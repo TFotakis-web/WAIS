@@ -7,9 +7,9 @@
         },
         
         
-          "authwaisUserPoolId": {
+          "authwais38036aa9UserPoolId": {
             "Type": "String",
-            "Default": "authwaisUserPoolId"
+            "Default": "authwais38036aa9UserPoolId"
           }
         
           
@@ -37,13 +37,13 @@
             "FunctionName": {
                 "Fn::If": [
                     "ShouldNotCreateEnvResources",
-                    "AdminQueries08b23d9d", 
+                    "AdminQueries3e8c423f", 
                     {
 
                         "Fn::Join": [
                             "",
                             [
-                                "AdminQueries08b23d9d",
+                                "AdminQueries3e8c423f",
                                 "-",
                                 {
                                     "Ref": "env"
@@ -58,9 +58,9 @@
                     "ENV": {
                         "Ref": "env"
                     },
-                    "GROUP": "admin",
+                    "GROUP": "admins",
                     "USERPOOL" : {
-                        "Ref": "authwaisUserPoolId" 
+                        "Ref": "authwais38036aa9UserPoolId" 
                     }
                 }
             },
@@ -75,13 +75,13 @@
                 "RoleName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "AdminQueries08b23d9dLambdaRole", 
+                        "AdminQueries3e8c423fLambdaRole", 
                         {
 
                             "Fn::Join": [
                                 "",
                                 [
-                                    "AdminQueries08b23d9dLambdaRole",
+                                    "AdminQueries3e8c423fLambdaRole",
                                     "-",
                                     {
                                         "Ref": "env"
@@ -153,7 +153,7 @@
 										},
 										":userpool/",
 										{
-											"Ref": "authwaisUserPoolId"
+											"Ref": "authwais38036aa9UserPoolId"
 										}
 									]
 								]

@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "wais",
+    "identityPoolName": "wais38036aa9_identitypool_38036aa9",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "waisd1fe2025",
-    "userPoolName": "wais",
+    "resourceNameTruncated": "wais38036aa9",
+    "userPoolName": "wais38036aa9_userpool_38036aa9",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -22,26 +22,13 @@
         "Requires Numbers"
     ],
     "requiredAttributes": [
-        "address",
-        "birthdate",
-        "email",
-        "family_name",
-        "middle_name",
-        "gender",
-        "locale",
-        "given_name",
-        "name",
-        "phone_number",
-        "preferred_username",
-        "picture",
-        "updated_at"
+        "email"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": "7",
     "userpoolClientWriteAttributes": [
         "address",
         "birthdate",
-        "email",
         "family_name",
         "middle_name",
         "gender",
@@ -51,7 +38,8 @@
         "phone_number",
         "preferred_username",
         "picture",
-        "updated_at"
+        "updated_at",
+        "email"
     ],
     "userpoolClientReadAttributes": [
         "address",
@@ -70,10 +58,10 @@
         "email_verified",
         "phone_number_verified"
     ],
-    "userpoolClientLambdaRole": "waisd1fe2025_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "wais3838036aa9_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
-    "sharedId": "d1fe2025",
-    "resourceName": "wais",
+    "sharedId": "38036aa9",
+    "resourceName": "wais38036aa9",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -88,22 +76,22 @@
         ]
     },
     "useDefault": "manual",
+    "userPoolGroupList": [
+        "admins",
+        "managers",
+        "employees",
+        "externalContractors"
+    ],
+    "serviceName": "Cognito",
+    "dependsOn": [],
     "thirdPartyAuth": false,
     "userPoolGroups": true,
     "adminQueries": true,
     "triggers": "{}",
     "hostedUI": false,
-    "userPoolGroupList": [
-        "admin",
-        "manager",
-        "employee",
-        "externalContractor"
-    ],
-    "adminQueryGroup": "admin",
-    "serviceName": "Cognito",
+    "adminQueryGroup": "admins",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
-    "permissions": [],
-    "dependsOn": []
+    "permissions": []
 }

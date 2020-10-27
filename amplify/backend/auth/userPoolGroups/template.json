@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authwaisUserPoolId": {
+        "authwais38036aa9UserPoolId": {
             "Type": "String",
-            "Default": "authwaisUserPoolId"
+            "Default": "authwais38036aa9UserPoolId"
         },
         
-        "authwaisIdentityPoolId": {
+        "authwais38036aa9IdentityPoolId": {
             "Type": "String",
-            "Default": "authwaisIdentityPoolId"
+            "Default": "authwais38036aa9IdentityPoolId"
         },
         
-        "authwaisAppClientID": {
+        "authwais38036aa9AppClientID": {
             "Type": "String",
-            "Default": "authwaisAppClientID"
+            "Default": "authwais38036aa9AppClientID"
         },
-        "authwaisAppClientIDWeb": {
+        "authwais38036aa9AppClientIDWeb": {
             "Type": "String",
-            "Default": "authwaisAppClientIDWeb"
+            "Default": "authwais38036aa9AppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -41,26 +41,26 @@
     },
     "Resources": {
     
-        "adminGroup": {
+        "adminsGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "admin",
+              "GroupName" : "admins",
               "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "adminsGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authwaisUserPoolId"
+                "Ref": "authwais38036aa9UserPoolId"
               } 
             }
         },
         
-        "adminGroupRole": {
+        "adminsGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -68,9 +68,9 @@
                         "",
                         [
                           {
-                            "Ref": "authwaisUserPoolId"
+                            "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-adminGroupRole"
+                          "-adminsGroupRole"
                         ]
                     ]
                 },
@@ -85,7 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwaisIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -95,26 +95,26 @@
         },
      
     
-        "managerGroup": {
+        "managersGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "manager",
+              "GroupName" : "managers",
               "Precedence" : 2,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "managerGroupRole",
+                    "managersGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authwaisUserPoolId"
+                "Ref": "authwais38036aa9UserPoolId"
               } 
             }
         },
         
-        "managerGroupRole": {
+        "managersGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -122,9 +122,9 @@
                         "",
                         [
                           {
-                            "Ref": "authwaisUserPoolId"
+                            "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-managerGroupRole"
+                          "-managersGroupRole"
                         ]
                     ]
                 },
@@ -139,7 +139,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwaisIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -149,26 +149,26 @@
         },
      
     
-        "employeeGroup": {
+        "employeesGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "employee",
+              "GroupName" : "employees",
               "Precedence" : 3,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "employeeGroupRole",
+                    "employeesGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authwaisUserPoolId"
+                "Ref": "authwais38036aa9UserPoolId"
               } 
             }
         },
         
-        "employeeGroupRole": {
+        "employeesGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -176,9 +176,9 @@
                         "",
                         [
                           {
-                            "Ref": "authwaisUserPoolId"
+                            "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-employeeGroupRole"
+                          "-employeesGroupRole"
                         ]
                     ]
                 },
@@ -193,7 +193,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwaisIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -203,26 +203,26 @@
         },
      
     
-        "externalContractorGroup": {
+        "externalContractorsGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "externalContractor",
+              "GroupName" : "externalContractors",
               "Precedence" : 4,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "externalContractorGroupRole",
+                    "externalContractorsGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authwaisUserPoolId"
+                "Ref": "authwais38036aa9UserPoolId"
               } 
             }
         },
         
-        "externalContractorGroupRole": {
+        "externalContractorsGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -230,9 +230,9 @@
                         "",
                         [
                           {
-                            "Ref": "authwaisUserPoolId"
+                            "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-externalContractorGroupRole"
+                          "-externalContractorsGroupRole"
                         ]
                     ]
                 },
@@ -247,7 +247,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwaisIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -273,7 +273,7 @@
                                 "",
                                 [
                                   
-                                  "wais",
+                                  "wais38036aa9",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -432,16 +432,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authwaisIdentityPoolId"
+                    "Ref": "authwais38036aa9IdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authwaisUserPoolId"
+                    "Ref": "authwais38036aa9UserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authwaisAppClientIDWeb"
+                    "Ref": "authwais38036aa9AppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authwaisAppClientID"
+                    "Ref": "authwais38036aa9AppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -457,10 +457,10 @@
     
     "Outputs": {
       
-        "adminGroupRole": {
+        "adminsGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "adminsGroupRole",
                     "Arn"
                 ]
             }
@@ -468,10 +468,10 @@
         },
         
       
-        "managerGroupRole": {
+        "managersGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "managerGroupRole",
+                    "managersGroupRole",
                     "Arn"
                 ]
             }
@@ -479,10 +479,10 @@
         },
         
       
-        "employeeGroupRole": {
+        "employeesGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "employeeGroupRole",
+                    "employeesGroupRole",
                     "Arn"
                 ]
             }
@@ -490,10 +490,10 @@
         },
         
       
-        "externalContractorGroupRole": {
+        "externalContractorsGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "externalContractorGroupRole",
+                    "externalContractorsGroupRole",
                     "Arn"
                 ]
             }
