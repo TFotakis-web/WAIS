@@ -7,52 +7,39 @@
 		expand-on-hover
 		:slim-collapsed="collapsed"
 		@toggleSlim="collapsed = $event"
-		sidenav-class="unique-color-dark"
+		sidenav-class="blue accent-4"
 		color="white"
 	>
-		<div slot="header">
-			<div
-				class="d-flex align-items-center my-4"
-				:class="
-					collapsed
-						? 'justify-content-center'
-						: 'justify-content-start'
-				"
+		<div slot="header" class="white-text">
+			<router-link
+				:to="{ name: 'Home' }"
+				class="d-flex align-items-center my-4 justify-content-center white-text"
 			>
 				<mdb-avatar :width="40" style="flex: 0 0 auto">
-					<img
+					<!-- <img
 						src="https://mdbootstrap.com/img/Photos/Avatars/avatar-7.jpg"
 						class="img-fluid rounded-circle z-depth-1"
-					/>
+					/> -->
+					<h1>
+						<mdb-icon far icon="building" />
+					</h1>
 				</mdb-avatar>
 				<p
 					class="m-t mb-0 ml-4 p-0"
 					style="flex: 0 2 auto"
 					v-show="!collapsed"
 				>
-					<strong
-						>John Smith
-						<mdb-icon
-							color="success"
-							icon="circle"
-							class="ml-2"
-							size="sm"
-					/></strong>
+					<strong>MedInsCare</strong>
 				</p>
-			</div>
+			</router-link>
 			<hr class="w-100" />
 		</div>
-		<div slot="content" class="mt-5 d-flex justify-content-center">
-			<mdb-btn
-				tag="a"
-				class="mx-0"
-				size="sm"
-				transparent
-				floating
-				:icon="collapsed ? 'chevron-right' : 'chevron-left'"
-				icon-class="white-text"
-				@click="collapsed = !collapsed"
-			></mdb-btn>
+		<div slot="content" class="d-flex justify-content-center white-text">
+			<a type="button" class="mx-0">
+				<mdb-icon
+					:icon="collapsed ? 'chevron-right' : 'chevron-left'"
+				/>
+			</a>
 		</div>
 
 		<mdb-navbar
@@ -60,56 +47,56 @@
 			tag="div"
 			:toggler="false"
 			position="top"
-			dark
-			color="unique-color-dark"
+			light
+			color="white"
 		>
+			<mdb-navbar-nav class="nav-flex-icons" left>
+				<mdb-nav-item
+					:to="{ name: 'Home' }"
+					waves-fixed
+					icon="euro-sign"
+					class="ml-5"
+				>
+					<span class="ml-1">1345.85/1800.00</span>
+				</mdb-nav-item>
+			</mdb-navbar-nav>
 			<mdb-navbar-nav class="nav-flex-icons" right>
 				<mdb-nav-item
-					to="/navigation/pro/double-navigation-v1"
+					:to="{ name: 'Home' }"
 					waves-fixed
-					icon="code-branch"
-					><span class="ml-1">v.1</span></mdb-nav-item
+					icon="file-signature"
 				>
+					<!-- <span class="ml-1">Contract check</span> -->
+				</mdb-nav-item>
 				<mdb-nav-item
-					to="/navigation/pro/double-navigation-v2"
+					:to="{ name: 'Home' }"
 					waves-fixed
-					icon="eye"
-					><span class="ml-1">v.2</span></mdb-nav-item
+					icon="shopping-cart"
 				>
+					<!-- <span class="ml-1">Cart</span> -->
+				</mdb-nav-item>
 				<mdb-nav-item
-					to="/navigation/pro/double-navigation-v3"
+					:to="{ name: 'Home' }"
 					waves-fixed
-					icon="file-code"
-					far
-					><span class="ml-1">v.3</span></mdb-nav-item
+					icon="university"
 				>
+					<!-- <span class="ml-1"></span> -->
+				</mdb-nav-item>
+				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="bell">
+					<!-- <span class="ml-1"></span> -->
+				</mdb-nav-item>
 				<mdb-nav-item
-					to="/navigation/pro/double-navigation-v4"
+					:to="{ name: 'Home' }"
 					waves-fixed
-					icon="terminal"
-					><span class="ml-1">v.4</span></mdb-nav-item
+					icon="handshake"
 				>
-				<mdb-nav-item
-					active
-					to="/navigation/pro/double-navigation-v5"
-					waves-fixed
-					icon="smile"
-					far
-					><span class="ml-1">v.5</span></mdb-nav-item
+					<!-- <span class="ml-1"></span> -->
+				</mdb-nav-item>
+				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="globe">
+					<span class="ml-1">EN</span></mdb-nav-item
 				>
-				<mdb-nav-item
-					to="/navigation/pro/double-navigation-v6"
-					waves-fixed
-					icon="user"
-					far
-					><span class="ml-1">v.6</span></mdb-nav-item
-				>
-				<mdb-nav-item
-					waves-fixed
-					icon="sign-out-alt"
-					@click="signOut"
-				>
-					<span>{{ $t('Sign Out') }}</span>
+				<mdb-nav-item waves-fixed icon="sign-out-alt" @click="signOut">
+					<!-- <span>{{ $t("Sign Out") }}</span> -->
 				</mdb-nav-item>
 			</mdb-navbar-nav>
 		</mdb-navbar>
@@ -132,56 +119,180 @@ export default {
 			collapsed: true,
 			navigation: [
 				{
-					name: "Double navigation",
-					icon: "bars",
+					name: "Τιμολόγηση",
+					icon: "chart-line",
 					children: [
 						{
-							name: "Version 1",
-							to: "/navigation/pro/double-navigation-v1"
+							name: "Οχημα",
+							to: { name: 'VehiclePricing' }
 						},
 						{
-							name: "Version 2",
-							to: "/navigation/pro/double-navigation-v2"
+							name: "Αστική Ευθύνη",
+							to: { name: 'IndustrialLiabilityPricing' }
 						},
 						{
-							name: "Version 3",
-							to: "/navigation/pro/double-navigation-v3"
+							name: "Πυρός",
+							to: { name: 'FirePricing' }
 						},
 						{
-							name: "Version 4",
-							to: "/navigation/pro/double-navigation-v4"
-						},
-						{
-							name: "Version 5",
-							to: "/navigation/pro/double-navigation-v5"
-						},
-						{
-							name: "Version 6",
-							to: "/navigation/pro/double-navigation-v6"
+							name: "Ζωής",
+							to: { name: 'LifePricing' }
 						}
 					]
 				},
 				{
-					name: "Getting started",
-					icon: "mdb",
+					name: "Συμβόλαιο",
+					icon: "file-contract",
+					children: [
+						{
+							name: "Αρχείο",
+							to: { name: 'ContractsFile' }
+						},
+						{
+							name: "Ανείσπρακτα",
+							to: { name: 'UncollectedContracts' }
+						},
+						{
+							name: "Εισπραγμένα",
+							to: { name: 'CollectedContracts' }
+						},
+						{
+							name: "Πρόσθετες πράξεις",
+							to: { name: 'ContractAdditionalActs' }
+						},
+						{
+							name: "Πράσινη κάρτα",
+							to: { name: 'GreenCardContracts' }
+						},
+						{
+							name: "Αζήτητα",
+							to: { name: 'UnclaimedContracts' }
+						},
+						{
+							name: "Άκυρα",
+							to: { name: 'InvalidContracts' }
+						},
+						{
+							name: "Εισαγωγή Συμβολαίου",
+							to: { name: 'NewContract' }
+						}
+					]
+				},
+				{
+					name: "Διεκπεραίωση",
+					icon: "list-ul",
+					children: [
+						{
+							name: "Ληξιάρεια",
+							to: { name: 'ProcessingDueDateRegister' }
+						},
+						{
+							name: "Προς πληρωμή",
+							to: { name: 'ProcessingDuePayment' }
+						},
+						{
+							name: "Πληρωμένα",
+							to: { name: 'ProcessingPaid' }
+						},
+						{
+							name: "Ζημίες",
+							to: { name: 'ProcessingLosses' }
+						}
+					]
+				},
+				{
+					name: "Λογιστήριο",
+					icon: "cash-register",
+					children: [
+						{
+							name: "Αποδείξεις ταμείου",
+							to: { name: 'AccountingReceipts' }
+						},
+						{
+							name: "Ταμειακές",
+							to: { name: 'AccountingRegisters' }
+						},
+						{
+							name: "Ταμείο ημέρας",
+							to: { name: 'AccountingTodaysIncome' }
+						},
+						{
+							name: "Προμήθειες προς είσπραξη",
+							to: { name: 'AccountingCommissionsUncollected' }
+						},
+						{
+							name: "Εισπραγμένες προμήθειες",
+							to: { name: 'AccountingCommissionsCollected' }
+						},
+						{
+							name: "Αλληλοχρεος λογαριασμός",
+							to: { name: 'AccountingMutualAccount' }
+						}
+					]
+				},
+				{
+					name: "Συνεργάτες",
+					icon: "user-friends",
+					children: [
+						{
+							name: "Προμηθευτές",
+							to: { name: 'SupplierContractors' }
+						},
+						{
+							name: "Συνεργάτες",
+							to: { name: 'ContractorsExternalContractors' }
+						}
+					]
+				},
+				{
+					name: "Καρτέλες",
+					icon: "wpforms",
 					fab: true,
 					children: [
 						{
-							name: "Quick start",
-							href:
-								"https://mdbootstrap.com/docs/vue/getting-started/quick-start/"
+							name: "Οχημάτων",
+							to: { name: 'VehicleCards' }
 						},
 						{
-							name: "Technical Support",
-							href: "https://mdbootstrap.com/support/"
+							name: "Πελατών",
+							to: { name: 'CustomerCards' }
 						}
 					]
 				},
 				{
-					name: "Documentation",
-					icon: "graduation-cap",
-					href: "https://mdbootstrap.com/docs/vue/"
-				}
+					name: "Βιβλιοθήκη",
+					icon: "book",
+					children: [
+						{
+							name: "Βιβλίο 1",
+							to: { name: 'Library' }
+						},
+						{
+							name: "Βιβλίο 2",
+							to: { name: 'Library' }
+						}
+					]
+				},
+				// {
+				// 	name: "Getting started",
+				// 	icon: "mdb",
+				// 	fab: true,
+				// 	children: [
+				// 		{
+				// 			name: "Quick start",
+				// 			href: "https://mdbootstrap.com/docs/vue/getting-started/quick-start/"
+				// 		},
+				// 		{
+				// 			name: "Technical Support",
+				// 			href: "https://mdbootstrap.com/support/"
+				// 		}
+				// 	]
+				// },
+				// {
+				// 	name: "Documentation",
+				// 	icon: "graduation-cap",
+				// 	href: "https://mdbootstrap.com/docs/vue/"
+				// }
 			]
 		};
 	},

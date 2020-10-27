@@ -1,14 +1,12 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t("Home page") }}</h1>
+		<h1>{{ $t("Accounting Receipts") }}</h1>
 		<h5 class="text-info">{{ $t("Under Construction") }}</h5>
 	</div>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
-	name: 'Home',
+	name: 'AccountingReceipts',
 };
 </script>
