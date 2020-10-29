@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import axios from "axios";
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
@@ -39,6 +40,11 @@ const v = {
 	store,
 	i18n,
 	render: h => h(App),
+	data: function () {
+		return {
+			enumData: {}
+		};
+	},
 	methods: {
 		toGreeklish,
 		initLocale: function () {
@@ -74,14 +80,23 @@ const v = {
 				this.$cookies.remove(cookie);
 			}
 		},
+		loadEnumData: function () {
+			this.$http.get('/enumData.json')
+				.then(res => {
+					this.$root.enumData = res.data;
+				})
+				.catch(err => {
+					console.error(err);
+				});
+		}
+	},
+	mounted: function() {
+		this.loadEnumData();
 	}
 };
 
-// -------------- Assignments ------------------------------------------
-const vm = new Vue(v);
-window.WaisVue = vm;
-
 // -------------- Prototype expansion ----------------------------------
+Vue.prototype.$http = axios;
 Vue.prototype.$notifyAction = {
 	error: err => {
 		// eslint-disable-next-line no-console
@@ -179,6 +194,11 @@ Vue.prototype.$headData = {
 		return Object.values(res);
 	}
 };
+
+
+// -------------- Assignments ------------------------------------------
+const vm = new Vue(v);
+window.WaisVue = vm;
 
 // -------------- Mount --------------
 vm.$mount('#app');

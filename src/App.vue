@@ -2,7 +2,7 @@
 	<div id="app" style="background-color: #fafafa">
 		<navigation v-if="authState === 'signedin'" />
 		<!-- <router-view v-else/> -->
-		<mdb-container style="height: 100vh">
+		<mdb-container fluid style="height: 100vh">
 			<mdb-row class="h-100 justify-content-center align-items-center">
 				<amplify-authenticator class="mt-5"/>
 			</mdb-row>
