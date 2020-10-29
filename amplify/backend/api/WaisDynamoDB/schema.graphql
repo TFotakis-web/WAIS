@@ -70,7 +70,7 @@ type Contract {
 	customer: Customer!
 	contractId: ID!
 	voucherID: Int!
-	contractState: String!
+	contractState: String! # Send to S3 on completion
 	tradeAdmin: String! #Aftos poy kanei amesa to insurance
 	assignee: String! #Aftos poy kanei emesa to insurance
 	partner: String!
