@@ -17,12 +17,17 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbvue/lib/css/mdb.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import VueAnalytics from 'vue-analytics';
+import Vue2TouchEvents from 'vue2-touch-events';
+import LoadScript from 'vue-plugin-load-script';
+
 
 Amplify.configure(aws_exports);
 
 Vue.use(Notifications);
 Vue.use(VueCookies);
 Vue.use(VueHead);
+Vue.use(Vue2TouchEvents);
+Vue.use(LoadScript);
 
 for (const component in mdbvue) {
 	Vue.component(component, mdbvue[component]);
