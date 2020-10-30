@@ -8,7 +8,6 @@ import Amplify from 'aws-amplify';
 import '@aws-amplify/ui-vue';
 import aws_exports from './aws-exports';
 import i18n from './i18n';
-// import Notifications from 'vue-notification';
 import VueCookies from 'vue-cookies';
 import VueHead from 'vue-head';
 import { toGreeklish } from 'greek-utils';
@@ -23,7 +22,6 @@ import { Notify } from 'mdbvue';
 
 Amplify.configure(aws_exports);
 
-// Vue.use(Notifications);
 Vue.use(VueCookies);
 Vue.use(VueHead);
 Vue.use(Vue2TouchEvents);
