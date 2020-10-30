@@ -15,6 +15,7 @@ module.exports = {
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-unused-vars': 'warn',
 		'no-unused-labels': 'warn',
-		'no-empty': 'warn'
+		'no-empty': 'warn',
+		'vue/custom-event-name-casing': 'off'
 	}
 }
