@@ -8,7 +8,7 @@ import Amplify from 'aws-amplify';
 import '@aws-amplify/ui-vue';
 import aws_exports from './aws-exports';
 import i18n from './i18n';
-import Notifications from 'vue-notification';
+// import Notifications from 'vue-notification';
 import VueCookies from 'vue-cookies';
 import VueHead from 'vue-head';
 import { toGreeklish } from 'greek-utils';
@@ -19,15 +19,16 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import VueAnalytics from 'vue-analytics';
 import Vue2TouchEvents from 'vue2-touch-events';
 import LoadScript from 'vue-plugin-load-script';
-
+import { Notify } from 'mdbvue';
 
 Amplify.configure(aws_exports);
 
-Vue.use(Notifications);
+// Vue.use(Notifications);
 Vue.use(VueCookies);
 Vue.use(VueHead);
 Vue.use(Vue2TouchEvents);
 Vue.use(LoadScript);
+Vue.use(Notify);
 
 for (const component in mdbvue) {
 	Vue.component(component, mdbvue[component]);
@@ -106,30 +107,33 @@ Vue.prototype.$notifyAction = {
 	error: err => {
 		// eslint-disable-next-line no-console
 		console.error(err);
-		vm.$notify({
-			text: vm.$t('Something went wrong...'),
-			type: 'error'
+		vm.$notify.error({
+			message: vm.$t('Something went wrong...'),
+			progressBar: true,
+			timeOut: 10000
 		});
 	},
 	errorPermanent: err => {
 		// eslint-disable-next-line no-console
 		console.error(err);
-		vm.$notify({
-			text: vm.$t('Something went wrong...'),
-			type: 'error',
-			duration: -1
+		vm.$notify.error({
+			message: vm.$t('Something went wrong...'),
+			progressBar: true,
+			timeOut: 10000
 		});
 	},
 	saveSuccess: () => {
-		vm.$notify({
-			text: vm.$t('Saved successfully!'),
-			type: 'success'
+		vm.$notify.success({
+			message: vm.$t('Saved successfully!'),
+			progressBar: true,
+			timeOut: 10000
 		});
 	},
 	deleteSuccess: () => {
-		vm.$notify({
-			text: vm.$t('Deleted successfully!'),
-			type: 'success'
+		vm.$notify.success({
+			message: vm.$t('Deleted successfully!'),
+			progressBar: true,
+			timeOut: 10000
 		});
 	}
 };
