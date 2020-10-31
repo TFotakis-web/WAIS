@@ -125,11 +125,13 @@
 						<mdb-icon icon="user-circle" class="black-text" />
 					</mdb-dropdown-toggle>
 					<mdb-dropdown-menu left style="min-width: unset">
-						<mdb-dropdown-item>My account</mdb-dropdown-item>
-						<hr class="m-0"/>
+						<mdb-dropdown-item>{{
+							$t("My account")
+						}}</mdb-dropdown-item>
+						<hr class="m-0" />
 						<mdb-dropdown-item @click="signOut">
 							<mdb-icon class="black-text" icon="sign-out-alt" />
-							{{ $t('Sign Out') }}
+							{{ $t("Sign Out") }}
 						</mdb-dropdown-item>
 					</mdb-dropdown-menu>
 				</mdb-dropdown>
@@ -152,158 +154,162 @@ export default {
 		return {
 			show: true,
 			collapsed: true,
-			navigation: [
+		};
+	},
+	computed: {
+		navigation: function () {
+			return [
 				{
-					name: "Τιμολόγηση",
+					name: this.$t('Pricing'),
 					icon: "chart-line",
 					children: [
 						{
-							name: "Οχημα",
+							name: this.$t('Vehicle'),
 							to: { name: 'VehiclePricing' }
 						},
 						{
-							name: "Αστική Ευθύνη",
+							name: this.$t('Industrial Liability'),
 							to: { name: 'IndustrialLiabilityPricing' }
 						},
 						{
-							name: "Πυρός",
+							name: this.$t('Fire'),
 							to: { name: 'FirePricing' }
 						},
 						{
-							name: "Ζωής",
+							name: this.$t('Life'),
 							to: { name: 'LifePricing' }
 						}
 					]
 				},
 				{
-					name: "Συμβόλαιο",
+					name: this.$t('Contracts'),
 					icon: "file-contract",
 					children: [
 						{
-							name: "Αρχείο",
+							name: this.$t('File'),
 							to: { name: 'ContractsFile' }
 						},
 						{
-							name: "Ανείσπρακτα",
+							name: this.$t('Uncollected'),
 							to: { name: 'UncollectedContracts' }
 						},
 						{
-							name: "Εισπραγμένα",
+							name: this.$t('Collected'),
 							to: { name: 'CollectedContracts' }
 						},
 						{
-							name: "Πρόσθετες πράξεις",
+							name: this.$t('Additional Acts'),
 							to: { name: 'ContractAdditionalActs' }
 						},
 						{
-							name: "Πράσινη κάρτα",
+							name: this.$t('Green Card'),
 							to: { name: 'GreenCardContracts' }
 						},
 						{
-							name: "Αζήτητα",
+							name: this.$t('Unclaimed'),
 							to: { name: 'UnclaimedContracts' }
 						},
 						{
-							name: "Άκυρα",
+							name: this.$t('Invalid'),
 							to: { name: 'InvalidContracts' }
 						},
 						{
-							name: "Εισαγωγή Συμβολαίου",
+							name: this.$t('New'),
 							to: { name: 'NewContract' }
 						}
 					]
 				},
 				{
-					name: "Διεκπεραίωση",
+					name: this.$t('Processing'),
 					icon: "list-ul",
 					children: [
 						{
-							name: "Ληξιάρεια",
+							name: this.$t('Due Date Register'),
 							to: { name: 'ProcessingDueDateRegister' }
 						},
 						{
-							name: "Προς πληρωμή",
+							name: this.$t('Due Payment'),
 							to: { name: 'ProcessingDuePayment' }
 						},
 						{
-							name: "Πληρωμένα",
+							name: this.$t('Paid'),
 							to: { name: 'ProcessingPaid' }
 						},
 						{
-							name: "Ζημίες",
+							name: this.$t('Losses'),
 							to: { name: 'ProcessingLosses' }
 						}
 					]
 				},
 				{
-					name: "Λογιστήριο",
+					name: this.$t('Accounting'),
 					icon: "cash-register",
 					children: [
 						{
-							name: "Αποδείξεις ταμείου",
+							name: this.$t('Receipts'),
 							to: { name: 'AccountingReceipts' }
 						},
 						{
-							name: "Ταμειακές",
+							name: this.$t('Registers'),
 							to: { name: 'AccountingRegisters' }
 						},
 						{
-							name: "Ταμείο ημέρας",
+							name: this.$t('Todays Income'),
 							to: { name: 'AccountingTodaysIncome' }
 						},
 						{
-							name: "Προμήθειες προς είσπραξη",
+							name: this.$t('Commissions Uncollected'),
 							to: { name: 'AccountingCommissionsUncollected' }
 						},
 						{
-							name: "Εισπραγμένες προμήθειες",
+							name: this.$t('Commissions Collected'),
 							to: { name: 'AccountingCommissionsCollected' }
 						},
 						{
-							name: "Αλληλοχρεος λογαριασμός",
+							name: this.$t('Mutual Account'),
 							to: { name: 'AccountingMutualAccount' }
 						}
 					]
 				},
 				{
-					name: "Συνεργάτες",
+					name: this.$t('Contractors'),
 					icon: "user-friends",
 					children: [
 						{
-							name: "Προμηθευτές",
+							name: this.$t('Suppliers'),
 							to: { name: 'SupplierContractors' }
 						},
 						{
-							name: "Συνεργάτες",
+							name: this.$t('External Contractors'),
 							to: { name: 'ContractorsExternalContractors' }
 						}
 					]
 				},
 				{
-					name: "Καρτέλες",
+					name: this.$t('Cards'),
 					icon: "wpforms",
 					fab: true,
 					children: [
 						{
-							name: "Οχημάτων",
+							name: this.$t('Vehicle Cards'),
 							to: { name: 'VehicleCards' }
 						},
 						{
-							name: "Πελατών",
+							name: this.$t('Customer Cards'),
 							to: { name: 'CustomerCards' }
 						}
 					]
 				},
 				{
-					name: "Βιβλιοθήκη",
+					name: this.$t('Library'),
 					icon: "book",
 					children: [
 						{
-							name: "Βιβλίο 1",
+							name: "Book 1",
 							to: { name: 'Library' }
 						},
 						{
-							name: "Βιβλίο 2",
+							name: "Book 2",
 							to: { name: 'Library' }
 						}
 					]
@@ -328,8 +334,8 @@ export default {
 				// 	icon: "graduation-cap",
 				// 	href: "https://mdbootstrap.com/docs/vue/"
 				// }
-			]
-		};
+			];
+		}
 	},
 	mounted() {
 		this.$store.commit("toggleDocs", false);

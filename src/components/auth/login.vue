@@ -88,7 +88,7 @@
 							/>
 							<div class="text-right mb-3">
 								<a href="#" @click.prevent="passreset = true">{{
-									$t('Forgot your password?")
+									$t('Forgot your password?')
 								}}</a>
 							</div>
 							<div class="text-center">
@@ -115,7 +115,7 @@
 								<hr />
 								<p class="mt-4">
 									<span
-										>{{ $t('Don't have an account?') }}
+										>{{ $t('Don\'t have an account?') }}
 									</span>
 									<router-link
 										:to="{
