@@ -901,17 +901,11 @@
 </template>
 
 <script>
-// import { mdbBtn } from "../../Components/Button";
-// import { mdbBtnGroup } from "../../Components/ButtonGroup";
-// import { mdbTooltip } from "../../Advanced/Tooltip";
 import { Drag, Drop } from "vue-drag-drop";
 
 const mdbMonthView = {
 	name: "mdbMonthView",
 	components: {
-		// mdbBtn,
-		// mdbBtnGroup,
-		// mdbTooltip,
 		Drag,
 		Drop
 	},
@@ -1127,7 +1121,7 @@ export { mdbMonthView };
 .mdb-month-view {
 	width: 100%;
 	height: 100%;
-	margin-bottom: 50px;
+	/* margin-bottom: 50px; */
 }
 .mdb-month-view table {
 	table-layout: fixed;

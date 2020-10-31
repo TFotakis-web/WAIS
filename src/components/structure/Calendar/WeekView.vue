@@ -1793,17 +1793,11 @@
 </template>
 
 <script>
-// import { mdbTooltip } from "../../Advanced/Tooltip";
-// import { mdbBtn } from "../../Components/Button";
-// import { mdbBtnGroup } from "../../Components/ButtonGroup";
 import { Drag, Drop } from "vue-drag-drop";
 
 const mdbWeekView = {
 	name: "mdbWeekView",
 	components: {
-		// mdbBtn,
-		// mdbBtnGroup,
-		// mdbTooltip,
 		Drag,
 		Drop
 	},
@@ -2062,7 +2056,7 @@ export { mdbWeekView };
 .mdb-week-view {
 	width: 100%;
 	height: 100%;
-	margin-bottom: 50px;
+	/* margin-bottom: 50px; */
 }
 .mdb-week-view table {
 	table-layout: fixed;

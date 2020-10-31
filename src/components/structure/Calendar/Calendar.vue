@@ -389,13 +389,6 @@ import { mdbMonthView } from "./MonthView";
 import { mdbWeekView } from "./WeekView";
 import { mdbListView } from "./ListView";
 import orderBy from "lodash.orderby";
-// import { mdbModal } from "../../Modals/Modal";
-// import { mdbModalHeader } from "../../Modals/ModalHeader";
-// import { mdbModalTitle } from "../../Modals/ModalTitle";
-// import { mdbModalBody } from "../../Modals/ModalBody";
-// import { mdbModalFooter } from "../../Modals/ModalFooter";
-// import { mdbBtn } from "../../Components/Button";
-// import { mdbInput } from "../../Forms/Input";
 
 const Calendar = {
 	name: "mdbCalendar",
@@ -403,13 +396,6 @@ const Calendar = {
 		mdbMonthView,
 		mdbWeekView,
 		mdbListView,
-		// mdbModal,
-		// mdbModalHeader,
-		// mdbModalTitle,
-		// mdbModalBody,
-		// mdbModalFooter,
-		// mdbBtn,
-		// mdbInput
 	},
 	props: {
 		defaultView: {

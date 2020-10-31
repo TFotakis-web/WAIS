@@ -130,17 +130,9 @@
 </template>
 
 <script>
-// import { mdbBtn } from "../../Components/Button";
-// import { mdbBtnGroup } from "../../Components/ButtonGroup";
-// import { mdbIcon } from "../../Content/Fa";
 
 const mdbListView = {
 	name: "mdbListView",
-	// components: {
-	// 	mdbBtn,
-	// 	mdbBtnGroup,
-	// 	mdbIcon
-	// },
 	props: {
 		defaultDate: {
 			type: Date
@@ -256,7 +248,7 @@ export { mdbListView };
 .mdb-list-view {
 	width: 100%;
 	height: 100%;
-	margin-bottom: 50px;
+	/* margin-bottom: 50px; */
 }
 .mdb-list-view table {
 	width: 100%;
