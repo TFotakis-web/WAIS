@@ -16,6 +16,7 @@ module.exports = {
 		'no-unused-vars': 'warn',
 		'no-unused-labels': 'warn',
 		'no-empty': 'warn',
-		'vue/custom-event-name-casing': 'off'
+		'vue/custom-event-name-casing': 'off',
+		'vue/experimental-script-setup-vars': 'off'
 	}
 }
