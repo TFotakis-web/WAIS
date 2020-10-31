@@ -82,9 +82,6 @@
 				>
 					<!-- <span class="ml-1"></span> -->
 				</mdb-nav-item>
-				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="bell">
-					<!-- <span class="ml-1"></span> -->
-				</mdb-nav-item>
 				<mdb-nav-item
 					:to="{ name: 'Home' }"
 					waves-fixed
@@ -92,12 +89,50 @@
 				>
 					<!-- <span class="ml-1"></span> -->
 				</mdb-nav-item>
-				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="globe">
-					<span class="ml-1">EN</span></mdb-nav-item
-				>
-				<mdb-nav-item waves-fixed icon="sign-out-alt" @click="signOut">
-					<!-- <span>{{ $t("Sign Out") }}</span> -->
+				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="bell">
+					<!-- <span class="ml-1"></span> -->
 				</mdb-nav-item>
+				<mdb-dropdown
+					tag="li"
+					class="nav-item black-text"
+					style="border-left: 1px solid grey !important"
+				>
+					<mdb-dropdown-toggle
+						tag="a"
+						navLink
+						slot="toggle"
+						waves-fixed
+						class="pr-0"
+					>
+						<mdb-icon icon="globe" class="black-text" />
+					</mdb-dropdown-toggle>
+					<mdb-dropdown-menu style="min-width: unset">
+						<mdb-dropdown-item
+							v-for="locale in $i18n.availableLocales"
+							:key="locale"
+							@click="$root.changeLanguage(locale)"
+							>{{ locale }}</mdb-dropdown-item
+						>
+					</mdb-dropdown-menu>
+				</mdb-dropdown>
+				<mdb-dropdown tag="li" class="nav-item black-text">
+					<mdb-dropdown-toggle
+						tag="a"
+						navLink
+						slot="toggle"
+						waves-fixed
+					>
+						<mdb-icon icon="user-circle" class="black-text" />
+					</mdb-dropdown-toggle>
+					<mdb-dropdown-menu left style="min-width: unset">
+						<mdb-dropdown-item>My account</mdb-dropdown-item>
+						<hr class="m-0"/>
+						<mdb-dropdown-item @click="signOut">
+							<mdb-icon class="black-text" icon="sign-out-alt" />
+							{{ $t('Sign Out') }}
+						</mdb-dropdown-item>
+					</mdb-dropdown-menu>
+				</mdb-dropdown>
 			</mdb-navbar-nav>
 		</mdb-navbar>
 

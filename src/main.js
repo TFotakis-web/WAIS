@@ -61,9 +61,9 @@ const v = {
 			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
 			this.$cookies.set('locale', this.$i18n.locale);
 		},
-		changeLanguage: function () {
-			this.$i18n.locale = this.$i18n.locale === 'en' ? 'gr' : 'en';
-			this.$cookies.set('locale', this.$i18n.locale);
+		changeLanguage: function (locale) {
+			this.$i18n.locale = locale;
+			this.$cookies.set('locale', locale);
 		},
 		parseJwt: function (token) {
 			const base64Url = token.split('.')[1];
