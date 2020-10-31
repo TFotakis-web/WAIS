@@ -101,7 +101,7 @@
 			</mdb-navbar-nav>
 		</mdb-navbar>
 
-		<div class="pt-5" slot="main" style="min-height: 100vh">
+		<div class="py-5" slot="main" style="min-height: 100vh">
 			<router-view />
 		</div>
 	</mdb-side-nav-2>
