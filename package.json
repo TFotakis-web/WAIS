@@ -6,7 +6,7 @@
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
-		"i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+		"i18n:report": "vue-i18n-extract report -d -v \"./src/**/*.?(js|vue)\" -l \"./src/locales/**/*.json\" -a"
 	},
 	"dependencies": {
 		"@aws-amplify/cli": "^4.31.1",
@@ -42,6 +42,7 @@
 		"eslint-plugin-vue": "^7.1.0",
 		"vue-cli-plugin-axios": "~0.0.4",
 		"vue-cli-plugin-i18n": "~1.0.1",
+		"vue-i18n-extract": "^1.1.10",
 		"vue-template-compiler": "^2.6.12"
 	}
 }
