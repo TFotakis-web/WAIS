@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t("Home page") }}</h1>
-		<h5 class="text-info mb-5">{{ $t("Under Construction") }}</h5>
+		<h1>{{ $t('Home page') }}</h1>
+		<h5 class="text-info mb-5">{{ $t('Under Construction') }}</h5>
 
 		<mdb-container>
 			<mdb-row class="mb-5">
@@ -124,7 +124,6 @@
 
 <script>
 // @ is an alias to /src
-// import mdbCalendar from '@/components/admin-pro-components/Calendar/Calendar.vue';
 import mdbCalendar from '@/components/structure/Calendar/Calendar.vue';
 export default {
 	name: 'Home',

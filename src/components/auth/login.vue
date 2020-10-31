@@ -53,7 +53,7 @@
 					type="submit"
 					rounded
 					class="mb-4"
-					>{{ $t("Login") }}</mdb-btn
+					>{{ $t('Login') }}</mdb-btn
 				>
 			</div>
 		</form>
@@ -65,7 +65,7 @@
 					<mdb-card-header class="blue-gradient m-0">
 						<mdb-row class="d-flex justify-content-center">
 							<h3 class="white-text m-0 p-5 font-weight-bold">
-								{{ $t("Login to WAIS") }}
+								{{ $t('Login to WAIS') }}
 							</h3>
 						</mdb-row>
 					</mdb-card-header>
@@ -88,7 +88,7 @@
 							/>
 							<div class="text-right mb-3">
 								<a href="#" @click.prevent="passreset = true">{{
-									$t("Forgot your password?")
+									$t('Forgot your password?")
 								}}</a>
 							</div>
 							<div class="text-center">
@@ -98,7 +98,7 @@
 									type="submit"
 									rounded
 									class="mb-4"
-									>{{ $t("Login") }}</mdb-btn
+									>{{ $t('Login') }}</mdb-btn
 								>
 								<mdb-btn
 									v-else
@@ -110,19 +110,19 @@
 									<span
 										class="spinner-border spinner-border-sm mr-1"
 									/>
-									<span>{{ $t("Logging in...") }}</span>
+									<span>{{ $t('Logging in...') }}</span>
 								</mdb-btn>
 								<hr />
 								<p class="mt-4">
 									<span
-										>{{ $t("Don't have an account?") }}
+										>{{ $t('Don't have an account?') }}
 									</span>
 									<router-link
 										:to="{
 											name: 'Register',
 											query: { next: $route.query.next },
 										}"
-										>{{ $t("Register") }}</router-link
+										>{{ $t('Register') }}</router-link
 									>
 								</p>
 								<a
@@ -143,7 +143,7 @@
 					<mdb-card-header class="blue-gradient m-0">
 						<mdb-row class="d-flex justify-content-center">
 							<h3 class="white-text m-0 p-5 font-weight-bold">
-								{{ $t("Reset your password") }}
+								{{ $t('Reset your password') }}
 							</h3>
 						</mdb-row>
 					</mdb-card-header>
@@ -167,7 +167,7 @@
 										type="submit"
 										rounded
 										class="mb-3"
-										>{{ $t("reset") }}</mdb-btn
+										>{{ $t('reset') }}</mdb-btn
 									>
 									<mdb-btn
 										v-else
@@ -185,7 +185,7 @@
 										@click="passreset = false"
 										rounded
 										class="mb-3"
-										>{{ $t("back") }}</mdb-btn
+										>{{ $t('back') }}</mdb-btn
 									>
 								</div>
 							</form>
@@ -202,7 +202,7 @@
 								color="primary"
 								rounded
 								class="mb-3"
-								>{{ $t("resend email") }}</mdb-btn
+								>{{ $t('resend email') }}</mdb-btn
 							>
 							<mdb-btn
 								v-else
@@ -223,7 +223,7 @@
 								"
 								rounded
 								class="mb-3"
-								>{{ $t("continue") }}</mdb-btn
+								>{{ $t('continue') }}</mdb-btn
 							>
 						</div>
 

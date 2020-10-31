@@ -21,7 +21,7 @@
 			/>
 			<div class="text-center">
 				<mdb-btn color="primary" type="submit" rounded class="mb-4">{{
-					$t("Login")
+					$t('Login')
 				}}</mdb-btn>
 			</div>
 		</form>
