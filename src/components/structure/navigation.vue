@@ -337,12 +337,12 @@ export default {
 			];
 		}
 	},
-	mounted() {
-		this.$store.commit("toggleDocs", false);
-	},
-	beforeDestroy() {
-		this.$store.commit("toggleDocs", true);
-	},
+	// mounted() {
+	// 	this.$store.commit("toggleDocs", false);
+	// },
+	// beforeDestroy() {
+	// 	this.$store.commit("toggleDocs", true);
+	// },
 	mixins: [waves],
 	methods: {
 		signOut: async () => {
