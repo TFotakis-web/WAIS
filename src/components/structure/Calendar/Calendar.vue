@@ -12,13 +12,15 @@
 			@dateChange="dateChange"
 			@eventsUpdate="eventsUpdate"
 			@changeView="changeView"
+			:firstDayOfWeek="firstDayOfWeek"
 		/>
 
 		<mdb-week-view
 			v-if="view === 'week'"
 			:defaultDate="date"
 			:dayNames="shortDayNames"
-			:monthNames="shortMonthNames"
+			:monthNames="monthNames"
+			:shortMonthNames="shortMonthNames"
 			:events="newEvents"
 			:todayText="todayText"
 			@editEvent="editEvent"
@@ -26,18 +28,21 @@
 			@dateChange="dateChange"
 			@eventsUpdate="eventsUpdate"
 			@changeView="changeView"
+			:firstDayOfWeek="firstDayOfWeek"
 		/>
 
 		<mdb-list-view
 			v-if="view === 'list'"
 			:defaultDate="date"
 			:dayNames="dayNames"
-			:monthNames="shortMonthNames"
+			:monthNames="monthNames"
+			:shortMonthNames="shortMonthNames"
 			:events="newEvents"
 			:todayText="todayText"
 			@changeView="changeView"
 			@editEvent="editEvent"
 			@dateChange="dateChange"
+			:firstDayOfWeek="firstDayOfWeek"
 		/>
 
 		<mdb-modal
@@ -388,7 +393,7 @@
 import { mdbMonthView } from "./MonthView";
 import { mdbWeekView } from "./WeekView";
 import { mdbListView } from "./ListView";
-import orderBy from "lodash.orderby";
+// import orderBy from "lodash.orderby";
 
 const Calendar = {
 	name: "mdbCalendar",
@@ -400,76 +405,26 @@ const Calendar = {
 	props: {
 		defaultView: {
 			type: String,
-			default: "month"
+			default: "week"
 		},
 		defaultDate: {
 			type: Date,
 			default: () => new Date()
 		},
-		monthNames: {
-			type: Array,
-			default: () => [
-				"January",
-				"February",
-				"March",
-				"April",
-				"May",
-				"June",
-				"July",
-				"August",
-				"September",
-				"October",
-				"November",
-				"December"
-			]
-		},
-		shortMonthNames: {
-			type: Array,
-			default: () => [
-				"Jan",
-				"Feb",
-				"Mar",
-				"Apr",
-				"May",
-				"Jun",
-				"Jul",
-				"Aug",
-				"Sep",
-				"Oct",
-				"Nov",
-				"Dec"
-			]
-		},
-		dayNames: {
-			type: Array,
-			default: () => [
-				"Sunday",
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday",
-				"Saturday"
-			]
-		},
-		shortDayNames: {
-			type: Array,
-			default: () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-		},
-		todayText: {
-			type: String,
-			default: "Today"
-		},
 		events: {
 			type: [Array, Boolean],
 			default: false
+		},
+		firstDayOfWeek: {
+			type: Number,
+			default: 1
 		}
 	},
 	data() {
 		return {
 			view: this.defaultView,
 			date: this.defaultDate,
-			newEvents: orderBy(this.events, ["start", "end"], ["asc", "desc"]),
+			newEvents: this.$lodash.orderBy(this.events, ["start", "end"], ["asc", "desc"]),
 			editEventModal: false,
 			editEventIndex: 0,
 			addEventModal: false,
@@ -522,14 +477,14 @@ const Calendar = {
 					newTime[2]
 				);
 			}
-			this.newEvents = orderBy(
+			this.newEvents = this.$lodash.orderBy(
 				this.newEvents,
 				["start", "end"],
 				["asc", "desc"]
 			);
 		},
 		updateEvents() {
-			this.newEvents = orderBy(
+			this.newEvents = this.$lodash.orderBy(
 				this.newEvents,
 				["start", "end"],
 				["asc", "desc"]
@@ -568,7 +523,7 @@ const Calendar = {
 			if (this.newEvent.start >= this.newEvent.end) return;
 			this.newEvents.push(this.newEvent);
 			this.newEvent = {};
-			this.newEvents = orderBy(
+			this.newEvents = this.$lodash.orderBy(
 				this.newEvents,
 				["start", "end"],
 				["asc", "desc"]
@@ -577,7 +532,7 @@ const Calendar = {
 		},
 		deleteEvent() {
 			this.newEvents.splice(this.editEventIndex, 1);
-			this.newEvents = orderBy(
+			this.newEvents = this.$lodash.orderBy(
 				this.newEvents,
 				["start", "end"],
 				["asc", "desc"]
@@ -592,12 +547,74 @@ const Calendar = {
 		},
 		eventsUpdate(events) {
 			this.newEvents = events;
-			this.newEvents = orderBy(
+			this.newEvents = this.$lodash.orderBy(
 				this.newEvents,
 				["start", "end"],
 				["asc", "desc"]
 			);
 		}
+	},
+	computed: {
+		name() {
+			return this.data
+		},
+		monthNames() {
+			return [
+				this.$t('January'),
+				this.$t('February'),
+				this.$t('March'),
+				this.$t('April'),
+				this.$t('May'),
+				this.$t('June'),
+				this.$t('July'),
+				this.$t('August'),
+				this.$t('September'),
+				this.$t('October'),
+				this.$t('November'),
+				this.$t('December')
+			];
+		},
+		shortMonthNames() {
+			return [
+				this.$t('Jan'),
+				this.$t('Feb'),
+				this.$t('Mar'),
+				this.$t('Apr'),
+				this.$t('May'),
+				this.$t('Jun'),
+				this.$t('Jul'),
+				this.$t('Aug'),
+				this.$t('Sep'),
+				this.$t('Oct'),
+				this.$t('Nov'),
+				this.$t('Dec')
+			];
+		},
+		dayNames() {
+			return [
+				this.$t('Sunday'),
+				this.$t('Monday'),
+				this.$t('Tuesday'),
+				this.$t('Wednesday'),
+				this.$t('Thursday'),
+				this.$t('Friday'),
+				this.$t('Saturday'),
+			];
+		},
+		shortDayNames() {
+			return [
+				this.$t('Sun'),
+				this.$t('Mon'),
+				this.$t('Tue'),
+				this.$t('Wed'),
+				this.$t('Thu'),
+				this.$t('Fri'),
+				this.$t('Sat'),
+			];
+		},
+		todayText() {
+			return this.$t('Today');
+		},
 	},
 	watch: {
 		defaultDate(newVal) {
