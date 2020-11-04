@@ -9,13 +9,13 @@
 		"i18n:report": "vue-i18n-extract report -d -v \"./src/**/*.?(js|vue)\" -l \"./src/locales/**/*.json\" -a"
 	},
 	"dependencies": {
-		"@aws-amplify/cli": "^4.31.1",
-		"@aws-amplify/ui-vue": "^0.2.24",
+		"@aws-amplify/cli": "^4.32.0",
+		"@aws-amplify/ui-vue": "^0.2.26",
 		"@vue/cli": "^4.5.8",
-		"aws-amplify": "^3.3.5",
+		"aws-amplify": "^3.3.7",
 		"core-js": "^3.6.5",
 		"greek-utils": "^1.2.2",
-		"lodash.orderby": "^4.6.0",
+		"lodash": "^4.17.20",
 		"mdbvue": "git+https://oauth2:VYTRyyN4sy4yzR5cjskz@git.mdbootstrap.com/mdb/vue/vu-pro.git",
 		"register-service-worker": "^1.7.1",
 		"uuid": "^8.3.1",
@@ -25,6 +25,7 @@
 		"vue-drag-drop": "^1.1.4",
 		"vue-head": "^2.2.0",
 		"vue-i18n": "^8.22.1",
+		"vue-moment": "^4.1.0",
 		"vue-router": "^3.4.8",
 		"vuex": "^3.5.1"
 	},

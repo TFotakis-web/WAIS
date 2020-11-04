@@ -19,6 +19,8 @@ import VueAnalytics from 'vue-analytics';
 import Vue2TouchEvents from 'vue2-touch-events';
 import LoadScript from 'vue-plugin-load-script';
 import { Notify } from 'mdbvue';
+import MomentJS from 'vue-moment';
+import lodash from 'lodash';
 
 Amplify.configure(aws_exports);
 
@@ -27,6 +29,7 @@ Vue.use(VueHead);
 Vue.use(Vue2TouchEvents);
 Vue.use(LoadScript);
 Vue.use(Notify);
+Vue.use(MomentJS);
 
 for (const component in mdbvue) {
 	Vue.component(component, mdbvue[component]);
@@ -94,13 +97,14 @@ const v = {
 				});
 		}
 	},
-	mounted: function() {
+	mounted: function () {
 		this.loadEnumData();
 	}
 };
 
 // -------------- Prototype expansion ----------------------------------
 Vue.prototype.$http = axios;
+Vue.prototype.$lodash = lodash;
 Vue.prototype.$notifyAction = {
 	error: err => {
 		// eslint-disable-next-line no-console
