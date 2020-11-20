@@ -30,6 +30,9 @@ import ContractorsExternalContractors from '@/views/contractors/ExternalContract
 import VehicleCards from '@/views/cards/Vehicle';
 import CustomerCards from '@/views/cards/Customer';
 import Library from '@/views/library/Library';
+import Trade from '@/views/Trade';
+import UserProfile from '@/views/UserProfile';
+import PlatformData from '@/views/platformData/PlatformData';
 
 Vue.use(VueRouter);
 
@@ -63,6 +66,9 @@ const routes = [
 	{ path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards, meta: { requiresAuth: true } },
 	{ path: '/cards/customers', name: 'CustomerCards', component: CustomerCards, meta: { requiresAuth: true } },
 	{ path: '/library', name: 'Library', component: Library, meta: { requiresAuth: true } },
+	{ path: '/trade', name: 'Trade', component: Trade, meta: { requiresAuth: true } },
+	{ path: '/profile', name: 'UserProfile', component: UserProfile, meta: { requiresAuth: true } },
+	{ path: '/platformData', name: 'PlatformData', component: PlatformData, meta: { requiresAuth: true } },
 ];
 
 const router = new VueRouter({
