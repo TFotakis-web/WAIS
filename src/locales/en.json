@@ -100,6 +100,15 @@
   "Today": "Today",
   "Month": "Month",
   "Week": "Week",
-  "List":"List",
-  "All day": "All day"
+  "List": "List",
+  "All day": "All day",
+  "Platform Data": "Platform Data",
+  "String": "String",
+  "Number": "Number",
+  "Array": "Array",
+  "Object": "Object",
+  "Save": "Save",
+  "Trade": "Trade",
+  "User Profile": "User Profile",
+  "This key is already in use.": "This key is already in use."
 }
