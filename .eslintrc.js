@@ -17,6 +17,7 @@ module.exports = {
 		'no-unused-labels': 'warn',
 		'no-empty': 'warn',
 		'vue/custom-event-name-casing': 'off',
-		'vue/experimental-script-setup-vars': 'off'
+		'vue/experimental-script-setup-vars': 'off',
+		'vue/no-mutating-props': 'off'
 	}
 }
