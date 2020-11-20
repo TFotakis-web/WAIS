@@ -49,7 +49,7 @@ const v = {
 	render: h => h(App),
 	data: function () {
 		return {
-			enumData: {}
+			platformData: {}
 		};
 	},
 	methods: {
@@ -90,7 +90,7 @@ const v = {
 		loadEnumData: function () {
 			this.$http.get('/enumData.json')
 				.then(res => {
-					this.$root.enumData = res.data;
+					this.$root.platformData = res.data;
 				})
 				.catch(err => {
 					console.error(err);
@@ -105,6 +105,7 @@ const v = {
 // -------------- Prototype expansion ----------------------------------
 Vue.prototype.$http = axios;
 Vue.prototype.$lodash = lodash;
+Vue.prototype.$platformData = {};
 Vue.prototype.$notifyAction = {
 	error: err => {
 		// eslint-disable-next-line no-console
