@@ -1,10 +1,10 @@
 <template>
 	<div id="app">
 		<navigation v-if="authState === 'signedin'" />
-		<!-- <router-view v-else/> -->
 		<mdb-container v-else fluid style="height: 100vh">
 			<mdb-row class="h-100 justify-content-center align-items-center">
-				<amplify-authenticator class="mt-5" />
+				<auth/>
+				<!-- <amplify-authenticator/> -->
 			</mdb-row>
 		</mdb-container>
 	</div>
@@ -13,11 +13,13 @@
 <script>
 	import navigation from '@/components/structure/navigation';
 	import { onAuthUIStateChange } from '@aws-amplify/ui-components';
+	import auth from '@/components/auth/auth';
 
 	export default {
 		name: 'App',
 		components: {
 			navigation,
+			auth,
 		},
 		created() {
 			onAuthUIStateChange((authState, authData) => {
