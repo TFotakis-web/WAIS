@@ -6,16 +6,16 @@ export const auth = {
 		user: null
 	},
 	mutations: {
-		setUSer(state, payload) {
+		setUser(state, payload) {
 			state.user = payload;
 		}
 	},
 	actions: {
-		async logout({ commit }) {
+		async signOut({ commit }) {
 			commit("setUser", null);
 			return await Auth.signOut();
 		},
-		async login({ commit }, { username, password }) {
+		async signIn({ commit }, { username, password }) {
 			try {
 				await Auth.signIn({
 					username,
@@ -30,28 +30,56 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
+		async forgotPassword(_, username) {
+			try {
+				await Auth.forgotPassword(username);
+				return Promise.resolve("Success");
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async forgotPasswordSubmit(_, { username, code, password }) {
+			try {
+				await Auth.forgotPasswordSubmit(username, code, password);
+				return Promise.resolve("Success");
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
 		async confirmSignUp(_, { username, code }) {
 			try {
 				await Auth.confirmSignUp(username, code);
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
-				return Promise.reject();
+				return Promise.reject(error);
 			}
 		},
-		async signUp(_, { username, password, email }) {
+		async resendSignUp(_, username) {
+			try {
+				await Auth.resendSignUp(username);
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async signUp(_, { username, password, email, phone_number }) {
 			try {
 				await Auth.signUp({
 					username,
 					password,
 					attributes: {
-						email
+						email,
+						phone_number
 					}
 				});
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
-				return Promise.reject();
+				return Promise.reject(error);
 			}
 		},
 		async authAction({ commit }) {
