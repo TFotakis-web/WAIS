@@ -110,5 +110,22 @@
   "Save": "Save",
   "Trade": "Trade",
   "User Profile": "User Profile",
-  "This key is already in use.": "This key is already in use."
+  "This key is already in use.": "This key is already in use.",
+  "Create a new account": "Create a new account",
+  "Don't have an account?": "Don't have an account?",
+  "Create account": "Create account",
+  "Send code": "Send code",
+  "Back to Sign In": "Back to Sign In",
+  "Sign in to your WAIS account": "Sign in to your WAIS account",
+  "Create a new WAIS account": "Create a new WAIS account",
+  "Verification Code": "Verification Code",
+  "Resend verification code": "Resend verification code",
+  "Submit": "Submit",
+  "Have an account?": "Have an account?",
+  "Sign in": "Sign in",
+  "New password": "New password",
+  "Sign In": "Sign In",
+  "Country Code": "Country Code",
+  "Phone Number": "Phone Number",
+  "Sign Up": "Sign Up"
 }

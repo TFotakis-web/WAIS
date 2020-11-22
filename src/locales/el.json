@@ -1,7 +1,7 @@
 {
   "Home page": "Αρχική σελίδα",
-  "Username": "Username",
-  "Password": "Password",
+  "Username": "Ονομα Χρήστη",
+  "Password": "Κωδικός",
   "Login": "Είσοδος",
   "Login to WAIS": "Είσοδος στο WAIS",
   "Forgot your password?": "Ξεχάσατε τον κωδικό σας;",
@@ -110,5 +110,22 @@
   "Save": "Αποθήκευση",
   "Trade": "Επωνυμία",
   "User Profile": "Προφίλ Χρήστη",
-  "This key is already in use.": "Αυτό το κλειδί χρησιμοποιείται ήδη."
+  "This key is already in use.": "Αυτό το κλειδί χρησιμοποιείται ήδη.",
+  "Create a new account": "Δημιουργία ενός νέου λογαριασμού",
+  "Don't have an account?": "Δεν έχετε λογαριασμό;",
+  "Create account": "Δημιουργία λογαριασμού",
+  "Send code": "Αποστολή κωδικού",
+  "Back to Sign In": "Πίσω στην Σύνδεση",
+  "Sign in to your WAIS account": "Συνδεθείτε στον WAIS λογαριασμό σας",
+  "Create a new WAIS account": "Δημιουργία νέου λογαριασμού WAIS",
+  "Verification Code": "Κωδικός Επαλήθευσης",
+  "Resend verification code": "Επανάληωη αποστολής κωδικού επαλήθευσης",
+  "Submit": "Υποβολή",
+  "Have an account?": "Έχετε λογαριασμό;",
+  "Sign in": "Σύνδεση",
+  "New password": "Νέος κωδικός",
+  "Sign In": "Σύνδεση",
+  "Country Code": "Κωδικός Χώρας",
+  "Phone Number": "Τηλέφωνο",
+  "Sign Up": "Εγγραφή"
 }
