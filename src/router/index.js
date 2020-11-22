@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
-import SignUp from '@/views/auth/SignUp.vue';
-
 import VehiclePricing from '@/views/pricing/Vehicle';
 import IndustrialLiabilityPricing from '@/views/pricing/IndustrialLiability';
 import FirePricing from '@/views/pricing/Fire';
@@ -37,7 +35,6 @@ import PlatformData from '@/views/platformData/PlatformData';
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: '/signup', name: "SignUp", component: SignUp },
 	{ path: '/', name: 'Home', component: Home, meta: { requiresAuth: true } },
 	{ path: '/pricing/vehicle', name: 'VehiclePricing', component: VehiclePricing, meta: { requiresAuth: true } },
 	{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: IndustrialLiabilityPricing, meta: { requiresAuth: true } },
