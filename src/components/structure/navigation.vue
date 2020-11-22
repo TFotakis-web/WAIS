@@ -58,16 +58,7 @@
 				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="bell">
 					<!-- <span class="ml-1"></span> -->
 				</mdb-nav-item>
-				<mdb-dropdown tag="li" class="nav-item black-text" style="border-left: 1px solid grey !important">
-					<mdb-dropdown-toggle tag="a" navLink slot="toggle" waves-fixed class="pr-0">
-						<mdb-icon icon="globe" class="black-text" />
-					</mdb-dropdown-toggle>
-					<mdb-dropdown-menu style="min-width: unset">
-						<mdb-dropdown-item v-for="locale in $i18n.availableLocales" :key="locale" @click="$root.changeLanguage(locale)">{{
-							locale
-						}}</mdb-dropdown-item>
-					</mdb-dropdown-menu>
-				</mdb-dropdown>
+				<localeDropdown class="nav-item" style="border-left: 1px solid grey !important" />
 				<mdb-dropdown tag="li" class="nav-item black-text">
 					<mdb-dropdown-toggle tag="a" navLink slot="toggle" waves-fixed>
 						<mdb-icon icon="user-circle" class="black-text" />
@@ -91,11 +82,15 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex';
 	import { waves } from 'mdbvue';
-	import { Auth } from 'aws-amplify';
+	import localeDropdown from '@/components/structure/localeDropdown';
 
 	export default {
 		name: 'navigation',
+		components: {
+			localeDropdown,
+		},
 		data() {
 			return {
 				show: true,
@@ -285,8 +280,14 @@
 		},
 		mixins: [waves],
 		methods: {
-			signOut: async () => {
-				await Auth.signOut();
+			...mapActions({
+				signOutStore: 'auth/signOut',
+			}),
+			signOut: async function() {
+				await this.signOutStore();
+				if (this.$router.currentRoute.name !== 'Home') {
+					this.$router.push({ name: 'Home' });
+				}
 			},
 		},
 	};
