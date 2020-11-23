@@ -119,5 +119,9 @@
   "Phone Number": "Phone Number",
   "Sign Up": "Sign Up",
   "Signing in": "Signing in",
-  "Signing up": "Signing up"
+  "Signing up": "Signing up",
+  "error404": {
+    "header": "Error 404! Page not found.",
+    "message": "Oops! The page you requested was not found. Try going to the"
+  }
 }
