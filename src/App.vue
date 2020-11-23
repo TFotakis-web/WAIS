@@ -206,4 +206,15 @@
 		font-weight: 900;
 		content: '\f0da';
 	}
+
+	.fadingSlide-enter-active,
+	.fadingSlide-leave-active {
+		transition: opacity 0.1s, transform 0.1s;
+	}
+
+	.fadingSlide-enter,
+	.fadingSlide-leave-to{
+		opacity: 0;
+		transform: translateY(0.25%);
+	}
 </style>
