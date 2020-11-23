@@ -1,40 +1,41 @@
 <template>
 	<div id="app">
-		<navigation v-if="authState === 'signedin'" />
-		<mdb-container v-else fluid style="height: 100vh">
-			<mdb-row class="h-100 justify-content-center align-items-center">
-				<auth/>
-				<!-- <amplify-authenticator/> -->
-			</mdb-row>
-		</mdb-container>
+		<fullScreenSpinner v-if="loading"/>
+		<template v-else>
+			<navigation v-if="this.$store.getters['auth/user']" />
+			<mdb-container v-else fluid style="height: 100vh">
+				<mdb-row class="h-100 justify-content-center align-items-center">
+					<auth />
+					<!-- <amplify-authenticator/> -->
+				</mdb-row>
+			</mdb-container>
+		</template>
 	</div>
 </template>
 
 <script>
 	import navigation from '@/components/structure/navigation';
-	import { onAuthUIStateChange } from '@aws-amplify/ui-components';
 	import auth from '@/components/auth/auth';
+	import fullScreenSpinner from '@/components/structure/fullScreenSpinner';
 
 	export default {
 		name: 'App',
 		components: {
 			navigation,
 			auth,
-		},
-		created() {
-			onAuthUIStateChange((authState, authData) => {
-				this.authState = authState;
-				this.user = authData;
-			});
+			fullScreenSpinner
 		},
 		data() {
 			return {
-				user: undefined,
-				authState: undefined,
+				loading: true,
 			};
 		},
-		beforeDestroy() {
-			return onAuthUIStateChange;
+		created() {
+			this.$store.dispatch('auth/authAction')
+			.then(() => {
+				this.loading = false;
+			})
+			.catch(this.$notifyAction.error);
 		},
 	};
 </script>
