@@ -76,7 +76,9 @@
 		</mdb-navbar>
 
 		<div class="py-5" slot="main" style="min-height: 100vh">
-			<router-view />
+			<transition name="fadingSlide" mode="out-in">
+				<router-view/>
+			</transition>
 		</div>
 	</mdb-side-nav-2>
 </template>
