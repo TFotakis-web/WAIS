@@ -31,41 +31,72 @@ import Library from '@/views/library/Library';
 import Trade from '@/views/Trade';
 import UserProfile from '@/views/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
+import NotFound from '@/views/NotFound';
 
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: '/', name: 'Home', component: Home, meta: { requiresAuth: true } },
-	{ path: '/pricing/vehicle', name: 'VehiclePricing', component: VehiclePricing, meta: { requiresAuth: true } },
-	{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: IndustrialLiabilityPricing, meta: { requiresAuth: true } },
-	{ path: '/pricing/fire', name: 'FirePricing', component: FirePricing, meta: { requiresAuth: true } },
-	{ path: '/pricing/life', name: 'LifePricing', component: LifePricing, meta: { requiresAuth: true } },
-	{ path: '/contract/file', name: 'ContractsFile', component: ContractsFile, meta: { requiresAuth: true } },
-	{ path: '/contract/uncollected', name: 'UncollectedContracts', component: UncollectedContracts, meta: { requiresAuth: true } },
-	{ path: '/contract/collected', name: 'CollectedContracts', component: CollectedContracts, meta: { requiresAuth: true } },
-	{ path: '/contract/additionalActs', name: 'ContractAdditionalActs', component: ContractAdditionalActs, meta: { requiresAuth: true } },
-	{ path: '/contract/greenCard', name: 'GreenCardContracts', component: GreenCardContracts, meta: { requiresAuth: true } },
-	{ path: '/contract/unclaimed', name: 'UnclaimedContracts', component: UnclaimedContracts, meta: { requiresAuth: true } },
-	{ path: '/contract/invalid', name: 'InvalidContracts', component: InvalidContracts, meta: { requiresAuth: true } },
-	{ path: '/contract/new', name: 'NewContract', component: NewContract, meta: { requiresAuth: true } },
-	{ path: '/processing/dueDateRegister', name: 'ProcessingDueDateRegister', component: ProcessingDueDateRegister, meta: { requiresAuth: true } },
-	{ path: '/processing/duePayment', name: 'ProcessingDuePayment', component: ProcessingDuePayment, meta: { requiresAuth: true } },
-	{ path: '/processing/paid', name: 'ProcessingPaid', component: ProcessingPaid, meta: { requiresAuth: true } },
-	{ path: '/processing/losses', name: 'ProcessingLosses', component: ProcessingLosses, meta: { requiresAuth: true } },
-	{ path: '/accounting/receipts', name: 'AccountingReceipts', component: AccountingReceipts, meta: { requiresAuth: true } },
-	{ path: '/accounting/registers', name: 'AccountingRegisters', component: AccountingRegisters, meta: { requiresAuth: true } },
-	{ path: '/accounting/todaysIncome', name: 'AccountingTodaysIncome', component: AccountingTodaysIncome, meta: { requiresAuth: true } },
-	{ path: '/accounting/commissionsUncollected', name: 'AccountingCommissionsUncollected', component: AccountingCommissionsUncollected, meta: { requiresAuth: true } },
-	{ path: '/accounting/commissionsCollected', name: 'AccountingCommissionsCollected', component: AccountingCommissionsCollected, meta: { requiresAuth: true } },
-	{ path: '/accounting/mutualAccount', name: 'AccountingMutualAccount', component: AccountingMutualAccount, meta: { requiresAuth: true } },
-	{ path: '/contractors/suppliers', name: 'SupplierContractors', component: SupplierContractors, meta: { requiresAuth: true } },
-	{ path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: ContractorsExternalContractors, meta: { requiresAuth: true } },
-	{ path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards, meta: { requiresAuth: true } },
-	{ path: '/cards/customers', name: 'CustomerCards', component: CustomerCards, meta: { requiresAuth: true } },
-	{ path: '/library', name: 'Library', component: Library, meta: { requiresAuth: true } },
-	{ path: '/trade', name: 'Trade', component: Trade, meta: { requiresAuth: true } },
-	{ path: '/profile', name: 'UserProfile', component: UserProfile, meta: { requiresAuth: true } },
-	{ path: '/platformData', name: 'PlatformData', component: PlatformData, meta: { requiresAuth: true } },
+	{ path: '/', name: 'Home', component: Home },
+	{ path: '/pricing/vehicle', name: 'VehiclePricing', component: VehiclePricing },
+	{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: IndustrialLiabilityPricing },
+	{ path: '/pricing/fire', name: 'FirePricing', component: FirePricing },
+	{ path: '/pricing/life', name: 'LifePricing', component: LifePricing },
+	{ path: '/contract/file', name: 'ContractsFile', component: ContractsFile },
+	{ path: '/contract/uncollected', name: 'UncollectedContracts', component: UncollectedContracts },
+	{ path: '/contract/collected', name: 'CollectedContracts', component: CollectedContracts },
+	{ path: '/contract/additionalActs', name: 'ContractAdditionalActs', component: ContractAdditionalActs },
+	{ path: '/contract/greenCard', name: 'GreenCardContracts', component: GreenCardContracts },
+	{ path: '/contract/unclaimed', name: 'UnclaimedContracts', component: UnclaimedContracts },
+	{ path: '/contract/invalid', name: 'InvalidContracts', component: InvalidContracts },
+	{ path: '/contract/new', name: 'NewContract', component: NewContract },
+	{ path: '/processing/dueDateRegister', name: 'ProcessingDueDateRegister', component: ProcessingDueDateRegister },
+	{ path: '/processing/duePayment', name: 'ProcessingDuePayment', component: ProcessingDuePayment },
+	{ path: '/processing/paid', name: 'ProcessingPaid', component: ProcessingPaid },
+	{ path: '/processing/losses', name: 'ProcessingLosses', component: ProcessingLosses },
+	{ path: '/accounting/receipts', name: 'AccountingReceipts', component: AccountingReceipts },
+	{ path: '/accounting/registers', name: 'AccountingRegisters', component: AccountingRegisters },
+	{ path: '/accounting/todaysIncome', name: 'AccountingTodaysIncome', component: AccountingTodaysIncome },
+	{ path: '/accounting/commissionsUncollected', name: 'AccountingCommissionsUncollected', component: AccountingCommissionsUncollected },
+	{ path: '/accounting/commissionsCollected', name: 'AccountingCommissionsCollected', component: AccountingCommissionsCollected },
+	{ path: '/accounting/mutualAccount', name: 'AccountingMutualAccount', component: AccountingMutualAccount },
+	{ path: '/contractors/suppliers', name: 'SupplierContractors', component: SupplierContractors },
+	{ path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: ContractorsExternalContractors },
+	{ path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards },
+	{ path: '/cards/customers', name: 'CustomerCards', component: CustomerCards },
+	{ path: '/library', name: 'Library', component: Library },
+	{ path: '/trade', name: 'Trade', component: Trade },
+	{ path: '/profile', name: 'UserProfile', component: UserProfile },
+	{ path: '/platformData', name: 'PlatformData', component: PlatformData },
+
+	// Example of how to use 404 page with items with id on the route
+	// https://github.com/vueschool/vuejs-router/blob/eff7d82e1d0d00be5da0c65308d61cbbdcdcc34a/src/router.js
+	// https://vueschool.io/lessons/how-to-create-a-404-not-found-route-and-page-with-vue-router
+	// {
+	// 	path: "/someItem/:id",
+	// 	name: "SomeItemDetails",
+	// 	props: true,
+	// 	component: SomeItemDetails,
+	// 	children: [
+	// 		{
+	// 			path: ":subItemId",
+	// 			name: "SubItemDetails",
+	// 			props: true,
+	// 			component: SubItemDetails
+	// 		}
+	// 	],
+	// 	beforeEnter: (to, from, next) => {
+	// 		const exists = store.someItem.find(
+	// 			item => item.id === to.params.id
+	// 		);
+	// 		if (exists) {
+	// 			next();
+	// 		} else {
+	// 			next({ name: "notFound" });
+	// 		}
+	// 	}
+	// },
+
+	{ path: '/404-page-not-found', alias: '*', name: 'NotFound', component: NotFound },
 ];
 
 const router = new VueRouter({
