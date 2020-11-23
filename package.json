@@ -9,7 +9,7 @@
 		"i18n:report": "vue-i18n-extract report -d -v \"./src/**/*.?(js|vue)\" -l \"./src/locales/**/*.json\" -a"
 	},
 	"dependencies": {
-		"@aws-amplify/cli": "^4.32.0",
+		"@aws-amplify/cli": "^4.34.0",
 		"@aws-amplify/ui-vue": "^0.2.26",
 		"@vue/cli": "^4.5.8",
 		"aws-amplify": "^3.3.7",
