@@ -14,7 +14,7 @@
 					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Sign In') }}</mdb-btn>
 					<mdb-btn v-else color="primary" rounded disabled class="mb-4">
 						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Signing in...') }}</span>
+						<span>{{ $t('Signing in') }}...</span>
 					</mdb-btn>
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />

@@ -111,7 +111,7 @@ Vue.prototype.$notifyAction = {
 		// eslint-disable-next-line no-console
 		console.error(err);
 		vm.$notify.error({
-			message: vm.$t('Something went wrong...'),
+			message: vm.$t('Something went wrong') + "...",
 			progressBar: true,
 			timeOut: 10000
 		});
@@ -120,7 +120,7 @@ Vue.prototype.$notifyAction = {
 		// eslint-disable-next-line no-console
 		console.error(err);
 		vm.$notify.error({
-			message: vm.$t('Something went wrong...'),
+			message: vm.$t('Something went wrong') + "...",
 			progressBar: true,
 			timeOut: 10000
 		});
