@@ -17,159 +17,164 @@
 # }
 
 type Trade @model {
-	id: String!
-	name: String!
-	info: String
-	postcode: String
-	tin: String
-	logo: AWSURL
-	companyAccess: [CompanyAccess]
-	owner: ID # UserID
-	employees: [ID] # UserID
-	contractors: [ID] # UserID
-	customers: [Customer]
-	contracts: [Contract]
-	#permissions..
+  id: String!
+  name: String!
+  info: String
+  postcode: String
+  tin: String
+  logo: AWSURL
+  companyAccess: [CompanyAccess] @connection(name: "TradeCompanyAccess") # 1-N relation (turns into M-N)
+  owner: ID # UserID
+  employees: [ID] # UserID
+  contractors: [ID] # UserID
+  customers: [Customer] @connection(name: "TradeCustomers") # 1-N relation
+  contracts: [Contract] @connection(name: "TradeContracts") # 1-N relation
 }
 
-type CompanyAccess {
-	companyName: String!
-	from: String! #decide on null/empty value
-	expirationDate: AWSDate
-	active: Boolean
-	info: String!
+# An M->N intermediate relation used to bridge the collaborations between companies
+type CompanyAccess @model {
+  Trade: from! @connection(name: "TradeCompanyAccess") #This trade initiates the collaboration
+  Trade: to! @connection(name: "TradeCompanyAccess") #This trade needs to accept the collaboration
+  expirationDate: AWSDate! # Can be used to configure a TTL workflow
+  active: Boolean!
+  info: String!
+  #Add relevant connection info here
 }
 
-type Customer {
-	id: ID!
-	tin: Int
-	name: String
-	surname: String
-	fathersName: String
-	birthDate: AWSDate
-	gender: String
-	email: AWSEmail
-	mobile: AWSPhone
-	postcode: String
-	doy: String
-	address: String
-	familyStatus: String
-	creationDate: AWSDateTime
-	files: [File]
-	driversLicense: DriversLicense
+type Customer @model {
+  id: ID!
+  tin: Int
+  name: String
+  surname: String
+  fathersName: String
+  birthDate: AWSDate
+  gender: String
+  email: AWSEmail
+  mobile: AWSPhone
+  postcode: String
+  doy: String
+  address: String
+  familyStatus: String
+  creationDate: AWSDateTime
+  files: [File]
+  driversLicense: DriversLicense
+  Trade: trade @connection(name: "TradeCustomers") # Does this need to be an array?
 }
 
-# consider id
-type File  {
-	name: String
-	url: AWSURL
+# consider an id
+type File {
+  name: String
+  url: AWSURL
 }
 
-type Contract {
-	id: ID!
-	customer: Customer!
-	contractId: ID!
-	voucherID: Int!
-	contractState: String! # Send to S3 on completion
-	tradeAdmin: String! #Aftos poy kanei amesa to insurance
-	assignee: String! #Aftos poy kanei emesa to insurance
-	partner: String!
-	company: String!
-	insuranceClass: String!
-	insuranceCoverage: [String]
-	insuranceUsage: String
-	vehicle: Vehicle!
-	duration: String!
-	creationDate: String!
-	startDate: AWSDate!
-	endDate: AWSDate!
-	data: String!
-	discount: Float! # e.g. 0.1
-	jointWorth: Float!
-	netWorth: Float!
-	driversLicense: DriversLicense
+# All fields in this type MUST be immutable
+type Contract @model {
+  id: ID!
+  customer: Customer!
+  contractId: ID!
+  voucherID: Int!
+  contractState: String! # Send to S3 on completion
+  tradeAdmin: String! #Aftos poy kanei amesa to insurance
+  assignee: String! #Aftos poy kanei emesa to insurance
+  partner: String!
+  company: String!
+  insuranceClass: String!
+  insuranceCoverage: [String]
+  insuranceUsage: String
+  vehicle: Vehicle!
+  duration: String!
+  creationDate: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  data: String!
+  discount: Float! # e.g. 0.1
+  jointWorth: Float!
+  netWorth: Float!
+  driversLicense: DriversLicense
+  Trade: trade @connection(name: "TradeContracts")
 }
 
 type DriversLicense {
-	LicenseID: Int
-	DriversLicenseType: String # Erasitexniko/Epaggelmatiko
-	Category: [DriversLicenseCategory]
+  LicenseID: Int
+  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
+  Category: [DriversLicenseCategory]
 }
 
 type DriversLicenseCategory {
-	category: String
-	issueDate: AWSDate
-	expiresAt: AWSDate
+  category: String
+  issueDate: AWSDate
+  expiresAt: AWSDate
 }
 
 type Vehicle @model {
-	id: ID!
-	numberPlate: String!
-	color: String!
-	manufacturer: String!
-	model: String!
-	owner: String!
-	trim: String!
-	fuelType: String
-	usage: String!
-	displacement: Int!
-	eurotax: Int!
-	firstRegistrationDate: AWSDate!
-	passengers: Int!
-	purchaseDate: AWSDate!
-	taxableHorsepower: Int!
-	vin: String!
-	value: Float!
-	file: [File]
-	# SecurityMeasure
+  id: ID!
+  numberPlate: String!
+  color: String!
+  manufacturer: String!
+  model: String!
+  owner: String!
+  trim: String!
+  fuelType: String
+  usage: String!
+  displacement: Int!
+  eurotax: Int!
+  firstRegistrationDate: AWSDate!
+  passengers: Int!
+  purchaseDate: AWSDate!
+  taxableHorsepower: Int!
+  vin: String!
+  value: Float!
+  file: [File]
+  # SecurityMeasure
 }
 
 type InsurancePackage {
-	name: String!
-	insuranceClass: String!
-	coverage: [String]
-	usages: String
+  name: String!
+  insuranceClass: String!
+  coverage: [String]
+  usages: String
 }
 
 type UserCognito {
-	id: ID! # Custom attribute
-	name: String! # Full Name (includes middle name)
-	given_name: String! # First name
-	family_name: String! # Surname
-	middle_name: String! # Father's name!
-	preferred_username: String!
-	picture: String!
-	email: String!
-	email_verified: Boolean!
-	gender: String!
-	birthdate: String!
-	locale: String!
-	phone_number: String!
-	phone_number_verified: Boolean!
-	address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
-	updated_at: AWSDateTime!
+  id: ID! # Custom attribute
+  name: String! # Full Name (includes middle name)
+  given_name: String! # First name
+  family_name: String! # Surname
+  middle_name: String! # Father's name!
+  preferred_username: String!
+  picture: String!
+  email: String!
+  email_verified: Boolean!
+  gender: String!
+  birthdate: String!
+  locale: String!
+  phone_number: String!
+  phone_number_verified: Boolean!
+  address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+  updated_at: AWSDateTime!
 }
 
 type UserProfile @model {
-	userID: ID!
-	permissions: [UserPermissions]
-	preferences: AWSJSON
-	telephone: AWSPhone
-	tin: Int!
-	doy: String!
-	familyStatus: String!
-	creationDate: AWSDate!
-	chamberRecordNumber: String!
-	insuranceLicenseExpirationDate: AWSDate!
-	partnersNumberLimit: Int!
-	professionStartDate: AWSDate!
-	message: String!
-	valid: Boolean!
-	file: [File]
+  userID: ID!
+  permissions: [UserPermissions]
+  preferences: AWSJSON
+  telephone: AWSPhone
+  tin: Int!
+  doy: String!
+  familyStatus: String!
+  creationDate: AWSDate!
+  chamberRecordNumber: String!
+  insuranceLicenseExpirationDate: AWSDate!
+  partnersNumberLimit: Int!
+  professionStartDate: AWSDate!
+  message: String!
+  valid: Boolean!
+  file: [File]
 }
 
+#Add all department-specific
 type UserPermissions {
-	department: String #User defined
-	read: Boolean
-	write: Boolean
+  department: String #User defined
+  read: Boolean
+  write: Boolean
 }
