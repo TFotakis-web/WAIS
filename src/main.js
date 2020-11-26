@@ -52,22 +52,12 @@ const v = {
 			platformData: {}
 		};
 	},
+	mounted: function () {
+		this.loadEnumData();
+		this.initLocale();
+	},
 	methods: {
 		toGreeklish,
-		initLocale: function () {
-			const localeCookie = this.$cookies.get('locale');
-			if (localeCookie) {
-				this.$i18n.locale = localeCookie;
-				return;
-			}
-			const userLang = navigator.language || navigator.userLanguage;
-			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
-			this.$cookies.set('locale', this.$i18n.locale);
-		},
-		changeLanguage: function (locale) {
-			this.$i18n.locale = locale;
-			this.$cookies.set('locale', locale);
-		},
 		parseJwt: function (token) {
 			const base64Url = token.split('.')[1];
 			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -95,10 +85,17 @@ const v = {
 				.catch(err => {
 					console.error(err);
 				});
-		}
-	},
-	mounted: function () {
-		this.loadEnumData();
+		},
+		initLocale: function () {
+			const localeCookie = this.$cookies.get('locale');
+			if (localeCookie) {
+				this.$i18n.locale = localeCookie;
+				return;
+			}
+			const userLang = navigator.language || navigator.userLanguage;
+			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
+			this.$cookies.set('locale', this.$i18n.locale);
+		},
 	}
 };
 
