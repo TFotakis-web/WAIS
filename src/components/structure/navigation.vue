@@ -36,8 +36,8 @@
 		<mdb-navbar slot="nav" tag="div" :toggler="false" position="top" light color="white">
 			<mdb-navbar-nav class="nav-flex-icons" left>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'right' }" class="ml-5">
-					<span slot="tip">{{ $t("navbar-item.home") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="home"/>
+					<span slot="tip">{{ $t('navbar-item.home') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="home" />
 				</mdb-tooltip>
 				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="euro-sign">
 					<span class="ml-1">1345.85/1800.00</span>
@@ -45,28 +45,28 @@
 			</mdb-navbar-nav>
 			<mdb-navbar-nav class="nav-flex-icons" right>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.database") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'PlatformData' }" waves-fixed icon="table"/>
+					<span slot="tip">{{ $t('navbar-item.database') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'PlatformData' }" waves-fixed icon="table" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.contract-approval") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="file-signature"/>
+					<span slot="tip">{{ $t('navbar-item.contract-approval') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="file-signature" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.payment") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="shopping-cart"/>
+					<span slot="tip">{{ $t('navbar-item.payment') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="shopping-cart" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.bank") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="university"/>
+					<span slot="tip">{{ $t('navbar-item.bank') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="university" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.collaboration") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="handshake"/>
+					<span slot="tip">{{ $t('navbar-item.collaboration') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="handshake" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t("navbar-item.notifications") }}</span>
-					<mdb-nav-item  slot="reference" :to="{ name: 'Home' }" waves-fixed icon="bell"/>
+					<span slot="tip">{{ $t('navbar-item.notifications') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="bell" />
 				</mdb-tooltip>
 				<localeDropdown class="nav-item" style="border-left: 1px solid grey !important" />
 				<mdb-dropdown tag="li" class="nav-item black-text">
@@ -78,7 +78,7 @@
 						<hr class="m-0" />
 						<mdb-dropdown-item @click="signOut">
 							<mdb-icon class="black-text" icon="sign-out-alt" />
-							{{ $t('Sign Out') }}
+							{{ $t('navbar-item.signOut') }}
 						</mdb-dropdown-item>
 					</mdb-dropdown-menu>
 				</mdb-dropdown>
