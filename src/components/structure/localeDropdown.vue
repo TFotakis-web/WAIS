@@ -1,6 +1,6 @@
 <template>
 	<mdb-tooltip material trigger="hover" :options="{ placement: 'left' }">
-		<span slot="tip">{{ $t('language') }}</span>
+		<span slot="tip">{{ $t('components.localeDropdown.language') }}</span>
 		<mdb-dropdown slot="reference" tag="li" class="black-text">
 			<mdb-dropdown-toggle tag="a" navLink slot="toggle" waves-fixed class="pr-0">
 				<mdb-icon icon="globe" class="black-text" />
