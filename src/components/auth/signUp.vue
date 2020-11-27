@@ -7,36 +7,13 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signUp">
-				<mdb-input
-					v-model="credentials.username"
-					:label="$t('fields.username')"
-					icon="user-circle"
-					type="text"
-					required
-					name="username"
-					autocomplete="username"
-					class="mb-5"
-				/>
-				<mdb-input
-					v-model="credentials.password"
-					:label="$t('fields.password')"
-					icon="lock"
-					type="password"
-					required
-					name="password"
-					autocomplete="current-password"
-					class="mb-5"
-				/>
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-5" />
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required name="password" autocomplete="current-password" class="mb-5" />
 				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" />
 
 				<mdb-row>
 					<mdb-col>
-						<mdb-select
-							v-model="telephoneCodeOptions"
-							@getValue="(code) => (selectedTelephoneCode = code)"
-							:label="$t('fields.countryCode')"
-							icon="phone"
-						/>
+						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" />
 					</mdb-col>
 					<mdb-col>
 						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" />
@@ -44,11 +21,7 @@
 				</mdb-row>
 
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('views.auth.signUp') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="mb-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('views.auth.signingUp') }}</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
@@ -65,11 +38,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'signUp',
 		components: {
 			localeDropdown,
+			loadingBtn,
 		},
 		data() {
 			return {
