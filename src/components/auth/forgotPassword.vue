@@ -7,22 +7,9 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
-				<mdb-input
-					v-model="username"
-					:label="$t('fields.username')"
-					icon="user-circle"
-					type="text"
-					required
-					class="mb-3"
-					name="username"
-					autocomplete="username"
-				/>
+				<mdb-input v-model="username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-3" name="username" autocomplete="username" />
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('actions.sendCode') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="my-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('actions.sendingCode') }}</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
@@ -33,32 +20,10 @@
 			</form>
 
 			<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
-				<mdb-input
-					v-model="verificationCode"
-					:label="$t('fields.verificationCode')"
-					icon="qrcode"
-					type="text"
-					required
-					class="mb-3"
-					name="verificationCode"
-					autocomplete="verificationCode"
-				/>
-				<mdb-input
-					v-model="newPassword"
-					:label="$t('fields.newPassword')"
-					icon="lock"
-					type="password"
-					required
-					class="mb-3"
-					name="password"
-					autocomplete="new-password"
-				/>
+				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" />
+				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="new-password" />
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('actions.submit') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="my-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('actions.submitting') }}</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
@@ -74,11 +39,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'forgotPassword',
 		components: {
 			localeDropdown,
+			loadingBtn
 		},
 		data() {
 			return {
