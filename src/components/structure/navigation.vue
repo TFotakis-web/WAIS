@@ -36,7 +36,7 @@
 		<mdb-navbar slot="nav" tag="div" :toggler="false" position="top" light color="white">
 			<mdb-navbar-nav class="nav-flex-icons" left>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'right' }" class="ml-5">
-					<span slot="tip">{{ $t('navbar-item.home') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.home') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="home" />
 				</mdb-tooltip>
 				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="euro-sign">
@@ -45,27 +45,27 @@
 			</mdb-navbar-nav>
 			<mdb-navbar-nav class="nav-flex-icons" right>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.database') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.database') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'PlatformData' }" waves-fixed icon="table" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.contract-approval') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.contract-approval') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="file-signature" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.payment') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.payment') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="shopping-cart" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.bank') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.bank') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="university" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.collaboration') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.collaboration') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="handshake" />
 				</mdb-tooltip>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('navbar-item.notifications') }}</span>
+					<span slot="tip">{{ $t('components.navigation.navbar-item.notifications') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="bell" />
 				</mdb-tooltip>
 				<localeDropdown class="nav-item" style="border-left: 1px solid grey !important" />
@@ -74,11 +74,11 @@
 						<mdb-icon icon="user-circle" class="black-text" />
 					</mdb-dropdown-toggle>
 					<mdb-dropdown-menu left style="min-width: unset">
-						<mdb-dropdown-item :to="{ name: 'UserProfile' }">{{ $t('navbar-item.myAccount') }}</mdb-dropdown-item>
+						<mdb-dropdown-item :to="{ name: 'UserProfile' }">{{ $t('components.navigation.navbar-item.myAccount') }}</mdb-dropdown-item>
 						<hr class="m-0" />
 						<mdb-dropdown-item @click="signOut">
 							<mdb-icon class="black-text" icon="sign-out-alt" />
-							{{ $t('navbar-item.signOut') }}
+							{{ $t('components.navigation.navbar-item.signOut') }}
 						</mdb-dropdown-item>
 					</mdb-dropdown-menu>
 				</mdb-dropdown>
@@ -113,148 +113,148 @@
 			navigation: function() {
 				return [
 					{
-						name: this.$t('sidenav.pricing._groupName'),
+						name: this.$t('components.navigation.sidenav.pricing._groupName'),
 						icon: 'chart-line',
 						children: [
 							{
-								name: this.$t('sidenav.pricing.vehicle'),
+								name: this.$t('components.navigation.sidenav.pricing.vehicle'),
 								to: { name: 'VehiclePricing' },
 							},
 							{
-								name: this.$t('sidenav.pricing.industrialLiability'),
+								name: this.$t('components.navigation.sidenav.pricing.industrialLiability'),
 								to: { name: 'IndustrialLiabilityPricing' },
 							},
 							{
-								name: this.$t('sidenav.pricing.fire'),
+								name: this.$t('components.navigation.sidenav.pricing.fire'),
 								to: { name: 'FirePricing' },
 							},
 							{
-								name: this.$t('sidenav.pricing.life'),
+								name: this.$t('components.navigation.sidenav.pricing.life'),
 								to: { name: 'LifePricing' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.contracts._groupName'),
+						name: this.$t('components.navigation.sidenav.contracts._groupName'),
 						icon: 'file-contract',
 						children: [
 							{
-								name: this.$t('sidenav.contracts.file'),
+								name: this.$t('components.navigation.sidenav.contracts.file'),
 								to: { name: 'ContractsFile' },
 							},
 							{
-								name: this.$t('sidenav.contracts.uncollected'),
+								name: this.$t('components.navigation.sidenav.contracts.uncollected'),
 								to: { name: 'UncollectedContracts' },
 							},
 							{
-								name: this.$t('sidenav.contracts.collected'),
+								name: this.$t('components.navigation.sidenav.contracts.collected'),
 								to: { name: 'CollectedContracts' },
 							},
 							{
-								name: this.$t('sidenav.contracts.additionalActs'),
+								name: this.$t('components.navigation.sidenav.contracts.additionalActs'),
 								to: { name: 'ContractAdditionalActs' },
 							},
 							{
-								name: this.$t('sidenav.contracts.greenCard'),
+								name: this.$t('components.navigation.sidenav.contracts.greenCard'),
 								to: { name: 'GreenCardContracts' },
 							},
 							{
-								name: this.$t('sidenav.contracts.unclaimed'),
+								name: this.$t('components.navigation.sidenav.contracts.unclaimed'),
 								to: { name: 'UnclaimedContracts' },
 							},
 							{
-								name: this.$t('sidenav.contracts.invalid'),
+								name: this.$t('components.navigation.sidenav.contracts.invalid'),
 								to: { name: 'InvalidContracts' },
 							},
 							{
-								name: this.$t('sidenav.contracts.new'),
+								name: this.$t('components.navigation.sidenav.contracts.new'),
 								to: { name: 'NewContract' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.processing._groupName'),
+						name: this.$t('components.navigation.sidenav.processing._groupName'),
 						icon: 'list-ul',
 						children: [
 							{
-								name: this.$t('sidenav.processing.dueDateRegister'),
+								name: this.$t('components.navigation.sidenav.processing.dueDateRegister'),
 								to: { name: 'ProcessingDueDateRegister' },
 							},
 							{
-								name: this.$t('sidenav.processing.duePayment'),
+								name: this.$t('components.navigation.sidenav.processing.duePayment'),
 								to: { name: 'ProcessingDuePayment' },
 							},
 							{
-								name: this.$t('sidenav.processing.paid'),
+								name: this.$t('components.navigation.sidenav.processing.paid'),
 								to: { name: 'ProcessingPaid' },
 							},
 							{
-								name: this.$t('sidenav.processing.losses'),
+								name: this.$t('components.navigation.sidenav.processing.losses'),
 								to: { name: 'ProcessingLosses' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.accounting._groupName'),
+						name: this.$t('components.navigation.sidenav.accounting._groupName'),
 						icon: 'cash-register',
 						children: [
 							{
-								name: this.$t('sidenav.accounting.receipts'),
+								name: this.$t('components.navigation.sidenav.accounting.receipts'),
 								to: { name: 'AccountingReceipts' },
 							},
 							{
-								name: this.$t('sidenav.accounting.registers'),
+								name: this.$t('components.navigation.sidenav.accounting.registers'),
 								to: { name: 'AccountingRegisters' },
 							},
 							{
-								name: this.$t('sidenav.accounting.todaysIncome'),
+								name: this.$t('components.navigation.sidenav.accounting.todaysIncome'),
 								to: { name: 'AccountingTodaysIncome' },
 							},
 							{
-								name: this.$t('sidenav.accounting.commissionsUncollected'),
+								name: this.$t('components.navigation.sidenav.accounting.commissionsUncollected'),
 								to: { name: 'AccountingCommissionsUncollected' },
 							},
 							{
-								name: this.$t('sidenav.accounting.commissionsCollected'),
+								name: this.$t('components.navigation.sidenav.accounting.commissionsCollected'),
 								to: { name: 'AccountingCommissionsCollected' },
 							},
 							{
-								name: this.$t('sidenav.accounting.mutualAccount'),
+								name: this.$t('components.navigation.sidenav.accounting.mutualAccount'),
 								to: { name: 'AccountingMutualAccount' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.contractors._groupName'),
+						name: this.$t('components.navigation.sidenav.contractors._groupName'),
 						icon: 'user-friends',
 						children: [
 							{
-								name: this.$t('sidenav.contractors.suppliers'),
+								name: this.$t('components.navigation.sidenav.contractors.suppliers'),
 								to: { name: 'SupplierContractors' },
 							},
 							{
-								name: this.$t('sidenav.contractors.externalContractors'),
+								name: this.$t('components.navigation.sidenav.contractors.externalContractors'),
 								to: { name: 'ContractorsExternalContractors' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.cards._groupName'),
+						name: this.$t('components.navigation.sidenav.cards._groupName'),
 						icon: 'wpforms',
 						fab: true,
 						children: [
 							{
-								name: this.$t('sidenav.cards.vehicleCards'),
+								name: this.$t('components.navigation.sidenav.cards.vehicleCards'),
 								to: { name: 'VehicleCards' },
 							},
 							{
-								name: this.$t('sidenav.cards.customerCards'),
+								name: this.$t('components.navigation.sidenav.cards.customerCards'),
 								to: { name: 'CustomerCards' },
 							},
 						],
 					},
 					{
-						name: this.$t('sidenav.library._groupName'),
+						name: this.$t('components.navigation.sidenav.library._groupName'),
 						icon: 'book',
 						children: [
 							{
