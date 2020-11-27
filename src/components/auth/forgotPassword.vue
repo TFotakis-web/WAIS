@@ -2,14 +2,14 @@
 	<mdb-card>
 		<mdb-card-header class="blue-gradient m-0">
 			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('Reset your password') }}</h3>
+				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.resetYourPassword') }}</h3>
 			</mdb-row>
 		</mdb-card-header>
 		<mdb-card-body>
 			<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
 				<mdb-input
 					v-model="username"
-					:label="$t('Username')"
+					:label="$t('fields.username')"
 					icon="user-circle"
 					type="text"
 					required
@@ -18,15 +18,15 @@
 					autocomplete="username"
 				/>
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Send code') }}</mdb-btn>
+					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('actions.sendCode') }}</mdb-btn>
 					<mdb-btn v-else color="primary" rounded disabled class="my-4">
 						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Sending code...') }}</span>
+						<span>{{ $t('actions.sendingCode') }}</span>
 					</mdb-btn>
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('Back to Sign In') }}</span>
+						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.backToSignIn') }}</span>
 					</p>
 					<localeDropdown />
 				</div>
@@ -35,7 +35,7 @@
 			<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
 				<mdb-input
 					v-model="verificationCode"
-					:label="$t('Verification Code')"
+					:label="$t('fields.verificationCode')"
 					icon="qrcode"
 					type="text"
 					required
@@ -45,7 +45,7 @@
 				/>
 				<mdb-input
 					v-model="newPassword"
-					:label="$t('New password')"
+					:label="$t('fields.newPassword')"
 					icon="lock"
 					type="password"
 					required
@@ -54,15 +54,15 @@
 					autocomplete="new-password"
 				/>
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Submit') }}</mdb-btn>
+					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('actions.submit') }}</mdb-btn>
 					<mdb-btn v-else color="primary" rounded disabled class="my-4">
 						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Submitting...') }}</span>
+						<span>{{ $t('actions.submitting') }}</span>
 					</mdb-btn>
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('Back to Sign In') }}</span>
+						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.backToSignIn') }}</span>
 					</p>
 					<localeDropdown />
 				</div>
