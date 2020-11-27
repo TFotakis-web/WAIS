@@ -1,7 +1,15 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t('New') }}</h1>
-		<h5 class="text-info">{{ $t('Under Construction') }}</h5>
+		<h1>{{ $t('components.navigation.sidenav.contracts.new') }}</h1>
+		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
+
+		<mdb-container fluid>
+			<mdb-card>
+				<mdb-card-body>
+
+				</mdb-card-body>
+			</mdb-card>
+		</mdb-container>
 	</div>
 </template>
 
