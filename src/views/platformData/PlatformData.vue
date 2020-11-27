@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t('Platform Data') }}</h1>
-		<h5 class="text-info">{{ $t('Under Construction') }}</h5>
+		<h1>{{ $t('views.platformData.pageTitle') }}</h1>
+		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
 		<mdb-container>
 			<mdb-row>
 				<mdb-col>
@@ -41,27 +41,27 @@
 
 						<mdb-list-group-item :justify-content-between="false" class="mt-3">
 							<template v-if="newItemType === ''">
-								<span class="mr-1">{{ $t('New') }}:</span>
+								<span class="mr-1">{{ $t('actions.add') }}:</span>
 								<template v-if="Array.isArray(curData)">
 									<span
 										class="a-tag"
 										v-if="curData[0] === undefined || typeof curData[0] === 'string'"
 										@click="addNewItem('String')"
-										>{{ $t('String') }}</span
+										>{{ $t('views.platformData.string') }}</span
 									>
 									<span v-if="curData[0] === undefined" class="mr-1">,</span>
 									<span
 										class="a-tag"
 										v-if="curData[0] === undefined || typeof curData[0] === 'number'"
 										@click="addNewItem('Number')"
-										>{{ $t('Number') }}</span
+										>{{ $t('views.platformData.number') }}</span
 									>
 								</template>
 								<template v-else-if="curData.constructor === Object">
-									<span class="a-tag mr-1" @click="addNewItem('String')">{{ $t('String') }},</span>
-									<span class="a-tag mr-1" @click="addNewItem('Number')">{{ $t('Number') }},</span>
-									<span class="a-tag mr-1" @click="addNewItem('Array')">{{ $t('Array') }},</span>
-									<span class="a-tag mr-1" @click="addNewItem('Object')">{{ $t('Object') }}</span>
+									<span class="a-tag mr-1" @click="addNewItem('String')">{{ $t('views.platformData.string') }},</span>
+									<span class="a-tag mr-1" @click="addNewItem('Number')">{{ $t('views.platformData.number') }},</span>
+									<span class="a-tag mr-1" @click="addNewItem('Array')">{{ $t('views.platformData.array') }},</span>
+									<span class="a-tag mr-1" @click="addNewItem('Object')">{{ $t('views.platformData.object') }}</span>
 								</template>
 							</template>
 							<template v-else>
@@ -81,7 +81,7 @@
 						</mdb-list-group-item>
 					</mdb-list-group>
 
-					<mdb-btn color="success" :disabled="saveIsDisabled" @click.native="save">{{ $t('Save') }}</mdb-btn>
+					<mdb-btn color="success" :disabled="saveIsDisabled" @click.native="save">{{ $t('actions.save') }}</mdb-btn>
 				</mdb-col>
 			</mdb-row>
 		</mdb-container>
@@ -127,7 +127,7 @@
 				} else {
 					if (Object.keys(this.curData).includes(this.newItemKey)) {
 						this.$notify.error({
-							message: this.$t('This key is already in use.'),
+							message: this.$t('views.platformData.thisKeyIsAlreadyInUse'),
 							progressBar: true,
 							timeOut: 10000,
 						});
