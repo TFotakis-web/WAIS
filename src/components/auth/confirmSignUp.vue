@@ -7,34 +7,12 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="confirmSignUp">
-				<mdb-input
-					v-model="credentials.username"
-					:label="$t('fields.username')"
-					icon="user-circle"
-					type="text"
-					required
-					name="username"
-					autocomplete="username"
-					disabled
-				/>
-				<mdb-input
-					v-model="verificationCode"
-					:label="$t('fields.verificationCode')"
-					icon="qrcode"
-					type="text"
-					required
-					class="mb-3"
-					name="verificationCode"
-					autocomplete="verificationCode"
-				/>
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" disabled />
+				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" />
 				<span v-if="!resendLoading" @click="resendSignUp" class="a-tag">{{ $t('actions.resendVerificationCode') }}</span>
 				<span v-else>{{ $t('actions.resendVerificationCode') }}</span>
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('actions.submit') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="my-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('actions.submitting') }}</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
@@ -51,11 +29,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'confirmSignUp',
 		components: {
 			localeDropdown,
+			loadingBtn
 		},
 		props: {
 			credentials: {
