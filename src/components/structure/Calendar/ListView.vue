@@ -16,9 +16,9 @@
 						<mdb-btn class="px-3" outline="info" darkWaves @click.native="changeWeek('today')">{{ todayText }}</mdb-btn>
 					</mdb-btn-group>
 					<mdb-btn-group>
-						<mdb-btn outline="info" darkWaves @click.native="changeView('month')">{{ $t('Month') }}</mdb-btn>
-						<mdb-btn outline="info" darkWaves @click.native="changeView('week')">{{ $t('Week') }}</mdb-btn>
-						<mdb-btn color="info" darkWaves @click.native="changeView('list')">{{ $t('List') }}</mdb-btn>
+						<mdb-btn outline="info" darkWaves @click.native="changeView('month')">{{ $t('components.calendar.month') }}</mdb-btn>
+						<mdb-btn outline="info" darkWaves @click.native="changeView('week')">{{ $t('components.calendar.week') }}</mdb-btn>
+						<mdb-btn color="info" darkWaves @click.native="changeView('list')">{{ $t('components.calendar.list') }}</mdb-btn>
 					</mdb-btn-group>
 				</div>
 				<table>
