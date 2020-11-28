@@ -2,25 +2,21 @@
 	<mdb-card>
 		<mdb-card-header class="blue-gradient m-0">
 			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('Sign in to your WAIS account') }}</h3>
+				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.signInToYourWaisAccount') }}</h3>
 			</mdb-row>
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signIn">
-				<mdb-input v-model="credentials.username" :label="$t('Username')" icon="user-circle" type="text" required class="mb-5" name="username" autocomplete="username"/>
-				<mdb-input v-model="credentials.password" :label="$t('Password')" icon="lock" type="password" required class="mb-2" name="password" autocomplete="current-password"/>
-				<span @click="$emit('auth-page-changed', 'forgotPassword')" class="a-tag">{{ $t('Forgot your password?') }}</span>
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-5" name="username" autocomplete="username" />
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required class="mb-2" name="password" autocomplete="current-password" />
+				<span @click="$emit('auth-page-changed', 'forgotPassword')" class="a-tag">{{ $t('views.auth.forgotYourPassword') }}</span>
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Sign In') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="mb-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Signing in') }}...</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
-						<span>{{ $t("Don't have an account?") }} </span>
-						<span @click="$emit('auth-page-changed', 'signUp')" class="a-tag">{{ $t('Create account') }}</span>
+						<span>{{ $t('views.auth.dontHaveAnAccount') }} </span>
+						<span @click="$emit('auth-page-changed', 'signUp')" class="a-tag">{{ $t('views.auth.createAccount') }}</span>
 					</p>
 					<localeDropdown />
 				</div>
@@ -32,11 +28,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'signIn',
 		components: {
 			localeDropdown,
+			loadingBtn,
 		},
 		data() {
 			return {
@@ -45,7 +43,7 @@
 					username: '',
 					password: '',
 				},
-				error: {}
+				error: {},
 			};
 		},
 		methods: {

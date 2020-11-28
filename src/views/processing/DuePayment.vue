@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t('Due Payment') }}</h1>
-		<h5 class="text-info">{{ $t('Under Construction') }}</h5>
+		<h1>{{ $t('components.navigation.sidenav.processing.duePayment') }}</h1>
+		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
 	</div>
 </template>
 

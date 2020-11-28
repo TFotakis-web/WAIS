@@ -52,22 +52,12 @@ const v = {
 			platformData: {}
 		};
 	},
+	mounted: function () {
+		this.loadEnumData();
+		this.initLocale();
+	},
 	methods: {
 		toGreeklish,
-		initLocale: function () {
-			const localeCookie = this.$cookies.get('locale');
-			if (localeCookie) {
-				this.$i18n.locale = localeCookie;
-				return;
-			}
-			const userLang = navigator.language || navigator.userLanguage;
-			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
-			this.$cookies.set('locale', this.$i18n.locale);
-		},
-		changeLanguage: function (locale) {
-			this.$i18n.locale = locale;
-			this.$cookies.set('locale', locale);
-		},
 		parseJwt: function (token) {
 			const base64Url = token.split('.')[1];
 			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -95,10 +85,17 @@ const v = {
 				.catch(err => {
 					console.error(err);
 				});
-		}
-	},
-	mounted: function () {
-		this.loadEnumData();
+		},
+		initLocale: function () {
+			const localeCookie = this.$cookies.get('locale');
+			if (localeCookie) {
+				this.$i18n.locale = localeCookie;
+				return;
+			}
+			const userLang = navigator.language || navigator.userLanguage;
+			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
+			this.$cookies.set('locale', this.$i18n.locale);
+		},
 	}
 };
 
@@ -111,7 +108,7 @@ Vue.prototype.$notifyAction = {
 		// eslint-disable-next-line no-console
 		console.error(err);
 		vm.$notify.error({
-			message: vm.$t('Something went wrong') + "...",
+			message: vm.$t('defaultNotification.somethingWentWrong'),
 			progressBar: true,
 			timeOut: 10000
 		});
@@ -120,21 +117,21 @@ Vue.prototype.$notifyAction = {
 		// eslint-disable-next-line no-console
 		console.error(err);
 		vm.$notify.error({
-			message: vm.$t('Something went wrong') + "...",
+			message: vm.$t('defaultNotification.somethingWentWrong'),
 			progressBar: true,
 			timeOut: 10000
 		});
 	},
 	saveSuccess: () => {
 		vm.$notify.success({
-			message: vm.$t('Saved successfully!'),
+			message: vm.$t('defaultNotification.saveSuccess'),
 			progressBar: true,
 			timeOut: 10000
 		});
 	},
 	deleteSuccess: () => {
 		vm.$notify.success({
-			message: vm.$t('Deleted successfully!'),
+			message: vm.$t('defaultNotification.deleteSuccess'),
 			progressBar: true,
 			timeOut: 10000
 		});
@@ -143,27 +140,27 @@ Vue.prototype.$notifyAction = {
 Vue.prototype.$datepickerOptions = function () {
 	return {
 		week: [
-			vm.$t('Mo'),
-			vm.$t('Tu'),
-			vm.$t('We'),
-			vm.$t('Th'),
-			vm.$t('Fr'),
-			vm.$t('Sa'),
-			vm.$t('Su'),
+			vm.$t('dates.days.Mo'),
+			vm.$t('dates.days.Tu'),
+			vm.$t('dates.days.We'),
+			vm.$t('dates.days.Th'),
+			vm.$t('dates.days.Fr'),
+			vm.$t('dates.days.Sa'),
+			vm.$t('dates.days.Su'),
 		],
 		month: [
-			vm.$t('January'),
-			vm.$t('February'),
-			vm.$t('March'),
-			vm.$t('April'),
-			vm.$t('May'),
-			vm.$t('June'),
-			vm.$t('July'),
-			vm.$t('August'),
-			vm.$t('September'),
-			vm.$t('October'),
-			vm.$t('November'),
-			vm.$t('December'),
+			vm.$t('dates.months.January'),
+			vm.$t('dates.months.February'),
+			vm.$t('dates.months.March'),
+			vm.$t('dates.months.April'),
+			vm.$t('dates.months.May'),
+			vm.$t('dates.months.June'),
+			vm.$t('dates.months.July'),
+			vm.$t('dates.months.August'),
+			vm.$t('dates.months.September'),
+			vm.$t('dates.months.October'),
+			vm.$t('dates.months.November'),
+			vm.$t('dates.months.December'),
 		],
 		format: 'YYYY-MM-DD',
 	};
@@ -206,7 +203,6 @@ Vue.prototype.$headData = {
 		return Object.values(res);
 	}
 };
-
 
 // -------------- Assignments ------------------------------------------
 const vm = new Vue(v);

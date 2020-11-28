@@ -1,9 +1,9 @@
 <template>
 	<div class="text-center pt-5">
-		<h1>{{ $t('Home page') }}</h1>
-		<h5 class="text-info mb-5">{{ $t('Under Construction') }}</h5>
+		<h1>{{ $t('views.homePage.pageTitle') }}</h1>
+		<h5 class="text-info mb-5">{{ $t('various.underConstruction') }}</h5>
 
-		<mdb-container>
+		<mdb-container fluid>
 			<mdb-row class="mb-5">
 				<mdb-col>
 					<mdbCalendar :events="events" />

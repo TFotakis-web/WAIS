@@ -2,58 +2,31 @@
 	<mdb-card>
 		<mdb-card-header class="blue-gradient m-0">
 			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('Create a new WAIS account') }}</h3>
+				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.createANewWaisAccount') }}</h3>
 			</mdb-row>
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signUp">
-				<mdb-input
-					v-model="credentials.username"
-					:label="$t('Username')"
-					icon="user-circle"
-					type="text"
-					required
-					name="username"
-					autocomplete="username"
-					class="mb-5"
-				/>
-				<mdb-input
-					v-model="credentials.password"
-					:label="$t('Password')"
-					icon="lock"
-					type="password"
-					required
-					name="password"
-					autocomplete="current-password"
-					class="mb-5"
-				/>
-				<mdb-input v-model="credentials.email" :label="$t('Email')" icon="envelope" type="email" required name="email" autocomplete="email" />
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-5" />
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required name="password" autocomplete="current-password" class="mb-5" />
+				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" />
 
 				<mdb-row>
 					<mdb-col>
-						<mdb-select
-							v-model="telephoneCodeOptions"
-							@getValue="(code) => (selectedTelephoneCode = code)"
-							:label="$t('Country Code')"
-							icon="phone"
-						/>
+						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" />
 					</mdb-col>
 					<mdb-col>
-						<mdb-input v-model="phone_number" :label="$t('Phone Number')" type="number" required name="phone" autocomplete="tel" />
+						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" />
 					</mdb-col>
 				</mdb-row>
 
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Sign Up') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="mb-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Signing up') }}...</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
-						<span>{{ $t('Have an account?') }} </span>
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('Sign in') }}</span>
+						<span>{{ $t('views.auth.haveAnAccount') }} </span>
+						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.signIn') }}</span>
 					</p>
 					<localeDropdown />
 				</div>
@@ -65,11 +38,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'signUp',
 		components: {
 			localeDropdown,
+			loadingBtn,
 		},
 		data() {
 			return {

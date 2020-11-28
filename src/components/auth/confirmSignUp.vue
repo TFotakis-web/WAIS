@@ -2,44 +2,22 @@
 	<mdb-card>
 		<mdb-card-header class="blue-gradient m-0">
 			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('Create a new WAIS account') }}</h3>
+				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.createANewWaisAccount') }}</h3>
 			</mdb-row>
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="confirmSignUp">
-				<mdb-input
-					v-model="credentials.username"
-					:label="$t('Username')"
-					icon="user-circle"
-					type="text"
-					required
-					name="username"
-					autocomplete="username"
-					disabled
-				/>
-				<mdb-input
-					v-model="verificationCode"
-					:label="$t('Verification Code')"
-					icon="qrcode"
-					type="text"
-					required
-					class="mb-3"
-					name="verificationCode"
-					autocomplete="verificationCode"
-				/>
-				<span v-if="!resendLoading" @click="resendSignUp" class="a-tag">{{ $t('Resend verification code') }}</span>
-				<span v-else>{{ $t('Resend verification code') }}</span>
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" disabled />
+				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" />
+				<span v-if="!resendLoading" @click="resendSignUp" class="a-tag">{{ $t('actions.resendVerificationCode') }}</span>
+				<span v-else>{{ $t('actions.resendVerificationCode') }}</span>
 				<div class="text-center">
-					<mdb-btn v-if="!loading" color="primary" type="submit" rounded class="my-4">{{ $t('Submit') }}</mdb-btn>
-					<mdb-btn v-else color="primary" rounded disabled class="my-4">
-						<span class="spinner-border spinner-border-sm mr-1" />
-						<span>{{ $t('Submitting...') }}</span>
-					</mdb-btn>
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-4" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
-						<span>{{ $t('Have an account?') }} </span>
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('Sign in') }}</span>
+						<span>{{ $t('views.auth.haveAnAccount') }} </span>
+						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.signIn') }}</span>
 					</p>
 					<localeDropdown />
 				</div>
@@ -51,11 +29,13 @@
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'confirmSignUp',
 		components: {
 			localeDropdown,
+			loadingBtn
 		},
 		props: {
 			credentials: {
