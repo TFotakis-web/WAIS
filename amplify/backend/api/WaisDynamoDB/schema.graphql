@@ -1,175 +1,221 @@
-# type Task
-#   @model
-#   @auth(
-#     rules: [
-#       { allow: groups, groups: ["Managers"], queries: null, mutations: [create, update, delete] }
-#       { allow: groups, groups: ["Employees"], queries: [get, list], mutations: null }
-#     ]
-#   ) {
-#   id: ID!
-#   title: String!
-#   description: String
-#   status: String
-# }
-# type PrivateNote @model @auth(rules: [{ allow: owner }]) {
-#   id: ID!
-#   content: String!
-# }
+# DynamoDB schema in GraphQL
+# Docs: https://docs.amplify.aws/cli/graphql-transformer
+# Connection INFO: https://docs.amplify.aws/cli/graphql-transformer/connection
 
-type Trade @model {
-	id: String!
-	name: String!
-	info: String
-	postcode: String
-	tin: String
-	logo: AWSURL
-	companyAccess: [CompanyAccess]
-	owner: ID # UserID
-	employees: [ID] # UserID
-	contractors: [ID] # UserID
-	customers: [Customer]
-	contracts: [Contract]
-	#permissions..
+type Trade
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  ownerId: ID! # Cognito user ID
+  name: String!
+  tin: String
+  logo: AWSURL
+  info: String
+  postcode: String
+
+  # Users associated with this Trade
+  owner: UserProfile @connection(fields: ["ownerId"])
+  employees: [TradeUserConnection]
+    @connection(keyName: "byTradeId", fields: ["id"])
+  contractors: [TradeUserConnection]
+    @connection(keyName: "byTradeId", fields: ["id"])
+
+  # Connections
+  fromCompanyAccess: [CompanyAccessConnection]
+    @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
+  toCompanyAccess: [CompanyAccessConnection]
+    @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
+  customers: [Customer] @connection(keyName: "byTradeId", fields: ["id"])
+  contracts: [Contract] @connection(keyName: "byTradeId", fields: ["id"])
 }
 
-type CompanyAccess {
-	companyName: String!
-	from: String! #decide on null/empty value
-	expirationDate: AWSDate
-	active: Boolean
-	info: String!
+type CompanyAccessConnection
+  @model(subscriptions: null)
+  @key(name: "byFromId", fields: ["fromId", "toId"])
+  @key(name: "byToId", fields: ["toId", "fromId"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  fromId: ID!
+  toId: ID!
+  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  expirationDate: AWSDate! # Can be used to configure a TTL workflow
+  active: Boolean!
+  info: String!
 }
 
-type Customer {
-	id: ID!
-	tin: Int
-	name: String
-	surname: String
-	fathersName: String
-	birthDate: AWSDate
-	gender: String
-	email: AWSEmail
-	mobile: AWSPhone
-	postcode: String
-	doy: String
-	address: String
-	familyStatus: String
-	creationDate: AWSDateTime
-	files: [File]
-	driversLicense: DriversLicense
+type TradeUserConnection
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "userId"])
+  @key(name: "byUserId", fields: ["userId", "tradeId"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  tradeId: ID!
+  userId: ID!
+  trade: Trade! @connection(fields: ["tradeId"])
+  user: UserProfile! @connection(fields: ["userId"])
+  info: String
 }
 
-# consider id
-type File  {
-	name: String
-	url: AWSURL
+type UserProfile
+  @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username", "id"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID! #Cognito UserPool id
+  username: String!
+  permissions: [UserPermissions]
+  preferences: AWSJSON
+  telephone: AWSPhone
+  tin: Int!
+  doy: String!
+  familyStatus: String!
+  creationDate: AWSDate!
+  chamberRecordNumber: String!
+  insuranceLicenseExpirationDate: AWSDate!
+  partnersNumberLimit: Int!
+  professionStartDate: AWSDate!
+  message: String!
+  valid: Boolean!
+  file: [File]
 }
 
-type Contract {
-	id: ID!
-	customer: Customer!
-	contractId: ID!
-	voucherID: Int!
-	contractState: String! # Send to S3 on completion
-	tradeAdmin: String! #Aftos poy kanei amesa to insurance
-	assignee: String! #Aftos poy kanei emesa to insurance
-	partner: String!
-	company: String!
-	insuranceClass: String!
-	insuranceCoverage: [String]
-	insuranceUsage: String
-	vehicle: Vehicle!
-	duration: String!
-	creationDate: String!
-	startDate: AWSDate!
-	endDate: AWSDate!
-	data: String!
-	discount: Float! # e.g. 0.1
-	jointWorth: Float!
-	netWorth: Float!
-	driversLicense: DriversLicense
+#Add all department-specific
+type UserPermissions {
+  department: String #User defined
+  read: Boolean
+  write: Boolean
+}
+
+type Customer
+  @model(subscriptions: null)
+  @key(name: "byEmail", fields: ["email", "name"])
+  @key(name: "byTradeId", fields: ["tradeId", "name"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  tin: Int
+  name: String
+  surname: String
+  fathersName: String
+  birthDate: AWSDate
+  gender: String
+  email: AWSEmail
+  mobile: AWSPhone
+  postcode: String
+  doy: String
+  address: String
+  familyStatus: String
+  creationDate: AWSDateTime
+  files: [File]
+  driversLicense: DriversLicense
+
+  # Trade related fields
+  tradeId: ID!
+  trade: Trade @connection(fields: ["tradeId"])
+}
+
+# consider an id
+type File {
+  name: String
+  url: AWSURL
+}
+
+# All fields in this type MUST be immutable
+type Contract
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "id"])
+  @key(name: "byCustomerId", fields: ["customerId", "id"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  #Unique IDs
+  id: ID!
+  voucherId: ID!
+  vehicleId: ID!
+  customerId: ID!
+  tradeId: ID!
+
+  contractState: String! # Send to S3 on completion
+  tradeAdmin: String! #Aftos poy kanei amesa to insurance
+  assignee: String! #Aftos poy kanei emesa to insurance
+  partner: String!
+  company: String!
+  insuranceClass: String!
+  insuranceCoverage: [String]
+  insuranceUsage: String
+
+  duration: String!
+  creationDate: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  data: String!
+  discount: Float! # e.g. 0.1
+  jointWorth: Float!
+  netWorth: Float!
+  driversLicense: DriversLicense
+
+  #Connections
+  vehicle: Vehicle! @connection(fields: ["vehicleId"])
+  customer: Customer! @connection(fields: ["customerId"])
+  trade: Trade! @connection(fields: ["tradeId"])
 }
 
 type DriversLicense {
-	LicenseID: Int
-	DriversLicenseType: String # Erasitexniko/Epaggelmatiko
-	Category: [DriversLicenseCategory]
+  LicenseID: Int
+  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
+  Category: [DriversLicenseCategory]
 }
 
 type DriversLicenseCategory {
-	category: String
-	issueDate: AWSDate
-	expiresAt: AWSDate
+  category: String
+  issueDate: AWSDate
+  expiresAt: AWSDate
 }
 
-type Vehicle @model {
-	id: ID!
-	numberPlate: String!
-	color: String!
-	manufacturer: String!
-	model: String!
-	owner: String!
-	trim: String!
-	fuelType: String
-	usage: String!
-	displacement: Int!
-	eurotax: Int!
-	firstRegistrationDate: AWSDate!
-	passengers: Int!
-	purchaseDate: AWSDate!
-	taxableHorsepower: Int!
-	vin: String!
-	value: Float!
-	file: [File]
-	# SecurityMeasure
+type Vehicle
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  numberPlate: String!
+  color: String!
+  manufacturer: String!
+  model: String!
+  owner: String!
+  trim: String!
+  fuelType: String
+  usage: String!
+  displacement: Int!
+  eurotax: Int!
+  firstRegistrationDate: AWSDate!
+  passengers: Int!
+  purchaseDate: AWSDate!
+  taxableHorsepower: Int!
+  vin: String!
+  value: Float!
+  file: [File]
 }
 
 type InsurancePackage {
-	name: String!
-	insuranceClass: String!
-	coverage: [String]
-	usages: String
+  name: String!
+  insuranceClass: String!
+  coverage: [String]
+  usages: String
 }
 
-type UserCognito {
-	id: ID! # Custom attribute
-	name: String! # Full Name (includes middle name)
-	given_name: String! # First name
-	family_name: String! # Surname
-	middle_name: String! # Father's name!
-	preferred_username: String!
-	picture: String!
-	email: String!
-	email_verified: Boolean!
-	gender: String!
-	birthdate: String!
-	locale: String!
-	phone_number: String!
-	phone_number_verified: Boolean!
-	address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
-	updated_at: AWSDateTime!
-}
+# Used to model a Cognito user, not a 'real' DynamoDB type
 
-type UserProfile @model {
-	userID: ID!
-	permissions: [UserPermissions]
-	preferences: AWSJSON
-	telephone: AWSPhone
-	tin: Int!
-	doy: String!
-	familyStatus: String!
-	creationDate: AWSDate!
-	chamberRecordNumber: String!
-	insuranceLicenseExpirationDate: AWSDate!
-	partnersNumberLimit: Int!
-	professionStartDate: AWSDate!
-	message: String!
-	valid: Boolean!
-	file: [File]
-}
-
-type UserPermissions {
-	department: String #User defined
-	read: Boolean
-	write: Boolean
-}
+# type UserCognito {
+#   id: ID! # Custom attribute
+#   name: String! # Full Name (includes middle name)
+#   given_name: String! # First name
+#   family_name: String! # Surname
+#   middle_name: String! # Father's name!
+#   preferred_username: String!
+#   picture: String!
+#   email: String!
+#   email_verified: Boolean!
+#   gender: String!
+#   birthdate: String!
+#   locale: String!
+#   phone_number: String!
+#   phone_number_verified: Boolean!
+#   address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+#   updated_at: AWSDateTime!
+# }
