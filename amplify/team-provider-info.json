@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "wais38036aa9": {}
+        "wais38036aa9": {},
+        "userPoolGroups": {}
       },
       "hosting": {
         "amplifyhosting": {
