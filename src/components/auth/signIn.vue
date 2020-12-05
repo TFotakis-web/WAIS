@@ -7,11 +7,11 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signIn">
-				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-5" name="username" autocomplete="username" />
-				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required class="mb-2" name="password" autocomplete="current-password" />
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-4" name="username" autocomplete="username" outline/>
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="current-password" outline/>
 				<span @click="$emit('auth-page-changed', 'forgotPassword')" class="a-tag">{{ $t('views.auth.forgotYourPassword') }}</span>
 				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="my-4" />
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="my-3" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
