@@ -7,9 +7,9 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
-				<mdb-input v-model="username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-3" name="username" autocomplete="username" />
+				<mdb-input v-model="username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-3" name="username" autocomplete="username" outline/>
 				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="my-4" />
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="my-3" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
@@ -20,10 +20,10 @@
 			</form>
 
 			<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
-				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" />
-				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="new-password" />
+				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" outline/>
+				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="new-password" outline/>
 				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-4" />
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-3" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
