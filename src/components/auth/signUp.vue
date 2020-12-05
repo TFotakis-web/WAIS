@@ -7,16 +7,16 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signUp">
-				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-5" />
-				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required name="password" autocomplete="current-password" class="mb-5" />
-				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" />
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-4" outline/>
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required name="password" autocomplete="current-password" class="mb-4" outline/>
+				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" class="mb-4" outline/>
 
 				<mdb-row>
 					<mdb-col>
-						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" />
+						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" outline/>
 					</mdb-col>
 					<mdb-col>
-						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" />
+						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" outline/>
 					</mdb-col>
 				</mdb-row>
 
