@@ -217,4 +217,14 @@
 		opacity: 0;
 		transform: translateY(0.25%);
 	}
+
+	.md-form {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+	}
+
+	.nav-link {
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
 </style>
