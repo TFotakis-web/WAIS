@@ -2,7 +2,6 @@
 	<div class="text-center pt-5">
 		<h1>{{ $t('views.homePage.pageTitle') }}</h1>
 		<h5 class="text-info mb-5">{{ $t('various.underConstruction') }}</h5>
-
 		<mdb-container fluid>
 			<mdb-row class="mb-5">
 				<mdb-col>
@@ -12,9 +11,11 @@
 			<mdb-row>
 				<mdb-col>
 					<mdb-card cascade narrow>
-						<mdb-view cascade class="gradient-card-header blue"><h5 class="mb-0">Performance</h5></mdb-view>
+						<mdb-view cascade class="gradient-card-header blue">
+							<h5 class="mb-0">Performance</h5>
+						</mdb-view>
 						<mdb-card-body>
-							<mdb-line-chart :data="lineChartData2" :options="lineChartOptions2" :height="300"></mdb-line-chart>
+							<mdb-line-chart :data="lineChartData2" :options="lineChartOptions2" :height="300" />
 						</mdb-card-body>
 					</mdb-card>
 				</mdb-col>
@@ -26,22 +27,20 @@
 									<mdb-btn tag="a" floating disabled class="grey lighten-5 z-depth-0">
 										<mdb-icon icon="check" class="text-primary" />
 									</mdb-btn>
-									<h3 class="text-white"><mdb-icon icon="euro-sign" /> 800,011</h3>
+									<h3 class="text-white"><mdb-icon icon="euro-sign" />800,011</h3>
 									<mdb-card class="rgba-white-light z-depth-0">
 										<mdb-card-body class="text-left">
 											<h5 class="text-white">
 												<mdb-icon icon="euro-sign" />
-												501,011
+												<span>501,011</span>
 											</h5>
 											<p class="text-white">Closed</p>
 											<hr class="white" />
 											<h5 class="text-white">
 												<mdb-icon icon="euro-sign" />
-												299,011
+												<span>299,011</span>
 											</h5>
-											<p class="text-white mb-0">
-												Closed
-											</p>
+											<p class="text-white mb-0">Closed</p>
 										</mdb-card-body>
 									</mdb-card>
 								</mdb-card-body>
@@ -57,7 +56,7 @@
 											</mdb-btn>
 											<h3 class="text-white">
 												<mdb-icon icon="euro-sign" />
-												2318
+												<span>2318</span>
 											</h3>
 											<p class="text-white">New Opportunity</p>
 										</mdb-card-body>
@@ -73,7 +72,7 @@
 											</mdb-btn>
 											<h3 class="text-white">
 												<mdb-icon icon="euro-sign" />
-												5192
+												<span>5192</span>
 											</h3>
 											<p class="text-white">Emails received</p>
 										</mdb-card-body>
