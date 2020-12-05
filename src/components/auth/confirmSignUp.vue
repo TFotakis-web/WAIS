@@ -7,12 +7,12 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="confirmSignUp">
-				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" disabled />
-				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" />
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" disabled class="mb-4" outline/>
+				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" outline/>
 				<span v-if="!resendLoading" @click="resendSignUp" class="a-tag">{{ $t('actions.resendVerificationCode') }}</span>
 				<span v-else>{{ $t('actions.resendVerificationCode') }}</span>
 				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-4" />
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-3" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr />
 					<p class="mt-4">
