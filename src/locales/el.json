@@ -104,13 +104,22 @@
 			"pageTitle": "Αρχική σελίδα"
 		},
 		"Trade": {
-			"pageTitle": "Επωνυμία"
+			"pageTitle": "Επωνυμία",
+			"companyInfo": "Εταιρικά Στοιχεία",
+			"companyAccounts": "Εταιρικοί Λογαριασμοί",
+			"companyCodes": "Εταιρικοί Κωδικοί",
+			"companyFiles": "Εταιρικά Αρχεία"
 		},
 		"User Profile": {
 			"pageTitle": "Προφίλ Χρήστη"
 		},
 		"Vehicle Cards Details": {
 			"pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
+		},
+		"newContract": {
+			"personalInfo": "Προσωπικά Στοιχεία",
+			"vehicleInfo": "Στοιχεία Οχήματος",
+			"contractInfo": "Στοιχεία Συμβολαίου"
 		}
 	},
 	"fields": {
@@ -120,7 +129,39 @@
 		"email": "Email",
 		"countryCode": "Κωδικός Χώρας",
 		"phoneNumber": "Τηλέφωνο",
-		"verificationCode": "Κωδικός Επαλήθευσης"
+		"verificationCode": "Κωδικός Επαλήθευσης",
+		"tin": "ΑΦΜ",
+		"name": "Όνομα",
+		"surname": "Επώνυμο",
+		"address": "Διεύθυνση",
+		"city": "Πόλη",
+		"district": "Νομός",
+		"phone": "Τηλέφωνο",
+		"mobile": "Κινητό",
+		"birthDate": "Ημ. Γέννησης",
+		"driversLicenseIssueDate": "Ημ. έκδοσης Διπλώματος",
+		"numberPlate": "Αριθμός Κυκλοφορίας",
+		"branch": "Κλάδος",
+		"usage": "Χρήση",
+		"manufacturer": "Κατασκευαστής",
+		"model": "Μοντέλο",
+		"type": "Τύπος",
+		"color": "Χρώμα",
+		"fuelType": "Καύσιμο",
+		"owner": "Κάτοχος",
+		"company": "Εταιρεία",
+		"package": "Πρόγραμμα",
+		"contractNumber": "Αριθμός Συμβολαίου",
+		"issueDate": "Ημ. Έναρξης",
+		"duration": "Διάρκεια",
+		"discount": "Έκπτωση",
+		"grossIncome": "Μικτά έσοδα",
+		"netIncome": "Καθαρά έσοδα",
+		"collaborator": "Συνεργάτης",
+		"trade": "Επωνυμία",
+		"registrationNumber": "Αρ. Μητρώου",
+		"professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
+		"licenseExpirationDate": "Ημ. Λήξης Άδειας"
 	},
 	"actions": {
 		"submit": "Υποβολή",

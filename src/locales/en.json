@@ -104,13 +104,22 @@
 			"pageTitle": "Home page"
 		},
 		"Trade": {
-			"pageTitle": "Trade"
+			"pageTitle": "Trade",
+			"companyInfo": "Company Information",
+			"companyAccounts": "Company accounts",
+			"companyCodes": "Company codes",
+			"companyFiles": "Company files"
 		},
 		"User Profile": {
 			"pageTitle": "User Profile"
 		},
 		"Vehicle Cards Details": {
 			"pageTitle": "Vehicle Cards Details"
+		},
+		"newContract": {
+			"personalInfo": "Personal information",
+			"vehicleInfo": "Vehicle information",
+			"contractInfo": "Contract information"
 		}
 	},
 	"fields": {
@@ -120,7 +129,39 @@
 		"email": "Email",
 		"countryCode": "Country Code",
 		"phoneNumber": "Phone Number",
-		"verificationCode": "Verification Code"
+		"verificationCode": "Verification Code",
+		"tin": "TIN",
+		"name": "Name",
+		"surname": "Surname",
+		"address": "Address",
+		"city": "City",
+		"district": "District",
+		"phone": "Phone",
+		"mobile": "Mobile",
+		"birthDate": "Birth date",
+		"driversLicenseIssueDate": "Drivers license issue date",
+		"numberPlate": "Number plate",
+		"branch": "Branch",
+		"usage": "Usage",
+		"manufacturer": "Manufacturer",
+		"model": "Model",
+		"type": "Type",
+		"color": "Color",
+		"fuelType": "Fuel type",
+		"owner": "Owner",
+		"company": "Company",
+		"package": "Package",
+		"contractNumber": "Contract number",
+		"issueDate": "Issue date",
+		"duration": "Duration",
+		"discount": "Discount",
+		"grossIncome": "Gross income",
+		"netIncome": "Net income",
+		"collaborator": "Collaborator",
+		"trade": "Trade",
+		"registrationNumber": "Registration number",
+		"professionStartDate": "Profession start date",
+		"licenseExpirationDate": "License expiration date"
 	},
 	"actions": {
 		"submit": "Submit",
