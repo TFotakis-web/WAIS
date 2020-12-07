@@ -89,76 +89,28 @@
 				/>
 				<p class="mb-0">Color</p>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="info"
-						class="custom-control-input"
-						name="color-radio"
-						id="info-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="info" class="custom-control-input" name="color-radio" id="info-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-info" for="info-radio">Info</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="success"
-						class="custom-control-input"
-						name="color-radio"
-						id="success-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-success" for="success-radio">Success</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="warning"
-						class="custom-control-input"
-						name="color-radio"
-						id="warning-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-warning" for="warning-radio">Warning</label>
 				</div>
 				<br />
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="danger"
-						class="custom-control-input"
-						name="color-radio"
-						id="danger-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-danger" for="danger-radio">Danger</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="primary"
-						class="custom-control-input"
-						name="color-radio"
-						id="primary-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-primary" for="primary-radio">Primary</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input
-						type="radio"
-						value="secondary"
-						class="custom-control-input"
-						name="color-radio"
-						id="secondary-radio"
-						v-model="activeEvent.color"
-						@change="updateEvents()"
-					/>
+					<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="activeEvent.color" @change="updateEvents()" />
 					<label class="custom-control-label text-secondary" for="secondary-radio">Secondary</label>
 				</div>
 			</mdb-modal-body>
@@ -217,59 +169,24 @@
 						<label class="custom-control-label text-info" for="info-radio">Info</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input
-							type="radio"
-							value="success"
-							class="custom-control-input"
-							name="color-radio"
-							id="success-radio"
-							v-model="newEvent.color"
-						/>
+						<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="newEvent.color" />
 						<label class="custom-control-label text-success" for="success-radio">Success</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input
-							type="radio"
-							value="warning"
-							class="custom-control-input"
-							name="color-radio"
-							id="warning-radio"
-							v-model="newEvent.color"
-						/>
+						<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="newEvent.color" />
 						<label class="custom-control-label text-warning" for="warning-radio">Warning</label>
 					</div>
 					<br />
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input
-							type="radio"
-							value="danger"
-							class="custom-control-input"
-							name="color-radio"
-							id="danger-radio"
-							v-model="newEvent.color"
-						/>
+						<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="newEvent.color" />
 						<label class="custom-control-label text-danger" for="danger-radio">Danger</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input
-							type="radio"
-							value="primary"
-							class="custom-control-input"
-							name="color-radio"
-							id="primary-radio"
-							v-model="newEvent.color"
-						/>
+						<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="newEvent.color" />
 						<label class="custom-control-label text-primary" for="primary-radio">Primary</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input
-							type="radio"
-							value="secondary"
-							class="custom-control-input"
-							name="color-radio"
-							id="secondary-radio"
-							v-model="newEvent.color"
-						/>
+						<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="newEvent.color" />
 						<label class="custom-control-label text-secondary" for="secondary-radio">Secondary</label>
 					</div>
 				</mdb-modal-body>
@@ -286,7 +203,6 @@
 	import { mdbMonthView } from './MonthView';
 	import { mdbWeekView } from './WeekView';
 	import { mdbListView } from './ListView';
-	// import orderBy from "lodash.orderby";
 
 	const Calendar = {
 		name: 'mdbCalendar',
@@ -469,9 +385,7 @@
 				this.$emit('getEvents', this.newEvents);
 			},
 			activeEvent() {
-				this.activeEvent.start.getDate() < 10
-					? (this.activeEventData.startDate = '0' + this.activeEvent.start.getDate())
-					: (this.activeEventData.startDate = this.activeEvent.start.getDate());
+				this.activeEvent.start.getDate() < 10 ? (this.activeEventData.startDate = '0' + this.activeEvent.start.getDate()) : (this.activeEventData.startDate = this.activeEvent.start.getDate());
 				this.activeEvent.start.getMonth() < 10
 					? (this.activeEventData.startMonth = '0' + (this.activeEvent.start.getMonth() + 1))
 					: (this.activeEventData.startMonth = this.activeEvent.start.getMonth() + 1);
@@ -484,15 +398,11 @@
 				this.activeEvent.start.getSeconds() < 10
 					? (this.activeEventData.startSeconds = '0' + this.activeEvent.start.getSeconds())
 					: (this.activeEventData.startSeconds = this.activeEvent.start.getSeconds());
-				this.activeEvent.end.getDate() < 10
-					? (this.activeEventData.endDate = '0' + this.activeEvent.end.getDate())
-					: (this.activeEventData.endDate = this.activeEvent.end.getDate());
+				this.activeEvent.end.getDate() < 10 ? (this.activeEventData.endDate = '0' + this.activeEvent.end.getDate()) : (this.activeEventData.endDate = this.activeEvent.end.getDate());
 				this.activeEvent.end.getMonth() < 10
 					? (this.activeEventData.endMonth = '0' + (this.activeEvent.end.getMonth() + 1))
 					: (this.activeEventData.endMonth = this.activeEvent.end.getMonth() + 1);
-				this.activeEvent.end.getHours() < 10
-					? (this.activeEventData.endHours = '0' + this.activeEvent.end.getHours())
-					: (this.activeEventData.endHours = this.activeEvent.end.getHours());
+				this.activeEvent.end.getHours() < 10 ? (this.activeEventData.endHours = '0' + this.activeEvent.end.getHours()) : (this.activeEventData.endHours = this.activeEvent.end.getHours());
 				this.activeEvent.end.getMinutes() < 10
 					? (this.activeEventData.endMinutes = '0' + this.activeEvent.end.getMinutes())
 					: (this.activeEventData.endMinutes = this.activeEvent.end.getMinutes());
@@ -502,36 +412,22 @@
 			},
 			newEvent() {
 				if (this.newEvent.start) {
-					this.newEvent.start.getDate() < 10
-						? (this.newEventData.startDate = '0' + this.newEvent.start.getDate())
-						: (this.newEventData.startDate = this.newEvent.start.getDate());
+					this.newEvent.start.getDate() < 10 ? (this.newEventData.startDate = '0' + this.newEvent.start.getDate()) : (this.newEventData.startDate = this.newEvent.start.getDate());
 					this.newEvent.start.getMonth() < 10
 						? (this.newEventData.startMonth = '0' + (this.newEvent.start.getMonth() + 1))
 						: (this.newEventData.startMonth = this.newEvent.start.getMonth() + 1);
-					this.newEvent.start.getHours() < 10
-						? (this.newEventData.startHours = '0' + this.newEvent.start.getHours())
-						: (this.newEventData.startHours = this.newEvent.start.getHours());
+					this.newEvent.start.getHours() < 10 ? (this.newEventData.startHours = '0' + this.newEvent.start.getHours()) : (this.newEventData.startHours = this.newEvent.start.getHours());
 					this.newEvent.start.getMinutes() < 10
 						? (this.newEventData.startMinutes = '0' + this.newEvent.start.getMinutes())
 						: (this.newEventData.startMinutes = this.newEvent.start.getMinutes());
 					this.newEvent.start.getSeconds() < 10
 						? (this.newEventData.startSeconds = '0' + this.newEvent.start.getSeconds())
 						: (this.newEventData.startSeconds = this.newEvent.start.getSeconds());
-					this.newEvent.end.getDate() < 10
-						? (this.newEventData.endDate = '0' + this.newEvent.end.getDate())
-						: (this.newEventData.endDate = this.newEvent.end.getDate());
-					this.newEvent.end.getMonth() < 10
-						? (this.newEventData.endMonth = '0' + (this.newEvent.end.getMonth() + 1))
-						: (this.newEventData.endMonth = this.newEvent.end.getMonth() + 1);
-					this.newEvent.end.getHours() < 10
-						? (this.newEventData.endHours = '0' + this.newEvent.end.getHours())
-						: (this.newEventData.endHours = this.newEvent.end.getHours());
-					this.newEvent.end.getMinutes() < 10
-						? (this.newEventData.endMinutes = '0' + this.newEvent.end.getMinutes())
-						: (this.newEventData.endMinutes = this.newEvent.end.getMinutes());
-					this.newEvent.end.getSeconds() < 10
-						? (this.newEventData.endSeconds = '0' + this.newEvent.end.getSeconds())
-						: (this.newEventData.endSeconds = this.newEvent.end.getSeconds());
+					this.newEvent.end.getDate() < 10 ? (this.newEventData.endDate = '0' + this.newEvent.end.getDate()) : (this.newEventData.endDate = this.newEvent.end.getDate());
+					this.newEvent.end.getMonth() < 10 ? (this.newEventData.endMonth = '0' + (this.newEvent.end.getMonth() + 1)) : (this.newEventData.endMonth = this.newEvent.end.getMonth() + 1);
+					this.newEvent.end.getHours() < 10 ? (this.newEventData.endHours = '0' + this.newEvent.end.getHours()) : (this.newEventData.endHours = this.newEvent.end.getHours());
+					this.newEvent.end.getMinutes() < 10 ? (this.newEventData.endMinutes = '0' + this.newEvent.end.getMinutes()) : (this.newEventData.endMinutes = this.newEvent.end.getMinutes());
+					this.newEvent.end.getSeconds() < 10 ? (this.newEventData.endSeconds = '0' + this.newEvent.end.getSeconds()) : (this.newEventData.endSeconds = this.newEvent.end.getSeconds());
 				}
 			},
 		},
