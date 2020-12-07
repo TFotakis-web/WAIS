@@ -26,6 +26,7 @@ import AccountingMutualAccount from '@/views/accounting/MutualAccount';
 import SupplierContractors from '@/views/contractors/Supplier';
 import ContractorsExternalContractors from '@/views/contractors/ExternalContractors';
 import VehicleCards from '@/views/cards/Vehicle';
+import VehicleCardsDetails from '@/views/cards/VehicleDetails';
 import CustomerCards from '@/views/cards/Customer';
 import Library from '@/views/library/Library';
 import Trade from '@/views/Trade';
@@ -62,6 +63,7 @@ const routes = [
 	{ path: '/contractors/suppliers', name: 'SupplierContractors', component: SupplierContractors },
 	{ path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: ContractorsExternalContractors },
 	{ path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards },
+	{ path: '/cards/vehicle/:id', name: 'VehicleCardsDetails', component: VehicleCardsDetails },
 	{ path: '/cards/customers', name: 'CustomerCards', component: CustomerCards },
 	{ path: '/library', name: 'Library', component: Library },
 	{ path: '/trade', name: 'Trade', component: Trade },
