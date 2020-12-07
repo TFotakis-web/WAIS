@@ -17,6 +17,7 @@
 							:key="index"
 							@click.native="openVehicleDetail(vehicle)"
 							:justify-content-between="false"
+							action
 						>
 							<span>{{ vehicle.numberPlate }}</span>
 						</mdb-list-group-item>
