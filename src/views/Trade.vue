@@ -57,30 +57,63 @@
 							</mdb-col>
 						</mdb-row>
 						<mdb-row class="mb-4">
-							<mdb-col sm="6">
-								<h6>
-									<span>{{ $t('views.Trade.companyAccounts') }}</span>
-									<mdb-icon icon="plus" class="float-right"/>
-								</h6>
+							<mdb-col md="6">
+								<mdb-row>
+									<mdb-col>
+										<h6>
+											<span>{{ $t('views.Trade.companyAccounts') }}</span>
+											<mdb-icon icon="plus" class="ml-3" />
+										</h6>
+									</mdb-col>
+								</mdb-row>
+								<mdb-row v-for="(account, i) in companyAccounts" :key="'companyAccounts' + i" class="mb-2">
+									<mdb-col col="5">
+										<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline />
+									</mdb-col>
+									<mdb-col col="5">
+										<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline />
+									</mdb-col>
+									<mdb-col col="2" class="text-right">
+										<mdb-icon icon="trash" class="clickable" />
+									</mdb-col>
+								</mdb-row>
 							</mdb-col>
-							<mdb-col sm="6">
-								<h6>
-									<span>{{ $t('views.Trade.companyCodes') }}</span>
-									<mdb-icon icon="plus" class="float-right"/>
-								</h6>
+							<mdb-col md="6">
+								<mdb-row>
+									<mdb-col>
+										<h6>
+											<span>{{ $t('views.Trade.companyCodes') }}</span>
+											<mdb-icon icon="plus" class="ml-3" />
+										</h6>
+									</mdb-col>
+								</mdb-row>
+								<mdb-row v-for="(companyCode, i) in companyCodes" :key="'companyCodes' + i" class="mb-2">
+									<mdb-col col="5">
+										<mdb-select search v-model="companyOptions" :label="$t('fields.company')" :small="validation.companyCodes[i].name" type="text" outline required />
+									</mdb-col>
+									<mdb-col col="5">
+										<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline />
+									</mdb-col>
+									<mdb-col col="2" class="text-right">
+										<mdb-icon icon="trash" class="clickable" />
+									</mdb-col>
+								</mdb-row>
 							</mdb-col>
 						</mdb-row>
 						<mdb-row>
 							<mdb-col sm="6">
 								<h6>
 									<span>{{ $t('views.Trade.companyFiles') }}</span>
-									<mdb-icon icon="plus" class="float-right"/>
+									<mdb-icon icon="plus" class="ml-3" />
 								</h6>
 							</mdb-col>
 						</mdb-row>
-						<mdb-row class="mb-4">
-							<mdb-col>
-
+						<mdb-row>
+							<mdb-col sm="6" md="4" lg="3" v-for="(file, i) in companyFiles" :key="'companyCodes' + i">
+									<mdb-list-group-item>
+										<a :href="file.url" target="_blank">{{ file.name }}</a>
+										<mdb-icon icon="trash" class="clickable float-right" />
+									</mdb-list-group-item>
 							</mdb-col>
 						</mdb-row>
 						<mdb-row>
@@ -101,6 +134,13 @@
 		name: 'Trade',
 		data() {
 			return {
+				companyOptions: [
+					{ text: 'Option nr 1', value: 'Option 1' },
+					{ text: 'Option nr 2', value: 'Option 2' },
+					{ text: 'Option nr 3', value: 'Option 3' },
+					{ text: 'Option nr 4', value: 'Option 4' },
+					{ text: 'Option nr 5', value: 'Option 5' },
+				],
 				fields: {
 					trade: '',
 					tradeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
@@ -129,10 +169,31 @@
 					phone: '',
 					mobile: '',
 					email: '',
-					companyAccounts: '',
-					companyCodes: '',
-					companyFiles: '',
+					companyAccounts: [
+						{ name: '', iban: '' },
+						{ name: '', iban: '' },
+					],
+					companyCodes: [
+						{ name: '', code: '' },
+						{ name: '', code: '' },
+					],
+					companyFiles: [
+						{ name: '', url: '' },
+						{ name: '', url: '' },
+					],
 				},
+				companyAccounts: [
+					{ name: 'Account 1', iban: 'GR111222333444555666777888999' },
+					{ name: 'Account 2', iban: 'GR000111222333444555666777888' },
+				],
+				companyCodes: [
+					{ name: 'Company 1', code: '12345' },
+					{ name: 'Company 2', code: '67890' },
+				],
+				companyFiles: [
+					{ name: 'File 1', url: '#file1' },
+					{ name: 'File 2', url: '#file2' },
+				],
 			};
 		},
 		methods: {
