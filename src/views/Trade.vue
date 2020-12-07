@@ -1,19 +1,14 @@
 <template>
 	<div class="pt-5">
-		<!-- <h1>{{ $t('views.Trade.pageTitle') }}</h1> -->
 		<h5 class="text-info text-center mb-5">{{ $t('various.underConstruction') }}</h5>
 		<mdb-container>
-			<!-- <mdb-card cascade narrow>
-				<mdb-row>
-					<mdb-col xl="6" lg="12" class="mx-auto">
-						<div class="view view-cascade gradient-card-header blue lighten-1">
-							<h2 class="h2-responsive mb-0">{{ $t('views.Trade.pageTitle') }}</h2>
-						</div>
-					</mdb-col>
-				</mdb-row> -->
 			<mdb-card cascade>
 				<mdb-view cascade class="blue lighten-1 p-3">
-					<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }"></div>
+					<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }">
+						<mdb-view hover class="h-100 w-100 rounded-circle">
+							<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style=" overflow-wrap: anywhere; text-align: center;"/>
+						</mdb-view>
+					</div>
 				</mdb-view>
 				<mdb-card-body>
 					<form @submit.prevent="save">
@@ -110,10 +105,10 @@
 						</mdb-row>
 						<mdb-row>
 							<mdb-col sm="6" md="4" lg="3" v-for="(file, i) in companyFiles" :key="'companyCodes' + i">
-									<mdb-list-group-item>
-										<a :href="file.url" target="_blank">{{ file.name }}</a>
-										<mdb-icon icon="trash" class="clickable float-right" />
-									</mdb-list-group-item>
+								<mdb-list-group-item>
+									<a :href="file.url" target="_blank">{{ file.name }}</a>
+									<mdb-icon icon="trash" class="clickable float-right" />
+								</mdb-list-group-item>
 							</mdb-col>
 						</mdb-row>
 						<mdb-row>
