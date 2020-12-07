@@ -161,7 +161,9 @@
 		"trade": "Επωνυμία",
 		"registrationNumber": "Αρ. Μητρώου",
 		"professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
-		"licenseExpirationDate": "Ημ. Λήξης Άδειας"
+		"licenseExpirationDate": "Ημ. Λήξης Άδειας",
+		"iban": "IBAN",
+		"code": "Κωδικός"
 	},
 	"actions": {
 		"submit": "Υποβολή",

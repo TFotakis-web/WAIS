@@ -161,7 +161,9 @@
 		"trade": "Trade",
 		"registrationNumber": "Registration number",
 		"professionStartDate": "Profession start date",
-		"licenseExpirationDate": "License expiration date"
+		"licenseExpirationDate": "License expiration date",
+		"iban": "IBAN",
+		"code": "Code"
 	},
 	"actions": {
 		"submit": "Submit",
