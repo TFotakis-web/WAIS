@@ -6,7 +6,7 @@
 				<mdb-view cascade class="blue lighten-1 p-3">
 					<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }">
 						<mdb-view hover class="h-100 w-100 rounded-circle">
-							<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style=" overflow-wrap: anywhere; text-align: center;"/>
+							<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style=" overflow-wrap: anywhere; text-align: center;" />
 						</mdb-view>
 					</div>
 				</mdb-view>
@@ -52,7 +52,7 @@
 							</mdb-col>
 						</mdb-row>
 						<mdb-row class="mb-4">
-							<mdb-col md="6">
+							<mdb-col lg="6">
 								<mdb-row>
 									<mdb-col>
 										<h6>
@@ -61,19 +61,13 @@
 										</h6>
 									</mdb-col>
 								</mdb-row>
-								<mdb-row v-for="(account, i) in companyAccounts" :key="'companyAccounts' + i" class="mb-2">
-									<mdb-col col="5">
-										<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline />
-									</mdb-col>
-									<mdb-col col="5">
-										<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline />
-									</mdb-col>
-									<mdb-col col="2" class="text-right">
-										<mdb-icon icon="trash" class="clickable" />
-									</mdb-col>
-								</mdb-row>
+								<div v-for="(account, i) in companyAccounts" :key="'companyAccounts' + i" class="d-flex flex-row mb-2 align-items-baseline">
+									<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline class="flex-fill mr-2" />
+									<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline class="flex-fill mr-2" />
+									<mdb-icon icon="trash" class="clickable" />
+								</div>
 							</mdb-col>
-							<mdb-col md="6">
+							<mdb-col lg="6">
 								<mdb-row>
 									<mdb-col>
 										<h6>
@@ -82,17 +76,11 @@
 										</h6>
 									</mdb-col>
 								</mdb-row>
-								<mdb-row v-for="(companyCode, i) in companyCodes" :key="'companyCodes' + i" class="mb-2">
-									<mdb-col col="5">
-										<mdb-select search v-model="companyOptions" :label="$t('fields.company')" :small="validation.companyCodes[i].name" type="text" outline required />
-									</mdb-col>
-									<mdb-col col="5">
-										<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline />
-									</mdb-col>
-									<mdb-col col="2" class="text-right">
-										<mdb-icon icon="trash" class="clickable" />
-									</mdb-col>
-								</mdb-row>
+								<div v-for="(companyCode, i) in companyCodes" :key="'companyCodes' + i" class="d-flex flex-row mb-2 align-items-baseline">
+									<mdb-select search v-model="companyOptions" :label="$t('fields.company')" :small="validation.companyCodes[i].name" type="text" outline required class="flex-fill mr-2" />
+									<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline class="flex-fill mr-2" />
+									<mdb-icon icon="trash" class="clickable" />
+								</div>
 							</mdb-col>
 						</mdb-row>
 						<mdb-row>
