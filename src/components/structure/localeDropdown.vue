@@ -6,7 +6,7 @@
 				<mdb-icon icon="globe" class="black-text" />
 			</mdb-dropdown-toggle>
 			<mdb-dropdown-menu style="min-width: unset">
-				<mdb-dropdown-item v-for="locale in $i18n.availableLocales" :key="locale" @click="changeLanguage(locale)">
+				<mdb-dropdown-item v-for="locale in $i18n.availableLocales" :key="locale" @click="$i18n.$loadLanguageAsync(locale)">
 					{{ locale }}
 				</mdb-dropdown-item>
 			</mdb-dropdown-menu>
@@ -17,11 +17,5 @@
 <script>
 	export default {
 		name: 'LocaleDropdown',
-		methods: {
-			changeLanguage: function(locale) {
-				this.$i18n.$loadLanguageAsync(locale);
-				this.$cookies.set('locale', locale);
-			},
-		},
 	};
 </script>
