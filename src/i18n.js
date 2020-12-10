@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import $http from '@/axios';
+import $store from '@/store';
+import VueCookies from 'vue-cookies';
 
 Vue.use(VueI18n);
 
@@ -18,29 +20,24 @@ function setI18nLanguage(lang) {
 	$i18n.locale = lang;
 	$http.defaults.headers.common['Accept-Language'] = lang;
 	document.querySelector('html').setAttribute('lang', lang);
+	VueCookies.set('locale', lang);
 	return lang;
 }
 
 VueI18n.prototype.$loadLanguageAsync = async function (lang) {
-	// If the same language
-	console.log("Load language async");
-	if ($i18n.locale === lang) {
-		return Promise.resolve(setI18nLanguage(lang));
-	}
-
-	// If the language was already loaded
-	if (loadedLanguages.includes(lang)) {
-		return Promise.resolve(setI18nLanguage(lang));
-	}
+	// Handle en-US, el-GR and similar coding
+	lang = lang.split('-')[0]
 
 	// If the language hasn't been loaded yet
-	const a = performance.now();
-	const messages = await $http.get(`/locales/${lang}.json`);
-	const b = performance.now();
-	console.log(b - a);
-	$i18n.setLocaleMessage(lang, messages.data);
-	loadedLanguages.push(lang);
-	return setI18nLanguage(lang);
+	if (!loadedLanguages.includes(lang)) {
+		$store.commit('increaseGlobalPendingPromises');
+		const messages = await $http.get(`/locales/${lang}.json`);
+		$store.commit('decreaseGlobalPendingPromises');
+		$i18n.setLocaleMessage(lang, messages.data);
+		loadedLanguages.push(lang);
+	}
+
+	return Promise.resolve(setI18nLanguage(lang));
 }
 
 export default $i18n;
