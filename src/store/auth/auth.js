@@ -82,9 +82,15 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		async authAction({ commit }) {
-			const userInfo = await Auth.currentUserInfo();
-			commit("setUser", userInfo);
+		async currentUserInfo({ commit }) {
+			try {
+				const userInfo = await Auth.currentUserInfo();
+				commit("setUser", userInfo);
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		}
 	},
 	getters: {
