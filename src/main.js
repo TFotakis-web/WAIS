@@ -87,13 +87,8 @@ const v = {
 				});
 		},
 		initLocale: function () {
-			const localeCookie = this.$cookies.get('locale');
-			if (localeCookie) {
-				this.$i18n.locale = localeCookie;
-				return;
-			}
-			const userLang = navigator.language || navigator.userLanguage;
-			if (userLang && userLang.match('el')) this.$i18n.locale = 'gr';
+			const userLang = this.$cookies.get('locale') || navigator.language || navigator.userLanguage;
+			this.$i18n.$loadLanguageAsync(userLang);
 			this.$cookies.set('locale', this.$i18n.locale);
 		},
 	}
