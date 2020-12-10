@@ -1,15 +1,5 @@
 <template>
-	<mdb-side-nav-2
-		:value="true"
-		:data="navigation"
-		side
-		slim
-		expand-on-hover
-		:slim-collapsed="collapsed"
-		@toggleSlim="collapsed = $event"
-		sidenav-class="blue accent-4"
-		color="white"
-	>
+	<mdb-side-nav-2 :value="true" :data="navigation" side slim expand-on-hover :slim-collapsed="collapsed" @toggleSlim="collapsed = $event" sidenav-class="blue accent-4" color="white">
 		<div slot="header" class="white-text">
 			<router-link :to="{ name: 'Trade' }" class="d-flex align-items-center my-4 justify-content-center white-text">
 				<mdb-avatar :width="40" style="flex: 0 0 auto">
@@ -85,10 +75,15 @@
 			</mdb-navbar-nav>
 		</mdb-navbar>
 
-		<div class="py-5" slot="main" style="min-height: 100vh">
-			<transition name="fadingSlide" mode="out-in">
-				<router-view />
-			</transition>
+		<div class="py-5" slot="main" style="min-height: 100vh; position: relative">
+			<div v-show="$store.getters.routerViewPendingPromises > 0" style="position: absolute; left: 50%; top: 50%; transform: translate(-32px, -32px); z-index: 100000;">
+				<mdb-spinner big />
+			</div>
+			<div v-show="$store.getters.routerViewPendingPromises === 0" name="fadingSlide" mode="out-in">
+				<transition name="fadingSlide" mode="out-in">
+					<router-view />
+				</transition>
+			</div>
 		</div>
 	</mdb-side-nav-2>
 </template>
