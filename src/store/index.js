@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import { auth } from '@/store/auth/auth';
 import { vehicle } from '@/store/vehicle/vehicle';
 import { trade } from '@/store/trade/trade';
+import { platformData } from '@/store/platformData/platformData';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -10,6 +11,7 @@ export default new Vuex.Store({
 		auth,
 		vehicle,
 		trade,
+		platformData
 	},
 	state: {
 		globalPendingPromises: 0,
