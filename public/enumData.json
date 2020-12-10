@@ -1,5 +1,5 @@
 {
-	"Branches":[
+	"Branches": [
 		"Αυτοκίνητο",
 		"Πυρός",
 		"Αστική ευθύνη",
@@ -100,9 +100,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -212,34 +212,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -252,9 +250,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -364,34 +362,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -404,9 +400,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -516,34 +512,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -556,9 +550,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -668,34 +662,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -708,9 +700,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -820,34 +812,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -860,9 +850,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -972,34 +962,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1012,9 +1000,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1124,34 +1112,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1164,9 +1150,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1276,34 +1262,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1316,9 +1300,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1428,34 +1412,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1468,9 +1450,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1580,34 +1562,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1620,9 +1600,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1732,34 +1712,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1772,9 +1750,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -1884,34 +1862,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -1924,9 +1900,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2036,34 +2012,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2076,9 +2050,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2188,34 +2162,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2228,9 +2200,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2340,34 +2312,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2380,9 +2350,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2492,34 +2462,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2532,9 +2500,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2644,34 +2612,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2684,9 +2650,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2796,34 +2762,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2836,9 +2800,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -2948,34 +2912,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -2988,9 +2950,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -3100,34 +3062,32 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		},
@@ -3140,9 +3100,9 @@
 						"Γενική Αστική Ευθύνη": -1,
 						"Επαγγελματική Ευθύνη": -1
 					},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Αυτοκίνητο": {
 					"id": -1,
@@ -3252,39 +3212,37 @@
 						"ΦΙΧ ΨΥΓΕΙΟ": -1,
 						"ΦΙΧ": -1
 					},
-					"packages":{
+					"packages": {
 						"Βασικό": -1,
-						"Βασικό με θραύση":-1,
+						"Βασικό με θραύση": -1,
 						"Πυρός - Κλοπή": -1,
 						"Μικτή": -1
 					},
-					"Duration": {
-
-					},
+					"Duration": {},
 					"Discount": {
 						"Αγροτική (10%)": -1
 					}
 				},
-				"Ζωής":  {
+				"Ζωής": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				},
 				"Πυρός": {
 					"id": -1,
 					"covers": {},
 					"usages": {},
-					"packages":{},
-					"duration":{},
-					"discount":{}
+					"packages": {},
+					"duration": {},
+					"discount": {}
 				}
 			}
 		}
 	},
-	"DOY": [
+	"DOY-old": [
 		"A’ AΘHNΩN",
 		"Δ' AΘHNΩN",
 		"ΣT' AΘHNΩN",
@@ -3427,1466 +3385,2885 @@
 		"XANIΩN",
 		"XIOY"
 	],
-	"CarModels": {
-		"ALFA ROMEO": [
-			"145",
-			"146",
-			"147",
-			"155",
-			"156",
-			"159",
-			"164",
-			"166",
-			"Brera",
-			"GT",
-			"GTV",
-			"Giulia",
-			"Giulietta",
-			"Grosswagon",
-			"MiTo",
-			"4C SRIDER",
-			"Spider",
-			"Stelvio"
-		],
-		"Abarth": [
-			"500",
-			"500 C",
-			"595",
-			"595 C",
-			"695",
-			"124 Spider",
-			"Grande Punto",
-			"Punto Evo"
-		],
-		"ASTON MARTIN": [
-			"DB9"
-		],
-		"AUDI": [
-			"Άλλο μοντέλο",
-			"A2",
-			"A3",
-			"A4",
-			"A6",
-			"A8",
-			"RS4",
-			"S3",
-			"S4",
-			"S6",
-			"S8",
-			"TTR",
-			"TTC",
-			"80",
-			"S5",
-			"Q7",
-			"Q5",
-			"A5",
-			"RS6",
-			"Q3",
-			"A1",
-			"R8",
-			"S1"
-		],
-		"BMW": [
-			"Άλλο Μοντέλο",
-			"Series 1",
-			"Series 2",
-			"Series 3",
-			"Series 4",
-			"Series 5",
-			"Series 6",
-			"Series 7",
-			"Series 8",
-			"X1",
-			"X3",
-			"X4",
-			"X5",
-			"X6",
-			"M4",
-			"M3",
-			"M5",
-			"M6",
-			"Z3",
-			"Z4",
-			"Z8",
-			"Series i3",
-			"Series i8",
-			"Series M2"
-		],
-		"CITROEN": [
-			"C1",
-			"C2",
-			"C3",
-			"C4",
-			"C5",
-			"C6",
-			"C8",
-			"C 15",
-			"DS3",
-			"DS4",
-			"DS5",
-			"Berlingo",
-			"Evasion",
-			"Nemo",
-			"Saxo",
-			"Xantia",
-			"Xsara",
-			"Jamper",
-			"New Jamper",
-			"Jampy",
-			"C - Grosser",
-			"C-ELYSEE",
-			"Grand C4",
-			"AX",
-			"ZX",
-			"XM"
-		],
-		"DAEWOO": [
-			"Matiz",
-			"Kalos",
-			"Lacetti",
-			"Lanos",
-			"Nexia",
-			"Espero",
-			"Evanda",
-			"Korando",
-			"Lecanza",
-			"Musso",
-			"Nubira",
-			"Tacuma",
-			"Rezzo"
-		],
-		"FIAT": [
-			"500",
-			"500C",
-			"500L",
-			"500X",
-			"Brava",
-			"Bravo",
-			"Cinquecento",
-			"Doblo",
-			"Ducato",
-			"Fiorino",
-			"Multipla",
-			"Panta",
-			"Panta Van",
-			"Panda Cross",
-			"Punto",
-			"Punto Evo",
-			"Grande Punto",
-			"Scudo",
-			"Seicento",
-			"Stilo",
-			"Tempra",
-			"Tipo",
-			"Uno",
-			"Albea",
-			"Barchetta",
-			"Coupe",
-			"Croma",
-			"Doblo Cargo",
-			"Doblo Panorama",
-			"Ducato Compinato",
-			"Ducato Doppia",
-			"Ducato Maxi",
-			"Freemont",
-			"Fiorino Qubo",
-			"Fullback",
-			"Idea",
-			"Marea",
-			"Linea",
-			"Palio",
-			"Sedici",
-			"Stilo Multiwagon",
-			"Strada",
-			"Strada RST",
-			"Talento",
-			"Ulysee",
-			"124 Spider"
-		],
-		"FORD": [
-			"Escort",
-			"Fiesta",
-			"Focus",
-			"Focus RS",
-			"Puma",
-			"Ka",
-			"Ka+",
-			"StreetKa",
-			"Kuga",
-			"Fusion",
-			"Mondeo",
-			"Scorpio",
-			"Maverick",
-			"Ranger",
-			"B-Max",
-			"C-Max",
-			"S-Max",
-			"Tourneo",
-			"Grand Tourneo Connect",
-			"Tourneo Connect",
-			"Tourneo Courier",
-			"Transit",
-			"Transit Connect",
-			"Transit Courier",
-			"Transit Custom",
-			"Mustang Fastback",
-			"Mustang Cabrio",
-			"Galaxy",
-			"ETG",
-			"Ecosport",
-			"Edge"
-		],
-		"HONDA": [
-			"Accord",
-			"Civic",
-			"Civic Aerodeck",
-			"Prelude",
-			"CR-V",
-			"CR-X",
-			"CR-Z",
-			"HR-V",
-			"S2000",
-			"Jazz",
-			"Stream",
-			"FR-V",
-			"Legend",
-			"Insight"
-		],
-		"HUMMER": [
-			"H2",
-			"H3"
-		],
-		"HYUNDAI": [
-			"Accent",
-			"Atos",
-			"Atos Prime",
-			"Getz",
-			"Matrix",
-			"i10",
-			"i20",
-			"i30",
-			"i30 Tourer",
-			"iX35",
-			"Elantra",
-			"Lantra",
-			"Galloper",
-			"Santa Fe",
-			"Scoupe",
-			"Sonata",
-			"Coupe FX",
-			"Coupe GK",
-			"Grase",
-			"H-1",
-			"Terracan",
-			"Tucson",
-			"Trajet"
-		],
-		"Infiniti": [
-			"G37",
-			"EX37",
-			"FX"
-		],
-		"ISUZU": [
-			"Trooper",
-			"D-Max",
-			"N Series"
-		],
-		"JAGUAR": [
-			"S-Type",
-			"X-Type",
-			"F-Type",
-			"XJ",
-			"XJ6",
-			"XJ8",
-			"XJ12",
-			"XJ Super",
-			"XJR",
-			"XJR6",
-			"XJR8",
-			"XJR Super",
-			"XJ Daimler",
-			"XJ6 Daimler",
-			"XJ8 Daimler",
-			"XJ12 Daimler",
-			"XJ6 Sovereign",
-			"XJ8 Sovereign",
-			"Sovereign XJ8",
-			"XK",
-			"XK8",
-			"XKR",
-			"XKR-S",
-			"XK Series XKR",
-			"XF",
-			"XFR",
-			"XFR S",
-			"XE",
-			"F-PACE"
-		],
-		"JEEP": [
-			"Cherokee",
-			"Grand Cherokee",
-			"Wrangler",
-			"Commander",
-			"Compass",
-			"Patriot",
-			"Renegade",
-			"Wrangler Unlimited"
-		],
-		"LADA": [
-			"Diva",
-			"Diva Edition One",
-			"110 Aquarius",
-			"110 Libra",
-			"111 Grand Tour",
-			"112 Venus",
-			"Niva",
-			"Niva City",
-			"Niva Safari",
-			"Niva Club",
-			"Samara",
-			"Samara Edition One",
-			"1500",
-			"21044",
-			"21073"
-		],
-		"Lamborghini": [
-			"Murcielago",
-			"Gallardo",
-			"Aventador"
-		],
-		"LANCIA": [
-			"Dedra",
-			"Delta HPE",
-			"Delta HF Integrale",
-			"Delta",
-			"Kappa",
-			"Lybra",
-			"Ypsilon",
-			"Y10",
-			"Thesis",
-			"Phedra",
-			"Musa"
-		],
-		"KIA": [
-			"Clarus",
-			"Pride",
-			"Rio",
-			"Sephia",
-			"Shuma",
-			"Sportage",
-			"Besta",
-			"Sorento",
-			"Picanto",
-			"Cerato",
-			"Carens",
-			"Magentis",
-			"Ceed",
-			"Soul",
-			"Venga",
-			"ProCeed",
-			"Sportage QL"
-		],
-		"Lexus": [
-			"GS 300",
-			"IS 200",
-			"LS 400",
-			"RX 300",
-			"SC 430",
-			"IS 300",
-			"GS 430",
-			"LS 430",
-			"RX 400h",
-			"IS 250",
-			"RX 350",
-			"GS 450h",
-			"LS 460",
-			"LS 600h",
-			"GS 460",
-			"LS 600h Long",
-			"IS 250C",
-			"RX 450h",
-			"CT 200h",
-			"IS 300h",
-			"NX 300h",
-			"GS 300h"
-		],
-		"MASERATI": [
-			"224",
-			"3200 GT",
-			"424",
-			"422",
-			"Ghibli",
-			"Quattroporte",
-			"Spyder",
-			"Coupe",
-			"GranTurismo",
-			"GranCabrio",
-			"LEVANTE"
-		],
-		"MAZDA": [
-			"121",
-			"323",
-			"626",
-			"Demio",
-			"MPV",
-			"MX-3",
-			"MX-5",
-			"Premacy",
-			"RX-7",
-			"Xedos",
-			"Xedos 9",
-			"B-Series",
-			"E-Series",
-			"Tribute",
-			"6",
-			"2",
-			"3",
-			"RX-8",
-			"5",
-			"3 MPS",
-			"BT-50",
-			"CX-7"
-		],
-		"MERCEDES": [
-			"Class A A140",
-			"Class A Long A140",
-			"Class A A150",
-			"Class A A160",
-			"Class A A160 CDi",
-			"Class A A160 CDi BE",
-			"Class A A160d",
-			"Class A Long A160",
-			"Class A A170",
-			"A170 CDi",
-			"Class A Long A170 CDi",
-			"Class A A180",
-			"Class A A180 CDi",
-			"Class A A180 CDi BE",
-			"Class A A180d",
-			"Class A A190",
-			"Class A Long A190",
-			"Class A A200",
-			"Class A A200 CDi",
-			"Class A A200 CDi BE",
-			"Class A A200d",
-			"Class A A210",
-			"Class A Long A210",
-			"Class A A220",
-			"Class A A220 CDi BE",
-			"Class A A220d",
-			"Class A A250",
-			"Class A A45 AMG",
-			"Class B B150",
-			"Class B B160",
-			"Class B B160 CDi",
-			"Class B B160d",
-			"Class B B170",
-			"Class B B180",
-			"Class B B180 CDi",
-			"Class B B180d",
-			"Class B B200",
-			"Class B B200 CDi",
-			"Class B B200c",
-			"Class B B200d",
-			"Class B B220",
-			"Class B B220 CDi",
-			"Class B B220d",
-			"Class B B250",
-			"Class B B250 Electric",
-			"Class C C160",
-			"Class C C180",
-			"Class C C180 CDi",
-			"Class C C180 CDi T",
-			"Class C C180d",
-			"Class C C180d T",
-			"Class C C180 K",
-			"Class C C180 BlueTEC",
-			"Class C C200",
-			"Class C C200 CDi",
-			"Class C C200 CDi T",
-			"Class C C200d",
-			"Class C C200d T",
-			"Class C C200 D",
-			"Class C C200K",
-			"Class C C200 BlueTEC",
-			"Class C C220",
-			"Class C C220 CDi",
-			"Class C C220 CDi T",
-			"Class C C220d",
-			"Class C C220d T",
-			"Class C C220 D",
-			"Class C C220 BlueTEC",
-			"Class C C220 BlueTEC T",
-			"Class C C230",
-			"Class C C240",
-			"Class C C250",
-			"Class C C250 CDi",
-			"Class C C250 CDi T",
-			"Class C C250d",
-			"Class C C250d T",
-			"Class C C250 D",
-			"Class C C250 TD",
-			"Class C C250 BlueTEC",
-			"Class C C250 BlueTEC T",
-			"Class C C270 CDi",
-			"Class C C270 CDi T",
-			"Class C C280",
-			"Class C C300",
-			"Class C C300h",
-			"Class C C300h T",
-			"Class C C300 BlueTEC",
-			"Class C C300 BlueTEC T",
-			"Class C C320",
-			"Class C C320 CDi",
-			"Class C C320 CDi T",
-			"Class C C350",
-			"Class C C350 CDi",
-			"Class C C350 CGi",
-			"Class C C350 e",
-			"Class C C350 e T",
-			"Class C C400",
-			"Class C AMG C180",
-			"Class C AMG C30 CDi",
-			"Class C AMG C30 CDi T",
-			"Class C AMG C32",
-			"Class C AMG C43",
-			"Class C AMG C55",
-			"Class C AMG C63",
-			"Class C AMG C450",
-			"Class CL CL420",
-			"Class CL CL500",
-			"Class CL CL600",
-			"Class CL AMG CL55",
-			"Class CL AMG CL63",
-			"Class CL AMG CL65",
-			"Class CLA CLA180",
-			"Class CLA CLA180 CDI",
-			"Class CLA CLA180d",
-			"Class CLA CLA200",
-			"Class CLA CLA200 CDI",
-			"Class CLA CLA200d",
-			"Class CLA CLA220",
-			"Class CLA CLA220 CDI",
-			"Class CLA CLA220d",
-			"Class CLA CLA250",
-			"Class CLA AMG CLA45",
-			"Class CLA SB CLA180",
-			"Class CLA SB CLA180d",
-			"Class CLA SB CLA200",
-			"Class CLA SB CLA200 CDI\t",
-			"Class CLA SB CLA200d",
-			"Class CLA SB CLA220",
-			"Class CLA SB CLA220 CDI",
-			"Class CLA SB CLA220d",
-			"Class CLA SB CLA250",
-			"Class CLA SB AMG CLA45",
-			"Class CLC CLC160",
-			"Class CLC CLC180",
-			"Class CLC CLC200",
-			"Class CLC CLC200 CDi",
-			"Class CLC CLC230",
-			"Class CLC CLC250",
-			"Class CLC CLC350",
-			"Class CLK CLK200",
-			"Class CLK CLK220 CDi",
-			"Class CLK CLK230",
-			"Class CLK CLK240",
-			"Class CLK CLK270CDI",
-			"Class CLK CLK280",
-			"Class CLK CLK320",
-			"Class CLK CLK320 CDi",
-			"Class CLK CLK350",
-			"Class CLK CLK430",
-			"Class CLK CLK500",
-			"Class CLK AMG CLK55",
-			"Class CLK AMG CLK63",
-			"Class CLS CLS220 BLUEtec",
-			"Class CLS CLS220 BLUEtec",
-			"Class CLS CLS220d",
-			"Class CLS CLS250 BlueTEC",
-			"Class CLS CLS250 CDI",
-			"Class CLS CLS250d\t",
-			"Class CLS CLS280",
-			"Class CLS CLS300",
-			"Class CLS CLS320\t",
-			"Class CLS CLS320CDi",
-			"Class CLS CLS350",
-			"Class CLS CLS350 BlueTEC",
-			"Class CLS CLS350CDi",
-			"Class CLS CLS350 CGi",
-			"Class CLS CLS350d\t\t",
-			"Class CLS CLS400",
-			"Class CLS CLS500",
-			"Class CLS AMG CLS55",
-			"Class CLS AMG CLS63",
-			"Class CLS AMG SB CLS63",
-			"Class CLS SB CLS250 CDI BE",
-			"Class CLS SB CLS350",
-			"Class CLS SB CLS500",
-			"Class E E180",
-			"Class E E200",
-			"Class E E200 BlueTEC",
-			"Class E E200 CDi",
-			"Class E E200 CDI BE",
-			"Class E E200 CDi T",
-			"Class E E200 CGi",
-			"Class E E200 D",
-			"Class E E200d",
-			"Class E E220",
-			"Class E E220 BlueTEC",
-			"Class E E220 CDi",
-			"Class E E220 CDI BE",
-			"Class E E220 CDi T",
-			"Class E E220d",
-			"Class E E230",
-			"Class E E240",
-			"Class E E250",
-			"Class E E250 BlueTEC",
-			"Class E E250 CDi",
-			"Class E E250 CDI BE",
-			"Class E E250 CGi",
-			"Class E E250 D",
-			"Class E E250 TD",
-			"Class E E250d",
-			"Class E E270 CDi",
-			"Class E E270 CDi T",
-			"Class E E280",
-			"Class E E280 CDi",
-			"Class E E280 CDi T",
-			"Class E E290 TD",
-			"Class E E300",
-			"Class E E300 BlueTEC",
-			"Class E E300 CDI",
-			"Class E E300 CGi",
-			"Class E E300 TD",
-			"Class E E320",
-			"Class E E320 CDi",
-			"Class E E320 CDi T",
-			"Class E E350",
-			"Class E E350 BlueTEC",
-			"Class E E350 CDI",
-			"Class E E350CGi",
-			"Class E E350d",
-			"Class E E350e",
-			"Class E E400",
-			"Class E E400 CDi",
-			"Class E E420",
-			"Class E E500",
-			"Class E AMG E55",
-			"Class E AMG E63",
-			"Class E AMG E63 S",
-			"Class E E63 AMG",
-			"Class E AMG S E63",
-			"Class G G270 CDi",
-			"Class G G320",
-			"Class G G320 CDi",
-			"Class G G350",
-			"Class G G350 CDi",
-			"Class G G350d",
-			"Class G G400 CDi",
-			"Class G G500",
-			"Class G AMG G63",
-			"Class G AMG G65",
-			"Class G Long G350",
-			"Class G Long G350 CDi",
-			"Class G Long G400 LCDi",
-			"Class G Long G500",
-			"Class G Long AMG G55",
-			"Class G Long AMG G63",
-			"Class G Long AMG G65",
-			"Class GL GL320 CDI",
-			"Class GL GL350 BlueTEC",
-			"Class GL GL350 CDI",
-			"Class GL GL400",
-			"Class GL GL420 CDI",
-			"Class GL GL450",
-			"Class GL GL450 CDI",
-			"Class GL GL500",
-			"Class GL AMG GL63",
-			"Class GLA GLA180",
-			"Class GLA GLA180 CDI",
-			"Class GLA GLA180d",
-			"Class GLA GLA200",
-			"Class GLA GLA200 CDI",
-			"Class GLA GLA200d",
-			"Class GLA GLA220",
-			"Class GLA GLA220 CDI",
-			"Class GLA GLA220d",
-			"Class GLA GLA250",
-			"Class GLA 45 AMG",
-			"Class GLC GLC220d",
-			"Class GLC GLC250",
-			"Class GLC GLC250d",
-			"Class GLC GLC350d",
-			"Class GLC GLC350e",
-			"Class GLC Coupe GLC220d",
-			"Class GLC Coupe GLC250",
-			"Class GLC Coupe GLC250d",
-			"Class GLC Coupe GLC300",
-			"Class GLC Coupe GLC350d",
-			"Class GLC Coupe GLC350e",
-			"Class GLC Coupe AMG GLC43",
-			"Class GLC AMG GLC43",
-			"Class GLE GLE250d",
-			"Class GLE GLE350d",
-			"Class GLE GLE400",
-			"Class GLE GLE500",
-			"Class GLE GLE500e",
-			"Class GLE Coupe GLE350d",
-			"Class GLE Coupe GLE400",
-			"Class GLE Coupe GLE500",
-			"Class GLE AMG GLE43",
-			"Class GLE AMG GLE63",
-			"Class GLE AMG GLE63 S",
-			"Class GLE AMG GLE450",
-			"Class GLE AMG Coupe GLE43",
-			"Class GLE AMG Coupe GLE63",
-			"Class GLE AMG Coupe GLE450",
-			"Class GLK GLK200",
-			"Class GLK GLK200 CDi",
-			"Class GLK GLK220",
-			"Class GLK GLK220 CDi",
-			"Class GLK GLK250",
-			"Class GLK GLK250 CDi",
-			"Class GLK GLK280",
-			"Class GLK GLK300",
-			"Class GLK GLK320 CDi",
-			"Class GLK GLK350",
-			"Class GLK GLK350 CDi",
-			"Class GLS GLS350d",
-			"Class GLS GLS400",
-			"Class GLS GLS500",
-			"Class GLS AMG GLS63",
-			"Class M ML230",
-			"Class M ML250",
-			"Class M ML270 CDi",
-			"Class M ML280 CDi",
-			"Class M ML300 CDi",
-			"Class M ML320",
-			"Class M ML320 CDi",
-			"Class M ML350",
-			"Class M ML350 CDi",
-			"Class M ML400",
-			"Class M ML400 CDi",
-			"Class M ML420 CDi",
-			"Class M ML430",
-			"Class M ML450 CDi",
-			"Class M ML500",
-			"Class M AMG ML55",
-			"Class M AMG ML63",
-			"Class R R280",
-			"Class R R300",
-			"Class R R320",
-			"Class R R350",
-			"Class R R500",
-			"Class R Long R280",
-			"Class R Long R300",
-			"Class R Long R320",
-			"Class R Long R350",
-			"Class R Long R500",
-			"Class S S250 CDi",
-			"Class S S280",
-			"Class S S300",
-			"Class S S300 BlueTEC",
-			"Class S S300h",
-			"Class S S320",
-			"Class S S350",
-			"Class S S350d",
-			"Class S S400",
-			"Class S S400h",
-			"Class S S420",
-			"Class S S430",
-			"Class S S450",
-			"Class S S500",
-			"Class S S600",
-			"Class S AMG S55",
-			"Class S AMG S63",
-			"Class S AMG S65",
-			"Class S S63 AMG",
-			"Class S S65 AMG",
-			"Class S Cabrio S63  AMG",
-			"Class S Cabrio S65  AMG",
-			"Class S Cabrio S500",
-			"Class S Long S250 CDi",
-			"Class S Long S280",
-			"Class S Long S300",
-			"Class S Long S300 BlueTEC",
-			"Class S Long S300h",
-			"Class S Long S320",
-			"Class S Long S320 CDi",
-			"Class S Long S350",
-			"Class S Long S350\tBlueTEC",
-			"Class S Long S350 CDi",
-			"Class S Long S350d",
-			"Class S Long S400",
-			"Class S Long S400 CDi",
-			"Class S Long S400h",
-			"Class S Long S420",
-			"Class S Long S420 CDi",
-			"Class S Long S430",
-			"Class S Long S430L",
-			"Class S Long S450",
-			"Class S Long S450 CDi",
-			"Class S Long S500",
-			"Class S Long S500e",
-			"Class S Long S600",
-			"Class S Long AMG S55",
-			"Class S Long AMG S63",
-			"Class S Long AMG S65",
-			"Class S Long S63 AMG",
-			"Class S Long S65 AMG",
-			"Class S Long Guard S600",
-			"Class SL SL280",
-			"Class SL SL300",
-			"Class SL SL320",
-			"Class SL SL350",
-			"Class SL SL400",
-			"Class SL SL500",
-			"Class SL SL600",
-			"Class SL AMG SL55",
-			"Class SL AMG SL63",
-			"Class SL AMG SL65",
-			"Class SLC180",
-			"Class SLC200",
-			"Class SLC250d",
-			"Class SLC300",
-			"Class SLC AMG SLC43",
-			"Class SLK200",
-			"Class SLK250",
-			"Class SLK250 CDi",
-			"Class SLK300",
-			"Class SLK350",
-			"Class SLK SLK200",
-			"Class SLK SLK230",
-			"Class SLK SLK280",
-			"Class SLK SLK300",
-			"Class SLK SLK320",
-			"Class SLK SLK350",
-			"Class SLK AMG SLK32",
-			"Class SLK AMG SLK55",
-			"SLR 5.4i",
-			"SLS AMG 6.2",
-			"Class V V200 CDI",
-			"Class V V200d",
-			"Class V V220 CDI",
-			"Class V V220d",
-			"Class V V250 BlueTEC",
-			"Class V V250d",
-			"Maybach Class S S500",
-			"Maybach Class S S600",
-			"Citan",
-			"Sprinter 208",
-			"Sprinter 209",
-			"Sprinter 210",
-			"Sprinter 211",
-			"Sprinter 213",
-			"Sprinter 214",
-			"Sprinter 215",
-			"Sprinter 216",
-			"Sprinter 218",
-			"Sprinter 219",
-			"Sprinter 224",
-			"Sprinter 308",
-			"Sprinter 309",
-			"Sprinter 310",
-			"Sprinter 311",
-			"Sprinter 312",
-			"Sprinter 313",
-			"Sprinter 314",
-			"Sprinter 315",
-			"Sprinter 316",
-			"Sprinter 318",
-			"Sprinter 319",
-			"Sprinter 324",
-			"Vaneo",
-			"Viano 2.0",
-			"Viano 2.2 CDi",
-			"Viano 3.0 CDi",
-			"Viano 3.2i",
-			"Viano 3.5i",
-			"Vito",
-			"Vito Tourer",
-			"100D"
-		],
-		"MINI COOPER": [
-			"One",
-			"Cooper",
-			"Cooper S",
-			"Cabrio One",
-			"Cabrio Cooper",
-			"Cabrio Cooper S",
-			"Clubman One",
-			"Clubman Cooper",
-			"Clubman Cooper S",
-			"Countryman One",
-			"Countryman Cooper",
-			"Countryman Cooper S",
-			"Coupe Cooper",
-			"Coupe Cooper S",
-			"Roadster Cooper",
-			"Roadster Cooper S",
-			"Paceman Cooper",
-			"Paceman Cooper S"
-		],
-		"MITSUBISHI": [
-			"ASX",
-			"Canter",
-			"Carisma",
-			"Colt",
-			"Colt CZC",
-			"Galant",
-			"Grandis",
-			"CR-L200",
-			"L200",
-			"L300",
-			"Lancer",
-			"Lancer Evolution",
-			"Pajero",
-			"Pajero Pinin",
-			"Space Wagon",
-			"Outlander"
-		],
-		"NISSAN": [
-			"100 NX",
-			"300 ZX",
-			"200 SX",
-			"Almera",
-			"Almera Pulsar",
-			"Maxima QX",
-			"Micra",
-			"Patrol GR",
-			"Primera",
-			"Primera Bluebird",
-			"Serena",
-			"Sunny",
-			"Terrano",
-			"Cabstar",
-			"Pickup",
-			"Vanette Cargo",
-			"Micra",
-			"X-Trail",
-			"Cabstar E",
-			"Primastar",
-			"350 Z",
-			"Kubistar",
-			"Murano",
-			"Pathfinder",
-			"Navara",
-			"Note",
-			"Qashqai",
-			"Tiida",
-			"GT-R",
-			"370 Z",
-			"Pixo",
-			"Evalia",
-			"NV200",
-			"Juke",
-			"Juke Nismo",
-			"NV400",
-			"NV300"
-		],
-		"OPEL": [
-			"Adam",
-			"Agila",
-			"Antara",
-			"Ampera",
-			"Astra",
-			"Astra GTC",
-			"Astra ST",
-			"Astra Van",
-			"Campo",
-			"Combo",
-			"Cascada",
-			"Combo Tour",
-			"Corsa",
-			"Corsa Van",
-			"Frontera",
-			"GT 2.0i",
-			"Insignia",
-			"Insignia CT",
-			"Meriva",
-			"Mokka",
-			"Mokka X",
-			"Movano",
-			"Omega",
-			"Signum",
-			"Speedster",
-			"Tigra",
-			"Vectra",
-			"Vivaro",
-			"Zafira",
-			"Zafira Tourer"
-		],
-		"PEUGEOT": [
-			"106",
-			"107",
-			"108",
-			"205",
-			"206",
-			"206+",
-			"206 XA",
-			"207",
-			"207 Enterprise",
-			"208",
-			"301",
-			"306",
-			"307",
-			"308",
-			"405",
-			"406",
-			"407",
-			"508",
-			"508 SW",
-			"605",
-			"607",
-			"806",
-			"807",
-			"1007",
-			"2008",
-			"3008",
-			"4007",
-			"5008",
-			"Bipper",
-			"BipperTepee",
-			"Boxer",
-			"New Boxer",
-			"Expert Combi",
-			"Expert Tepee",
-			"Expert Traveller",
-			"Expert Van",
-			"Partner",
-			"Partner Tepee",
-			"RCZ"
-		],
-		"PIAGGIO": [
-			"Porter",
-			"Porter D120",
-			"Porter maxxi D120",
-			"Porter Van D120"
-		],
-		"Pondiac": [
-			"Firebird",
-			"Trans Sport"
-		],
-		"Porsche": [
-			"911 Carrera",
-			"911 Carrera S",
-			"911 Carrera 2S",
-			"911 Carrera 4S",
-			"911 Carrera GT2",
-			"911 Carrera GT3",
-			"911 Carrera RS",
-			"911 Carrera Targa",
-			"911 Targa",
-			"911 Targa 4 GTS",
-			"911 Targa 4S",
-			"911 GT2",
-			"911 GT3",
-			"911 GT3 RS",
-			"911 Turbo",
-			"Boxster",
-			"Boxster GTS",
-			"Boxster S",
-			"Boxster Spyder",
-			"Carrera GT",
-			"Cayenne",
-			"Cayenne GTS",
-			"Cayenne S",
-			"Cayman",
-			"Cayman GTS",
-			"Cayman GT4",
-			"Cayman R",
-			"Cayman S",
-			"Macan",
-			"Macan S",
-			"Panamera",
-			"Panamera S",
-			"Panamera 2S",
-			"Panamera 4S",
-			"Panamera GTS",
-			"928",
-			"968"
-		],
-		"RENAULT": [
-			"R19",
-			"R 19",
-			"Captur",
-			"Clio",
-			"Clio Pro+",
-			"Express",
-			"Espace",
-			"Fluence",
-			"Grand Espace",
-			"Kadjar",
-			"Kangoo",
-			"Kangoo Express",
-			"Kangoo Generation",
-			"Kangoo Pampa",
-			"Koleos",
-			"Laguna",
-			"Megane",
-			"Megane Scenic",
-			"Modus",
-			"Safrane",
-			"Scenic",
-			"Scenic RX4",
-			"Grand Scenic",
-			"Twingo",
-			"Thalia",
-			"Trafic",
-			"Vel Satis"
-		],
-		"ROVER": [
-			"25",
-			"45",
-			"75",
-			"200",
-			"400",
-			"600",
-			"800",
-			"Streetwise"
-		],
-		"SAAB": [
-			"900",
-			"900 Turbo",
-			"9000",
-			"9-3",
-			"9-3 Viggen",
-			"9-5",
-			"9-3X",
-			"9-7X"
-		],
-		"SEAT": [
-			"Alhambra",
-			"Altea",
-			"Altea Freetrack",
-			"Altea XL",
-			"Arosa",
-			"Ateca",
-			"Cordoba",
-			"Exeo",
-			"Ibiza",
-			"Ibiza Cupra",
-			"Ibiza Van",
-			"Inca",
-			"Leon",
-			"Leon Cupra",
-			"Leon X-Perience",
-			"Marbella",
-			"Mii",
-			"Toledo"
-		],
-		"SKODA": [
-			"Citigo",
-			"Fabia",
-			"Fabia 60",
-			"Fabia 65",
-			"Fabia 70",
-			"Fabia 75",
-			"Fabia 80",
-			"Fabia 86",
-			"Fabia 100",
-			"Fabia 101",
-			"Fabia 102",
-			"Fabia 105",
-			"Fabia 115",
-			"Fabia 130",
-			"Fabia RS",
-			"Felicia",
-			"Kodiaq",
-			"Octavia",
-			"Octavia RS",
-			"Octavia5",
-			"Octavia5 RS",
-			"Octavia5 Scout",
-			"Octavia 90",
-			"Octavia 101",
-			"Octavia 110",
-			"Pickup",
-			"Rapid",
-			"Rapid Spaceback",
-			"Roomster",
-			"Roomster Scout",
-			"Superb",
-			"Yeti",
-			"Yeti Outdoor"
-		],
-		"SMART": [
-			"City",
-			"Fortwo",
-			"Fortwo Electric Drive",
-			"Forfour",
-			"Forfour Electric Drive",
-			"Roadster"
-		],
-		"SUBARU": [
-			"B9 Tribeca",
-			"BRZ",
-			"E 12",
-			"Forester",
-			"Impreza",
-			"Impreza GT Turbo",
-			"Impreza WRX",
-			"Justy",
-			"Justy II",
-			"Justy G3X",
-			"Legacy",
-			"Legacy Outback",
-			"Levorg",
-			"Outback",
-			"SVX",
-			"Trezia",
-			"Vivio",
-			"XV",
-			"WRX STI"
-		],
-		"SUZUKI": [
-			"Alto",
-			"Baleno",
-			"Baleno SHVS",
-			"Carry",
-			"Celerio",
-			"Grand Vitara",
-			"Jimny",
-			"Ignis",
-			"Ignis SHVS",
-			"Liana",
-			"Samurai",
-			"Splash",
-			"Swift",
-			"Vitara",
-			"Wagon R",
-			"Wagon R+",
-			"SX-4",
-			"SX-4 S-Cross",
-			"X-90"
-		],
-		"TATA": [
-			"Safari",
-			"Sumo",
-			"Telcoline",
-			"Telcosport"
-		],
-		"TOYOTA": [
-			"Aygo",
-			"Aygo x-Wave",
-			"Auris",
-			"Auris TS",
-			"Avensis",
-			"Carina E",
-			"Celica",
-			"Celica T Sport",
-			"C-HR",
-			"Corolla",
-			"Corona",
-			"Dyna 100",
-			"Dyna 150",
-			"GT86",
-			"Hiace",
-			"Hilux",
-			"iQ",
-			"Land Cruiser",
-			"Land Cruiser 150",
-			"MR2",
-			"Paseo",
-			"Prius",
-			"Proace",
-			"Proace Verso",
-			"RAV4",
-			"Starlet",
-			"URBAN CRUISER",
-			"Yaris",
-			"Yaris T Sport",
-			"Yaris Verso",
-			"Verso"
-		],
-		"VOLKSWAGEN": [
-			"Amarok",
-			"Beetle",
-			"New Beetle",
-			"Bora",
-			"Caddy",
-			"Caddy Kombi",
-			"Caddy Kombi Maxi",
-			"Caddy Maxi",
-			"Caravelle",
-			"CC",
-			"Crafter Chassis",
-			"Crafter Chassis 35",
-			"Crafter Van",
-			"Crafter Van 35",
-			"Eos",
-			"Fox",
-			"Jetta",
-			"Golf",
-			"Golf AllTrack",
-			"e-Golf",
-			"Golf Plus",
-			"Golf R32",
-			"Golf Sportsvan",
-			"Lupo",
-			"LT 35",
-			"LT46",
-			"Multivan",
-			"Passat",
-			"Passat Alltrack",
-			"Passat R36",
-			"Phaeton",
-			"Phaeton GP",
-			"Phaeton Long",
-			"Phaeton Long GP",
-			"Polo",
-			"Polo Van",
-			"Cross Polo",
-			"Scirocco",
-			"Scirocco R",
-			"Sharan",
-			"Taro",
-			"Tiguan",
-			"Touareg",
-			"Touareg GP",
-			"Touran",
-			"Cross Touran",
-			"Transporter",
-			"Transporter Kombi",
-			"Transporter T5",
-			"Transporter T6",
-			"Up",
-			"Cross Up",
-			"e-Up",
-			"Load Up!",
-			"Vento"
-		],
-		"VOLVO": [
-			"440",
-			"460",
-			"480",
-			"850",
-			"960",
-			"C30",
-			"C70",
-			"S40",
-			"S60",
-			"S60 C.Country",
-			"S70",
-			"S80",
-			"S90",
-			"V40",
-			"V40 C.Country",
-			"V50",
-			"V60",
-			"V60 C.Country",
-			"V70",
-			"V90",
-			"V90 C.Country",
-			"XC60",
-			"XC70",
-			"XC90"
-		],
-		"Bentley": [
-			"Arnage",
-			"Azure",
-			"Brooklands",
-			"Continental Flying Spur",
-			"Continental GT",
-			"Continental GTC",
-			"Continental Supersports",
-			"Mulsanne"
-		],
-		"Cadillac": [
-			"ATS",
-			"BLS",
-			"CLS",
-			"CTS",
-			"CTS Coupe",
-			"CTS Wagon",
-			"CTS-V",
-			"CTS-V Coupe",
-			"CTS-V Wagon",
-			"Escalade",
-			"Seville STS",
-			"SRX",
-			"STS",
-			"XLR",
-			"XLR - V"
-		],
-		"CHEVROLET": [
-			"Aveo",
-			"Blazer",
-			"Cruze",
-			"TrailBlazer",
-			"Camaro",
-			"Captiva",
-			"Corvette",
-			"Epica",
-			"Evanda",
-			"Lacetti",
-			"Matiz",
-			"Orlando",
-			"Rezzo",
-			"Spark",
-			"Tahoe",
-			"Trans Sport",
-			"Trax"
-		],
-		"Chysler": [
-			"300C",
-			"300M",
-			"Crossfire",
-			"Neon",
-			"New Yorker",
-			"PT Cruiser",
-			"Sebring",
-			"Stratus",
-			"Viper",
-			"Vision",
-			"Voyager"
-		],
-		"DACIA": [
-			"Duster",
-			"Logan",
-			"MCV",
-			"Sandero",
-			"Sandero Stepway"
-		],
-		"DAIHATSU": [
-			"Applause",
-			"Charade",
-			"Copen",
-			"Cuore",
-			"Feroza",
-			"Grand Move",
-			"Hijet",
-			"Sirion",
-			"Terios",
-			"YRV"
-		],
-		"Dodge": [
-			"Avenger",
-			"Caliber",
-			"Nitro",
-			"Viper"
-		],
-		"Ferrari": [
-			"348 TB",
-			"348 TS",
-			"355 GTS",
-			"360 Modena",
-			"456 GT",
-			"458 Italia",
-			"512 TR",
-			"550 Maranello",
-			"599 GTB FIORANO",
-			"612 Scaglietti",
-			"Mondial T",
-			"FF",
-			"F430 F1",
-			"F430 Spider F1",
-			"California",
-			"California 30",
-			"Testarossa"
-		]
+	"DOY": [
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"A ATHENS",
+				"A’ AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Δ' AΘHNΩN",
+				"Δ' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣT' AΘHNΩN",
+				"ΣT' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IB' AΘHNΩN",
+				"IB' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IΓ' AΘHNΩN",
+				"IΓ' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IΔ' AΘHNΩN",
+				"IΔ' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IZ' AΘHNΩN",
+				"IZ' AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΜΕΓΑΛΩΝ ΕΠΙΧΕΙΡΗΣΕΩΝ",
+				"ΜΕΓΑΛΩΝ ΕΠΙΧΕΙΡΗΣΕΩΝ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΦΟΡΟΛΟΓΙΑΣ ΑΝΩΝΥΜΩΝ ΕΤΑΙΡΕΙΩΝ(Φ.Α.Ε.) AΘHNΩN",
+				"ΦΟΡΟΛΟΓΙΑΣ ΑΝΩΝΥΜΩΝ ΕΤΑΙΡΕΙΩΝ(Φ.Α.Ε.) AΘHNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KATOIKΩN EΞΩTEPIKOY",
+				"KATOIKΩN EΞΩTEPIKOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΓIOY ΔHMHTPIOY",
+				"AΓIOY ΔHMHTPIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AIΓAΛEΩ",
+				"AIΓAΛEΩ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΓIΩN ANAPΓYPΩN",
+				"AΓIΩN ANAPΓYPΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AMAPOYΣIOY",
+				"AMAPOYΣIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AXAPNΩN",
+				"AXAPNΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"BYPΩNA",
+				"BYPΩNA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΓAΛATΣIOY",
+				"ΓAΛATΣIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΓΛYΦAΔAΣ",
+				"ΓΛYΦAΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"EΛEYΣINAΣ",
+				"EΛEYΣINAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"HΛIOYΠOΛHΣ",
+				"HΛIOYΠOΛHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAΛΛIΘEAΣ",
+				"KAΛΛIΘEAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KHΦIΣIAΣ",
+				"KHΦIΣIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KOPΩΠIOY",
+				"KOPΩΠIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"MOΣXATOY",
+				"MOΣXATOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"N. IΩNIAΣ",
+				"N. IΩNIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"N. ΣMYPNHΣ",
+				"N. ΣMYPNHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"N. HPAKΛEIOY",
+				"N. HPAKΛEIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"NIKAIAΣ",
+				"NIKAIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠAΛ. ΦAΛHPOY",
+				"ΠAΛ. ΦAΛHPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠAΛΛHNHΣ",
+				"ΠAΛΛHNHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Α' ΠΕΙΡΑΙΑ",
+				"Α' ΠΕΙΡΑΙΑ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Γ' ΠEIPAIA",
+				"Γ' ΠEIPAIA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Δ' ΠEIPAIA",
+				"Δ' ΠEIPAIA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"E' ΠEIPAIA",
+				"E' ΠEIPAIA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΦAE ΠEIPAIA",
+				"ΦAE ΠEIPAIA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠΛOIΩN ΠEIPAIA",
+				"ΠΛOIΩN ΠEIPAIA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"A' ΠEPIΣTEPIOY",
+				"A' ΠEPIΣTEPIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"B' ΠEPIΣTEPIOY",
+				"B' ΠEPIΣTEPIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"XAΛANΔPIOY",
+				"XAΛANΔPIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΧΟΛΑΡΓΟΥ",
+				"ΧΟΛΑΡΓΟΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΨYXIKOY",
+				"ΨYXIKOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΓIOY KHPYKOY IKAPIAΣ",
+				"AΓIOY KHPYKOY IKAPIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΓIOY NIKOΛAOY",
+				"AΓIOY NIKOΛAOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΓPINIOY",
+				"AΓPINIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AIΓINAΣ",
+				"AIΓINAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AIΓIOY",
+				"AIΓIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AΛEΞANΔPOYΠOΛHΣ",
+				"AΛEΞANΔPOYΠOΛHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AMAΛIAΔAΣ",
+				"AMAΛIAΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AMΠEΛOKHΠΩN ΘEΣ/NIKHΣ",
+				"AMΠEΛOKHΠΩN ΘEΣ/NIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"AMΦIΣΣAΣ",
+				"AMΦIΣΣAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ANΔPOY",
+				"ANΔPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"APΓOΣTOΛIOY",
+				"APΓOΣTOΛIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"APΓOYΣ",
+				"APΓOYΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"APTAΣ",
+				"APTAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"BEPOIAΣ",
+				"BEPOIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"BOΛOY",
+				"BOΛOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΓIANNITΣΩN",
+				"ΓIANNITΣΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΓPEBENΩN",
+				"ΓPEBENΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΔPAMAΣ",
+				"ΔPAMAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"EΔEΣΣAΣ",
+				"EΔEΣΣAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ZAKYNΘOY",
+				"ZAKYNΘOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"HΓOYMENITΣAΣ",
+				"HΓOYMENITΣAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"HPAKΛEIOY",
+				"HPAKΛEIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΘΑΣΟΥ",
+				"ΘΑΣΟΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΘΕΣΠΡΩΤΙΚΟΥ",
+				"ΘΕΣΠΡΩΤΙΚΟΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"A' ΘEΣΣAΛONIKHΣ",
+				"A' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Δ' ΘEΣΣAΛONIKHΣ",
+				"Δ' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"E' ΘEΣΣAΛONIKHΣ",
+				"E' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣT' ΘEΣΣAΛONIKHΣ",
+				"ΣT' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Z' ΘEΣΣAΛONIKHΣ",
+				"Z' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"H' ΘEΣΣAΛONIKHΣ",
+				"H' ΘEΣΣAΛONIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΦAE ΘEΣΣΑΛΟNIKHΣ",
+				"ΦAE ΘEΣΣΑΛΟNIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΘHBAΣ",
+				"ΘHBAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΘHPAΣ",
+				"ΘHPAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IΘAKHΣ",
+				"IΘAKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IΩANNINΩN",
+				"IΩANNINΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"IΩNIAΣ ΘEΣ/NIKHΣ",
+				"IΩNIAΣ ΘEΣ/NIKHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KABAΛAΣ",
+				"KABAΛAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAΛAMAPIAΣ",
+				"KAΛAMAPIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAΛAMATAΣ",
+				"KAΛAMATAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAΛYMNOY",
+				"KAΛYMNOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAPΔITΣAΣ",
+				"KAPΔITΣAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAPΠAΘOY",
+				"KAPΠAΘOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAPΠENHΣIOY",
+				"KAPΠENHΣIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KAΣTOPIAΣ",
+				"KAΣTOPIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KATEPINHΣ",
+				"KATEPINHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KEAΣ",
+				"KEAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KEPKYPAΣ",
+				"KEPKYPAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KIΛKIΣ",
+				"KIΛKIΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KOZANHΣ",
+				"KOZANHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KOMOTHNHΣ",
+				"KOMOTHNHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KOPINΘOY",
+				"KOPINΘOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KYΘHPΩN",
+				"KYΘHPΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"KYMHΣ",
+				"KYMHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΚΩ",
+				"ΚΩ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛAΓKAΔA",
+				"ΛAΓKAΔA"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛAMIAΣ",
+				"ΛAMIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"A' ΛAPIΣAΣ",
+				"A' ΛAPIΣAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Β' ΛΑΡΙΣΑΣ",
+				"Β' ΛΑΡΙΣΑΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛEPOY",
+				"ΛEPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛEYKAΔAΣ",
+				"ΛEYKAΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛHMNOY",
+				"ΛHMNOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΛIBAΔEIAΣ",
+				"ΛIBAΔEIAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"MEΣOΛOΓΓIOY",
+				"MEΣOΛOΓΓIOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"MHΛOY",
+				"MHΛOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"MYKONOY",
+				"MYKONOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"MYTIΛHNHΣ",
+				"MYTIΛHNHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"NAΞOY",
+				"NAΞOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"NAYΠΛIOΥ",
+				"NAYΠΛIOΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"N. IΩNIAΣ ΒΟΛΟΥ",
+				"N. IΩNIAΣ ΒΟΛΟΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"NEΩN MOYΔANIΩN",
+				"NEΩN MOYΔANIΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΞANΘHΣ",
+				"ΞANΘHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"OPEΣTIAΔAΣ",
+				"OPEΣTIAΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠAΞΩN",
+				"ΠAΞΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠAPOY",
+				"ΠAPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"A' ΠATPΩN",
+				"A' ΠATPΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"Γ' ΠATPΩN",
+				"Γ' ΠATPΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠΕΡΑΜΑΤΟΣ(Ν. ΡΕΘΥΜΝΗΣ)",
+				"ΠΕΡΑΜΑΤΟΣ(Ν. ΡΕΘΥΜΝΗΣ)"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠOΛYΓYPOY",
+				"ΠOΛYΓYPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠΟΡΟΥ",
+				"ΠΟΡΟΥ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠPEBEZAΣ",
+				"ΠPEBEZAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠTOΛEMAΙΔAΣ",
+				"ΠTOΛEMAΙΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΠYPΓOY",
+				"ΠYPΓOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"PEΘYMNOY",
+				"PEΘYMNOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"POΔOY",
+				"POΔOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣAΛAMINAΣ",
+				"ΣAΛAMINAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣAMOY",
+				"ΣAMOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣEPPΩN",
+				"ΣEPPΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣKIAΘOY",
+				"ΣKIAΘOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣKOΠEΛOY",
+				"ΣKOΠEΛOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣΠAPTHΣ",
+				"ΣΠAPTHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣΠETΣΩN",
+				"ΣΠETΣΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΣYPOY",
+				"ΣYPOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"THNOY",
+				"THNOY"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"TPIKAΛΩN",
+				"TPIKAΛΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"TPIΠOΛHΣ",
+				"TPIΠOΛHΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"YΔPAΣ",
+				"YΔPAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"ΦΛΩPINAΣ",
+				"ΦΛΩPINAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"XAΛKIΔAΣ",
+				"XAΛKIΔAΣ"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"XANIΩN",
+				"XANIΩN"
+			]
+		},
+		{
+			"locales": [
+				"en",
+				"el"
+			],
+			"translations": [
+				"XIOY",
+				"XIOY"
+			]
+		}
+	],
+	"Vehicles": {
+		"Cars": {
+			"ALFA ROMEO": [
+				"145",
+				"146",
+				"147",
+				"155",
+				"156",
+				"159",
+				"164",
+				"166",
+				"Brera",
+				"GT",
+				"GTV",
+				"Giulia",
+				"Giulietta",
+				"Grosswagon",
+				"MiTo",
+				"4C SRIDER",
+				"Spider",
+				"Stelvio"
+			],
+			"Abarth": [
+				"500",
+				"500 C",
+				"595",
+				"595 C",
+				"695",
+				"124 Spider",
+				"Grande Punto",
+				"Punto Evo"
+			],
+			"ASTON MARTIN": [
+				"DB9"
+			],
+			"AUDI": [
+				"Άλλο μοντέλο",
+				"A2",
+				"A3",
+				"A4",
+				"A6",
+				"A8",
+				"RS4",
+				"S3",
+				"S4",
+				"S6",
+				"S8",
+				"TTR",
+				"TTC",
+				"80",
+				"S5",
+				"Q7",
+				"Q5",
+				"A5",
+				"RS6",
+				"Q3",
+				"A1",
+				"R8",
+				"S1"
+			],
+			"BMW": [
+				"Άλλο Μοντέλο",
+				"Series 1",
+				"Series 2",
+				"Series 3",
+				"Series 4",
+				"Series 5",
+				"Series 6",
+				"Series 7",
+				"Series 8",
+				"X1",
+				"X3",
+				"X4",
+				"X5",
+				"X6",
+				"M4",
+				"M3",
+				"M5",
+				"M6",
+				"Z3",
+				"Z4",
+				"Z8",
+				"Series i3",
+				"Series i8",
+				"Series M2"
+			],
+			"CITROEN": [
+				"C1",
+				"C2",
+				"C3",
+				"C4",
+				"C5",
+				"C6",
+				"C8",
+				"C 15",
+				"DS3",
+				"DS4",
+				"DS5",
+				"Berlingo",
+				"Evasion",
+				"Nemo",
+				"Saxo",
+				"Xantia",
+				"Xsara",
+				"Jamper",
+				"New Jamper",
+				"Jampy",
+				"C - Grosser",
+				"C-ELYSEE",
+				"Grand C4",
+				"AX",
+				"ZX",
+				"XM"
+			],
+			"DAEWOO": [
+				"Matiz",
+				"Kalos",
+				"Lacetti",
+				"Lanos",
+				"Nexia",
+				"Espero",
+				"Evanda",
+				"Korando",
+				"Lecanza",
+				"Musso",
+				"Nubira",
+				"Tacuma",
+				"Rezzo"
+			],
+			"FIAT": [
+				"500",
+				"500C",
+				"500L",
+				"500X",
+				"Brava",
+				"Bravo",
+				"Cinquecento",
+				"Doblo",
+				"Ducato",
+				"Fiorino",
+				"Multipla",
+				"Panta",
+				"Panta Van",
+				"Panda Cross",
+				"Punto",
+				"Punto Evo",
+				"Grande Punto",
+				"Scudo",
+				"Seicento",
+				"Stilo",
+				"Tempra",
+				"Tipo",
+				"Uno",
+				"Albea",
+				"Barchetta",
+				"Coupe",
+				"Croma",
+				"Doblo Cargo",
+				"Doblo Panorama",
+				"Ducato Compinato",
+				"Ducato Doppia",
+				"Ducato Maxi",
+				"Freemont",
+				"Fiorino Qubo",
+				"Fullback",
+				"Idea",
+				"Marea",
+				"Linea",
+				"Palio",
+				"Sedici",
+				"Stilo Multiwagon",
+				"Strada",
+				"Strada RST",
+				"Talento",
+				"Ulysee",
+				"124 Spider"
+			],
+			"FORD": [
+				"Escort",
+				"Fiesta",
+				"Focus",
+				"Focus RS",
+				"Puma",
+				"Ka",
+				"Ka+",
+				"StreetKa",
+				"Kuga",
+				"Fusion",
+				"Mondeo",
+				"Scorpio",
+				"Maverick",
+				"Ranger",
+				"B-Max",
+				"C-Max",
+				"S-Max",
+				"Tourneo",
+				"Grand Tourneo Connect",
+				"Tourneo Connect",
+				"Tourneo Courier",
+				"Transit",
+				"Transit Connect",
+				"Transit Courier",
+				"Transit Custom",
+				"Mustang Fastback",
+				"Mustang Cabrio",
+				"Galaxy",
+				"ETG",
+				"Ecosport",
+				"Edge"
+			],
+			"HONDA": [
+				"Accord",
+				"Civic",
+				"Civic Aerodeck",
+				"Prelude",
+				"CR-V",
+				"CR-X",
+				"CR-Z",
+				"HR-V",
+				"S2000",
+				"Jazz",
+				"Stream",
+				"FR-V",
+				"Legend",
+				"Insight"
+			],
+			"HUMMER": [
+				"H2",
+				"H3"
+			],
+			"HYUNDAI": [
+				"Accent",
+				"Atos",
+				"Atos Prime",
+				"Getz",
+				"Matrix",
+				"i10",
+				"i20",
+				"i30",
+				"i30 Tourer",
+				"iX35",
+				"Elantra",
+				"Lantra",
+				"Galloper",
+				"Santa Fe",
+				"Scoupe",
+				"Sonata",
+				"Coupe FX",
+				"Coupe GK",
+				"Grase",
+				"H-1",
+				"Terracan",
+				"Tucson",
+				"Trajet"
+			],
+			"Infiniti": [
+				"G37",
+				"EX37",
+				"FX"
+			],
+			"ISUZU": [
+				"Trooper",
+				"D-Max",
+				"N Series"
+			],
+			"JAGUAR": [
+				"S-Type",
+				"X-Type",
+				"F-Type",
+				"XJ",
+				"XJ6",
+				"XJ8",
+				"XJ12",
+				"XJ Super",
+				"XJR",
+				"XJR6",
+				"XJR8",
+				"XJR Super",
+				"XJ Daimler",
+				"XJ6 Daimler",
+				"XJ8 Daimler",
+				"XJ12 Daimler",
+				"XJ6 Sovereign",
+				"XJ8 Sovereign",
+				"Sovereign XJ8",
+				"XK",
+				"XK8",
+				"XKR",
+				"XKR-S",
+				"XK Series XKR",
+				"XF",
+				"XFR",
+				"XFR S",
+				"XE",
+				"F-PACE"
+			],
+			"JEEP": [
+				"Cherokee",
+				"Grand Cherokee",
+				"Wrangler",
+				"Commander",
+				"Compass",
+				"Patriot",
+				"Renegade",
+				"Wrangler Unlimited"
+			],
+			"LADA": [
+				"Diva",
+				"Diva Edition One",
+				"110 Aquarius",
+				"110 Libra",
+				"111 Grand Tour",
+				"112 Venus",
+				"Niva",
+				"Niva City",
+				"Niva Safari",
+				"Niva Club",
+				"Samara",
+				"Samara Edition One",
+				"1500",
+				"21044",
+				"21073"
+			],
+			"Lamborghini": [
+				"Murcielago",
+				"Gallardo",
+				"Aventador"
+			],
+			"LANCIA": [
+				"Dedra",
+				"Delta HPE",
+				"Delta HF Integrale",
+				"Delta",
+				"Kappa",
+				"Lybra",
+				"Ypsilon",
+				"Y10",
+				"Thesis",
+				"Phedra",
+				"Musa"
+			],
+			"KIA": [
+				"Clarus",
+				"Pride",
+				"Rio",
+				"Sephia",
+				"Shuma",
+				"Sportage",
+				"Besta",
+				"Sorento",
+				"Picanto",
+				"Cerato",
+				"Carens",
+				"Magentis",
+				"Ceed",
+				"Soul",
+				"Venga",
+				"ProCeed",
+				"Sportage QL"
+			],
+			"Lexus": [
+				"GS 300",
+				"IS 200",
+				"LS 400",
+				"RX 300",
+				"SC 430",
+				"IS 300",
+				"GS 430",
+				"LS 430",
+				"RX 400h",
+				"IS 250",
+				"RX 350",
+				"GS 450h",
+				"LS 460",
+				"LS 600h",
+				"GS 460",
+				"LS 600h Long",
+				"IS 250C",
+				"RX 450h",
+				"CT 200h",
+				"IS 300h",
+				"NX 300h",
+				"GS 300h"
+			],
+			"MASERATI": [
+				"224",
+				"3200 GT",
+				"424",
+				"422",
+				"Ghibli",
+				"Quattroporte",
+				"Spyder",
+				"Coupe",
+				"GranTurismo",
+				"GranCabrio",
+				"LEVANTE"
+			],
+			"MAZDA": [
+				"121",
+				"323",
+				"626",
+				"Demio",
+				"MPV",
+				"MX-3",
+				"MX-5",
+				"Premacy",
+				"RX-7",
+				"Xedos",
+				"Xedos 9",
+				"B-Series",
+				"E-Series",
+				"Tribute",
+				"6",
+				"2",
+				"3",
+				"RX-8",
+				"5",
+				"3 MPS",
+				"BT-50",
+				"CX-7"
+			],
+			"MERCEDES": [
+				"Class A A140",
+				"Class A Long A140",
+				"Class A A150",
+				"Class A A160",
+				"Class A A160 CDi",
+				"Class A A160 CDi BE",
+				"Class A A160d",
+				"Class A Long A160",
+				"Class A A170",
+				"A170 CDi",
+				"Class A Long A170 CDi",
+				"Class A A180",
+				"Class A A180 CDi",
+				"Class A A180 CDi BE",
+				"Class A A180d",
+				"Class A A190",
+				"Class A Long A190",
+				"Class A A200",
+				"Class A A200 CDi",
+				"Class A A200 CDi BE",
+				"Class A A200d",
+				"Class A A210",
+				"Class A Long A210",
+				"Class A A220",
+				"Class A A220 CDi BE",
+				"Class A A220d",
+				"Class A A250",
+				"Class A A45 AMG",
+				"Class B B150",
+				"Class B B160",
+				"Class B B160 CDi",
+				"Class B B160d",
+				"Class B B170",
+				"Class B B180",
+				"Class B B180 CDi",
+				"Class B B180d",
+				"Class B B200",
+				"Class B B200 CDi",
+				"Class B B200c",
+				"Class B B200d",
+				"Class B B220",
+				"Class B B220 CDi",
+				"Class B B220d",
+				"Class B B250",
+				"Class B B250 Electric",
+				"Class C C160",
+				"Class C C180",
+				"Class C C180 CDi",
+				"Class C C180 CDi T",
+				"Class C C180d",
+				"Class C C180d T",
+				"Class C C180 K",
+				"Class C C180 BlueTEC",
+				"Class C C200",
+				"Class C C200 CDi",
+				"Class C C200 CDi T",
+				"Class C C200d",
+				"Class C C200d T",
+				"Class C C200 D",
+				"Class C C200K",
+				"Class C C200 BlueTEC",
+				"Class C C220",
+				"Class C C220 CDi",
+				"Class C C220 CDi T",
+				"Class C C220d",
+				"Class C C220d T",
+				"Class C C220 D",
+				"Class C C220 BlueTEC",
+				"Class C C220 BlueTEC T",
+				"Class C C230",
+				"Class C C240",
+				"Class C C250",
+				"Class C C250 CDi",
+				"Class C C250 CDi T",
+				"Class C C250d",
+				"Class C C250d T",
+				"Class C C250 D",
+				"Class C C250 TD",
+				"Class C C250 BlueTEC",
+				"Class C C250 BlueTEC T",
+				"Class C C270 CDi",
+				"Class C C270 CDi T",
+				"Class C C280",
+				"Class C C300",
+				"Class C C300h",
+				"Class C C300h T",
+				"Class C C300 BlueTEC",
+				"Class C C300 BlueTEC T",
+				"Class C C320",
+				"Class C C320 CDi",
+				"Class C C320 CDi T",
+				"Class C C350",
+				"Class C C350 CDi",
+				"Class C C350 CGi",
+				"Class C C350 e",
+				"Class C C350 e T",
+				"Class C C400",
+				"Class C AMG C180",
+				"Class C AMG C30 CDi",
+				"Class C AMG C30 CDi T",
+				"Class C AMG C32",
+				"Class C AMG C43",
+				"Class C AMG C55",
+				"Class C AMG C63",
+				"Class C AMG C450",
+				"Class CL CL420",
+				"Class CL CL500",
+				"Class CL CL600",
+				"Class CL AMG CL55",
+				"Class CL AMG CL63",
+				"Class CL AMG CL65",
+				"Class CLA CLA180",
+				"Class CLA CLA180 CDI",
+				"Class CLA CLA180d",
+				"Class CLA CLA200",
+				"Class CLA CLA200 CDI",
+				"Class CLA CLA200d",
+				"Class CLA CLA220",
+				"Class CLA CLA220 CDI",
+				"Class CLA CLA220d",
+				"Class CLA CLA250",
+				"Class CLA AMG CLA45",
+				"Class CLA SB CLA180",
+				"Class CLA SB CLA180d",
+				"Class CLA SB CLA200",
+				"Class CLA SB CLA200 CDI\t",
+				"Class CLA SB CLA200d",
+				"Class CLA SB CLA220",
+				"Class CLA SB CLA220 CDI",
+				"Class CLA SB CLA220d",
+				"Class CLA SB CLA250",
+				"Class CLA SB AMG CLA45",
+				"Class CLC CLC160",
+				"Class CLC CLC180",
+				"Class CLC CLC200",
+				"Class CLC CLC200 CDi",
+				"Class CLC CLC230",
+				"Class CLC CLC250",
+				"Class CLC CLC350",
+				"Class CLK CLK200",
+				"Class CLK CLK220 CDi",
+				"Class CLK CLK230",
+				"Class CLK CLK240",
+				"Class CLK CLK270CDI",
+				"Class CLK CLK280",
+				"Class CLK CLK320",
+				"Class CLK CLK320 CDi",
+				"Class CLK CLK350",
+				"Class CLK CLK430",
+				"Class CLK CLK500",
+				"Class CLK AMG CLK55",
+				"Class CLK AMG CLK63",
+				"Class CLS CLS220 BLUEtec",
+				"Class CLS CLS220 BLUEtec",
+				"Class CLS CLS220d",
+				"Class CLS CLS250 BlueTEC",
+				"Class CLS CLS250 CDI",
+				"Class CLS CLS250d\t",
+				"Class CLS CLS280",
+				"Class CLS CLS300",
+				"Class CLS CLS320\t",
+				"Class CLS CLS320CDi",
+				"Class CLS CLS350",
+				"Class CLS CLS350 BlueTEC",
+				"Class CLS CLS350CDi",
+				"Class CLS CLS350 CGi",
+				"Class CLS CLS350d\t\t",
+				"Class CLS CLS400",
+				"Class CLS CLS500",
+				"Class CLS AMG CLS55",
+				"Class CLS AMG CLS63",
+				"Class CLS AMG SB CLS63",
+				"Class CLS SB CLS250 CDI BE",
+				"Class CLS SB CLS350",
+				"Class CLS SB CLS500",
+				"Class E E180",
+				"Class E E200",
+				"Class E E200 BlueTEC",
+				"Class E E200 CDi",
+				"Class E E200 CDI BE",
+				"Class E E200 CDi T",
+				"Class E E200 CGi",
+				"Class E E200 D",
+				"Class E E200d",
+				"Class E E220",
+				"Class E E220 BlueTEC",
+				"Class E E220 CDi",
+				"Class E E220 CDI BE",
+				"Class E E220 CDi T",
+				"Class E E220d",
+				"Class E E230",
+				"Class E E240",
+				"Class E E250",
+				"Class E E250 BlueTEC",
+				"Class E E250 CDi",
+				"Class E E250 CDI BE",
+				"Class E E250 CGi",
+				"Class E E250 D",
+				"Class E E250 TD",
+				"Class E E250d",
+				"Class E E270 CDi",
+				"Class E E270 CDi T",
+				"Class E E280",
+				"Class E E280 CDi",
+				"Class E E280 CDi T",
+				"Class E E290 TD",
+				"Class E E300",
+				"Class E E300 BlueTEC",
+				"Class E E300 CDI",
+				"Class E E300 CGi",
+				"Class E E300 TD",
+				"Class E E320",
+				"Class E E320 CDi",
+				"Class E E320 CDi T",
+				"Class E E350",
+				"Class E E350 BlueTEC",
+				"Class E E350 CDI",
+				"Class E E350CGi",
+				"Class E E350d",
+				"Class E E350e",
+				"Class E E400",
+				"Class E E400 CDi",
+				"Class E E420",
+				"Class E E500",
+				"Class E AMG E55",
+				"Class E AMG E63",
+				"Class E AMG E63 S",
+				"Class E E63 AMG",
+				"Class E AMG S E63",
+				"Class G G270 CDi",
+				"Class G G320",
+				"Class G G320 CDi",
+				"Class G G350",
+				"Class G G350 CDi",
+				"Class G G350d",
+				"Class G G400 CDi",
+				"Class G G500",
+				"Class G AMG G63",
+				"Class G AMG G65",
+				"Class G Long G350",
+				"Class G Long G350 CDi",
+				"Class G Long G400 LCDi",
+				"Class G Long G500",
+				"Class G Long AMG G55",
+				"Class G Long AMG G63",
+				"Class G Long AMG G65",
+				"Class GL GL320 CDI",
+				"Class GL GL350 BlueTEC",
+				"Class GL GL350 CDI",
+				"Class GL GL400",
+				"Class GL GL420 CDI",
+				"Class GL GL450",
+				"Class GL GL450 CDI",
+				"Class GL GL500",
+				"Class GL AMG GL63",
+				"Class GLA GLA180",
+				"Class GLA GLA180 CDI",
+				"Class GLA GLA180d",
+				"Class GLA GLA200",
+				"Class GLA GLA200 CDI",
+				"Class GLA GLA200d",
+				"Class GLA GLA220",
+				"Class GLA GLA220 CDI",
+				"Class GLA GLA220d",
+				"Class GLA GLA250",
+				"Class GLA 45 AMG",
+				"Class GLC GLC220d",
+				"Class GLC GLC250",
+				"Class GLC GLC250d",
+				"Class GLC GLC350d",
+				"Class GLC GLC350e",
+				"Class GLC Coupe GLC220d",
+				"Class GLC Coupe GLC250",
+				"Class GLC Coupe GLC250d",
+				"Class GLC Coupe GLC300",
+				"Class GLC Coupe GLC350d",
+				"Class GLC Coupe GLC350e",
+				"Class GLC Coupe AMG GLC43",
+				"Class GLC AMG GLC43",
+				"Class GLE GLE250d",
+				"Class GLE GLE350d",
+				"Class GLE GLE400",
+				"Class GLE GLE500",
+				"Class GLE GLE500e",
+				"Class GLE Coupe GLE350d",
+				"Class GLE Coupe GLE400",
+				"Class GLE Coupe GLE500",
+				"Class GLE AMG GLE43",
+				"Class GLE AMG GLE63",
+				"Class GLE AMG GLE63 S",
+				"Class GLE AMG GLE450",
+				"Class GLE AMG Coupe GLE43",
+				"Class GLE AMG Coupe GLE63",
+				"Class GLE AMG Coupe GLE450",
+				"Class GLK GLK200",
+				"Class GLK GLK200 CDi",
+				"Class GLK GLK220",
+				"Class GLK GLK220 CDi",
+				"Class GLK GLK250",
+				"Class GLK GLK250 CDi",
+				"Class GLK GLK280",
+				"Class GLK GLK300",
+				"Class GLK GLK320 CDi",
+				"Class GLK GLK350",
+				"Class GLK GLK350 CDi",
+				"Class GLS GLS350d",
+				"Class GLS GLS400",
+				"Class GLS GLS500",
+				"Class GLS AMG GLS63",
+				"Class M ML230",
+				"Class M ML250",
+				"Class M ML270 CDi",
+				"Class M ML280 CDi",
+				"Class M ML300 CDi",
+				"Class M ML320",
+				"Class M ML320 CDi",
+				"Class M ML350",
+				"Class M ML350 CDi",
+				"Class M ML400",
+				"Class M ML400 CDi",
+				"Class M ML420 CDi",
+				"Class M ML430",
+				"Class M ML450 CDi",
+				"Class M ML500",
+				"Class M AMG ML55",
+				"Class M AMG ML63",
+				"Class R R280",
+				"Class R R300",
+				"Class R R320",
+				"Class R R350",
+				"Class R R500",
+				"Class R Long R280",
+				"Class R Long R300",
+				"Class R Long R320",
+				"Class R Long R350",
+				"Class R Long R500",
+				"Class S S250 CDi",
+				"Class S S280",
+				"Class S S300",
+				"Class S S300 BlueTEC",
+				"Class S S300h",
+				"Class S S320",
+				"Class S S350",
+				"Class S S350d",
+				"Class S S400",
+				"Class S S400h",
+				"Class S S420",
+				"Class S S430",
+				"Class S S450",
+				"Class S S500",
+				"Class S S600",
+				"Class S AMG S55",
+				"Class S AMG S63",
+				"Class S AMG S65",
+				"Class S S63 AMG",
+				"Class S S65 AMG",
+				"Class S Cabrio S63  AMG",
+				"Class S Cabrio S65  AMG",
+				"Class S Cabrio S500",
+				"Class S Long S250 CDi",
+				"Class S Long S280",
+				"Class S Long S300",
+				"Class S Long S300 BlueTEC",
+				"Class S Long S300h",
+				"Class S Long S320",
+				"Class S Long S320 CDi",
+				"Class S Long S350",
+				"Class S Long S350\tBlueTEC",
+				"Class S Long S350 CDi",
+				"Class S Long S350d",
+				"Class S Long S400",
+				"Class S Long S400 CDi",
+				"Class S Long S400h",
+				"Class S Long S420",
+				"Class S Long S420 CDi",
+				"Class S Long S430",
+				"Class S Long S430L",
+				"Class S Long S450",
+				"Class S Long S450 CDi",
+				"Class S Long S500",
+				"Class S Long S500e",
+				"Class S Long S600",
+				"Class S Long AMG S55",
+				"Class S Long AMG S63",
+				"Class S Long AMG S65",
+				"Class S Long S63 AMG",
+				"Class S Long S65 AMG",
+				"Class S Long Guard S600",
+				"Class SL SL280",
+				"Class SL SL300",
+				"Class SL SL320",
+				"Class SL SL350",
+				"Class SL SL400",
+				"Class SL SL500",
+				"Class SL SL600",
+				"Class SL AMG SL55",
+				"Class SL AMG SL63",
+				"Class SL AMG SL65",
+				"Class SLC180",
+				"Class SLC200",
+				"Class SLC250d",
+				"Class SLC300",
+				"Class SLC AMG SLC43",
+				"Class SLK200",
+				"Class SLK250",
+				"Class SLK250 CDi",
+				"Class SLK300",
+				"Class SLK350",
+				"Class SLK SLK200",
+				"Class SLK SLK230",
+				"Class SLK SLK280",
+				"Class SLK SLK300",
+				"Class SLK SLK320",
+				"Class SLK SLK350",
+				"Class SLK AMG SLK32",
+				"Class SLK AMG SLK55",
+				"SLR 5.4i",
+				"SLS AMG 6.2",
+				"Class V V200 CDI",
+				"Class V V200d",
+				"Class V V220 CDI",
+				"Class V V220d",
+				"Class V V250 BlueTEC",
+				"Class V V250d",
+				"Maybach Class S S500",
+				"Maybach Class S S600",
+				"Citan",
+				"Sprinter 208",
+				"Sprinter 209",
+				"Sprinter 210",
+				"Sprinter 211",
+				"Sprinter 213",
+				"Sprinter 214",
+				"Sprinter 215",
+				"Sprinter 216",
+				"Sprinter 218",
+				"Sprinter 219",
+				"Sprinter 224",
+				"Sprinter 308",
+				"Sprinter 309",
+				"Sprinter 310",
+				"Sprinter 311",
+				"Sprinter 312",
+				"Sprinter 313",
+				"Sprinter 314",
+				"Sprinter 315",
+				"Sprinter 316",
+				"Sprinter 318",
+				"Sprinter 319",
+				"Sprinter 324",
+				"Vaneo",
+				"Viano 2.0",
+				"Viano 2.2 CDi",
+				"Viano 3.0 CDi",
+				"Viano 3.2i",
+				"Viano 3.5i",
+				"Vito",
+				"Vito Tourer",
+				"100D"
+			],
+			"MINI COOPER": [
+				"One",
+				"Cooper",
+				"Cooper S",
+				"Cabrio One",
+				"Cabrio Cooper",
+				"Cabrio Cooper S",
+				"Clubman One",
+				"Clubman Cooper",
+				"Clubman Cooper S",
+				"Countryman One",
+				"Countryman Cooper",
+				"Countryman Cooper S",
+				"Coupe Cooper",
+				"Coupe Cooper S",
+				"Roadster Cooper",
+				"Roadster Cooper S",
+				"Paceman Cooper",
+				"Paceman Cooper S"
+			],
+			"MITSUBISHI": [
+				"ASX",
+				"Canter",
+				"Carisma",
+				"Colt",
+				"Colt CZC",
+				"Galant",
+				"Grandis",
+				"CR-L200",
+				"L200",
+				"L300",
+				"Lancer",
+				"Lancer Evolution",
+				"Pajero",
+				"Pajero Pinin",
+				"Space Wagon",
+				"Outlander"
+			],
+			"NISSAN": [
+				"100 NX",
+				"300 ZX",
+				"200 SX",
+				"Almera",
+				"Almera Pulsar",
+				"Maxima QX",
+				"Micra",
+				"Patrol GR",
+				"Primera",
+				"Primera Bluebird",
+				"Serena",
+				"Sunny",
+				"Terrano",
+				"Cabstar",
+				"Pickup",
+				"Vanette Cargo",
+				"Micra",
+				"X-Trail",
+				"Cabstar E",
+				"Primastar",
+				"350 Z",
+				"Kubistar",
+				"Murano",
+				"Pathfinder",
+				"Navara",
+				"Note",
+				"Qashqai",
+				"Tiida",
+				"GT-R",
+				"370 Z",
+				"Pixo",
+				"Evalia",
+				"NV200",
+				"Juke",
+				"Juke Nismo",
+				"NV400",
+				"NV300"
+			],
+			"OPEL": [
+				"Adam",
+				"Agila",
+				"Antara",
+				"Ampera",
+				"Astra",
+				"Astra GTC",
+				"Astra ST",
+				"Astra Van",
+				"Campo",
+				"Combo",
+				"Cascada",
+				"Combo Tour",
+				"Corsa",
+				"Corsa Van",
+				"Frontera",
+				"GT 2.0i",
+				"Insignia",
+				"Insignia CT",
+				"Meriva",
+				"Mokka",
+				"Mokka X",
+				"Movano",
+				"Omega",
+				"Signum",
+				"Speedster",
+				"Tigra",
+				"Vectra",
+				"Vivaro",
+				"Zafira",
+				"Zafira Tourer"
+			],
+			"PEUGEOT": [
+				"106",
+				"107",
+				"108",
+				"205",
+				"206",
+				"206+",
+				"206 XA",
+				"207",
+				"207 Enterprise",
+				"208",
+				"301",
+				"306",
+				"307",
+				"308",
+				"405",
+				"406",
+				"407",
+				"508",
+				"508 SW",
+				"605",
+				"607",
+				"806",
+				"807",
+				"1007",
+				"2008",
+				"3008",
+				"4007",
+				"5008",
+				"Bipper",
+				"BipperTepee",
+				"Boxer",
+				"New Boxer",
+				"Expert Combi",
+				"Expert Tepee",
+				"Expert Traveller",
+				"Expert Van",
+				"Partner",
+				"Partner Tepee",
+				"RCZ"
+			],
+			"PIAGGIO": [
+				"Porter",
+				"Porter D120",
+				"Porter maxxi D120",
+				"Porter Van D120"
+			],
+			"Pondiac": [
+				"Firebird",
+				"Trans Sport"
+			],
+			"Porsche": [
+				"911 Carrera",
+				"911 Carrera S",
+				"911 Carrera 2S",
+				"911 Carrera 4S",
+				"911 Carrera GT2",
+				"911 Carrera GT3",
+				"911 Carrera RS",
+				"911 Carrera Targa",
+				"911 Targa",
+				"911 Targa 4 GTS",
+				"911 Targa 4S",
+				"911 GT2",
+				"911 GT3",
+				"911 GT3 RS",
+				"911 Turbo",
+				"Boxster",
+				"Boxster GTS",
+				"Boxster S",
+				"Boxster Spyder",
+				"Carrera GT",
+				"Cayenne",
+				"Cayenne GTS",
+				"Cayenne S",
+				"Cayman",
+				"Cayman GTS",
+				"Cayman GT4",
+				"Cayman R",
+				"Cayman S",
+				"Macan",
+				"Macan S",
+				"Panamera",
+				"Panamera S",
+				"Panamera 2S",
+				"Panamera 4S",
+				"Panamera GTS",
+				"928",
+				"968"
+			],
+			"RENAULT": [
+				"R19",
+				"R 19",
+				"Captur",
+				"Clio",
+				"Clio Pro+",
+				"Express",
+				"Espace",
+				"Fluence",
+				"Grand Espace",
+				"Kadjar",
+				"Kangoo",
+				"Kangoo Express",
+				"Kangoo Generation",
+				"Kangoo Pampa",
+				"Koleos",
+				"Laguna",
+				"Megane",
+				"Megane Scenic",
+				"Modus",
+				"Safrane",
+				"Scenic",
+				"Scenic RX4",
+				"Grand Scenic",
+				"Twingo",
+				"Thalia",
+				"Trafic",
+				"Vel Satis"
+			],
+			"ROVER": [
+				"25",
+				"45",
+				"75",
+				"200",
+				"400",
+				"600",
+				"800",
+				"Streetwise"
+			],
+			"SAAB": [
+				"900",
+				"900 Turbo",
+				"9000",
+				"9-3",
+				"9-3 Viggen",
+				"9-5",
+				"9-3X",
+				"9-7X"
+			],
+			"SEAT": [
+				"Alhambra",
+				"Altea",
+				"Altea Freetrack",
+				"Altea XL",
+				"Arosa",
+				"Ateca",
+				"Cordoba",
+				"Exeo",
+				"Ibiza",
+				"Ibiza Cupra",
+				"Ibiza Van",
+				"Inca",
+				"Leon",
+				"Leon Cupra",
+				"Leon X-Perience",
+				"Marbella",
+				"Mii",
+				"Toledo"
+			],
+			"SKODA": [
+				"Citigo",
+				"Fabia",
+				"Fabia 60",
+				"Fabia 65",
+				"Fabia 70",
+				"Fabia 75",
+				"Fabia 80",
+				"Fabia 86",
+				"Fabia 100",
+				"Fabia 101",
+				"Fabia 102",
+				"Fabia 105",
+				"Fabia 115",
+				"Fabia 130",
+				"Fabia RS",
+				"Felicia",
+				"Kodiaq",
+				"Octavia",
+				"Octavia RS",
+				"Octavia5",
+				"Octavia5 RS",
+				"Octavia5 Scout",
+				"Octavia 90",
+				"Octavia 101",
+				"Octavia 110",
+				"Pickup",
+				"Rapid",
+				"Rapid Spaceback",
+				"Roomster",
+				"Roomster Scout",
+				"Superb",
+				"Yeti",
+				"Yeti Outdoor"
+			],
+			"SMART": [
+				"City",
+				"Fortwo",
+				"Fortwo Electric Drive",
+				"Forfour",
+				"Forfour Electric Drive",
+				"Roadster"
+			],
+			"SUBARU": [
+				"B9 Tribeca",
+				"BRZ",
+				"E 12",
+				"Forester",
+				"Impreza",
+				"Impreza GT Turbo",
+				"Impreza WRX",
+				"Justy",
+				"Justy II",
+				"Justy G3X",
+				"Legacy",
+				"Legacy Outback",
+				"Levorg",
+				"Outback",
+				"SVX",
+				"Trezia",
+				"Vivio",
+				"XV",
+				"WRX STI"
+			],
+			"SUZUKI": [
+				"Alto",
+				"Baleno",
+				"Baleno SHVS",
+				"Carry",
+				"Celerio",
+				"Grand Vitara",
+				"Jimny",
+				"Ignis",
+				"Ignis SHVS",
+				"Liana",
+				"Samurai",
+				"Splash",
+				"Swift",
+				"Vitara",
+				"Wagon R",
+				"Wagon R+",
+				"SX-4",
+				"SX-4 S-Cross",
+				"X-90"
+			],
+			"TATA": [
+				"Safari",
+				"Sumo",
+				"Telcoline",
+				"Telcosport"
+			],
+			"TOYOTA": [
+				"Aygo",
+				"Aygo x-Wave",
+				"Auris",
+				"Auris TS",
+				"Avensis",
+				"Carina E",
+				"Celica",
+				"Celica T Sport",
+				"C-HR",
+				"Corolla",
+				"Corona",
+				"Dyna 100",
+				"Dyna 150",
+				"GT86",
+				"Hiace",
+				"Hilux",
+				"iQ",
+				"Land Cruiser",
+				"Land Cruiser 150",
+				"MR2",
+				"Paseo",
+				"Prius",
+				"Proace",
+				"Proace Verso",
+				"RAV4",
+				"Starlet",
+				"URBAN CRUISER",
+				"Yaris",
+				"Yaris T Sport",
+				"Yaris Verso",
+				"Verso"
+			],
+			"VOLKSWAGEN": [
+				"Amarok",
+				"Beetle",
+				"New Beetle",
+				"Bora",
+				"Caddy",
+				"Caddy Kombi",
+				"Caddy Kombi Maxi",
+				"Caddy Maxi",
+				"Caravelle",
+				"CC",
+				"Crafter Chassis",
+				"Crafter Chassis 35",
+				"Crafter Van",
+				"Crafter Van 35",
+				"Eos",
+				"Fox",
+				"Jetta",
+				"Golf",
+				"Golf AllTrack",
+				"e-Golf",
+				"Golf Plus",
+				"Golf R32",
+				"Golf Sportsvan",
+				"Lupo",
+				"LT 35",
+				"LT46",
+				"Multivan",
+				"Passat",
+				"Passat Alltrack",
+				"Passat R36",
+				"Phaeton",
+				"Phaeton GP",
+				"Phaeton Long",
+				"Phaeton Long GP",
+				"Polo",
+				"Polo Van",
+				"Cross Polo",
+				"Scirocco",
+				"Scirocco R",
+				"Sharan",
+				"Taro",
+				"Tiguan",
+				"Touareg",
+				"Touareg GP",
+				"Touran",
+				"Cross Touran",
+				"Transporter",
+				"Transporter Kombi",
+				"Transporter T5",
+				"Transporter T6",
+				"Up",
+				"Cross Up",
+				"e-Up",
+				"Load Up!",
+				"Vento"
+			],
+			"VOLVO": [
+				"440",
+				"460",
+				"480",
+				"850",
+				"960",
+				"C30",
+				"C70",
+				"S40",
+				"S60",
+				"S60 C.Country",
+				"S70",
+				"S80",
+				"S90",
+				"V40",
+				"V40 C.Country",
+				"V50",
+				"V60",
+				"V60 C.Country",
+				"V70",
+				"V90",
+				"V90 C.Country",
+				"XC60",
+				"XC70",
+				"XC90"
+			],
+			"Bentley": [
+				"Arnage",
+				"Azure",
+				"Brooklands",
+				"Continental Flying Spur",
+				"Continental GT",
+				"Continental GTC",
+				"Continental Supersports",
+				"Mulsanne"
+			],
+			"Cadillac": [
+				"ATS",
+				"BLS",
+				"CLS",
+				"CTS",
+				"CTS Coupe",
+				"CTS Wagon",
+				"CTS-V",
+				"CTS-V Coupe",
+				"CTS-V Wagon",
+				"Escalade",
+				"Seville STS",
+				"SRX",
+				"STS",
+				"XLR",
+				"XLR - V"
+			],
+			"CHEVROLET": [
+				"Aveo",
+				"Blazer",
+				"Cruze",
+				"TrailBlazer",
+				"Camaro",
+				"Captiva",
+				"Corvette",
+				"Epica",
+				"Evanda",
+				"Lacetti",
+				"Matiz",
+				"Orlando",
+				"Rezzo",
+				"Spark",
+				"Tahoe",
+				"Trans Sport",
+				"Trax"
+			],
+			"Chysler": [
+				"300C",
+				"300M",
+				"Crossfire",
+				"Neon",
+				"New Yorker",
+				"PT Cruiser",
+				"Sebring",
+				"Stratus",
+				"Viper",
+				"Vision",
+				"Voyager"
+			],
+			"DACIA": [
+				"Duster",
+				"Logan",
+				"MCV",
+				"Sandero",
+				"Sandero Stepway"
+			],
+			"DAIHATSU": [
+				"Applause",
+				"Charade",
+				"Copen",
+				"Cuore",
+				"Feroza",
+				"Grand Move",
+				"Hijet",
+				"Sirion",
+				"Terios",
+				"YRV"
+			],
+			"Dodge": [
+				"Avenger",
+				"Caliber",
+				"Nitro",
+				"Viper"
+			],
+			"Ferrari": [
+				"348 TB",
+				"348 TS",
+				"355 GTS",
+				"360 Modena",
+				"456 GT",
+				"458 Italia",
+				"512 TR",
+				"550 Maranello",
+				"599 GTB FIORANO",
+				"612 Scaglietti",
+				"Mondial T",
+				"FF",
+				"F430 F1",
+				"F430 Spider F1",
+				"California",
+				"California 30",
+				"Testarossa"
+			]
+		}
 	},
+	"VehicleTypes" : [
+		{"locales": ["en", "el"], "translations": ["Car", "Αυτοκίνητο"]},
+		{"locales": ["en", "el"], "translations": ["Motorcycle", "Δίκυκλο"]},
+		{"locales": ["en", "el"], "translations": ["Boat", "Σκάφος"]}
+	],
 	"PostCodes": {
 		"ΧΑΛΚΙΔΙΚΗ": {
 			"ΟΡΜΥΛΙΑ": [
@@ -8029,9 +9406,7 @@
 			"ΦΙΧ"
 		]
 	},
-	"ContractState": {
-
-	},
+	"ContractState": {},
 	"DriversLicenseType": [
 		"Ερασιτεχνικό",
 		"Επαγγελματικό"
