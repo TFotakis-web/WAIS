@@ -24,6 +24,12 @@
       },
       "function": {
         "AdminQueries3e8c423f": {}
+      },
+      "storage": {
+        "waisfe6672bb": {
+          "bucketName": "wais-system-files",
+          "region": "eu-central-1"
+        }
       }
     }
   }

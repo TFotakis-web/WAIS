@@ -1024,3 +1024,42 @@ export const listVehicles = /* GraphQL */ `
     }
   }
 `;
+export const getUserCallendarMessage = /* GraphQL */ `
+  query GetUserCallendarMessage($id: ID!) {
+    getUserCallendarMessage(id: $id) {
+      id
+      userId
+      tradeID
+      username
+      createdAt
+      payload
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listUserCallendarMessages = /* GraphQL */ `
+  query ListUserCallendarMessages(
+    $filter: ModelUserCallendarMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserCallendarMessages(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        tradeID
+        username
+        createdAt
+        payload
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;

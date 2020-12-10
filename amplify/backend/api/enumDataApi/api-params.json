@@ -1,0 +1,41 @@
+{
+    "paths": [
+        {
+            "name": "/resources/enumData",
+            "lambdaFunction": "enumData",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH"
+                ]
+            },
+            "policyResourceName": "/resources/enumData"
+        }
+    ],
+    "resourceName": "enumDataApi",
+    "apiName": "enumDataApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "enumData"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-wais-dev-114847-authRole",
+        "unAuthRoleName": "amplify-wais-dev-114847-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "enumData",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
