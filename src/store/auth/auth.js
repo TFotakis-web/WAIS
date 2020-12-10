@@ -12,8 +12,14 @@ export const auth = {
 	},
 	actions: {
 		async signOut({ commit }) {
-			commit("setUser", null);
-			return await Auth.signOut();
+			try {
+				await Auth.signOut();
+				commit("setUser", null);
+				return Promise.resolve("Success");
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
 		async signIn({ commit }, { username, password }) {
 			try {
