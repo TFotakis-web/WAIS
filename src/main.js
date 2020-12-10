@@ -73,13 +73,7 @@ const v = {
 			}
 		},
 		loadEnumData: function () {
-			this.$http.get('/enumData.json')
-				.then(res => {
-					this.$root.platformData = res.data;
-				})
-				.catch(err => {
-					console.error(err);
-				});
+			this.$store.dispatch('platformData/getPlatformData');
 		},
 		initLocale: function () {
 			const userLang = this.$cookies.get('locale') || navigator.language || navigator.userLanguage;
