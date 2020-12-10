@@ -47,14 +47,9 @@ const v = {
 	store,
 	i18n,
 	render: h => h(App),
-	data: function () {
-		return {
-			platformData: {}
-		};
-	},
 	mounted: function () {
-		this.loadEnumData();
 		this.initLocale();
+		this.loadEnumData();
 	},
 	methods: {
 		toGreeklish,
@@ -89,7 +84,6 @@ const v = {
 		initLocale: function () {
 			const userLang = this.$cookies.get('locale') || navigator.language || navigator.userLanguage;
 			this.$i18n.$loadLanguageAsync(userLang);
-			this.$cookies.set('locale', this.$i18n.locale);
 		},
 	}
 };
