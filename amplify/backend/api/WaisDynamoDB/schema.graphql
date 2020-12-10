@@ -199,6 +199,21 @@ type InsurancePackage {
   usages: String
 }
 
+
+#For callendar use
+type UserCallendarMessage
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  userId: ID!
+  tradeID: ID!
+  username: String!
+  createdAt: String!
+  payload: String
+}
+
+
+
 # Used to model a Cognito user, not a 'real' DynamoDB type
 
 # type UserCognito {
