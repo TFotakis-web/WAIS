@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
-		<fullScreenSpinner v-if="loading" />
-		<template v-else>
+		<fullScreenSpinner v-if="$store.getters.globalPendingPromises > 0" />
+		<div v-else>
 			<navigation v-if="this.$store.getters['auth/user']" />
 			<mdb-container v-else fluid style="height: 100vh">
 				<mdb-row class="h-100 justify-content-center align-items-center">
@@ -9,7 +9,7 @@
 					<!-- <amplify-authenticator/> -->
 				</mdb-row>
 			</mdb-container>
-		</template>
+		</div>
 	</div>
 </template>
 
@@ -23,20 +23,7 @@
 		components: {
 			navigation,
 			auth,
-			fullScreenSpinner,
-		},
-		data() {
-			return {
-				loading: true,
-			};
-		},
-		created() {
-			this.$store
-				.dispatch('auth/authAction')
-				.then(() => {
-					this.loading = false;
-				})
-				.catch(this.$notifyAction.error);
+			fullScreenSpinner
 		},
 	};
 </script>
