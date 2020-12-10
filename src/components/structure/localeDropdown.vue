@@ -19,7 +19,7 @@
 		name: 'LocaleDropdown',
 		methods: {
 			changeLanguage: function(locale) {
-				this.$i18n.locale = locale;
+				this.$i18n.$loadLanguageAsync(locale);
 				this.$cookies.set('locale', locale);
 			},
 		},
