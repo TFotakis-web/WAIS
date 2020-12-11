@@ -1996,3 +1996,54 @@ export const deleteVehicle = /* GraphQL */ `
     }
   }
 `;
+export const createUserCalendarEvent = /* GraphQL */ `
+  mutation CreateUserCalendarEvent(
+    $input: CreateUserCalendarEventInput!
+    $condition: ModelUserCalendarEventConditionInput
+  ) {
+    createUserCalendarEvent(input: $input, condition: $condition) {
+      id
+      userId
+      tradeId
+      username
+      createdAt
+      payload
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateUserCalendarEvent = /* GraphQL */ `
+  mutation UpdateUserCalendarEvent(
+    $input: UpdateUserCalendarEventInput!
+    $condition: ModelUserCalendarEventConditionInput
+  ) {
+    updateUserCalendarEvent(input: $input, condition: $condition) {
+      id
+      userId
+      tradeId
+      username
+      createdAt
+      payload
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteUserCalendarEvent = /* GraphQL */ `
+  mutation DeleteUserCalendarEvent(
+    $input: DeleteUserCalendarEventInput!
+    $condition: ModelUserCalendarEventConditionInput
+  ) {
+    deleteUserCalendarEvent(input: $input, condition: $condition) {
+      id
+      userId
+      tradeId
+      username
+      createdAt
+      payload
+      updatedAt
+      owner
+    }
+  }
+`;

@@ -1024,3 +1024,42 @@ export const listVehicles = /* GraphQL */ `
     }
   }
 `;
+export const getUserCalendarEvent = /* GraphQL */ `
+  query GetUserCalendarEvent($id: ID!) {
+    getUserCalendarEvent(id: $id) {
+      id
+      userId
+      tradeId
+      username
+      createdAt
+      payload
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listUserCalendarEvents = /* GraphQL */ `
+  query ListUserCalendarEvents(
+    $filter: ModelUserCalendarEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserCalendarEvents(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        tradeId
+        username
+        createdAt
+        payload
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
