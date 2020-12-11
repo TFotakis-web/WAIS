@@ -59,20 +59,6 @@
           ]
         }
       ]
-    },
-    "enumDataApi": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "enumData",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
     }
   },
   "function": {
@@ -89,35 +75,6 @@
           ]
         }
       ]
-    },
-    "enumData": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "waisfe6672bb",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
     }
   },
   "hosting": {
@@ -125,14 +82,6 @@
       "service": "amplifyhosting",
       "type": "cicd",
       "lastPushTimeStamp": "2020-10-27T10:09:38.180Z"
-    }
-  },
-  "storage": {
-    "waisfe6672bb": {
-      "service": "S3",
-      "serviceType": "imported",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
     }
   }
 }
