@@ -16,7 +16,7 @@
 		"core-js": "^3.6.5",
 		"greek-utils": "^1.2.2",
 		"lodash": "^4.17.20",
-		"mdbvue": "git+https://oauth2:VYTRyyN4sy4yzR5cjskz@git.mdbootstrap.com/mdb/vue/vu-pro.git",
+		"mdbvue": "./mdb/mdbvue/mdbvue-6.7.1.tgz",
 		"register-service-worker": "^1.7.1",
 		"uuid": "^8.3.1",
 		"vue": "^2.6.12",
@@ -27,6 +27,7 @@
 		"vue-i18n": "^8.22.1",
 		"vue-moment": "^4.1.0",
 		"vue-router": "^3.4.8",
+		"vue2-touch-events": "^3.0.1",
 		"vuex": "^3.5.1"
 	},
 	"devDependencies": {
