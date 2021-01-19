@@ -1,35 +1,4 @@
 {
-  "prod": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-wais-prod-140316-authRole",
-      "UnauthRoleArn": "arn:aws:iam::700078438137:role/amplify-wais-prod-140316-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::700078438137:role/amplify-wais-prod-140316-authRole",
-      "Region": "eu-central-1",
-      "DeploymentBucketName": "amplify-wais-prod-140316-deployment",
-      "UnauthRoleName": "amplify-wais-prod-140316-unauthRole",
-      "StackName": "amplify-wais-prod-140316",
-      "StackId": "arn:aws:cloudformation:eu-central-1:700078438137:stack/amplify-wais-prod-140316/5249a880-5a4e-11eb-998e-02b1a61bbaa6",
-      "AmplifyAppId": "d13cbbfbyui3bz"
-    },
-    "categories": {
-      "auth": {
-        "wais38036aa9": {},
-        "userPoolGroups": {}
-      },
-      "function": {
-        "AdminQueries3e8c423f": {},
-        "S3Trigger455f502f": {},
-        "wais38036aa9PostConfirmation": {},
-        "ResolverFunction": {}
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d13cbbfbyui3bz",
-          "type": "cicd"
-        }
-      }
-    }
-  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-wais-staging-151410-authRole",
@@ -53,6 +22,37 @@
         "wais38036aa9PostConfirmation": {
           "GROUP": ""
         },
+        "ResolverFunction": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d13cbbfbyui3bz",
+          "type": "cicd"
+        }
+      }
+    }
+  },
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wais-prod-140316-authRole",
+      "UnauthRoleArn": "arn:aws:iam::700078438137:role/amplify-wais-prod-140316-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::700078438137:role/amplify-wais-prod-140316-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-wais-prod-140316-deployment",
+      "UnauthRoleName": "amplify-wais-prod-140316-unauthRole",
+      "StackName": "amplify-wais-prod-140316",
+      "StackId": "arn:aws:cloudformation:eu-central-1:700078438137:stack/amplify-wais-prod-140316/5249a880-5a4e-11eb-998e-02b1a61bbaa6",
+      "AmplifyAppId": "d13cbbfbyui3bz"
+    },
+    "categories": {
+      "auth": {
+        "wais38036aa9": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueries3e8c423f": {},
+        "S3Trigger455f502f": {},
+        "wais38036aa9PostConfirmation": {},
         "ResolverFunction": {}
       },
       "hosting": {

@@ -23,10 +23,10 @@
 #   info: String
 #   postcode: String
 #   ownerId: String! # Cognito user ID
-
+ 
 #   # HR
 #   owner: UserProfile @connection(fields: ["ownerId"])
-#   employees: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byTradeId", fields: ["id"])
+#   employees: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(fields: ["id"])
 #   contractors: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byTradeId", fields: ["id"])
 #   customers: [Customer] @connection(keyName: "byTradeId", fields: ["id"])
 #   contracts: [Contract] @connection(keyName: "byTradeId", fields: ["id"])
@@ -232,99 +232,99 @@
 #   info: String
 # }
 
-# #Add all department-specific
-# type UserPermissions {
-#   department: String #User defined
-#   read: Boolean
-#   write: Boolean
-# }
+#Add all department-specific
+type UserPermissions {
+  department: String #User defined
+  read: Boolean
+  write: Boolean
+}
 
-# # consider an id
-# type File {
-#   name: String
-#   url: AWSURL
-# }
+# consider an id
+type File {
+  name: String
+  url: AWSURL
+}
 
-# type DriversLicense {
-#   LicenseID: Int
-#   DriversLicenseType: String # Erasitexniko/Epaggelmatiko
-#   Category: [DriversLicenseCategory]
-# }
+type DriversLicense {
+  LicenseID: Int
+  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
+  Category: [DriversLicenseCategory]
+}
 
-# type DriversLicenseCategory {
-#   category: String
-#   issueDate: AWSDate
-#   expiresAt: AWSDate
-# }
+type DriversLicenseCategory {
+  category: String
+  issueDate: AWSDate
+  expiresAt: AWSDate
+}
 
-# type InsurancePackage {
-#   name: String!
-#   insuranceClass: String!
-#   coverage: [String]
-#   usages: String
-# }
+type InsurancePackage {
+  name: String!
+  insuranceClass: String!
+  coverage: [String]
+  usages: String
+}
 
 
 
 # ####################################################################################################################################################################################
 
-# # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
-# type Query {
-#   me: User @function(name: "ResolverFunction-${env}")
-#   user(username: String): User @function(name: "ResolverFunction-${env}")
-#   echo(msg: String): String @function(name: "ResolverFunction-${env}")
-# }
+# These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
+type Query {
+  me: User @function(name: "ResolverFunction-${env}")
+  user(username: String): User @function(name: "ResolverFunction-${env}")
+  echo(msg: String): String @function(name: "ResolverFunction-${env}")
+}
 
-# type User {
-#   Username: String!
-#   UserAttributes: [Value]
-#   UserCreateDate: String
-#   UserLastModifiedDate: String
-#   Enabled: Boolean
-#   UserStatus: UserStatus
-#   MFAOptions: [MFAOption]
-#   PreferredMfaSetting: String
-#   UserMFASettingList: String
-# }
-# type Value {
-#   Name: String!
-#   Value: String
-# }
-# type MFAOption {
-#   DeliveryMedium: String
-#   AttributeName: String
-# }
-# enum UserStatus {
-#   UNCONFIRMED
-#   CONFIRMED
-#   ARCHIVED
-#   COMPROMISED
-#   UNKNOWN
-#   RESET_REQUIRED
-#   FORCE_CHANGE_PASSWORD
-# }
+type User {
+  Username: String!
+  UserAttributes: [Value]
+  UserCreateDate: String
+  UserLastModifiedDate: String
+  Enabled: Boolean
+  UserStatus: UserStatus
+  MFAOptions: [MFAOption]
+  PreferredMfaSetting: String
+  UserMFASettingList: String
+}
+type Value {
+  Name: String!
+  Value: String
+}
+type MFAOption {
+  DeliveryMedium: String
+  AttributeName: String
+}
+enum UserStatus {
+  UNCONFIRMED
+  CONFIRMED
+  ARCHIVED
+  COMPROMISED
+  UNKNOWN
+  RESET_REQUIRED
+  FORCE_CHANGE_PASSWORD
+}
 
 type TestType @model {
   id: ID
   val: String!
 }
 
-# # Used to model a Cognito user, not a 'real' DynamoDB type
-# # type UserCognito {
-# #   id: ID! # Custom attribute
-# #   name: String! # Full Name (includes middle name)
-# #   given_name: String! # First name
-# #   family_name: String! # Surname
-# #   middle_name: String! # Father's name!
-# #   preferred_username: String!
-# #   picture: String!
-# #   email: String!
-# #   email_verified: Boolean!
-# #   gender: String!
-# #   birthdate: String!
-# #   locale: String!
-# #   phone_number: String!
-# #   phone_number_verified: Boolean!
-# #   address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
-# #   updated_at: AWSDateTime!
-# # }
+# Used to model a Cognito user, not a 'real' DynamoDB type
+# type UserCognito {
+#   id: ID! # Custom attribute
+#   name: String! # Full Name (includes middle name)
+#   given_name: String! # First name
+#   family_name: String! # Surname
+#   middle_name: String! # Father's name!
+#   preferred_username: String!
+#   picture: String!
+#   email: String!
+#   email_verified: Boolean!
+#   gender: String!
+#   birthdate: String!
+#   locale: String!
+#   phone_number: String!
+#   phone_number_verified: Boolean!
+#   address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+#   updated_at: AWSDateTime!
+# }
