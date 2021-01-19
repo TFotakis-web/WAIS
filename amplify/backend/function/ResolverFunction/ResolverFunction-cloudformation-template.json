@@ -96,7 +96,7 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-staging-121057-deployment",
+          "S3Bucket": "amplify-wais-staging-151410-deployment",
           "S3Key": "amplify-builds/ResolverFunction-677a6c6b6b6e306d3075-build.zip"
         }
       }
