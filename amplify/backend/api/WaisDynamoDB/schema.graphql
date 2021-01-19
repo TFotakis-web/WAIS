@@ -1,122 +1,93 @@
-# DynamoDB schema in GraphQL
-# Docs: https://docs.amplify.aws/cli/graphql-transformer
-# Connection INFO: https://docs.amplify.aws/cli/graphql-transformer/connection
-
 type Trade
   @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "ownerId"
+        identityClaim: "sub"
+        operations: [read]
+      }
+      { allow: groups, groups: ["admin"] }
+    ]
+  )
+  @key(name: "byName", fields: ["name", "id"]) {
+
+  # Immutable UID
   id: ID!
-  ownerId: ID! # Cognito user ID
-  name: String!
+  
+  # Trade details
+  tradeName: String!
   tin: String
   logo: AWSURL
   info: String
   postcode: String
+  ownerId: String! # Cognito user ID
 
-  # Users associated with this Trade
+  # HR
   owner: UserProfile @connection(fields: ["ownerId"])
-  employees: [TradeUserConnection]
-    @connection(keyName: "byTradeId", fields: ["id"])
-  contractors: [TradeUserConnection]
-    @connection(keyName: "byTradeId", fields: ["id"])
-
-  # Connections
-  fromCompanyAccess: [CompanyAccessConnection]
-    @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
-  toCompanyAccess: [CompanyAccessConnection]
-    @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
+  employees: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byTradeId", fields: ["id"])
+  contractors: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byTradeId", fields: ["id"])
   customers: [Customer] @connection(keyName: "byTradeId", fields: ["id"])
   contracts: [Contract] @connection(keyName: "byTradeId", fields: ["id"])
-}
-
-type CompanyAccessConnection
-  @model(subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"])
-  @key(name: "byToId", fields: ["toId", "fromId"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  fromId: ID!
-  toId: ID!
-  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSDate! # Can be used to configure a TTL workflow
-  active: Boolean!
-  info: String!
-}
-
-type TradeUserConnection
-  @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "userId"])
-  @key(name: "byUserId", fields: ["userId", "tradeId"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  tradeId: ID!
-  userId: ID!
-  trade: Trade! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"])
-  info: String
+  
+  # Connections
+  fromCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
+  toCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
 }
 
 type UserProfile
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username", "id"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID! #Cognito UserPool id
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "id"
+        identityClaim: "id"
+        operations: [read]
+      }
+      { allow: groups, groups: ["admin"] }
+    ]
+  ) {
+  #Redudant fields, keep them to avoid multiple queries
+  id: ID!
   username: String!
+
+  #Unique fields, not present anywhere eles
   permissions: [UserPermissions]
   preferences: AWSJSON
   telephone: AWSPhone
   tin: Int!
   doy: String!
   familyStatus: String!
-  creationDate: AWSDate!
   chamberRecordNumber: String!
   insuranceLicenseExpirationDate: AWSDate!
   partnersNumberLimit: Int!
   professionStartDate: AWSDate!
-  message: String!
-  valid: Boolean!
   file: [File]
 }
-
-#Add all department-specific
-type UserPermissions {
-  department: String #User defined
-  read: Boolean
-  write: Boolean
-}
-
-type Customer
+type Vehicle
   @model(subscriptions: null)
-  @key(name: "byEmail", fields: ["email", "name"])
-  @key(name: "byTradeId", fields: ["tradeId", "name"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
-  tin: Int
-  name: String
-  surname: String
-  fathersName: String
-  birthDate: AWSDate
-  gender: String
-  email: AWSEmail
-  mobile: AWSPhone
-  postcode: String
-  doy: String
-  address: String
-  familyStatus: String
-  creationDate: AWSDateTime
-  files: [File]
-  driversLicense: DriversLicense
-
-  # Trade related fields
-  tradeId: ID!
-  trade: Trade @connection(fields: ["tradeId"])
-}
-
-# consider an id
-type File {
-  name: String
-  url: AWSURL
+  numberPlate: String!
+  color: String!
+  manufacturer: String!
+  model: String!
+  owner: String!
+  trim: String!
+  fuelType: String
+  usage: String!
+  displacement: Int!
+  eurotax: Int!
+  firstRegistrationDate: AWSDate!
+  passengers: Int!
+  purchaseDate: AWSDate!
+  taxableHorsepower: Int!
+  vin: String!
+  value: Float!
+  file: [File]
 }
 
 # All fields in this type MUST be immutable
@@ -124,7 +95,7 @@ type Contract
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId", "id"])
   @key(name: "byCustomerId", fields: ["customerId", "id"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
   #Unique IDs
   id: ID!
   voucherId: ID!
@@ -157,6 +128,123 @@ type Contract
   trade: Trade! @connection(fields: ["tradeId"])
 }
 
+
+type Customer
+  @model(subscriptions: null)
+  @key(name: "byEmail", fields: ["email", "name"])
+  @key(name: "byTradeId", fields: ["tradeId", "name"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  tin: Int
+  name: String
+  surname: String
+  fathersName: String
+  birthDate: AWSDate
+  gender: String
+  email: AWSEmail
+  mobile: AWSPhone
+  postcode: String
+  doy: String
+  address: String
+  familyStatus: String
+  creationDate: AWSDateTime
+  files: [File]
+  driversLicense: DriversLicense
+
+  # Trade related fields
+  tradeId: ID!
+  trade: Trade @connection(fields: ["tradeId"])
+}
+
+
+#For callendar use
+type UserCalendarEvent
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner, ownerField: "userId", identityClaim: "sub" }]) {
+  userId: String! # Cognito ID
+  tradeId: ID!
+  username: String!
+  createdAt: String!
+  payload: String
+}
+
+
+
+type CompanyAccessConnectionRequest
+  @model(subscriptions: null)
+  @key(name: "byFromId", fields: ["fromId", "toId"])
+  @key(name: "byToId", fields: ["toId", "fromId"])
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "memebers"
+        identityClaim: "sub"
+        operations: [read, update]
+      }
+      { allow: groups, groups: ["admin"] }
+    ]
+  ) {
+  fromId: ID!
+  toId: ID!
+  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  expirationDate: AWSDate! # Can be used to configure a TTL workflow
+  active: Boolean!
+  memebers: [String]! #Cognito IDs of users who can access this object
+  info: String!
+}
+
+type CompanyAccessConnection
+  @model(subscriptions: null)
+  @key(name: "byFromId", fields: ["fromId", "toId"])
+  @key(name: "byToId", fields: ["toId", "fromId"])
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "memebers"
+        identityClaim: "sub"
+        operations: [read]
+      }
+      { allow: groups, groups: ["admin"] }
+    ]
+  ) {
+  fromId: ID!
+  toId: ID!
+  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  expirationDate: AWSDate! # Can be used to configure a TTL workflow
+  active: Boolean!
+  memebers: [String]! #Cognito IDs of users who can access this object
+  info: String!
+}
+
+type TradeUserConnection
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "userId"])
+  @key(name: "byUserId", fields: ["userId", "tradeId"])
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
+  tradeId: ID!
+  userId: String! #Owner ID of the UserProfile
+  trade: Trade! @connection(fields: ["tradeId"])
+  user: UserProfile! @connection(fields: ["userId"])
+  info: String
+}
+
+#Add all department-specific
+type UserPermissions {
+  department: String #User defined
+  read: Boolean
+  write: Boolean
+}
+
+# consider an id
+type File {
+  name: String
+  url: AWSURL
+}
+
 type DriversLicense {
   LicenseID: Int
   DriversLicenseType: String # Erasitexniko/Epaggelmatiko
@@ -169,29 +257,6 @@ type DriversLicenseCategory {
   expiresAt: AWSDate
 }
 
-type Vehicle
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  numberPlate: String!
-  color: String!
-  manufacturer: String!
-  model: String!
-  owner: String!
-  trim: String!
-  fuelType: String
-  usage: String!
-  displacement: Int!
-  eurotax: Int!
-  firstRegistrationDate: AWSDate!
-  passengers: Int!
-  purchaseDate: AWSDate!
-  taxableHorsepower: Int!
-  vin: String!
-  value: Float!
-  file: [File]
-}
-
 type InsurancePackage {
   name: String!
   insuranceClass: String!
@@ -200,20 +265,51 @@ type InsurancePackage {
 }
 
 
-#For callendar use
-type UserCalendarEvent
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }]) {
-  id: ID!
-  userId: ID!
-  tradeId: ID!
-  username: String!
-  createdAt: String!
-  payload: String
+
+####################################################################################################################################################################################
+
+# These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
+type Query {
+  me: User @function(name: "ResolverFunction-${env}")
+  user(username: String): User @function(name: "ResolverFunction-${env}")
+  echo(msg: String): String @function(name: "ResolverFunction-${env}")
+}
+
+type User {
+  Username: String!
+  UserAttributes: [Value]
+  UserCreateDate: String
+  UserLastModifiedDate: String
+  Enabled: Boolean
+  UserStatus: UserStatus
+  MFAOptions: [MFAOption]
+  PreferredMfaSetting: String
+  UserMFASettingList: String
+}
+type Value {
+  Name: String!
+  Value: String
+}
+type MFAOption {
+  DeliveryMedium: String
+  AttributeName: String
+}
+enum UserStatus {
+  UNCONFIRMED
+  CONFIRMED
+  ARCHIVED
+  COMPROMISED
+  UNKNOWN
+  RESET_REQUIRED
+  FORCE_CHANGE_PASSWORD
+}
+
+type TestType @model {
+  id: ID
+  val: String!
 }
 
 # Used to model a Cognito user, not a 'real' DynamoDB type
-
 # type UserCognito {
 #   id: ID! # Custom attribute
 #   name: String! # Full Name (includes middle name)
