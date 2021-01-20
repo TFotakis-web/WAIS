@@ -14,7 +14,6 @@
 		"@vue/cli": "^4.5.8",
 		"aws-amplify": "^3.3.7",
 		"core-js": "^3.6.5",
-		"graphql-ttl-transformer": "^1.1.0",
 		"greek-utils": "^1.2.2",
 		"lodash": "^4.17.20",
 		"mdbvue": "./mdb/mdbvue/mdbvue-6.7.1.tgz",
