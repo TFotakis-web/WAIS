@@ -10,7 +10,7 @@ frontend:
     preBuild:
       commands:
         - npm install
-        - npm install --save graphql-ttl-transformer
+        - npm i -g graphql-ttl-transformer # For the @tll GraphQL directive
     build:
       commands:
         - npm run build
