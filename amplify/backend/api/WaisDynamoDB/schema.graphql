@@ -30,7 +30,7 @@ type UserProfile @model(subscriptions: null) @auth(rules: [{ allow: owner, owner
   doy: String!
   familyStatus: String!
   chamberRecordNumber: String!
-  insuranceLicenseExpirationDate: AWSTimestamp! @ttl
+  insuranceLicenseExpirationDate: AWSTimestamp!
   partnersNumberLimit: Int!
   professionStartDate: String!
   file: [File]
@@ -94,10 +94,9 @@ type Contract @model(subscriptions: null) @auth(rules: [{ allow: owner }, { allo
   #Connections
   vehicle: Vehicle @connection(fields: ["vehicleId"]) # OK
   customer: Customer @connection(fields: ["customerId"]) # 1-2
-  trade: Trade @connection(fields: ["tradeId"]) # Between 1 and 2 trades and at most 1 contractor 
+  trade: Trade @connection(fields: ["tradeId"]) # Between 1 and 2 trades and at most 1 contractor
 
   #Participants
-
 }
 
 type Customer @model(subscriptions: null) @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) @key(name: "byEmail", fields: ["email", "name"]) @key(name: "byTradeId", fields: ["tradeId", "name"]) {
@@ -137,7 +136,7 @@ type CompanyAccessConnectionRequest @model(subscriptions: null) @key(name: "byFr
   toId: ID!
   from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
   to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSTimestamp! @ttl # Can be used to configure a TTL workflow
+  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
 }
 
@@ -147,7 +146,7 @@ type CompanyAccessConnection @model(subscriptions: null) @key(name: "byFromId", 
   toId: ID!
   from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
   to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSTimestamp! @ttl # Can be used to configure a TTL workflow
+  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
 }
 #Add all department-specific
@@ -188,9 +187,9 @@ type InsurancePackage {
 }
 
 #For callendar use
-type UserCalendarEvent @model(subscriptions: null) @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "sub" }, { allow: groups, groups: ["admin"] }]) {
+type UserCalendarEvent @model(subscriptions: null) @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
-  userId: String! # Cognito ID
+  userId: String!
   username: String!
   createdAt: String!
   payload: String
