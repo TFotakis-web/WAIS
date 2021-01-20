@@ -48,6 +48,31 @@ export const echo = /* GraphQL */ `
     echo(msg: $msg)
   }
 `;
+export const createUserCalendarEventForUserId = /* GraphQL */ `
+  query CreateUserCalendarEventForUserId($payload: String) {
+    createUserCalendarEventForUserId(payload: $payload)
+  }
+`;
+export const updateUserCalendarEventForUserId = /* GraphQL */ `
+  query UpdateUserCalendarEventForUserId($id: ID, $payload: String) {
+    updateUserCalendarEventForUserId(id: $id, payload: $payload)
+  }
+`;
+export const deleteUserCalendarEventForUserId = /* GraphQL */ `
+  query DeleteUserCalendarEventForUserId($id: ID) {
+    deleteUserCalendarEventForUserId(id: $id)
+  }
+`;
+export const createCompanyConnectionRequest = /* GraphQL */ `
+  query CreateCompanyConnectionRequest($email: String) {
+    createCompanyConnectionRequest(email: $email)
+  }
+`;
+export const replyToCompanyConnectionRequest = /* GraphQL */ `
+  query ReplyToCompanyConnectionRequest($id: ID, $status: ConnectionStatus) {
+    replyToCompanyConnectionRequest(id: $id, status: $status)
+  }
+`;
 export const getTrade = /* GraphQL */ `
   query GetTrade($id: ID!) {
     getTrade(id: $id) {
@@ -70,8 +95,9 @@ export const getTrade = /* GraphQL */ `
         partnersNumberLimit
         professionStartDate
         file {
-          name
-          url
+          bucket
+          region
+          key
         }
         tradeCon {
           nextToken
@@ -101,58 +127,6 @@ export const getTrade = /* GraphQL */ `
         }
         nextToken
       }
-      customers {
-        items {
-          id
-          tradeId
-          tin
-          name
-          surname
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          creationDate
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      contracts {
-        items {
-          id
-          voucherId
-          vehicleId
-          customerId
-          tradeId
-          contractState
-          tradeAdmin
-          assignee
-          partner
-          company
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          creationDate
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
       fromCompanyAccess {
         items {
           id
@@ -172,6 +146,17 @@ export const getTrade = /* GraphQL */ `
           toId
           expirationDate
           message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractAccess {
+        items {
+          id
+          tradeId
+          contractId
+          ownsContract
           createdAt
           updatedAt
         }
@@ -217,16 +202,13 @@ export const listTrades = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -250,8 +232,9 @@ export const getUserProfile = /* GraphQL */ `
       partnersNumberLimit
       professionStartDate
       file {
-        name
-        url
+        bucket
+        region
+        key
       }
       tradeCon {
         items {
@@ -288,8 +271,9 @@ export const listUserProfiles = /* GraphQL */ `
         partnersNumberLimit
         professionStartDate
         file {
-          name
-          url
+          bucket
+          region
+          key
         }
         tradeCon {
           nextToken
@@ -306,7 +290,6 @@ export const getVehicle = /* GraphQL */ `
     getVehicle(id: $id) {
       id
       tradeId
-      contractId
       numberPlate
       color
       manufacturer
@@ -324,92 +307,9 @@ export const getVehicle = /* GraphQL */ `
       vin
       value
       file {
-        name
-        url
-      }
-      contract {
-        id
-        voucherId
-        vehicleId
-        customerId
-        tradeId
-        contractState
-        tradeAdmin
-        assignee
-        partner
-        company
-        insuranceClass
-        insuranceCoverage
-        insuranceUsage
-        duration
-        creationDate
-        startDate
-        endDate
-        data
-        discount
-        jointWorth
-        netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
-        vehicle {
-          id
-          tradeId
-          contractId
-          numberPlate
-          color
-          manufacturer
-          model
-          owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          tradeId
-          tin
-          name
-          surname
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          creationDate
-          createdAt
-          updatedAt
-          owner
-        }
-        trade {
-          id
-          tradeName
-          tin
-          logo
-          info
-          postcode
-          ownerId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-        owner
+        bucket
+        region
+        key
       }
       createdAt
       updatedAt
@@ -426,7 +326,6 @@ export const listVehicles = /* GraphQL */ `
       items {
         id
         tradeId
-        contractId
         numberPlate
         color
         manufacturer
@@ -444,34 +343,9 @@ export const listVehicles = /* GraphQL */ `
         vin
         value
         file {
-          name
-          url
-        }
-        contract {
-          id
-          voucherId
-          vehicleId
-          customerId
-          tradeId
-          contractState
-          tradeAdmin
-          assignee
-          partner
-          company
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          creationDate
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-          owner
+          bucket
+          region
+          key
         }
         createdAt
         updatedAt
@@ -484,15 +358,16 @@ export const getContract = /* GraphQL */ `
   query GetContract($id: ID!) {
     getContract(id: $id) {
       id
+      createdAt
       voucherId
       vehicleId
       customerId
       tradeId
+      second_tradeId
+      contractorId
+      co_name
+      co_TRN
       contractState
-      tradeAdmin
-      assignee
-      partner
-      company
       insuranceClass
       insuranceCoverage
       insuranceUsage
@@ -513,144 +388,7 @@ export const getContract = /* GraphQL */ `
           expiresAt
         }
       }
-      vehicle {
-        id
-        tradeId
-        contractId
-        numberPlate
-        color
-        manufacturer
-        model
-        owner
-        trim
-        fuelType
-        usage
-        displacement
-        eurotax
-        firstRegistrationDate
-        passengers
-        purchaseDate
-        taxableHorsepower
-        vin
-        value
-        file {
-          name
-          url
-        }
-        contract {
-          id
-          voucherId
-          vehicleId
-          customerId
-          tradeId
-          contractState
-          tradeAdmin
-          assignee
-          partner
-          company
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          creationDate
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-          owner
-        }
-        createdAt
-        updatedAt
-      }
-      customer {
-        id
-        tradeId
-        tin
-        name
-        surname
-        fathersName
-        birthDate
-        gender
-        email
-        mobile
-        postcode
-        doy
-        address
-        familyStatus
-        creationDate
-        files {
-          name
-          url
-        }
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
-        trade {
-          id
-          tradeName
-          tin
-          logo
-          info
-          postcode
-          ownerId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      trade {
-        id
-        tradeName
-        tin
-        logo
-        info
-        postcode
-        ownerId
-        owner {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        fromCompanyAccess {
-          nextToken
-        }
-        toCompanyAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -663,15 +401,16 @@ export const listContracts = /* GraphQL */ `
     listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        createdAt
         voucherId
         vehicleId
         customerId
         tradeId
+        second_tradeId
+        contractorId
+        co_name
+        co_TRN
         contractState
-        tradeAdmin
-        assignee
-        partner
-        company
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -687,63 +426,7 @@ export const listContracts = /* GraphQL */ `
           LicenseID
           DriversLicenseType
         }
-        vehicle {
-          id
-          tradeId
-          contractId
-          numberPlate
-          color
-          manufacturer
-          model
-          owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          tradeId
-          tin
-          name
-          surname
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          creationDate
-          createdAt
-          updatedAt
-          owner
-        }
-        trade {
-          id
-          tradeName
-          tin
-          logo
-          info
-          postcode
-          ownerId
-          createdAt
-          updatedAt
-        }
-        createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -768,8 +451,9 @@ export const getCustomer = /* GraphQL */ `
       familyStatus
       creationDate
       files {
-        name
-        url
+        bucket
+        region
+        key
       }
       driversLicense {
         LicenseID
@@ -780,52 +464,8 @@ export const getCustomer = /* GraphQL */ `
           expiresAt
         }
       }
-      trade {
-        id
-        tradeName
-        tin
-        logo
-        info
-        postcode
-        ownerId
-        owner {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        fromCompanyAccess {
-          nextToken
-        }
-        toCompanyAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -853,27 +493,16 @@ export const listCustomers = /* GraphQL */ `
         familyStatus
         creationDate
         files {
-          name
-          url
+          bucket
+          region
+          key
         }
         driversLicense {
           LicenseID
           DriversLicenseType
         }
-        trade {
-          id
-          tradeName
-          tin
-          logo
-          info
-          postcode
-          ownerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -913,16 +542,13 @@ export const getTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -940,8 +566,9 @@ export const getTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         professionStartDate
         file {
-          name
-          url
+          bucket
+          region
+          key
         }
         tradeCon {
           nextToken
@@ -1047,16 +674,13 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -1090,16 +714,13 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -1158,6 +779,146 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
     }
   }
 `;
+export const getTradeContractConnection = /* GraphQL */ `
+  query GetTradeContractConnection($id: ID!) {
+    getTradeContractConnection(id: $id) {
+      id
+      tradeId
+      contractId
+      trade {
+        id
+        tradeName
+        tin
+        logo
+        info
+        postcode
+        ownerId
+        owner {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
+        fromCompanyAccess {
+          nextToken
+        }
+        toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      contract {
+        id
+        createdAt
+        voucherId
+        vehicleId
+        customerId
+        tradeId
+        second_tradeId
+        contractorId
+        co_name
+        co_TRN
+        contractState
+        insuranceClass
+        insuranceCoverage
+        insuranceUsage
+        duration
+        creationDate
+        startDate
+        endDate
+        data
+        discount
+        jointWorth
+        netWorth
+        driversLicense {
+          LicenseID
+          DriversLicenseType
+        }
+        updatedAt
+      }
+      ownsContract
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTradeContractConnections = /* GraphQL */ `
+  query ListTradeContractConnections(
+    $filter: ModelTradeContractConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeContractConnections(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeId
+        contractId
+        trade {
+          id
+          tradeName
+          tin
+          logo
+          info
+          postcode
+          ownerId
+          createdAt
+          updatedAt
+        }
+        contract {
+          id
+          createdAt
+          voucherId
+          vehicleId
+          customerId
+          tradeId
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          creationDate
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          updatedAt
+        }
+        ownsContract
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getCompanyAccessConnection = /* GraphQL */ `
   query GetCompanyAccessConnection($id: ID!) {
     getCompanyAccessConnection(id: $id) {
@@ -1192,16 +953,13 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -1235,16 +993,13 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
+          nextToken
+        }
+        contractAccess {
           nextToken
         }
         createdAt
@@ -1308,7 +1063,6 @@ export const getUserCalendarEvent = /* GraphQL */ `
     getUserCalendarEvent(id: $id) {
       id
       userId
-      username
       createdAt
       payload
       updatedAt
@@ -1329,7 +1083,6 @@ export const listUserCalendarEvents = /* GraphQL */ `
       items {
         id
         userId
-        username
         createdAt
         payload
         updatedAt
