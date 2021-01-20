@@ -28,4 +28,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 Compile with: 
 ```
 amplify api gql-compile
-```
+``` 
