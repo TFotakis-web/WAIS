@@ -71,7 +71,7 @@ type Contract @model(subscriptions: null) @auth(rules: [{ allow: owner }, { allo
   vehicleId: ID!
   customerId: ID!
   tradeId: ID!
-
+  #createdby kai updatedAt
   contractState: String! # Send to S3 on completion
   tradeAdmin: String! #Aftos poy kanei amesa to insurance
   assignee: String! #Aftos poy kanei emesa to insurance
@@ -92,11 +92,12 @@ type Contract @model(subscriptions: null) @auth(rules: [{ allow: owner }, { allo
   driversLicense: DriversLicense
 
   #Connections
-  vehicle: Vehicle @connection(fields: ["vehicleId"])
-  customer: Customer @connection(fields: ["customerId"])
-  trade: Trade @connection(fields: ["tradeId"])
+  vehicle: Vehicle @connection(fields: ["vehicleId"]) # OK
+  customer: Customer @connection(fields: ["customerId"]) # 1-2
+  trade: Trade @connection(fields: ["tradeId"]) # Between 1 and 2 trades and at most 1 contractor 
 
   #Participants
+
 }
 
 type Customer @model(subscriptions: null) @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) @key(name: "byEmail", fields: ["email", "name"]) @key(name: "byTradeId", fields: ["tradeId", "name"]) {

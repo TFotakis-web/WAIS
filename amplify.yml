@@ -9,8 +9,8 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install --save graphql-ttl-transformer
         - npm install
+        - npm install --save graphql-ttl-transformer
     build:
       commands:
         - npm run build
