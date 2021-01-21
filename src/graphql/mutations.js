@@ -41,6 +41,7 @@ export const createTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -52,6 +53,7 @@ export const createTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -138,6 +140,7 @@ export const updateTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -149,6 +152,7 @@ export const updateTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -235,6 +239,7 @@ export const deleteTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -246,6 +251,7 @@ export const deleteTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -318,6 +324,7 @@ export const createUserProfile = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -355,6 +362,7 @@ export const updateUserProfile = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -392,6 +400,7 @@ export const deleteUserProfile = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -824,6 +833,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         read
         write
       }
+      employeeType
       preferences
       createdAt
       updatedAt
@@ -906,6 +916,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         read
         write
       }
+      employeeType
       preferences
       createdAt
       updatedAt
@@ -988,6 +999,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         read
         write
       }
+      employeeType
       preferences
       createdAt
       updatedAt
@@ -1860,6 +1872,318 @@ export const deleteUserCalendarEvent = /* GraphQL */ `
       userId
       createdAt
       payload
+      updatedAt
+    }
+  }
+`;
+export const createUserWallet = /* GraphQL */ `
+  mutation CreateUserWallet(
+    $input: CreateUserWalletInput!
+    $condition: ModelUserWalletConditionInput
+  ) {
+    createUserWallet(input: $input, condition: $condition) {
+      id
+      username
+      balance
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserWallet = /* GraphQL */ `
+  mutation UpdateUserWallet(
+    $input: UpdateUserWalletInput!
+    $condition: ModelUserWalletConditionInput
+  ) {
+    updateUserWallet(input: $input, condition: $condition) {
+      id
+      username
+      balance
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserWallet = /* GraphQL */ `
+  mutation DeleteUserWallet(
+    $input: DeleteUserWalletInput!
+    $condition: ModelUserWalletConditionInput
+  ) {
+    deleteUserWallet(input: $input, condition: $condition) {
+      id
+      username
+      balance
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTransactionHistory = /* GraphQL */ `
+  mutation CreateTransactionHistory(
+    $input: CreateTransactionHistoryInput!
+    $condition: ModelTransactionHistoryConditionInput
+  ) {
+    createTransactionHistory(input: $input, condition: $condition) {
+      id
+      timestamp
+      senderId
+      receiverId
+      transactionAmount
+      sender {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiver {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      senderWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      receiverWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTransactionHistory = /* GraphQL */ `
+  mutation UpdateTransactionHistory(
+    $input: UpdateTransactionHistoryInput!
+    $condition: ModelTransactionHistoryConditionInput
+  ) {
+    updateTransactionHistory(input: $input, condition: $condition) {
+      id
+      timestamp
+      senderId
+      receiverId
+      transactionAmount
+      sender {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiver {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      senderWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      receiverWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTransactionHistory = /* GraphQL */ `
+  mutation DeleteTransactionHistory(
+    $input: DeleteTransactionHistoryInput!
+    $condition: ModelTransactionHistoryConditionInput
+  ) {
+    deleteTransactionHistory(input: $input, condition: $condition) {
+      id
+      timestamp
+      senderId
+      receiverId
+      transactionAmount
+      sender {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiver {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      senderWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      receiverWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createAdminRequests = /* GraphQL */ `
+  mutation CreateAdminRequests(
+    $input: CreateAdminRequestsInput!
+    $condition: ModelAdminRequestsConditionInput
+  ) {
+    createAdminRequests(input: $input, condition: $condition) {
+      id
+      tradeId
+      expiresAt
+      requestType
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAdminRequests = /* GraphQL */ `
+  mutation UpdateAdminRequests(
+    $input: UpdateAdminRequestsInput!
+    $condition: ModelAdminRequestsConditionInput
+  ) {
+    updateAdminRequests(input: $input, condition: $condition) {
+      id
+      tradeId
+      expiresAt
+      requestType
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAdminRequests = /* GraphQL */ `
+  mutation DeleteAdminRequests(
+    $input: DeleteAdminRequestsInput!
+    $condition: ModelAdminRequestsConditionInput
+  ) {
+    deleteAdminRequests(input: $input, condition: $condition) {
+      id
+      tradeId
+      expiresAt
+      requestType
+      message
+      createdAt
       updatedAt
     }
   }

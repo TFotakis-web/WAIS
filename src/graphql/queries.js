@@ -48,6 +48,11 @@ export const echo = /* GraphQL */ `
     echo(msg: $msg)
   }
 `;
+export const requestAdminAproval = /* GraphQL */ `
+  query RequestAdminAproval($messageForAdmin: String) {
+    requestAdminAproval(messageForAdmin: $messageForAdmin)
+  }
+`;
 export const createUserCalendarEventForUserId = /* GraphQL */ `
   query CreateUserCalendarEventForUserId($payload: String) {
     createUserCalendarEventForUserId(payload: $payload)
@@ -71,6 +76,32 @@ export const createCompanyConnectionRequest = /* GraphQL */ `
 export const replyToCompanyConnectionRequest = /* GraphQL */ `
   query ReplyToCompanyConnectionRequest($id: ID, $status: ConnectionStatus) {
     replyToCompanyConnectionRequest(id: $id, status: $status)
+  }
+`;
+export const addEmployeeToTrade = /* GraphQL */ `
+  query AddEmployeeToTrade($username: String!) {
+    addEmployeeToTrade(username: $username)
+  }
+`;
+export const putFile = /* GraphQL */ `
+  query PutFile($name: String, $key: String) {
+    putFile(name: $name, key: $key)
+  }
+`;
+export const getFile = /* GraphQL */ `
+  query GetFile($name: String) {
+    getFile(name: $name)
+  }
+`;
+export const sendMoneyToUserWithUsername = /* GraphQL */ `
+  query SendMoneyToUserWithUsername(
+    $receiverUsername: String
+    $amount: Float!
+  ) {
+    sendMoneyToUserWithUsername(
+      receiverUsername: $receiverUsername
+      amount: $amount
+    )
   }
 `;
 export const getTrade = /* GraphQL */ `
@@ -110,6 +141,7 @@ export const getTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -121,6 +153,7 @@ export const getTrade = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -241,6 +274,7 @@ export const getUserProfile = /* GraphQL */ `
           id
           tradeId
           userId
+          employeeType
           preferences
           createdAt
           updatedAt
@@ -581,6 +615,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         read
         write
       }
+      employeeType
       preferences
       createdAt
       updatedAt
@@ -632,6 +667,7 @@ export const listTradeUserConnections = /* GraphQL */ `
           read
           write
         }
+        employeeType
         preferences
         createdAt
         updatedAt
@@ -1085,6 +1121,205 @@ export const listUserCalendarEvents = /* GraphQL */ `
         userId
         createdAt
         payload
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserWallet = /* GraphQL */ `
+  query GetUserWallet($id: ID!) {
+    getUserWallet(id: $id) {
+      id
+      username
+      balance
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserWallets = /* GraphQL */ `
+  query ListUserWallets(
+    $filter: ModelUserWalletFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserWallets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTransactionHistory = /* GraphQL */ `
+  query GetTransactionHistory($id: ID!) {
+    getTransactionHistory(id: $id) {
+      id
+      timestamp
+      senderId
+      receiverId
+      transactionAmount
+      sender {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      receiver {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        tradeCon {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      senderWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      receiverWallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTransactionHistorys = /* GraphQL */ `
+  query ListTransactionHistorys(
+    $filter: ModelTransactionHistoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTransactionHistorys(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        timestamp
+        senderId
+        receiverId
+        transactionAmount
+        sender {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+        receiver {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+        senderWallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        receiverWallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getAdminRequests = /* GraphQL */ `
+  query GetAdminRequests($id: ID!) {
+    getAdminRequests(id: $id) {
+      id
+      tradeId
+      expiresAt
+      requestType
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listAdminRequestss = /* GraphQL */ `
+  query ListAdminRequestss(
+    $filter: ModelAdminRequestsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAdminRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        tradeId
+        expiresAt
+        requestType
+        message
+        createdAt
         updatedAt
       }
       nextToken

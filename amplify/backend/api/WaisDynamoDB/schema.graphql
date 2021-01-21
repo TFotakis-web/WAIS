@@ -135,6 +135,7 @@ type TradeUserConnection
   trade: Trade! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"])
   permissions: [UserPermissions]
+  employeeType: EmployeeType! # e.g Contractor
   preferences: String
 }
 
@@ -251,6 +252,20 @@ type TransactionHistory
   receiverWallet: UserWallet! @connection(fields: ["receiverId"])
 }
 
+type AdminRequests
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  tradeId: ID!
+  expiresAt: AWSTimestamp!
+  requestType: AdminRequestEnum!
+  message: String!
+}
+
+enum AdminRequestEnum {
+  APROVE_TRADE
+}
 # ####################################################################################################################################################################################
 
 # Everyone can call this queries
@@ -260,6 +275,9 @@ type Query {
   me: User @function(name: "ResolverFunction-${env}")
   user(username: String): User @function(name: "ResolverFunction-${env}")
   echo(msg: String): String @function(name: "ResolverFunction-${env}")
+
+  #Admin requests
+  requestAdminAproval(messageForAdmin: String): String @function(name: "ResolverFunction-${env}")
 
   #Callendar
   createUserCalendarEventForUserId(payload: String): ID @function(name: "ResolverFunction-${env}") #Returns the callendar entry ID
@@ -275,11 +293,11 @@ type Query {
   #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "ResolverFunction-${env}")
 
   # Update user Files
-  putFile(name: String, key: String): Boolean @function(name: "ResolverFunction-${env}")
+  putFile(name: String, key: String): String @function(name: "ResolverFunction-${env}")
   getFile(name: String): String @function(name: "ResolverFunction-${env}")
 
   # Update user balance
-  sendMoneyToUserWithUsername(receiverUsername:String,amount: Float!): String @function(name: "ResolverFunction-${env}")
+  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String @function(name: "ResolverFunction-${env}")
 }
 
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property

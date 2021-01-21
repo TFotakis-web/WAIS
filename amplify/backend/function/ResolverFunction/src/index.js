@@ -13,10 +13,10 @@ const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
 /**
  * Get user pool information from environment variables.
  */
-const COGNITO_USERPOOL_ID = process.env.AUTH_MYRESOURCENAME_USERPOOLID;
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAIS38036AA9_USERPOOLID;
 if (!COGNITO_USERPOOL_ID) {
   throw new Error(
-    `Function requires environment variable: 'COGNITO_USERPOOL_ID'`
+    `Function requires a valid pool ID`
   );
 }
 
