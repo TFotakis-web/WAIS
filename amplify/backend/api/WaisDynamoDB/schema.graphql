@@ -226,6 +226,31 @@ type UserCalendarEvent
   payload: String
 }
 
+type UserWallet
+  @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username"])
+  @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
+  id: ID! #UserProfile ID
+  username: String!
+  balance: Float!
+}
+
+type TransactionHistory
+  @model(subscriptions: null)
+  @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
+  @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  timestamp: AWSTimestamp!
+  senderId: ID! # UserProfile ID
+  receiverId: ID!
+  transactionAmount: Float!
+  sender: UserProfile! @connection(fields: ["senderId"])
+  receiver: UserProfile! @connection(fields: ["receiverId"])
+  senderWallet: UserWallet! @connection(fields: ["senderId"])
+  receiverWallet: UserWallet! @connection(fields: ["receiverId"])
+}
+
 # ####################################################################################################################################################################################
 
 # Everyone can call this queries
@@ -246,10 +271,15 @@ type Query {
   replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus @function(name: "ResolverFunction-${env}")
 
   # Trade user management
+  addEmployeeToTrade(username: String!): String @function(name: "ResolverFunction-${env}") #TODO add types
+  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "ResolverFunction-${env}")
 
   # Update user Files
+  putFile(name: String, key: String): Boolean @function(name: "ResolverFunction-${env}")
+  getFile(name: String): String @function(name: "ResolverFunction-${env}")
 
   # Update user balance
+  sendMoneyToUserWithUsername(receiverUsername:String,amount: Float!): String @function(name: "ResolverFunction-${env}")
 }
 
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
