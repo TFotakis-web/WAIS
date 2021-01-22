@@ -1,0 +1,121 @@
+{
+  "permissions": {
+    "auth": {
+      "wais38036aa9": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "api": {
+      "WaisDynamoDB": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "function": {
+      "AdminQueries3e8c423f": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "waisstorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Trade:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "UserProfile:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Vehicle:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Contract:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Customer:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "TradeUserConnection:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "CompanyAccessConnectionRequest:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "TradeContractConnection:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "CompanyAccessConnection:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "UserCalendarEvent:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "UserWallet:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "TransactionHistory:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "AdminRequests:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "TestType:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
