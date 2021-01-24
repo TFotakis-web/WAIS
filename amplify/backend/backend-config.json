@@ -3,17 +3,7 @@
     "wais38036aa9": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "wais38036aa9PostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false
     },
     "userPoolGroups": {
@@ -85,85 +75,13 @@
           ]
         }
       ]
-    },
-    "S3Trigger455f502f": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "wais38036aa9PostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "ResolverFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "waisstorage",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
     }
   },
   "hosting": {
     "amplifyhosting": {
       "service": "amplifyhosting",
-      "type": "cicd"
-    }
-  },
-  "storage": {
-    "waisstorage": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger455f502f",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
-        }
-      ]
+      "type": "cicd",
+      "lastPushTimeStamp": "2020-10-27T10:09:38.180Z"
     }
   }
 }

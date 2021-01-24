@@ -16,12 +16,16 @@
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": true,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase",
+        "Requires Numbers"
+    ],
     "requiredAttributes": [
         "email"
     ],
     "userpoolClientGenerateSecret": true,
-    "userpoolClientRefreshTokenValidity": "1",
+    "userpoolClientRefreshTokenValidity": "7",
     "userpoolClientWriteAttributes": [
         "address",
         "birthdate",
@@ -73,32 +77,21 @@
     },
     "useDefault": "manual",
     "userPoolGroupList": [
-        "admin",
-        "system",
-        "user"
+        "admins",
+        "managers",
+        "employees",
+        "externalContractors"
     ],
     "serviceName": "Cognito",
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "wais38036aa9PostConfirmation",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        }
-    ],
+    "dependsOn": [],
     "thirdPartyAuth": false,
     "userPoolGroups": true,
     "adminQueries": true,
-    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
+    "triggers": "{}",
     "hostedUI": false,
-    "adminQueryGroup": "admin",
+    "adminQueryGroup": "admins",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
-    "permissions": [
-        "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
-    ]
+    "permissions": []
 }

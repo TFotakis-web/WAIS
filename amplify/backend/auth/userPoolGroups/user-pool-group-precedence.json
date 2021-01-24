@@ -1,14 +1,18 @@
 [
-    {
-        "groupName": "admin",
-        "precedence": 1
-    },
-    {
-        "groupName": "system",
-        "precedence": 2
-    },
-    {
-        "groupName": "user",
-        "precedence": 3
-    }
+  {
+    "groupName": "admins",
+    "precedence": 1
+  },
+  {
+    "groupName": "managers",
+    "precedence": 2
+  },
+  {
+    "groupName": "employees",
+    "precedence": 3
+  },
+  {
+    "groupName": "externalContractors",
+    "precedence": 4
+  }
 ]

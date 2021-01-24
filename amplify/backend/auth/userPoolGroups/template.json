@@ -41,15 +41,15 @@
     },
     "Resources": {
     
-        "adminGroup": {
+        "adminsGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "admin",
+              "GroupName" : "admins",
               "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "adminsGroupRole",
                     "Arn"
                 ]
               },
@@ -60,7 +60,7 @@
             }
         },
         
-        "adminGroupRole": {
+        "adminsGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -70,7 +70,7 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-adminGroupRole"
+                          "-adminsGroupRole"
                         ]
                     ]
                 },
@@ -95,15 +95,15 @@
         },
      
     
-        "systemGroup": {
+        "managersGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "system",
+              "GroupName" : "managers",
               "Precedence" : 2,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "systemGroupRole",
+                    "managersGroupRole",
                     "Arn"
                 ]
               },
@@ -114,7 +114,7 @@
             }
         },
         
-        "systemGroupRole": {
+        "managersGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -124,7 +124,7 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-systemGroupRole"
+                          "-managersGroupRole"
                         ]
                     ]
                 },
@@ -149,15 +149,15 @@
         },
      
     
-        "userGroup": {
+        "employeesGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "user",
+              "GroupName" : "employees",
               "Precedence" : 3,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "userGroupRole",
+                    "employeesGroupRole",
                     "Arn"
                 ]
               },
@@ -168,7 +168,7 @@
             }
         },
         
-        "userGroupRole": {
+        "employeesGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -178,7 +178,61 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-userGroupRole"
+                          "-employeesGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
+        "externalContractorsGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "externalContractors",
+              "Precedence" : 4,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "externalContractorsGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "authwais38036aa9UserPoolId"
+              } 
+            }
+        },
+        
+        "externalContractorsGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "authwais38036aa9UserPoolId"
+                          },
+                          "-externalContractorsGroupRole"
                         ]
                     ]
                 },
@@ -403,10 +457,10 @@
     
     "Outputs": {
       
-        "adminGroupRole": {
+        "adminsGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "adminsGroupRole",
                     "Arn"
                 ]
             }
@@ -414,10 +468,10 @@
         },
         
       
-        "systemGroupRole": {
+        "managersGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "systemGroupRole",
+                    "managersGroupRole",
                     "Arn"
                 ]
             }
@@ -425,10 +479,21 @@
         },
         
       
-        "userGroupRole": {
+        "employeesGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "userGroupRole",
+                    "employeesGroupRole",
+                    "Arn"
+                ]
+            }
+         
+        },
+        
+      
+        "externalContractorsGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "externalContractorsGroupRole",
                     "Arn"
                 ]
             }
