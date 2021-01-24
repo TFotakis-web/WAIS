@@ -9,6 +9,18 @@ Parameters:
     Type: String
   
   
+  
+  
+  functionwais38036aa9PostConfirmationArn: 
+    Type: String
+    Default: functionwais38036aa9PostConfirmationArn
+  
+  functionwais38036aa9PostConfirmationName: 
+    Type: String
+    Default: functionwais38036aa9PostConfirmationName
+  
+  
+  
 
     
   identityPoolName:
@@ -172,6 +184,19 @@ Resources:
         
       
       
+      LambdaConfig:
+        
+        
+        
+        
+        
+          PostConfirmation: !Ref functionwais38036aa9PostConfirmationArn
+        
+        
+        
+        
+        
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
@@ -182,10 +207,10 @@ Resources:
       Policies:
         PasswordPolicy:
           MinimumLength: !Ref passwordPolicyMinLength
-          RequireLowercase: true
-          RequireNumbers: true
+          RequireLowercase: false
+          RequireNumbers: false
           RequireSymbols: false
-          RequireUppercase: true
+          RequireUppercase: false
           
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
@@ -198,12 +223,53 @@ Resources:
     
   
     
+  
+  UserPoolPostConfirmationLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionwais38036aa9PostConfirmationName
+      SourceArn: !GetAtt UserPool.Arn
     
   
   
    
     
   # Updating lambda role with permissions to Cognito
+  
+  
+  wais38036aa9PostConfirmationAddToGroupCognito:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: wais38036aa9PostConfirmationAddToGroupCognito
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+            
+              - cognito-idp:AdminAddUserToGroup
+            
+              - cognito-idp:GetGroup
+            
+              - cognito-idp:CreateGroup
+            
+            
+            
+            Resource: !GetAtt
+            
+              - UserPool
+            
+              - Arn
+            
+            
+            
+
+      Roles:
+        - !Join ['',["wais38036aa9PostConfirmation", '-', !Ref env]]
+  
   
   
   UserPoolClientWeb:

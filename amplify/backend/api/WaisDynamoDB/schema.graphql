@@ -1,178 +1,56 @@
-# DynamoDB schema in GraphQL
-# Docs: https://docs.amplify.aws/cli/graphql-transformer
-# Connection INFO: https://docs.amplify.aws/cli/graphql-transformer/connection
-
 type Trade
   @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @key(name: "byName", fields: ["tradeName", "id"]) {
   id: ID!
-  ownerId: ID! # Cognito user ID
-  name: String!
-  tin: String
-  logo: AWSURL
-  info: String
-  postcode: String
 
-  # Users associated with this Trade
+  # Trade details
+  tradeName: String!
+  tin: String!
+  logo: AWSURL!
+  info: String!
+  postcode: String!
+  ownerId: ID!
+
+  # HR
   owner: UserProfile @connection(fields: ["ownerId"])
-  employees: [TradeUserConnection]
-    @connection(keyName: "byTradeId", fields: ["id"])
-  contractors: [TradeUserConnection]
-    @connection(keyName: "byTradeId", fields: ["id"])
+  employees: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
+  contractors: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
 
   # Connections
-  fromCompanyAccess: [CompanyAccessConnection]
-    @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
-  toCompanyAccess: [CompanyAccessConnection]
-    @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
-  customers: [Customer] @connection(keyName: "byTradeId", fields: ["id"])
-  contracts: [Contract] @connection(keyName: "byTradeId", fields: ["id"])
-}
-
-type CompanyAccessConnection
-  @model(subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"])
-  @key(name: "byToId", fields: ["toId", "fromId"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  fromId: ID!
-  toId: ID!
-  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSDate! # Can be used to configure a TTL workflow
-  active: Boolean!
-  info: String!
-}
-
-type TradeUserConnection
-  @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "userId"])
-  @key(name: "byUserId", fields: ["userId", "tradeId"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  tradeId: ID!
-  userId: ID!
-  trade: Trade! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"])
-  info: String
+  fromCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
+  toCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
+  contractAccess: [TradeContractConnection] @connection(keyName: "byTradeId", fields: ["id"])
 }
 
 type UserProfile
   @model(subscriptions: null)
-  @key(name: "byUsername", fields: ["username", "id"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID! #Cognito UserPool id
+  @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "id", operations: [read] }, { allow: groups, groups: ["admin"] }])
+  @key(name: "byUsername", fields: ["username", "id"]) {
+  id: ID! #Cognito ID
   username: String!
-  permissions: [UserPermissions]
-  preferences: AWSJSON
-  telephone: AWSPhone
+
+  #Unique fields, not present anywhere eles
+  telephone: String
   tin: Int!
   doy: String!
   familyStatus: String!
-  creationDate: AWSDate!
   chamberRecordNumber: String!
-  insuranceLicenseExpirationDate: AWSDate!
+  insuranceLicenseExpirationDate: AWSTimestamp!
   partnersNumberLimit: Int!
-  professionStartDate: AWSDate!
-  message: String!
-  valid: Boolean!
-  file: [File]
-}
+  professionStartDate: String!
+  file: [S3Object]
 
-#Add all department-specific
-type UserPermissions {
-  department: String #User defined
-  read: Boolean
-  write: Boolean
-}
-
-type Customer
-  @model(subscriptions: null)
-  @key(name: "byEmail", fields: ["email", "name"])
-  @key(name: "byTradeId", fields: ["tradeId", "name"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  id: ID!
-  tin: Int
-  name: String
-  surname: String
-  fathersName: String
-  birthDate: AWSDate
-  gender: String
-  email: AWSEmail
-  mobile: AWSPhone
-  postcode: String
-  doy: String
-  address: String
-  familyStatus: String
-  creationDate: AWSDateTime
-  files: [File]
-  driversLicense: DriversLicense
-
-  # Trade related fields
-  tradeId: ID!
-  trade: Trade @connection(fields: ["tradeId"])
-}
-
-# consider an id
-type File {
-  name: String
-  url: AWSURL
-}
-
-# All fields in this type MUST be immutable
-type Contract
-  @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "id"])
-  @key(name: "byCustomerId", fields: ["customerId", "id"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
-  #Unique IDs
-  id: ID!
-  voucherId: ID!
-  vehicleId: ID!
-  customerId: ID!
-  tradeId: ID!
-
-  contractState: String! # Send to S3 on completion
-  tradeAdmin: String! #Aftos poy kanei amesa to insurance
-  assignee: String! #Aftos poy kanei emesa to insurance
-  partner: String!
-  company: String!
-  insuranceClass: String!
-  insuranceCoverage: [String]
-  insuranceUsage: String
-
-  duration: String!
-  creationDate: String!
-  startDate: AWSDate!
-  endDate: AWSDate!
-  data: String!
-  discount: Float! # e.g. 0.1
-  jointWorth: Float!
-  netWorth: Float!
-  driversLicense: DriversLicense
-
-  #Connections
-  vehicle: Vehicle! @connection(fields: ["vehicleId"])
-  customer: Customer! @connection(fields: ["customerId"])
-  trade: Trade! @connection(fields: ["tradeId"])
-}
-
-type DriversLicense {
-  LicenseID: Int
-  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
-  Category: [DriversLicenseCategory]
-}
-
-type DriversLicenseCategory {
-  category: String
-  issueDate: AWSDate
-  expiresAt: AWSDate
+  # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
+  tradeCon: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byUserId", fields: ["id"])
 }
 
 type Vehicle
   @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @key(name: "byTradeId", fields: ["tradeId", "id"]) {
   id: ID!
+  tradeId: ID!
   numberPlate: String!
   color: String!
   manufacturer: String!
@@ -183,13 +61,152 @@ type Vehicle
   usage: String!
   displacement: Int!
   eurotax: Int!
-  firstRegistrationDate: AWSDate!
+  firstRegistrationDate: String!
   passengers: Int!
-  purchaseDate: AWSDate!
+  purchaseDate: String!
   taxableHorsepower: Int!
   vin: String!
   value: Float!
-  file: [File]
+  file: [S3Object]
+}
+
+type Contract
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @key(name: "byTradeId", fields: ["tradeId", "createdAt"])
+  @key(name: "byCustomerId", fields: ["customerId", "tradeId"]) {
+  id: ID!
+  createdAt: String!
+  voucherId: ID!
+  vehicleId: ID!
+  customerId: ID!
+  tradeId: ID!
+  second_tradeId: ID #Optional
+  contractorId: ID #Optional
+  co_name: String # CoSign participant name (OPTIONAL)
+  co_TRN: String # CoSign participant "AFM" (OPTIONAL)
+  contractState: String! # Send to S3 on completion
+  insuranceClass: String!
+  insuranceCoverage: [String]
+  insuranceUsage: String
+  duration: String!
+  creationDate: String!
+  startDate: String!
+  endDate: String!
+  data: String!
+  discount: Float! # e.g. 0.1
+  jointWorth: Float!
+  netWorth: Float!
+  driversLicense: DriversLicense
+}
+
+type Customer
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @key(name: "byEmail", fields: ["email", "name"])
+  @key(name: "byTradeId", fields: ["tradeId", "name"]) {
+  id: ID!
+  tradeId: ID!
+  tin: Int
+  name: String
+  surname: String
+  fathersName: String
+  birthDate: String
+  gender: String
+  email: String
+  mobile: String
+  postcode: String
+  doy: String
+  address: String
+  familyStatus: String
+  creationDate: AWSTimestamp!
+  files: [S3Object]
+  driversLicense: DriversLicense
+}
+
+type TradeUserConnection
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "userId"])
+  @key(name: "byUserId", fields: ["userId", "tradeId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  tradeId: ID!
+  userId: ID! #Owner ID of the UserProfile
+  trade: Trade! @connection(fields: ["tradeId"])
+  user: UserProfile! @connection(fields: ["userId"])
+  permissions: [UserPermissions]
+  employeeType: EmployeeType! # e.g Contractor
+  preferences: String
+}
+
+type CompanyAccessConnectionRequest
+  @model(subscriptions: null)
+  @key(name: "byFromId", fields: ["fromId", "toId"])
+  @key(name: "byToId", fields: ["toId", "fromId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  fromId: ID!
+  toId: ID!
+  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
+  message: String!
+}
+
+type TradeContractConnection
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "contractId"])
+  @key(name: "byContractId", fields: ["contractId", "tradeId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  tradeId: ID!
+  contractId: ID!
+  trade: Trade! @connection(fields: ["tradeId"])
+  contract: Contract! @connection(fields: ["contractId"])
+  ownsContract: Boolean! #If true then the Trade can edit the Contract
+}
+
+type CompanyAccessConnection
+  @model(subscriptions: null)
+  @key(name: "byFromId", fields: ["fromId", "toId"])
+  @key(name: "byToId", fields: ["toId", "fromId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  fromId: ID!
+  toId: ID!
+  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
+  message: String!
+}
+
+#Add all department-specific
+type UserPermissions {
+  department: String #User defined
+  read: Boolean
+  write: Boolean
+}
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum EmployeeType {
+  STANDARD
+  CONTRACTOR
+}
+
+type DriversLicense {
+  LicenseID: Int
+  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
+  Category: [DriversLicenseCategory]
+}
+
+type DriversLicenseCategory {
+  category: String
+  issueDate: String
+  expiresAt: String
 }
 
 type InsurancePackage {
@@ -199,21 +216,131 @@ type InsurancePackage {
   usages: String
 }
 
-
 #For callendar use
 type UserCalendarEvent
   @model(subscriptions: null)
-  @auth(rules: [{ allow: owner }]) {
+  @key(name: "byUserId", fields: ["userId", "createdAt"])
+  @auth(rules: [{ allow: owner, ownerField: "userId", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
-  userId: ID!
-  tradeId: ID!
-  username: String!
+  userId: String! #User ID (NOT COGNITO ID)
   createdAt: String!
   payload: String
 }
 
-# Used to model a Cognito user, not a 'real' DynamoDB type
+type UserWallet
+  @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username"])
+  @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
+  id: ID! #UserProfile ID
+  username: String!
+  balance: Float!
+}
 
+type TransactionHistory
+  @model(subscriptions: null)
+  @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
+  @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  timestamp: AWSTimestamp!
+  senderId: ID! # UserProfile ID
+  receiverId: ID!
+  transactionAmount: Float!
+  sender: UserProfile! @connection(fields: ["senderId"])
+  receiver: UserProfile! @connection(fields: ["receiverId"])
+  senderWallet: UserWallet! @connection(fields: ["senderId"])
+  receiverWallet: UserWallet! @connection(fields: ["receiverId"])
+}
+
+type AdminRequests
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  tradeId: ID!
+  expiresAt: AWSTimestamp!
+  requestType: AdminRequestEnum!
+  message: String!
+}
+
+enum AdminRequestEnum {
+  APROVE_TRADE
+}
+# ####################################################################################################################################################################################
+
+# Everyone can call this queries
+# Authentication is performed inside the lambda resolver
+type Query {
+  #Utils
+  me: User @function(name: "ResolverFunction-${env}")
+  user(username: String): User @function(name: "ResolverFunction-${env}")
+  echo(msg: String): String @function(name: "ResolverFunction-${env}")
+
+  #Admin requests
+  requestAdminAproval(messageForAdmin: String): String @function(name: "ResolverFunction-${env}")
+
+  #Callendar
+  createUserCalendarEventForUserId(payload: String): ID @function(name: "ResolverFunction-${env}") #Returns the callendar entry ID
+  updateUserCalendarEventForUserId(id: ID, payload: String): String @function(name: "ResolverFunction-${env}")
+  deleteUserCalendarEventForUserId(id: ID): String @function(name: "ResolverFunction-${env}")
+
+  #Manage company connections
+  createCompanyConnectionRequest(email: String): String @function(name: "ResolverFunction-${env}")
+  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus @function(name: "ResolverFunction-${env}")
+
+  # Trade user management
+  addEmployeeToTrade(username: String!): String @function(name: "ResolverFunction-${env}") #TODO add types
+  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "ResolverFunction-${env}")
+
+  # Update user Files
+  putFile(name: String, key: String): String @function(name: "ResolverFunction-${env}")
+  getFile(name: String): String @function(name: "ResolverFunction-${env}")
+
+  # Update user balance
+  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String @function(name: "ResolverFunction-${env}")
+}
+
+# These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
+type User {
+  Username: String!
+  UserAttributes: [Value]
+  UserCreateDate: String
+  UserLastModifiedDate: String
+  Enabled: Boolean
+  UserStatus: UserStatus
+  MFAOptions: [MFAOption]
+  PreferredMfaSetting: String
+  UserMFASettingList: String
+}
+type Value {
+  Name: String!
+  Value: String
+}
+type MFAOption {
+  DeliveryMedium: String
+  AttributeName: String
+}
+enum UserStatus {
+  UNCONFIRMED
+  CONFIRMED
+  ARCHIVED
+  COMPROMISED
+  UNKNOWN
+  RESET_REQUIRED
+  FORCE_CHANGE_PASSWORD
+}
+
+enum ConnectionStatus {
+  ACCEPTED
+  REJECTED
+}
+
+type TestType @model @auth(rules: [{ allow: private }]) {
+  id: ID
+  val: String!
+}
+
+# Used to model a Cognito user, not a 'real' DynamoDB type
 # type UserCognito {
 #   id: ID! # Custom attribute
 #   name: String! # Full Name (includes middle name)

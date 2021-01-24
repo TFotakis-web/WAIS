@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "auth": {
+      "wais38036aa9": [
+        "read"
+      ]
+    },
+    "api": {
+      "WaisDynamoDB": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
