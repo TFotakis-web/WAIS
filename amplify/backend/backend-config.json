@@ -89,7 +89,24 @@
     "S3Trigger455f502f": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
-      "build": true
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ]
     },
     "wais38036aa9PostConfirmation": {
       "build": true,
@@ -124,49 +141,12 @@
           ]
         }
       ]
-    },
-    "DynamoDBTrigger": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueries3e8c423f",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "waisstorage",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
     }
   },
   "hosting": {
     "amplifyhosting": {
       "service": "amplifyhosting",
-      "type": "cicd",
-      "lastPushTimeStamp": "2020-10-27T10:09:38.180Z"
+      "type": "cicd"
     }
   },
   "storage": {
