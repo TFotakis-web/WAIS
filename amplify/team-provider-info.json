@@ -21,8 +21,7 @@
         "S3Trigger455f502f": {},
         "wais38036aa9PostConfirmation": {
           "GROUP": ""
-        },
-        "ResolverFunction": {}
+        }
       },
       "hosting": {
         "amplifyhosting": {
