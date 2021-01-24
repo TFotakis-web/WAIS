@@ -1,4 +1,10 @@
-// eslint-disable-next-line
+/* Amplify Params - DO NOT EDIT
+	API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
+	API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
+	AUTH_WAIS38036AA9_USERPOOLID
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT */// eslint-disable-next-line
 exports.handler = function(event, context) {
   console.log('Received S3 event:', JSON.stringify(event, null, 2));
   // Get the object from the event and show its content type

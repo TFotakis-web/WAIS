@@ -8,7 +8,23 @@
         "precedence": 2
     },
     {
-        "groupName": "user",
+        "groupName": "manager",
         "precedence": 3
+    },
+    {
+        "groupName": "employee",
+        "precedence": 4
+    },
+    {
+        "groupName": "contractor",
+        "precedence": 5
+    },
+    {
+        "groupName": "pending",
+        "precedence": 6
+    },
+    {
+        "groupName": "blacklisted",
+        "precedence": 7
     }
 ]

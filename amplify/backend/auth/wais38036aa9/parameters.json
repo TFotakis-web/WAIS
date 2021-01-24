@@ -14,7 +14,7 @@
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": true,
+    "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
@@ -75,7 +75,11 @@
     "userPoolGroupList": [
         "admin",
         "system",
-        "user"
+        "manager",
+        "employee",
+        "contractor",
+        "pending",
+        "blacklisted"
     ],
     "serviceName": "Cognito",
     "dependsOn": [

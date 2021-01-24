@@ -12,14 +12,6 @@
         "update",
         "delete"
       ]
-    },
-    "storage": {
-      "waisstorage": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ]
     }
   },
   "lambdaLayers": []

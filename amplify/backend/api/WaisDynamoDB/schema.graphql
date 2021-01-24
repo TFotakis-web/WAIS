@@ -281,6 +281,7 @@ type Query {
 
   #Callendar
   createUserCalendarEventForUserId(payload: String): ID @function(name: "ResolverFunction-${env}") #Returns the callendar entry ID
+  updateUserCalendarEventForUserId(id: ID, payload: String): String @function(name: "ResolverFunction-${env}")
   deleteUserCalendarEventForUserId(id: ID): String @function(name: "ResolverFunction-${env}")
 
   #Manage company connections
@@ -297,10 +298,6 @@ type Query {
 
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String @function(name: "ResolverFunction-${env}")
-}
-
-type Mutation {
-  updateUserCalendarEventForUserId(id: ID, payload: String): String @function(name: "ResolverFunction-${env}")
 }
 
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
