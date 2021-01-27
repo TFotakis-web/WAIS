@@ -1,1 +1,34 @@
-{}
+{
+    "groupPermissionMap": {
+        "admin": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "system": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "manager": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "employee": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "contractor": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "pending": [
+            "create/update",
+            "read",
+            "delete"
+        ]
+    }
+}

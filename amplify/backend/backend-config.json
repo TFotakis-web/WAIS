@@ -86,28 +86,6 @@
         }
       ]
     },
-    "S3Trigger455f502f": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
     "wais38036aa9PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -156,6 +134,11 @@
           ]
         }
       ]
+    },
+    "S3Trigger2191702a": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
     }
   },
   "hosting": {
@@ -170,8 +153,57 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "adminGroupRole"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "systemGroupRole"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "managerGroupRole"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "employeeGroupRole"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "contractorGroupRole"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "pendingGroupRole"
+          ]
+        },
+        {
           "category": "function",
-          "resourceName": "S3Trigger455f502f",
+          "resourceName": "S3Trigger2191702a",
           "attributes": [
             "Name",
             "Arn",

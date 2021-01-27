@@ -18,9 +18,8 @@
       },
       "function": {
         "AdminQueries3e8c423f": {},
-        "S3Trigger455f502f": {},
         "wais38036aa9PostConfirmation": {
-          "GROUP": ""
+          "GROUP": "pending"
         }
       },
       "hosting": {
