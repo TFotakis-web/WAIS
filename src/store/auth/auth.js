@@ -1,13 +1,19 @@
 import { Auth } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
+import { getUserProfile } from '@/graphql/queries';
 
 export const auth = {
 	namespaced: true,
 	state: {
-		user: null
+		user: null,
+		userProfile: null,
 	},
 	mutations: {
 		setUser(state, payload) {
 			state.user = payload;
+		},
+		setUserProfile(state, payload) {
+			state.userProfile = payload;
 		}
 	},
 	actions: {
@@ -21,15 +27,14 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		async signIn({ commit }, { username, password }) {
+		async signIn({ dispatch }, { username, password }) {
 			try {
 				await Auth.signIn({
 					username,
 					password
 				});
 
-				const userInfo = await Auth.currentUserInfo();
-				commit("setUser", userInfo);
+				await dispatch("currentUserInfo");
 				return Promise.resolve("Success");
 			} catch (error) {
 				console.error(error);
@@ -90,8 +95,15 @@ export const auth = {
 		},
 		async currentUserInfo({ commit }) {
 			try {
+				commit('increaseGlobalPendingPromises', null, { root: true });
 				const userInfo = await Auth.currentUserInfo();
-				commit("setUser", userInfo);
+				if (userInfo) {
+					commit("setUser", userInfo);
+
+					const userProfile = await API.graphql(graphqlOperation(getUserProfile, { id: userInfo.id }));
+					commit("setUserProfile", userProfile);
+				}
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
@@ -100,6 +112,11 @@ export const auth = {
 		}
 	},
 	getters: {
-		user: (state) => state.user
+		user: (state) => state.user,
+		userId: (state) => state.user.id,
+		username: (state) => state.user.username,
+		userAttributes: (state) => state.user.attributes,
+		userProfile: (state) => state.userProfile,
+		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
 	}
 }
