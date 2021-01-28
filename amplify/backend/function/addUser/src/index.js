@@ -6,57 +6,62 @@
 	REGION
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
-
-const https = require('https')
 const AWS = require('aws-sdk')
+const https = require('https')
 const urlParse = require('url').URL
-const appsyncUrl = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
-const region = process.env.REGION
-const endpoint = new urlParse(appsyncUrl).hostname.toString()
-const graphqlQuery = require('./query.js').mutation
-const apiKey = process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
 
-exports.handler = async (event) => {
+const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
+const REGION = process.env.REGION
+const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
+
+exports.handler = async event => {
   console.log('addUser called')
-  const req = new AWS.HttpRequest(appsyncUrl, region)
-
-  req.method = 'POST'
-  req.path = '/graphql'
-  req.headers.host = endpoint
-  req.headers['Content-Type'] = 'application/json'
-  req.body = JSON.stringify({
-    query: graphqlQuery,
-    operationName: 'createTestType',
-    variables: {
-      input: {
-        id:'id1',
-        val: 'val1',
-      },
+  
+  const item = {
+    input: {
+      id: 'id1',
+      val: 'val1',
     },
+  }
+  const operation = require('./query.js').mutation
+  const operationName = 'createTestType'
+
+  const request = createSignedRequest(ENDPOINT, item, operation, operationName, REGION, APPSYNC_URL)
+  return getResponseFromApi(ENDPOINT, request)
+}
+
+//
+// create a signed graphql operation request
+//
+const createSignedRequest = (endpoint, item, operation, operationName, region, url) => {
+  const request = new AWS.HttpRequest(url, region)
+  request.method = 'POST'
+  request.path = '/graphql'
+  request.headers.host = endpoint 
+  request.headers['Content-Type'] = 'application/json'
+  request.body = JSON.stringify({
+    query: operation,
+    operationName: operationName,
+    variables: item,
   })
 
-  if (apiKey) {
-    req.headers['x-api-key'] = apiKey
-  } else {
-    const signer = new AWS.Signers.V4(req, 'appsync', true)
-    signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
-  }
+  const signer = new AWS.Signers.V4(request, 'appsync', true)
+  signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
 
-  const data = await new Promise((resolve, reject) => {
-    const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
-      result.on('data', (data) => {
+  return request
+}
+
+//
+// send a request to the appsync api and return the response data
+//
+const getResponseFromApi = (endpoint, request) => {
+  return new Promise((resolve, reject) => {
+    const httpRequest = https.request({ ...request, host: endpoint }, result => {
+      result.on('data', data => {
         resolve(JSON.parse(data.toString()))
       })
     })
-
-    httpRequest.write(req.body)
+    httpRequest.write(request.body)
     httpRequest.end()
   })
-  
-  console.log('addUser result: ' + data)
-
-  return {
-    statusCode: 200,
-    body: data,
-  }
 }

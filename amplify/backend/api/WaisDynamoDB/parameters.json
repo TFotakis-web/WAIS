@@ -1,11 +1,11 @@
 {
-    "AppSyncApiName": "WaisDynamoDB",
-    "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false,
-    "AuthCognitoUserPoolId": {
-        "Fn::GetAtt": [
-            "authwais38036aa9",
-            "Outputs.UserPoolId"
-        ]
-    }
+  "AppSyncApiName": "WaisDynamoDB",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authwais38036aa9",
+      "Outputs.UserPoolId"
+    ]
+  }
 }
