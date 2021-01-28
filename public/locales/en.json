@@ -86,7 +86,8 @@
 			"signUp": "Sign up",
 			"signingUp": "Signing up...",
 			"resetYourPassword": "Reset your password",
-			"forgotYourPassword": "Forgot your password?"
+			"forgotYourPassword": "Forgot your password?",
+			"changeYourPassword": "Please change your password."
 		},
 		"error404": {
 			"header": "Error 404! Page not found.",
