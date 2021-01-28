@@ -298,6 +298,9 @@ type Query {
 
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String @function(name: "ResolverFunction-${env}")
+
+  ## Test
+  test1(payload: String): String @function(name: "ResolverFunction-${env}")
 }
 
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
@@ -335,7 +338,7 @@ enum ConnectionStatus {
   REJECTED
 }
 
-type TestType @model @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
+type TestType @model @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID
   val: String!
 }

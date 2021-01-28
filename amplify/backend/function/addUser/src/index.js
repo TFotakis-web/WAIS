@@ -17,6 +17,7 @@ const graphqlQuery = require('./query.js').mutation
 const apiKey = process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
 
 exports.handler = async (event) => {
+  console.log('addUser called')
   const req = new AWS.HttpRequest(appsyncUrl, region)
 
   req.method = 'POST'
@@ -28,6 +29,7 @@ exports.handler = async (event) => {
     operationName: 'createTestType',
     variables: {
       input: {
+        id:'id1',
         val: 'val1',
       },
     },
@@ -50,6 +52,8 @@ exports.handler = async (event) => {
     httpRequest.write(req.body)
     httpRequest.end()
   })
+  
+  console.log('addUser result: ' + data)
 
   return {
     statusCode: 200,

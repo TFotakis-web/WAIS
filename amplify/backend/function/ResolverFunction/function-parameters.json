@@ -13,6 +13,14 @@
         "delete"
       ]
     },
+    "function": {
+      "addUser": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
     "storage": {
       "waisstorage": [
         "create",

@@ -104,6 +104,11 @@ export const sendMoneyToUserWithUsername = /* GraphQL */ `
     )
   }
 `;
+export const test1 = /* GraphQL */ `
+  query Test1($payload: String) {
+    test1(payload: $payload)
+  }
+`;
 export const listTrades = /* GraphQL */ `
   query ListTrades(
     $filter: ModelTradeFilterInput
@@ -1333,6 +1338,7 @@ export const getTestType = /* GraphQL */ `
       val
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1348,6 +1354,7 @@ export const listTestTypes = /* GraphQL */ `
         val
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

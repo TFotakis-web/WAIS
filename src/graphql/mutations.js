@@ -2198,6 +2198,7 @@ export const createTestType = /* GraphQL */ `
       val
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2211,6 +2212,7 @@ export const updateTestType = /* GraphQL */ `
       val
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2224,6 +2226,7 @@ export const deleteTestType = /* GraphQL */ `
       val
       createdAt
       updatedAt
+      owner
     }
   }
 `;

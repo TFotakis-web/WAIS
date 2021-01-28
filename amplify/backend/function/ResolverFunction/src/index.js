@@ -3,22 +3,27 @@
 	API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
 	AUTH_WAIS38036AA9_USERPOOLID
 	ENV
+	FUNCTION_ADDUSER_NAME
 	REGION
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
-const { CognitoIdentityServiceProvider } = require("aws-sdk");
-const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
+const { CognitoIdentityServiceProvider } = require('aws-sdk')
+const aws = require('aws-sdk')
+const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 
 /**
  * Get user pool information from environment variables.
  */
-const COGNITO_USERPOOL_ID = process.env.AUTH_WAIS38036AA9_USERPOOLID;
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAIS38036AA9_USERPOOLID
 if (!COGNITO_USERPOOL_ID) {
-  throw new Error(
-    `Function requires a valid pool ID`
-  );
+  throw new Error(`Function requires a valid pool ID`)
 }
+
+//Add user function ref
+const lambda = new aws.Lambda({
+  region: process.env.REGION,
+})
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
@@ -26,37 +31,50 @@ if (!COGNITO_USERPOOL_ID) {
 const resolvers = {
   Query: {
     echo: (ctx) => {
-      return ctx.arguments.msg;
+      console.log('Resolving echo')
+      return ctx.arguments.msg
     },
     me: async (ctx) => {
-      var params = {
-        UserPoolId: COGNITO_USERPOOL_ID,
-        Username: ctx.identity.claims["cognito:username"],
-      };
+      console.log('Resolving me')
       try {
         return await cognitoIdentityServiceProvider
-          .adminGetUser(params)
-          .promise();
+          .adminGetUser({
+            UserPoolId: COGNITO_USERPOOL_ID,
+            Username: ctx.identity.claims['cognito:username'],
+          })
+          .promise()
       } catch (e) {
-        throw new Error(`NOT FOUND`);
+        throw new Error(e)
       }
     },
     user: async (ctx) => {
-      var params = {
-        UserPoolId: COGNITO_USERPOOL_ID,
-        Username: ctx.identity.claims[ctx.arguments.username],
-      };
+      console.log('Resolving user')
       try {
         return await cognitoIdentityServiceProvider
-          .adminGetUser(params)
-          .promise();
+          .adminGetUser({
+            UserPoolId: COGNITO_USERPOOL_ID,
+            Username: ctx.identity.claims[ctx.arguments.username],
+          })
+          .promise()
       } catch (e) {
-        throw new Error(`NOT FOUND`);
+        throw new Error(e)
+      }
+    },
+    test1: async (ctx) => {
+      console.log('Resolving test1')
+      try {
+        return await lambda
+          .invoke({
+            FunctionName: process.env.FUNCTION_ADDUSER_NAME,
+            Payload: JSON.stringify(ctx.arguments.username)
+          })
+          .promise()
+      } catch (e) {
+        throw new Error(e)
       }
     },
   },
-};
-
+}
 // event
 // {
 //   "typeName": "...", /* Filled dynamically based on @function usage location */
@@ -68,12 +86,15 @@ const resolvers = {
 //   "prev": { /* If using the built-in pipeline resolver support, this contains the object returned by the previous function. */ },
 // }
 exports.handler = async (event) => {
-  const typeHandler = resolvers[event.typeName];
+  console.log('Resolving event from ' + event.fieldName)
+  const typeHandler = resolvers[event.typeName]
   if (typeHandler) {
-    const resolver = typeHandler[event.fieldName];
+    const resolver = typeHandler[event.fieldName]
     if (resolver) {
-      return await resolver(event);
+      const res = await resolver(event)
+      console.log('Resolver result is ' + JSON.stringify(res))
+      return res
     }
   }
-  throw new Error("Resolver not found.");
-};
+  throw new Error('Resolver not found.')
+}
