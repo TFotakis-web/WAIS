@@ -1,6 +1,6 @@
 type Trade
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byName", fields: ["tradeName", "id"]) {
   id: ID!
 
@@ -25,7 +25,7 @@ type Trade
 
 type UserProfile
   @model(subscriptions: null)
-  @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "id", operations: [read] }, { allow: groups, groups: ["admin"] }])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byUsername", fields: ["username", "id"]) {
   id: ID! #Cognito ID
   username: String!
@@ -42,12 +42,12 @@ type UserProfile
   file: [S3Object]
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
-  tradeCon: [TradeUserConnection] @auth(rules: [{ allow: groups, groups: ["admin"] }]) @connection(keyName: "byUserId", fields: ["id"])
+  tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
 }
 
 type Vehicle
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byTradeId", fields: ["tradeId", "id"]) {
   id: ID!
   tradeId: ID!
@@ -72,7 +72,7 @@ type Vehicle
 
 type Contract
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byTradeId", fields: ["tradeId", "createdAt"])
   @key(name: "byCustomerId", fields: ["customerId", "tradeId"]) {
   id: ID!
@@ -102,7 +102,7 @@ type Contract
 
 type Customer
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byEmail", fields: ["email", "name"])
   @key(name: "byTradeId", fields: ["tradeId", "name"]) {
   id: ID!
@@ -128,7 +128,7 @@ type TradeUserConnection
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId", "userId"])
   @key(name: "byUserId", fields: ["userId", "tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   tradeId: ID!
   userId: ID! #Owner ID of the UserProfile
@@ -143,7 +143,7 @@ type CompanyAccessConnectionRequest
   @model(subscriptions: null)
   @key(name: "byFromId", fields: ["fromId", "toId"])
   @key(name: "byToId", fields: ["toId", "fromId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   fromId: ID!
   toId: ID!
@@ -157,7 +157,7 @@ type TradeContractConnection
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId", "contractId"])
   @key(name: "byContractId", fields: ["contractId", "tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   tradeId: ID!
   contractId: ID!
@@ -170,7 +170,7 @@ type CompanyAccessConnection
   @model(subscriptions: null)
   @key(name: "byFromId", fields: ["fromId", "toId"])
   @key(name: "byToId", fields: ["toId", "fromId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   fromId: ID!
   toId: ID!
@@ -220,7 +220,7 @@ type InsurancePackage {
 type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUserId", fields: ["userId", "createdAt"])
-  @auth(rules: [{ allow: owner, ownerField: "userId", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   userId: String! #User ID (NOT COGNITO ID)
   createdAt: String!
@@ -230,7 +230,7 @@ type UserCalendarEvent
 type UserWallet
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username"])
-  @auth(rules: [{ allow: owner, ownerField: "id", identityClaim: "sub", operations: [read] }, { allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID! #UserProfile ID
   username: String!
   balance: Float!
@@ -240,7 +240,7 @@ type TransactionHistory
   @model(subscriptions: null)
   @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
   @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   timestamp: AWSTimestamp!
   senderId: ID! # UserProfile ID
@@ -255,7 +255,7 @@ type TransactionHistory
 type AdminRequests
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }]) {
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   tradeId: ID!
   expiresAt: AWSTimestamp!
@@ -266,7 +266,7 @@ type AdminRequests
 enum AdminRequestEnum {
   APROVE_TRADE
 }
-# #################################################################################################################################################################################### 
+# ####################################################################################################################################################################################
 
 # Everyone can call this queries
 # Authentication is performed inside the lambda resolver
@@ -335,7 +335,7 @@ enum ConnectionStatus {
   REJECTED
 }
 
-type TestType @model @auth(rules: [{ allow: private }]) {
+type TestType @model @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) {
   id: ID
   val: String!
 }

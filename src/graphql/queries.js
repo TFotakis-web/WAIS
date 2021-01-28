@@ -104,6 +104,57 @@ export const sendMoneyToUserWithUsername = /* GraphQL */ `
     )
   }
 `;
+export const listTrades = /* GraphQL */ `
+  query ListTrades(
+    $filter: ModelTradeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTrades(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        tradeName
+        tin
+        logo
+        info
+        postcode
+        ownerId
+        createdAt
+        updatedAt
+        owner {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
+        contractAccess {
+          nextToken
+        }
+        fromCompanyAccess {
+          nextToken
+        }
+        toCompanyAccess {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const getTrade = /* GraphQL */ `
   query GetTrade($id: ID!) {
     getTrade(id: $id) {
@@ -114,6 +165,8 @@ export const getTrade = /* GraphQL */ `
       info
       postcode
       ownerId
+      createdAt
+      updatedAt
       owner {
         id
         username
@@ -130,11 +183,11 @@ export const getTrade = /* GraphQL */ `
           region
           key
         }
+        createdAt
+        updatedAt
         tradeCon {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       employees {
         items {
@@ -155,6 +208,17 @@ export const getTrade = /* GraphQL */ `
           userId
           employeeType
           preferences
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractAccess {
+        items {
+          id
+          tradeId
+          contractId
+          ownsContract
           createdAt
           updatedAt
         }
@@ -184,105 +248,6 @@ export const getTrade = /* GraphQL */ `
         }
         nextToken
       }
-      contractAccess {
-        items {
-          id
-          tradeId
-          contractId
-          ownsContract
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listTrades = /* GraphQL */ `
-  query ListTrades(
-    $filter: ModelTradeFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTrades(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        tradeName
-        tin
-        logo
-        info
-        postcode
-        ownerId
-        owner {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        fromCompanyAccess {
-          nextToken
-        }
-        toCompanyAccess {
-          nextToken
-        }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserProfile = /* GraphQL */ `
-  query GetUserProfile($id: ID!) {
-    getUserProfile(id: $id) {
-      id
-      username
-      telephone
-      tin
-      doy
-      familyStatus
-      chamberRecordNumber
-      insuranceLicenseExpirationDate
-      partnersNumberLimit
-      professionStartDate
-      file {
-        bucket
-        region
-        key
-      }
-      tradeCon {
-        items {
-          id
-          tradeId
-          userId
-          employeeType
-          preferences
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -309,13 +274,48 @@ export const listUserProfiles = /* GraphQL */ `
           region
           key
         }
+        createdAt
+        updatedAt
         tradeCon {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const getUserProfile = /* GraphQL */ `
+  query GetUserProfile($id: ID!) {
+    getUserProfile(id: $id) {
+      id
+      username
+      telephone
+      tin
+      doy
+      familyStatus
+      chamberRecordNumber
+      insuranceLicenseExpirationDate
+      partnersNumberLimit
+      professionStartDate
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
+      tradeCon {
+        items {
+          id
+          tradeId
+          userId
+          employeeType
+          preferences
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -388,44 +388,6 @@ export const listVehicles = /* GraphQL */ `
     }
   }
 `;
-export const getContract = /* GraphQL */ `
-  query GetContract($id: ID!) {
-    getContract(id: $id) {
-      id
-      createdAt
-      voucherId
-      vehicleId
-      customerId
-      tradeId
-      second_tradeId
-      contractorId
-      co_name
-      co_TRN
-      contractState
-      insuranceClass
-      insuranceCoverage
-      insuranceUsage
-      duration
-      creationDate
-      startDate
-      endDate
-      data
-      discount
-      jointWorth
-      netWorth
-      driversLicense {
-        LicenseID
-        DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
-      }
-      updatedAt
-    }
-  }
-`;
 export const listContracts = /* GraphQL */ `
   query ListContracts(
     $filter: ModelContractFilterInput
@@ -463,6 +425,44 @@ export const listContracts = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const getContract = /* GraphQL */ `
+  query GetContract($id: ID!) {
+    getContract(id: $id) {
+      id
+      createdAt
+      voucherId
+      vehicleId
+      customerId
+      tradeId
+      second_tradeId
+      contractorId
+      co_name
+      co_TRN
+      contractState
+      insuranceClass
+      insuranceCoverage
+      insuranceUsage
+      duration
+      creationDate
+      startDate
+      endDate
+      data
+      discount
+      jointWorth
+      netWorth
+      driversLicense {
+        LicenseID
+        DriversLicenseType
+        Category {
+          category
+          issueDate
+          expiresAt
+        }
+      }
+      updatedAt
     }
   }
 `;
@@ -548,6 +548,15 @@ export const getTradeUserConnection = /* GraphQL */ `
       id
       tradeId
       userId
+      permissions {
+        department
+        read
+        write
+      }
+      employeeType
+      preferences
+      createdAt
+      updatedAt
       trade {
         id
         tradeName
@@ -556,6 +565,8 @@ export const getTradeUserConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -576,17 +587,15 @@ export const getTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       user {
         id
@@ -604,21 +613,12 @@ export const getTradeUserConnection = /* GraphQL */ `
           region
           key
         }
+        createdAt
+        updatedAt
         tradeCon {
           nextToken
         }
-        createdAt
-        updatedAt
       }
-      permissions {
-        department
-        read
-        write
-      }
-      employeeType
-      preferences
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -637,6 +637,15 @@ export const listTradeUserConnections = /* GraphQL */ `
         id
         tradeId
         userId
+        permissions {
+          department
+          read
+          write
+        }
+        employeeType
+        preferences
+        createdAt
+        updatedAt
         trade {
           id
           tradeName
@@ -662,15 +671,6 @@ export const listTradeUserConnections = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        permissions {
-          department
-          read
-          write
-        }
-        employeeType
-        preferences
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -682,6 +682,10 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
       id
       fromId
       toId
+      expirationDate
+      message
+      createdAt
+      updatedAt
       from {
         id
         tradeName
@@ -690,6 +694,8 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -710,17 +716,15 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       to {
         id
@@ -730,6 +734,8 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -750,22 +756,16 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
-      expirationDate
-      message
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -784,6 +784,10 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
         id
         fromId
         toId
+        expirationDate
+        message
+        createdAt
+        updatedAt
         from {
           id
           tradeName
@@ -806,10 +810,6 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        expirationDate
-        message
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -821,6 +821,9 @@ export const getTradeContractConnection = /* GraphQL */ `
       id
       tradeId
       contractId
+      ownsContract
+      createdAt
+      updatedAt
       trade {
         id
         tradeName
@@ -829,6 +832,8 @@ export const getTradeContractConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -849,17 +854,15 @@ export const getTradeContractConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       contract {
         id
@@ -890,9 +893,6 @@ export const getTradeContractConnection = /* GraphQL */ `
         }
         updatedAt
       }
-      ownsContract
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -911,6 +911,9 @@ export const listTradeContractConnections = /* GraphQL */ `
         id
         tradeId
         contractId
+        ownsContract
+        createdAt
+        updatedAt
         trade {
           id
           tradeName
@@ -947,9 +950,6 @@ export const listTradeContractConnections = /* GraphQL */ `
           netWorth
           updatedAt
         }
-        ownsContract
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -961,6 +961,10 @@ export const getCompanyAccessConnection = /* GraphQL */ `
       id
       fromId
       toId
+      expirationDate
+      message
+      createdAt
+      updatedAt
       from {
         id
         tradeName
@@ -969,6 +973,8 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -989,17 +995,15 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       to {
         id
@@ -1009,6 +1013,8 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        createdAt
+        updatedAt
         owner {
           id
           username
@@ -1029,22 +1035,16 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        contractAccess {
+          nextToken
+        }
         fromCompanyAccess {
           nextToken
         }
         toCompanyAccess {
           nextToken
         }
-        contractAccess {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
-      expirationDate
-      message
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1063,6 +1063,10 @@ export const listCompanyAccessConnections = /* GraphQL */ `
         id
         fromId
         toId
+        expirationDate
+        message
+        createdAt
+        updatedAt
         from {
           id
           tradeName
@@ -1085,10 +1089,6 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        expirationDate
-        message
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -1127,17 +1127,6 @@ export const listUserCalendarEvents = /* GraphQL */ `
     }
   }
 `;
-export const getUserWallet = /* GraphQL */ `
-  query GetUserWallet($id: ID!) {
-    getUserWallet(id: $id) {
-      id
-      username
-      balance
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const listUserWallets = /* GraphQL */ `
   query ListUserWallets(
     $filter: ModelUserWalletFilterInput
@@ -1156,6 +1145,17 @@ export const listUserWallets = /* GraphQL */ `
     }
   }
 `;
+export const getUserWallet = /* GraphQL */ `
+  query GetUserWallet($id: ID!) {
+    getUserWallet(id: $id) {
+      id
+      username
+      balance
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const getTransactionHistory = /* GraphQL */ `
   query GetTransactionHistory($id: ID!) {
     getTransactionHistory(id: $id) {
@@ -1164,6 +1164,8 @@ export const getTransactionHistory = /* GraphQL */ `
       senderId
       receiverId
       transactionAmount
+      createdAt
+      updatedAt
       sender {
         id
         username
@@ -1180,11 +1182,11 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
         }
+        createdAt
+        updatedAt
         tradeCon {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       receiver {
         id
@@ -1202,11 +1204,11 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
         }
+        createdAt
+        updatedAt
         tradeCon {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       senderWallet {
         id
@@ -1222,8 +1224,6 @@ export const getTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1244,6 +1244,8 @@ export const listTransactionHistorys = /* GraphQL */ `
         senderId
         receiverId
         transactionAmount
+        createdAt
+        updatedAt
         sender {
           id
           username
@@ -1286,8 +1288,6 @@ export const listTransactionHistorys = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
       nextToken
     }

@@ -7,50 +7,52 @@
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
-exports.handler = async (event) => {
-  // TODO implement
-  const response = {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-    body: JSON.stringify('Hello from Lambda!'),
-  }
-  return response
-}
+const https = require('https')
+const AWS = require('aws-sdk')
+const urlParse = require('url').URL
+const appsyncUrl = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
+const region = process.env.REGION
+const endpoint = new urlParse(appsyncUrl).hostname.toString()
+const graphqlQuery = require('./query.js').mutation
+const apiKey = process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
 
-// try{
-//   const graphqlData = await axios({
-//     url: process.env.API_URL,
-//     method: 'post',
-//     headers: {
-//       'x-api-key': process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT,
-//     },
-//     data: {
-//       query: print(gql`
-//         mutation createTestType($input: CreateTestTypeInput!) {
-//           createTestType(input: $input) {
-//             id
-//             val
-//           }
-//         }
-//       `),
-//       variables: {
-//         input: {
-//           id: '12345!',
-//           val: 'My first val',
-//         },
-//       },
-//     },
-//   })
-//   console.log('Successfully created TestType')
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify('OKK'),
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//     },
-//   }
-//   } catch (err) {
-//   console.log('Failed to create a UserProfile entry: ', err)
-//   }
+exports.handler = async (event) => {
+  const req = new AWS.HttpRequest(appsyncUrl, region)
+
+  req.method = 'POST'
+  req.path = '/graphql'
+  req.headers.host = endpoint
+  req.headers['Content-Type'] = 'application/json'
+  req.body = JSON.stringify({
+    query: graphqlQuery,
+    operationName: 'createTestType',
+    variables: {
+      input: {
+        val: 'val1',
+      },
+    },
+  })
+
+  if (apiKey) {
+    req.headers['x-api-key'] = apiKey
+  } else {
+    const signer = new AWS.Signers.V4(req, 'appsync', true)
+    signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
+  }
+
+  const data = await new Promise((resolve, reject) => {
+    const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
+      result.on('data', (data) => {
+        resolve(JSON.parse(data.toString()))
+      })
+    })
+
+    httpRequest.write(req.body)
+    httpRequest.end()
+  })
+
+  return {
+    statusCode: 200,
+    body: data,
+  }
+}
