@@ -36,9 +36,9 @@
 				loading: true,
 			};
 		},
-		created() {
+		mounted() {
 			this.loading = true;
-			this.$store.dispatch('auth/currentUserInfo').then(() => (this.loading = false));
+			this.$store.dispatch('auth/currentAuthenticatedUser').then(() => (this.loading = false));
 		},
 	};
 </script>
