@@ -3,9 +3,13 @@ import { Auth } from 'aws-amplify';
 export const auth = {
 	namespaced: true,
 	state: {
+		cognitoUser: null,
 		user: null
 	},
 	mutations: {
+		setCognitoUser(state, payload) {
+			state.cognitoUser = payload;
+		},
 		setUser(state, payload) {
 			state.user = payload;
 		}
@@ -21,15 +25,20 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		async signIn({ commit }, { username, password }) {
+		async signIn({ commit, dispatch }, { username, password }) {
 			try {
-				await Auth.signIn({
+				const cognitoUser = await Auth.signIn({
 					username,
 					password
 				});
-
-				const userInfo = await Auth.currentUserInfo();
-				commit("setUser", userInfo);
+				commit("setCognitoUser", cognitoUser);
+				if(cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+					return Promise.reject({
+						name: 'NEW_PASSWORD_REQUIRED',
+						code: 'NEW_PASSWORD_REQUIRED'
+					});
+				}
+				await dispatch("currentUserInfo");
 				return Promise.resolve("Success");
 			} catch (error) {
 				console.error(error);
@@ -114,7 +123,24 @@ export const auth = {
 				console.error(error);
 				return Promise.reject(error);
 			}
-		}
+		},
+		async currentAuthenticatedUser({ commit, dispatch }) {
+			try {
+				let cognitoUser = await Auth.currentAuthenticatedUser({
+					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+				}).catch(async error => {
+						console.log(error);
+						await Auth.signOut();
+					});
+				commit("setCognitoUser", cognitoUser);
+				await dispatch("currentUserInfo");
+				return Promise.resolve();
+			} catch (error) {
+				await Auth.signOut();
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
 	},
 	getters: {
 		user: (state) => state.user
