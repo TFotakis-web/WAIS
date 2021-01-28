@@ -54,6 +54,23 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
+		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
+			try {
+				const cognitoUser = await Auth.signIn({
+					username: username,
+					password: old_password
+				});
+				await Auth.completeNewPassword(cognitoUser, new_password);
+				dispatch("signIn", {
+					username: username,
+					password: new_password
+				});
+				return Promise.resolve("Success");
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
 		async confirmSignUp(_, { username, code }) {
 			try {
 				await Auth.confirmSignUp(username, code);
