@@ -18,8 +18,13 @@
       },
       "function": {
         "AdminQueries3e8c423f": {},
+        "wais38036aa9PostAuthentication": {},
         "wais38036aa9PostConfirmation": {
           "GROUP": "pending"
+        },
+        "wais38036aa9PreSignup": {
+          "DOMAINWHITELIST": "",
+          "DOMAINBLACKLIST": ""
         }
       },
       "hosting": {

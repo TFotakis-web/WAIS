@@ -6,7 +6,25 @@
       "dependsOn": [
         {
           "category": "function",
+          "resourceName": "wais38036aa9PostAuthentication",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
           "resourceName": "wais38036aa9PostConfirmation",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "wais38036aa9PreSignup",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -90,47 +108,6 @@
         }
       ]
     },
-    "wais38036aa9PostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "ResolverFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "addUser",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "waisstorage",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
-    },
     "dynamodbtrigger": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -151,34 +128,20 @@
       "providerPlugin": "awscloudformation",
       "build": true
     },
-    "addUser": {
+    "wais38036aa9PostAuthentication": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "waisstorage",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
+      "service": "Lambda"
+    },
+    "wais38036aa9PostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "wais38036aa9PreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "hosting": {

@@ -2,10 +2,6 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
-    "GROUP": {
-      "Type": "String",
-      "Default": ""
-    },
     "modules": {
       "Type": "String",
       "Default": "",
@@ -61,12 +57,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostConfirmation",
+            "wais38036aa9PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostConfirmation",
+                  "wais38036aa9PostAuthentication",
                   "-",
                   {
                     "Ref": "env"
@@ -86,9 +82,6 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            },
-            "GROUP": {
-              "Ref": "GROUP"
             }
           }
         },
@@ -102,7 +95,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/wais38036aa9PostConfirmation-47527176356d46424575-build.zip"
+          "S3Key": "amplify-builds/wais38036aa9PostAuthentication-6147654b714341506f50-build.zip"
         }
       }
     },
@@ -112,12 +105,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostConfirmation",
+            "wais38036aa9PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostConfirmation",
+                  "wais38036aa9PostAuthentication",
                   "-",
                   {
                     "Ref": "env"

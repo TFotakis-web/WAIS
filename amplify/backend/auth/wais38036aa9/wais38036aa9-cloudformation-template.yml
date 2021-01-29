@@ -11,6 +11,16 @@ Parameters:
   
   
   
+  functionwais38036aa9PostAuthenticationArn: 
+    Type: String
+    Default: functionwais38036aa9PostAuthenticationArn
+  
+  functionwais38036aa9PostAuthenticationName: 
+    Type: String
+    Default: functionwais38036aa9PostAuthenticationName
+  
+  
+  
   functionwais38036aa9PostConfirmationArn: 
     Type: String
     Default: functionwais38036aa9PostConfirmationArn
@@ -18,6 +28,16 @@ Parameters:
   functionwais38036aa9PostConfirmationName: 
     Type: String
     Default: functionwais38036aa9PostConfirmationName
+  
+  
+  
+  functionwais38036aa9PreSignupArn: 
+    Type: String
+    Default: functionwais38036aa9PreSignupArn
+  
+  functionwais38036aa9PreSignupName: 
+    Type: String
+    Default: functionwais38036aa9PreSignupName
   
   
   
@@ -189,10 +209,14 @@ Resources:
         
         
         
+          PostAuthentication: !Ref functionwais38036aa9PostAuthenticationArn
+        
         
           PostConfirmation: !Ref functionwais38036aa9PostConfirmationArn
         
         
+        
+          PreSignUp: !Ref functionwais38036aa9PreSignupArn
         
         
         
@@ -222,6 +246,15 @@ Resources:
     
     
   
+  
+  UserPoolPostAuthenticationLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionwais38036aa9PostAuthenticationName
+      SourceArn: !GetAtt UserPool.Arn
     
   
   UserPoolPostConfirmationLambdaInvokePermission: 
@@ -234,6 +267,15 @@ Resources:
       SourceArn: !GetAtt UserPool.Arn
     
   
+  
+  UserPoolPreSignupLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionwais38036aa9PreSignupName
+      SourceArn: !GetAtt UserPool.Arn
   
    
     

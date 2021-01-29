@@ -85,7 +85,25 @@
     "dependsOn": [
         {
             "category": "function",
+            "resourceName": "wais38036aa9PostAuthentication",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        },
+        {
+            "category": "function",
             "resourceName": "wais38036aa9PostConfirmation",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "wais38036aa9PreSignup",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
@@ -96,7 +114,7 @@
     "thirdPartyAuth": false,
     "userPoolGroups": true,
     "adminQueries": true,
-    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\",\n    \"custom\"\n  ]\n}",
+    "triggers": "{\n  \"PostAuthentication\": [\n    \"custom\"\n  ],\n  \"PostConfirmation\": [\n    \"add-to-group\",\n    \"custom\"\n  ],\n  \"PreSignup\": [\n    \"email-filter-whitelist\",\n    \"email-filter-blacklist\",\n    \"custom\"\n  ]\n}",
     "hostedUI": false,
     "adminQueryGroup": "admin",
     "parentStack": {
