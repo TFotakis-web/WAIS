@@ -23,7 +23,7 @@ export const me = /* GraphQL */ `
   }
 `;
 export const user = /* GraphQL */ `
-  query User($username: String) {
+  query User($username: String!) {
     user(username: $username) {
       Username
       UserAttributes {
@@ -44,69 +44,8 @@ export const user = /* GraphQL */ `
   }
 `;
 export const echo = /* GraphQL */ `
-  query Echo($msg: String) {
+  query Echo($msg: String!) {
     echo(msg: $msg)
-  }
-`;
-export const requestAdminAproval = /* GraphQL */ `
-  query RequestAdminAproval($messageForAdmin: String) {
-    requestAdminAproval(messageForAdmin: $messageForAdmin)
-  }
-`;
-export const createUserCalendarEventForUserId = /* GraphQL */ `
-  query CreateUserCalendarEventForUserId($payload: String) {
-    createUserCalendarEventForUserId(payload: $payload)
-  }
-`;
-export const updateUserCalendarEventForUserId = /* GraphQL */ `
-  query UpdateUserCalendarEventForUserId($id: ID, $payload: String) {
-    updateUserCalendarEventForUserId(id: $id, payload: $payload)
-  }
-`;
-export const deleteUserCalendarEventForUserId = /* GraphQL */ `
-  query DeleteUserCalendarEventForUserId($id: ID) {
-    deleteUserCalendarEventForUserId(id: $id)
-  }
-`;
-export const createCompanyConnectionRequest = /* GraphQL */ `
-  query CreateCompanyConnectionRequest($email: String) {
-    createCompanyConnectionRequest(email: $email)
-  }
-`;
-export const replyToCompanyConnectionRequest = /* GraphQL */ `
-  query ReplyToCompanyConnectionRequest($id: ID, $status: ConnectionStatus) {
-    replyToCompanyConnectionRequest(id: $id, status: $status)
-  }
-`;
-export const addEmployeeToTrade = /* GraphQL */ `
-  query AddEmployeeToTrade($username: String!) {
-    addEmployeeToTrade(username: $username)
-  }
-`;
-export const putFile = /* GraphQL */ `
-  query PutFile($name: String, $key: String) {
-    putFile(name: $name, key: $key)
-  }
-`;
-export const getFile = /* GraphQL */ `
-  query GetFile($name: String) {
-    getFile(name: $name)
-  }
-`;
-export const sendMoneyToUserWithUsername = /* GraphQL */ `
-  query SendMoneyToUserWithUsername(
-    $receiverUsername: String
-    $amount: Float!
-  ) {
-    sendMoneyToUserWithUsername(
-      receiverUsername: $receiverUsername
-      amount: $amount
-    )
-  }
-`;
-export const test1 = /* GraphQL */ `
-  query Test1($payload: String) {
-    test1(payload: $payload)
   }
 `;
 export const listTrades = /* GraphQL */ `
@@ -1304,7 +1243,6 @@ export const getAdminRequests = /* GraphQL */ `
       id
       tradeId
       expiresAt
-      requestType
       message
       createdAt
       updatedAt
@@ -1322,7 +1260,6 @@ export const listAdminRequestss = /* GraphQL */ `
         id
         tradeId
         expiresAt
-        requestType
         message
         createdAt
         updatedAt

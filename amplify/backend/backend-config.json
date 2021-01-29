@@ -142,6 +142,71 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "asyncactions": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "storage",
+          "resourceName": "waisstorage",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ]
+    },
+    "resolver": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "asyncactions",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "storage",
+          "resourceName": "waisstorage",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ]
     }
   },
   "hosting": {

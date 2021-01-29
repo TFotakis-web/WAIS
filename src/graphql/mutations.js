@@ -1,6 +1,47 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const requestAdminAproval = /* GraphQL */ `
+  mutation RequestAdminAproval($tradeId: String!, $message: String!) {
+    requestAdminAproval(tradeId: $tradeId, message: $message)
+  }
+`;
+export const createCompanyConnectionRequest = /* GraphQL */ `
+  mutation CreateCompanyConnectionRequest($email: String) {
+    createCompanyConnectionRequest(email: $email)
+  }
+`;
+export const replyToCompanyConnectionRequest = /* GraphQL */ `
+  mutation ReplyToCompanyConnectionRequest($id: ID, $status: ConnectionStatus) {
+    replyToCompanyConnectionRequest(id: $id, status: $status)
+  }
+`;
+export const addEmployeeToTrade = /* GraphQL */ `
+  mutation AddEmployeeToTrade($username: String!) {
+    addEmployeeToTrade(username: $username)
+  }
+`;
+export const putFile = /* GraphQL */ `
+  mutation PutFile($name: String, $key: String) {
+    putFile(name: $name, key: $key)
+  }
+`;
+export const getFile = /* GraphQL */ `
+  mutation GetFile($name: String) {
+    getFile(name: $name)
+  }
+`;
+export const sendMoneyToUserWithUsername = /* GraphQL */ `
+  mutation SendMoneyToUserWithUsername(
+    $receiverUsername: String
+    $amount: Float!
+  ) {
+    sendMoneyToUserWithUsername(
+      receiverUsername: $receiverUsername
+      amount: $amount
+    )
+  }
+`;
 export const createTrade = /* GraphQL */ `
   mutation CreateTrade(
     $input: CreateTradeInput!
@@ -2149,7 +2190,6 @@ export const createAdminRequests = /* GraphQL */ `
       id
       tradeId
       expiresAt
-      requestType
       message
       createdAt
       updatedAt
@@ -2165,7 +2205,6 @@ export const updateAdminRequests = /* GraphQL */ `
       id
       tradeId
       expiresAt
-      requestType
       message
       createdAt
       updatedAt
@@ -2181,7 +2220,6 @@ export const deleteAdminRequests = /* GraphQL */ `
       id
       tradeId
       expiresAt
-      requestType
       message
       createdAt
       updatedAt
