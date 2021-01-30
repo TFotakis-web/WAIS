@@ -1,10 +1,13 @@
 import { Auth } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
+import { getUserProfile } from '@/graphql/queries';
 
 export const auth = {
 	namespaced: true,
 	state: {
 		cognitoUser: null,
-		user: null
+		user: null,
+		userProfile: null,
 	},
 	mutations: {
 		setCognitoUser(state, payload) {
@@ -12,6 +15,9 @@ export const auth = {
 		},
 		setUser(state, payload) {
 			state.user = payload;
+		},
+		setUserProfile(state, payload) {
+			state.userProfile = payload;
 		}
 	},
 	actions: {
@@ -116,8 +122,14 @@ export const auth = {
 		},
 		async currentUserInfo({ commit }) {
 			try {
+				commit('increaseGlobalPendingPromises', null, {root: true});
 				const userInfo = await Auth.currentUserInfo();
-				commit("setUser", userInfo);
+				if (userInfo) {
+					commit("setUser", userInfo);
+					const userProfile = await API.graphql(graphqlOperation(getUserProfile, {id: userInfo.id}));
+					commit("setUserProfile", userProfile);
+				}
+				commit('decreaseGlobalPendingPromises', null, {root: true});
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
@@ -129,9 +141,9 @@ export const auth = {
 				let cognitoUser = await Auth.currentAuthenticatedUser({
 					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				}).catch(async error => {
-						console.log(error);
-						await Auth.signOut();
-					});
+					console.log(error);
+					await Auth.signOut();
+				});
 				commit("setCognitoUser", cognitoUser);
 				await dispatch("currentUserInfo");
 				return Promise.resolve();
@@ -141,8 +153,42 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-	},
-	getters: {
-		user: (state) => state.user
+		async updateUserAttributes({ dispatch }, attributes) {
+			try {
+				const user = await Auth.currentAuthenticatedUser();
+				// const attributes = {
+				// address: '',
+				// birthdate: '',
+				// email: '',
+				// family_name: '',
+				// gender: '',
+				// given_name: '',
+				// locale: '',
+				// middle_name: '',
+				// name: '',
+				// nickname: '',
+				// phone_number: '',
+				// picture: '',
+				// preferred_username: '',
+				// profile: '',
+				// website: '',
+				// zoneinfo: ''
+				// };
+				await Auth.updateUserAttributes(user, attributes);
+				dispatch("currentUserInfo");
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		getters: {
+			user: (state) => state.user,
+			userId: (state) => state.user.id,
+			username: (state) => state.user.username,
+			userAttributes: (state) => state.user.attributes,
+			userProfile: (state) => state.userProfile,
+			userPreferences: (state) => JSON.parse(state.userProfile.preferences),
+		}
 	}
 }
