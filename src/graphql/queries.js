@@ -1,53 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const me = /* GraphQL */ `
-  query Me {
-    me {
-      Username
-      UserAttributes {
-        Name
-        Value
-      }
-      UserCreateDate
-      UserLastModifiedDate
-      Enabled
-      UserStatus
-      MFAOptions {
-        DeliveryMedium
-        AttributeName
-      }
-      PreferredMfaSetting
-      UserMFASettingList
-    }
-  }
-`;
-export const user = /* GraphQL */ `
-  query User($username: String!) {
-    user(username: $username) {
-      Username
-      UserAttributes {
-        Name
-        Value
-      }
-      UserCreateDate
-      UserLastModifiedDate
-      Enabled
-      UserStatus
-      MFAOptions {
-        DeliveryMedium
-        AttributeName
-      }
-      PreferredMfaSetting
-      UserMFASettingList
-    }
-  }
-`;
-export const echo = /* GraphQL */ `
-  query Echo($msg: String!) {
-    echo(msg: $msg)
-  }
-`;
 export const listTrades = /* GraphQL */ `
   query ListTrades(
     $filter: ModelTradeFilterInput
@@ -63,9 +16,10 @@ export const listTrades = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -109,9 +63,10 @@ export const getTrade = /* GraphQL */ `
       info
       postcode
       ownerId
+      ownerUsername
       createdAt
       updatedAt
-      owner {
+      ownerProfile {
         id
         username
         telephone
@@ -509,9 +464,10 @@ export const getTradeUserConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -598,6 +554,7 @@ export const listTradeUserConnections = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -638,9 +595,10 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -678,9 +636,10 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -740,6 +699,7 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -751,6 +711,7 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -776,9 +737,10 @@ export const getTradeContractConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -866,6 +828,7 @@ export const listTradeContractConnections = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -917,9 +880,10 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -957,9 +921,10 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         info
         postcode
         ownerId
+        ownerUsername
         createdAt
         updatedAt
-        owner {
+        ownerProfile {
           id
           username
           telephone
@@ -1019,6 +984,7 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -1030,6 +996,7 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           info
           postcode
           ownerId
+          ownerUsername
           createdAt
           updatedAt
         }
@@ -1046,6 +1013,7 @@ export const getUserCalendarEvent = /* GraphQL */ `
       createdAt
       payload
       updatedAt
+      owner
     }
   }
 `;
@@ -1066,6 +1034,7 @@ export const listUserCalendarEvents = /* GraphQL */ `
         createdAt
         payload
         updatedAt
+        owner
       }
       nextToken
     }
@@ -1266,6 +1235,53 @@ export const listAdminRequestss = /* GraphQL */ `
       }
       nextToken
     }
+  }
+`;
+export const me = /* GraphQL */ `
+  query Me {
+    me {
+      Username
+      UserAttributes {
+        Name
+        Value
+      }
+      UserCreateDate
+      UserLastModifiedDate
+      Enabled
+      UserStatus
+      MFAOptions {
+        DeliveryMedium
+        AttributeName
+      }
+      PreferredMfaSetting
+      UserMFASettingList
+    }
+  }
+`;
+export const user = /* GraphQL */ `
+  query User($username: String!) {
+    user(username: $username) {
+      Username
+      UserAttributes {
+        Name
+        Value
+      }
+      UserCreateDate
+      UserLastModifiedDate
+      Enabled
+      UserStatus
+      MFAOptions {
+        DeliveryMedium
+        AttributeName
+      }
+      PreferredMfaSetting
+      UserMFASettingList
+    }
+  }
+`;
+export const echo = /* GraphQL */ `
+  query Echo($msg: String!) {
+    echo(msg: $msg)
   }
 `;
 export const getTestType = /* GraphQL */ `

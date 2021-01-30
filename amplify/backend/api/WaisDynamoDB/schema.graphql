@@ -11,9 +11,10 @@ type Trade
   info: String!
   postcode: String!
   ownerId: ID!
+  ownerUsername: String!
 
   # HR
-  owner: UserProfile @connection(fields: ["ownerId"])
+  ownerProfile: UserProfile @connection(fields: ["ownerId"])
   employees: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
   contractors: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
 
@@ -220,7 +221,7 @@ type InsurancePackage {
 type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUserId", fields: ["userId", "createdAt"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   userId: String! #User ID (NOT COGNITO ID)
   createdAt: String!
@@ -230,7 +231,13 @@ type UserCalendarEvent
 type UserWallet
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(
+    rules: [
+      { allow: owner, operations: [read], ownerField: "username" }
+      { allow: groups, groups: ["admin"] }
+      { allow: private, provider: iam }
+    ]
+  ) {
   id: ID! #UserProfile ID
   username: String!
   balance: Float!
@@ -268,29 +275,50 @@ type AdminRequests
 # Authentication is performed inside the lambda resolver
 type Query {
   #Utils
-  me: User @function(name: "ResolverFunction-${env}")
-  user(username: String!): User @function(name: "ResolverFunction-${env}")
-  echo(msg: String!): String @function(name: "ResolverFunction-${env}")
+  me: User
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  user(username: String!): User
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  echo(msg: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 
 type Mutation {
   #Admin requests
-  requestAdminAproval(tradeId: String!, message: String!): String @function(name: "ResolverFunction-${env}")
+  requestAdminAproval(tradeId: String!, message: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   #Manage company connections
-  createCompanyConnectionRequest(email: String): String @function(name: "ResolverFunction-${env}")
-  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus @function(name: "ResolverFunction-${env}")
+  createCompanyConnectionRequest(email: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   # Trade user management
-  addEmployeeToTrade(username: String!): String @function(name: "ResolverFunction-${env}") #TODO add types
-  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "ResolverFunction-${env}")
+  addEmployeeToTrade(username: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) #TODO add types
+  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "resolver-${env}")
 
   # Update user Files
-  putFile(name: String, key: String): String @function(name: "ResolverFunction-${env}")
-  getFile(name: String): String @function(name: "ResolverFunction-${env}")
+  putFile(name: String, key: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  getFile(name: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   # Update user balance
-  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String @function(name: "ResolverFunction-${env}")
+  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
@@ -328,6 +356,7 @@ enum ConnectionStatus {
   REJECTED
 }
 
+# For debugging purposes, delete on production
 type TestType @model @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID
   val: String!

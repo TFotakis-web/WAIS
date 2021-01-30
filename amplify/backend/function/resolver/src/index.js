@@ -9,7 +9,7 @@
 Amplify Params - DO NOT EDIT */
 
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
-const aws = require('aws-sdk')
+const AWS = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 const https = require('https')
 const urlParse = require('url').URL
@@ -28,7 +28,7 @@ if (!COGNITO_USERPOOL_ID) {
 }
 
 //Add user function ref
-const lambda = new aws.Lambda({
+const lambda = new AWS.Lambda({
   region: process.env.REGION,
 })
 
@@ -72,7 +72,7 @@ const resolvers = {
       }
     },
   },
-  
+
   Mutation: {
     requestAdminAproval: (ctx) => {
       console.log('Resolving requestAdminAproval')
@@ -132,6 +132,7 @@ exports.handler = async (event) => {
 // create a signed graphql operation request
 //
 const createSignedRequest = (endpoint, item, operation, operationName, region, url) => {
+  console.log('Executing GraphQL query: ' + operation)
   const request = new AWS.HttpRequest(url, region)
   request.method = 'POST'
   request.path = '/graphql'
