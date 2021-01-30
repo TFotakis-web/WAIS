@@ -282,6 +282,7 @@ type Query {
   user(username: String!): User
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+    
   echo(msg: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])

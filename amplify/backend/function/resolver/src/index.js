@@ -64,7 +64,7 @@ const resolvers = {
         return await cognitoIdentityServiceProvider
           .adminGetUser({
             UserPoolId: COGNITO_USERPOOL_ID,
-            Username: ctx.identity.claims[ctx.arguments.username],
+            Username: ctx.arguments.username,
           })
           .promise()
       } catch (e) {
