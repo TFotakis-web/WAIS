@@ -1,243 +1,244 @@
 {
-	"components": {
-		"navigation": {
-			"navbar-item": {
-				"database": "Βάση Δεδομένων",
-				"contract-approval": "Έγκριση συμβολαίου",
-				"payment": "ΠΛηρωμή",
-				"bank": "Iris",
-				"collaboration": " Συνεργασία",
-				"notifications": "Ειδοποιήσεις",
-				"home": "Αρχική",
-				"myAccount": "Ο λογαριασμός μου",
-				"signOut": "Αποσύνδεση"
-			},
-			"sidenav": {
-				"pricing": {
-					"_groupName": "Τιμολόγηση",
-					"vehicle": "Οχήματος",
-					"industrialLiability": "Αστικής Ευθύνης",
-					"fire": "Πυρός",
-					"life": "Ζωής"
-				},
-				"contracts": {
-					"_groupName": "Συμβόλαια",
-					"file": "Αρχείο",
-					"uncollected": "Ανείσπρακτα",
-					"collected": "Εισπραγμένα",
-					"additionalActs": "Πρόσθετες Πράξεις",
-					"greenCard": "Πράσινη Κάρτα",
-					"unclaimed": "Αζήτητα",
-					"invalid": "Ακυρα",
-					"new": "Εισαγωγή Συμβολαίου"
-				},
-				"processing": {
-					"_groupName": "Διεκπεραίωση",
-					"dueDateRegister": "Ληξειάρια",
-					"duePayment": "Προς Πληρωμή",
-					"paid": "Πληρωμένα",
-					"losses": "Ζημιές"
-				},
-				"accounting": {
-					"_groupName": "Λογιστήριο",
-					"receipts": "Αποδείξεις",
-					"registers": "Ταμειακές",
-					"todaysIncome": "Ταμείο Ημέρας",
-					"commissionsUncollected": "Προμήθειες προς είσπραξη",
-					"commissionsCollected": "Εισπραγμένες Προμήθειες",
-					"mutualAccount": "Αλληλόχρεος Λογαριασμός"
-				},
-				"contractors": {
-					"_groupName": "Συνεργάτες",
-					"suppliers": "Προμηθευτές",
-					"externalContractors": "Εξωτερικοί Συνεργάτες"
-				},
-				"cards": {
-					"_groupName": "Καρτέλες",
-					"vehicleCards": "Καρτέλες Οχημάτων",
-					"customerCards": "Καρτέλες Πελατών"
-				},
-				"library": {
-					"_groupName": "Βιβλιοθήκη"
-				}
-			}
-		},
-		"calendar": {
-			"today": "Σήμερα",
-			"month": "Μήνας",
-			"week": "Εβδομάδα",
-			"list": "Λίστα",
-			"allDay": "Όλη μέρα"
-		},
-		"localeDropdown": {
-			"language": "Γλώσσα"
-		}
-	},
-	"views": {
-		"auth": {
-			"dontHaveAnAccount": "Δεν έχετε λογαριασμό;",
-			"createAccount": "Δημιουργία λογαριασμού",
-			"backToSignIn": "Πίσω στην Σύνδεση",
-			"signInToYourWaisAccount": "Συνδεθείτε στον WAIS λογαριασμό σας",
-			"createANewWaisAccount": "Δημιουργία νέου λογαριασμού WAIS",
-			"haveAnAccount": "Έχετε λογαριασμό;",
-			"signIn": "Σύνδεση",
-			"signingIn": "Συνδέεται...",
-			"signUp": "Εγγραφή",
-			"signingUp": "Εγγραφή...",
-			"resetYourPassword": "Επαναφορά κωδικού",
-			"forgotYourPassword": "Ξεχάσατε τον κωδικό σας;",
-			"changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας."
-		},
-		"error404": {
-			"header": "Σφάλμα 404! Η σελίδα δεν βρέθηκε.",
-			"message": "Ούπς! Η σελίδα που ζητήσατε δεν βρέθηκε. Δοκιμάστε να πάτε στην "
-		},
-		"platformData": {
-			"pageTitle": "Δεδομένα Πλατφόρμας",
-			"string": "Αλφαριθμιτικό",
-			"number": "Αριθμός",
-			"array": "Λίστα",
-			"object": "Αντικείμενο",
-			"thisKeyIsAlreadyInUse": "Αυτό το κλειδί χρησιμοποιείται ήδη."
-		},
-		"homePage": {
-			"pageTitle": "Αρχική σελίδα"
-		},
-		"Trade": {
-			"pageTitle": "Επωνυμία",
-			"companyInfo": "Εταιρικά Στοιχεία",
-			"companyAccounts": "Εταιρικοί Λογαριασμοί",
-			"companyCodes": "Εταιρικοί Κωδικοί",
-			"companyFiles": "Εταιρικά Αρχεία"
-		},
-		"User Profile": {
-			"pageTitle": "Προφίλ Χρήστη"
-		},
-		"Vehicle Cards Details": {
-			"pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
-		},
-		"newContract": {
-			"personalInfo": "Προσωπικά Στοιχεία",
-			"vehicleInfo": "Στοιχεία Οχήματος",
-			"contractInfo": "Στοιχεία Συμβολαίου"
-		}
-	},
-	"fields": {
-		"username": "Όνομα χρήστη",
-		"password": "Κωδικός",
-		"newPassword": "Νέος κωδικός",
-		"email": "Email",
-		"countryCode": "Κωδικός Χώρας",
-		"phoneNumber": "Τηλέφωνο",
-		"verificationCode": "Κωδικός Επαλήθευσης",
-		"tin": "ΑΦΜ",
-		"name": "Όνομα",
-		"surname": "Επώνυμο",
-		"address": "Διεύθυνση",
-		"city": "Πόλη",
-		"district": "Νομός",
-		"phone": "Τηλέφωνο",
-		"mobile": "Κινητό",
-		"birthDate": "Ημ. Γέννησης",
-		"driversLicenseIssueDate": "Ημ. έκδοσης Διπλώματος",
-		"numberPlate": "Αριθμός Κυκλοφορίας",
-		"branch": "Κλάδος",
-		"usage": "Χρήση",
-		"manufacturer": "Κατασκευαστής",
-		"model": "Μοντέλο",
-		"type": "Τύπος",
-		"color": "Χρώμα",
-		"fuelType": "Καύσιμο",
-		"owner": "Κάτοχος",
-		"company": "Εταιρεία",
-		"package": "Πρόγραμμα",
-		"contractNumber": "Αριθμός Συμβολαίου",
-		"issueDate": "Ημ. Έναρξης",
-		"duration": "Διάρκεια",
-		"discount": "Έκπτωση",
-		"grossIncome": "Μικτά έσοδα",
-		"netIncome": "Καθαρά έσοδα",
-		"collaborator": "Συνεργάτης",
-		"trade": "Επωνυμία",
-		"registrationNumber": "Αρ. Μητρώου",
-		"professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
-		"licenseExpirationDate": "Ημ. Λήξης Άδειας",
-		"iban": "IBAN",
-		"code": "Κωδικός"
-	},
-	"actions": {
-		"submit": "Υποβολή",
-		"submitting": "Υποβάλλεται...",
-		"sendCode": "Αποστολή κωδικού",
-		"sendingCode": "Κωδικός αποστέλλεται...",
-		"resendVerificationCode": "Επανάληψη αποστολής κωδικού επαλήθευσης",
-		"add": "Προσθήκη",
-		"adding": "Προστίθεται...",
-		"delete": "Διαγραφή",
-		"deleting": "Διαγράφεται...",
-		"update": "Ενημέρωση",
-		"updating": "Ενημερώνεται...",
-		"edit": "Επεξεργασία",
-		"save": "Αποθήκευση",
-		"saving": "Αποθηκεύεται..."
-	},
-	"defaultNotification": {
-		"somethingWentWrong": "Κάτι πήγε στραβά...",
-		"saveSuccess": "Επιτυχής αποθήκευση!",
-		"deleteSuccess": "Επιτυχής διαγραφή!"
-	},
-	"dates": {
-		"days": {
-			"Mo": "Δε",
-			"Tu": "Τρ",
-			"We": "Τε",
-			"Th": "Πε",
-			"Fr": "Πα",
-			"Sa": "Σα",
-			"Su": "Κυ",
-			"Sun": "Κυρ",
-			"Mon": "Δευ",
-			"Tue": "Τρί",
-			"Wed": "Τετ",
-			"Thu": "Πέμ",
-			"Fri": "Παρ",
-			"Sat": "Σάβ",
-			"Sunday": "Κυριακή",
-			"Monday": "Δευτέρα",
-			"Tuesday": "Τρίτη",
-			"Wednesday": "Τετάρτη",
-			"Thursday": "Πέμπτη",
-			"Friday": "Παρασκευή",
-			"Saturday": "Σάββατο"
-		},
-		"months": {
-			"Jan": "Ιαν",
-			"Feb": "Φεβ",
-			"Mar": "Μαρ",
-			"Apr": "Απρ",
-			"Jun": "Ιούν",
-			"Jul": "Ιούλ",
-			"Aug": "Αύγ",
-			"Sep": "Σεπ",
-			"Oct": "Οκτ",
-			"Nov": "Νοέ",
-			"Dec": "Δεκ",
-			"January": "Ιανουάριος",
-			"February": "Φεβρουάριος",
-			"March": "Μάρτιος",
-			"April": "Απρίλιος",
-			"May": "Μάιος",
-			"June": "Ιούνιος",
-			"July": "Ιούλιος",
-			"August": "Αύγουστος",
-			"September": "Σεπτέμβριος",
-			"October": "Οκτώβριος",
-			"November": "Νοέμβριος",
-			"December": "Δεκέμβριος"
-		}
-	},
-	"various": {
-		"underConstruction": "Υπό κατασκευή"
-	}
+  "components": {
+    "navigation": {
+      "navbar-item": {
+        "database": "Βάση Δεδομένων",
+        "contract-approval": "Έγκριση συμβολαίου",
+        "payment": "ΠΛηρωμή",
+        "bank": "Iris",
+        "collaboration": " Συνεργασία",
+        "notifications": "Ειδοποιήσεις",
+        "home": "Αρχική",
+        "myAccount": "Ο λογαριασμός μου",
+        "signOut": "Αποσύνδεση"
+      },
+      "sidenav": {
+        "pricing": {
+          "_groupName": "Τιμολόγηση",
+          "vehicle": "Οχήματος",
+          "industrialLiability": "Αστικής Ευθύνης",
+          "fire": "Πυρός",
+          "life": "Ζωής"
+        },
+        "contracts": {
+          "_groupName": "Συμβόλαια",
+          "file": "Αρχείο",
+          "uncollected": "Ανείσπρακτα",
+          "collected": "Εισπραγμένα",
+          "additionalActs": "Πρόσθετες Πράξεις",
+          "greenCard": "Πράσινη Κάρτα",
+          "unclaimed": "Αζήτητα",
+          "invalid": "Ακυρα",
+          "new": "Εισαγωγή Συμβολαίου"
+        },
+        "processing": {
+          "_groupName": "Διεκπεραίωση",
+          "dueDateRegister": "Ληξειάρια",
+          "duePayment": "Προς Πληρωμή",
+          "paid": "Πληρωμένα",
+          "losses": "Ζημιές"
+        },
+        "accounting": {
+          "_groupName": "Λογιστήριο",
+          "receipts": "Αποδείξεις",
+          "registers": "Ταμειακές",
+          "todaysIncome": "Ταμείο Ημέρας",
+          "commissionsUncollected": "Προμήθειες προς είσπραξη",
+          "commissionsCollected": "Εισπραγμένες Προμήθειες",
+          "mutualAccount": "Αλληλόχρεος Λογαριασμός"
+        },
+        "contractors": {
+          "_groupName": "Συνεργάτες",
+          "suppliers": "Προμηθευτές",
+          "externalContractors": "Εξωτερικοί Συνεργάτες"
+        },
+        "cards": {
+          "_groupName": "Καρτέλες",
+          "vehicleCards": "Καρτέλες Οχημάτων",
+          "customerCards": "Καρτέλες Πελατών"
+        },
+        "library": {
+          "_groupName": "Βιβλιοθήκη"
+        }
+      }
+    },
+    "calendar": {
+      "today": "Σήμερα",
+      "month": "Μήνας",
+      "week": "Εβδομάδα",
+      "list": "Λίστα",
+      "allDay": "Όλη μέρα"
+    },
+    "localeDropdown": {
+      "language": "Γλώσσα"
+    }
+  },
+  "views": {
+    "auth": {
+      "dontHaveAnAccount": "Δεν έχετε λογαριασμό;",
+      "createAccount": "Δημιουργία λογαριασμού",
+      "backToSignIn": "Πίσω στην Σύνδεση",
+      "signInToYourWaisAccount": "Συνδεθείτε στον WAIS λογαριασμό σας",
+      "createANewWaisAccount": "Δημιουργία νέου λογαριασμού WAIS",
+      "haveAnAccount": "Έχετε λογαριασμό;",
+      "signIn": "Σύνδεση",
+      "signingIn": "Συνδέεται...",
+      "signUp": "Εγγραφή",
+      "signingUp": "Εγγραφή...",
+      "resetYourPassword": "Επαναφορά κωδικού",
+      "forgotYourPassword": "Ξεχάσατε τον κωδικό σας;",
+      "changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας."
+    },
+    "error404": {
+      "header": "Σφάλμα 404! Η σελίδα δεν βρέθηκε.",
+      "message": "Ούπς! Η σελίδα που ζητήσατε δεν βρέθηκε. Δοκιμάστε να πάτε στην "
+    },
+    "platformData": {
+      "pageTitle": "Δεδομένα Πλατφόρμας",
+      "string": "Αλφαριθμιτικό",
+      "number": "Αριθμός",
+      "array": "Λίστα",
+      "object": "Αντικείμενο",
+      "thisKeyIsAlreadyInUse": "Αυτό το κλειδί χρησιμοποιείται ήδη."
+    },
+    "homePage": {
+      "pageTitle": "Αρχική σελίδα"
+    },
+    "Trade": {
+      "pageTitle": "Επωνυμία",
+      "companyInfo": "Εταιρικά Στοιχεία",
+      "companyAccounts": "Εταιρικοί Λογαριασμοί",
+      "companyCodes": "Εταιρικοί Κωδικοί",
+      "companyFiles": "Εταιρικά Αρχεία"
+    },
+    "userProfile": {
+      "pageTitle": "Προφίλ Χρήστη",
+      "personalInfo": "Προσωπικές Στοιχεία"
+    },
+    "Vehicle Cards Details": {
+      "pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
+    },
+    "newContract": {
+      "personalInfo": "Προσωπικά Στοιχεία",
+      "vehicleInfo": "Στοιχεία Οχήματος",
+      "contractInfo": "Στοιχεία Συμβολαίου"
+    }
+  },
+  "fields": {
+    "username": "Όνομα χρήστη",
+    "password": "Κωδικός",
+    "newPassword": "Νέος κωδικός",
+    "email": "Email",
+    "countryCode": "Κωδικός Χώρας",
+    "phoneNumber": "Τηλέφωνο",
+    "verificationCode": "Κωδικός Επαλήθευσης",
+    "tin": "ΑΦΜ",
+    "name": "Όνομα",
+    "surname": "Επώνυμο",
+    "address": "Διεύθυνση",
+    "city": "Πόλη",
+    "district": "Νομός",
+    "phone": "Τηλέφωνο",
+    "mobile": "Κινητό",
+    "birthDate": "Ημ. Γέννησης",
+    "driversLicenseIssueDate": "Ημ. έκδοσης Διπλώματος",
+    "numberPlate": "Αριθμός Κυκλοφορίας",
+    "branch": "Κλάδος",
+    "usage": "Χρήση",
+    "manufacturer": "Κατασκευαστής",
+    "model": "Μοντέλο",
+    "type": "Τύπος",
+    "color": "Χρώμα",
+    "fuelType": "Καύσιμο",
+    "owner": "Κάτοχος",
+    "company": "Εταιρεία",
+    "package": "Πρόγραμμα",
+    "contractNumber": "Αριθμός Συμβολαίου",
+    "issueDate": "Ημ. Έναρξης",
+    "duration": "Διάρκεια",
+    "discount": "Έκπτωση",
+    "grossIncome": "Μικτά έσοδα",
+    "netIncome": "Καθαρά έσοδα",
+    "collaborator": "Συνεργάτης",
+    "trade": "Επωνυμία",
+    "registrationNumber": "Αρ. Μητρώου",
+    "professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
+    "licenseExpirationDate": "Ημ. Λήξης Άδειας",
+    "iban": "IBAN",
+    "code": "Κωδικός"
+  },
+  "actions": {
+    "submit": "Υποβολή",
+    "submitting": "Υποβάλλεται...",
+    "sendCode": "Αποστολή κωδικού",
+    "sendingCode": "Κωδικός αποστέλλεται...",
+    "resendVerificationCode": "Επανάληψη αποστολής κωδικού επαλήθευσης",
+    "add": "Προσθήκη",
+    "adding": "Προστίθεται...",
+    "delete": "Διαγραφή",
+    "deleting": "Διαγράφεται...",
+    "update": "Ενημέρωση",
+    "updating": "Ενημερώνεται...",
+    "edit": "Επεξεργασία",
+    "save": "Αποθήκευση",
+    "saving": "Αποθηκεύεται..."
+  },
+  "defaultNotification": {
+    "somethingWentWrong": "Κάτι πήγε στραβά...",
+    "saveSuccess": "Επιτυχής αποθήκευση!",
+    "deleteSuccess": "Επιτυχής διαγραφή!"
+  },
+  "dates": {
+    "days": {
+      "Mo": "Δε",
+      "Tu": "Τρ",
+      "We": "Τε",
+      "Th": "Πε",
+      "Fr": "Πα",
+      "Sa": "Σα",
+      "Su": "Κυ",
+      "Sun": "Κυρ",
+      "Mon": "Δευ",
+      "Tue": "Τρί",
+      "Wed": "Τετ",
+      "Thu": "Πέμ",
+      "Fri": "Παρ",
+      "Sat": "Σάβ",
+      "Sunday": "Κυριακή",
+      "Monday": "Δευτέρα",
+      "Tuesday": "Τρίτη",
+      "Wednesday": "Τετάρτη",
+      "Thursday": "Πέμπτη",
+      "Friday": "Παρασκευή",
+      "Saturday": "Σάββατο"
+    },
+    "months": {
+      "Jan": "Ιαν",
+      "Feb": "Φεβ",
+      "Mar": "Μαρ",
+      "Apr": "Απρ",
+      "Jun": "Ιούν",
+      "Jul": "Ιούλ",
+      "Aug": "Αύγ",
+      "Sep": "Σεπ",
+      "Oct": "Οκτ",
+      "Nov": "Νοέ",
+      "Dec": "Δεκ",
+      "January": "Ιανουάριος",
+      "February": "Φεβρουάριος",
+      "March": "Μάρτιος",
+      "April": "Απρίλιος",
+      "May": "Μάιος",
+      "June": "Ιούνιος",
+      "July": "Ιούλιος",
+      "August": "Αύγουστος",
+      "September": "Σεπτέμβριος",
+      "October": "Οκτώβριος",
+      "November": "Νοέμβριος",
+      "December": "Δεκέμβριος"
+    }
+  },
+  "various": {
+    "underConstruction": "Υπό κατασκευή"
+  }
 }
