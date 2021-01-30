@@ -127,10 +127,11 @@ export const auth = {
 				commit('decreaseGlobalPendingPromises', null, {root: true});
 				if (userInfo) {
 					commit("setUser", userInfo);
-					commit('increaseGlobalPendingPromises', null, {root: true});
-					const userProfile = await API.graphql(graphqlOperation(getUserProfile, {id: userInfo.id}));
-					commit('decreaseGlobalPendingPromises', null, {root: true});
-					commit("setUserProfile", userProfile);
+					// Todo: Load user profile
+					// commit('increaseGlobalPendingPromises', null, {root: true});
+					// const userProfile = await API.graphql(graphqlOperation(getUserProfile, {id: userInfo.id}));
+					// commit('decreaseGlobalPendingPromises', null, {root: true});
+					// commit("setUserProfile", userProfile);
 				}
 				return Promise.resolve();
 			} catch (error) {
@@ -140,13 +141,16 @@ export const auth = {
 		},
 		async currentAuthenticatedUser({ commit, dispatch }) {
 			try {
+				commit('increaseGlobalPendingPromises', null, {root: true});
 				let cognitoUser = await Auth.currentAuthenticatedUser({
 					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				}).catch(async error => {
 					console.log(error);
 					await Auth.signOut();
 				});
+				commit('decreaseGlobalPendingPromises', null, {root: true});
 				commit("setCognitoUser", cognitoUser);
+
 				await dispatch("currentUserInfo");
 				return Promise.resolve();
 			} catch (error) {
@@ -157,7 +161,7 @@ export const auth = {
 		},
 		async updateUserAttributes({ dispatch }, attributes) {
 			try {
-				const user = await Auth.currentAuthenticatedUser();
+				// const user = await Auth.currentAuthenticatedUser();
 				// const attributes = {
 				// address: '',
 				// birthdate: '',
@@ -176,8 +180,8 @@ export const auth = {
 				// website: '',
 				// zoneinfo: ''
 				// };
-				await Auth.updateUserAttributes(user, attributes);
-				dispatch("currentUserInfo");
+				// await Auth.updateUserAttributes(user, attributes);
+				// dispatch("currentUserInfo");
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
