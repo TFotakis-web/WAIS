@@ -77,6 +77,20 @@ const resolvers = {
     requestAdminAproval: (ctx) => {
       console.log('Resolving requestAdminAproval')
 
+      //Retrieve the caller UserProfile
+      const userProfiles = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          { username: ctx.identity.claims['cognito:username'] },
+          queries.getUserProfileByUsername,
+          'getUserProfileByUsername',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+      const selUserProfile = userProfiles[0]
+
       //Expire this after 1 week
       var expiresAt = Date.now()
       expiresAt += 1000 * 60 * 60 * 24 * 7
@@ -85,9 +99,14 @@ const resolvers = {
       //New request
       const item = {
         id: +new Date(),
-        tradeId: ctx.arguments.tradeId,
         expiresAt: expiresAt,
         message: ctx.arguments.message,
+        tradeId: ctx.arguments.tradeId,
+        tradeName: '',
+        logo: '',
+        info: '',
+        postcode: '',
+        profile: selUserProfile,
       }
 
       //Attempt the request
@@ -99,6 +118,38 @@ const resolvers = {
 
       //Log the result
       console.log('Response of ' + item + ' was ' + response)
+      return response
+    },
+
+    adminAproveRequest: (ctx) => {
+      console.log('Resolving adminAproveRequest')
+
+      //Caller user/profile ID
+      const reqID = ctx.arguments.id
+
+      //args
+      const input = {
+        id: reqID,
+        tradeInput: {
+          id: 'trade_' + +new Date(),
+          tradeName: '',
+          tin: '',
+          logo: '',
+          info: '',
+          postcode: '',
+          ownerId: userID,
+          ownerUsername: userName,
+        },
+      }
+
+      //Delete completed request
+      const response = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(ENDPOINT, input, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
+      )
+
+      //Log and return
+      console.log('Response of adminAproveRequest was: ' + response)
       return response
     },
   },

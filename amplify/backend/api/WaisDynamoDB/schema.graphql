@@ -1,34 +1,65 @@
 type Trade
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byName", fields: ["tradeName", "id"]) {
-  id: ID!
-
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "owner", operations: [read, update] }
+      { allow: members, ownerField: "members", operations: [read] }
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  )
+  @key(name: "byTradeName", fields: ["tradeName", "owner"])
+  @key(name: "byOwner", fields: ["owner", "tradeName"]) {
   # Trade details
   tradeName: String!
+  owner: String!
   tin: String!
-  logo: AWSURL!
+  logo: String!
   info: String!
   postcode: String!
-  ownerId: ID!
-  ownerUsername: String!
 
-  # HR
-  ownerProfile: UserProfile @connection(fields: ["ownerId"])
-  employees: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
-  contractors: [TradeUserConnection] @connection(keyName: "byTradeId", fields: ["id"])
+  # Owner UserProfile
+  ownerProfile: UserProfile
+    @connection(fields: ["owner"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "owner", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 
-  # Connections
-  fromCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byFromId", fields: ["id"]) # Accesses requested by this trade
-  toCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byToId", fields: ["id"]) #  Accesses made by others to this trade
-  contractAccess: [TradeContractConnection] @connection(keyName: "byTradeId", fields: ["id"])
+  # Standard employees of this trade
+  employees: [TradeUserConnection]
+    @connection(keyName: "byTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "onwer", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  # Contractors working associated with this trade
+  contractors: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
+
+  # Connections with other Trades
+  fromCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"]) # Accesses requested by this trade
+  toCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byToTradeName", fields: ["tradeName"]) #  Accesses made by others to this trade
+  # Contracts associatec with this Trade
+  contractConnections: [TradeContractConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
 }
 
 type UserProfile
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byUsername", fields: ["username", "id"]) {
-  id: ID! #Cognito ID
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "owner", operations: [read, update] }
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  )
+  @key(name: "byUsername", fields: ["username", "telephone"]) {
   username: String!
 
   #Unique fields, not present anywhere eles
@@ -41,9 +72,18 @@ type UserProfile
   partnersNumberLimit: Int!
   professionStartDate: String!
   file: [S3Object]
+  owner: String!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
-  tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
+  tradeCon: [TradeUserConnection]
+    @connection(keyName: "byUserName", fields: ["username"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "onwer", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 }
 
 type Vehicle
@@ -181,6 +221,124 @@ type CompanyAccessConnection
   message: String!
 }
 
+#For callendar use
+type UserCalendarEvent
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  username: String!
+  createdAt: String!
+  payload: String
+}
+
+type UserWallet
+  @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username"])
+  @auth(
+    rules: [
+      { allow: owner, operations: [read], ownerField: "username" }
+      { allow: groups, groups: ["admin"] }
+      { allow: private, provider: iam }
+    ]
+  ) {
+  username: String!
+  balance: Float!
+}
+
+type TransactionHistory
+  @model(subscriptions: null)
+  @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
+  @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  id: ID!
+  timestamp: AWSTimestamp!
+  senderId: ID! # UserProfile ID
+  receiverId: ID!
+  transactionAmount: Float!
+  sender: UserProfile! @connection(fields: ["senderId"])
+  receiver: UserProfile! @connection(fields: ["receiverId"])
+  senderWallet: UserWallet! @connection(fields: ["senderId"])
+  receiverWallet: UserWallet! @connection(fields: ["receiverId"])
+}
+
+type AdminRequests
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId"])
+  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  expiresAt: AWSTimestamp!
+  message: String!
+  profile: UserProfile!
+
+  #Request fields
+  tradeId: ID!
+  tradeName: String!
+  logo: String
+  info: String!
+  postcode: String!
+}
+
+type TestType @model(subscriptions: null) {
+  id: ID!
+}
+
+# ####################################################################################################################################################################################
+
+# Everyone can call this queries
+# Authentication is performed inside the lambda resolver
+type Query {
+  #Utils
+  me: User @function(name: "resolver-${env}") @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  user(username: String!): User
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  echo(msg: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+}
+
+type Mutation {
+  #Admin API
+  requestAdminAproval(tradeId: String!, message: String!): String  #Returns the request ID
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  adminAproveRequest(id: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  #Manage company connections
+  createCompanyConnectionRequest(email: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  # Trade user management
+  addEmployeeToTrade(username: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) #TODO add types
+  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "resolver-${env}")
+
+  # Update user Files
+  putFile(name: String, key: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  getFile(name: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
+  # Update user balance
+  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+}
+
+###################### ENUMS/TYPES ######################
+
 #Add all department-specific
 type UserPermissions {
   department: String #User defined
@@ -217,111 +375,6 @@ type InsurancePackage {
   usages: String
 }
 
-#For callendar use
-type UserCalendarEvent
-  @model(subscriptions: null)
-  @key(name: "byUserId", fields: ["userId", "createdAt"])
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
-  userId: String! #User ID (NOT COGNITO ID)
-  createdAt: String!
-  payload: String
-}
-
-type UserWallet
-  @model(subscriptions: null)
-  @key(name: "byUsername", fields: ["username"])
-  @auth(
-    rules: [
-      { allow: owner, operations: [read], ownerField: "username" }
-      { allow: groups, groups: ["admin"] }
-      { allow: private, provider: iam }
-    ]
-  ) {
-  id: ID! #UserProfile ID
-  username: String!
-  balance: Float!
-}
-
-type TransactionHistory
-  @model(subscriptions: null)
-  @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
-  @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
-  timestamp: AWSTimestamp!
-  senderId: ID! # UserProfile ID
-  receiverId: ID!
-  transactionAmount: Float!
-  sender: UserProfile! @connection(fields: ["senderId"])
-  receiver: UserProfile! @connection(fields: ["receiverId"])
-  senderWallet: UserWallet! @connection(fields: ["senderId"])
-  receiverWallet: UserWallet! @connection(fields: ["receiverId"])
-}
-
-type AdminRequests
-  @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
-  tradeId: ID!
-  expiresAt: AWSTimestamp!
-  message: String!
-}
-
-# ####################################################################################################################################################################################
-
-# Everyone can call this queries
-# Authentication is performed inside the lambda resolver
-type Query {
-  #Utils
-  me: User
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  user(username: String!): User
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-    
-  echo(msg: String!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-}
-
-type Mutation {
-  #Admin requests
-  requestAdminAproval(tradeId: String!, message: String!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  #Manage company connections
-  createCompanyConnectionRequest(email: String): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  # Trade user management
-  addEmployeeToTrade(username: String!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) #TODO add types
-  #updateEmployeePermissions(username: String!, permissions: UserPermissions): String @function(name: "resolver-${env}")
-
-  # Update user Files
-  putFile(name: String, key: String): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  getFile(name: String): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  # Update user balance
-  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-}
-
 # These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
 type User {
   Username: String!
@@ -355,12 +408,6 @@ enum UserStatus {
 enum ConnectionStatus {
   ACCEPTED
   REJECTED
-}
-
-# For debugging purposes, delete on production
-type TestType @model @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID
-  val: String!
 }
 
 # Used to model a Cognito user, not a 'real' DynamoDB type
