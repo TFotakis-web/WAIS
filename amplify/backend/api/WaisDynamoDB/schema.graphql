@@ -2,28 +2,40 @@ type Trade
   @model(subscriptions: null)
   @auth(
     rules: [
-      { allow: owner, ownerField: "owner", operations: [read, update] }
+      { allow: owner, ownerField: "ownerUsername", operations: [read, update] }
       { allow: members, ownerField: "members", operations: [read] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byTradeName", fields: ["tradeName", "owner"])
-  @key(name: "byOwner", fields: ["owner", "tradeName"]) {
+  @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
+  @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
   # Trade details
   tradeName: String!
-  owner: String!
+  ownerUsername: String!
   tin: String!
   logo: String!
   info: String!
   postcode: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 
   # Owner UserProfile
   ownerProfile: UserProfile
-    @connection(fields: ["owner"])
+    @connection(fields: ["ownerUsername"])
     @auth(
       rules: [
-        { allow: owner, ownerField: "owner", operations: [read] }
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  # Users that can access this object (excluding Admins/Lambdas)
+  members: [String]!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
         { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
         { allow: private, provider: iam, operations: [create, read, update, delete] }
       ]
@@ -34,32 +46,78 @@ type Trade
     @connection(keyName: "byTradeName", fields: ["tradeName"])
     @auth(
       rules: [
-        { allow: owner, ownerField: "onwer", operations: [read] }
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
         { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
         { allow: private, provider: iam, operations: [create, read, update, delete] }
       ]
     )
 
   # Contractors working associated with this trade
-  contractors: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
+  contractors: [TradeUserConnection]
+    @connection(keyName: "byTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 
-  # Connections with other Trades
-  fromCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"]) # Accesses requested by this trade
-  toCompanyAccess: [CompanyAccessConnection] @connection(keyName: "byToTradeName", fields: ["tradeName"]) #  Accesses made by others to this trade
+  # Accesses requested by this trade
+  fromCompanyAccess: [CompanyAccessConnection]
+    @connection(keyName: "byFromTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  # Accesses made by others to this trade
+  toCompanyAccess: [CompanyAccessConnection]
+    @connection(keyName: "byToTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
   # Contracts associatec with this Trade
-  contractConnections: [TradeContractConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
+  contractConnections: [TradeContractConnection]
+    @connection(keyName: "byTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  customers: [Customers]
+    @connection(keyName: "byTradeName", fields: ["tradeName"])
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 }
 
 type UserProfile
   @model(subscriptions: null)
   @auth(
     rules: [
-      { allow: owner, ownerField: "owner", operations: [read, update] }
+      { allow: owner, ownerField: "username", operations: [read, update] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byUsername", fields: ["username", "telephone"]) {
+  @key(name: "byUsername", fields: ["username", "telephone"], queryField: "listUserProfileByName") {
+  # Important field(s)
   username: String!
 
   #Unique fields, not present anywhere eles
@@ -72,14 +130,13 @@ type UserProfile
   partnersNumberLimit: Int!
   professionStartDate: String!
   file: [S3Object]
-  owner: String!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection]
     @connection(keyName: "byUserName", fields: ["username"])
     @auth(
       rules: [
-        { allow: owner, ownerField: "onwer", operations: [read] }
+        { allow: owner, ownerField: "username", operations: [read] }
         { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
         { allow: private, provider: iam, operations: [create, read, update, delete] }
       ]
@@ -88,15 +145,23 @@ type UserProfile
 
 type Vehicle
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byTradeId", fields: ["tradeId", "id"]) {
-  id: ID!
-  tradeId: ID!
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "members", operations: [read] }
+      { allow: groups, groups: ["admin"] }
+      { allow: private, provider: iam }
+    ]
+  )
+  @key(name: "byTradeName", fields: ["tradeName", "vehicleId"])
+  @key(name: "byNumberPlates", fields: ["numberPlate", "vehicleId"])
+  @key(name: "byNumberPlates", fields: ["numberPlate", "vehicleId"]) {
+  vehicleId: ID!
+  tradeName: String!
   numberPlate: String!
   color: String!
   manufacturer: String!
   model: String!
-  owner: String!
+  vehicle_owner: String!
   trim: String!
   fuelType: String
   usage: String!
@@ -109,14 +174,20 @@ type Vehicle
   vin: String!
   value: Float!
   file: [S3Object]
+  members: [String]
 }
 
 type Contract
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byTradeId", fields: ["tradeId", "createdAt"])
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "members", operations: [read] }
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  )
+  @key(name: "byTradeName", fields: ["tradeName", "createdAt"])
   @key(name: "byCustomerId", fields: ["customerId", "tradeId"]) {
-  id: ID!
   createdAt: String!
   voucherId: ID!
   vehicleId: ID!
@@ -139,22 +210,29 @@ type Contract
   jointWorth: Float!
   netWorth: Float!
   driversLicense: DriversLicense
+  members: [String]
+  vehicle: Vehicle @connection(fields: ["vehicleId"])
 }
 
 type Customer
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byEmail", fields: ["email", "name"])
-  @key(name: "byTradeId", fields: ["tradeId", "name"]) {
-  id: ID!
-  tradeId: ID!
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "members", operations: [read] }
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  )
+  @key(name: "byEmail", fields: ["email", "firstName", "lastName"])
+  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"]) {
+  tradeName: ID!
   tin: Int
-  name: String
-  surname: String
+  firstName: String
+  lastName: String
   fathersName: String
   birthDate: String
   gender: String
-  email: String
+  email: String!
   mobile: String
   postcode: String
   doy: String
@@ -163,25 +241,34 @@ type Customer
   creationDate: AWSTimestamp!
   files: [S3Object]
   driversLicense: DriversLicense
+  members: [String]
 }
 
 type TradeUserConnection
   @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "userId"])
-  @key(name: "byUserId", fields: ["userId", "tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
-  tradeId: ID!
-  userId: ID! #Owner ID of the UserProfile
-  trade: Trade! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"])
+  @key(name: "byTradeName", fields: ["tradeName", "username"])
+  @key(name: "byUsername", fields: ["username", "tradeName"])
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "members", operations: [read] }
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  ) {
+  tradeName: String!
+  username: String!
+  trade: Trade! @connection(fields: ["tradeName"])
+  user: UserProfile! @connection(fields: ["username"])
   permissions: [UserPermissions]
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
+
+  # Users that can access this connection. e.g Admin/User
+  members: [String!]!
 }
 
 type CompanyAccessConnectionRequest
-  @model(subscriptions: null)
+  @model(queries: null, mutations: null, subscriptions: null)
   @key(name: "byFromId", fields: ["fromId", "toId"])
   @key(name: "byToId", fields: ["toId", "fromId"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
@@ -195,7 +282,7 @@ type CompanyAccessConnectionRequest
 }
 
 type TradeContractConnection
-  @model(subscriptions: null)
+  @model(queries: null, mutations: null, subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId", "contractId"])
   @key(name: "byContractId", fields: ["contractId", "tradeId"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
@@ -242,6 +329,8 @@ type UserWallet
   ) {
   username: String!
   balance: Float!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type TransactionHistory
@@ -249,10 +338,9 @@ type TransactionHistory
   @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
   @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
   timestamp: AWSTimestamp!
-  senderId: ID! # UserProfile ID
-  receiverId: ID!
+  senderUsername: ID! # UserProfile ID
+  receiverUsername: ID!
   transactionAmount: Float!
   sender: UserProfile! @connection(fields: ["senderId"])
   receiver: UserProfile! @connection(fields: ["receiverId"])
