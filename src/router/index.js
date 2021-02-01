@@ -29,7 +29,7 @@ import VehicleCards from '@/views/cards/Vehicle';
 import VehicleCardsDetails from '@/views/cards/VehicleDetails';
 import CustomerCards from '@/views/cards/Customer';
 import Library from '@/views/library/Library';
-import Trade from '@/views/Trade';
+import Trade from '@/views/trade/Trade';
 import UserProfile from '@/views/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
 import NotFound from '@/views/NotFound';
