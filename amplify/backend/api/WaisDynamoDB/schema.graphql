@@ -1,18 +1,19 @@
-type Trade
+type Trade2
   @model(subscriptions: null)
   @auth(
     rules: [
       { allow: owner, ownerField: "ownerUsername", operations: [read, update] }
-      { allow: members, ownerField: "members", operations: [read] }
+      { allow: owner, ownerField: "members", operations: [read] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
   @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
   @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
-  # Trade details
+  id: ID!
   tradeName: String!
   ownerUsername: String!
+  ownerId: ID!
   tin: String!
   logo: String!
   info: String!
@@ -20,91 +21,41 @@ type Trade
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 
-  # Owner UserProfile
-  ownerProfile: UserProfile
-    @connection(fields: ["ownerUsername"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
-
   # Users that can access this object (excluding Admins/Lambdas)
-  members: [String]!
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+  members: [String]! @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
+
+  #Owner's UserProfile
+  ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Standard employees of this trade
   employees: [TradeUserConnection]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Contractors working associated with this trade
   contractors: [TradeUserConnection]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Accesses requested by this trade
   fromCompanyAccess: [CompanyAccessConnection]
     @connection(keyName: "byFromTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Accesses made by others to this trade
   toCompanyAccess: [CompanyAccessConnection]
     @connection(keyName: "byToTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Contracts associatec with this Trade
   contractConnections: [TradeContractConnection]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
-  customers: [Customers]
+  # Customers of this Trade
+  customers: [Customer]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 }
 
 type UserProfile
@@ -116,8 +67,9 @@ type UserProfile
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byUsername", fields: ["username", "telephone"], queryField: "listUserProfileByName") {
+  @key(name: "byDoy", fields: ["doy", "createdAt"], queryField: "listUserProfileByDoy") {
   # Important field(s)
+  id: ID!
   username: String!
 
   #Unique fields, not present anywhere eles
@@ -130,6 +82,10 @@ type UserProfile
   partnersNumberLimit: Int!
   professionStartDate: String!
   file: [S3Object]
+
+  #Extras
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection]
@@ -152,12 +108,11 @@ type Vehicle
       { allow: private, provider: iam }
     ]
   )
-  @key(name: "byTradeName", fields: ["tradeName", "vehicleId"])
-  @key(name: "byNumberPlates", fields: ["numberPlate", "vehicleId"])
-  @key(name: "byNumberPlates", fields: ["numberPlate", "vehicleId"]) {
-  vehicleId: ID!
-  tradeName: String!
+  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"])
+  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"]) {
+  id: ID!
   numberPlate: String!
+  tradeName: String!
   color: String!
   manufacturer: String!
   model: String!
@@ -187,14 +142,16 @@ type Contract
     ]
   )
   @key(name: "byTradeName", fields: ["tradeName", "createdAt"])
-  @key(name: "byCustomerId", fields: ["customerId", "tradeId"]) {
-  createdAt: String!
-  voucherId: ID!
+  @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"])
+  @key(name: "byCustomerId", fields: ["customerId", "tradeName"]) {
+  id: ID!
+  vehicleNumberPlate: String!
   vehicleId: ID!
-  customerId: ID!
-  tradeId: ID!
-  second_tradeId: ID #Optional
-  contractorId: ID #Optional
+  voucherId: String!
+  customerId: String!
+  tradeName: String!
+  second_tradeId: String #Optional
+  contractorId: String #Optional
   co_name: String # CoSign participant name (OPTIONAL)
   co_TRN: String # CoSign participant "AFM" (OPTIONAL)
   contractState: String! # Send to S3 on completion
@@ -211,6 +168,7 @@ type Contract
   netWorth: Float!
   driversLicense: DriversLicense
   members: [String]
+  createdAt: String!
   vehicle: Vehicle @connection(fields: ["vehicleId"])
 }
 
@@ -223,10 +181,10 @@ type Customer
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byEmail", fields: ["email", "firstName", "lastName"])
   @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"]) {
-  tradeName: ID!
-  tin: Int
+  id: ID!
+  tin: String!
+  tradeName: String!
   firstName: String
   lastName: String
   fathersName: String
@@ -247,7 +205,8 @@ type Customer
 type TradeUserConnection
   @model(subscriptions: null)
   @key(name: "byTradeName", fields: ["tradeName", "username"])
-  @key(name: "byUsername", fields: ["username", "tradeName"])
+  @key(name: "byEmployeeType", fields: ["employeeType", "username"])
+  @key(name: "byUserName", fields: ["username", "tradeName"])
   @auth(
     rules: [
       { allow: owner, ownerField: "members", operations: [read] }
@@ -255,41 +214,49 @@ type TradeUserConnection
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   ) {
+  id: ID!
+  tradeId: ID!
   tradeName: String!
+  userId: ID!
   username: String!
-  trade: Trade! @connection(fields: ["tradeName"])
-  user: UserProfile! @connection(fields: ["username"])
+  trade: Trade2! @connection(fields: ["tradeId"])
+  user: UserProfile! @connection(fields: ["userId"])
   permissions: [UserPermissions]
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
   # Users that can access this connection. e.g Admin/User
   members: [String!]!
+
+  #Extras
+  createdAt: AWSDateTime!
 }
 
 type CompanyAccessConnectionRequest
-  @model(queries: null, mutations: null, subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"])
-  @key(name: "byToId", fields: ["toId", "fromId"])
+  @model(subscriptions: null)
+  @key(name: "byMessage", fields: ["message", "createdAt"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   fromId: ID!
   toId: ID!
-  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  from: Trade2! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade2! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
   expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
+  createdAt: AWSDateTime!
 }
 
 type TradeContractConnection
-  @model(queries: null, mutations: null, subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "contractId"])
+  @model(subscriptions: null)
+  @key(name: "byTradeId", fields: ["tradeId", "tradeName"])
+  @key(name: "byTradeName", fields: ["tradeName", "tradeId"])
   @key(name: "byContractId", fields: ["contractId", "tradeId"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   tradeId: ID!
+  tradeName: String!
   contractId: ID!
-  trade: Trade! @connection(fields: ["tradeId"])
+  trade: Trade2! @connection(fields: ["tradeId"])
   contract: Contract! @connection(fields: ["contractId"])
   ownsContract: Boolean! #If true then the Trade can edit the Contract
 }
@@ -298,12 +265,16 @@ type CompanyAccessConnection
   @model(subscriptions: null)
   @key(name: "byFromId", fields: ["fromId", "toId"])
   @key(name: "byToId", fields: ["toId", "fromId"])
+  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"])
+  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   fromId: ID!
+  fromTradeName: String!
   toId: ID!
-  from: Trade! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  toTradeName: String!
+  from: Trade2! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Trade2! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
   expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
 }
@@ -312,6 +283,7 @@ type CompanyAccessConnection
 type UserCalendarEvent
   @model(subscriptions: null)
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  id: ID!
   username: String!
   createdAt: String!
   payload: String
@@ -327,6 +299,7 @@ type UserWallet
       { allow: private, provider: iam }
     ]
   ) {
+  id: ID!
   username: String!
   balance: Float!
   createdAt: AWSDateTime!
@@ -335,26 +308,31 @@ type UserWallet
 
 type TransactionHistory
   @model(subscriptions: null)
-  @key(name: "bySenderId", fields: ["senderId", "timestamp", "receiverId"])
-  @key(name: "byReceiverId", fields: ["receiverId", "timestamp", "senderId"])
+  @key(name: "bySenderUsername", fields: ["senderUsername", "timestamp", "receiverUsername"])
+  @key(name: "byReceiverUsername", fields: ["receiverUsername", "timestamp", "senderUsername"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  id: ID!
+  senderUserProfileId: ID!
+  receiverUserProfileId: ID!
   timestamp: AWSTimestamp!
-  senderUsername: ID! # UserProfile ID
-  receiverUsername: ID!
+  senderUsername: String! # UserProfile ID
+  receiverUsername: String!
   transactionAmount: Float!
-  sender: UserProfile! @connection(fields: ["senderId"])
-  receiver: UserProfile! @connection(fields: ["receiverId"])
-  senderWallet: UserWallet! @connection(fields: ["senderId"])
-  receiverWallet: UserWallet! @connection(fields: ["receiverId"])
+  sender: UserProfile! @connection(fields: ["senderUserProfileId"])
+  receiver: UserProfile! @connection(fields: ["receiverUserProfileId"])
+  senderWallet: UserWallet! @connection(fields: ["senderUserProfileId"])
+  receiverWallet: UserWallet! @connection(fields: ["receiverUserProfileId"])
 }
 
 type AdminRequests
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId"])
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  id: ID!
   expiresAt: AWSTimestamp!
   message: String!
-  profile: UserProfile!
+  userId: ID!
+  profile: UserProfile! @connection(fields: ["userId"])
 
   #Request fields
   tradeId: ID!
@@ -362,10 +340,6 @@ type AdminRequests
   logo: String
   info: String!
   postcode: String!
-}
-
-type TestType @model(subscriptions: null) {
-  id: ID!
 }
 
 # ####################################################################################################################################################################################
@@ -425,7 +399,7 @@ type Mutation {
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 
-###################### ENUMS/TYPES ######################
+# ###################### ENUMS/TYPES ######################
 
 #Add all department-specific
 type UserPermissions {
