@@ -109,7 +109,11 @@
       "companyInfo": "Εταιρικά Στοιχεία",
       "companyAccounts": "Εταιρικοί Λογαριασμοί",
       "companyCodes": "Εταιρικοί Κωδικοί",
-      "companyFiles": "Εταιρικά Αρχεία"
+      "companyFiles": "Εταιρικά Αρχεία",
+      "userPermissionsTableCard": {
+        "cardTitle": "Δικαιώματα Χρηστών",
+        "tablePermissionHeader": "Δικαίωμα"
+      }
     },
     "userProfile": {
       "pageTitle": "Προφίλ Χρήστη",

@@ -109,7 +109,11 @@
       "companyInfo": "Company Information",
       "companyAccounts": "Company accounts",
       "companyCodes": "Company codes",
-      "companyFiles": "Company files"
+      "companyFiles": "Company files",
+      "userPermissionsTableCard": {
+        "cardTitle": "User Permissions",
+        "tablePermissionHeader": "Permission"
+      }
     },
     "userProfile": {
       "pageTitle": "User Profile",
