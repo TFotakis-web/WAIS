@@ -73,14 +73,14 @@ type UserProfile
   username: String!
 
   #Unique fields, not present anywhere eles
-  telephone: String
-  tin: Int!
+  telephone: String!
+  tin: String!
   doy: String!
   familyStatus: String!
   chamberRecordNumber: String!
-  insuranceLicenseExpirationDate: AWSTimestamp!
+  insuranceLicenseExpirationDate: AWSDateTime!
   partnersNumberLimit: Int!
-  professionStartDate: String!
+  professionStartDate: AWSDateTime!
   file: [S3Object]
 
   #Extras
@@ -88,7 +88,7 @@ type UserProfile
   updatedAt: AWSDateTime!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
-  tradeCon: [TradeUserConnection]
+  tradeCon: [TradeUserConnection!]!
     @connection(keyName: "byUserName", fields: ["username"])
     @auth(
       rules: [
