@@ -102,7 +102,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/wais38036aa9PostConfirmation-577a556654427a74586f-build.zip"
+          "S3Key": "amplify-builds/wais38036aa9PostConfirmation-55414656427266573959-build.zip"
         }
       }
     },
@@ -179,6 +179,36 @@
                     },
                     "lambda": {
                       "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Sid": "AllowAsyncActionsLambda",
+              "Effect": "Allow",
+              "Action": "lambda:InvokeFunction",
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:lambda:${region}:${account}:function:${lambda}",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "asyncactions",
+                          "-",
+                          {
+                            "Ref": "env"
+                          }
+                        ]
+                      ]
                     }
                   }
                 ]

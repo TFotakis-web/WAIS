@@ -9,6 +9,7 @@ Amplify Params - DO NOT EDIT */
 const AWS = require('aws-sdk')
 const https = require('https')
 const urlParse = require('url').URL
+const queries = require('./queries.js')
 
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
@@ -18,7 +19,6 @@ const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 // create a signed graphql operation request
 //
 const createSignedRequest = (endpoint, item, operation, operationName, region, url) => {
-  console.log('Executing GraphQL query: ' + operation)
   const request = new AWS.HttpRequest(url, region)
   request.method = 'POST'
   request.path = '/graphql'
@@ -50,7 +50,7 @@ const getResponseFromApi = (endpoint, request) => {
 }
 
 exports.handler = async (event) => {
-  if (action in event) {
+  if (!("action" in event)) {
     return {
       statusCode: 401,
       body: JSON.stringify('No action field found.'),
@@ -60,12 +60,12 @@ exports.handler = async (event) => {
     }
   }
   switch (event.action) {
-    case createUserProfile:
-      console.log('createUserProfile')
+    case "createUserProfile":
+      console.log('Executing createUserProfile for input: '+ JSON.stringify(event))
 
       //
       try {
-        const graphqlData = getResponseFromApi(
+        const graphqlResponse = await getResponseFromApi(
           ENDPOINT,
           createSignedRequest(
             ENDPOINT,
@@ -73,50 +73,45 @@ exports.handler = async (event) => {
               input: {
                 id: event.uuid,
                 username: event.username,
-                telephone: '',
-                tin: '',
-                doy: '',
-                familyStatus: '',
-                chamberRecordNumber: '',
+                telephone: 'UNKNOWN',
+                tin: 'UNKNOWN',
+                doy: 'UNKNOWN',
+                familyStatus: 'UNKNOWN',
+                chamberRecordNumber: 'UNKNOWN',
                 insuranceLicenseExpirationDate: new Date().toISOString(),
-                partnersNumberLimit: '',
+                partnersNumberLimit: 0,
                 professionStartDate: new Date().toISOString(),
-                file: [],
-                tradeCon: [],
+                file: []
               },
             },
-            print(gql`
-              mutation createUserProfile($input: CreateUserProfileInput!) {
-                createUserProfile(input: $input) {
-                  id
-                  username
-                }
-              }
-            `),
+            queries.createUserProfile,
             'createUserProfile',
             REGION,
             APPSYNC_URL,
           ),
         )
-        console.log('Successfully created UserProfile with output: ' + graphqlData)
-        return {
-          statusCode: 200,
-          body: JSON.stringify('OKK'),
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
+        if (graphqlResponse.errors) {
+          throw new Error(JSON.stringify(graphqlResponse.errors))
+        }else{
+          console.log('Successfully created UserProfile for: ' + JSON.stringify(graphqlResponse))  
+            return {
+              statusCode: 200,
+              body: JSON.stringify(graphqlResponse),
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+              },
+            }
         }
       } catch (err) {
-        console.log('Failed to create a UserProfile entry: ', err)
+        console.log('Failed to create a UserProfile entry: ', err.message)
         return {
           statusCode: 400,
-          body: err,
+          body: err.message,
           headers: {
             'Access-Control-Allow-Origin': '*',
           },
         }
       }
-      break
 
     default:
       return {
