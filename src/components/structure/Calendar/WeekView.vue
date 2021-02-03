@@ -461,6 +461,9 @@ export {mdbWeekView};
 	margin: 1px 0;
 	margin-left: 2px;
 	margin-right: -2px;
+
+	height: 19px;
+	overflow: hidden;
 }
 
 .mdb-event-continuation {
