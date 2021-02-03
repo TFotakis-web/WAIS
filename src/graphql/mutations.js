@@ -1,12 +1,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTrade2 = /* GraphQL */ `
-  mutation CreateTrade2(
-    $input: CreateTrade2Input!
-    $condition: ModelTrade2ConditionInput
+export const createOffice = /* GraphQL */ `
+  mutation CreateOffice(
+    $input: CreateOfficeInput!
+    $condition: ModelOfficeConditionInput
   ) {
-    createTrade2(input: $input, condition: $condition) {
+    createOffice(input: $input, condition: $condition) {
       id
       tradeName
       ownerUsername
@@ -136,12 +136,12 @@ export const createTrade2 = /* GraphQL */ `
     }
   }
 `;
-export const updateTrade2 = /* GraphQL */ `
-  mutation UpdateTrade2(
-    $input: UpdateTrade2Input!
-    $condition: ModelTrade2ConditionInput
+export const updateOffice = /* GraphQL */ `
+  mutation UpdateOffice(
+    $input: UpdateOfficeInput!
+    $condition: ModelOfficeConditionInput
   ) {
-    updateTrade2(input: $input, condition: $condition) {
+    updateOffice(input: $input, condition: $condition) {
       id
       tradeName
       ownerUsername
@@ -271,12 +271,12 @@ export const updateTrade2 = /* GraphQL */ `
     }
   }
 `;
-export const deleteTrade2 = /* GraphQL */ `
-  mutation DeleteTrade2(
-    $input: DeleteTrade2Input!
-    $condition: ModelTrade2ConditionInput
+export const deleteOffice = /* GraphQL */ `
+  mutation DeleteOffice(
+    $input: DeleteOfficeInput!
+    $condition: ModelOfficeConditionInput
   ) {
-    deleteTrade2(input: $input, condition: $condition) {
+    deleteOffice(input: $input, condition: $condition) {
       id
       tradeName
       ownerUsername

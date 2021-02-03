@@ -6,7 +6,7 @@ export const listTradeByName = /* GraphQL */ `
     $tradeName: String
     $ownerUsername: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelTrade2FilterInput
+    $filter: ModelOfficeFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -72,7 +72,7 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
     $ownerUsername: String
     $tradeName: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelTrade2FilterInput
+    $filter: ModelOfficeFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -133,9 +133,9 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
     }
   }
 `;
-export const getTrade2 = /* GraphQL */ `
-  query GetTrade2($id: ID!) {
-    getTrade2(id: $id) {
+export const getOffice = /* GraphQL */ `
+  query GetOffice($id: ID!) {
+    getOffice(id: $id) {
       id
       tradeName
       ownerUsername
@@ -265,13 +265,13 @@ export const getTrade2 = /* GraphQL */ `
     }
   }
 `;
-export const listTrade2s = /* GraphQL */ `
-  query ListTrade2s(
-    $filter: ModelTrade2FilterInput
+export const listOffices = /* GraphQL */ `
+  query ListOffices(
+    $filter: ModelOfficeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTrade2s(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listOffices(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         tradeName

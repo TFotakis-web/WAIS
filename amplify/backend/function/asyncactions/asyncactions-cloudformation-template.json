@@ -97,7 +97,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/asyncactions-69706f6c3664676c6953-build.zip"
+          "S3Key": "amplify-builds/asyncactions-68324c324e394e2b6a66-build.zip"
         }
       }
     },

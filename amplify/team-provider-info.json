@@ -25,7 +25,8 @@
         "wais38036aa9PreSignup": {
           "DOMAINWHITELIST": "",
           "DOMAINBLACKLIST": ""
-        }
+        },
+        "asyncactions": {}
       },
       "hosting": {
         "amplifyhosting": {

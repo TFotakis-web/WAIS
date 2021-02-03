@@ -1,4 +1,4 @@
-type Trade2
+type Office
   @model(subscriptions: null)
   @auth(
     rules: [
@@ -47,12 +47,12 @@ type Trade2
     @connection(keyName: "byToTradeName", fields: ["tradeName"])
     @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
-  # Contracts associatec with this Trade
+  # Contracts associatec with this Office
   contractConnections: [TradeContractConnection]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
     @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
-  # Customers of this Trade
+  # Customers of this Office
   customers: [Customer]
     @connection(keyName: "byTradeName", fields: ["tradeName"])
     @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
@@ -219,7 +219,7 @@ type TradeUserConnection
   tradeName: String!
   userId: ID!
   username: String!
-  trade: Trade2! @connection(fields: ["tradeId"])
+  trade: Office! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"])
   permissions: [UserPermissions]
   employeeType: EmployeeType! # e.g Contractor
@@ -239,8 +239,8 @@ type CompanyAccessConnectionRequest
   id: ID!
   fromId: ID!
   toId: ID!
-  from: Trade2! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade2! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
   expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
   createdAt: AWSDateTime!
@@ -256,9 +256,9 @@ type TradeContractConnection
   tradeId: ID!
   tradeName: String!
   contractId: ID!
-  trade: Trade2! @connection(fields: ["tradeId"])
+  trade: Office! @connection(fields: ["tradeId"])
   contract: Contract! @connection(fields: ["contractId"])
-  ownsContract: Boolean! #If true then the Trade can edit the Contract
+  ownsContract: Boolean! #If true then the Office can edit the Contract
 }
 
 type CompanyAccessConnection
@@ -273,8 +273,8 @@ type CompanyAccessConnection
   fromTradeName: String!
   toId: ID!
   toTradeName: String!
-  from: Trade2! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Trade2! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+  from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+  to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
   expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
   message: String!
 }
@@ -378,7 +378,7 @@ type Mutation {
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
-  # Trade user management
+  # Office user management
   addEmployeeToTrade(username: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) #TODO add types
