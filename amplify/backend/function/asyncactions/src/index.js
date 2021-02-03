@@ -50,7 +50,8 @@ const getResponseFromApi = (endpoint, request) => {
 }
 
 exports.handler = async (event) => {
-  if (!("action" in event)) {
+  //Request must contain an 'action' entry
+  if (!('action' in event)) {
     return {
       statusCode: 401,
       body: JSON.stringify('No action field found.'),
@@ -59,67 +60,98 @@ exports.handler = async (event) => {
       },
     }
   }
-  switch (event.action) {
-    case "createUserProfile":
-      console.log('Executing createUserProfile for input: '+ JSON.stringify(event))
 
-      //
-      try {
-        const graphqlResponse = await getResponseFromApi(
-          ENDPOINT,
-          createSignedRequest(
-            ENDPOINT,
-            {
-              input: {
-                id: event.uuid,
-                username: event.username,
-                telephone: 'UNKNOWN',
-                tin: 'UNKNOWN',
-                doy: 'UNKNOWN',
-                familyStatus: 'UNKNOWN',
-                chamberRecordNumber: 'UNKNOWN',
-                insuranceLicenseExpirationDate: new Date().toISOString(),
-                partnersNumberLimit: 0,
-                professionStartDate: new Date().toISOString(),
-                file: []
-              },
-            },
-            queries.createUserProfile,
-            'createUserProfile',
-            REGION,
-            APPSYNC_URL,
-          ),
-        )
-        if (graphqlResponse.errors) {
-          throw new Error(JSON.stringify(graphqlResponse.errors))
-        }else{
-          console.log('Successfully created UserProfile for: ' + JSON.stringify(graphqlResponse))  
-            return {
-              statusCode: 200,
-              body: JSON.stringify(graphqlResponse),
-              headers: {
-                'Access-Control-Allow-Origin': '*',
-              },
-            }
-        }
-      } catch (err) {
-        console.log('Failed to create a UserProfile entry: ', err.message)
-        return {
-          statusCode: 400,
-          body: err.message,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
+  //Lambda response
+  const response = {}
+
+  //Create the following data structures for a new user
+  //UserProfile, UserWallet
+  switch (event.action) {
+    case 'InitUser':
+      let response = {
+        ['LambdaInput']: JSON.stringify(event),
+        ['LambdaErrors']: '',
+        ['UserProfileResponse']: '',
+        ['UserProfileErrors']: '',
+        ['UserWalletResponse']: '',
+        ['UserWalletErrors']: '',
       }
+
+      //Create a UserProfile
+      const userProfileResponse = await getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          {
+            input: {
+              id: event.uuid,
+              username: event.username,
+              telephone: 'UNKNOWN',
+              tin: 'UNKNOWN',
+              doy: 'UNKNOWN',
+              familyStatus: 'UNKNOWN',
+              chamberRecordNumber: 'UNKNOWN',
+              insuranceLicenseExpirationDate: new Date().toISOString(),
+              partnersNumberLimit: 0,
+              professionStartDate: new Date().toISOString(),
+              file: [],
+            },
+          },
+          queries.createUserProfile,
+          'createUserProfile',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+      if (userProfileResponse.errors) {
+        response['UserProfileErrors'] = JSON.stringify(userProfileResponse.errors)
+        break
+      } else {
+        response['UserProfileResponse'] = JSON.stringify(userProfileResponse)
+      }
+
+      //Create the UserProfile
+      const userWalletResponse = await getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          {
+            input: {
+              id: event.uuid,
+              username: event.username,
+              balance: 0.0,
+            },
+          },
+          queries.createUserWallet,
+          'createUserWallet',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+      if (userWalletResponse.errors) {
+        response['UserWalletErrors'] = JSON.stringify(userWalletResponse.errors)
+        break
+      } else {
+        response['UserWalletResponse'] = JSON.stringify(userWalletResponse)
+      }
+      break
 
     default:
-      return {
-        statusCode: 401,
-        body: JSON.stringify('Default case in switch statement.'),
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
+      response['UserWalletResponse'] = JSON.stringify('Default case in switch statement.')
+  }
+
+  //Determine the status code
+  const statusCode = 200
+  if (response['UserProfileErrors'] === '' || response['UserWalletErrors'] === '') {
+    statusCode = 400
+  }
+
+  //Return the status map
+  return {
+    statusCode: statusCode,
+    body: JSON.stringify(response),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   }
 }

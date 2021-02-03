@@ -7,4 +7,13 @@ module.exports = {
       }
     }
   `,
+  createUserWallet: `
+    mutation createUserWallet($input CreateUserWalletInput!){
+      createUserWallet(input: $input) {
+        id: ID
+        username: String!
+        balance: Float!
+      }
+    }
+  `,
 }

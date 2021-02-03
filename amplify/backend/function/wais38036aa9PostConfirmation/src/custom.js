@@ -6,7 +6,7 @@ var lambda = new AWS.Lambda({
 exports.handler = (event, context, callback) => {
   console.log('Attempting to create a NEW UserProfile entry for ' + event.username)
   const item = {
-    action: 'createUserProfile',
+    action: 'InitUser',
     username: event.username,
     uuid: context.awsRequestId,
   }
