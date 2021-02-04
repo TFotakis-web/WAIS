@@ -3,26 +3,32 @@ AWS.config.update({ region: process.env.REGION })
 var lambda = new AWS.Lambda({
   region: process.env.REGION,
 })
-exports.handler = (event, context, callback) => {
-  console.log('Attempting to create a NEW UserProfile entry for ' + event.username)
-  const item = {
+
+exports.handler = async (event, context, callback) => {
+  const targetFunctionName = 'asyncactions-' + process.env.ENV
+  const payload = {
     action: 'InitUser',
     username: event.username,
     uuid: context.awsRequestId,
   }
-  lambda.invoke(
-    {
-      FunctionName: process.env.ASYNCACTIONS_NAME,
-      Payload: JSON.stringify(item, null, 2),
-    },
-    function (error, data) {
-      console.log(
-        JSON.stringify({
-          data: data,
-          error: error,
-        }),
-      )
-    },
+
+  console.log(
+    'Attempting to create user resources for ' +
+      JSON.stringify({
+        target: targetFunctionName,
+        payload: payload,
+      }),
   )
-  callback(null, event)
+
+  try {
+    await lambda
+      .invoke({
+        FunctionName: targetFunctionName,
+        Payload: JSON.stringify(payload),
+      })
+      .promise()
+    callback(null, event)
+  } catch (e) {
+    callback(e)
+  }
 }
