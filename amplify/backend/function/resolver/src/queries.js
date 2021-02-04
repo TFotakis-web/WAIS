@@ -5,8 +5,8 @@ module.exports = {
         id
       }
     }
-  }`
-  ,getUserProfileByUsername: `query getUserProfileByUsername($username: username){
+  }`,
+  getUserProfileByUsername: `query getUserProfileByUsername($username: username){
     listUserProfiles(filter: {username: {eq: $username}}, limit: 1) {
       items {
         id
@@ -34,9 +34,27 @@ module.exports = {
       expiresAt
     }
   }`,
-  approveAdminRequest: `mutation approveAdminRequest($id: id!, $tradeInput: CreateTradeInput!) {
-    deleteAdminRequests(input: $id) {
-      id
+  getAdminRequest: `query getAdminRequest($input: requestId){
+    listAdminRequestss(filter: {id: {eq: "$input"}}) {
+      items {
+        id
+        info
+        logo
+        tin
+        postcode
+        userId
+        updatedAt
+        tradeName
+        tradeId
+      }
+    }
+  }`,
+  approveAdminRequest: `mutation approveAdminRequest($id: ID, $officeInput: CreateOfficeInput){
+    deleteAdminRequests(input: {id: $id}) {
+      tradeName
+    }
+    createOffice(input: $officeInput) {
+      tradeName
     }
   }`,
 }

@@ -36,53 +36,63 @@ const lambda = new AWS.Lambda({
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
 const resolvers = {
+  Office: {
+    customers: (event) => {},
+    contracts: (event) => {},
+    employees: (event) => {},
+    contractors: (event) => {},
+  },
   Query: {
-    echo: (ctx) => {
+    echo: (event) => {
       console.log('Resolving echo')
       try {
-        return ctx.arguments.msg
+        return event.arguments.msg
       } catch (error) {
         throw new Error(e)
       }
     },
-    me: async (ctx) => {
+    me: async (event) => {
       console.log('Resolving me')
       try {
+        if (!event.identity.claims) {
+          throw new Error('This Query should only be called by authorized Users.')
+        }
         return await cognitoIdentityServiceProvider
           .adminGetUser({
             UserPoolId: COGNITO_USERPOOL_ID,
-            Username: ctx.identity.claims['cognito:username'],
+            Username: event.identity.claims['cognito:username'],
           })
           .promise()
       } catch (e) {
         throw new Error(e)
       }
     },
-    user: async (ctx) => {
+    user: async (event) => {
       console.log('Resolving user')
       try {
         return await cognitoIdentityServiceProvider
           .adminGetUser({
             UserPoolId: COGNITO_USERPOOL_ID,
-            Username: ctx.arguments.username,
+            Username: event.arguments.username,
           })
           .promise()
       } catch (e) {
         throw new Error(e)
       }
     },
-  },
-
-  Mutation: {
-    requestAdminAproval: (ctx) => {
+    requestAdminAproval: (event) => {
       console.log('Resolving requestAdminAproval')
+
+      if (!event.identity.claims['cognito:username']) {
+        throw new Error('Invalid credentials')
+      }
 
       //Retrieve the caller UserProfile
       const userProfiles = getResponseFromApi(
         ENDPOINT,
         createSignedRequest(
           ENDPOINT,
-          { username: ctx.identity.claims['cognito:username'] },
+          { username: event.identity.claims['cognito:username'] },
           queries.getUserProfileByUsername,
           'getUserProfileByUsername',
           REGION,
@@ -98,11 +108,11 @@ const resolvers = {
 
       //New request
       const item = {
-        id: +new Date(),
+        id: event.uuid,
         expiresAt: expiresAt,
-        message: ctx.arguments.message,
-        tradeId: ctx.arguments.tradeId,
-        tradeName: '',
+        message: event.arguments.message,
+        tradeId: event.uuid,
+        tradeName: event.arguments.tradeName,
         logo: '',
         info: '',
         postcode: '',
@@ -121,31 +131,42 @@ const resolvers = {
       return response
     },
 
-    adminAproveRequest: (ctx) => {
+    adminAproveRequest: (event) => {
       console.log('Resolving adminAproveRequest')
 
-      //Caller user/profile ID
-      const reqID = ctx.arguments.id
-
-      //args
-      const input = {
-        id: reqID,
-        tradeInput: {
-          id: 'trade_' + +new Date(),
-          tradeName: '',
-          tin: '',
-          logo: '',
-          info: '',
-          postcode: '',
-          ownerId: userID,
-          ownerUsername: userName,
-        },
+      //Username check, this shouldn't be called via IAM
+      if (!event.identity.claims['cognito:username']) {
+        throw new Error('Invalid credentials')
       }
 
-      //Delete completed request
+      //Input Args
+      const approvedReqId = event.arguments.id
+
+      //Retrieve the item of the request from DDB
+      const adminRequestResponse = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(ENDPOINT, { input: approvedReqId }, queries.getAdminRequest, 'getAdminRequest', REGION, APPSYNC_URL),
+      )
+      const selAdminReq = adminRequestResponse[0]
+
+      //Create the Office and delete the now approved AdminRequest
+      const adminReqInput = {
+        id: event.arguments.id,
+        officeInput: {
+          id: selAdminReq.tradeId,
+          tradeName: selAdminReq.tradeName,
+          tin: selAdminReq.tin,
+          logo: selAdminReq.logo,
+          info: selAdminReq.info,
+          postcode: selAdminReq.postcode,
+          ownerId: selAdminReq.ownerId,
+          ownerUsername: selAdminReq.ownerUsername,
+          members: []
+        },
+      }
       const response = getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, input, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
+        createSignedRequest(ENDPOINT, adminReqInput, queries.approveAdminRequest, 'approveAdminRequest', REGION, APPSYNC_URL),
       )
 
       //Log and return
@@ -153,6 +174,8 @@ const resolvers = {
       return response
     },
   },
+
+  Mutation: {},
 }
 
 // event
