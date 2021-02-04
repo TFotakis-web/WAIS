@@ -32,18 +32,83 @@ const lambda = new AWS.Lambda({
   region: process.env.REGION,
 })
 
+const getUserProfile = (username) => {
+  //Retrieve the caller UserProfile
+  const userProfiles = getResponseFromApi(
+    ENDPOINT,
+    createSignedRequest(
+      ENDPOINT,
+      { username: username },
+      queries.getUserProfileByUsername,
+      'getUserProfileByUsername',
+      REGION,
+      APPSYNC_URL,
+    ),
+  )
+  return userProfiles[0]
+}
+
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
 const resolvers = {
   Office: {
-    customers: (event) => {},
-    contracts: (event) => {},
-    employees: (event) => {},
-    contractors: (event) => {},
+    customers: (event, srcObj) => {
+      console.log('Resolving Office.customers')
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials')
+      }
+
+      //Get user profile (includes permissions)
+      const userProfile = getUserProfile(event.identity.claims['cognito:username'])
+      const permissions = userProfile.tradeCon[0].permissions
+
+      // TODO add permsission check
+      // ...
+
+      //List customers request input item
+      let item = {}
+      if (event.arguments.filter) {
+        item.filter = {
+          and: [
+            {
+              tradeName: { eq: srcObj.tradeName },
+            },
+            event.arguments.filter,
+          ],
+        }
+      } else {
+        item.filter = {
+          tradeName: { eq: srcObj.tradeName },
+        }
+      }
+      if (event.arguments.limit) {
+        item.limit = event.arguments.limit
+      }
+      if (event.arguments.nextToken) {
+        item.nextToken = event.arguments.nextToken
+      }
+
+      //Attempt the request
+      console.log('Attempting to register new admin request: ' + item)
+      const customersResponse = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(ENDPOINT, { input: item }, queries.listCustomers, 'listCustomers', REGION, APPSYNC_URL),
+      )
+
+      // Filter out customer fields based on permissions
+      // TODO ...
+
+      //Log the result
+      console.log('Response of ' + item + ' was ' + customersResponse)
+      return response
+    },
+    contracts: (event, srcObj) => {},
+    employees: (event, srcObj) => {},
+    contractors: (event, srcObj) => {},
   },
   Query: {
-    echo: (event) => {
+    echo: (event, srcObj) => {
       console.log('Resolving echo')
       try {
         return event.arguments.msg
@@ -51,7 +116,7 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    me: async (event) => {
+    me: async (event, srcObj) => {
       console.log('Resolving me')
       try {
         if (!event.identity.claims) {
@@ -67,7 +132,7 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    user: async (event) => {
+    user: async (event, srcObj) => {
       console.log('Resolving user')
       try {
         return await cognitoIdentityServiceProvider
@@ -80,26 +145,15 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    requestAdminAproval: (event) => {
+    requestAdminAproval: (event, srcObj) => {
       console.log('Resolving requestAdminAproval')
 
-      if (!event.identity.claims['cognito:username']) {
+      if (!event.identity.claims) {
         throw new Error('Invalid credentials')
       }
 
       //Retrieve the caller UserProfile
-      const userProfiles = getResponseFromApi(
-        ENDPOINT,
-        createSignedRequest(
-          ENDPOINT,
-          { username: event.identity.claims['cognito:username'] },
-          queries.getUserProfileByUsername,
-          'getUserProfileByUsername',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
-      const selUserProfile = userProfiles[0]
+      const selUserProfile = getUserProfile(event.identity.claims['cognito:username'])
 
       //Expire this after 1 week
       var expiresAt = Date.now()
@@ -131,11 +185,11 @@ const resolvers = {
       return response
     },
 
-    adminAproveRequest: (event) => {
+    adminAproveRequest: (event, srcObj) => {
       console.log('Resolving adminAproveRequest')
 
       //Username check, this shouldn't be called via IAM
-      if (!event.identity.claims['cognito:username']) {
+      if (!event.identity.claims) {
         throw new Error('Invalid credentials')
       }
 
@@ -161,7 +215,7 @@ const resolvers = {
           postcode: selAdminReq.postcode,
           ownerId: selAdminReq.ownerId,
           ownerUsername: selAdminReq.ownerUsername,
-          members: []
+          members: [],
         },
       }
       const response = getResponseFromApi(
@@ -194,7 +248,7 @@ exports.handler = async (event) => {
   if (typeHandler) {
     const resolver = typeHandler[event.fieldName]
     if (resolver) {
-      const res = await resolver(event)
+      const res = await resolver(event, source)
       console.log('Resolver result is ' + JSON.stringify(res))
       return res
     }

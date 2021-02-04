@@ -10,6 +10,7 @@ module.exports = {
     listUserProfiles(filter: {username: {eq: $username}}, limit: 1) {
       items {
         id
+        username
         chamberRecordNumber
         createdAt
         doy
@@ -25,7 +26,15 @@ module.exports = {
         telephone
         tin
         updatedAt
-        username
+        tradeCon{
+          tradeName
+          employeeType
+          permissions{
+            department
+            read
+            write
+          }
+        }
       }
     }
   }`,
@@ -55,6 +64,44 @@ module.exports = {
     }
     createOffice(input: $officeInput) {
       tradeName
+    }
+  }`,
+  listCustomers: `query listCustomers($filter: ModelCustomerFilterInput,$limit: Int,$nextToken: String){
+    listCustomers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        address
+        birthDate
+        creationDate
+        createdAt
+        doy
+        driversLicense {
+          Category {
+            category
+            expiresAt
+            issueDate
+          }
+          DriversLicenseType
+          LicenseID
+        }
+        email
+        familyStatus
+        fathersName
+        firstName
+        files {
+          bucket
+          key
+          region
+        }
+        gender
+        id
+        lastName
+        mobile
+        postcode
+        tin
+        tradeName
+        updatedAt
+      }
+      nextToken
     }
   }`,
 }

@@ -28,7 +28,7 @@ type Office
   ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Paperwork
-  customers: [Customer] @function(name: "resolver-${env}")
+  customers(filter: String, limit: Int, nextToken: String): Customer @function(name: "resolver-${env}")
   contracts: [Contract] @function(name: "resolver-${env}")
   employees: [UserProfile] @function(name: "resolver-${env}")
   contractors: [UserProfile] @function(name: "resolver-${env}")
