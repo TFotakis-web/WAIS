@@ -16,12 +16,12 @@ exports.handler = (event, context, callback) => {
       Payload: JSON.stringify(item, null, 2),
     },
     function (error, data) {
-      if (error) {
-        context.done('error', error)
-      }
-      if (data.Payload) {
-        context.succeed(data.Payload)
-      }
+      console.log(
+        JSON.stringify({
+          data: data,
+          error: error,
+        }),
+      )
     },
   )
   callback(null, event)

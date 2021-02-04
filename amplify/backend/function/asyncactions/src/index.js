@@ -54,7 +54,7 @@ exports.handler = async (event) => {
   if (!('action' in event)) {
     return {
       statusCode: 401,
-      body: JSON.stringify('No action field found.'),
+      body: 'No action field found.',
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -62,19 +62,22 @@ exports.handler = async (event) => {
   }
 
   //Lambda response
-  const response = {}
+  let response = {
+    LambdaInput: event,
+    LambdaErrors: '',
+    ActionResponse: '',
+  }
+  let statusCode = 200
 
   //Create the following data structures for a new user
   //UserProfile, UserWallet
   switch (event.action) {
     case 'InitUser':
-      let response = {
-        ['LambdaInput']: JSON.stringify(event),
-        ['LambdaErrors']: '',
-        ['UserProfileResponse']: '',
-        ['UserProfileErrors']: '',
-        ['UserWalletResponse']: '',
-        ['UserWalletErrors']: '',
+      let initUserResponse = {
+        UserProfileResponse: '',
+        UserProfileErrors: '',
+        UserWalletResponse: '',
+        UserWalletErrors: '',
       }
 
       //Create a UserProfile
@@ -104,10 +107,12 @@ exports.handler = async (event) => {
         ),
       )
       if (userProfileResponse.errors) {
-        response['UserProfileErrors'] = JSON.stringify(userProfileResponse.errors)
+        initUserResponse.UserProfileErrors = userProfileResponse.errors
+        response.ActionResponse = initUserResponse
+        statusCode = 400
         break
       } else {
-        response['UserProfileResponse'] = JSON.stringify(userProfileResponse)
+        initUserResponse.UserProfileResponse = userProfileResponse
       }
 
       //Create the UserProfile
@@ -129,27 +134,25 @@ exports.handler = async (event) => {
         ),
       )
       if (userWalletResponse.errors) {
-        response['UserWalletErrors'] = JSON.stringify(userWalletResponse.errors)
+        initUserResponse.UserWalletErrors = userWalletResponse.errors
+        response.ActionResponse = initUserResponse
+        statusCode = 400
         break
       } else {
-        response['UserWalletResponse'] = JSON.stringify(userWalletResponse)
+        initUserResponse.UserWalletResponse = userWalletResponse
       }
+      response.ActionResponse = initUserResponse
       break
 
     default:
-      response['UserWalletResponse'] = JSON.stringify('Default case in switch statement.')
-  }
-
-  //Determine the status code
-  const statusCode = 200
-  if (response['UserProfileErrors'] === '' || response['UserWalletErrors'] === '') {
-    statusCode = 400
+      response.LambdaErrors = 'Default case in switch statement.'
   }
 
   //Return the status map
+  console.log(JSON.stringify(response))
   return {
     statusCode: statusCode,
-    body: JSON.stringify(response),
+    body: response,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

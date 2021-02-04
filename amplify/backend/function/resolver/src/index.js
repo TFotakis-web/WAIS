@@ -84,9 +84,13 @@ const resolvers = {
       }
       if (event.arguments.limit) {
         item.limit = event.arguments.limit
+      } else {
+        item.limit = 50
       }
       if (event.arguments.nextToken) {
         item.nextToken = event.arguments.nextToken
+      } else {
+        item.nextToken = null
       }
 
       //Attempt the request
