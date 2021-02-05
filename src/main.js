@@ -5,8 +5,9 @@ import '@/registerServiceWorker';
 import router from '@/router';
 import store from '@/store';
 import Amplify from 'aws-amplify';
-import '@aws-amplify/ui-vue';
+import { Auth } from '@aws-amplify/auth'
 import aws_exports from '@/aws-exports';
+import '@aws-amplify/ui-vue';
 import i18n from '@/i18n';
 import VueCookies from 'vue-cookies';
 import VueHead from 'vue-head';
@@ -23,6 +24,7 @@ import MomentJS from 'vue-moment';
 import lodash from 'lodash';
 
 Amplify.configure(aws_exports);
+Auth.configure(aws_exports);
 
 Vue.use(VueCookies);
 Vue.use(VueHead);
