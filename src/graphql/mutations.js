@@ -3784,6 +3784,11 @@ export const deleteAdminRequests = /* GraphQL */ `
     }
   }
 `;
+export const createOrUpdateContract = /* GraphQL */ `
+  mutation CreateOrUpdateContract($contract: String) {
+    createOrUpdateContract(contract: $contract)
+  }
+`;
 export const createCompanyConnectionRequest = /* GraphQL */ `
   mutation CreateCompanyConnectionRequest($email: String) {
     createCompanyConnectionRequest(email: $email)

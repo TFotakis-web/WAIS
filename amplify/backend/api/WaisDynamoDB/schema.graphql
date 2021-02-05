@@ -22,18 +22,23 @@ type Office
   updatedAt: AWSDateTime!
 
   # Users that can access this object (excluding Admins/Lambdas)
-  members: [String]! @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
+  members: [String]!
+    @auth(
+      rules: [
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 
   #Owner's UserProfile
   ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Paperwork
   customers(filter: String, limit: Int, nextToken: String): Customer @function(name: "resolver-${env}")
-  contracts: [Contract] @function(name: "resolver-${env}")
-  employees: [UserProfile] @function(name: "resolver-${env}")
-  contractors: [UserProfile] @function(name: "resolver-${env}")
+  contracts(filter: String, limit: Int, nextToken: String): Contract @function(name: "resolver-${env}")
+  employees(filter: String, limit: Int, nextToken: String): UserProfile @function(name: "resolver-${env}")
+  contractors(filter: String, limit: Int, nextToken: String): UserProfile @function(name: "resolver-${env}")
 }
-
 type UserProfile
   @model(subscriptions: null)
   @auth(
@@ -327,6 +332,11 @@ type Query {
 }
 
 type Mutation {
+  #Paperwork
+  createOrUpdateContract(contract: String): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+
   #Manage company connections
   createCompanyConnectionRequest(email: String): String
     @function(name: "resolver-${env}")

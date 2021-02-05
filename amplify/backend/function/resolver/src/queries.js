@@ -6,7 +6,7 @@ module.exports = {
       }
     }
   }`,
-  getUserProfileByUsername: `query getUserProfileByUsername($username: username){
+  getUserProfileByUsername: `query getUserProfileByUsername($username: String){
     listUserProfiles(filter: {username: {eq: $username}}, limit: 1) {
       items {
         id
@@ -38,12 +38,23 @@ module.exports = {
       }
     }
   }`,
+  getUserPermissions: `query getUserPermissions($username: String!, $tradeName: String!){
+    listTradeUserConnections(filter: {and: [{tradeName: {eq: $username}},{username: {eq: $tradeName}}]}) {
+      items {
+        permissions {
+          department
+          write
+          read
+        }
+      }
+    }
+  }`,
   createAdminRequest: `mutation createAdminRequest($input: CreateAdminRequestInput!) {
     createAdminRequests(input: $input) {
       expiresAt
     }
   }`,
-  getAdminRequest: `query getAdminRequest($input: requestId){
+  getAdminRequest: `query getAdminRequest($input: ID!){
     listAdminRequestss(filter: {id: {eq: "$input"}}) {
       items {
         id
@@ -100,6 +111,74 @@ module.exports = {
         tin
         tradeName
         updatedAt
+      }
+      nextToken
+    }
+  }`,
+  listContracts: `query listContracts($filter: ModelContractFilterInput,$limit: Int,$nextToken: String){
+    listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        co_name
+        co_TRN
+        contractId
+        contractState
+        contractorId
+        creationDate
+        createdAt
+        customerId
+        discount
+        data
+        driversLicense {
+          Category {
+            category
+            expiresAt
+            issueDate
+          }
+          LicenseID
+          DriversLicenseType
+        }
+        duration
+        endDate
+        id
+        insuranceClass
+        insuranceCoverage
+        insuranceUsage
+        jointWorth
+        netWorth
+        startDate
+        second_tradeId
+        tradeName
+        vehicle {
+          file {
+            bucket
+            key
+            region
+          }
+          color
+          createdAt
+          displacement
+          eurotax
+          fuelType
+          firstRegistrationDate
+          id
+          manufacturer
+          model
+          vin
+          vehicle_owner
+          usage
+          value
+          trim
+          updatedAt
+          tradeName
+          taxableHorsepower
+          purchaseDate
+          passengers
+          numberPlate
+        }
+        voucherId
+        version
+        vehicleNumberPlate
+        vehicleId
       }
       nextToken
     }
