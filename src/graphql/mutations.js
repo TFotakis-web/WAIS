@@ -2160,11 +2160,13 @@ export const manageOfficeEmployee = /* GraphQL */ `
     $username: String!
     $action: EmployeeAction!
     $permissions: [UserPermissionsInput]!
+    $tradeName: String!
   ) {
     manageOfficeEmployee(
       username: $username
       action: $action
       permissions: $permissions
+      tradeName: $tradeName
     )
   }
 `;

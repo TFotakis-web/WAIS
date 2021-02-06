@@ -20,6 +20,9 @@ const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 
+AWS.config.update({ region: REGION })
+var ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' })
+
 /**
  * Get user pool information from environment variables.
  */
@@ -431,17 +434,68 @@ const resolvers = {
       }
 
       //Get args
-      const argCustomer = event.arguments.customer
+      const ownUsername = event.identity.claims['cognito:username']
+      const empUsername = event.arguments.username
       const argAction = event.arguments.action
+      const permissions = event.username.permissions
+      const tradeName = event.username.tradeName
 
-      //Get office stuff
+      //Get caller Office
+      let item = {
+        limit: 1,
+        nextToken: null,
+        tradeName: { eq: tradeName }, //SK
+        username: ownUsername, //PK
+      }
+      const getTradesByOwnerReq = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          { input: item },
+          queries.listTradeByNameAndOwnerUsername,
+          'listTradeByNameAndOwnerUsername',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+      console.log('Looked up office: ' + JSON.stringify(getTradesByOwnerReq))
+      const tradeResponse = getTradesByOwnerReq.data.listTradeByNameAndOwnerUsername[0]
+      if (!tradeResponse) {
+        throw new Error('User is either not valid or not the owner of the provided trade name.')
+      } else {
+        console.log('Updating office: ' + JSON.stringify(tradeResponse))
+      }
 
       //Validate args
       let resolverResponse = ''
       switch (argAction) {
         case 'CREATE':
+          // Call DynamoDB to add the item to the table
+          ddb.putItem(
+            {
+              TableName: 'Office-' + process.env.ENV,
+              Item: {
+                CUSTOMER_ID: { N: '001' },
+                CUSTOMER_NAME: { S: 'Richard Roe' }, //TODO ...
+              },
+            },
+            function (err, data) {
+              if (err) {
+                console.log('Error', err)
+              } else {
+                console.log('Success', data)
+              }
+            },
+          )
           break
         case 'UPDATE':
+          //Get existing user permissions
+          const userExistingPermissions = getUserPermissions(empUsername)
+
+          //Merge with input permissions
+
+          //Save user
+
           break
         case 'DELETE':
           break

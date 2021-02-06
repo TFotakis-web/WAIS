@@ -1,11 +1,4 @@
 module.exports = {
-  listTestTypes: `query listTestTypes(){
-    listTestTypes {
-      items {
-        id
-      }
-    }
-  }`,
   listUserProfileByUsername: `query listUserProfileByUsername($username: String){
     listUserProfileByUsername(username: $username, limit: 1) {
       items {
@@ -186,7 +179,7 @@ module.exports = {
     }
   }`,
   listEmployeesByEmployeeType: `query listEmployees($filter: ModelUserProfileFilterInput,$limit: Int, $nextToken: String, $tradeName: String!){
-    listTradeUserConnectionsByTradeName(tradeName: $tradeName, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTradeUserConnectionsByTradeName($filter: ModelUserProfileFilterInput,$limit: Int, $nextToken: String, $tradeName: String!) {
       items {
         id
         employeeType
@@ -212,6 +205,16 @@ module.exports = {
         }
       }
       nextToken
-    }   
+    }   filter: {tradeName: {eq: $tradeName}
   }`,
+  listTradeByNameAndOwnerUsername: `query listTradeByNameAndOwnerUsername($limit: Int, $nextToken: String, $tradeNameFilter: ModelStringKeyConditionInput!, $username: String!)
+    listTradeByNameAndOwnerUsername($limit: Int, $nextToken: String, $tradeNameFilter: ModelStringKeyConditionInput!, $username: String!) {
+      items {
+        id
+        members
+        tradeName
+      }
+      nextToken
+    }
+  `,
 }

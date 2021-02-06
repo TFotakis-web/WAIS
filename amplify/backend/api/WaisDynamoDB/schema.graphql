@@ -349,7 +349,7 @@ type Mutation {
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   # Office user management
-  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!): String
+  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!,tradeName: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
