@@ -6,8 +6,8 @@ module.exports = {
       }
     }
   }`,
-  getUserProfileByUsername: `query getUserProfileByUsername($username: String){
-    listUserProfiles(filter: {username: {eq: $username}}, limit: 1) {
+  listUserProfileByUsername: `query listUserProfileByUsername($username: String){
+    listUserProfileByUsername(username: $username, limit: 1) {
       items {
         id
         username
@@ -27,19 +27,21 @@ module.exports = {
         tin
         updatedAt
         tradeCon{
-          tradeName
-          employeeType
-          permissions{
-            department
-            read
-            write
+          items{
+            tradeName
+            employeeType
+            permissions{
+              department
+              read
+              write
+            }
           }
         }
       }
     }
   }`,
   getUserPermissions: `query getUserPermissions($username: String!, $tradeName: String!){
-    listTradeUserConnections(filter: {and: [{tradeName: {eq: $username}},{username: {eq: $tradeName}}]}) {
+    listTradeUserConnections(filter: {and: [{username: {eq: $username}},{tradeName: {eq: $tradeName}}]}) {
       items {
         permissions {
           department
@@ -183,32 +185,33 @@ module.exports = {
       nextToken
     }
   }`,
-  listEmployeesByEmployeeType: `query listEmployees($filter: ModelUserProfileFilterInput,$limit: Int, $nextToken: String, $tradeName: String!, $empType: EmployeeType!){
-    listUserProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listEmployeesByEmployeeType: `query listEmployees($filter: ModelUserProfileFilterInput,$limit: Int, $nextToken: String, $tradeName: String!){
+    listTradeUserConnectionsByTradeName(tradeName: $tradeName, filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        chamberRecordNumber
+        id
+        employeeType
+        tradeName
         createdAt
-        username
-        updatedAt
-        tradeCon(filter: {and: [{employeeType: {eq: $empType}} , {tradeName: {eq : $tradeName }} ]}) {
-          items {
-            employeeType
-            preferences
-            tradeId
-            tradeName
-            username
-            userId
-          }
+        permissions {
+          department
+          read
+          write
         }
-        tin
-        telephone
-        professionStartDate
-        partnersNumberLimit
-        insuranceLicenseExpirationDate
-        doy
-        familyStatus
+        preferences
+        updatedAt
+        user {
+          doy
+          familyStatus
+          createdAt
+          tin
+          telephone
+          professionStartDate
+          partnersNumberLimit
+          insuranceLicenseExpirationDate
+          username
+        }
       }
       nextToken
-    }    
+    }   
   }`,
 }

@@ -28,30 +28,27 @@ if (!COGNITO_USERPOOL_ID) {
   throw new Error(`Function requires a valid pool ID`)
 }
 
-//Add user function ref
-const lambda = new AWS.Lambda({
-  region: process.env.REGION,
-})
-
 const getUserProfile = (username) => {
-  //Retrieve the caller UserProfile
-  const userProfileResponse = getResponseFromApi(
+  console.log('Resolving UserProfile for ' + username + '.')
+  let userProfileResponse = getResponseFromApi(
     ENDPOINT,
     createSignedRequest(
       ENDPOINT,
       { username: username },
-      queries.getUserProfileByUsername,
-      'getUserProfileByUsername',
+      queries.listUserProfileByUsername,
+      'listUserProfileByUsername',
       REGION,
       APPSYNC_URL,
     ),
   )
-  return userProfileResponse.data.getUserProfileByUsername.items[0]
+  console.log('Fetched UserProfile for ' + username + ' : ' + JSON.stringify(userProfileResponse))
+  console.log('Fetched UserProfile for ' + username + ' : ' + userProfileResponse)
+  return userProfileResponse.data.listUserProfileByUsername.items[0]
 }
 
 const getUserPermissions = (username, tradeName) => {
-  //Retrieve the caller UserProfile
-  const userProfResponse = getResponseFromApi(
+  console.log('Resolving permissions for ' + username + '.')
+  let userProfResponse = getResponseFromApi(
     ENDPOINT,
     createSignedRequest(
       ENDPOINT,
@@ -62,6 +59,7 @@ const getUserPermissions = (username, tradeName) => {
       APPSYNC_URL,
     ),
   )
+  console.log('Fetched UserPermissions for ' + username + ' : ' + JSON.stringify(userProfResponse))
   return userProfResponse.data.getUserPermissions.items
 }
 
@@ -94,6 +92,35 @@ const getDefaultFunctionArgs = (event) => {
   return item
 }
 
+const getUserProfileFunctionArgs = (event, type) => {
+  let item = {}
+  if (event.arguments.filter) {
+    item.filter = {
+      and: [
+        {
+          employeeType: { eq: type },
+        },
+        event.arguments.filter,
+      ],
+    }
+  } else {
+    item.filter = {
+      employeeType: { eq: type },
+    }
+  }
+  if (event.arguments.limit) {
+    item.limit = event.arguments.limit
+  } else {
+    item.limit = 50
+  }
+  if (event.arguments.nextToken) {
+    item.nextToken = event.arguments.nextToken
+  } else {
+    item.nextToken = null
+  }
+  return item
+}
+
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
@@ -107,9 +134,9 @@ const resolvers = {
       let permissions = ''
 
       if (event.identity.claims) {
-        console.log('No credentials found, returning all values.')
+        console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(user, event.source.tradeName)
+        permissions = getUserPermissions(username, event.source.tradeName)
       }
 
       //List customers request input item
@@ -145,12 +172,15 @@ const resolvers = {
       let permissions = ''
 
       if (event.identity.claims) {
-        console.log('No credentials found, returning all values.')
+        console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(user, event.source.tradeName)
+        permissions = getUserPermissions(username, event.source.tradeName)
       }
 
       let item = getDefaultFunctionArgs(event)
+
+      //Attempt the request
+      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
 
       //Attempt the request
       const contractsResponse = getResponseFromApi(
@@ -178,15 +208,14 @@ const resolvers = {
       let permissions = ''
 
       if (event.identity.claims) {
-        console.log('No credentials found, returning all values.')
+        console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(user, event.source.tradeName)
+        permissions = getUserPermissions(username, event.source.tradeName)
       }
 
       //List employees request input item
-      let item = getDefaultFunctionArgs(event)
+      let item = getUserProfileFunctionArgs(event, 'STANDARD')
       item.tradeName = tradeName
-      item.empType = 'STANDARD'
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
@@ -224,15 +253,14 @@ const resolvers = {
       let permissions = ''
 
       if (event.identity.claims) {
-        console.log('No credentials found, returning all values.')
+        console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(user, event.source.tradeName)
+        permissions = getUserPermissions(username, event.source.tradeName)
       }
 
       //List contractors request input item
-      let item = getDefaultItem(event)
+      let item = getUserProfileFunctionArgs(event, 'CONTRACTOR')
       item.tradeName = tradeName
-      item.empType = 'CONTRACTOR'
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
@@ -304,12 +332,18 @@ const resolvers = {
     requestAdminAproval: (event) => {
       console.log('Resolving requestAdminAproval')
 
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials')
+      //Username and permissions
+      let username = 'IAM'
+      let permissions = ''
+
+      if (event.identity.claims) {
+        console.log('Credentials found..')
+        username = event.identity.claims['cognito:username']
+        permissions = getUserPermissions(username, event.arguments.tradeName)
       }
 
       //Retrieve the caller UserProfile
-      const selUserProfile = getUserProfile(event.identity.claims['cognito:username'])
+      const selUserProfile = getUserProfile(username)
 
       //Expire this after 1 week
       var expiresAt = Date.now()

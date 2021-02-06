@@ -49,6 +49,7 @@ type UserProfile
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
+  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername")
   @key(name: "byDoy", fields: ["doy", "createdAt"], queryField: "listUserProfileByDoy") {
   # Important field(s)
   id: ID!
@@ -83,8 +84,8 @@ type UserProfile
 type Vehicle
   @model(subscriptions: null)
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"])
-  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"]) {
+  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehicleByTradeName")
+  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"],, queryField: "listVehiclesByOwner") {
   id: ID!
   numberPlate: String!
   tradeName: String!
@@ -114,9 +115,9 @@ type Contract
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byTradeName", fields: ["tradeName", "createdAt"])
-  @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"])
-  @key(name: "byCustomerId", fields: ["customerId", "tradeName"]) {
+  @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
+  @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
+  @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
   id: ID!
   contractId: ID! # Not unique, remember that we keep a history of each contract
   version: Int! # For history
@@ -176,9 +177,9 @@ type Customer
 
 type TradeUserConnection
   @model(subscriptions: null)
-  @key(name: "byTradeName", fields: ["tradeName", "username"])
-  @key(name: "byEmployeeType", fields: ["employeeType", "username"])
-  @key(name: "byUserName", fields: ["username", "tradeName"])
+  @key(name: "byTradeName", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeName")
+  @key(name: "byEmployeeType", fields: ["employeeType", "username"], queryField: "listTradeUserConnectionsByEmployeeType")
+  @key(name: "byUserName", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUserName")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }

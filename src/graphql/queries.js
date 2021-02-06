@@ -190,6 +190,49 @@ export const listOffices = /* GraphQL */ `
     }
   }
 `;
+export const listUserProfileByUsername = /* GraphQL */ `
+  query ListUserProfileByUsername(
+    $username: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserProfileByUsername(
+      username: $username
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+        tradeCon {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const listUserProfileByDoy = /* GraphQL */ `
   query ListUserProfileByDoy(
     $doy: String
@@ -372,6 +415,102 @@ export const getVehicle = /* GraphQL */ `
     }
   }
 `;
+export const listVehicleByTradeName = /* GraphQL */ `
+  query ListVehicleByTradeName(
+    $tradeName: String
+    $numberPlate: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelVehicleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVehicleByTradeName(
+      tradeName: $tradeName
+      numberPlate: $numberPlate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        numberPlate
+        tradeName
+        color
+        manufacturer
+        model
+        vehicle_owner
+        trim
+        fuelType
+        usage
+        displacement
+        eurotax
+        firstRegistrationDate
+        passengers
+        purchaseDate
+        taxableHorsepower
+        vin
+        value
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listVehiclesByOwner = /* GraphQL */ `
+  query ListVehiclesByOwner(
+    $vehicle_owner: String
+    $tradeName: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelVehicleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVehiclesByOwner(
+      vehicle_owner: $vehicle_owner
+      tradeName: $tradeName
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        numberPlate
+        tradeName
+        color
+        manufacturer
+        model
+        vehicle_owner
+        trim
+        fuelType
+        usage
+        displacement
+        eurotax
+        firstRegistrationDate
+        passengers
+        purchaseDate
+        taxableHorsepower
+        vin
+        value
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listContracts = /* GraphQL */ `
   query ListContracts(
     $filter: ModelContractFilterInput
@@ -502,6 +641,231 @@ export const getContract = /* GraphQL */ `
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+export const listContractsByTradeName = /* GraphQL */ `
+  query ListContractsByTradeName(
+    $tradeName: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelContractFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContractsByTradeName(
+      tradeName: $tradeName
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        contractId
+        version
+        vehicleNumberPlate
+        vehicleId
+        voucherId
+        customerId
+        tradeName
+        second_tradeId
+        contractorId
+        co_name
+        co_TRN
+        contractState
+        insuranceClass
+        insuranceCoverage
+        insuranceUsage
+        duration
+        creationDate
+        startDate
+        endDate
+        data
+        discount
+        jointWorth
+        netWorth
+        driversLicense {
+          LicenseID
+          DriversLicenseType
+        }
+        createdAt
+        updatedAt
+        vehicle {
+          id
+          numberPlate
+          tradeName
+          color
+          manufacturer
+          model
+          vehicle_owner
+          trim
+          fuelType
+          usage
+          displacement
+          eurotax
+          firstRegistrationDate
+          passengers
+          purchaseDate
+          taxableHorsepower
+          vin
+          value
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listContractsByVehicleNumberPlates = /* GraphQL */ `
+  query ListContractsByVehicleNumberPlates(
+    $vehicleNumberPlate: String
+    $tradeName: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelContractFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContractsByVehicleNumberPlates(
+      vehicleNumberPlate: $vehicleNumberPlate
+      tradeName: $tradeName
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        contractId
+        version
+        vehicleNumberPlate
+        vehicleId
+        voucherId
+        customerId
+        tradeName
+        second_tradeId
+        contractorId
+        co_name
+        co_TRN
+        contractState
+        insuranceClass
+        insuranceCoverage
+        insuranceUsage
+        duration
+        creationDate
+        startDate
+        endDate
+        data
+        discount
+        jointWorth
+        netWorth
+        driversLicense {
+          LicenseID
+          DriversLicenseType
+        }
+        createdAt
+        updatedAt
+        vehicle {
+          id
+          numberPlate
+          tradeName
+          color
+          manufacturer
+          model
+          vehicle_owner
+          trim
+          fuelType
+          usage
+          displacement
+          eurotax
+          firstRegistrationDate
+          passengers
+          purchaseDate
+          taxableHorsepower
+          vin
+          value
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listContractsByCustomerId = /* GraphQL */ `
+  query ListContractsByCustomerId(
+    $customerId: String
+    $tradeName: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelContractFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContractsByCustomerId(
+      customerId: $customerId
+      tradeName: $tradeName
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        contractId
+        version
+        vehicleNumberPlate
+        vehicleId
+        voucherId
+        customerId
+        tradeName
+        second_tradeId
+        contractorId
+        co_name
+        co_TRN
+        contractState
+        insuranceClass
+        insuranceCoverage
+        insuranceUsage
+        duration
+        creationDate
+        startDate
+        endDate
+        data
+        discount
+        jointWorth
+        netWorth
+        driversLicense {
+          LicenseID
+          DriversLicenseType
+        }
+        createdAt
+        updatedAt
+        vehicle {
+          id
+          numberPlate
+          tradeName
+          color
+          manufacturer
+          model
+          vehicle_owner
+          trim
+          fuelType
+          usage
+          displacement
+          eurotax
+          firstRegistrationDate
+          passengers
+          purchaseDate
+          taxableHorsepower
+          vin
+          value
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
     }
   }
 `;
@@ -661,6 +1025,210 @@ export const listTradeUserConnections = /* GraphQL */ `
     $nextToken: String
   ) {
     listTradeUserConnections(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeId
+        tradeName
+        userId
+        username
+        permissions {
+          department
+          read
+          write
+        }
+        employeeType
+        preferences
+        createdAt
+        updatedAt
+        trade {
+          id
+          tradeName
+          ownerUsername
+          ownerId
+          tin
+          logo
+          info
+          postcode
+          createdAt
+          updatedAt
+          customers
+          contracts
+          employees
+          contractors
+          members
+        }
+        user {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
+  query ListTradeUserConnectionsByTradeName(
+    $tradeName: String
+    $username: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelTradeUserConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeUserConnectionsByTradeName(
+      tradeName: $tradeName
+      username: $username
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeId
+        tradeName
+        userId
+        username
+        permissions {
+          department
+          read
+          write
+        }
+        employeeType
+        preferences
+        createdAt
+        updatedAt
+        trade {
+          id
+          tradeName
+          ownerUsername
+          ownerId
+          tin
+          logo
+          info
+          postcode
+          createdAt
+          updatedAt
+          customers
+          contracts
+          employees
+          contractors
+          members
+        }
+        user {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
+  query ListTradeUserConnectionsByEmployeeType(
+    $employeeType: EmployeeType
+    $username: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelTradeUserConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeUserConnectionsByEmployeeType(
+      employeeType: $employeeType
+      username: $username
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeId
+        tradeName
+        userId
+        username
+        permissions {
+          department
+          read
+          write
+        }
+        employeeType
+        preferences
+        createdAt
+        updatedAt
+        trade {
+          id
+          tradeName
+          ownerUsername
+          ownerId
+          tin
+          logo
+          info
+          postcode
+          createdAt
+          updatedAt
+          customers
+          contracts
+          employees
+          contractors
+          members
+        }
+        user {
+          id
+          username
+          telephone
+          tin
+          doy
+          familyStatus
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          partnersNumberLimit
+          professionStartDate
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listTradeUserConnectionsByUserName = /* GraphQL */ `
+  query ListTradeUserConnectionsByUserName(
+    $username: String
+    $tradeName: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelTradeUserConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeUserConnectionsByUserName(
+      username: $username
+      tradeName: $tradeName
+      sortDirection: $sortDirection
       filter: $filter
       limit: $limit
       nextToken: $nextToken
