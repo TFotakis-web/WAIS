@@ -1,242 +1,248 @@
 {
-	"components": {
-		"navigation": {
-			"navbar-item": {
-				"database": "Database",
-				"contract-approval": "Contract approval",
-				"payment": "Payment",
-				"bank": "Iris",
-				"collaboration": "Collaboration",
-				"notifications": "Notifications",
-				"home": "Home",
-				"myAccount": "My account",
-				"signOut": "Sign Out"
-			},
-			"sidenav": {
-				"pricing": {
-					"_groupName": "Pricing",
-					"vehicle": "Vehicle",
-					"industrialLiability": "Industrial Liability",
-					"fire": "Fire",
-					"life": "Life"
-				},
-				"contracts": {
-					"_groupName": "Contracts",
-					"file": "File",
-					"uncollected": "Uncollected",
-					"collected": "Collected",
-					"additionalActs": "Additional Acts",
-					"greenCard": "Green Card",
-					"unclaimed": "Unclaimed",
-					"invalid": "Invalid",
-					"new": "Create Contract"
-				},
-				"processing": {
-					"_groupName": "Processing",
-					"dueDateRegister": "Due Date Register",
-					"duePayment": "Due Payment",
-					"paid": "Paid",
-					"losses": "Losses"
-				},
-				"accounting": {
-					"_groupName": "Accounting",
-					"receipts": "Receipts",
-					"registers": "Registers",
-					"todaysIncome": "Todays Income",
-					"commissionsUncollected": "Commissions Uncollected",
-					"commissionsCollected": "Commissions Collected",
-					"mutualAccount": "Mutual Account"
-				},
-				"contractors": {
-					"_groupName": "Contractors",
-					"suppliers": "Suppliers",
-					"externalContractors": "External Contractors"
-				},
-				"cards": {
-					"_groupName": "Cards",
-					"vehicleCards": "Vehicle Cards",
-					"customerCards": "Customer Cards"
-				},
-				"library": {
-					"_groupName": "Library"
-				}
-			}
-		},
-		"calendar": {
-			"today": "Today",
-			"month": "Month",
-			"week": "Week",
-			"list": "List",
-			"allDay": "All day"
-		},
-		"localeDropdown": {
-			"language": "Language"
-		}
-	},
-	"views": {
-		"auth": {
-			"dontHaveAnAccount": "Don't have an account?",
-			"createAccount": "Create account",
-			"backToSignIn": "Back to Sign In",
-			"signInToYourWaisAccount": "Sign in to your WAIS account",
-			"createANewWaisAccount": "Create a new WAIS account",
-			"haveAnAccount": "Have an account?",
-			"signIn": "Sign in",
-			"signingIn": "Signing in...",
-			"signUp": "Sign up",
-			"signingUp": "Signing up...",
-			"resetYourPassword": "Reset your password",
-			"forgotYourPassword": "Forgot your password?"
-		},
-		"error404": {
-			"header": "Error 404! Page not found.",
-			"message": "Oops! The page you requested was not found. Try going to the"
-		},
-		"platformData": {
-			"pageTitle": "Platform Data",
-			"string": "String",
-			"number": "Number",
-			"array": "Array",
-			"object": "Object",
-			"thisKeyIsAlreadyInUse": "This key is already in use."
-		},
-		"homePage": {
-			"pageTitle": "Home page"
-		},
-		"Trade": {
-			"pageTitle": "Trade",
-			"companyInfo": "Company Information",
-			"companyAccounts": "Company accounts",
-			"companyCodes": "Company codes",
-			"companyFiles": "Company files"
-		},
-		"User Profile": {
-			"pageTitle": "User Profile"
-		},
-		"Vehicle Cards Details": {
-			"pageTitle": "Vehicle Cards Details"
-		},
-		"newContract": {
-			"personalInfo": "Personal information",
-			"vehicleInfo": "Vehicle information",
-			"contractInfo": "Contract information"
-		}
-	},
-	"fields": {
-		"username": "Username",
-		"password": "Password",
-		"newPassword": "New password",
-		"email": "Email",
-		"countryCode": "Country Code",
-		"phoneNumber": "Phone Number",
-		"verificationCode": "Verification Code",
-		"tin": "TIN",
-		"name": "Name",
-		"surname": "Surname",
-		"address": "Address",
-		"city": "City",
-		"district": "District",
-		"phone": "Phone",
-		"mobile": "Mobile",
-		"birthDate": "Birth date",
-		"driversLicenseIssueDate": "Drivers license issue date",
-		"numberPlate": "Number plate",
-		"branch": "Branch",
-		"usage": "Usage",
-		"manufacturer": "Manufacturer",
-		"model": "Model",
-		"type": "Type",
-		"color": "Color",
-		"fuelType": "Fuel type",
-		"owner": "Owner",
-		"company": "Company",
-		"package": "Package",
-		"contractNumber": "Contract number",
-		"issueDate": "Issue date",
-		"duration": "Duration",
-		"discount": "Discount",
-		"grossIncome": "Gross income",
-		"netIncome": "Net income",
-		"collaborator": "Collaborator",
-		"trade": "Trade",
-		"registrationNumber": "Registration number",
-		"professionStartDate": "Profession start date",
-		"licenseExpirationDate": "License expiration date",
-		"iban": "IBAN",
-		"code": "Code"
-	},
-	"actions": {
-		"submit": "Submit",
-		"submitting": "Submitting...",
-		"sendCode": "Send code",
-		"sendingCode": "Sending code...",
-		"resendVerificationCode": "Resend verification code",
-		"add": "Add",
-		"adding": "Adding...",
-		"delete": "Delete",
-		"deleting": "Deleting...",
-		"update": "Update",
-		"updating": "Updating...",
-		"edit": "Edit",
-		"save": "Save",
-		"saving": "Saving..."
-	},
-	"defaultNotification": {
-		"somethingWentWrong": "Something went wrong...",
-		"saveSuccess": "Saved successfully!",
-		"deleteSuccess": "Deleted successfully!"
-	},
-	"dates": {
-		"days": {
-			"Mo": "Mo",
-			"Tu": "Tu",
-			"We": "We",
-			"Th": "Th",
-			"Fr": "Fr",
-			"Sa": "Sa",
-			"Su": "Su",
-			"Sun": "Sun",
-			"Mon": "Mon",
-			"Tue": "Tue",
-			"Wed": "Wed",
-			"Thu": "Thu",
-			"Fri": "Fri",
-			"Sat": "Sat",
-			"Sunday": "Sunday",
-			"Monday": "Monday",
-			"Tuesday": "Tuesday",
-			"Wednesday": "Wednesday",
-			"Thursday": "Thursday",
-			"Friday": "Friday",
-			"Saturday": "Saturday"
-		},
-		"months": {
-			"Jan": "Jan",
-			"Feb": "Feb",
-			"Mar": "Mar",
-			"Apr": "Apr",
-			"Jun": "Jun",
-			"Jul": "Jul",
-			"Aug": "Aug",
-			"Sep": "Sep",
-			"Oct": "Oct",
-			"Nov": "Nov",
-			"Dec": "Dec",
-			"January": "January",
-			"February": "February",
-			"March": "March",
-			"April": "April",
-			"May": "May",
-			"June": "June",
-			"July": "July",
-			"August": "August",
-			"September": "September",
-			"October": "October",
-			"November": "November",
-			"December": "December"
-		}
-	},
-	"various": {
-		"underConstruction": "Under Construction"
-	}
+  "components": {
+    "navigation": {
+      "navbar-item": {
+        "database": "Database",
+        "contract-approval": "Contract approval",
+        "payment": "Payment",
+        "bank": "Iris",
+        "collaboration": "Collaboration",
+        "notifications": "Notifications",
+        "home": "Home",
+        "myAccount": "My account",
+        "signOut": "Sign Out"
+      },
+      "sidenav": {
+        "pricing": {
+          "_groupName": "Pricing",
+          "vehicle": "Vehicle",
+          "industrialLiability": "Industrial Liability",
+          "fire": "Fire",
+          "life": "Life"
+        },
+        "contracts": {
+          "_groupName": "Contracts",
+          "file": "File",
+          "uncollected": "Uncollected",
+          "collected": "Collected",
+          "additionalActs": "Additional Acts",
+          "greenCard": "Green Card",
+          "unclaimed": "Unclaimed",
+          "invalid": "Invalid",
+          "new": "Create Contract"
+        },
+        "processing": {
+          "_groupName": "Processing",
+          "dueDateRegister": "Due Date Register",
+          "duePayment": "Due Payment",
+          "paid": "Paid",
+          "losses": "Losses"
+        },
+        "accounting": {
+          "_groupName": "Accounting",
+          "receipts": "Receipts",
+          "registers": "Registers",
+          "todaysIncome": "Todays Income",
+          "commissionsUncollected": "Commissions Uncollected",
+          "commissionsCollected": "Commissions Collected",
+          "mutualAccount": "Mutual Account"
+        },
+        "contractors": {
+          "_groupName": "Contractors",
+          "suppliers": "Suppliers",
+          "externalContractors": "External Contractors"
+        },
+        "cards": {
+          "_groupName": "Cards",
+          "vehicleCards": "Vehicle Cards",
+          "customerCards": "Customer Cards"
+        },
+        "library": {
+          "_groupName": "Library"
+        }
+      }
+    },
+    "calendar": {
+      "today": "Today",
+      "month": "Month",
+      "week": "Week",
+      "list": "List",
+      "allDay": "All day"
+    },
+    "localeDropdown": {
+      "language": "Language"
+    }
+  },
+  "views": {
+    "auth": {
+      "dontHaveAnAccount": "Don't have an account?",
+      "createAccount": "Create account",
+      "backToSignIn": "Back to Sign In",
+      "signInToYourWaisAccount": "Sign in to your WAIS account",
+      "createANewWaisAccount": "Create a new WAIS account",
+      "haveAnAccount": "Have an account?",
+      "signIn": "Sign in",
+      "signingIn": "Signing in...",
+      "signUp": "Sign up",
+      "signingUp": "Signing up...",
+      "resetYourPassword": "Reset your password",
+      "forgotYourPassword": "Forgot your password?",
+      "changeYourPassword": "Please change your password."
+    },
+    "error404": {
+      "header": "Error 404! Page not found.",
+      "message": "Oops! The page you requested was not found. Try going to the"
+    },
+    "platformData": {
+      "pageTitle": "Platform Data",
+      "string": "String",
+      "number": "Number",
+      "array": "Array",
+      "object": "Object",
+      "thisKeyIsAlreadyInUse": "This key is already in use."
+    },
+    "homePage": {
+      "pageTitle": "Home page"
+    },
+    "Trade": {
+      "pageTitle": "Trade",
+      "companyInfo": "Company Information",
+      "companyAccounts": "Company accounts",
+      "companyCodes": "Company codes",
+      "companyFiles": "Company files",
+      "userPermissionsTableCard": {
+        "cardTitle": "User Permissions",
+        "tablePermissionHeader": "Permission"
+      }
+    },
+    "userProfile": {
+      "pageTitle": "User Profile",
+      "personalInfo": "Personal Information"
+    },
+    "Vehicle Cards Details": {
+      "pageTitle": "Vehicle Cards Details"
+    },
+    "newContract": {
+      "personalInfo": "Personal information",
+      "vehicleInfo": "Vehicle information",
+      "contractInfo": "Contract information"
+    }
+  },
+  "fields": {
+    "username": "Username",
+    "password": "Password",
+    "newPassword": "New password",
+    "email": "Email",
+    "countryCode": "Country Code",
+    "phoneNumber": "Phone Number",
+    "verificationCode": "Verification Code",
+    "tin": "TIN",
+    "name": "Name",
+    "surname": "Surname",
+    "address": "Address",
+    "city": "City",
+    "district": "District",
+    "phone": "Phone",
+    "mobile": "Mobile",
+    "birthDate": "Birth date",
+    "driversLicenseIssueDate": "Drivers license issue date",
+    "numberPlate": "Number plate",
+    "branch": "Branch",
+    "usage": "Usage",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "type": "Type",
+    "color": "Color",
+    "fuelType": "Fuel type",
+    "owner": "Owner",
+    "company": "Company",
+    "package": "Package",
+    "contractNumber": "Contract number",
+    "issueDate": "Issue date",
+    "duration": "Duration",
+    "discount": "Discount",
+    "grossIncome": "Gross income",
+    "netIncome": "Net income",
+    "collaborator": "Collaborator",
+    "trade": "Trade",
+    "registrationNumber": "Registration number",
+    "professionStartDate": "Profession start date",
+    "licenseExpirationDate": "License expiration date",
+    "iban": "IBAN",
+    "code": "Code"
+  },
+  "actions": {
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "sendCode": "Send code",
+    "sendingCode": "Sending code...",
+    "resendVerificationCode": "Resend verification code",
+    "add": "Add",
+    "adding": "Adding...",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "update": "Update",
+    "updating": "Updating...",
+    "edit": "Edit",
+    "save": "Save",
+    "saving": "Saving..."
+  },
+  "defaultNotification": {
+    "somethingWentWrong": "Something went wrong...",
+    "saveSuccess": "Saved successfully!",
+    "deleteSuccess": "Deleted successfully!"
+  },
+  "dates": {
+    "days": {
+      "Mo": "Mo",
+      "Tu": "Tu",
+      "We": "We",
+      "Th": "Th",
+      "Fr": "Fr",
+      "Sa": "Sa",
+      "Su": "Su",
+      "Sun": "Sun",
+      "Mon": "Mon",
+      "Tue": "Tue",
+      "Wed": "Wed",
+      "Thu": "Thu",
+      "Fri": "Fri",
+      "Sat": "Sat",
+      "Sunday": "Sunday",
+      "Monday": "Monday",
+      "Tuesday": "Tuesday",
+      "Wednesday": "Wednesday",
+      "Thursday": "Thursday",
+      "Friday": "Friday",
+      "Saturday": "Saturday"
+    },
+    "months": {
+      "Jan": "Jan",
+      "Feb": "Feb",
+      "Mar": "Mar",
+      "Apr": "Apr",
+      "Jun": "Jun",
+      "Jul": "Jul",
+      "Aug": "Aug",
+      "Sep": "Sep",
+      "Oct": "Oct",
+      "Nov": "Nov",
+      "Dec": "Dec",
+      "January": "January",
+      "February": "February",
+      "March": "March",
+      "April": "April",
+      "May": "May",
+      "June": "June",
+      "July": "July",
+      "August": "August",
+      "September": "September",
+      "October": "October",
+      "November": "November",
+      "December": "December"
+    }
+  },
+  "various": {
+    "underConstruction": "Under Construction"
+  }
 }

@@ -1,7 +1,7 @@
 <template>
-	<div id="app">
-		<fullScreenSpinner v-if="$store.getters.globalPendingPromises > 0" />
-		<div v-else>
+	<div id="app" v-if="appSystemsLoaded && $store.getters.localesLoaded">
+		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0" />
+		<div v-show="$store.getters.globalPendingPromises === 0">
 			<navigation v-if="this.$store.getters['auth/user']" />
 			<mdb-container v-else fluid style="height: 100vh">
 				<mdb-row class="h-100 justify-content-center align-items-center">
@@ -25,6 +25,14 @@
 			auth,
 			fullScreenSpinner
 		},
+		data() {
+			return {
+				appSystemsLoaded: false
+			}
+		},
+		mounted() {
+			this.appSystemsLoaded = true;
+		}
 	};
 </script>
 

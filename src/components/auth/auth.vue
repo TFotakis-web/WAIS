@@ -4,6 +4,7 @@
 		<template v-else>
 			<SignIn v-if="authPage === 'signIn'" @auth-page-changed="(value) => (authPage = value)" @auth-credentials="(value) => (credentials = value)" />
 			<ForgotPassword v-else-if="authPage === 'forgotPassword'" @auth-page-changed="(value) => (authPage = value)" />
+			<ForceChangePassword v-else-if="authPage === 'forceChangePassword'" @auth-page-changed="(value) => (authPage = value)" :credentials="credentials"/>
 			<SignUp v-else-if="authPage === 'signUp'" @auth-page-changed="(value) => (authPage = value)" @auth-credentials="(value) => (credentials = value)" />
 			<ConfirmSignUp v-else-if="authPage === 'confirmSignUp'" @auth-page-changed="(value) => (authPage = value)" :credentials="credentials" />
 		</template>
@@ -16,10 +17,12 @@
 	import ForgotPassword from '@/components/auth/forgotPassword';
 	import SignUp from '@/components/auth/signUp';
 	import ConfirmSignUp from '@/components/auth/confirmSignUp';
+	import ForceChangePassword from "@/components/auth/forceChangePassword";
 
 	export default {
 		name: 'auth',
 		components: {
+			ForceChangePassword,
 			fullScreenSpinner,
 			SignIn,
 			ForgotPassword,
@@ -33,9 +36,9 @@
 				loading: true,
 			};
 		},
-		created() {
+		mounted() {
 			this.loading = true;
-			this.$store.dispatch('auth/currentUserInfo').then(() => (this.loading = false));
+			this.$store.dispatch('auth/currentAuthenticatedUser').then(() => (this.loading = false));
 		},
 	};
 </script>

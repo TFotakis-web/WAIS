@@ -64,7 +64,7 @@
 						<mdb-icon icon="user-circle" class="black-text" />
 					</mdb-dropdown-toggle>
 					<mdb-dropdown-menu left style="min-width: unset">
-						<mdb-dropdown-item :to="{ name: 'UserProfile' }">{{ $t('components.navigation.navbar-item.myAccount') }}</mdb-dropdown-item>
+						<mdb-dropdown-item :to="{ name: 'UserProfile' }" class="text-center">{{ $store.getters['auth/username'] }}</mdb-dropdown-item>
 						<hr class="m-0" />
 						<mdb-dropdown-item @click="signOut">
 							<mdb-icon class="black-text" icon="sign-out-alt" />
@@ -79,7 +79,7 @@
 			<div v-show="$store.getters.routerViewPendingPromises > 0" style="position: absolute; left: 50%; top: 50%; transform: translate(-32px, -32px); z-index: 100000;">
 				<mdb-spinner big />
 			</div>
-			<div v-show="$store.getters.routerViewPendingPromises === 0" name="fadingSlide" mode="out-in">
+			<div v-show="$store.getters.routerViewPendingPromises === 0">
 				<transition name="fadingSlide" mode="out-in">
 					<router-view />
 				</transition>

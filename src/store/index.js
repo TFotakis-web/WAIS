@@ -15,6 +15,7 @@ export default new Vuex.Store({
 	},
 	state: {
 		globalPendingPromises: 0,
+		localesLoaded: false,
 		routerViewPendingPromises: 0
 	},
 	mutations: {
@@ -35,11 +36,15 @@ export default new Vuex.Store({
 			if (state.routerViewPendingPromises < 0) {
 				console.error("Pending Promises:", state.routerViewPendingPromises);
 			}
+		},
+		setLocalesLoaded(state, loaded) {
+			state.localesLoaded = loaded;
 		}
 	},
 	actions: {},
 	getters: {
 		globalPendingPromises: (state) => state.globalPendingPromises,
-		routerViewPendingPromises: (state) => state.routerViewPendingPromises
+		routerViewPendingPromises: (state) => state.routerViewPendingPromises,
+		localesLoaded: (state) => state.localesLoaded
 	}
 });

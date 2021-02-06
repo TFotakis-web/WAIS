@@ -62,6 +62,12 @@
 							username: this.credentials.username,
 							password: this.credentials.password,
 						});
+					} else if (error.name === 'NEW_PASSWORD_REQUIRED') {
+						this.$emit('auth-page-changed', 'forceChangePassword');
+						this.$emit('auth-credentials', {
+							username: this.credentials.username,
+							password: this.credentials.password,
+						});
 					}
 					this.error = error;
 					this.loading = false;

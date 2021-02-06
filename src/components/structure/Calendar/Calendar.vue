@@ -382,7 +382,13 @@
 				this.date = newVal;
 			},
 			newEvents() {
-				this.$emit('getEvents', this.newEvents);
+				let events = this.$lodash.orderBy(this.events, ['start', 'end'], ['asc', 'desc']);
+				events = JSON.stringify(events);
+
+				let newEvents = JSON.stringify(this.newEvents);
+				if (events !== newEvents) {
+					this.$emit('eventsUpdate', this.newEvents);
+				}
 			},
 			activeEvent() {
 				this.activeEvent.start.getDate() < 10 ? (this.activeEventData.startDate = '0' + this.activeEvent.start.getDate()) : (this.activeEventData.startDate = this.activeEvent.start.getDate());
@@ -430,6 +436,9 @@
 					this.newEvent.end.getSeconds() < 10 ? (this.newEventData.endSeconds = '0' + this.newEvent.end.getSeconds()) : (this.newEventData.endSeconds = this.newEvent.end.getSeconds());
 				}
 			},
+			events() {
+				this.newEvents = this.$lodash.orderBy(this.events, ['start', 'end'], ['asc', 'desc']);
+			}
 		},
 	};
 

@@ -30,9 +30,9 @@ VueI18n.prototype.$loadLanguageAsync = async function (lang) {
 
 	// If the language hasn't been loaded yet
 	if (!loadedLanguages.includes(lang)) {
-		$store.commit('increaseGlobalPendingPromises');
+		$store.commit('setLocalesLoaded', false);
 		const messages = await $http.get(`/locales/${lang}.json`);
-		$store.commit('decreaseGlobalPendingPromises');
+		$store.commit('setLocalesLoaded', true);
 		$i18n.setLocaleMessage(lang, messages.data);
 		loadedLanguages.push(lang);
 	}
