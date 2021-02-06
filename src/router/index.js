@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
+import Home from '@/views/Home/Home.vue';
 import VehiclePricing from '@/views/pricing/Vehicle';
 import IndustrialLiabilityPricing from '@/views/pricing/IndustrialLiability';
 import FirePricing from '@/views/pricing/Fire';
