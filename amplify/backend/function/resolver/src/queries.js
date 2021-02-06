@@ -183,4 +183,32 @@ module.exports = {
       nextToken
     }
   }`,
+  listEmployeesByEmployeeType: `query listEmployees($filter: ModelUserProfileFilterInput,$limit: Int, $nextToken: String, $tradeName: String!, $empType: EmployeeType!){
+    listUserProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        chamberRecordNumber
+        createdAt
+        username
+        updatedAt
+        tradeCon(filter: {and: [{employeeType: {eq: $empType}} , {tradeName: {eq : $tradeName }} ]}) {
+          items {
+            employeeType
+            preferences
+            tradeId
+            tradeName
+            username
+            userId
+          }
+        }
+        tin
+        telephone
+        professionStartDate
+        partnersNumberLimit
+        insuranceLicenseExpirationDate
+        doy
+        familyStatus
+      }
+      nextToken
+    }    
+  }`,
 }

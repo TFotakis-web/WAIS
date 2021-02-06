@@ -34,10 +34,11 @@ type Office
   ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
   # Paperwork
-  customers(filter: String, limit: Int, nextToken: String): Customer @function(name: "resolver-${env}")
-  contracts(filter: String, limit: Int, nextToken: String): Contract @function(name: "resolver-${env}")
-  employees(filter: String, limit: Int, nextToken: String): UserProfile @function(name: "resolver-${env}")
-  contractors(filter: String, limit: Int, nextToken: String): UserProfile @function(name: "resolver-${env}")
+  # Response structure: {"items":[...],"nextToken":"..."}
+  customers(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+  contracts(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+  employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+  contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
 }
 type UserProfile
   @model(subscriptions: null)
@@ -347,7 +348,7 @@ type Mutation {
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   # Office user management
-  addEmployeeToTrade(username: String!): String
+  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
@@ -356,11 +357,33 @@ type Mutation {
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
 
-  #Contracts #TODO change input
-  addOrUpdateContract(contract: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  #CRUD
+  manageCustomers(customer: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageContracts(contract: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageEmployees(employee: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
 # ###################### ENUMS/TYPES ######################
+
+# CRUD specififc types
+enum CRUDAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+input UserPermissionsInput {
+  department: String
+  read: Boolean
+  write: Boolean
+}
+
+# Employee management API
+enum EmployeeAction {
+  UPSERT # Creates user with the given permissions if they dont exist OR *overwrites* their permissions with the provided ones
+  DELETE # Remove user
+  ADD_ACTIONS # Appends the set of provided permissions to the existings ones
+}
 
 #Add all department-specific
 type UserPermissions {

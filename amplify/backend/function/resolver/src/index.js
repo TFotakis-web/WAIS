@@ -35,7 +35,7 @@ const lambda = new AWS.Lambda({
 
 const getUserProfile = (username) => {
   //Retrieve the caller UserProfile
-  const userProfiles = getResponseFromApi(
+  const userProfileResponse = getResponseFromApi(
     ENDPOINT,
     createSignedRequest(
       ENDPOINT,
@@ -46,12 +46,12 @@ const getUserProfile = (username) => {
       APPSYNC_URL,
     ),
   )
-  return userProfiles[0]
+  return userProfileResponse.data.getUserProfileByUsername.items[0]
 }
 
 const getUserPermissions = (username, tradeName) => {
   //Retrieve the caller UserProfile
-  return getResponseFromApi(
+  const userProfResponse = getResponseFromApi(
     ENDPOINT,
     createSignedRequest(
       ENDPOINT,
@@ -62,9 +62,10 @@ const getUserPermissions = (username, tradeName) => {
       APPSYNC_URL,
     ),
   )
+  return userProfResponse.data.getUserPermissions.items
 }
 
-const getDefaultItem = (event) => {
+const getDefaultFunctionArgs = (event) => {
   let item = {}
   if (event.arguments.filter) {
     item.filter = {
@@ -100,57 +101,167 @@ const resolvers = {
   Office: {
     customers: (event) => {
       console.log('Resolving Office.customers')
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials')
+
+      //Username and permissions
+      let username = 'IAM'
+      let permissions = ''
+
+      if (event.identity.claims) {
+        console.log('No credentials found, returning all values.')
+        username = event.identity.claims['cognito:username']
+        permissions = getUserPermissions(user, event.source.tradeName)
       }
 
-      //User permissions
-      const permissions = getUserPermissions(event.identity.claims['cognito:username'], event.source.tradeName)
-
-      // TODO add permsission check
-      // ...
-
       //List customers request input item
-      let item = getDefaultItem(event)
+      let item = getDefaultFunctionArgs(event)
 
       //Attempt the request
-      console.log('Attempting to register new admin request: ' + item)
+      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
+
+      //Response structure:
+      //{ data: { listCustomers: { items: [], nextToken: null } }, errors: [{ path: '', location: '', message: '' }] }
       const customersResponse = getResponseFromApi(
         ENDPOINT,
         createSignedRequest(ENDPOINT, { input: item }, queries.listCustomers, 'listCustomers', REGION, APPSYNC_URL),
       )
 
       // Filter out customer fields based on permissions
-      // TODO ...
+      if (permissions) {
+        //TODO
+      }
+
+      //Result
+      const resolverResponse = customersResponse.data.listCustomers
 
       //Log the result
-      console.log('Response of ' + item + ' was ' + customersResponse)
-      return customersResponse
+      console.log('Response of ' + item + ' was ' + resolverResponse)
+      return resolverResponse
     },
     contracts: async (event) => {
       console.log('Resolving Office.contracts')
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials')
+
+      //Username and permissions
+      let username = 'IAM'
+      let permissions = ''
+
+      if (event.identity.claims) {
+        console.log('No credentials found, returning all values.')
+        username = event.identity.claims['cognito:username']
+        permissions = getUserPermissions(user, event.source.tradeName)
       }
 
-      //User permissions
-      const permissions = getUserPermissions(event.identity.claims['cognito:username'], event.source.tradeName)
-
-      let item = getDefaultItem(event)
+      let item = getDefaultFunctionArgs(event)
 
       //Attempt the request
-      console.log('Attempting to register new admin request: ' + item)
-      const contracts = getResponseFromApi(
+      const contractsResponse = getResponseFromApi(
         ENDPOINT,
         createSignedRequest(ENDPOINT, { input: item }, queries.listContracts, 'listContracts', REGION, APPSYNC_URL),
       )
 
+      // Filter out customer fields based on permissions
+      if (permissions) {
+        //TODO
+      }
+
+      //Result
+      const resolverResponse = contractsResponse.data.listContracts
+
       //Filter out things..
-      console.log('Response of ' + item + ' was ' + contracts)
-      return contracts
+      console.log('Response of ' + item + ' was ' + resolverResponse)
+      return resolverResponse
     },
-    employees: (event) => {},
-    contractors: (event) => {},
+    employees: (event) => {
+      console.log('Resolving Office.employees')
+
+      //Username and permissions
+      let username = 'IAM'
+      let permissions = ''
+
+      if (event.identity.claims) {
+        console.log('No credentials found, returning all values.')
+        username = event.identity.claims['cognito:username']
+        permissions = getUserPermissions(user, event.source.tradeName)
+      }
+
+      //List employees request input item
+      let item = getDefaultFunctionArgs(event)
+      item.tradeName = tradeName
+      item.empType = 'STANDARD'
+
+      //Attempt the request
+      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
+
+      //Response structure:
+      const employeesResponse = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          { input: item },
+          queries.listEmployeesByEmployeeType,
+          'listEmployeesByEmployeeType',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+
+      // Filter out customer fields based on permissions
+      if (permissions) {
+        //TODO
+      }
+
+      //Result
+      const resolverResponse = employeesResponse.data.listEmployeesByEmployeeType
+
+      //Log the result
+      console.log('Response of ' + item + ' was ' + resolverResponse)
+      return resolverResponse
+    },
+    contractors: (event) => {
+      console.log('Resolving Office.contractors')
+
+      //Username and permissions
+      let username = 'IAM'
+      let permissions = ''
+
+      if (event.identity.claims) {
+        console.log('No credentials found, returning all values.')
+        username = event.identity.claims['cognito:username']
+        permissions = getUserPermissions(user, event.source.tradeName)
+      }
+
+      //List contractors request input item
+      let item = getDefaultItem(event)
+      item.tradeName = tradeName
+      item.empType = 'CONTRACTOR'
+
+      //Attempt the request
+      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
+
+      //Response structure:
+      const contractorsResponse = getResponseFromApi(
+        ENDPOINT,
+        createSignedRequest(
+          ENDPOINT,
+          { input: item },
+          queries.listEmployeesByEmployeeType,
+          'listEmployeesByEmployeeType',
+          REGION,
+          APPSYNC_URL,
+        ),
+      )
+
+      // Filter out customer fields based on permissions
+      if (permissions) {
+        //TODO
+      }
+
+      //Result
+      const resolverResponse = contractorsResponse.data.listEmployeesByEmployeeType
+
+      //Log the result
+      console.log('Response of ' + item + ' was ' + resolverResponse)
+      return resolverResponse
+    },
   },
   Query: {
     echo: (event) => {
@@ -220,14 +331,15 @@ const resolvers = {
 
       //Attempt the request
       console.log('Attempting to register new admin request: ' + item)
-      const response = getResponseFromApi(
+      const adminReqResponse = getResponseFromApi(
         ENDPOINT,
         createSignedRequest(ENDPOINT, { input: item }, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
       )
+      const resolverResponse = adminReqResponse.data.createAdminRequest
 
       //Log the result
-      console.log('Response of ' + item + ' was ' + response)
-      return response
+      console.log('Response of ' + item + ' was ' + resolverResponse)
+      return resolverResponse
     },
 
     adminAproveRequest: (event) => {
@@ -246,7 +358,7 @@ const resolvers = {
         ENDPOINT,
         createSignedRequest(ENDPOINT, { input: approvedReqId }, queries.getAdminRequest, 'getAdminRequest', REGION, APPSYNC_URL),
       )
-      const selAdminReq = adminRequestResponse[0]
+      const selAdminReq = adminRequestResponse.data.getAdminRequest.items[0]
 
       //Create the Office and delete the now approved AdminRequest
       const adminReqInput = {
@@ -263,18 +375,58 @@ const resolvers = {
           members: [],
         },
       }
-      const response = getResponseFromApi(
+      const apprResponse = getResponseFromApi(
         ENDPOINT,
         createSignedRequest(ENDPOINT, adminReqInput, queries.approveAdminRequest, 'approveAdminRequest', REGION, APPSYNC_URL),
       )
+      const resolverResponse = apprResponse.data.approveAdminRequest
 
       //Log and return
-      console.log('Response of adminAproveRequest was: ' + response)
+      console.log('Response of adminAproveRequest was: ' + resolverResponse)
       return response
     },
   },
 
-  Mutation: {},
+  Mutation: {
+    manageOfficeEmployee: (event) => {
+      console.log('Resolving manageOfficeEmployee')
+
+      //Username check, this shouldn't be called via IAM
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials')
+      }
+
+      //Get args
+      const argCustomer = event.arguments.customer
+      const argAction = event.arguments.action
+
+      //Get office stuff
+
+      //Validate args
+      let resolverResponse = ''
+      switch (argAction) {
+        case 'CREATE':
+          break
+        case 'UPDATE':
+          break
+        case 'DELETE':
+          break
+
+        default:
+          throw new Error('Unknown CRUD action.')
+      }
+      return resolverResponse
+    },
+    manageCustomers: (event) => {
+      return '{}'
+    },
+    manageContracts: (event) => {
+      return '{}'
+    },
+    manageEmployees: (event) => {
+      return '{}'
+    },
+  },
 }
 
 // event
@@ -288,7 +440,7 @@ const resolvers = {
 //   "prev": { /* If using the built-in pipeline resolver support, this contains the object returned by the previous function. */ },
 // }
 exports.handler = async (event) => {
-  console.log('Resolving event from ' + event.fieldName)
+  console.log('Resolving event: ' + JSON.stringify(event))
   const typeHandler = resolvers[event.typeName]
   if (typeHandler) {
     const resolver = typeHandler[event.fieldName]
