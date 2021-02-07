@@ -84,9 +84,9 @@
 	</div>
 </template>
 <script>
-import calendarCard from "@/views/Home/calendarCard";
-import performanceCard from "@/views/Home/performanceCard";
-import newsfeedCard from "@/views/Home/newsfeedCard";
+import calendarCard from "@/views/home/calendarCard";
+import performanceCard from "@/views/home/performanceCard";
+import newsfeedCard from "@/views/home/newsfeedCard";
 
 export default {
 	name: 'Home',
