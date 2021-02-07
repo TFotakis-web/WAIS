@@ -33,6 +33,7 @@ import Trade from '@/views/trade/Trade';
 import UserProfile from '@/views/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
 import NotFound from '@/views/NotFound';
+import DevTools from "@/views/devTools/DevTools";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,7 @@ const routes = [
 	{ path: '/trade', name: 'Trade', component: Trade },
 	{ path: '/profile', name: 'UserProfile', component: UserProfile },
 	{ path: '/platformData', name: 'PlatformData', component: PlatformData },
+	{ path: '/devTools', name: 'DevTools', component: DevTools },
 
 	// Example of how to use 404 page with items with id on the route
 	// https://github.com/vueschool/vuejs-router/blob/eff7d82e1d0d00be5da0c65308d61cbbdcdcc34a/src/router.js
