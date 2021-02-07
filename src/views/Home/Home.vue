@@ -10,10 +10,10 @@
 			</mdb-row>
 			<mdb-row class="mb-5">
 				<mdb-col>
-					<performanceCard/>
+					<performanceCard :max-content-height="300"/>
 				</mdb-col>
 				<mdb-col>
-					<newsfeedCard/>
+					<newsfeedCard :max-content-height="300"/>
 				</mdb-col>
 			</mdb-row>
 			<mdb-row>
