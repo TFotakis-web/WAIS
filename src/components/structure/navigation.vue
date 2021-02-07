@@ -35,6 +35,10 @@
 			</mdb-navbar-nav>
 			<mdb-navbar-nav class="nav-flex-icons" right>
 				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
+					<span slot="tip">{{ $t('components.navigation.navbar-item.devtools') }}</span>
+					<mdb-nav-item slot="reference" :to="{ name: 'DevTools' }" waves-fixed fab icon="dev" />
+				</mdb-tooltip>
+				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
 					<span slot="tip">{{ $t('components.navigation.navbar-item.database') }}</span>
 					<mdb-nav-item slot="reference" :to="{ name: 'PlatformData' }" waves-fixed icon="table" />
 				</mdb-tooltip>
