@@ -32,7 +32,7 @@ import Library from '@/views/library/Library';
 import Trade from '@/views/trade/Trade';
 import UserProfile from '@/views/userProfile/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
-import NotFound from '@/views/NotFound';
+import NotFound from '@/views/errorPages/NotFound';
 import DevTools from "@/views/devTools/DevTools";
 
 Vue.use(VueRouter);
