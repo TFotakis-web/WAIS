@@ -21,6 +21,15 @@ type Office
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 
+  # The amount of employees (or contractors) left that can join this Office
+  remainingMembersAllowed: Int!
+    @auth(
+      rules: [
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
   # Users that can access this object (excluding Admins/Lambdas)
   members: [String]!
     @auth(
@@ -77,6 +86,7 @@ type UserProfile
       rules: [
         { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
         { allow: private, provider: iam, operations: [create, read, update, delete] }
+        { allow: owner, ownerField: "username", operations: [read] }
       ]
     )
 }
@@ -85,7 +95,7 @@ type Vehicle
   @model(subscriptions: null)
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
   @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehicleByTradeName")
-  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"],, queryField: "listVehiclesByOwner") {
+  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
   id: ID!
   numberPlate: String!
   tradeName: String!
@@ -184,6 +194,7 @@ type TradeUserConnection
     rules: [
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
+      { allow: owner, ownerField: "username", operations: [read] }
     ]
   ) {
   id: ID!
@@ -349,7 +360,7 @@ type Mutation {
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   # Office user management
-  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!,tradeName: String!): String
+  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!, tradeName: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
@@ -381,9 +392,9 @@ input UserPermissionsInput {
 
 # Employee management API
 enum EmployeeAction {
-  UPSERT # Creates user with the given permissions if they dont exist OR *overwrites* their permissions with the provided ones
-  DELETE # Remove user
-  ADD_ACTIONS # Appends the set of provided permissions to the existings ones
+  INSERT # Creates user with the given permissions if they dont exist
+  UPDATE # Overwrites the user's permissions iff they exist in members
+  DELETE # Remove user, permissions field is ignored and thus can be omitted
 }
 
 #Add all department-specific
@@ -396,6 +407,7 @@ type S3Object {
   bucket: String!
   region: String!
   key: String!
+  name: String!
 }
 
 enum EmployeeType {

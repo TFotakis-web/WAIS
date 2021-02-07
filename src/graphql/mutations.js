@@ -21,6 +21,7 @@ export const createOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      remainingMembersAllowed
       members
       ownerProfile {
         id
@@ -37,6 +38,7 @@ export const createOffice = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -67,6 +69,7 @@ export const updateOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      remainingMembersAllowed
       members
       ownerProfile {
         id
@@ -83,6 +86,7 @@ export const updateOffice = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -113,6 +117,7 @@ export const deleteOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      remainingMembersAllowed
       members
       ownerProfile {
         id
@@ -129,6 +134,7 @@ export const deleteOffice = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -159,6 +165,7 @@ export const createUserProfile = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -199,6 +206,7 @@ export const updateUserProfile = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -239,6 +247,7 @@ export const deleteUserProfile = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -287,6 +296,7 @@ export const createVehicle = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -321,6 +331,7 @@ export const updateVehicle = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -355,6 +366,7 @@ export const deleteVehicle = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -425,6 +437,7 @@ export const createContract = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -496,6 +509,7 @@ export const updateContract = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -567,6 +581,7 @@ export const deleteContract = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -599,6 +614,7 @@ export const createCustomer = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       driversLicense {
         LicenseID
@@ -639,6 +655,7 @@ export const updateCustomer = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       driversLicense {
         LicenseID
@@ -679,6 +696,7 @@ export const deleteCustomer = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       driversLicense {
         LicenseID
@@ -729,6 +747,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -760,6 +779,7 @@ export const createTradeUserConnection = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -805,6 +825,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -836,6 +857,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -881,6 +903,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -912,6 +935,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -950,6 +974,7 @@ export const createCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -981,6 +1006,7 @@ export const createCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1028,6 +1054,7 @@ export const updateCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1059,6 +1086,7 @@ export const updateCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1106,6 +1134,7 @@ export const deleteCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1137,6 +1166,7 @@ export const deleteCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1184,6 +1214,7 @@ export const createTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1285,6 +1316,7 @@ export const updateTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1386,6 +1418,7 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1489,6 +1522,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1520,6 +1554,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1569,6 +1604,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1600,6 +1636,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1649,6 +1686,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1680,6 +1718,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1813,6 +1852,7 @@ export const createTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1835,6 +1875,7 @@ export const createTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1889,6 +1930,7 @@ export const updateTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1911,6 +1953,7 @@ export const updateTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1965,6 +2008,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1987,6 +2031,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -2044,6 +2089,7 @@ export const createAdminRequests = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -2087,6 +2133,7 @@ export const updateAdminRequests = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -2130,6 +2177,7 @@ export const deleteAdminRequests = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt

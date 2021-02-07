@@ -21,7 +21,8 @@ const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 
 AWS.config.update({ region: REGION })
-var ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' })
+var ddb = new AWS.DynamoDB().DocumentClient()
+const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
 /**
  * Get user pool information from environment variables.
@@ -425,7 +426,7 @@ const resolvers = {
   },
 
   Mutation: {
-    manageOfficeEmployee: (event) => {
+    manageOfficeEmployee: async (event) => {
       console.log('Resolving manageOfficeEmployee')
 
       //Username check, this shouldn't be called via IAM
@@ -459,43 +460,136 @@ const resolvers = {
         ),
       )
       console.log('Looked up office: ' + JSON.stringify(getTradesByOwnerReq))
-      const tradeResponse = getTradesByOwnerReq.data.listTradeByNameAndOwnerUsername[0]
-      if (!tradeResponse) {
+      const office = getTradesByOwnerReq.data.listTradeByNameAndOwnerUsername[0]
+      if (!office) {
         throw new Error('User is either not valid or not the owner of the provided trade name.')
       } else {
-        console.log('Updating office: ' + JSON.stringify(tradeResponse))
+        console.log('Retrieved office: ' + JSON.stringify(office))
+      }
+
+      //Have an updated member list prepared
+      let newMembers = office.members
+      if (!newMembers.includes(empUsername)) {
+        newMembers.push(empUsername)
       }
 
       //Validate args
       let resolverResponse = ''
       switch (argAction) {
-        case 'CREATE':
-          // Call DynamoDB to add the item to the table
-          ddb.putItem(
-            {
-              TableName: 'Office-' + process.env.ENV,
-              Item: {
-                CUSTOMER_ID: { N: '001' },
-                CUSTOMER_NAME: { S: 'Richard Roe' }, //TODO ...
+        case 'INSERT':
+          // Update members and put user into members iff remaining > 0 AND memebers dont contain empUsername
+          // Put new tradecon
+          // Atomically decrement the members counter by one
+          data = await dynamoDb
+            .transactWriteItems({
+              TransactItems: [
+                {
+                  Update: {
+                    TableName: 'Office' + ddbSuffix,
+                    Key: {
+                      id: office.id,
+                    },
+                    ConditionExpression: 'not_contains(members,:new_emp_username) and remainingMembersAllowed > 0',
+                    UpdateExpression: 'SET members = list_append(members, :new_emp_username)',
+                    ExpressionAttributeValues: {
+                      ':new_emp_username': empUsername,
+                    },
+                    ReturnValues: 'UPDATED_NEW',
+                  },
+                },
+                {
+                  Put: {
+                    TableName: 'TradeUserConnection' + ddbSuffix,
+                    Item: {
+                      id: { S: event.identity.claims.event_id },
+                      tradeId: { S: office.tradeId },
+                      tradeName: { S: office.tradeName },
+                      userId: { S: '' },
+                      username: { S: '' },
+                      trade: { S: '' },
+                      user: { S: '' },
+                      permissions: { S: '' },
+                      employeeType: { S: '' },
+                      preferences: { S: '' },
+                    },
+                  },
+                },
+              ],
+            })
+            .promise()
+
+          ddb
+            .update({
+              TableName: 'Office' + ddbSuffix,
+              ExpressionAttributeNames: {
+                '#Y': 'buyer',
               },
+              ExpressionAttributeValues: {
+                ':y': ['PersonXYZ'],
+              },
+              Key: {
+                id: 'Hy2H4Z-lf',
+              },
+              ConditionExpression: 'attribute_exists(buyer)',
+              UpdateExpression: 'SET #Y = list_append(#Y,:y)',
+            })
+            .then(
+              (data) => {
+                res.status(200).send(data)
+              },
+              (err) => {
+                console.log(err)
+                ddb
+                  .update({
+                    TableName: 'product',
+                    ExpressionAttributeNames: {
+                      '#Y': 'buyer',
+                    },
+                    ExpressionAttributeValues: {
+                      ':y': ['PersonXYZ'],
+                    },
+                    Key: {
+                      id: 'Hy2H4Z-lf',
+                    },
+                    ConditionExpression: 'attribute_not_exists(buyer)',
+                    UpdateExpression: 'SET #Y = (#Y,:y)',
+                  })
+                  .then(
+                    (data) => {
+                      res.status(200).send(data)
+                    },
+                    (err) => {
+                      console.log(err)
+                      res.sendStatus(500)
+                    },
+                  )
+              },
+            )
+          ddb.update(
+            {
+              TableName: 'Office' + ddbSuffix,
+              UpdateExpression: 'set info.rating = :r, info.plot=:p, info.actors=:a',
+              ExpressionAttributeValues: {
+                ':r': 5.5,
+                ':p': 'Everything happens all at once.',
+                ':a': ['Larry', 'Moe', 'Curly'],
+              },
+              Key: {
+                year: year,
+                title: title,
+              },
+              ReturnValues: 'ALL_NEW',
             },
             function (err, data) {
               if (err) {
-                console.log('Error', err)
+                console.error('Unable to update item. Error JSON:', JSON.stringify(err, null, 2))
               } else {
-                console.log('Success', data)
+                console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2))
               }
             },
           )
           break
         case 'UPDATE':
-          //Get existing user permissions
-          const userExistingPermissions = getUserPermissions(empUsername)
-
-          //Merge with input permissions
-
-          //Save user
-
           break
         case 'DELETE':
           break

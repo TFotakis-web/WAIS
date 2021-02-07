@@ -33,6 +33,7 @@ export const listTradeByName = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -85,6 +86,7 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -122,6 +124,7 @@ export const getOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      remainingMembersAllowed
       members
       ownerProfile {
         id
@@ -138,6 +141,7 @@ export const getOffice = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -170,6 +174,7 @@ export const listOffices = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -222,6 +227,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -265,6 +271,7 @@ export const listUserProfileByDoy = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -293,6 +300,7 @@ export const getUserProfile = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -335,6 +343,7 @@ export const listUserProfiles = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -376,6 +385,7 @@ export const listVehicles = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -409,6 +419,7 @@ export const getVehicle = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       createdAt
       updatedAt
@@ -455,6 +466,7 @@ export const listVehicleByTradeName = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -503,6 +515,7 @@ export const listVehiclesByOwner = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -637,6 +650,7 @@ export const getContract = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -891,6 +905,7 @@ export const getCustomer = /* GraphQL */ `
         bucket
         region
         key
+        name
       }
       driversLicense {
         LicenseID
@@ -933,6 +948,7 @@ export const listCustomers = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         driversLicense {
           LicenseID
@@ -977,6 +993,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1008,6 +1025,7 @@ export const getTradeUserConnection = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1059,6 +1077,7 @@ export const listTradeUserConnections = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         user {
@@ -1127,6 +1146,7 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         user {
@@ -1195,6 +1215,7 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         user {
@@ -1263,6 +1284,7 @@ export const listTradeUserConnectionsByUserName = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         user {
@@ -1309,6 +1331,7 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1340,6 +1363,7 @@ export const getCompanyAccessConnectionRequest = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1393,6 +1417,7 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         to {
@@ -1410,6 +1435,7 @@ export const listCompanyAccessConnectionRequests = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
       }
@@ -1442,6 +1468,7 @@ export const getTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1549,6 +1576,7 @@ export const listTradeContractConnections = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         contract {
@@ -1611,6 +1639,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1642,6 +1671,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        remainingMembersAllowed
         members
         ownerProfile {
           id
@@ -1697,6 +1727,7 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
         to {
@@ -1714,6 +1745,7 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           contracts
           employees
           contractors
+          remainingMembersAllowed
           members
         }
       }
@@ -1810,6 +1842,7 @@ export const getTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1832,6 +1865,7 @@ export const getTransactionHistory = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
@@ -1954,6 +1988,7 @@ export const getAdminRequests = /* GraphQL */ `
           bucket
           region
           key
+          name
         }
         createdAt
         updatedAt
