@@ -10,7 +10,8 @@
         "notifications": "Ειδοποιήσεις",
         "home": "Αρχική",
         "myAccount": "Ο λογαριασμός μου",
-        "signOut": "Αποσύνδεση"
+        "signOut": "Αποσύνδεση",
+        "devtools": "Εργαλεία Προγραμματιστή"
       },
       "sidenav": {
         "pricing": {
@@ -126,6 +127,9 @@
       "personalInfo": "Προσωπικά Στοιχεία",
       "vehicleInfo": "Στοιχεία Οχήματος",
       "contractInfo": "Στοιχεία Συμβολαίου"
+    },
+    "devTools": {
+      "pageTitle": "Εργαλεία Προγραμματιστή"
     }
   },
   "fields": {

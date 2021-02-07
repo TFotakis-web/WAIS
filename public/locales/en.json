@@ -10,7 +10,8 @@
         "notifications": "Notifications",
         "home": "Home",
         "myAccount": "My account",
-        "signOut": "Sign Out"
+        "signOut": "Sign Out",
+        "devtools": "Developer Tools"
       },
       "sidenav": {
         "pricing": {
@@ -126,6 +127,9 @@
       "personalInfo": "Personal information",
       "vehicleInfo": "Vehicle information",
       "contractInfo": "Contract information"
+    },
+    "devTools": {
+      "pageTitle": "Developer Tools"
     }
   },
   "fields": {
