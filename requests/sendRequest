@@ -1,0 +1,13 @@
+
+# Payload
+
+## CREATE_TRADE
+{
+
+}
+
+## CREATE_COMPANY_CONNECTION
+{
+  "tradeOwnerEmail": "name@email.com",
+  "message": "..."
+}

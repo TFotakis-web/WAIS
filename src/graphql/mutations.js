@@ -26,6 +26,7 @@ export const createOffice = /* GraphQL */ `
       ownerProfile {
         id
         username
+        email
         telephone
         tin
         doy
@@ -74,6 +75,7 @@ export const updateOffice = /* GraphQL */ `
       ownerProfile {
         id
         username
+        email
         telephone
         tin
         doy
@@ -122,6 +124,7 @@ export const deleteOffice = /* GraphQL */ `
       ownerProfile {
         id
         username
+        email
         telephone
         tin
         doy
@@ -153,6 +156,7 @@ export const createUserProfile = /* GraphQL */ `
     createUserProfile(input: $input, condition: $condition) {
       id
       username
+      email
       telephone
       tin
       doy
@@ -194,6 +198,7 @@ export const updateUserProfile = /* GraphQL */ `
     updateUserProfile(input: $input, condition: $condition) {
       id
       username
+      email
       telephone
       tin
       doy
@@ -235,6 +240,7 @@ export const deleteUserProfile = /* GraphQL */ `
     deleteUserProfile(input: $input, condition: $condition) {
       id
       username
+      email
       telephone
       tin
       doy
@@ -752,6 +758,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -767,6 +774,7 @@ export const createTradeUserConnection = /* GraphQL */ `
       user {
         id
         username
+        email
         telephone
         tin
         doy
@@ -830,6 +838,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -845,6 +854,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
       user {
         id
         username
+        email
         telephone
         tin
         doy
@@ -908,6 +918,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -923,6 +934,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
       user {
         id
         username
+        email
         telephone
         tin
         doy
@@ -941,246 +953,6 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         updatedAt
         tradeCon {
           nextToken
-        }
-      }
-    }
-  }
-`;
-export const createCompanyAccessConnectionRequest = /* GraphQL */ `
-  mutation CreateCompanyAccessConnectionRequest(
-    $input: CreateCompanyAccessConnectionRequestInput!
-    $condition: ModelCompanyAccessConnectionRequestConditionInput
-  ) {
-    createCompanyAccessConnectionRequest(input: $input, condition: $condition) {
-      id
-      fromId
-      toId
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-      to {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const updateCompanyAccessConnectionRequest = /* GraphQL */ `
-  mutation UpdateCompanyAccessConnectionRequest(
-    $input: UpdateCompanyAccessConnectionRequestInput!
-    $condition: ModelCompanyAccessConnectionRequestConditionInput
-  ) {
-    updateCompanyAccessConnectionRequest(input: $input, condition: $condition) {
-      id
-      fromId
-      toId
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-      to {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const deleteCompanyAccessConnectionRequest = /* GraphQL */ `
-  mutation DeleteCompanyAccessConnectionRequest(
-    $input: DeleteCompanyAccessConnectionRequestInput!
-    $condition: ModelCompanyAccessConnectionRequestConditionInput
-  ) {
-    deleteCompanyAccessConnectionRequest(input: $input, condition: $condition) {
-      id
-      fromId
-      toId
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-      to {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
         }
       }
     }
@@ -1219,6 +991,7 @@ export const createTradeContractConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1321,6 +1094,7 @@ export const updateTradeContractConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1423,6 +1197,7 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1527,6 +1302,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1559,6 +1335,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1609,6 +1386,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1641,6 +1419,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1691,6 +1470,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1723,6 +1503,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1840,6 +1621,7 @@ export const createTransactionHistory = /* GraphQL */ `
       sender {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1863,6 +1645,7 @@ export const createTransactionHistory = /* GraphQL */ `
       receiver {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1918,6 +1701,7 @@ export const updateTransactionHistory = /* GraphQL */ `
       sender {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1941,6 +1725,7 @@ export const updateTransactionHistory = /* GraphQL */ `
       receiver {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1996,6 +1781,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
       sender {
         id
         username
+        email
         telephone
         tin
         doy
@@ -2019,6 +1805,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
       receiver {
         id
         username
+        email
         telephone
         tin
         doy
@@ -2056,166 +1843,73 @@ export const deleteTransactionHistory = /* GraphQL */ `
     }
   }
 `;
-export const createAdminRequests = /* GraphQL */ `
-  mutation CreateAdminRequests(
-    $input: CreateAdminRequestsInput!
-    $condition: ModelAdminRequestsConditionInput
+export const createRequests = /* GraphQL */ `
+  mutation CreateRequests(
+    $input: CreateRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    createAdminRequests(input: $input, condition: $condition) {
+    createRequests(input: $input, condition: $condition) {
       id
-      expiresAt
-      message
-      userId
-      tradeId
-      tradeName
-      logo
-      info
-      tin
-      postcode
       createdAt
       updatedAt
-      profile {
-        id
-        username
-        telephone
-        tin
-        doy
-        familyStatus
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        partnersNumberLimit
-        professionStartDate
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-      }
+      expiresAt
+      senderUsername
+      receiverUsername
+      type
+      payload
+      metadata
     }
   }
 `;
-export const updateAdminRequests = /* GraphQL */ `
-  mutation UpdateAdminRequests(
-    $input: UpdateAdminRequestsInput!
-    $condition: ModelAdminRequestsConditionInput
+export const updateRequests = /* GraphQL */ `
+  mutation UpdateRequests(
+    $input: UpdateRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    updateAdminRequests(input: $input, condition: $condition) {
+    updateRequests(input: $input, condition: $condition) {
       id
-      expiresAt
-      message
-      userId
-      tradeId
-      tradeName
-      logo
-      info
-      tin
-      postcode
       createdAt
       updatedAt
-      profile {
-        id
-        username
-        telephone
-        tin
-        doy
-        familyStatus
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        partnersNumberLimit
-        professionStartDate
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-      }
+      expiresAt
+      senderUsername
+      receiverUsername
+      type
+      payload
+      metadata
     }
   }
 `;
-export const deleteAdminRequests = /* GraphQL */ `
-  mutation DeleteAdminRequests(
-    $input: DeleteAdminRequestsInput!
-    $condition: ModelAdminRequestsConditionInput
+export const deleteRequests = /* GraphQL */ `
+  mutation DeleteRequests(
+    $input: DeleteRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    deleteAdminRequests(input: $input, condition: $condition) {
+    deleteRequests(input: $input, condition: $condition) {
       id
-      expiresAt
-      message
-      userId
-      tradeId
-      tradeName
-      logo
-      info
-      tin
-      postcode
       createdAt
       updatedAt
-      profile {
-        id
-        username
-        telephone
-        tin
-        doy
-        familyStatus
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        partnersNumberLimit
-        professionStartDate
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-      }
+      expiresAt
+      senderUsername
+      receiverUsername
+      type
+      payload
+      metadata
     }
   }
 `;
-export const createOrUpdateContract = /* GraphQL */ `
-  mutation CreateOrUpdateContract($contract: String) {
-    createOrUpdateContract(contract: $contract)
+export const manageCustomers = /* GraphQL */ `
+  mutation ManageCustomers($customer: String!, $action: ResourceAction!) {
+    manageCustomers(customer: $customer, action: $action)
   }
 `;
-export const createCompanyConnectionRequest = /* GraphQL */ `
-  mutation CreateCompanyConnectionRequest($email: String) {
-    createCompanyConnectionRequest(email: $email)
+export const manageContracts = /* GraphQL */ `
+  mutation ManageContracts($contract: String!, $action: ResourceAction!) {
+    manageContracts(contract: $contract, action: $action)
   }
 `;
-export const replyToCompanyConnectionRequest = /* GraphQL */ `
-  mutation ReplyToCompanyConnectionRequest($id: ID, $status: ConnectionStatus) {
-    replyToCompanyConnectionRequest(id: $id, status: $status)
-  }
-`;
-export const manageOfficeEmployee = /* GraphQL */ `
-  mutation ManageOfficeEmployee(
-    $username: String!
-    $action: EmployeeAction!
-    $permissions: [UserPermissionsInput]!
-    $tradeName: String!
-  ) {
-    manageOfficeEmployee(
-      username: $username
-      action: $action
-      permissions: $permissions
-      tradeName: $tradeName
-    )
+export const manageEmployees = /* GraphQL */ `
+  mutation ManageEmployees($employee: String!, $action: ResourceAction!) {
+    manageEmployees(employee: $employee, action: $action)
   }
 `;
 export const sendMoneyToUserWithUsername = /* GraphQL */ `
@@ -2227,20 +1921,5 @@ export const sendMoneyToUserWithUsername = /* GraphQL */ `
       receiverUsername: $receiverUsername
       amount: $amount
     )
-  }
-`;
-export const manageCustomers = /* GraphQL */ `
-  mutation ManageCustomers($customer: String!, $action: CRUDAction!) {
-    manageCustomers(customer: $customer, action: $action)
-  }
-`;
-export const manageContracts = /* GraphQL */ `
-  mutation ManageContracts($contract: String!, $action: CRUDAction!) {
-    manageContracts(contract: $contract, action: $action)
-  }
-`;
-export const manageEmployees = /* GraphQL */ `
-  mutation ManageEmployees($employee: String!, $action: CRUDAction!) {
-    manageEmployees(employee: $employee, action: $action)
   }
 `;

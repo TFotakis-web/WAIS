@@ -1,3 +1,4 @@
+# Each office has one owner and each owner hast one office, always!
 type Office
   @model(subscriptions: null)
   @auth(
@@ -58,13 +59,14 @@ type UserProfile
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername")
-  @key(name: "byDoy", fields: ["doy", "createdAt"], queryField: "listUserProfileByDoy") {
+  @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
+  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername") {
   # Important field(s)
   id: ID!
   username: String!
 
   #Unique fields, not present anywhere eles
+  email: String!
   telephone: String!
   tin: String!
   doy: String!
@@ -212,20 +214,6 @@ type TradeUserConnection
   createdAt: AWSDateTime!
 }
 
-type CompanyAccessConnectionRequest
-  @model(subscriptions: null)
-  @key(name: "byMessage", fields: ["message", "createdAt"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
-  fromId: ID!
-  toId: ID!
-  from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
-  message: String!
-  createdAt: AWSDateTime!
-}
-
 type TradeContractConnection
   @model(subscriptions: null)
   @key(name: "byTradeId", fields: ["tradeId", "tradeName"])
@@ -304,23 +292,32 @@ type TransactionHistory
   receiverWallet: UserWallet! @connection(fields: ["receiverUserProfileId"])
 }
 
-type AdminRequests
+type Requests
   @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId"])
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @key(name: "byReceiverUsername", fields: ["receiverUsername"])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: private, provider: iam }
+      { allow: owner, ownerField: "senderUsername", operations: [read, delete] }
+      { allow: owner, ownerField: "receiverUsername", operations: [read] }
+    ]
+  ) {
   id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
   expiresAt: AWSTimestamp!
-  message: String!
-  userId: ID!
-  profile: UserProfile! @connection(fields: ["userId"])
 
-  #Request fields
-  tradeId: ID!
-  tradeName: String!
-  logo: String
-  info: String!
-  tin: String!
-  postcode: String!
+  # Users involved
+  senderUsername: String!
+  receiverUsername: String!
+
+  # Request type and information
+  type: RequestType!
+  payload: String!
+
+  # Metadata (for AWS services)
+  metadata: String! @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 
 # ####################################################################################################################################################################################
@@ -337,48 +334,27 @@ type Query {
 
   echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  #Admin API
-  requestAdminAproval(tradeName: String!, message: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }]) #Returns the request ID
-  adminAproveRequest(id: String!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  # Request API
+  sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  fulfillRequest(id: ID!, decision: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
 type Mutation {
-  #Paperwork
-  createOrUpdateContract(contract: String): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  #Manage company connections
-  createCompanyConnectionRequest(email: String): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  replyToCompanyConnectionRequest(id: ID, status: ConnectionStatus): ConnectionStatus
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  # Office user management
-  manageOfficeEmployee(username: String!, action: EmployeeAction!, permissions: [UserPermissionsInput]!, tradeName: String!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  manageCustomers(customer: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageContracts(contract: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageEmployees(employee: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  #manageContractors() # Under construction
 
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-
-  #CRUD
-  manageCustomers(customer: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageContracts(contract: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageEmployees(employee: String!, action: CRUDAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
 # ###################### ENUMS/TYPES ######################
 
 # CRUD specififc types
-enum CRUDAction {
+enum ResourceAction {
   CREATE
   UPDATE
   DELETE
@@ -388,6 +364,11 @@ input UserPermissionsInput {
   department: String
   read: Boolean
   write: Boolean
+}
+
+enum RequestType {
+  CREATE_TRADE
+  CREATE_COMPANY_CONNECTION
 }
 
 # Employee management API

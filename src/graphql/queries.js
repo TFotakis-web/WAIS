@@ -38,6 +38,7 @@ export const listTradeByName = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -91,6 +92,7 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -129,6 +131,7 @@ export const getOffice = /* GraphQL */ `
       ownerProfile {
         id
         username
+        email
         telephone
         tin
         doy
@@ -179,6 +182,7 @@ export const listOffices = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -189,6 +193,49 @@ export const listOffices = /* GraphQL */ `
           professionStartDate
           createdAt
           updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listUserProfileByEmail = /* GraphQL */ `
+  query ListUserProfileByEmail(
+    $email: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserProfileByEmail(
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        email
+        telephone
+        tin
+        doy
+        familyStatus
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        partnersNumberLimit
+        professionStartDate
+        file {
+          bucket
+          region
+          key
+          name
+        }
+        createdAt
+        updatedAt
+        tradeCon {
+          nextToken
         }
       }
       nextToken
@@ -215,50 +262,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
       items {
         id
         username
-        telephone
-        tin
-        doy
-        familyStatus
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        partnersNumberLimit
-        professionStartDate
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listUserProfileByDoy = /* GraphQL */ `
-  query ListUserProfileByDoy(
-    $doy: String
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserProfileFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserProfileByDoy(
-      doy: $doy
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        username
+        email
         telephone
         tin
         doy
@@ -288,6 +292,7 @@ export const getUserProfile = /* GraphQL */ `
     getUserProfile(id: $id) {
       id
       username
+      email
       telephone
       tin
       doy
@@ -331,6 +336,7 @@ export const listUserProfiles = /* GraphQL */ `
       items {
         id
         username
+        email
         telephone
         tin
         doy
@@ -998,6 +1004,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1013,6 +1020,7 @@ export const getTradeUserConnection = /* GraphQL */ `
       user {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1083,6 +1091,7 @@ export const listTradeUserConnections = /* GraphQL */ `
         user {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1152,6 +1161,7 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
         user {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1221,6 +1231,7 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
         user {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1290,6 +1301,7 @@ export const listTradeUserConnectionsByUserName = /* GraphQL */ `
         user {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1300,143 +1312,6 @@ export const listTradeUserConnectionsByUserName = /* GraphQL */ `
           professionStartDate
           createdAt
           updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const getCompanyAccessConnectionRequest = /* GraphQL */ `
-  query GetCompanyAccessConnectionRequest($id: ID!) {
-    getCompanyAccessConnectionRequest(id: $id) {
-      id
-      fromId
-      toId
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-      to {
-        id
-        tradeName
-        ownerUsername
-        ownerId
-        tin
-        logo
-        info
-        postcode
-        createdAt
-        updatedAt
-        customers
-        contracts
-        employees
-        contractors
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const listCompanyAccessConnectionRequests = /* GraphQL */ `
-  query ListCompanyAccessConnectionRequests(
-    $filter: ModelCompanyAccessConnectionRequestFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCompanyAccessConnectionRequests(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        fromId
-        toId
-        expirationDate
-        message
-        createdAt
-        updatedAt
-        from {
-          id
-          tradeName
-          ownerUsername
-          ownerId
-          tin
-          logo
-          info
-          postcode
-          createdAt
-          updatedAt
-          customers
-          contracts
-          employees
-          contractors
-          remainingMembersAllowed
-          members
-        }
-        to {
-          id
-          tradeName
-          ownerUsername
-          ownerId
-          tin
-          logo
-          info
-          postcode
-          createdAt
-          updatedAt
-          customers
-          contracts
-          employees
-          contractors
-          remainingMembersAllowed
-          members
         }
       }
       nextToken
@@ -1473,6 +1348,7 @@ export const getTradeContractConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1644,6 +1520,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1676,6 +1553,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         ownerProfile {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1830,6 +1708,7 @@ export const getTransactionHistory = /* GraphQL */ `
       sender {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1853,6 +1732,7 @@ export const getTransactionHistory = /* GraphQL */ `
       receiver {
         id
         username
+        email
         telephone
         tin
         doy
@@ -1914,6 +1794,7 @@ export const listTransactionHistorys = /* GraphQL */ `
         sender {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1928,6 +1809,7 @@ export const listTransactionHistorys = /* GraphQL */ `
         receiver {
           id
           username
+          email
           telephone
           tin
           doy
@@ -1958,81 +1840,38 @@ export const listTransactionHistorys = /* GraphQL */ `
     }
   }
 `;
-export const getAdminRequests = /* GraphQL */ `
-  query GetAdminRequests($id: ID!) {
-    getAdminRequests(id: $id) {
+export const getRequests = /* GraphQL */ `
+  query GetRequests($id: ID!) {
+    getRequests(id: $id) {
       id
-      expiresAt
-      message
-      userId
-      tradeId
-      tradeName
-      logo
-      info
-      tin
-      postcode
       createdAt
       updatedAt
-      profile {
-        id
-        username
-        telephone
-        tin
-        doy
-        familyStatus
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        partnersNumberLimit
-        professionStartDate
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-      }
+      expiresAt
+      senderUsername
+      receiverUsername
+      type
+      payload
+      metadata
     }
   }
 `;
-export const listAdminRequestss = /* GraphQL */ `
-  query ListAdminRequestss(
-    $filter: ModelAdminRequestsFilterInput
+export const listRequestss = /* GraphQL */ `
+  query ListRequestss(
+    $filter: ModelRequestsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listAdminRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        expiresAt
-        message
-        userId
-        tradeId
-        tradeName
-        logo
-        info
-        tin
-        postcode
         createdAt
         updatedAt
-        profile {
-          id
-          username
-          telephone
-          tin
-          doy
-          familyStatus
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          partnersNumberLimit
-          professionStartDate
-          createdAt
-          updatedAt
-        }
+        expiresAt
+        senderUsername
+        receiverUsername
+        type
+        payload
+        metadata
       }
       nextToken
     }
@@ -2085,13 +1924,13 @@ export const echo = /* GraphQL */ `
     echo(msg: $msg)
   }
 `;
-export const requestAdminAproval = /* GraphQL */ `
-  query RequestAdminAproval($tradeName: String!, $message: String!) {
-    requestAdminAproval(tradeName: $tradeName, message: $message)
+export const sendRequest = /* GraphQL */ `
+  query SendRequest($requestType: RequestType!, $payload: String!) {
+    sendRequest(requestType: $requestType, payload: $payload)
   }
 `;
-export const adminAproveRequest = /* GraphQL */ `
-  query AdminAproveRequest($id: String!) {
-    adminAproveRequest(id: $id)
+export const fulfillRequest = /* GraphQL */ `
+  query FulfillRequest($id: ID!, $decision: String!) {
+    fulfillRequest(id: $id, decision: $decision)
   }
 `;

@@ -50,6 +50,8 @@ const getUserProfile = (username) => {
   return userProfileResponse.data.listUserProfileByUsername.items[0]
 }
 
+const getUserProfileByEmail = () => {}
+
 const getUserPermissions = (username, tradeName) => {
   console.log('Resolving permissions for ' + username + '.')
   let userProfResponse = getResponseFromApi(
@@ -333,38 +335,56 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    requestAdminAproval: (event) => {
-      console.log('Resolving requestAdminAproval')
+    sendRequest: (event) => {
+      console.log('Resolving sendRequest')
 
-      //Username and permissions
-      let username = 'IAM'
-      let permissions = ''
-
-      if (event.identity.claims) {
-        console.log('Credentials found..')
-        username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(username, event.arguments.tradeName)
+      // Retrieve username and permissions
+      if (!event.identity.claims) {
+        throw new Error('Credential not found.')
       }
 
+      //Unpack arguments
+      let senderUsername = event.identity.claims['cognito:username']
+      let payload = event.arguments.payload
+      let requestType = event.arguments.requestType
+      let id = event.uuid
+      let metadata = {}
+
+      // Halt this request if permissions don't match
+      // ... TODO
+
       //Retrieve the caller UserProfile
-      const selUserProfile = getUserProfile(username)
+      let selUserProfile = getUserProfile(username)
 
       //Expire this after 1 week
-      var expiresAt = Date.now()
+      let expiresAt = Date.now()
       expiresAt += 1000 * 60 * 60 * 24 * 7
       expiresAt = new Date(expiresAt)
 
+      //Get the receiver of this request based on the request payload and type
+      let receiver = 'undefined'
+
+      switch (requestType) {
+        case 'CREATE_COMPANY_CONNECTION':
+          let tradeOwnerEmail = payload.tradeOwnerEmail
+          let userProfile = getUserProfileByEmail(tradeOwnerEmail)
+          receiver = userProfile.username
+          break
+        case 'CREATE_TRADE':
+          break
+        default:
+          console.log('Receiver of request with id=[' + id + '] could not be determined.')
+      }
+
       //New request
       const item = {
-        id: event.uuid,
+        id: id,
         expiresAt: expiresAt,
-        message: event.arguments.message,
-        tradeId: event.uuid,
-        tradeName: event.arguments.tradeName,
-        logo: '',
-        info: '',
-        postcode: '',
-        profile: selUserProfile,
+        payload: payload,
+        type: requestType,
+        senderUsername: senderUsername,
+        receiverUsername: receiver,
+        metadata: metadata,
       }
 
       //Attempt the request
