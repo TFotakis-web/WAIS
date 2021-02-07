@@ -53,7 +53,8 @@ const v = {
 	render: h => h(App),
 	mounted: function () {
 		this.initLocale();
-		this.loadEnumData();
+		// Todo: Enable loadEnumData
+		// this.loadEnumData();
 	},
 	methods: {
 		toGreeklish,
