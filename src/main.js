@@ -5,7 +5,8 @@ import '@/registerServiceWorker';
 import router from '@/router';
 import store from '@/store';
 import Amplify from 'aws-amplify';
-import { Auth } from '@aws-amplify/auth'
+import { Auth } from '@aws-amplify/auth';
+import { API } from '@aws-amplify/api';
 import aws_exports from '@/aws-exports';
 import '@aws-amplify/ui-vue';
 import i18n from '@/i18n';
@@ -25,6 +26,7 @@ import lodash from 'lodash';
 
 Amplify.configure(aws_exports);
 Auth.configure(aws_exports);
+API.configure(aws_exports);
 
 Vue.use(VueCookies);
 Vue.use(VueHead);
