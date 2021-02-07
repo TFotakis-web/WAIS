@@ -35,7 +35,7 @@
 								<mdb-col
 									v-for="(weekDay, index) in dayNames"
 									:key="index"
-									:class="{ 'light-blue lighten-5': isToday(index) }"
+									:class="{ 'rgba-blue-slight': isToday(index) }"
 									class="px-0">
 									<div class="h-100 w-100">
 										{{ dayNames[(firstDay.getDay() + index) % 7] }}
@@ -188,7 +188,7 @@ const mdbWeekView = {
 		},
 		getClassesDropTBody(dayIndex) {
 			if (this.isToday(dayIndex)) {
-				return 'light-blue lighten-5';
+				return 'rgba-blue-slight';
 			} else if (!this.isWeekDay(dayIndex)) {
 				return 'rgba-mdb-color-slight';
 			}
@@ -235,7 +235,7 @@ const mdbWeekView = {
 				new Date(this.firstDay.getFullYear(), this.firstDay.getMonth(), this.firstDay.getDate() + index).toDateString() ===
 				new Date().toDateString()
 			) {
-				return 'light-blue lighten-5';
+				return 'rgba-blue-slight';
 			} else if (
 				new Date(this.firstDay.getFullYear(), this.firstDay.getMonth(), this.firstDay.getDate() + index).getDay() === 0 ||
 				new Date(this.firstDay.getFullYear(), this.firstDay.getMonth(), this.firstDay.getDate() + index).getDay() === 6
