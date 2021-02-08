@@ -340,10 +340,10 @@ type Query {
 }
 
 type Mutation {
-  manageCustomers(customer: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageContracts(contract: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageEmployees(employee: String!, action: ResourceAction!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  #manageContractors() # Under construction
+  manageCustomers(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageContracts(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageEmployees(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  manageContractors(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
@@ -358,12 +358,6 @@ enum ResourceAction {
   CREATE
   UPDATE
   DELETE
-}
-
-input UserPermissionsInput {
-  department: String
-  read: Boolean
-  write: Boolean
 }
 
 enum RequestType {

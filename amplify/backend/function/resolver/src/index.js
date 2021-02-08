@@ -12,9 +12,9 @@ const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const AWS = require('aws-sdk')
 
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
-const https = require('https')
 const urlParse = require('url').URL
 const queries = require('./queries.js')
+const utils = require('./utils')
 
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
@@ -32,101 +32,6 @@ if (!COGNITO_USERPOOL_ID) {
   throw new Error(`Function requires a valid pool ID`)
 }
 
-const getUserProfile = (username) => {
-  console.log('Resolving UserProfile for ' + username + '.')
-  let userProfileResponse = getResponseFromApi(
-    ENDPOINT,
-    createSignedRequest(
-      ENDPOINT,
-      { username: username },
-      queries.listUserProfileByUsername,
-      'listUserProfileByUsername',
-      REGION,
-      APPSYNC_URL,
-    ),
-  )
-  console.log('Fetched UserProfile for ' + username + ' : ' + JSON.stringify(userProfileResponse))
-  console.log('Fetched UserProfile for ' + username + ' : ' + userProfileResponse)
-  return userProfileResponse.data.listUserProfileByUsername.items[0]
-}
-
-const getUserProfileByEmail = () => {}
-
-const getUserPermissions = (username, tradeName) => {
-  console.log('Resolving permissions for ' + username + '.')
-  let userProfResponse = getResponseFromApi(
-    ENDPOINT,
-    createSignedRequest(
-      ENDPOINT,
-      { username: username, tradeName: tradeName },
-      queries.getUserPermissions,
-      'getUserPermissions',
-      REGION,
-      APPSYNC_URL,
-    ),
-  )
-  console.log('Fetched UserPermissions for ' + username + ' : ' + JSON.stringify(userProfResponse))
-  return userProfResponse.data.getUserPermissions.items
-}
-
-const getDefaultFunctionArgs = (event) => {
-  let item = {}
-  if (event.arguments.filter) {
-    item.filter = {
-      and: [
-        {
-          tradeName: { eq: event.source.tradeName },
-        },
-        event.arguments.filter,
-      ],
-    }
-  } else {
-    item.filter = {
-      tradeName: { eq: event.source.tradeName },
-    }
-  }
-  if (event.arguments.limit) {
-    item.limit = event.arguments.limit
-  } else {
-    item.limit = 50
-  }
-  if (event.arguments.nextToken) {
-    item.nextToken = event.arguments.nextToken
-  } else {
-    item.nextToken = null
-  }
-  return item
-}
-
-const getUserProfileFunctionArgs = (event, type) => {
-  let item = {}
-  if (event.arguments.filter) {
-    item.filter = {
-      and: [
-        {
-          employeeType: { eq: type },
-        },
-        event.arguments.filter,
-      ],
-    }
-  } else {
-    item.filter = {
-      employeeType: { eq: type },
-    }
-  }
-  if (event.arguments.limit) {
-    item.limit = event.arguments.limit
-  } else {
-    item.limit = 50
-  }
-  if (event.arguments.nextToken) {
-    item.nextToken = event.arguments.nextToken
-  } else {
-    item.nextToken = null
-  }
-  return item
-}
-
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
@@ -142,20 +47,20 @@ const resolvers = {
       if (event.identity.claims) {
         console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(username, event.source.tradeName)
+        permissions = utils.getUserPermissions(username, event.source.tradeName)
       }
 
       //List customers request input item
-      let item = getDefaultFunctionArgs(event)
+      let item = utils.getDefaultFunctionArgs(event)
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
 
       //Response structure:
       //{ data: { listCustomers: { items: [], nextToken: null } }, errors: [{ path: '', location: '', message: '' }] }
-      const customersResponse = getResponseFromApi(
+      const customersResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, { input: item }, queries.listCustomers, 'listCustomers', REGION, APPSYNC_URL),
+        utils.createSignedRequest(ENDPOINT, { input: item }, queries.listCustomers, 'listCustomers', REGION, APPSYNC_URL),
       )
 
       // Filter out customer fields based on permissions
@@ -180,18 +85,18 @@ const resolvers = {
       if (event.identity.claims) {
         console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(username, event.source.tradeName)
+        permissions = utils.getUserPermissions(username, event.source.tradeName)
       }
 
-      let item = getDefaultFunctionArgs(event)
+      let item = utils.getDefaultFunctionArgs(event)
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
 
       //Attempt the request
-      const contractsResponse = getResponseFromApi(
+      const contractsResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, { input: item }, queries.listContracts, 'listContracts', REGION, APPSYNC_URL),
+        utils.createSignedRequest(ENDPOINT, { input: item }, queries.listContracts, 'listContracts', REGION, APPSYNC_URL),
       )
 
       // Filter out customer fields based on permissions
@@ -216,20 +121,20 @@ const resolvers = {
       if (event.identity.claims) {
         console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(username, event.source.tradeName)
+        permissions = utils.getUserPermissions(username, event.source.tradeName)
       }
 
       //List employees request input item
-      let item = getUserProfileFunctionArgs(event, 'STANDARD')
+      let item = utils.getUserProfileFunctionArgs(event, 'STANDARD')
       item.tradeName = tradeName
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
 
       //Response structure:
-      const employeesResponse = getResponseFromApi(
+      const employeesResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(
+        utils.createSignedRequest(
           ENDPOINT,
           { input: item },
           queries.listEmployeesByEmployeeType,
@@ -261,20 +166,20 @@ const resolvers = {
       if (event.identity.claims) {
         console.log('Credentials found..')
         username = event.identity.claims['cognito:username']
-        permissions = getUserPermissions(username, event.source.tradeName)
+        permissions = utils.getUserPermissions(username, event.source.tradeName)
       }
 
       //List contractors request input item
-      let item = getUserProfileFunctionArgs(event, 'CONTRACTOR')
+      let item = utils.getUserProfileFunctionArgs(event, 'CONTRACTOR')
       item.tradeName = tradeName
 
       //Attempt the request
       console.log('Resolving user ' + username + ' with permissions: ' + permissions)
 
       //Response structure:
-      const contractorsResponse = getResponseFromApi(
+      const contractorsResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(
+        utils.createSignedRequest(
           ENDPOINT,
           { input: item },
           queries.listEmployeesByEmployeeType,
@@ -347,14 +252,24 @@ const resolvers = {
       let senderUsername = event.identity.claims['cognito:username']
       let payload = event.arguments.payload
       let requestType = event.arguments.requestType
+      let tradeName = payload.tradeName
       let id = event.uuid
       let metadata = {}
 
+      //Retrieve the caller UserProfile
+      let selUserProfile = utils.getUserProfile(username)
+
+      //Get permissions
+      let callerPermissions = null
+      if (tradeName) {
+        callerPermissions = utils.getUserPermissions(senderUsername, tradeName)
+      }
+
       // Halt this request if permissions don't match
       // ... TODO
-
-      //Retrieve the caller UserProfile
-      let selUserProfile = getUserProfile(username)
+      if (callerPermissions == null) {
+        throw new Error('User has insufficent permissions.')
+      }
 
       //Expire this after 1 week
       let expiresAt = Date.now()
@@ -367,7 +282,7 @@ const resolvers = {
       switch (requestType) {
         case 'CREATE_COMPANY_CONNECTION':
           let tradeOwnerEmail = payload.tradeOwnerEmail
-          let userProfile = getUserProfileByEmail(tradeOwnerEmail)
+          let userProfile = utils.getUserProfileByEmail(tradeOwnerEmail)
           receiver = userProfile.username
           break
         case 'CREATE_TRADE':
@@ -388,10 +303,10 @@ const resolvers = {
       }
 
       //Attempt the request
-      console.log('Attempting to register new admin request: ' + item)
-      const adminReqResponse = getResponseFromApi(
+      console.log('Attempting to register new request: ' + item)
+      const adminReqResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, { input: item }, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
+        utils.createSignedRequest(ENDPOINT, { input: item }, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
       )
       const resolverResponse = adminReqResponse.data.createAdminRequest
 
@@ -412,9 +327,9 @@ const resolvers = {
       const approvedReqId = event.arguments.id
 
       //Retrieve the item of the request from DDB
-      const adminRequestResponse = getResponseFromApi(
+      const adminRequestResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, { input: approvedReqId }, queries.getAdminRequest, 'getAdminRequest', REGION, APPSYNC_URL),
+        utils.createSignedRequest(ENDPOINT, { input: approvedReqId }, queries.getAdminRequest, 'getAdminRequest', REGION, APPSYNC_URL),
       )
       const selAdminReq = adminRequestResponse.data.getAdminRequest.items[0]
 
@@ -433,9 +348,9 @@ const resolvers = {
           members: [],
         },
       }
-      const apprResponse = getResponseFromApi(
+      const apprResponse = utils.getResponseFromApi(
         ENDPOINT,
-        createSignedRequest(ENDPOINT, adminReqInput, queries.approveAdminRequest, 'approveAdminRequest', REGION, APPSYNC_URL),
+        utils.createSignedRequest(ENDPOINT, adminReqInput, queries.approveAdminRequest, 'approveAdminRequest', REGION, APPSYNC_URL),
       )
       const resolverResponse = apprResponse.data.approveAdminRequest
 
@@ -446,7 +361,7 @@ const resolvers = {
   },
 
   Mutation: {
-    manageOfficeEmployee: async (event) => {
+    manageEmployees: async (event) => {
       console.log('Resolving manageOfficeEmployee')
 
       //Username check, this shouldn't be called via IAM
@@ -455,168 +370,32 @@ const resolvers = {
       }
 
       //Get args
-      const ownUsername = event.identity.claims['cognito:username']
-      const empUsername = event.arguments.username
-      const argAction = event.arguments.action
-      const permissions = event.username.permissions
-      const tradeName = event.username.tradeName
-
+      let managerUsername = event.identity.claims['cognito:username']
+      let payload = event.arguments.payload
+      let action = event.arguments.action
+      let uuid = event.uuid
       //Get caller Office
-      let item = {
-        limit: 1,
-        nextToken: null,
-        tradeName: { eq: tradeName }, //SK
-        username: ownUsername, //PK
-      }
-      const getTradesByOwnerReq = getResponseFromApi(
-        ENDPOINT,
-        createSignedRequest(
-          ENDPOINT,
-          { input: item },
-          queries.listTradeByNameAndOwnerUsername,
-          'listTradeByNameAndOwnerUsername',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
-      console.log('Looked up office: ' + JSON.stringify(getTradesByOwnerReq))
-      const office = getTradesByOwnerReq.data.listTradeByNameAndOwnerUsername[0]
+      let office = utils.getOfficeByOwnerUsername(managerUsername)
       if (!office) {
         throw new Error('User is either not valid or not the owner of the provided trade name.')
       } else {
         console.log('Retrieved office: ' + JSON.stringify(office))
       }
 
-      //Have an updated member list prepared
-      let newMembers = office.members
-      if (!newMembers.includes(empUsername)) {
-        newMembers.push(empUsername)
-      }
-
-      //Validate args
+      //Actions
       let resolverResponse = ''
-      switch (argAction) {
+      switch (action) {
         case 'INSERT':
-          // Update members and put user into members iff remaining > 0 AND memebers dont contain empUsername
-          // Put new tradecon
-          // Atomically decrement the members counter by one
-          data = await dynamoDb
-            .transactWriteItems({
-              TransactItems: [
-                {
-                  Update: {
-                    TableName: 'Office' + ddbSuffix,
-                    Key: {
-                      id: office.id,
-                    },
-                    ConditionExpression: 'not_contains(members,:new_emp_username) and remainingMembersAllowed > 0',
-                    UpdateExpression: 'SET members = list_append(members, :new_emp_username)',
-                    ExpressionAttributeValues: {
-                      ':new_emp_username': empUsername,
-                    },
-                    ReturnValues: 'UPDATED_NEW',
-                  },
-                },
-                {
-                  Put: {
-                    TableName: 'TradeUserConnection' + ddbSuffix,
-                    Item: {
-                      id: { S: event.identity.claims.event_id },
-                      tradeId: { S: office.tradeId },
-                      tradeName: { S: office.tradeName },
-                      userId: { S: '' },
-                      username: { S: '' },
-                      trade: { S: '' },
-                      user: { S: '' },
-                      permissions: { S: '' },
-                      employeeType: { S: '' },
-                      preferences: { S: '' },
-                    },
-                  },
-                },
-              ],
-            })
-            .promise()
-
-          ddb
-            .update({
-              TableName: 'Office' + ddbSuffix,
-              ExpressionAttributeNames: {
-                '#Y': 'buyer',
-              },
-              ExpressionAttributeValues: {
-                ':y': ['PersonXYZ'],
-              },
-              Key: {
-                id: 'Hy2H4Z-lf',
-              },
-              ConditionExpression: 'attribute_exists(buyer)',
-              UpdateExpression: 'SET #Y = list_append(#Y,:y)',
-            })
-            .then(
-              (data) => {
-                res.status(200).send(data)
-              },
-              (err) => {
-                console.log(err)
-                ddb
-                  .update({
-                    TableName: 'product',
-                    ExpressionAttributeNames: {
-                      '#Y': 'buyer',
-                    },
-                    ExpressionAttributeValues: {
-                      ':y': ['PersonXYZ'],
-                    },
-                    Key: {
-                      id: 'Hy2H4Z-lf',
-                    },
-                    ConditionExpression: 'attribute_not_exists(buyer)',
-                    UpdateExpression: 'SET #Y = (#Y,:y)',
-                  })
-                  .then(
-                    (data) => {
-                      res.status(200).send(data)
-                    },
-                    (err) => {
-                      console.log(err)
-                      res.sendStatus(500)
-                    },
-                  )
-              },
-            )
-          ddb.update(
-            {
-              TableName: 'Office' + ddbSuffix,
-              UpdateExpression: 'set info.rating = :r, info.plot=:p, info.actors=:a',
-              ExpressionAttributeValues: {
-                ':r': 5.5,
-                ':p': 'Everything happens all at once.',
-                ':a': ['Larry', 'Moe', 'Curly'],
-              },
-              Key: {
-                year: year,
-                title: title,
-              },
-              ReturnValues: 'ALL_NEW',
-            },
-            function (err, data) {
-              if (err) {
-                console.error('Unable to update item. Error JSON:', JSON.stringify(err, null, 2))
-              } else {
-                console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2))
-              }
-            },
-          )
+          resolverResponse = utils.addEmployeeToOffice(office, payload, uuid)
           break
         case 'UPDATE':
           break
         case 'DELETE':
           break
-
         default:
-          throw new Error('Unknown CRUD action.')
+          throw new Error('Invalid action.')
       }
+
       return resolverResponse
     },
     manageCustomers: (event) => {
@@ -653,39 +432,4 @@ exports.handler = async (event) => {
     }
   }
   throw new Error('Resolver not found.')
-}
-
-//
-// create a signed graphql operation request
-//
-const createSignedRequest = (endpoint, item, operation, operationName, region, url) => {
-  console.log('Executing GraphQL query: ' + operation)
-  const request = new AWS.HttpRequest(url, region)
-  request.method = 'POST'
-  request.path = '/graphql'
-  request.headers.host = endpoint
-  request.headers['Content-Type'] = 'application/json'
-  request.body = JSON.stringify({
-    query: operation,
-    operationName: operationName,
-    variables: item,
-  })
-  const signer = new AWS.Signers.V4(request, 'appsync', true)
-  signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
-  return request
-}
-
-//
-// send a request to the appsync api and return the response data
-//
-const getResponseFromApi = (endpoint, request) => {
-  return new Promise((resolve, reject) => {
-    const httpRequest = https.request({ ...request, host: endpoint }, (result) => {
-      result.on('data', (data) => {
-        resolve(JSON.parse(data.toString()))
-      })
-    })
-    httpRequest.write(request.body)
-    httpRequest.end()
-  })
 }

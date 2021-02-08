@@ -3,7 +3,7 @@
 
 ## CREATE_TRADE
 {
-
+  "tradeName" :"" 
 }
 
 ## CREATE_COMPANY_CONNECTION
