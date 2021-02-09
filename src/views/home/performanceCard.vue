@@ -4,8 +4,7 @@
 			<h5 class="mb-0">Performance</h5>
 		</mdb-view>
 		<mdb-card-body>
-			<div v-if="!show" :style="{'min-height': maxContentHeight}"></div>
-			<mdb-line-chart v-if="show" :data="lineChartData" :options="lineChartOptions" :height="maxContentHeight"/>
+			<mdb-line-chart :data="lineChartData" :options="lineChartOptions" :height="300"/>
 		</mdb-card-body>
 	</mdb-card>
 </template>
@@ -14,7 +13,6 @@ export default {
 	name: "performanceCard",
 	data() {
 		return {
-			show: false,
 			lineChartData: {
 				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 				datasets: [
@@ -69,18 +67,5 @@ export default {
 			},
 		}
 	},
-	props: {
-		maxContentHeight: {
-			type: Number,
-			default: 300
-		},
-	},
-	mounted() {
-		// this.show = true;
-
-		setTimeout(() => {
-			this.show = true;
-		}, 3000);
-	}
 }
 </script>

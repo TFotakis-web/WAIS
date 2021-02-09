@@ -10,10 +10,10 @@
 			</mdb-row>
 			<mdb-row class="mb-5">
 				<mdb-col>
-					<performanceCard :max-content-height="300"/>
+					<performanceCard/>
 				</mdb-col>
 				<mdb-col>
-					<newsfeedCard :max-content-height="300"/>
+					<newsfeedCard/>
 				</mdb-col>
 			</mdb-row>
 			<mdb-row>
@@ -84,9 +84,9 @@
 	</div>
 </template>
 <script>
-import calendarCard from "@/views/home/calendarCard";
-import performanceCard from "@/views/home/performanceCard";
-import newsfeedCard from "@/views/home/newsfeedCard";
+import calendarCard from "@/views/Home/calendarCard";
+import performanceCard from "@/views/Home/performanceCard";
+import newsfeedCard from "@/views/Home/newsfeedCard";
 
 export default {
 	name: 'Home',

@@ -4,7 +4,7 @@
 			<h5 class="mb-0">News Feed</h5>
 		</mdb-view>
 		<mdb-card-body>
-			<mdb-list-group :style="{'min-height': maxContentHeight + 'px', 'max-height': maxContentHeight + 'px'}" style="overflow-y: scroll">
+			<mdb-list-group style="max-height: 20em; overflow-y: scroll">
 				<mdb-list-group-item v-for="item in news" :key="'newsItems' + item.id.toString()">
 					<div>
 						<div class="d-flex w-100 justify-content-between">
@@ -22,12 +22,6 @@
 <script>
 export default {
 	name: "newsfeedCard",
-	props: {
-		maxContentHeight: {
-			type: Number,
-			default: 300
-		},
-	},
 	data() {
 		return {
 			news: []
