@@ -29,3 +29,7 @@ Compile with:
 ```
 amplify api gql-compile
 ``` 
+
+
+## Amplify CLI version
+npm install -g @aws-amplify/cli@4.42.2

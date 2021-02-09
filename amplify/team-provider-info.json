@@ -17,7 +17,8 @@
         "waisauthPreSignup": {}
       },
       "auth": {
-        "waisauth": {}
+        "waisauth": {},
+        "userPoolGroups": {}
       }
     }
   }
