@@ -1,6 +1,32 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const manageCustomers = /* GraphQL */ `
+  mutation ManageCustomers($action: ResourceAction!, $payload: String!) {
+    manageCustomers(action: $action, payload: $payload)
+  }
+`;
+export const manageContracts = /* GraphQL */ `
+  mutation ManageContracts($action: ResourceAction!, $payload: String!) {
+    manageContracts(action: $action, payload: $payload)
+  }
+`;
+export const manageEmployees = /* GraphQL */ `
+  mutation ManageEmployees($action: ResourceAction!, $payload: String!) {
+    manageEmployees(action: $action, payload: $payload)
+  }
+`;
+export const sendMoneyToUserWithUsername = /* GraphQL */ `
+  mutation SendMoneyToUserWithUsername(
+    $receiverUsername: String
+    $amount: Float!
+  ) {
+    sendMoneyToUserWithUsername(
+      receiverUsername: $receiverUsername
+      amount: $amount
+    )
+  }
+`;
 export const createOffice = /* GraphQL */ `
   mutation CreateOffice(
     $input: CreateOfficeInput!
@@ -1895,31 +1921,5 @@ export const deleteRequests = /* GraphQL */ `
       payload
       metadata
     }
-  }
-`;
-export const manageCustomers = /* GraphQL */ `
-  mutation ManageCustomers($customer: String!, $action: ResourceAction!) {
-    manageCustomers(customer: $customer, action: $action)
-  }
-`;
-export const manageContracts = /* GraphQL */ `
-  mutation ManageContracts($contract: String!, $action: ResourceAction!) {
-    manageContracts(contract: $contract, action: $action)
-  }
-`;
-export const manageEmployees = /* GraphQL */ `
-  mutation ManageEmployees($employee: String!, $action: ResourceAction!) {
-    manageEmployees(employee: $employee, action: $action)
-  }
-`;
-export const sendMoneyToUserWithUsername = /* GraphQL */ `
-  mutation SendMoneyToUserWithUsername(
-    $receiverUsername: String
-    $amount: Float!
-  ) {
-    sendMoneyToUserWithUsername(
-      receiverUsername: $receiverUsername
-      amount: $amount
-    )
   }
 `;

@@ -2,7 +2,11 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
-    "GROUP": {
+    "DOMAINBLACKLIST": {
+      "Type": "String",
+      "Default": ""
+    },
+    "DOMAINWHITELIST": {
       "Type": "String",
       "Default": ""
     },
@@ -61,12 +65,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostConfirmation",
+            "waisauthPreSignup",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostConfirmation",
+                  "waisauthPreSignup",
                   "-",
                   {
                     "Ref": "env"
@@ -87,8 +91,11 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "GROUP": {
-              "Ref": "GROUP"
+            "DOMAINWHITELIST": {
+              "Ref": "DOMAINWHITELIST"
+            },
+            "DOMAINBLACKLIST": {
+              "Ref": "DOMAINBLACKLIST"
             }
           }
         },
@@ -101,8 +108,8 @@
         "Runtime": "nodejs10.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/wais38036aa9PostConfirmation-33394b67616f7549684c-build.zip"
+          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
+          "S3Key": "amplify-builds/waisauthPreSignup-513078324e345a6a5344-build.zip"
         }
       }
     },
@@ -112,12 +119,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostConfirmation",
+            "waisauthPreSignup",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostConfirmation",
+                  "waisauthPreSignup",
                   "-",
                   {
                     "Ref": "env"
@@ -179,28 +186,6 @@
                     },
                     "lambda": {
                       "Ref": "LambdaFunction"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "lambda:InvokeFunction"
-              ],
-              "Resource": {
-                "Fn::Sub": [
-                  "arn:aws:lambda:${region}:${account}:function:asyncactions-${env}",
-                  {
-                    "region": {
-                      "Ref": "AWS::Region"
-                    },
-                    "account": {
-                      "Ref": "AWS::AccountId"
-                    },
-                    "env": {
-                      "Ref": "env"
                     }
                   }
                 ]

@@ -1,13 +1,11 @@
 /* Amplify Params - DO NOT EDIT
 	API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 	API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT
-	AUTH_WAIS38036AA9_USERPOOLID
+	AUTH_WAISAUTH_USERPOOLID
 	ENV
-	FUNCTION_ASYNCACTIONS_NAME
 	REGION
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
-
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 const urlParse = require('url').URL

@@ -1,6 +1,42 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const me = /* GraphQL */ `
+  query Me {
+    me {
+      Username
+      UserAttributes {
+        Name
+        Value
+      }
+      UserCreateDate
+      UserLastModifiedDate
+      Enabled
+      UserStatus
+      MFAOptions {
+        DeliveryMedium
+        AttributeName
+      }
+      PreferredMfaSetting
+      UserMFASettingList
+    }
+  }
+`;
+export const echo = /* GraphQL */ `
+  query Echo($msg: String!) {
+    echo(msg: $msg)
+  }
+`;
+export const sendRequest = /* GraphQL */ `
+  query SendRequest($requestType: RequestType!, $payload: String!) {
+    sendRequest(requestType: $requestType, payload: $payload)
+  }
+`;
+export const resolveRequest = /* GraphQL */ `
+  query ResolveRequest($id: ID!, $payload: String!) {
+    resolveRequest(id: $id, payload: $payload)
+  }
+`;
 export const listTradeByName = /* GraphQL */ `
   query ListTradeByName(
     $tradeName: String
@@ -1877,27 +1913,6 @@ export const listRequestss = /* GraphQL */ `
     }
   }
 `;
-export const me = /* GraphQL */ `
-  query Me {
-    me {
-      Username
-      UserAttributes {
-        Name
-        Value
-      }
-      UserCreateDate
-      UserLastModifiedDate
-      Enabled
-      UserStatus
-      MFAOptions {
-        DeliveryMedium
-        AttributeName
-      }
-      PreferredMfaSetting
-      UserMFASettingList
-    }
-  }
-`;
 export const user = /* GraphQL */ `
   query User($username: String!) {
     user(username: $username) {
@@ -1917,20 +1932,5 @@ export const user = /* GraphQL */ `
       PreferredMfaSetting
       UserMFASettingList
     }
-  }
-`;
-export const echo = /* GraphQL */ `
-  query Echo($msg: String!) {
-    echo(msg: $msg)
-  }
-`;
-export const sendRequest = /* GraphQL */ `
-  query SendRequest($requestType: RequestType!, $payload: String!) {
-    sendRequest(requestType: $requestType, payload: $payload)
-  }
-`;
-export const fulfillRequest = /* GraphQL */ `
-  query FulfillRequest($id: ID!, $decision: String!) {
-    fulfillRequest(id: $id, decision: $decision)
   }
 `;

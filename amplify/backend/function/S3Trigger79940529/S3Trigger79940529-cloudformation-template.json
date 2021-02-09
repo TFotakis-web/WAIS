@@ -2,35 +2,6 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
-    "modules": {
-      "Type": "String",
-      "Default": "",
-      "Description": "Comma-delimmited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
-    },
-    "resourceName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "trigger": {
-      "Type": "String",
-      "Default": "true"
-    },
-    "functionName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "roleName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentResource": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentStack": {
-      "Type": "String",
-      "Default": ""
-    },
     "env": {
       "Type": "String"
     }
@@ -57,12 +28,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostAuthentication",
+            "S3Trigger79940529",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostAuthentication",
+                  "S3Trigger79940529",
                   "-",
                   {
                     "Ref": "env"
@@ -76,24 +47,6 @@
           "Variables": {
             "ENV": {
               "Ref": "env"
-            },
-            "MODULES": {
-              "Ref": "modules"
-            },
-            "REGION": {
-              "Ref": "AWS::Region"
-            },
-            "ASYNCACTIONS_NAME": {
-              "Fn::Join": [
-                "",
-                [
-                  "asyncactions",
-                  "-",
-                  {
-                    "Ref": "env"
-                  }
-                ]
-              ]
             }
           }
         },
@@ -106,8 +59,8 @@
         "Runtime": "nodejs10.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/wais38036aa9PostAuthentication-79765145744e7164435a-build.zip"
+          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
+          "S3Key": "amplify-builds/S3Trigger79940529-444d533577774d72482f-build.zip"
         }
       }
     },
@@ -117,12 +70,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "wais38036aa9PostAuthentication",
+            "S3Trigger79940529LambdaRole79940529",
             {
               "Fn::Join": [
                 "",
                 [
-                  "wais38036aa9PostAuthentication",
+                  "S3Trigger79940529LambdaRole79940529",
                   "-",
                   {
                     "Ref": "env"
@@ -208,14 +161,14 @@
         ]
       }
     },
-    "LambdaExecutionRole": {
-      "Value": {
-        "Ref": "LambdaExecutionRole"
-      }
-    },
     "Region": {
       "Value": {
         "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
       }
     }
   }

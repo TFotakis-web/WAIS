@@ -1,18 +1,17 @@
 {
   "trigger": true,
   "modules": [
-    "add-to-group",
     "custom"
   ],
-  "parentResource": "wais38036aa9",
-  "functionName": "wais38036aa9PostConfirmation",
-  "resourceName": "wais38036aa9PostConfirmation",
+  "parentResource": "waisauth",
+  "functionName": "waisauthPostConfirmation",
+  "resourceName": "waisauthPostConfirmation",
   "parentStack": "auth",
-  "triggerEnvs": [],
+  "triggerEnvs": "[]",
   "triggerDir": "/home/gstamatakis/.nvm/versions/node/v14.15.4/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
   "triggerTemplate": "PostConfirmation.json.ejs",
-  "roleName": "wais38036aa9PostConfirmation",
+  "roleName": "waisauthPostConfirmation",
   "skipEdit": true,
-  "GROUP": "pending",
-  "enableCors": false
+  "enableCors": false,
+  "triggerEventPath": "PostConfirmation.event.json"
 }

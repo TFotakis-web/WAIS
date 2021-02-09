@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authwais38036aa9UserPoolId": {
+        "authwaisauthUserPoolId": {
             "Type": "String",
-            "Default": "authwais38036aa9UserPoolId"
+            "Default": "authwaisauthUserPoolId"
         },
         
-        "authwais38036aa9IdentityPoolId": {
+        "authwaisauthIdentityPoolId": {
             "Type": "String",
-            "Default": "authwais38036aa9IdentityPoolId"
+            "Default": "authwaisauthIdentityPoolId"
         },
         
-        "authwais38036aa9AppClientID": {
+        "authwaisauthAppClientID": {
             "Type": "String",
-            "Default": "authwais38036aa9AppClientID"
+            "Default": "authwaisauthAppClientID"
         },
-        "authwais38036aa9AppClientIDWeb": {
+        "authwaisauthAppClientIDWeb": {
             "Type": "String",
-            "Default": "authwais38036aa9AppClientIDWeb"
+            "Default": "authwaisauthAppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -55,7 +55,7 @@
               },
               
               "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
+                "Ref": "authwaisauthUserPoolId"
               } 
             }
         },
@@ -68,7 +68,7 @@
                         "",
                         [
                           {
-                            "Ref": "authwais38036aa9UserPoolId"
+                            "Ref": "authwaisauthUserPoolId"
                           },
                           "-adminGroupRole"
                         ]
@@ -85,331 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "systemGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "system",
-              "Precedence" : 2,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "systemGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "systemGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-systemGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "managerGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "manager",
-              "Precedence" : 3,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "managerGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "managerGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-managerGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "employeeGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "employee",
-              "Precedence" : 4,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "employeeGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "employeeGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-employeeGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "contractorGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "contractor",
-              "Precedence" : 5,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "contractorGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "contractorGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-contractorGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "pendingGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "pending",
-              "Precedence" : 6,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "pendingGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "pendingGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-pendingGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
-                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-     
-    
-        "blacklistedGroup": {
-          "Type" : "AWS::Cognito::UserPoolGroup",
-          "Properties" : {
-              "GroupName" : "blacklisted",
-              "Precedence" : 7,
-              
-              "RoleArn" : {
-                "Fn::GetAtt": [
-                    "blacklistedGroupRole",
-                    "Arn"
-                ]
-              },
-              
-              "UserPoolId" : {
-                "Ref": "authwais38036aa9UserPoolId"
-              } 
-            }
-        },
-        
-        "blacklistedGroupRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName":{
-                    "Fn::Join": [
-                        "",
-                        [
-                          {
-                            "Ref": "authwais38036aa9UserPoolId"
-                          },
-                          "-blacklistedGroupRole"
-                        ]
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Sid": "",
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Federated": "cognito-identity.amazonaws.com"
-                            },
-                            "Action": "sts:AssumeRoleWithWebIdentity",
-                            "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwaisauthIdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -435,7 +111,7 @@
                                 "",
                                 [
                                   
-                                  "wais38036aa9",
+                                  "waisauth",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -594,16 +270,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authwais38036aa9IdentityPoolId"
+                    "Ref": "authwaisauthIdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authwais38036aa9UserPoolId"
+                    "Ref": "authwaisauthUserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authwais38036aa9AppClientIDWeb"
+                    "Ref": "authwaisauthAppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authwais38036aa9AppClientID"
+                    "Ref": "authwaisauthAppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -623,72 +299,6 @@
             "Value": {
                 "Fn::GetAtt": [
                     "adminGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "systemGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "systemGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "managerGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "managerGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "employeeGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "employeeGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "contractorGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "contractorGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "pendingGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "pendingGroupRole",
-                    "Arn"
-                ]
-            }
-         
-        },
-        
-      
-        "blacklistedGroupRole": {
-            "Value": {
-                "Fn::GetAtt": [
-                    "blacklistedGroupRole",
                     "Arn"
                 ]
             }

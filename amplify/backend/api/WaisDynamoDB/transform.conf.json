@@ -1,11 +1,4 @@
 {
     "Version": 5,
-    "ElasticsearchWarning": true,
-    "StackMapping": {
-        "QuerylistTradeByNameResolver": "TradeCHANGEME",
-        "QuerylistTradeByOwnerUsernameResolver": "TradeCHANGEME",
-        "OfficeemployeesResolver": "ConnectionStack",
-        "OfficecontractorsResolver": "ConnectionStack",
-        "OfficecustomersResolver": "ConnectionStack"
-    }
+    "ElasticsearchWarning": true
 }

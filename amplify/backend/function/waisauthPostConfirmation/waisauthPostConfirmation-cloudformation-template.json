@@ -2,12 +2,41 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
+    "GROUP": {
+      "Type": "String",
+      "Default": ""
+    },
+    "modules": {
+      "Type": "String",
+      "Default": "",
+      "Description": "Comma-delimmited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
+    },
+    "resourceName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "trigger": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "functionName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "roleName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentResource": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentStack": {
+      "Type": "String",
+      "Default": ""
+    },
     "env": {
       "Type": "String"
-    },
-    "authwais38036aa9UserPoolId": {
-      "Type": "String",
-      "Default": "authwais38036aa9UserPoolId"
     }
   },
   "Conditions": {
@@ -32,12 +61,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries3e8c423f",
+            "waisauthPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries3e8c423f",
+                  "waisauthPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -52,9 +81,14 @@
             "ENV": {
               "Ref": "env"
             },
-            "GROUP": "admin",
-            "USERPOOL": {
-              "Ref": "authwais38036aa9UserPoolId"
+            "MODULES": {
+              "Ref": "modules"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "GROUP": {
+              "Ref": "GROUP"
             }
           }
         },
@@ -67,8 +101,8 @@
         "Runtime": "nodejs10.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-staging-151410-deployment",
-          "S3Key": "amplify-builds/AdminQueries3e8c423f-3567365a344e43327564-build.zip"
+          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
+          "S3Key": "amplify-builds/waisauthPostConfirmation-5456616f4e6f372b555a-build.zip"
         }
       }
     },
@@ -78,12 +112,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries3e8c423fLambdaRole",
+            "waisauthPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries3e8c423fLambdaRole",
+                  "waisauthPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -153,35 +187,22 @@
             {
               "Effect": "Allow",
               "Action": [
-                "cognito-idp:ListUsersInGroup",
-                "cognito-idp:AdminUserGlobalSignOut",
-                "cognito-idp:AdminEnableUser",
-                "cognito-idp:AdminDisableUser",
-                "cognito-idp:AdminRemoveUserFromGroup",
-                "cognito-idp:AdminAddUserToGroup",
-                "cognito-idp:AdminListGroupsForUser",
-                "cognito-idp:AdminGetUser",
-                "cognito-idp:AdminConfirmSignUp",
-                "cognito-idp:ListUsers",
-                "cognito-idp:ListGroups"
+                "lambda:InvokeFunction"
               ],
               "Resource": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:aws:cognito-idp:",
-                    {
+                "Fn::Sub": [
+                  "arn:aws:lambda:${region}:${account}:function:asyncactions-${env}",
+                  {
+                    "region": {
                       "Ref": "AWS::Region"
                     },
-                    ":",
-                    {
+                    "account": {
                       "Ref": "AWS::AccountId"
                     },
-                    ":userpool/",
-                    {
-                      "Ref": "authwais38036aa9UserPoolId"
+                    "env": {
+                      "Ref": "env"
                     }
-                  ]
+                  }
                 ]
               }
             }
@@ -204,14 +225,14 @@
         ]
       }
     },
-    "Region": {
-      "Value": {
-        "Ref": "AWS::Region"
-      }
-    },
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
       }
     }
   }

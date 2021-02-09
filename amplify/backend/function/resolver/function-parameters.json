@@ -1,23 +1,12 @@
 {
   "permissions": {
     "auth": {
-      "wais38036aa9": [
-        "create",
-        "read",
-        "update",
-        "delete"
+      "waisauth": [
+        "read"
       ]
     },
     "api": {
       "WaisDynamoDB": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ]
-    },
-    "function": {
-      "asyncactions": [
         "create",
         "read",
         "update",

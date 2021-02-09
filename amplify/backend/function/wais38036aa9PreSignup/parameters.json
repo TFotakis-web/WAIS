@@ -1,4 +1,0 @@
-{
-  "modules": "email-filter-whitelist,email-filter-blacklist,custom",
-  "resourceName": "wais38036aa9PreSignup"
-}

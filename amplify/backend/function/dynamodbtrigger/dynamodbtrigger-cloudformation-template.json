@@ -76,7 +76,7 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-staging-151410-deployment",
+          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
           "S3Key": "amplify-builds/dynamodbtrigger-6668646a4e4c462b672b-build.zip"
         }
       }
@@ -87,12 +87,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "waisLambdaRole7de86c8e",
+            "waisLambdaRolea0049853",
             {
               "Fn::Join": [
                 "",
                 [
-                  "waisLambdaRole7de86c8e",
+                  "waisLambdaRolea0049853",
                   "-",
                   {
                     "Ref": "env"
@@ -163,13 +163,13 @@
         }
       }
     },
-    "LambdaTriggerPolicyTrade": {
+    "LambdaTriggerPolicyOffice": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-Trade",
+        "PolicyName": "amplify-lambda-execution-policy-Office",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -188,7 +188,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiWaisDynamoDBGraphQLAPIIdOutput}:GetAtt:TradeTable:StreamArn"
+                  "Fn::Sub": "${apiWaisDynamoDBGraphQLAPIIdOutput}:GetAtt:OfficeTable:StreamArn"
                 }
               }
             }
@@ -196,10 +196,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingTrade": {
+    "LambdaEventSourceMappingOffice": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyTrade",
+        "LambdaTriggerPolicyOffice",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -207,7 +207,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiWaisDynamoDBGraphQLAPIIdOutput}:GetAtt:TradeTable:StreamArn"
+            "Fn::Sub": "${apiWaisDynamoDBGraphQLAPIIdOutput}:GetAtt:OfficeTable:StreamArn"
           }
         },
         "FunctionName": {
