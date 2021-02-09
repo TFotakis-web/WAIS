@@ -336,14 +336,13 @@ type Query {
 
   # Request API
   sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  fulfillRequest(id: ID!, decision: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
 type Mutation {
   manageCustomers(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
   manageContracts(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
   manageEmployees(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageContractors(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
@@ -363,13 +362,13 @@ enum ResourceAction {
 enum RequestType {
   CREATE_TRADE
   CREATE_COMPANY_CONNECTION
+  INVITE_USER_TO_OFFICE
 }
 
 # Employee management API
 enum EmployeeAction {
-  INSERT # Creates user with the given permissions if they dont exist
-  UPDATE # Overwrites the user's permissions iff they exist in members
-  DELETE # Remove user, permissions field is ignored and thus can be omitted
+  UPDATE_PERMISSIONS # Overwrites the user's permissions iff they exist in the 'members' field
+  REMOVE # Remove user, permissions field is ignored and thus can be omitted
 }
 
 #Add all department-specific

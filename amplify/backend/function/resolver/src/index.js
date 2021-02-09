@@ -9,20 +9,14 @@
 Amplify Params - DO NOT EDIT */
 
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
-const AWS = require('aws-sdk')
-
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 const urlParse = require('url').URL
-const queries = require('./queries.js')
+const queries = require('./gql_queries.js')
+const ddbQueries = require('./ddb_queries.js')
 const utils = require('./utils')
-
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
-
-AWS.config.update({ region: REGION })
-var ddb = new AWS.DynamoDB().DocumentClient()
-const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
 /**
  * Get user pool information from environment variables.
@@ -252,12 +246,11 @@ const resolvers = {
       let senderUsername = event.identity.claims['cognito:username']
       let payload = event.arguments.payload
       let requestType = event.arguments.requestType
-      let tradeName = payload.tradeName
       let id = event.uuid
       let metadata = {}
 
-      //Retrieve the caller UserProfile
-      let selUserProfile = utils.getUserProfile(username)
+      //Retrieve the UserProfiles
+      let senderUserProfile = utils.getUserProfile(username)
 
       //Get permissions
       let callerPermissions = null
@@ -287,6 +280,17 @@ const resolvers = {
           break
         case 'CREATE_TRADE':
           break
+        case 'INVITE_USER_TO_OFFICE':
+          let candidateEmployeeEmail = payload.email
+          if (!candidateEmployeeEmail) {
+            throw new Error('Receiver email missing.')
+          }
+          if (!utils.validateEmail(candidateEmployeeEmail)) {
+            throw new Error('Invalid receiver email')
+          }
+          let receiverUserProfile = ddbQueries.getUserProfileByEmail(candidateEmployeeEmail)
+          receiver = receiverUserProfile.username
+          break
         default:
           console.log('Receiver of request with id=[' + id + '] could not be determined.')
       }
@@ -303,20 +307,13 @@ const resolvers = {
       }
 
       //Attempt the request
-      console.log('Attempting to register new request: ' + item)
-      const adminReqResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(ENDPOINT, { input: item }, queries.createAdminRequest, 'createAdminRequest', REGION, APPSYNC_URL),
-      )
-      const resolverResponse = adminReqResponse.data.createAdminRequest
-
-      //Log the result
-      console.log('Response of ' + item + ' was ' + resolverResponse)
-      return resolverResponse
+      let insertionRes = ddbQueries.insertRequest(item)
+      console.log('Inserting request ' + JSON.stringify(item) + ' resulted in ' + JSON.stringify(insertionRes))
+      return insertionRes
     },
 
-    adminAproveRequest: (event) => {
-      console.log('Resolving adminAproveRequest')
+    resolveRequest: (event) => {
+      console.log('Resolving request')
 
       //Username check, this shouldn't be called via IAM
       if (!event.identity.claims) {
@@ -324,39 +321,46 @@ const resolvers = {
       }
 
       //Input Args
-      const approvedReqId = event.arguments.id
+      let uuid = event.uuid
+      let requestId = event.arguments.id
+      let callerUsername = event.identity.claims['cognito:username']
+      let requestObject = ddbQueries.getRequestById(requestId)
+      let requestType = requestObject.type
+      let receiverUsername = requestObject.receiverUsername
+      let receiverPayload = event.arguments.payload
+      let senderUsername = requestObject.senderUsername
+      let senderPayload = requestObject.payload
+      let decision = receiverPayload.decision
 
-      //Retrieve the item of the request from DDB
-      const adminRequestResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(ENDPOINT, { input: approvedReqId }, queries.getAdminRequest, 'getAdminRequest', REGION, APPSYNC_URL),
-      )
-      const selAdminReq = adminRequestResponse.data.getAdminRequest.items[0]
-
-      //Create the Office and delete the now approved AdminRequest
-      const adminReqInput = {
-        id: event.arguments.id,
-        officeInput: {
-          id: selAdminReq.tradeId,
-          tradeName: selAdminReq.tradeName,
-          tin: selAdminReq.tin,
-          logo: selAdminReq.logo,
-          info: selAdminReq.info,
-          postcode: selAdminReq.postcode,
-          ownerId: selAdminReq.ownerId,
-          ownerUsername: selAdminReq.ownerUsername,
-          members: [],
-        },
+      //Receiver and caller usernames must match
+      if (callerUsername !== receiverUsername) {
+        throw new Error('Caller and receiver usernames DONT match.')
       }
-      const apprResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(ENDPOINT, adminReqInput, queries.approveAdminRequest, 'approveAdminRequest', REGION, APPSYNC_URL),
-      )
-      const resolverResponse = apprResponse.data.approveAdminRequest
+
+      //Receiver must have a decision field
+      if (decision !== 'ACCEPT' || decision !== 'REJECT') {
+        throw new Error("Receiver must make a decision that is either 'ACCEPT' or 'REJECT'.")
+      }
+
+      //Decide based on the request type and update the relevant entries
+      switch (requestType) {
+        case 'INVITE_USER_TO_OFFICE':
+          if (decision === 'ACCEPT') {
+            ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
+          } else {
+            console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+          }
+          break
+        default:
+          throw new Error('Invalid request type.')
+      }
+
+      //Delete request as it has been resolved
+      let delResponse = ddbQueries.deleteRequest(uuid)
 
       //Log and return
-      console.log('Response of adminAproveRequest was: ' + resolverResponse)
-      return response
+      console.log('Response of resolveRequest was ' + JSON.stringify(delResponse))
+      return resolverResponse
     },
   },
 
@@ -385,12 +389,9 @@ const resolvers = {
       //Actions
       let resolverResponse = ''
       switch (action) {
-        case 'INSERT':
-          resolverResponse = utils.addEmployeeToOffice(office, payload, uuid)
+        case 'UPDATE_PERMISSIONS':
           break
-        case 'UPDATE':
-          break
-        case 'DELETE':
+        case 'REMOVE':
           break
         default:
           throw new Error('Invalid action.')
@@ -402,9 +403,6 @@ const resolvers = {
       return '{}'
     },
     manageContracts: (event) => {
-      return '{}'
-    },
-    manageEmployees: (event) => {
       return '{}'
     },
   },
