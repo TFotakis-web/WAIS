@@ -1,18 +1,30 @@
 [
-  {
-    "groupName": "admins",
-    "precedence": 1
-  },
-  {
-    "groupName": "managers",
-    "precedence": 2
-  },
-  {
-    "groupName": "employees",
-    "precedence": 3
-  },
-  {
-    "groupName": "externalContractors",
-    "precedence": 4
-  }
+    {
+        "groupName": "admin",
+        "precedence": 1
+    },
+    {
+        "groupName": "system",
+        "precedence": 2
+    },
+    {
+        "groupName": "manager",
+        "precedence": 3
+    },
+    {
+        "groupName": "employee",
+        "precedence": 4
+    },
+    {
+        "groupName": "contractor",
+        "precedence": 5
+    },
+    {
+        "groupName": "pending",
+        "precedence": 6
+    },
+    {
+        "groupName": "blacklisted",
+        "precedence": 7
+    }
 ]

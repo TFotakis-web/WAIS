@@ -52,7 +52,7 @@
             "ENV": {
               "Ref": "env"
             },
-            "GROUP": "admins",
+            "GROUP": "admin",
             "USERPOOL": {
               "Ref": "authwais38036aa9UserPoolId"
             }
@@ -162,7 +162,8 @@
                 "cognito-idp:AdminListGroupsForUser",
                 "cognito-idp:AdminGetUser",
                 "cognito-idp:AdminConfirmSignUp",
-                "cognito-idp:ListUsers"
+                "cognito-idp:ListUsers",
+                "cognito-idp:ListGroups"
               ],
               "Resource": {
                 "Fn::Join": [

@@ -41,15 +41,15 @@
     },
     "Resources": {
     
-        "adminsGroup": {
+        "adminGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "admins",
+              "GroupName" : "admin",
               "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "adminsGroupRole",
+                    "adminGroupRole",
                     "Arn"
                 ]
               },
@@ -60,7 +60,7 @@
             }
         },
         
-        "adminsGroupRole": {
+        "adminGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -70,7 +70,7 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-adminsGroupRole"
+                          "-adminGroupRole"
                         ]
                     ]
                 },
@@ -95,15 +95,15 @@
         },
      
     
-        "managersGroup": {
+        "systemGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "managers",
+              "GroupName" : "system",
               "Precedence" : 2,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "managersGroupRole",
+                    "systemGroupRole",
                     "Arn"
                 ]
               },
@@ -114,7 +114,7 @@
             }
         },
         
-        "managersGroupRole": {
+        "systemGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -124,7 +124,7 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-managersGroupRole"
+                          "-systemGroupRole"
                         ]
                     ]
                 },
@@ -149,15 +149,15 @@
         },
      
     
-        "employeesGroup": {
+        "managerGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "employees",
+              "GroupName" : "manager",
               "Precedence" : 3,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "employeesGroupRole",
+                    "managerGroupRole",
                     "Arn"
                 ]
               },
@@ -168,7 +168,7 @@
             }
         },
         
-        "employeesGroupRole": {
+        "managerGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -178,7 +178,7 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-employeesGroupRole"
+                          "-managerGroupRole"
                         ]
                     ]
                 },
@@ -203,15 +203,15 @@
         },
      
     
-        "externalContractorsGroup": {
+        "employeeGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "externalContractors",
+              "GroupName" : "employee",
               "Precedence" : 4,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "externalContractorsGroupRole",
+                    "employeeGroupRole",
                     "Arn"
                 ]
               },
@@ -222,7 +222,7 @@
             }
         },
         
-        "externalContractorsGroupRole": {
+        "employeeGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -232,7 +232,169 @@
                           {
                             "Ref": "authwais38036aa9UserPoolId"
                           },
-                          "-externalContractorsGroupRole"
+                          "-employeeGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
+        "contractorGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "contractor",
+              "Precedence" : 5,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "contractorGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "authwais38036aa9UserPoolId"
+              } 
+            }
+        },
+        
+        "contractorGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "authwais38036aa9UserPoolId"
+                          },
+                          "-contractorGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
+        "pendingGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "pending",
+              "Precedence" : 6,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "pendingGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "authwais38036aa9UserPoolId"
+              } 
+            }
+        },
+        
+        "pendingGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "authwais38036aa9UserPoolId"
+                          },
+                          "-pendingGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authwais38036aa9IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
+        "blacklistedGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "blacklisted",
+              "Precedence" : 7,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "blacklistedGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "authwais38036aa9UserPoolId"
+              } 
+            }
+        },
+        
+        "blacklistedGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "authwais38036aa9UserPoolId"
+                          },
+                          "-blacklistedGroupRole"
                         ]
                     ]
                 },
@@ -457,10 +619,10 @@
     
     "Outputs": {
       
-        "adminsGroupRole": {
+        "adminGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "adminsGroupRole",
+                    "adminGroupRole",
                     "Arn"
                 ]
             }
@@ -468,10 +630,10 @@
         },
         
       
-        "managersGroupRole": {
+        "systemGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "managersGroupRole",
+                    "systemGroupRole",
                     "Arn"
                 ]
             }
@@ -479,10 +641,10 @@
         },
         
       
-        "employeesGroupRole": {
+        "managerGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "employeesGroupRole",
+                    "managerGroupRole",
                     "Arn"
                 ]
             }
@@ -490,10 +652,43 @@
         },
         
       
-        "externalContractorsGroupRole": {
+        "employeeGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "externalContractorsGroupRole",
+                    "employeeGroupRole",
+                    "Arn"
+                ]
+            }
+         
+        },
+        
+      
+        "contractorGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "contractorGroupRole",
+                    "Arn"
+                ]
+            }
+         
+        },
+        
+      
+        "pendingGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "pendingGroupRole",
+                    "Arn"
+                ]
+            }
+         
+        },
+        
+      
+        "blacklistedGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "blacklistedGroupRole",
                     "Arn"
                 ]
             }

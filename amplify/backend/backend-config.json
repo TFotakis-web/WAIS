@@ -3,7 +3,26 @@
     "wais38036aa9": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "wais38036aa9PostAuthentication",
+          "triggerProvider": "Cognito",
+          "attributes": ["Arn", "Name"]
+        },
+        {
+          "category": "function",
+          "resourceName": "wais38036aa9PostConfirmation",
+          "triggerProvider": "Cognito",
+          "attributes": ["Arn", "Name"]
+        },
+        {
+          "category": "function",
+          "resourceName": "wais38036aa9PreSignup",
+          "triggerProvider": "Cognito",
+          "attributes": ["Arn", "Name"]
+        }
+      ],
       "customAuth": false
     },
     "userPoolGroups": {
@@ -13,12 +32,7 @@
         {
           "category": "auth",
           "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ]
+          "attributes": ["UserPoolId", "AppClientIDWeb", "AppClientID", "IdentityPoolId"]
         }
       ]
     }
@@ -35,7 +49,11 @@
               "userPoolId": "authwais38036aa9"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     },
@@ -46,17 +64,12 @@
         {
           "category": "auth",
           "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         },
         {
           "category": "function",
           "resourceName": "AdminQueries3e8c423f",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         }
       ]
     }
@@ -70,9 +83,88 @@
         {
           "category": "auth",
           "resourceName": "wais38036aa9",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
+        }
+      ]
+    },
+    "dynamodbtrigger": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": ["GraphQLAPIIdOutput", "GraphQLAPIEndpointOutput"]
+        }
+      ]
+    },
+    "S3Trigger2191702a": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
+    },
+    "wais38036aa9PostAuthentication": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "wais38036aa9PostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "wais38036aa9PreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "asyncactions": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": ["UserPoolId"]
+        },
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": ["GraphQLAPIIdOutput", "GraphQLAPIEndpointOutput"]
+        },
+        {
+          "category": "storage",
+          "resourceName": "waisstorage",
+          "attributes": ["BucketName"]
+        }
+      ]
+    },
+    "resolver": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": ["UserPoolId"]
+        },
+        {
+          "category": "api",
+          "resourceName": "WaisDynamoDB",
+          "attributes": ["GraphQLAPIIdOutput", "GraphQLAPIEndpointOutput"]
+        },
+        {
+          "category": "function",
+          "resourceName": "asyncactions",
+          "attributes": ["Name"]
+        },
+        {
+          "category": "storage",
+          "resourceName": "waisstorage",
+          "attributes": ["BucketName"]
         }
       ]
     }
@@ -80,8 +172,55 @@
   "hosting": {
     "amplifyhosting": {
       "service": "amplifyhosting",
-      "type": "cicd",
-      "lastPushTimeStamp": "2020-10-27T10:09:38.180Z"
+      "type": "cicd"
+    }
+  },
+  "storage": {
+    "waisstorage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "wais38036aa9",
+          "attributes": ["UserPoolId"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["adminGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["systemGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["managerGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["employeeGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["contractorGroupRole"]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": ["pendingGroupRole"]
+        },
+        {
+          "category": "function",
+          "resourceName": "S3Trigger2191702a",
+          "attributes": ["Name", "Arn", "LambdaExecutionRole"]
+        }
+      ]
     }
   }
 }
