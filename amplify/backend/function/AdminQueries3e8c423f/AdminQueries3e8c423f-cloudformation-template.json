@@ -67,8 +67,8 @@
         "Runtime": "nodejs10.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-prod-140316-deployment",
-          "S3Key": "amplify-builds/AdminQueries3e8c423f-3841742b4b714e6c4446-build.zip"
+          "S3Bucket": "amplify-wais-staging-151410-deployment",
+          "S3Key": "amplify-builds/AdminQueries3e8c423f-3567365a344e43327564-build.zip"
         }
       }
     },

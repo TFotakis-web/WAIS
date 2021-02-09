@@ -26,7 +26,8 @@
           "DOMAINWHITELIST": "",
           "DOMAINBLACKLIST": ""
         },
-        "asyncactions": {}
+        "asyncactions": {},
+        "resolver": {}
       },
       "hosting": {
         "amplifyhosting": {
