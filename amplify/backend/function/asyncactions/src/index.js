@@ -15,7 +15,7 @@ const queries = require('./queries.js')
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
-
+//
 //
 // create a signed graphql operation request
 //
