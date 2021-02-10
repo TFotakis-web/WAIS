@@ -57,7 +57,14 @@ exports.handler = async (event) => {
         professionStartDate: new Date().toISOString(),
         file: [],
       }
-      const userProfileResponse = ddbQueries.insertUserProfile(userProfileItem)
+      let userProfileResponse
+      try {
+        userProfileResponse = await ddbQueries.insertUserProfile(userProfileItem)
+      } catch (e) {
+        response.ActionResponse = initUserResponse
+        statusCode = 400
+        break
+      }
       if (userProfileResponse.errors) {
         initUserResponse.UserProfileErrors = userProfileResponse.errors
         response.ActionResponse = initUserResponse
@@ -73,7 +80,15 @@ exports.handler = async (event) => {
         username: event.username,
         balance: 0.0,
       }
-      const userWalletResponse = ddbQueries.insertUserWallet(walletItem)
+
+      let userWalletResponse
+      try {
+        userWalletResponse = await ddbQueries.insertUserWallet(walletItem)
+      } catch (e) {
+        response.ActionResponse = initUserResponse
+        statusCode = 400
+        break
+      }
       if (userWalletResponse.errors) {
         initUserResponse.UserWalletErrors = userWalletResponse.errors
         response.ActionResponse = initUserResponse

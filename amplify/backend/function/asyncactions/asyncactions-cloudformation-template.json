@@ -304,6 +304,25 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem"
+              ],
+              "Resource": "arn:aws:dynamodb:*:*:table/*"
+            },
+            {
+              "Sid": "GetStreamRecords",
+              "Effect": "Allow",
+              "Action": "dynamodb:GetRecords",
+              "Resource": "arn:aws:dynamodb:*:*:table/*/stream/* "
             }
           ]
         }

@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 const REGION = process.env.REGION
 AWS.config.update({ region: REGION })
-const ddb = new AWS.DynamoDB().DocumentClient()
+const ddb = new AWS.DynamoDB.DocumentClient()
 const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
 module.exports = {
