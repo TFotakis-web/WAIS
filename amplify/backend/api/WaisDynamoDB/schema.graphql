@@ -82,7 +82,6 @@ type UserProfile
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
-
   # Access to user's wallet
   wallet: UserWallet @connection(fields: ["id"])
 
@@ -207,7 +206,7 @@ type TradeUserConnection
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
-  # Usernames that can view this connection (not edit)
+  # Usernames that can view this connection (not edit) 
   members: [String]!
 
   #Extras
