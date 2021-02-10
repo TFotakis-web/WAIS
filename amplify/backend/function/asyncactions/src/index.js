@@ -44,7 +44,7 @@ exports.handler = async (event) => {
 
       //Create a UserProfile
       let userProfileItem = {
-        id: event.uuid,
+        id: event.email,
         username: event.username,
         email: event.email,
         telephone: event.phone_number,

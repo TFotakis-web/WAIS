@@ -242,10 +242,16 @@ const resolvers = {
 
       //Unpack arguments
       let senderUsername = event.identity.claims['cognito:username']
+      let senderEmail = event.identity.claims.email
       let payload = event.arguments.payload
+      let receiverEmail = payload.email
       let requestType = event.arguments.requestType
       let id = event.uuid
       let metadata = {}
+
+      if (!utils.validateEmail(receiverEmail)) {
+        throw new Error('Invalid receiver email')
+      }
 
       //Retrieve the UserProfiles
       let senderUserProfile = utils.getUserProfile(username)
@@ -253,17 +259,14 @@ const resolvers = {
         throw new Error('Failed to retrieve the user profile of ' + username)
       }
 
-      //Get permissions
-      let callerPermissions = null
-      if (tradeName) {
-        callerPermissions = utils.getUserPermissions(senderUsername, tradeName)
+      //Get the Office of the person sending this request
+      let callerOffice = getOfficeByOwnerUsername(senderUsername)
+      if (!callerOffice) {
+        throw new Error('Only office managers can send requests.')
       }
 
-      // Halt this request if permissions don't match
-      // ... TODO
-      if (callerPermissions == null) {
-        throw new Error('User has insufficent permissions.')
-      }
+      //Get permissions
+      let callerPermissions = (callerPermissions = utils.getUserPermissions(senderUsername, callerOffice.tradeName))
 
       //Expire this after 1 week
       let expiresAt = Date.now()
@@ -271,27 +274,16 @@ const resolvers = {
       expiresAt = new Date(expiresAt)
 
       //Get the receiver of this request based on the request payload and type
-      let receiver = 'undefined'
-
       switch (requestType) {
         case 'CREATE_COMPANY_CONNECTION':
-          let tradeOwnerEmail = payload.tradeOwnerEmail
-          let userProfile = utils.getUserProfileByEmail(tradeOwnerEmail)
-          receiver = userProfile.username
+          // if (callerPermissions == null) {
+          //   throw new Error('User has insufficent permissions.')
+          // }
           break
         case 'CREATE_TRADE':
-          receiver = 'ADMIN'
+          receiverEmail = 'admin@wais.com'
           break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
-          let candidateEmployeeEmail = payload.email
-          if (!candidateEmployeeEmail) {
-            throw new Error('Receiver email missing.')
-          }
-          if (!utils.validateEmail(candidateEmployeeEmail)) {
-            throw new Error('Invalid receiver email')
-          }
-          let receiverUserProfile = ddbQueries.getUserProfileByEmail(candidateEmployeeEmail)
-          receiver = receiverUserProfile.username
           break
         default:
           console.log('Receiver of request with id=[' + id + '] could not be determined.')
@@ -303,8 +295,8 @@ const resolvers = {
         expiresAt: expiresAt,
         payload: payload,
         type: requestType,
-        senderUsername: senderUsername,
-        receiverUsername: receiver,
+        senderEmail: senderEmail,
+        receiverEmail: receiverEmail,
         metadata: metadata,
       }
 

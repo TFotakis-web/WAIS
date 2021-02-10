@@ -45,8 +45,14 @@
         "AdminQueries79849b09": {},
         "S3Trigger79940529": {},
         "dynamodbtrigger": {},
-        "asyncactions": {},
-        "resolver": {}
+        "asyncactions": {
+          "deploymentBucketName": "amplify-wais-staging-203026-deployment",
+          "s3Key": "amplify-builds/asyncactions-417177596b354a722b53-build.zip"
+        },
+        "resolver": {
+          "deploymentBucketName": "amplify-wais-staging-203026-deployment",
+          "s3Key": "amplify-builds/resolver-55304c5a6e7856652b38-build.zip"
+        }
       }
     }
   }
