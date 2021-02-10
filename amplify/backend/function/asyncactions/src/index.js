@@ -7,48 +7,7 @@
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
-const AWS = require('aws-sdk')
-const https = require('https')
-const urlParse = require('url').URL
-const queries = require('./queries.js')
-
-const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
-const REGION = process.env.REGION
-const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
-//
-//
-// create a signed graphql operation request
-//
-const createSignedRequest = (endpoint, item, operation, operationName, region, url) => {
-  const request = new AWS.HttpRequest(url, region)
-  request.method = 'POST'
-  request.path = '/graphql'
-  request.headers.host = endpoint
-  request.headers['Content-Type'] = 'application/json'
-  request.body = JSON.stringify({
-    query: operation,
-    operationName: operationName,
-    variables: item,
-  })
-  const signer = new AWS.Signers.V4(request, 'appsync', true)
-  signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
-  return request
-}
-
-//
-// send a request to the appsync api and return the response data
-//
-const getResponseFromApi = (endpoint, request) => {
-  return new Promise((resolve, reject) => {
-    const httpRequest = https.request({ ...request, host: endpoint }, (result) => {
-      result.on('data', (data) => {
-        resolve(JSON.parse(data.toString()))
-      })
-    })
-    httpRequest.write(request.body)
-    httpRequest.end()
-  })
-}
+const ddbQueries = require('./ddb_queries.js')
 
 exports.handler = async (event) => {
   //Request must contain an 'action' entry
@@ -74,6 +33,8 @@ exports.handler = async (event) => {
   //UserProfile, UserWallet
   switch (event.action) {
     case 'InitUser':
+      console.log('InitUser with event: ' + JSON.stringify(event))
+
       let initUserResponse = {
         UserProfileResponse: '',
         UserProfileErrors: '',
@@ -82,31 +43,28 @@ exports.handler = async (event) => {
       }
 
       //Create a UserProfile
-      const userProfileResponse = await getResponseFromApi(
-        ENDPOINT,
-        createSignedRequest(
-          ENDPOINT,
-          {
-            input: {
-              id: event.uuid,
-              username: event.username,
-              telephone: 'undefined',
-              tin: 'undefined',
-              doy: 'undefined',
-              familyStatus: 'undefined',
-              chamberRecordNumber: 'undefined',
-              insuranceLicenseExpirationDate: new Date().toISOString(),
-              partnersNumberLimit: 0,
-              professionStartDate: new Date().toISOString(),
-              file: [],
-            },
-          },
-          queries.createUserProfile,
-          'createUserProfile',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
+      let userProfileItem = {
+        id: event.email,
+        username: event.username,
+        email: event.email,
+        telephone: event.phone_number,
+        tin: 'undefined',
+        doy: 'undefined',
+        familyStatus: 'undefined',
+        chamberRecordNumber: 'undefined',
+        insuranceLicenseExpirationDate: new Date().toISOString(),
+        partnersNumberLimit: 0,
+        professionStartDate: new Date().toISOString(),
+        file: [],
+      }
+      let userProfileResponse
+      try {
+        userProfileResponse = await ddbQueries.insertUserProfile(userProfileItem)
+      } catch (e) {
+        response.ActionResponse = initUserResponse
+        statusCode = 400
+        break
+      }
       if (userProfileResponse.errors) {
         initUserResponse.UserProfileErrors = userProfileResponse.errors
         response.ActionResponse = initUserResponse
@@ -117,23 +75,20 @@ exports.handler = async (event) => {
       }
 
       //Create the UserProfile
-      const userWalletResponse = await getResponseFromApi(
-        ENDPOINT,
-        createSignedRequest(
-          ENDPOINT,
-          {
-            input: {
-              id: event.uuid,
-              username: event.username,
-              balance: 0.0,
-            },
-          },
-          queries.createUserWallet,
-          'createUserWallet',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
+      let walletItem = {
+        id: event.email,
+        username: event.username,
+        balance: 0.0,
+      }
+
+      let userWalletResponse
+      try {
+        userWalletResponse = await ddbQueries.insertUserWallet(walletItem)
+      } catch (e) {
+        response.ActionResponse = initUserResponse
+        statusCode = 400
+        break
+      }
       if (userWalletResponse.errors) {
         initUserResponse.UserWalletErrors = userWalletResponse.errors
         response.ActionResponse = initUserResponse

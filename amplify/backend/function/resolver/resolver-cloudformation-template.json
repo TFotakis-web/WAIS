@@ -25,6 +25,12 @@
     "storagewaisstorageBucketName": {
       "Type": "String",
       "Default": "storagewaisstorageBucketName"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -96,8 +102,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
-          "S3Key": "amplify-builds/resolver-692b4735787273777a72-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

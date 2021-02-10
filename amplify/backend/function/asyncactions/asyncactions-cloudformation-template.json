@@ -25,6 +25,12 @@
     "storagewaisstorageBucketName": {
       "Type": "String",
       "Default": "storagewaisstorageBucketName"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -96,8 +102,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
-          "S3Key": "amplify-builds/asyncactions-6577705a516a6665342b-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },
@@ -294,6 +304,25 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem"
+              ],
+              "Resource": "arn:aws:dynamodb:*:*:table/*"
+            },
+            {
+              "Sid": "GetStreamRecords",
+              "Effect": "Allow",
+              "Action": "dynamodb:GetRecords",
+              "Resource": "arn:aws:dynamodb:*:*:table/*/stream/* "
             }
           ]
         }

@@ -61,11 +61,10 @@ type UserProfile
   )
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername") {
-  # Important field(s)
-  id: ID!
+  id: ID! #Currently the user's email, guaranteed to always be unique
   username: String!
 
-  #Unique fields, not present anywhere eles
+  #Unique fields, not present anywhere else
   email: String!
   telephone: String!
   tin: String!
@@ -82,15 +81,13 @@ type UserProfile
   updatedAt: AWSDateTime!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
-  tradeCon: [TradeUserConnection]
-    @connection(keyName: "byUserName", fields: ["username"])
-    @auth(
-      rules: [
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-        { allow: owner, ownerField: "username", operations: [read] }
-      ]
-    )
+  tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
+
+  # Access to user's wallet
+  wallet: UserWallet @connection(fields: ["id"])
+
+  # Access to pending requests with this user as receiver
+  requests: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
 }
 
 type Vehicle
@@ -189,14 +186,14 @@ type Customer
 
 type TradeUserConnection
   @model(subscriptions: null)
-  @key(name: "byTradeName", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeName")
-  @key(name: "byEmployeeType", fields: ["employeeType", "username"], queryField: "listTradeUserConnectionsByEmployeeType")
-  @key(name: "byUserName", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUserName")
+  @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
+  @key(name: "byEmployeeType", fields: ["employeeType"], queryField: "listTradeUserConnectionsByEmployeeType")
+  @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
-      { allow: owner, ownerField: "username", operations: [read] }
+      { allow: owner, ownerField: "members", operations: [read] }
     ]
   ) {
   id: ID!
@@ -205,10 +202,13 @@ type TradeUserConnection
   userId: ID!
   username: String!
   trade: Office! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"])
+  user: UserProfile! @connection(fields: ["userId"]) #User ID and User email are the same
   permissions: [UserPermissions]
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
+
+  # Usernames that can view this connection (not edit)
+  members: [String]!
 
   #Extras
   createdAt: AWSDateTime!
@@ -294,13 +294,14 @@ type TransactionHistory
 
 type Requests
   @model(subscriptions: null)
-  @key(name: "byReceiverUsername", fields: ["receiverUsername"])
+  @key(name: "bySenderEmail", fields: ["senderEmail"])
+  @key(name: "byReceiverEmail", fields: ["receiverEmail"])
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
       { allow: private, provider: iam }
-      { allow: owner, ownerField: "senderUsername", operations: [read, delete] }
-      { allow: owner, ownerField: "receiverUsername", operations: [read] }
+      { allow: owner, identityClaim: "email", ownerField: "senderEmail", operations: [read, delete] }
+      { allow: owner, identityClaim: "email", ownerField: "receiverEmail", operations: [read] }
     ]
   ) {
   id: ID!
@@ -309,8 +310,8 @@ type Requests
   expiresAt: AWSTimestamp!
 
   # Users involved
-  senderUsername: String!
-  receiverUsername: String!
+  senderEmail: String!
+  receiverEmail: String!
 
   # Request type and information
   type: RequestType!
@@ -362,7 +363,8 @@ enum ResourceAction {
 enum RequestType {
   CREATE_TRADE
   CREATE_COMPANY_CONNECTION
-  INVITE_USER_TO_OFFICE
+  INVITE_EMPLOYEE_TO_OFFICE
+  INVITE_CONTRACTOR_TO_OFFICE
 }
 
 # Employee management API

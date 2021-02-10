@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 const REGION = process.env.REGION
 AWS.config.update({ region: REGION })
-const ddb = new AWS.DynamoDB().DocumentClient()
+const ddb = new AWS.DynamoDB.DocumentClient()
 const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
 module.exports = {
@@ -14,10 +14,11 @@ module.exports = {
       newMembers.push(empUsername)
     }
 
+    // ==DDB TRANSACTION==
     // Update members and put user into members iff remaining > 0 AND memebers dont contain empUsername
     // Put new tradecon
     // Atomically decrement the members counter by one
-    data = ddb.transactWriteItems({
+    let transResult = ddb.transactWriteItems({
       TransactItems: [
         {
           Update: {
@@ -48,31 +49,12 @@ module.exports = {
             },
           },
         },
-        {
-          Put: {
-            TableName: 'UserProfile' + ddbSuffix,
-            Item: {
-              id: { S: uuid },
-              username: { S: empUsername },
-              email: { S: empEmail },
-              telephone: { S: '' },
-              tin: { S: '' },
-              doy: { S: '' },
-              familyStatus: { S: '' },
-              chamberRecordNumber: { S: '' },
-              insuranceLicenseExpirationDate: { S: '' },
-              partnersNumberLimit: { S: '' },
-              professionStartDate: { S: '' },
-              file: { L: [] },
-            },
-          },
-        },
       ],
     })
 
     //Log results
-    console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(data))
-    return data
+    console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(transResult))
+    return transResult
   },
   insertRequest: (request) => {
     console.log('insertRequest request: ' + JSON.stringify(request))
