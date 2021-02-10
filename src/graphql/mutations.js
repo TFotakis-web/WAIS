@@ -72,6 +72,16 @@ export const createOffice = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
     }
   }
@@ -119,6 +129,16 @@ export const updateOffice = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -170,6 +190,16 @@ export const deleteOffice = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
     }
   }
@@ -208,8 +238,30 @@ export const createUserProfile = /* GraphQL */ `
           username
           employeeType
           preferences
+          members
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      wallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      requests {
+        items {
+          id
+          createdAt
+          updatedAt
+          expiresAt
+          senderEmail
+          receiverEmail
+          type
+          payload
+          metadata
         }
         nextToken
       }
@@ -250,8 +302,30 @@ export const updateUserProfile = /* GraphQL */ `
           username
           employeeType
           preferences
+          members
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      wallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      requests {
+        items {
+          id
+          createdAt
+          updatedAt
+          expiresAt
+          senderEmail
+          receiverEmail
+          type
+          payload
+          metadata
         }
         nextToken
       }
@@ -292,8 +366,30 @@ export const deleteUserProfile = /* GraphQL */ `
           username
           employeeType
           preferences
+          members
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      wallet {
+        id
+        username
+        balance
+        createdAt
+        updatedAt
+      }
+      requests {
+        items {
+          id
+          createdAt
+          updatedAt
+          expiresAt
+          senderEmail
+          receiverEmail
+          type
+          payload
+          metadata
         }
         nextToken
       }
@@ -762,6 +858,7 @@ export const createTradeUserConnection = /* GraphQL */ `
       }
       employeeType
       preferences
+      members
       createdAt
       updatedAt
       trade {
@@ -818,6 +915,16 @@ export const createTradeUserConnection = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -842,6 +949,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
       }
       employeeType
       preferences
+      members
       createdAt
       updatedAt
       trade {
@@ -900,6 +1008,16 @@ export const updateTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
     }
   }
@@ -922,6 +1040,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
       }
       employeeType
       preferences
+      members
       createdAt
       updatedAt
       trade {
@@ -978,6 +1097,16 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -1667,6 +1796,16 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
       receiver {
         id
@@ -1689,6 +1828,16 @@ export const createTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -1747,6 +1896,16 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
       receiver {
         id
@@ -1769,6 +1928,16 @@ export const updateTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -1827,6 +1996,16 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
+          nextToken
+        }
       }
       receiver {
         id
@@ -1849,6 +2028,16 @@ export const deleteTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        wallet {
+          id
+          username
+          balance
+          createdAt
+          updatedAt
+        }
+        requests {
           nextToken
         }
       }
@@ -1879,8 +2068,8 @@ export const createRequests = /* GraphQL */ `
       createdAt
       updatedAt
       expiresAt
-      senderUsername
-      receiverUsername
+      senderEmail
+      receiverEmail
       type
       payload
       metadata
@@ -1897,8 +2086,8 @@ export const updateRequests = /* GraphQL */ `
       createdAt
       updatedAt
       expiresAt
-      senderUsername
-      receiverUsername
+      senderEmail
+      receiverEmail
       type
       payload
       metadata
@@ -1915,8 +2104,8 @@ export const deleteRequests = /* GraphQL */ `
       createdAt
       updatedAt
       expiresAt
-      senderUsername
-      receiverUsername
+      senderEmail
+      receiverEmail
       type
       payload
       metadata

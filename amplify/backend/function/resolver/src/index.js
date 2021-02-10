@@ -249,6 +249,9 @@ const resolvers = {
 
       //Retrieve the UserProfiles
       let senderUserProfile = utils.getUserProfile(username)
+      if (!senderUserProfile) {
+        throw new Error('Failed to retrieve the user profile of ' + username)
+      }
 
       //Get permissions
       let callerPermissions = null
@@ -277,8 +280,9 @@ const resolvers = {
           receiver = userProfile.username
           break
         case 'CREATE_TRADE':
+          receiver = 'ADMIN'
           break
-        case 'INVITE_USER_TO_OFFICE':
+        case 'INVITE_EMPLOYEE_TO_OFFICE':
           let candidateEmployeeEmail = payload.email
           if (!candidateEmployeeEmail) {
             throw new Error('Receiver email missing.')
@@ -342,7 +346,7 @@ const resolvers = {
 
       //Decide based on the request type and update the relevant entries
       switch (requestType) {
-        case 'INVITE_USER_TO_OFFICE':
+        case 'INVITE_EMPLOYEE_TO_OFFICE':
           if (decision === 'ACCEPT') {
             ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
           } else {

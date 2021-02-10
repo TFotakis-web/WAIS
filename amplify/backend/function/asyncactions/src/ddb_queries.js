@@ -21,4 +21,20 @@ module.exports = {
     console.log('insertUserProfile result: ' + JSON.stringify(resp))
     return resp
   },
+  insertUserWallet: (userProfileItem) => {
+    console.log('insertUserWallet request: ' + JSON.stringify(request))
+    let resp = { data: '', error: '' }
+    ddb.put(
+      {
+        TableName: 'UserWallet' + ddbSuffix,
+        Item: userProfileItem,
+      },
+      function (err, data) {
+        if (err) resp.error = err
+        else resp.data = data
+      },
+    )
+    console.log('insertUserWallet result: ' + JSON.stringify(resp))
+    return resp
+  },
 }

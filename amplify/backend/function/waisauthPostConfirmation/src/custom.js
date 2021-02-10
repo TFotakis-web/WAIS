@@ -6,13 +6,12 @@ var lambda = new AWS.Lambda({
 
 exports.handler = async (event, context, callback) => {
   const targetFunctionName = 'asyncactions-' + process.env.ENV
-  const username = event.userName
   const payload = {
     action: 'InitUser',
-    username: username,
-    uuid: context.awsRequestId,
+    username: event.userName,
+    email: event.request.userAttributes.email,
+    phone_number: event.request.userAttributes.phone_number,
   }
-
   try {
     await lambda
       .invoke({
@@ -20,10 +19,9 @@ exports.handler = async (event, context, callback) => {
         Payload: JSON.stringify(payload),
       })
       .promise()
+    console.log('Completed confirmation trigger for user ' + event.userName)
     callback(null, event)
-    console.log('Completed confirmation trigger for user ' + username)
   } catch (e) {
-    callback(e)
     console.log(
       'Failed confirmation trigger for the following input' +
         JSON.stringify({
@@ -34,5 +32,6 @@ exports.handler = async (event, context, callback) => {
           payload: payload,
         }),
     )
+    callback(e)
   }
 }

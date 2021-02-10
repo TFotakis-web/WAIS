@@ -18,7 +18,7 @@
 }
 ```
 
-## INVITE_USER_TO_OFFICE
+## INVITE_EMPLOYEE_TO_OFFICE
 
 ```json
 {
