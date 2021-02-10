@@ -14,7 +14,12 @@
     "categories": {
       "function": {
         "waisauthPostConfirmation": {},
-        "waisauthPreSignup": {}
+        "waisauthPreSignup": {},
+        "AdminQueries79849b09": {},
+        "S3Trigger79940529": {},
+        "dynamodbtrigger": {},
+        "asyncactions": {},
+        "resolver": {}
       },
       "auth": {
         "waisauth": {},
