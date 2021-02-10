@@ -11,6 +11,7 @@ const AWS = require('aws-sdk')
 const https = require('https')
 const urlParse = require('url').URL
 const queries = require('./queries.js')
+const ddbQueries = require('./ddb_queries.js')
 
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
@@ -74,6 +75,7 @@ exports.handler = async (event) => {
   //UserProfile, UserWallet
   switch (event.action) {
     case 'InitUser':
+      console.log('InitUser with event: ' + JSON.stringify(event))
       let initUserResponse = {
         UserProfileResponse: '',
         UserProfileErrors: '',
@@ -82,31 +84,21 @@ exports.handler = async (event) => {
       }
 
       //Create a UserProfile
-      const userProfileResponse = await getResponseFromApi(
-        ENDPOINT,
-        createSignedRequest(
-          ENDPOINT,
-          {
-            input: {
-              id: event.uuid,
-              username: event.username,
-              telephone: 'undefined',
-              tin: 'undefined',
-              doy: 'undefined',
-              familyStatus: 'undefined',
-              chamberRecordNumber: 'undefined',
-              insuranceLicenseExpirationDate: new Date().toISOString(),
-              partnersNumberLimit: 0,
-              professionStartDate: new Date().toISOString(),
-              file: [],
-            },
-          },
-          queries.createUserProfile,
-          'createUserProfile',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
+      let item = {
+        id: event.uuid,
+        username: event.username,
+        email: event.request.userAttributes.email,
+        telephone: event.request.userAttributes.phone_number,
+        tin: 'undefined',
+        doy: 'undefined',
+        familyStatus: 'undefined',
+        chamberRecordNumber: 'undefined',
+        insuranceLicenseExpirationDate: new Date().toISOString(),
+        partnersNumberLimit: 0,
+        professionStartDate: new Date().toISOString(),
+        file: [],
+      }
+      const userProfileResponse = ddbQueries.insertUserProfile(item)
       if (userProfileResponse.errors) {
         initUserResponse.UserProfileErrors = userProfileResponse.errors
         response.ActionResponse = initUserResponse

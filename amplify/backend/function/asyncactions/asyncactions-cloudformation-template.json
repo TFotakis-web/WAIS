@@ -96,8 +96,8 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-wais-waisprod-191259-deployment",
-          "S3Key": "amplify-builds/asyncactions-6577705a516a6665342b-build.zip"
+          "S3Bucket": "amplify-wais-staging-203026-deployment",
+          "S3Key": "amplify-builds/asyncactions-663239525a336d777330-build.zip"
         }
       }
     },
