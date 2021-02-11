@@ -2,7 +2,7 @@ const https = require('https')
 const queries = require('./gql_queries.js')
 const AWS = require('aws-sdk')
 const urlParse = require('url').URL
-const ses = new aws.SES({ region: 'us-west-2' })
+const ses = new AWS.SES({ region: 'us-west-2' })
 const SourceEmailAddress = '' //TODO
 
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT

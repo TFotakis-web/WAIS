@@ -70,6 +70,7 @@ module.exports = {
         .put({
           TableName: 'Requests' + ddbSuffix,
           Item: request,
+          ReturnValues: 'NONE',
         })
         .promise()
     } catch (err) {
@@ -85,9 +86,7 @@ module.exports = {
       resp.data = await ddb
         .delete({
           TableName: 'Requests' + ddbSuffix,
-          Key: {
-            id: 'id',
-          },
+          Key: { id: id },
         })
         .promise()
     } catch (err) {
@@ -103,8 +102,7 @@ module.exports = {
       resp.data = await ddb
         .get({
           TableName: 'Requests' + ddbSuffix,
-          KeyConditionExpression: 'id = :provided_id',
-          ExpressionAttributeValues: { ':provided_id': id },
+          Key: { id: id },
         })
         .promise()
     } catch (err) {
@@ -121,8 +119,7 @@ module.exports = {
         .get({
           TableName: 'UserProfile' + ddbSuffix,
           IndexName: 'byEmail',
-          KeyConditionExpression: 'email = :user_email',
-          ExpressionAttributeValues: { ':user_email': email },
+          Key: { id: email },
         })
         .promise()
     } catch (err) {
@@ -139,8 +136,7 @@ module.exports = {
         .get({
           TableName: 'Office' + ddbSuffix,
           IndexName: 'byOwnerUsername',
-          KeyConditionExpression: 'username = :provided_username',
-          ExpressionAttributeValues: { ':provided_username': username },
+          Key: { id: username },
         })
         .promise()
     } catch (err) {

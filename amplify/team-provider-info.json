@@ -92,7 +92,7 @@
         },
         "resolver": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/resolver-4852734a6345776e617a-build.zip"
+          "s3Key": "amplify-builds/resolver-78594f48453830683848-build.zip"
         }
       }
     }

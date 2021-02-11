@@ -9,9 +9,8 @@ Amplify Params - DO NOT EDIT */
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 const urlParse = require('url').URL
-const queries = require('./gql_queries.js')
 const ddbQueries = require('./ddb_queries.js')
-const utils = require('./utils')
+const utils = require('./utils.js')
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
@@ -19,7 +18,7 @@ const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 /**
  * Get user pool information from environment variables.
  */
-const COGNITO_USERPOOL_ID = process.env.AUTH_WAIS38036AA9_USERPOOLID
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAISAUTH_USERPOOLID
 if (!COGNITO_USERPOOL_ID) {
   throw new Error(`Function requires a valid pool ID`)
 }
@@ -243,11 +242,12 @@ const resolvers = {
       //Unpack arguments
       let senderUsername = event.identity.claims['cognito:username']
       let senderEmail = event.identity.claims.email
-      let receiverEmail = event.arguments.payload.email
-      let message = event.payload.message
-      let tradeName = event.payload.tradeName
+      let payload = JSON.parse(event.arguments.payload)
+      let receiverEmail = payload.email
+      let message = payload.message
+      let tradeName = payload.tradeName
       let requestType = event.arguments.requestType
-      let id = event.uuid
+      let callerOffice //Will be populated if necessary later on
       let metadata = {
         forAdmin: 'false',
       }
@@ -260,29 +260,37 @@ const resolvers = {
       //Retrieve the UserProfiles
       let senderUserProfile = await ddbQueries.getUserProfileByEmail(senderEmail)
       if (!senderUserProfile) {
-        throw new Error('Failed to retrieve the user profile of ' + username)
+        throw new Error('Failed to retrieve the user profile of ' + senderUsername)
       }
-
-      //Get the Office of the person sending this request
-      let callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
-      if (!callerOffice) {
-        throw new Error("User isn't an Office managers. Only office managers can send requests.")
+      if (senderUserProfile.error) {
+        throw new Error('Failed to retrieve the user profile of ' + senderUsername + ' with error ' + senderUserProfile.error)
       }
 
       //Expire this after 1 week
-      let expiresAt = Date.now()
-      expiresAt += 1000 * 60 * 60 * 24 * 7
-      expiresAt = new Date(expiresAt)
+      let curTS = Date.now()
+      let id = curTS + '_' + senderEmail
+      let expiresAt = new Date(curTS + 1000 * 60 * 60 * 24 * 7)
 
       //Get the receiver of this request based on the request payload and type
       switch (requestType) {
         case 'CREATE_COMPANY_CONNECTION':
+          //Get the Office of the person sending this request
+          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
           if (!utils.validateEmail(receiverEmail)) {
             throw new Error('Invalid receiver email')
           }
-          let receiverUserProfile = await ddbQueries.getUserProfileByEmail(receiverEmail)
+          receiverUserProfile = await ddbQueries.getUserProfileByEmail(receiverEmail)
           if (!receiverUserProfile) {
             throw new Error('Receiver office manager does not exist')
+          }
+          if (receiverUserProfile.error) {
+            throw new Error("Failed to retrieve the receiver's user profile with error " + receiverUserProfile.error)
           }
           break
         case 'CREATE_TRADE':
@@ -293,11 +301,27 @@ const resolvers = {
           metadata.forAdmin = 'true'
           break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
+          //Get the Office of the person sending this request
+          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
           if (!utils.validateEmail(receiverEmail)) {
             throw new Error('Invalid receiver email')
           }
           break
         case 'INVITE_CONTRACTOR_TO_OFFICE':
+          //Get the Office of the person sending this request
+          let callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
           if (!utils.validateEmail(receiverEmail)) {
             throw new Error('Invalid receiver email')
           }
@@ -319,8 +343,10 @@ const resolvers = {
 
       //Attempt the request
       let insertionRes = await ddbQueries.insertRequest(item)
-      console.log('Inserting request ' + JSON.stringify(item) + ' resulted in ' + JSON.stringify(insertionRes))
-      return insertionRes
+      if (insertionRes.error) {
+        throw new Error('Failed to insert request [' + JSON.stringify(item) + '] with error: ' + insertionRes.error)
+      }
+      return { requestId: id }
     },
 
     resolveRequest: async (event) => {
@@ -371,7 +397,7 @@ const resolvers = {
 
       //Log and return
       console.log('Response of resolveRequest was ' + JSON.stringify(delResponse))
-      return resolverResponse
+      return delResponse
     },
   },
 
