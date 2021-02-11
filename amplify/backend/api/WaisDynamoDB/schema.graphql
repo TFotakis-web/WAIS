@@ -316,7 +316,7 @@ type Requests
   type: RequestType!
   payload: String!
 
-  # Metadata (for AWS services)
+  # Metadata (for AWS services and administrators)
   metadata: String! @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 

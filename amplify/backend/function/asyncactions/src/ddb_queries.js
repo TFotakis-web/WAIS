@@ -9,13 +9,12 @@ module.exports = {
     console.log('insertUserProfile request: ' + JSON.stringify(userProfileItem))
     let resp = { data: '', error: '' }
     try {
-      await ddb
+      resp.data = await ddb
         .put({
           TableName: 'UserProfile' + ddbSuffix,
           Item: userProfileItem,
         })
         .promise()
-      resp.data = data
     } catch (err) {
       resp.error = err
     }
@@ -26,13 +25,12 @@ module.exports = {
     console.log('insertUserWallet request: ' + JSON.stringify(userWalletItem))
     let resp = { data: '', error: '' }
     try {
-      await ddb
+      resp.data = await ddb
         .put({
           TableName: 'UserWallet' + ddbSuffix,
           Item: userWalletItem,
         })
         .promise()
-      resp.data = data
     } catch (err) {
       resp.error = err
     }

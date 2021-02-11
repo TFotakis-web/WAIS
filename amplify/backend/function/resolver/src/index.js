@@ -29,7 +29,7 @@ if (!COGNITO_USERPOOL_ID) {
  */
 const resolvers = {
   Office: {
-    customers: (event) => {
+    customers: async (event) => {
       console.log('Resolving Office.customers')
 
       //Username and permissions
@@ -103,7 +103,7 @@ const resolvers = {
       console.log('Response of ' + item + ' was ' + resolverResponse)
       return resolverResponse
     },
-    employees: (event) => {
+    employees: async (event) => {
       console.log('Resolving Office.employees')
 
       //Username and permissions
@@ -148,7 +148,7 @@ const resolvers = {
       console.log('Response of ' + item + ' was ' + resolverResponse)
       return resolverResponse
     },
-    contractors: (event) => {
+    contractors: async (event) => {
       console.log('Resolving Office.contractors')
 
       //Username and permissions
@@ -195,7 +195,7 @@ const resolvers = {
     },
   },
   Query: {
-    echo: (event) => {
+    echo: async (event) => {
       console.log('Resolving echo')
       try {
         return event.arguments.msg
@@ -232,7 +232,7 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    sendRequest: (event) => {
+    sendRequest: async (event) => {
       console.log('Resolving sendRequest')
 
       // Retrieve username and permissions
@@ -243,30 +243,31 @@ const resolvers = {
       //Unpack arguments
       let senderUsername = event.identity.claims['cognito:username']
       let senderEmail = event.identity.claims.email
-      let payload = event.arguments.payload
-      let receiverEmail = payload.email
+      let receiverEmail = event.arguments.payload.email
+      let message = event.payload.message
+      let tradeName = event.payload.tradeName
       let requestType = event.arguments.requestType
       let id = event.uuid
-      let metadata = {}
+      let metadata = {
+        forAdmin: 'false',
+      }
 
-      if (!utils.validateEmail(receiverEmail)) {
-        throw new Error('Invalid receiver email')
+      //Message size should be at most 1024 chars
+      if (message.length > 1024) {
+        throw new Error('Message size larger than 1024 characters.')
       }
 
       //Retrieve the UserProfiles
-      let senderUserProfile = utils.getUserProfile(username)
+      let senderUserProfile = await ddbQueries.getUserProfileByEmail(senderEmail)
       if (!senderUserProfile) {
         throw new Error('Failed to retrieve the user profile of ' + username)
       }
 
       //Get the Office of the person sending this request
-      let callerOffice = getOfficeByOwnerUsername(senderUsername)
+      let callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
       if (!callerOffice) {
-        throw new Error('Only office managers can send requests.')
+        throw new Error("User isn't an Office managers. Only office managers can send requests.")
       }
-
-      //Get permissions
-      let callerPermissions = (callerPermissions = utils.getUserPermissions(senderUsername, callerOffice.tradeName))
 
       //Expire this after 1 week
       let expiresAt = Date.now()
@@ -276,24 +277,40 @@ const resolvers = {
       //Get the receiver of this request based on the request payload and type
       switch (requestType) {
         case 'CREATE_COMPANY_CONNECTION':
-          // if (callerPermissions == null) {
-          //   throw new Error('User has insufficent permissions.')
-          // }
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
+          let receiverUserProfile = await ddbQueries.getUserProfileByEmail(receiverEmail)
+          if (!receiverUserProfile) {
+            throw new Error('Receiver office manager does not exist')
+          }
           break
         case 'CREATE_TRADE':
-          receiverEmail = 'admin@wais.com'
+          if (tradeName.length < 4) {
+            throw new Error('Trade name length should be greater than 3')
+          }
+          receiverEmail = 'admin@wais.com' //TODO change to sth simillar
+          metadata.forAdmin = 'true'
           break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
+          break
+        case 'INVITE_CONTRACTOR_TO_OFFICE':
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
           break
         default:
-          console.log('Receiver of request with id=[' + id + '] could not be determined.')
+          throw new Error('Request of type ' + requestType + ' with request id=[' + id + '] failed.')
       }
 
       //New request
       const item = {
         id: id,
         expiresAt: expiresAt,
-        payload: payload,
+        payload: { message: message },
         type: requestType,
         senderEmail: senderEmail,
         receiverEmail: receiverEmail,
@@ -301,12 +318,12 @@ const resolvers = {
       }
 
       //Attempt the request
-      let insertionRes = ddbQueries.insertRequest(item)
+      let insertionRes = await ddbQueries.insertRequest(item)
       console.log('Inserting request ' + JSON.stringify(item) + ' resulted in ' + JSON.stringify(insertionRes))
       return insertionRes
     },
 
-    resolveRequest: (event) => {
+    resolveRequest: async (event) => {
       console.log('Resolving request')
 
       //Username check, this shouldn't be called via IAM
@@ -393,10 +410,10 @@ const resolvers = {
 
       return resolverResponse
     },
-    manageCustomers: (event) => {
+    manageCustomers: async (event) => {
       return '{}'
     },
-    manageContracts: (event) => {
+    manageContracts: async (event) => {
       return '{}'
     },
   },

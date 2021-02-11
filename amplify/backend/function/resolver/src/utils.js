@@ -46,25 +46,6 @@ module.exports = {
       httpRequest.end()
     })
   },
-  getUserProfile: (username) => {
-    console.log('Resolving UserProfile for ' + username + '.')
-    let userProfileResponse = getResponseFromApi(
-      ENDPOINT,
-      createSignedRequest(
-        ENDPOINT,
-        { username: username },
-        queries.listUserProfileByUsername,
-        'listUserProfileByUsername',
-        REGION,
-        APPSYNC_URL,
-      ),
-    )
-    console.log('Fetched UserProfile for ' + username + ' : ' + JSON.stringify(userProfileResponse))
-    return userProfileResponse.data.listUserProfileByUsername.items[0]
-  },
-  getUserProfileByEmail: () => {
-    throw new Error('Unimplemented!')
-  },
 
   getUserPermissions: (username, tradeName) => {
     console.log('Resolving permissions for ' + username + '.')
