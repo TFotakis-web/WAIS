@@ -32,6 +32,16 @@ exports.handler = async (event) => {
   //Create the following data structures for a new user
   //UserProfile, UserWallet
   switch (event.action) {
+    case 'CheckUniqueEmail':
+      console.log('CheckUniqueEmail with event: ' + JSON.stringify(event))
+      let existingProfile = ddbQueries.getUserProfileByEmailConsistently(event.email)
+      if (existingProfile.data) {
+        response.ActionResponse = 'REJECT'
+      } else {
+        response.ActionResponse = 'ACCEPT'
+      }
+      console.log('CheckUniqueEmail decidsion with email ' + event.email + ' is ' + response.ActionResponse)
+      break
     case 'InitUser':
       console.log('InitUser with event: ' + JSON.stringify(event))
 

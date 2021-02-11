@@ -62,6 +62,40 @@ module.exports = {
     console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(resp))
     return resp
   },
+  insertUserProfile: async (userProfileItem) => {
+    console.log('insertUserProfile request: ' + JSON.stringify(userProfileItem))
+    let resp = { data: '', error: '' }
+    try {
+      resp.data = await ddb
+        .put({
+          TableName: 'UserProfile' + ddbSuffix,
+          Item: userProfileItem,
+          ReturnValues: 'NONE',
+        })
+        .promise()
+    } catch (err) {
+      resp.error = err
+    }
+    console.log('insertUserProfile result: ' + JSON.stringify(resp))
+    return resp
+  },
+  insertUserWallet: async (userWalletItem) => {
+    console.log('insertUserWallet request: ' + JSON.stringify(userWalletItem))
+    let resp = { data: '', error: '' }
+    try {
+      resp.data = await ddb
+        .put({
+          TableName: 'UserWallet' + ddbSuffix,
+          Item: userWalletItem,
+          ReturnValues: 'NONE',
+        })
+        .promise()
+    } catch (err) {
+      resp.error = err
+    }
+    console.log('insertUserWallet result: ' + JSON.stringify(resp))
+    return resp
+  },
   insertRequest: async (request) => {
     console.log('insertRequest request: ' + JSON.stringify(request))
     let resp = { data: '', error: '' }
