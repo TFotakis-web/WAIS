@@ -22,9 +22,10 @@ exports.handler = async (event, context, callback) => {
 
     let returnedPayload = JSON.parse(result.Payload)
     if (returnedPayload.body.code == 200) {
+      console.log('User added successfully: ' + event.userName)
       callback(null, event)
     }
-    
+
     callback('User already exists.', event)
   } catch (e) {
     console.log(

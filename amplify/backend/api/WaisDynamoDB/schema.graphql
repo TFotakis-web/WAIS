@@ -19,8 +19,6 @@ type Office
   logo: String!
   info: String!
   postcode: String!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
 
   # The amount of employees (or contractors) left that can join this Office
   remainingMembersAllowed: Int!
@@ -61,7 +59,7 @@ type UserProfile
     ]
   )
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
-  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername") {
+  @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
   id: ID! #Currently the user's email, guaranteed to always be unique
   username: String!
 
@@ -76,10 +74,6 @@ type UserProfile
   partnersNumberLimit: Int!
   professionStartDate: AWSDateTime!
   file: [S3Object]
-
-  #Extras
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
@@ -207,7 +201,7 @@ type TradeUserConnection
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
-  # Usernames that can view this connection (not edit) 
+  # Usernames that can view this connection (not edit)
   members: [String]!
 
   #Extras
@@ -305,8 +299,6 @@ type Requests
     ]
   ) {
   id: ID!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
   expiresAt: AWSTimestamp!
 
   # Users involved

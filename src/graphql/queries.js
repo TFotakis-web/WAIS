@@ -63,12 +63,12 @@ export const listTradeByName = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -117,12 +117,12 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -156,12 +156,12 @@ export const getOffice = /* GraphQL */ `
       logo
       info
       postcode
-      createdAt
-      updatedAt
       customers
       contracts
       employees
       contractors
+      createdAt
+      updatedAt
       remainingMembersAllowed
       members
       ownerProfile {
@@ -217,12 +217,12 @@ export const listOffices = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -337,13 +337,13 @@ export const getUserProfile = /* GraphQL */ `
       requests {
         items {
           id
-          createdAt
-          updatedAt
           expiresAt
           senderEmail
           receiverEmail
           type
           payload
+          createdAt
+          updatedAt
           metadata
         }
         nextToken
@@ -407,7 +407,6 @@ export const listUserProfileByEmail = /* GraphQL */ `
 export const listUserProfileByUsername = /* GraphQL */ `
   query ListUserProfileByUsername(
     $username: String
-    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelUserProfileFilterInput
     $limit: Int
@@ -415,7 +414,6 @@ export const listUserProfileByUsername = /* GraphQL */ `
   ) {
     listUserProfileByUsername(
       username: $username
-      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -1092,12 +1090,12 @@ export const getTradeUserConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1189,12 +1187,12 @@ export const listTradeUserConnections = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1260,12 +1258,12 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1329,12 +1327,12 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1400,12 +1398,12 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1448,12 +1446,12 @@ export const getTradeContractConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1557,12 +1555,12 @@ export const listTradeContractConnections = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1620,12 +1618,12 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1653,12 +1651,12 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1710,12 +1708,12 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1728,12 +1726,12 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           logo
           info
           postcode
-          createdAt
-          updatedAt
           customers
           contracts
           employees
           contractors
+          createdAt
+          updatedAt
           remainingMembersAllowed
           members
         }
@@ -1975,13 +1973,13 @@ export const getRequests = /* GraphQL */ `
   query GetRequests($id: ID!) {
     getRequests(id: $id) {
       id
-      createdAt
-      updatedAt
       expiresAt
       senderEmail
       receiverEmail
       type
       payload
+      createdAt
+      updatedAt
       metadata
     }
   }
@@ -1995,13 +1993,13 @@ export const listRequestss = /* GraphQL */ `
     listRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        createdAt
-        updatedAt
         expiresAt
         senderEmail
         receiverEmail
         type
         payload
+        createdAt
+        updatedAt
         metadata
       }
       nextToken

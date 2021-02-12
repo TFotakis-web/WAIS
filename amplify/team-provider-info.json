@@ -68,7 +68,7 @@
       "function": {
         "waisauthPostConfirmation": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/waisauthPostConfirmation-664866696254584b2f2b-build.zip"
+          "s3Key": "amplify-builds/waisauthPostConfirmation-6d4e4650572f6b4e4b35-build.zip"
         },
         "waisauthPreSignup": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
