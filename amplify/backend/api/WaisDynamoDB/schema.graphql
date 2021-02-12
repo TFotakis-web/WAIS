@@ -66,13 +66,13 @@ type UserProfile
   #Unique fields, not present anywhere else
   email: String!
   telephone: String!
-  tin: String!
-  doy: String!
-  familyStatus: String!
-  chamberRecordNumber: String!
-  insuranceLicenseExpirationDate: AWSDateTime!
-  partnersNumberLimit: Int!
-  professionStartDate: AWSDateTime!
+  tin: String
+  doy: String
+  familyStatus: String
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDateTime
+  partnersNumberLimit: Int
+  professionStartDate: AWSDateTime
   file: [S3Object]
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR

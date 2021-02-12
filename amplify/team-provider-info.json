@@ -88,11 +88,11 @@
         },
         "asyncactions": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/asyncactions-335853474c5641444f58-build.zip"
+          "s3Key": "amplify-builds/asyncactions-524f786c735966524d6d-build.zip"
         },
         "resolver": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/resolver-626a4250537775743250-build.zip"
+          "s3Key": "amplify-builds/resolver-41505a765762776d3445-build.zip"
         }
       }
     }
