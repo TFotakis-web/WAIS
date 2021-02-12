@@ -36,6 +36,7 @@ exports.handler = async (event) => {
     LambdaInput: event,
     LambdaErrors: '',
     ActionResponse: '',
+    code: 200,
   }
   let statusCode = 200
 
@@ -44,13 +45,13 @@ exports.handler = async (event) => {
   switch (event.action) {
     case 'CheckUniqueEmail':
       console.log('CheckUniqueEmail with event: ' + JSON.stringify(event))
-      let existingProfile = ddbQueries.getUserProfileByEmailConsistently(event.email)
-      if (existingProfile.data) {
-        response.ActionResponse = 'REJECT'
-      } else {
+      let existingProfile = await ddbQueries.getUserProfileByEmailConsistently(event.email)
+      if (Object.keys(existingProfile.data).length == 0) {
         response.ActionResponse = 'ACCEPT'
+      } else { 
+        response.ActionResponse = 'REJECT'
       }
-      console.log('CheckUniqueEmail decidsion with email ' + event.email + ' is ' + response.ActionResponse)
+      console.log('CheckUniqueEmail decision with email ' + event.email + ' is ' + response.ActionResponse)
       break
     case 'InitUser':
       console.log('InitUser with event: ' + JSON.stringify(event))
@@ -123,6 +124,9 @@ exports.handler = async (event) => {
     default:
       response.LambdaErrors = 'Default case in switch statement.'
   }
+
+  //Return the status code
+  response.code = statusCode
 
   //Delete user on failure since that means that the user credentials are already present in the Wais DB
   if (statusCode !== 200) {

@@ -171,7 +171,7 @@ module.exports = {
     return resp
   },
   getUserProfileByEmailConsistently: async (email) => {
-    console.log('getUserProfileByEmail email: ' + email)
+    console.log('getUserProfileByEmailConsistently email: ' + email)
     let resp = { data: '', error: '' }
     try {
       resp.data = await ddb
@@ -185,7 +185,7 @@ module.exports = {
     } catch (err) {
       resp.error = err
     }
-    console.log('getUserProfileByEmail result: ' + JSON.stringify(resp))
+    console.log('getUserProfileByEmailConsistently result: ' + JSON.stringify(resp))
     return resp
   },
   getOfficeByOwnerUsername: async (username) => {

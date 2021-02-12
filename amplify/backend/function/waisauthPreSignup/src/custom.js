@@ -23,11 +23,13 @@ exports.handler = async (event, context, callback) => {
       })
       .promise()
     console.log('Completed PreSignUp trigger for user with email ' + email + ' and result ' + JSON.stringify(result))
-    if (result.ActionResponse === 'ACCEPT') {
-      callback(null, event)
-    } else {
-      callback('Input e-mail already exists, user has been deleted.', event)
+    let returnedPayload = JSON.parse(result.Payload)
+    if (returnedPayload) {
+      if (returnedPayload.ActionResponse === 'ACCEPT') {
+        callback(null, event)
+      }
     }
+    callback('Input e-mail already exists.', event)
   } catch (e) {
     console.log(
       'Failed PreSignUp trigger for the following input' +

@@ -50,6 +50,7 @@ type Office
   employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
 }
+
 type UserProfile
   @model(subscriptions: null)
   @auth(

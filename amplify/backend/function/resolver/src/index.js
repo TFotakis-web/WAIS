@@ -357,17 +357,23 @@ const resolvers = {
         throw new Error('Invalid credentials')
       }
 
+      //Lambda response
+      let resolverResponse = {
+        status: '',
+        errors: '',
+      }
+
       //Input Args
-      let uuid = event.uuid
-      let requestId = event.arguments.id
-      let callerUsername = event.identity.claims['cognito:username']
-      let requestObject = ddbQueries.getRequestById(requestId)
-      let requestType = requestObject.type
-      let receiverUsername = requestObject.receiverUsername
-      let receiverPayload = event.arguments.payload
-      let senderUsername = requestObject.senderUsername
-      let senderPayload = requestObject.payload
-      let decision = receiverPayload.decision
+      const uuid = event.uuid
+      const requestId = event.arguments.id
+      const callerUsername = event.identity.claims['cognito:username']
+      const requestObject = await ddbQueries.getRequestById(requestId)
+      const requestType = requestObject.type
+      const receiverUsername = requestObject.receiverUsername
+      const receiverPayload = event.arguments.payload
+      const senderUsername = requestObject.senderUsername
+      const senderPayload = requestObject.payload
+      const decision = receiverPayload.decision
 
       //Receiver and caller usernames must match
       if (callerUsername !== receiverUsername) {
@@ -381,9 +387,40 @@ const resolvers = {
 
       //Decide based on the request type and update the relevant entries
       switch (requestType) {
+        case 'CREATE_TRADE':
+          if (decision === 'ACCEPT') {
+            let newOfficeItem = {
+              id: '',
+              tradeName: '',
+              ownerUsername: '',
+              ownerId: '',
+              tin: '',
+              logo: '',
+              info: '',
+              postcode: '',
+              createdAt: '',
+              updatedAt: '',
+            }
+            let newOfficeResult = await ddbQueries.insertOfficeIfNotExists(newOfficeItem)
+            if (newOfficeResult) {
+              resolverResponse.status = JSON.stringify(newOfficeResult)
+            }
+          } else {
+            console.log('Request with id=[' + requestId + '] was rejected by Admin')
+          }
+          break
+        case 'CREATE_COMPANY_CONNECTION':
+          break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
           if (decision === 'ACCEPT') {
-            ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
+            let newEmpResult = await ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
+          } else {
+            console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+          }
+          break
+        case 'INVITE_CONTRACTOR_TO_OFFICE':
+          if (decision === 'ACCEPT') {
+            let newContractorResult = await ddbQueries.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
           } else {
             console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
           }
@@ -393,11 +430,14 @@ const resolvers = {
       }
 
       //Delete request as it has been resolved
-      let delResponse = ddbQueries.deleteRequest(uuid)
+      let delResponse = await ddbQueries.deleteRequest(uuid)
+      if (delResponse.error) {
+        resolverResponse.errors = delResponse
+      }
 
       //Log and return
       console.log('Response of resolveRequest was ' + JSON.stringify(delResponse))
-      return delResponse
+      return resolverResponse
     },
   },
 
@@ -415,6 +455,7 @@ const resolvers = {
       let payload = event.arguments.payload
       let action = event.arguments.action
       let uuid = event.uuid
+
       //Get caller Office
       let office = utils.getOfficeByOwnerUsername(managerUsername)
       if (!office) {
@@ -461,9 +502,14 @@ exports.handler = async (event) => {
   if (typeHandler) {
     const resolver = typeHandler[event.fieldName]
     if (resolver) {
-      const res = await resolver(event)
-      console.log('Resolver result is ' + JSON.stringify(res))
-      return res
+      try {
+        const res = await resolver(event)
+        console.log('Resolver result is ' + JSON.stringify(res))
+        return res
+      } catch (err) {
+        console.log('Resolver error is ' + JSON.stringify(err))
+        return err
+      }
     }
   }
   throw new Error('Resolver not found.')

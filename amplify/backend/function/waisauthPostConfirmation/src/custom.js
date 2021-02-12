@@ -13,7 +13,7 @@ exports.handler = async (event, context, callback) => {
     phone_number: event.request.userAttributes.phone_number,
   }
   try {
-    await lambda
+    let result = await lambda
       .invoke({
         FunctionName: targetFunctionName,
         Payload: JSON.stringify(payload),
@@ -21,6 +21,13 @@ exports.handler = async (event, context, callback) => {
       .promise()
     console.log('Completed confirmation trigger for user ' + event.userName)
     callback(null, event)
+
+    let returnedPayload = JSON.parse(result.Payload)
+    if (returnedPayload.code == 200) {
+      callback(null, event)
+    }
+    
+    callback('User already exists.', event)
   } catch (e) {
     console.log(
       'Failed confirmation trigger for the following input' +
