@@ -72,7 +72,7 @@
         },
         "waisauthPreSignup": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/waisauthPreSignup-52554c74747762315265-build.zip"
+          "s3Key": "amplify-builds/waisauthPreSignup-326e34534e6461595256-build.zip"
         },
         "AdminQueries79849b09": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
@@ -88,7 +88,7 @@
         },
         "asyncactions": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/asyncactions-4335367967516946674a-build.zip"
+          "s3Key": "amplify-builds/asyncactions-554e49744b694b737474-build.zip"
         },
         "resolver": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",

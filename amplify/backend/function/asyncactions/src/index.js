@@ -8,6 +8,16 @@
 Amplify Params - DO NOT EDIT */
 
 const ddbQueries = require('./ddb_queries.js')
+const { CognitoIdentityServiceProvider } = require('aws-sdk')
+const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
+
+/**
+ * Get user pool information from environment variables.
+ */
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAISAUTH_USERPOOLID
+if (!COGNITO_USERPOOL_ID) {
+  throw new Error(`Function requires a valid pool ID`)
+}
 
 exports.handler = async (event) => {
   //Request must contain an 'action' entry
@@ -112,6 +122,21 @@ exports.handler = async (event) => {
 
     default:
       response.LambdaErrors = 'Default case in switch statement.'
+  }
+
+  //Delete user on failure since that means that the user credentials are already present in the Wais DB
+  if (statusCode !== 200) {
+    try {
+      let resp = await cognitoIdentityServiceProvider
+        .adminDeleteUser({
+          UserPoolId: COGNITO_USERPOOL_ID,
+          Username: username,
+        })
+        .promise()
+      response.ActionResponse = JSON.stringify(resp)
+    } catch (e) {
+      response.LambdaErrors = JSON.stringify(e)
+    }
   }
 
   //Return the status map

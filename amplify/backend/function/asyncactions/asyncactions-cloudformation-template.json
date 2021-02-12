@@ -217,6 +217,7 @@
                 "cognito-idp:Describe*",
                 "cognito-idp:AdminGetDevice",
                 "cognito-idp:AdminGetUser",
+                "cognito-idp:AdminDeleteUser",
                 "cognito-idp:AdminList*",
                 "cognito-idp:List*",
                 "cognito-sync:Describe*",

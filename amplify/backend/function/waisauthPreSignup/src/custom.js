@@ -26,7 +26,7 @@ exports.handler = async (event, context, callback) => {
     if (result.ActionResponse === 'ACCEPT') {
       callback(null, event)
     } else {
-      callback('Input e-mail already exists.', event)
+      callback('Input e-mail already exists, user has been deleted.', event)
     }
   } catch (e) {
     console.log(
