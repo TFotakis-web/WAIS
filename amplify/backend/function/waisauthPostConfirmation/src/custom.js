@@ -19,11 +19,9 @@ exports.handler = async (event, context, callback) => {
         Payload: JSON.stringify(payload),
       })
       .promise()
-    console.log('Completed confirmation trigger for user ' + event.userName)
-    callback(null, event)
 
     let returnedPayload = JSON.parse(result.Payload)
-    if (returnedPayload.code == 200) {
+    if (returnedPayload.body.code == 200) {
       callback(null, event)
     }
     

@@ -48,7 +48,7 @@ exports.handler = async (event) => {
       let existingProfile = await ddbQueries.getUserProfileByEmailConsistently(event.email)
       if (Object.keys(existingProfile.data).length == 0) {
         response.ActionResponse = 'ACCEPT'
-      } else { 
+      } else {
         response.ActionResponse = 'REJECT'
       }
       console.log('CheckUniqueEmail decision with email ' + event.email + ' is ' + response.ActionResponse)
@@ -86,8 +86,8 @@ exports.handler = async (event) => {
         statusCode = 400
         break
       }
-      if (userProfileResponse.errors) {
-        initUserResponse.UserProfileErrors = userProfileResponse.errors
+      if (userProfileResponse.error) {
+        initUserResponse.UserProfileErrors = userProfileResponse.error
         response.ActionResponse = initUserResponse
         statusCode = 400
         break
@@ -110,8 +110,8 @@ exports.handler = async (event) => {
         statusCode = 400
         break
       }
-      if (userWalletResponse.errors) {
-        initUserResponse.UserWalletErrors = userWalletResponse.errors
+      if (userWalletResponse.error) {
+        initUserResponse.UserWalletErrors = userWalletResponse.error
         response.ActionResponse = initUserResponse
         statusCode = 400
         break

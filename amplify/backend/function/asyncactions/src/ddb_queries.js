@@ -70,10 +70,7 @@ module.exports = {
         .put({
           TableName: 'UserProfile' + ddbSuffix,
           Item: userProfileItem,
-          ConditionExpression: 'attribute_not_exists(:id)',
-          ExpressionAttributeValues: {
-            ':id': userProfileItem.id,
-          },
+          ConditionExpression: 'attribute_not_exists(id)',
           ReturnValues: 'NONE',
         })
         .promise()
@@ -91,10 +88,7 @@ module.exports = {
         .put({
           TableName: 'UserWallet' + ddbSuffix,
           Item: userWalletItem,
-          ConditionExpression: 'attribute_not_exists(:id)',
-          ExpressionAttributeValues: {
-            ':id': userWalletItem.id,
-          },
+          ConditionExpression: 'attribute_not_exists(id)',
           ReturnValues: 'NONE',
         })
         .promise()
