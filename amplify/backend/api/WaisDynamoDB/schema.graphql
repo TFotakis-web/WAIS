@@ -19,8 +19,6 @@ type Office
   logo: String!
   info: String!
   postcode: String!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
 
   # The amount of employees (or contractors) left that can join this Office
   remainingMembersAllowed: Int!
@@ -50,6 +48,7 @@ type Office
   employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
 }
+
 type UserProfile
   @model(subscriptions: null)
   @auth(
@@ -60,28 +59,25 @@ type UserProfile
     ]
   )
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
-  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserProfileByUsername") {
+  @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
   id: ID! #Currently the user's email, guaranteed to always be unique
   username: String!
 
   #Unique fields, not present anywhere else
   email: String!
   telephone: String!
-  tin: String!
-  doy: String!
-  familyStatus: String!
-  chamberRecordNumber: String!
-  insuranceLicenseExpirationDate: AWSDateTime!
-  partnersNumberLimit: Int!
-  professionStartDate: AWSDateTime!
+  tin: String
+  doy: String
+  familyStatus: String
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDateTime
+  partnersNumberLimit: Int
+  professionStartDate: AWSDateTime
   file: [S3Object]
-
-  #Extras
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
+
   # Access to user's wallet
   wallet: UserWallet @connection(fields: ["id"])
 
@@ -206,7 +202,7 @@ type TradeUserConnection
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
-  # Usernames that can view this connection (not edit) 
+  # Usernames that can view this connection (not edit)
   members: [String]!
 
   #Extras
@@ -304,8 +300,6 @@ type Requests
     ]
   ) {
   id: ID!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
   expiresAt: AWSTimestamp!
 
   # Users involved
@@ -316,7 +310,7 @@ type Requests
   type: RequestType!
   payload: String!
 
-  # Metadata (for AWS services)
+  # Metadata (for AWS services and administrators)
   metadata: String! @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 

@@ -41,12 +41,12 @@ export const createOffice = /* GraphQL */ `
       logo
       info
       postcode
-      createdAt
-      updatedAt
       customers
       contracts
       employees
       contractors
+      createdAt
+      updatedAt
       remainingMembersAllowed
       members
       ownerProfile {
@@ -100,12 +100,12 @@ export const updateOffice = /* GraphQL */ `
       logo
       info
       postcode
-      createdAt
-      updatedAt
       customers
       contracts
       employees
       contractors
+      createdAt
+      updatedAt
       remainingMembersAllowed
       members
       ownerProfile {
@@ -159,12 +159,12 @@ export const deleteOffice = /* GraphQL */ `
       logo
       info
       postcode
-      createdAt
-      updatedAt
       customers
       contracts
       employees
       contractors
+      createdAt
+      updatedAt
       remainingMembersAllowed
       members
       ownerProfile {
@@ -254,13 +254,13 @@ export const createUserProfile = /* GraphQL */ `
       requests {
         items {
           id
-          createdAt
-          updatedAt
           expiresAt
           senderEmail
           receiverEmail
           type
           payload
+          createdAt
+          updatedAt
           metadata
         }
         nextToken
@@ -318,13 +318,13 @@ export const updateUserProfile = /* GraphQL */ `
       requests {
         items {
           id
-          createdAt
-          updatedAt
           expiresAt
           senderEmail
           receiverEmail
           type
           payload
+          createdAt
+          updatedAt
           metadata
         }
         nextToken
@@ -382,13 +382,13 @@ export const deleteUserProfile = /* GraphQL */ `
       requests {
         items {
           id
-          createdAt
-          updatedAt
           expiresAt
           senderEmail
           receiverEmail
           type
           payload
+          createdAt
+          updatedAt
           metadata
         }
         nextToken
@@ -870,12 +870,12 @@ export const createTradeUserConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -961,12 +961,12 @@ export const updateTradeUserConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1052,12 +1052,12 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1135,12 +1135,12 @@ export const createTradeContractConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1238,12 +1238,12 @@ export const updateTradeContractConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1341,12 +1341,12 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1446,12 +1446,12 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1479,12 +1479,12 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1530,12 +1530,12 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1563,12 +1563,12 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1614,12 +1614,12 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -1647,12 +1647,12 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         logo
         info
         postcode
-        createdAt
-        updatedAt
         customers
         contracts
         employees
         contractors
+        createdAt
+        updatedAt
         remainingMembersAllowed
         members
         ownerProfile {
@@ -2065,13 +2065,13 @@ export const createRequests = /* GraphQL */ `
   ) {
     createRequests(input: $input, condition: $condition) {
       id
-      createdAt
-      updatedAt
       expiresAt
       senderEmail
       receiverEmail
       type
       payload
+      createdAt
+      updatedAt
       metadata
     }
   }
@@ -2083,13 +2083,13 @@ export const updateRequests = /* GraphQL */ `
   ) {
     updateRequests(input: $input, condition: $condition) {
       id
-      createdAt
-      updatedAt
       expiresAt
       senderEmail
       receiverEmail
       type
       payload
+      createdAt
+      updatedAt
       metadata
     }
   }
@@ -2101,13 +2101,13 @@ export const deleteRequests = /* GraphQL */ `
   ) {
     deleteRequests(input: $input, condition: $condition) {
       id
-      createdAt
-      updatedAt
       expiresAt
       senderEmail
       receiverEmail
       type
       payload
+      createdAt
+      updatedAt
       metadata
     }
   }

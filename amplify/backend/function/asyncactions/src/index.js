@@ -8,6 +8,16 @@
 Amplify Params - DO NOT EDIT */
 
 const ddbQueries = require('./ddb_queries.js')
+const { CognitoIdentityServiceProvider } = require('aws-sdk')
+const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
+
+/**
+ * Get user pool information from environment variables.
+ */
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAISAUTH_USERPOOLID
+if (!COGNITO_USERPOOL_ID) {
+  throw new Error(`Function requires a valid pool ID`)
+}
 
 exports.handler = async (event) => {
   //Request must contain an 'action' entry
@@ -26,12 +36,23 @@ exports.handler = async (event) => {
     LambdaInput: event,
     LambdaErrors: '',
     ActionResponse: '',
+    code: 200,
   }
   let statusCode = 200
 
   //Create the following data structures for a new user
   //UserProfile, UserWallet
   switch (event.action) {
+    case 'CheckUniqueEmail':
+      console.log('CheckUniqueEmail with event: ' + JSON.stringify(event))
+      let existingProfile = await ddbQueries.getUserProfileByEmailConsistently(event.email)
+      if (Object.keys(existingProfile.data).length == 0) {
+        response.ActionResponse = 'ACCEPT'
+      } else {
+        response.ActionResponse = 'REJECT'
+      }
+      console.log('CheckUniqueEmail decision with email ' + event.email + ' is ' + response.ActionResponse)
+      break
     case 'InitUser':
       console.log('InitUser with event: ' + JSON.stringify(event))
 
@@ -48,13 +69,15 @@ exports.handler = async (event) => {
         username: event.username,
         email: event.email,
         telephone: event.phone_number,
-        tin: 'undefined',
-        doy: 'undefined',
-        familyStatus: 'undefined',
-        chamberRecordNumber: 'undefined',
-        insuranceLicenseExpirationDate: new Date().toISOString(),
+        tin: null,
+        doy: null,
+        familyStatus: null,
+        chamberRecordNumber: null,
+        insuranceLicenseExpirationDate: null,
         partnersNumberLimit: 0,
-        professionStartDate: new Date().toISOString(),
+        professionStartDate: null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         file: [],
       }
       let userProfileResponse
@@ -65,8 +88,8 @@ exports.handler = async (event) => {
         statusCode = 400
         break
       }
-      if (userProfileResponse.errors) {
-        initUserResponse.UserProfileErrors = userProfileResponse.errors
+      if (userProfileResponse.error) {
+        initUserResponse.UserProfileErrors = userProfileResponse.error
         response.ActionResponse = initUserResponse
         statusCode = 400
         break
@@ -79,6 +102,8 @@ exports.handler = async (event) => {
         id: event.email,
         username: event.username,
         balance: 0.0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
 
       let userWalletResponse
@@ -89,8 +114,8 @@ exports.handler = async (event) => {
         statusCode = 400
         break
       }
-      if (userWalletResponse.errors) {
-        initUserResponse.UserWalletErrors = userWalletResponse.errors
+      if (userWalletResponse.error) {
+        initUserResponse.UserWalletErrors = userWalletResponse.error
         response.ActionResponse = initUserResponse
         statusCode = 400
         break
@@ -102,6 +127,24 @@ exports.handler = async (event) => {
 
     default:
       response.LambdaErrors = 'Default case in switch statement.'
+  }
+
+  //Return the status code
+  response.code = statusCode
+
+  //Delete user on failure since that means that the user credentials are already present in the Wais DB
+  if (statusCode !== 200) {
+    try {
+      let resp = await cognitoIdentityServiceProvider
+        .adminDeleteUser({
+          UserPoolId: COGNITO_USERPOOL_ID,
+          Username: username,
+        })
+        .promise()
+      response.ActionResponse = JSON.stringify(resp)
+    } catch (e) {
+      response.LambdaErrors = JSON.stringify(e)
+    }
   }
 
   //Return the status map

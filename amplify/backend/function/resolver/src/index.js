@@ -9,9 +9,8 @@ Amplify Params - DO NOT EDIT */
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 const urlParse = require('url').URL
-const queries = require('./gql_queries.js')
 const ddbQueries = require('./ddb_queries.js')
-const utils = require('./utils')
+const utils = require('./utils.js')
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
@@ -19,7 +18,7 @@ const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 /**
  * Get user pool information from environment variables.
  */
-const COGNITO_USERPOOL_ID = process.env.AUTH_WAIS38036AA9_USERPOOLID
+const COGNITO_USERPOOL_ID = process.env.AUTH_WAISAUTH_USERPOOLID
 if (!COGNITO_USERPOOL_ID) {
   throw new Error(`Function requires a valid pool ID`)
 }
@@ -29,7 +28,7 @@ if (!COGNITO_USERPOOL_ID) {
  */
 const resolvers = {
   Office: {
-    customers: (event) => {
+    customers: async (event) => {
       console.log('Resolving Office.customers')
 
       //Username and permissions
@@ -103,7 +102,7 @@ const resolvers = {
       console.log('Response of ' + item + ' was ' + resolverResponse)
       return resolverResponse
     },
-    employees: (event) => {
+    employees: async (event) => {
       console.log('Resolving Office.employees')
 
       //Username and permissions
@@ -148,7 +147,7 @@ const resolvers = {
       console.log('Response of ' + item + ' was ' + resolverResponse)
       return resolverResponse
     },
-    contractors: (event) => {
+    contractors: async (event) => {
       console.log('Resolving Office.contractors')
 
       //Username and permissions
@@ -195,7 +194,7 @@ const resolvers = {
     },
   },
   Query: {
-    echo: (event) => {
+    echo: async (event) => {
       console.log('Resolving echo')
       try {
         return event.arguments.msg
@@ -232,7 +231,7 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    sendRequest: (event) => {
+    sendRequest: async (event) => {
       console.log('Resolving sendRequest')
 
       // Retrieve username and permissions
@@ -243,70 +242,116 @@ const resolvers = {
       //Unpack arguments
       let senderUsername = event.identity.claims['cognito:username']
       let senderEmail = event.identity.claims.email
-      let payload = event.arguments.payload
+      let payload = JSON.parse(event.arguments.payload)
       let receiverEmail = payload.email
+      let message = payload.message
+      let tradeName = payload.tradeName
       let requestType = event.arguments.requestType
-      let id = event.uuid
-      let metadata = {}
+      let callerOffice //Will be populated if necessary later on
+      let metadata = {
+        forAdmin: 'false',
+      }
 
-      if (!utils.validateEmail(receiverEmail)) {
-        throw new Error('Invalid receiver email')
+      //Message size should be at most 1024 chars
+      if (message.length > 1024) {
+        throw new Error('Message size larger than 1024 characters.')
       }
 
       //Retrieve the UserProfiles
-      let senderUserProfile = utils.getUserProfile(username)
+      let senderUserProfile = await ddbQueries.getUserProfileByEmail(senderEmail)
       if (!senderUserProfile) {
-        throw new Error('Failed to retrieve the user profile of ' + username)
+        throw new Error('Failed to retrieve the user profile of ' + senderUsername)
       }
-
-      //Get the Office of the person sending this request
-      let callerOffice = getOfficeByOwnerUsername(senderUsername)
-      if (!callerOffice) {
-        throw new Error('Only office managers can send requests.')
+      if (senderUserProfile.error) {
+        throw new Error('Failed to retrieve the user profile of ' + senderUsername + ' with error ' + senderUserProfile.error)
       }
-
-      //Get permissions
-      let callerPermissions = (callerPermissions = utils.getUserPermissions(senderUsername, callerOffice.tradeName))
 
       //Expire this after 1 week
-      let expiresAt = Date.now()
-      expiresAt += 1000 * 60 * 60 * 24 * 7
-      expiresAt = new Date(expiresAt)
+      let curTS = Date.now()
+      let id = curTS + '_' + senderEmail
+      let expiresAt = new Date(curTS + 1000 * 60 * 60 * 24 * 7)
 
       //Get the receiver of this request based on the request payload and type
       switch (requestType) {
         case 'CREATE_COMPANY_CONNECTION':
-          // if (callerPermissions == null) {
-          //   throw new Error('User has insufficent permissions.')
-          // }
+          //Get the Office of the person sending this request
+          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
+          receiverUserProfile = await ddbQueries.getUserProfileByEmail(receiverEmail)
+          if (!receiverUserProfile) {
+            throw new Error('Receiver office manager does not exist')
+          }
+          if (receiverUserProfile.error) {
+            throw new Error("Failed to retrieve the receiver's user profile with error " + receiverUserProfile.error)
+          }
           break
         case 'CREATE_TRADE':
-          receiverEmail = 'admin@wais.com'
+          if (tradeName.length < 4) {
+            throw new Error('Trade name length should be greater than 3')
+          }
+          receiverEmail = 'admin@wais.com' //TODO change to sth simillar
+          metadata.forAdmin = 'true'
           break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
+          //Get the Office of the person sending this request
+          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
+          break
+        case 'INVITE_CONTRACTOR_TO_OFFICE':
+          //Get the Office of the person sending this request
+          let callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
+          if (!callerOffice) {
+            throw new Error("User isn't an Office managers. Only office managers can send requests.")
+          }
+          if (callerOffice.error) {
+            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
+          }
+          if (!utils.validateEmail(receiverEmail)) {
+            throw new Error('Invalid receiver email')
+          }
           break
         default:
-          console.log('Receiver of request with id=[' + id + '] could not be determined.')
+          throw new Error('Request of type ' + requestType + ' with request id=[' + id + '] failed.')
       }
 
       //New request
       const item = {
         id: id,
         expiresAt: expiresAt,
-        payload: payload,
+        payload: { message: message },
         type: requestType,
         senderEmail: senderEmail,
         receiverEmail: receiverEmail,
         metadata: metadata,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
 
       //Attempt the request
-      let insertionRes = ddbQueries.insertRequest(item)
-      console.log('Inserting request ' + JSON.stringify(item) + ' resulted in ' + JSON.stringify(insertionRes))
-      return insertionRes
+      let insertionRes = await ddbQueries.insertRequest(item)
+      if (insertionRes.error) {
+        throw new Error('Failed to insert request [' + JSON.stringify(item) + '] with error: ' + insertionRes.error)
+      }
+      return { requestId: id }
     },
 
-    resolveRequest: (event) => {
+    resolveRequest: async (event) => {
       console.log('Resolving request')
 
       //Username check, this shouldn't be called via IAM
@@ -314,17 +359,23 @@ const resolvers = {
         throw new Error('Invalid credentials')
       }
 
+      //Lambda response
+      let resolverResponse = {
+        status: '',
+        errors: '',
+      }
+
       //Input Args
-      let uuid = event.uuid
-      let requestId = event.arguments.id
-      let callerUsername = event.identity.claims['cognito:username']
-      let requestObject = ddbQueries.getRequestById(requestId)
-      let requestType = requestObject.type
-      let receiverUsername = requestObject.receiverUsername
-      let receiverPayload = event.arguments.payload
-      let senderUsername = requestObject.senderUsername
-      let senderPayload = requestObject.payload
-      let decision = receiverPayload.decision
+      const uuid = event.uuid
+      const requestId = event.arguments.id
+      const callerUsername = event.identity.claims['cognito:username']
+      const requestObject = await ddbQueries.getRequestById(requestId)
+      const requestType = requestObject.type
+      const receiverUsername = requestObject.receiverUsername
+      const receiverPayload = event.arguments.payload
+      const senderUsername = requestObject.senderUsername
+      const senderPayload = requestObject.payload
+      const decision = receiverPayload.decision
 
       //Receiver and caller usernames must match
       if (callerUsername !== receiverUsername) {
@@ -338,9 +389,40 @@ const resolvers = {
 
       //Decide based on the request type and update the relevant entries
       switch (requestType) {
+        case 'CREATE_TRADE':
+          if (decision === 'ACCEPT') {
+            let newOfficeItem = {
+              id: '',
+              tradeName: '',
+              ownerUsername: '',
+              ownerId: '',
+              tin: '',
+              logo: '',
+              info: '',
+              postcode: '',
+              createdAt: '',
+              updatedAt: '',
+            }
+            let newOfficeResult = await ddbQueries.insertOfficeIfNotExists(newOfficeItem)
+            if (newOfficeResult) {
+              resolverResponse.status = JSON.stringify(newOfficeResult)
+            }
+          } else {
+            console.log('Request with id=[' + requestId + '] was rejected by Admin')
+          }
+          break
+        case 'CREATE_COMPANY_CONNECTION':
+          break
         case 'INVITE_EMPLOYEE_TO_OFFICE':
           if (decision === 'ACCEPT') {
-            ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
+            let newEmpResult = await ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
+          } else {
+            console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+          }
+          break
+        case 'INVITE_CONTRACTOR_TO_OFFICE':
+          if (decision === 'ACCEPT') {
+            let newContractorResult = await ddbQueries.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
           } else {
             console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
           }
@@ -350,7 +432,10 @@ const resolvers = {
       }
 
       //Delete request as it has been resolved
-      let delResponse = ddbQueries.deleteRequest(uuid)
+      let delResponse = await ddbQueries.deleteRequest(uuid)
+      if (delResponse.error) {
+        resolverResponse.errors = delResponse
+      }
 
       //Log and return
       console.log('Response of resolveRequest was ' + JSON.stringify(delResponse))
@@ -372,6 +457,7 @@ const resolvers = {
       let payload = event.arguments.payload
       let action = event.arguments.action
       let uuid = event.uuid
+
       //Get caller Office
       let office = utils.getOfficeByOwnerUsername(managerUsername)
       if (!office) {
@@ -393,10 +479,10 @@ const resolvers = {
 
       return resolverResponse
     },
-    manageCustomers: (event) => {
+    manageCustomers: async (event) => {
       return '{}'
     },
-    manageContracts: (event) => {
+    manageContracts: async (event) => {
       return '{}'
     },
   },
@@ -418,9 +504,14 @@ exports.handler = async (event) => {
   if (typeHandler) {
     const resolver = typeHandler[event.fieldName]
     if (resolver) {
-      const res = await resolver(event)
-      console.log('Resolver result is ' + JSON.stringify(res))
-      return res
+      try {
+        const res = await resolver(event)
+        console.log('Resolver result is ' + JSON.stringify(res))
+        return res
+      } catch (err) {
+        console.log('Resolver error is ' + JSON.stringify(err))
+        return err
+      }
     }
   }
   throw new Error('Resolver not found.')

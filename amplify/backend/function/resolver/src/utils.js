@@ -2,7 +2,7 @@ const https = require('https')
 const queries = require('./gql_queries.js')
 const AWS = require('aws-sdk')
 const urlParse = require('url').URL
-const ses = new aws.SES({ region: 'us-west-2' })
+const ses = new AWS.SES({ region: 'us-west-2' })
 const SourceEmailAddress = '' //TODO
 
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
@@ -45,25 +45,6 @@ module.exports = {
       httpRequest.write(request.body)
       httpRequest.end()
     })
-  },
-  getUserProfile: (username) => {
-    console.log('Resolving UserProfile for ' + username + '.')
-    let userProfileResponse = getResponseFromApi(
-      ENDPOINT,
-      createSignedRequest(
-        ENDPOINT,
-        { username: username },
-        queries.listUserProfileByUsername,
-        'listUserProfileByUsername',
-        REGION,
-        APPSYNC_URL,
-      ),
-    )
-    console.log('Fetched UserProfile for ' + username + ' : ' + JSON.stringify(userProfileResponse))
-    return userProfileResponse.data.listUserProfileByUsername.items[0]
-  },
-  getUserProfileByEmail: () => {
-    throw new Error('Unimplemented!')
   },
 
   getUserPermissions: (username, tradeName) => {

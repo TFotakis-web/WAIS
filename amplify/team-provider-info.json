@@ -68,31 +68,31 @@
       "function": {
         "waisauthPostConfirmation": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/waisauthPostConfirmation-667a35624f6a72544968-build.zip"
+          "s3Key": "amplify-builds/waisauthPostConfirmation-6d4e4650572f6b4e4b35-build.zip"
         },
         "waisauthPreSignup": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/waisauthPreSignup-45477631455450417142-build.zip"
+          "s3Key": "amplify-builds/waisauthPreSignup-30456b5346572b704a58-build.zip"
         },
         "AdminQueries79849b09": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/AdminQueries79849b09-2b496b7932426667304d-build.zip"
+          "s3Key": "amplify-builds/AdminQueries79849b09-47364643383755435944-build.zip"
         },
         "S3Trigger79940529": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/S3Trigger79940529-72425037627059763536-build.zip"
+          "s3Key": "amplify-builds/S3Trigger79940529-444d533577774d72482f-build.zip"
         },
         "dynamodbtrigger": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/dynamodbtrigger-75422f6d384564764664-build.zip"
+          "s3Key": "amplify-builds/dynamodbtrigger-6668646a4e4c462b672b-build.zip"
         },
         "asyncactions": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/asyncactions-47733679445a6e563167-build.zip"
+          "s3Key": "amplify-builds/asyncactions-524f786c735966524d6d-build.zip"
         },
         "resolver": {
           "deploymentBucketName": "amplify-wais-staging-203026-deployment",
-          "s3Key": "amplify-builds/resolver-734254453530596e6865-build.zip"
+          "s3Key": "amplify-builds/resolver-41505a765762776d3445-build.zip"
         }
       }
     }
