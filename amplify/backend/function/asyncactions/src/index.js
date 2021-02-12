@@ -76,6 +76,8 @@ exports.handler = async (event) => {
         insuranceLicenseExpirationDate: new Date().toISOString(),
         partnersNumberLimit: 0,
         professionStartDate: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         file: [],
       }
       let userProfileResponse
@@ -100,6 +102,8 @@ exports.handler = async (event) => {
         id: event.email,
         username: event.username,
         balance: 0.0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
 
       let userWalletResponse

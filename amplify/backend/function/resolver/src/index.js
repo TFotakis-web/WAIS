@@ -339,6 +339,8 @@ const resolvers = {
         senderEmail: senderEmail,
         receiverEmail: receiverEmail,
         metadata: metadata,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }
 
       //Attempt the request

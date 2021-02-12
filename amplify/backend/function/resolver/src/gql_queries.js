@@ -5,7 +5,6 @@ module.exports = {
         id
         username
         chamberRecordNumber
-        createdAt
         doy
         familyStatus
         file {
@@ -18,7 +17,6 @@ module.exports = {
         professionStartDate
         telephone
         tin
-        updatedAt
         tradeCon{
           items{
             tradeName
