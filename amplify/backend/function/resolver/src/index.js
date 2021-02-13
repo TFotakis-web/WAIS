@@ -334,8 +334,9 @@ const resolvers = {
       const item = {
         id: id,
         expiresAt: expiresAt,
-        payload: { message: message },
+        payload: payload,
         type: requestType,
+        senderUsername: senderUsername,
         senderEmail: senderEmail,
         receiverEmail: receiverEmail,
         metadata: metadata,
@@ -368,18 +369,14 @@ const resolvers = {
       //Input Args
       const uuid = event.uuid
       const requestId = event.arguments.id
-      const callerUsername = event.identity.claims['cognito:username']
+      const callerEmail = event.identity.claims.email
       const requestObject = await ddbQueries.getRequestById(requestId)
-      const requestType = requestObject.type
-      const receiverUsername = requestObject.receiverUsername
       const receiverPayload = event.arguments.payload
-      const senderUsername = requestObject.senderUsername
-      const senderPayload = requestObject.payload
       const decision = receiverPayload.decision
 
       //Receiver and caller usernames must match
-      if (callerUsername !== receiverUsername) {
-        throw new Error('Caller and receiver usernames DONT match.')
+      if (callerEmail !== requestObject.receiverEmail) {
+        throw new Error('Caller and receiver e-mails DONT match.')
       }
 
       //Receiver must have a decision field
@@ -388,24 +385,26 @@ const resolvers = {
       }
 
       //Decide based on the request type and update the relevant entries
-      switch (requestType) {
+      switch (requestObject.type) {
         case 'CREATE_TRADE':
           if (decision === 'ACCEPT') {
             let newOfficeItem = {
-              id: '',
-              tradeName: '',
-              ownerUsername: '',
-              ownerId: '',
-              tin: '',
-              logo: '',
-              info: '',
-              postcode: '',
-              createdAt: '',
-              updatedAt: '',
+              id: uuid,
+              tradeName: receiverPayload.tradeName,
+              ownerUsername: requestObject.senderUsername,
+              ownerId: requestObject.senderEmail,
+              tin: null,
+              logo: null,
+              info: null,
+              postcode: null,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
             }
             let newOfficeResult = await ddbQueries.insertOfficeIfNotExists(newOfficeItem)
-            if (newOfficeResult) {
+            if (newOfficeResult.data) {
               resolverResponse.status = JSON.stringify(newOfficeResult)
+            } else {
+              console.log('Request with id=[' + requestId + '] was rejected by Admin')
             }
           } else {
             console.log('Request with id=[' + requestId + '] was rejected by Admin')

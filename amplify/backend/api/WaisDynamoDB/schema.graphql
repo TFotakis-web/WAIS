@@ -303,6 +303,7 @@ type Requests
   expiresAt: AWSTimestamp!
 
   # Users involved
+  senderUsername: String!
   senderEmail: String!
   receiverEmail: String!
 

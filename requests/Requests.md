@@ -26,3 +26,12 @@
   "message": "..."
 }
 ```
+
+# Responses
+
+```json
+{
+  "id": "...",
+  "decision": "[ACCEPT|REJECT]"
+}
+```
