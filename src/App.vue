@@ -1,15 +1,13 @@
 <template>
 	<div id="app" v-if="appSystemsLoaded && $store.getters.localesLoaded">
-		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0" />
-		<div v-show="$store.getters.globalPendingPromises === 0">
-			<navigation v-if="this.$store.getters['auth/user']" />
-			<mdb-container v-else fluid style="height: 100vh">
-				<mdb-row class="h-100 justify-content-center align-items-center">
-					<auth />
-					<!-- <amplify-authenticator/> -->
-				</mdb-row>
-			</mdb-container>
-		</div>
+		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0"/>
+		<mdb-container v-if="!this.$store.getters['auth/user']" fluid style="height: 100vh">
+			<mdb-row class="h-100 justify-content-center align-items-center">
+				<auth/>
+				<!-- <amplify-authenticator/> -->
+			</mdb-row>
+		</mdb-container>
+		<navigation v-else-if="$store.getters.globalPendingPromises === 0"/>
 	</div>
 </template>
 
