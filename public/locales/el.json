@@ -148,7 +148,6 @@
     "district": "Νομός",
     "phone": "Τηλέφωνο",
     "mobile": "Κινητό",
-    "birthDate": "Ημ. Γέννησης",
     "driversLicenseIssueDate": "Ημ. έκδοσης Διπλώματος",
     "numberPlate": "Αριθμός Κυκλοφορίας",
     "branch": "Κλάδος",
@@ -173,7 +172,14 @@
     "professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
     "licenseExpirationDate": "Ημ. Λήξης Άδειας",
     "iban": "IBAN",
-    "code": "Κωδικός"
+    "code": "Κωδικός",
+    "birthdate": "Ημ. Γέννησης",
+    "gender": "Φύλο",
+    "familyStatus": "Οικογενειακή Κατάσταση",
+    "doy": "ΔΟΥ",
+    "locale": "Γλώσσα",
+    "chamberRecordNumber": "Αρ. Μητρώου",
+    "insuranceLicenseExpirationDate": "Ημ. Λήξης Άδειας"
   },
   "actions": {
     "submit": "Υποβολή",

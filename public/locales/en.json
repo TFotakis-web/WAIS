@@ -148,7 +148,6 @@
     "district": "District",
     "phone": "Phone",
     "mobile": "Mobile",
-    "birthDate": "Birth date",
     "driversLicenseIssueDate": "Drivers license issue date",
     "numberPlate": "Number plate",
     "branch": "Branch",
@@ -173,7 +172,14 @@
     "professionStartDate": "Profession start date",
     "licenseExpirationDate": "License expiration date",
     "iban": "IBAN",
-    "code": "Code"
+    "code": "Code",
+    "birthdate": "Birthdate",
+    "gender": "Gender",
+    "familyStatus": "Family Status",
+    "doy": "DOY",
+    "locale": "Locale",
+    "chamberRecordNumber": "Chamber Record Number",
+    "insuranceLicenseExpirationDate": "Insurance License Exp. Date"
   },
   "actions": {
     "submit": "Submit",
