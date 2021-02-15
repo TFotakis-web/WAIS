@@ -65,7 +65,17 @@ type UserProfile
 
   #Unique fields, not present anywhere else
   email: String!
-  telephone: String!
+  telephone: AWSPhone!
+  name: String
+  family_name: String
+  gender: String
+  birthdate: AWSDate
+  address: String
+  city: String
+  profilePicture: S3Object
+  preferences: AWSJSON
+  locale: String
+
   tin: String
   doy: String
   familyStatus: String
@@ -74,6 +84,8 @@ type UserProfile
   partnersNumberLimit: Int
   professionStartDate: AWSDateTime
   file: [S3Object]
+
+  permissions: [UserPermissions]
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])

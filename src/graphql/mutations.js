@@ -54,6 +54,20 @@ export const createOffice = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -66,6 +80,11 @@ export const createOffice = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -113,6 +132,20 @@ export const updateOffice = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -125,6 +158,11 @@ export const updateOffice = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -172,6 +210,20 @@ export const deleteOffice = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -184,6 +236,11 @@ export const deleteOffice = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -214,6 +271,20 @@ export const createUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      name
+      family_name
+      gender
+      birthdate
+      address
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
       tin
       doy
       familyStatus
@@ -226,6 +297,11 @@ export const createUserProfile = /* GraphQL */ `
         region
         key
         name
+      }
+      permissions {
+        department
+        read
+        write
       }
       createdAt
       updatedAt
@@ -278,6 +354,20 @@ export const updateUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      name
+      family_name
+      gender
+      birthdate
+      address
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
       tin
       doy
       familyStatus
@@ -290,6 +380,11 @@ export const updateUserProfile = /* GraphQL */ `
         region
         key
         name
+      }
+      permissions {
+        department
+        read
+        write
       }
       createdAt
       updatedAt
@@ -342,6 +437,20 @@ export const deleteUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      name
+      family_name
+      gender
+      birthdate
+      address
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
       tin
       doy
       familyStatus
@@ -354,6 +463,11 @@ export const deleteUserProfile = /* GraphQL */ `
         region
         key
         name
+      }
+      permissions {
+        department
+        read
+        write
       }
       createdAt
       updatedAt
@@ -883,6 +997,14 @@ export const createTradeUserConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -899,6 +1021,20 @@ export const createTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -911,6 +1047,11 @@ export const createTradeUserConnection = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -974,6 +1115,14 @@ export const updateTradeUserConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -990,6 +1139,20 @@ export const updateTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1002,6 +1165,11 @@ export const updateTradeUserConnection = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1065,6 +1233,14 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1081,6 +1257,20 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1093,6 +1283,11 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1148,6 +1343,14 @@ export const createTradeContractConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1251,6 +1454,14 @@ export const updateTradeContractConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1354,6 +1565,14 @@ export const deleteTradeContractConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1459,6 +1678,14 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1492,6 +1719,14 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1543,6 +1778,14 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1576,6 +1819,14 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1627,6 +1878,14 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1660,6 +1919,14 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1778,6 +2045,20 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1790,6 +2071,11 @@ export const createTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1812,6 +2098,20 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1824,6 +2124,11 @@ export const createTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1878,6 +2183,20 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1890,6 +2209,11 @@ export const updateTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1912,6 +2236,20 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1924,6 +2262,11 @@ export const updateTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1978,6 +2321,20 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1990,6 +2347,11 @@ export const deleteTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -2012,6 +2374,20 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -2024,6 +2400,11 @@ export const deleteTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt

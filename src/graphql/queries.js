@@ -76,6 +76,14 @@ export const listTradeByName = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -130,6 +138,14 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -169,6 +185,20 @@ export const getOffice = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -181,6 +211,11 @@ export const getOffice = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -230,6 +265,14 @@ export const listOffices = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -257,6 +300,20 @@ export const listUserProfiles = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -269,6 +326,11 @@ export const listUserProfiles = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -297,6 +359,20 @@ export const getUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      name
+      family_name
+      gender
+      birthdate
+      address
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
       tin
       doy
       familyStatus
@@ -309,6 +385,11 @@ export const getUserProfile = /* GraphQL */ `
         region
         key
         name
+      }
+      permissions {
+        department
+        read
+        write
       }
       createdAt
       updatedAt
@@ -371,6 +452,20 @@ export const listUserProfileByEmail = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -383,6 +478,11 @@ export const listUserProfileByEmail = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -424,6 +524,20 @@ export const listUserProfileByUsername = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -436,6 +550,11 @@ export const listUserProfileByUsername = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1103,6 +1222,14 @@ export const getTradeUserConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1119,6 +1246,20 @@ export const getTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1131,6 +1272,11 @@ export const getTradeUserConnection = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1201,6 +1347,14 @@ export const listTradeUserConnections = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1272,6 +1426,14 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1341,6 +1503,14 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1412,6 +1582,14 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1459,6 +1637,14 @@ export const getTradeContractConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1631,6 +1817,14 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1664,6 +1858,14 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1819,6 +2021,20 @@ export const getTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1831,6 +2047,11 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1853,6 +2074,20 @@ export const getTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        name
+        family_name
+        gender
+        birthdate
+        address
+        city
+        profilePicture {
+          bucket
+          region
+          key
+          name
+        }
+        preferences
+        locale
         tin
         doy
         familyStatus
@@ -1865,6 +2100,11 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
           name
+        }
+        permissions {
+          department
+          read
+          write
         }
         createdAt
         updatedAt
@@ -1925,6 +2165,14 @@ export const listTransactionHistorys = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
@@ -1940,6 +2188,14 @@ export const listTransactionHistorys = /* GraphQL */ `
           username
           email
           telephone
+          name
+          family_name
+          gender
+          birthdate
+          address
+          city
+          preferences
+          locale
           tin
           doy
           familyStatus
