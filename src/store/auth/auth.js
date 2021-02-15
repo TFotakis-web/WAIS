@@ -1,6 +1,7 @@
 import { Auth } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listUserProfileByUsername } from '@/graphql/queries';
+import { updateUserProfile } from '@/graphql/mutations';
 
 export const auth = {
 	namespaced: true,
@@ -129,14 +130,15 @@ export const auth = {
 					console.log(error);
 					await Auth.signOut();
 				});
-				commit('decreaseGlobalPendingPromises', null, { root: true });
 				commit("setCognitoUser", cognitoUser);
-
 				await dispatch("currentUserInfo");
+
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
 				await Auth.signOut();
 				console.error(error);
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.reject(error);
 			}
 		},
@@ -144,14 +146,15 @@ export const auth = {
 			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				const userInfo = await Auth.currentUserInfo();
-				commit('decreaseGlobalPendingPromises', null, { root: true });
 				if (userInfo) {
 					commit("setUser", userInfo);
 					await dispatch("loadUserProfile");
 				}
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.reject(error);
 			}
 		},
@@ -161,45 +164,29 @@ export const auth = {
 				let userProfile;
 				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }));
 				userProfile = userProfile.data.listUserProfileByUsername.items[0];
-				commit('decreaseGlobalPendingPromises', null, { root: true });
 				commit("setUserProfile", userProfile);
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.reject(error);
 			}
 		},
-
-		// Todo: Implement
-		// async updateUserAttributes({ dispatch }, attributes) {
-		// 	try {
-		// const user = await Auth.currentAuthenticatedUser();
-		// const attributes = {
-		// address: '',
-		// birthdate: '',
-		// email: '',
-		// family_name: '',
-		// gender: '',
-		// given_name: '',
-		// locale: '',
-		// middle_name: '',
-		// name: '',
-		// nickname: '',
-		// phone_number: '',
-		// picture: '',
-		// preferred_username: '',
-		// profile: '',
-		// website: '',
-		// zoneinfo: ''
-		// };
-		// await Auth.updateUserAttributes(user, attributes);
-		// dispatch("currentUserInfo");
-		// return Promise.resolve();
-		// } catch (error) {
-		// 	console.error(error);
-		// 	return Promise.reject(error);
-		// }
-		// },
+		async updateUserProfile({ commit }, userProfile) {
+			try {
+				commit('increaseRouterViewPendingPromises', null, { root: true });
+				let response = await API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }));
+				userProfile = response.data.updateUserProfile;
+				commit("setUserProfile", userProfile);
+				commit('decreaseRouterViewPendingPromises', null, { root: true });
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				commit('decreaseRouterViewPendingPromises', null, { root: true });
+				return Promise.reject(error);
+			}
+		},
 	},
 	getters: {
 		cognitoUser: (state) => state.cognitoUser,
