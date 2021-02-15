@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getUserProfile } from '@/graphql/queries';
+import { listUserProfileByUsername } from '@/graphql/queries';
 
 export const auth = {
 	namespaced: true,
@@ -38,7 +38,7 @@ export const auth = {
 					password
 				});
 				commit("setCognitoUser", cognitoUser);
-				if(cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+				if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
 					return Promise.reject({
 						name: 'NEW_PASSWORD_REQUIRED',
 						code: 'NEW_PASSWORD_REQUIRED'
@@ -120,35 +120,16 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		async currentUserInfo({ commit }) {
-			try {
-				commit('increaseGlobalPendingPromises', null, {root: true});
-				const userInfo = await Auth.currentUserInfo();
-				commit('decreaseGlobalPendingPromises', null, {root: true});
-				if (userInfo) {
-					commit("setUser", userInfo);
-					// Todo: Load user profile
-					// commit('increaseGlobalPendingPromises', null, {root: true});
-					// const userProfile = await API.graphql(graphqlOperation(getUserProfile, {id: userInfo.id}));
-					// commit('decreaseGlobalPendingPromises', null, {root: true});
-					// commit("setUserProfile", userProfile);
-				}
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
 		async currentAuthenticatedUser({ commit, dispatch }) {
 			try {
-				commit('increaseGlobalPendingPromises', null, {root: true});
+				commit('increaseGlobalPendingPromises', null, { root: true });
 				let cognitoUser = await Auth.currentAuthenticatedUser({
 					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				}).catch(async error => {
 					console.log(error);
 					await Auth.signOut();
 				});
-				commit('decreaseGlobalPendingPromises', null, {root: true});
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 				commit("setCognitoUser", cognitoUser);
 
 				await dispatch("currentUserInfo");
@@ -159,35 +140,66 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		async updateUserAttributes({ dispatch }, attributes) {
+		async currentUserInfo({ commit, dispatch }) {
 			try {
-				// const user = await Auth.currentAuthenticatedUser();
-				// const attributes = {
-				// address: '',
-				// birthdate: '',
-				// email: '',
-				// family_name: '',
-				// gender: '',
-				// given_name: '',
-				// locale: '',
-				// middle_name: '',
-				// name: '',
-				// nickname: '',
-				// phone_number: '',
-				// picture: '',
-				// preferred_username: '',
-				// profile: '',
-				// website: '',
-				// zoneinfo: ''
-				// };
-				// await Auth.updateUserAttributes(user, attributes);
-				// dispatch("currentUserInfo");
+				commit('increaseGlobalPendingPromises', null, { root: true });
+				const userInfo = await Auth.currentUserInfo();
+				commit('decreaseGlobalPendingPromises', null, { root: true });
+				if (userInfo) {
+					commit("setUser", userInfo);
+					await dispatch("loadUserProfile");
+				}
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
 			}
 		},
+		async loadUserProfile({ commit, getters }) {
+			try {
+				commit('increaseGlobalPendingPromises', null, { root: true });
+				let userProfile;
+				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.user.username }));
+				userProfile = userProfile.data.listUserProfileByUsername.items[0];
+				commit('decreaseGlobalPendingPromises', null, { root: true });
+				commit("setUserProfile", userProfile);
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+
+		// Todo: Implement
+		// async updateUserAttributes({ dispatch }, attributes) {
+		// 	try {
+		// const user = await Auth.currentAuthenticatedUser();
+		// const attributes = {
+		// address: '',
+		// birthdate: '',
+		// email: '',
+		// family_name: '',
+		// gender: '',
+		// given_name: '',
+		// locale: '',
+		// middle_name: '',
+		// name: '',
+		// nickname: '',
+		// phone_number: '',
+		// picture: '',
+		// preferred_username: '',
+		// profile: '',
+		// website: '',
+		// zoneinfo: ''
+		// };
+		// await Auth.updateUserAttributes(user, attributes);
+		// dispatch("currentUserInfo");
+		// return Promise.resolve();
+		// } catch (error) {
+		// 	console.error(error);
+		// 	return Promise.reject(error);
+		// }
+		// },
 	},
 	getters: {
 		user: (state) => state.user,
