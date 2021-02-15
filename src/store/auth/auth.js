@@ -21,10 +21,51 @@ export const auth = {
 		}
 	},
 	actions: {
-		async signOut({ commit }) {
+		async signUp(_, { username, password, email, phone_number }) {
 			try {
-				await Auth.signOut();
-				commit("setUser", null);
+				await Auth.signUp({
+					username,
+					password,
+					attributes: {
+						email,
+						phone_number
+					}
+				});
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async confirmSignUp(_, { username, code }) {
+			try {
+				await Auth.confirmSignUp(username, code);
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async resendSignUp(_, username) {
+			try {
+				await Auth.resendSignUp(username);
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
+			try {
+				const cognitoUser = await Auth.signIn({
+					username: username,
+					password: old_password
+				});
+				await Auth.completeNewPassword(cognitoUser, new_password);
+				dispatch("signIn", {
+					username: username,
+					password: new_password
+				});
 				return Promise.resolve("Success");
 			} catch (error) {
 				console.error(error);
@@ -51,6 +92,16 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
+		async signOut({ commit }) {
+			try {
+				await Auth.signOut();
+				commit("setUser", null);
+				return Promise.resolve("Success");
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
 		async forgotPassword(_, username) {
 			try {
 				await Auth.forgotPassword(username);
@@ -64,57 +115,6 @@ export const auth = {
 			try {
 				await Auth.forgotPasswordSubmit(username, code, password);
 				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
-			try {
-				const cognitoUser = await Auth.signIn({
-					username: username,
-					password: old_password
-				});
-				await Auth.completeNewPassword(cognitoUser, new_password);
-				dispatch("signIn", {
-					username: username,
-					password: new_password
-				});
-				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async confirmSignUp(_, { username, code }) {
-			try {
-				await Auth.confirmSignUp(username, code);
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async resendSignUp(_, username) {
-			try {
-				await Auth.resendSignUp(username);
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async signUp(_, { username, password, email, phone_number }) {
-			try {
-				await Auth.signUp({
-					username,
-					password,
-					attributes: {
-						email,
-						phone_number
-					}
-				});
-				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
@@ -159,7 +159,7 @@ export const auth = {
 			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				let userProfile;
-				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.user.username }));
+				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }));
 				userProfile = userProfile.data.listUserProfileByUsername.items[0];
 				commit('decreaseGlobalPendingPromises', null, { root: true });
 				commit("setUserProfile", userProfile);
@@ -202,6 +202,7 @@ export const auth = {
 		// },
 	},
 	getters: {
+		cognitoUser: (state) => state.cognitoUser,
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
