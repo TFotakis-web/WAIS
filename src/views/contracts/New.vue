@@ -53,7 +53,7 @@
 								<mdb-input v-model="fields.email" :label="$t('fields.email')" :small="validation.email" type="text" name="email" autocomplete="email" outline required class="my-2" />
 							</mdb-col>
 							<mdb-col sm="6" md="4">
-								<mdb-input v-model="fields.birthDate" :label="$t('fields.birthDate')" :small="validation.birthDate" type="text" outline required class="my-2" />
+								<mdb-input v-model="fields.birthDate" :label="$t('fields.birthdate')" :small="validation.birthDate" type="text" outline required class="my-2" />
 							</mdb-col>
 							<mdb-col sm="6" md="4">
 								<mdb-input v-model="fields.driversLicenseIssueDate" :label="$t('fields.driversLicenseIssueDate')" :small="validation.driversLicenseIssueDate" type="text" outline required class="my-2" />
