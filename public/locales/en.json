@@ -179,7 +179,8 @@
     "doy": "DOY",
     "locale": "Locale",
     "chamberRecordNumber": "Chamber Record Number",
-    "insuranceLicenseExpirationDate": "Insurance License Exp. Date"
+    "insuranceLicenseExpirationDate": "Insurance License Exp. Date",
+    "postcode": "Postcode"
   },
   "actions": {
     "submit": "Submit",

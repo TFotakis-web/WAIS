@@ -179,7 +179,8 @@
     "doy": "ΔΟΥ",
     "locale": "Γλώσσα",
     "chamberRecordNumber": "Αρ. Μητρώου",
-    "insuranceLicenseExpirationDate": "Ημ. Λήξης Άδειας"
+    "insuranceLicenseExpirationDate": "Ημ. Λήξης Άδειας",
+    "postcode": "Ταχ. Κώδικας"
   },
   "actions": {
     "submit": "Υποβολή",
