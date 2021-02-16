@@ -72,6 +72,7 @@ type UserProfile
   birthdate: AWSDate
   address: String
   city: String
+  postcode: String
   profilePicture: S3Object
   preferences: AWSJSON
   locale: String
