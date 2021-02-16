@@ -39,6 +39,9 @@
 						<mdb-input v-model="fields.city" :label="$t('fields.city')" :small="validation.city" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
+						<mdb-input v-model="fields.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+					</mdb-col>
+					<mdb-col sm="6">
 						<mdb-input v-model="fields.phone" :label="$t('fields.phone')" :small="validation.phone" type="text" name="phone" autocomplete="tel" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
