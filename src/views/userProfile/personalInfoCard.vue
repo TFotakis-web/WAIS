@@ -54,6 +54,9 @@
 						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
+						<mdb-input v-model="userProfile.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+					</mdb-col>
+					<mdb-col sm="6">
 						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
