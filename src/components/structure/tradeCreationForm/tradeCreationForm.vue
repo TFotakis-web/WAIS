@@ -12,6 +12,7 @@
 						<form @submit.prevent="save">
 							<mdb-row>
 								<mdb-col>
+									<h4 class="text-center font-weight-bold my-4">{{ $store.getters['auth/username'] }}</h4>
 									<h5 class="font-weight-bold pl-0 my-4">{{ $t('views.tradeCreationForm.personalInfo') }}</h5>
 								</mdb-col>
 							</mdb-row>
@@ -73,19 +74,23 @@
 									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" class="d-none d-lg-block" required outline/>
 								</mdb-col>
 							</mdb-row>
-							<!-- Todo: Review if needed -->
-							<!-- <mdb-row>
-								<mdb-col>
-									<mdb-input type="textarea" :label="$t('fields.comments')" v-model="form.message" icon="pencil-alt" required outline/>
+							<mdb-row>
+								<mdb-col col="12">
+									<mdb-file-input textFieldTitle="File type 1" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
 								</mdb-col>
-							</mdb-row> -->
+								<mdb-col col="12">
+									<mdb-file-input textFieldTitle="File type 2" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
+								</mdb-col>
+								<mdb-col col="12">
+									<mdb-file-input textFieldTitle="File type 3" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
+								</mdb-col>
+								<mdb-col col="12">
+									<mdb-file-input textFieldTitle="Other files" @getValue="getFileInputValue" multiple sm btnColor="primary" icon="cloud-upload-alt"/>
+								</mdb-col>
+							</mdb-row>
 							<mdb-row>
 								<mdb-col>
-									<small class="text-danger">
-										TODO: show a dropdown menu to choose filename when does not fit (enarxi epaggelmatos, astiki euthini, adeia
-										epimelitiriou, katastatiko etaireias). When name has greek letters crashes.
-									</small>
-									<file-upload :files="files" :btnText="$t('actions.delete')" :text="{ able: { multi: $t('fields.dragAndDropOrClick') }, unable: { multi: $t('fields.clickToUpload') } }" multiple/>
+									<mdb-input type="textarea" :label="$t('fields.comments')" v-model="form.message" icon="pencil-alt" required outline class="my-4"/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
@@ -102,19 +107,19 @@
 							</mdb-row>
 							<mdb-row>
 								<mdb-col>
-									<hr />
+									<hr/>
 									<div class="text-center">
 										<loadingBtn
+											:text="$t('actions.save')"
+											:loading="loading"
+											:loadingText="$t('actions.saving')"
 											color="primary"
 											type="submit"
-											:rounded="true"
-											:loading="loading"
-											:text="$t('actions.save')"
-											:loadingText="$t('actions.saving')"
+											rounded
 											class="my-3"
 										/>
 										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-										<localeDropdown />
+										<localeDropdown/>
 										<mdb-btn flat darkWaves @click.native="signOut" icon="sign-out-alt">
 											{{ $t('components.navigation.navbar-item.signOut') }}
 										</mdb-btn>
@@ -129,21 +134,22 @@
 	</mdb-container>
 </template>
 <script>
-	import { mapActions } from 'vuex'
-	import FileUpload from 'mdb-file-upload'
-	import loadingBtn from '@/components/structure/loadingBtn'
-	import localeDropdown from '@/components/structure/localeDropdown'
+	import { mapActions } from 'vuex';
+	import { API, graphqlOperation, Storage } from 'aws-amplify';
+	import { sendRequest } from '@/graphql/queries';
+	import loadingBtn from '@/components/structure/loadingBtn';
+	import localeDropdown from '@/components/structure/localeDropdown';
 
 	export default {
 		name: 'tradeCreationForm',
 		components: {
-			FileUpload,
 			loadingBtn,
 			localeDropdown,
 		},
 		data() {
 			return {
 				form: {
+					userId: this.$store.getters['auth/user'].id,
 					type: 'Registration',
 					tradeName: '',
 					surname: '',
@@ -170,9 +176,53 @@
 		},
 		methods: {
 			...mapActions('auth', ['signOut']),
-			save() {
-				console.log('Saved.')
+			async save() {
+				// Todo: Upload files to S3
+				// Todo: File size less than 10MB
+				// https://docs.amplify.aws/lib/storage/upload/q/platform/js?fbclid=IwAR2T3-Q-isZD70YhhNHsoSlgDLTW6EjkJ0joKGMUNs_WUQfTqG9748b9uRQ#private-level
+				this.loading = true;
+				try {
+					let filename = 'test1.txt';
+					Storage.put(filename, 'Private Content', {
+						level: 'private',
+						contentType: 'text/plain',
+					})
+						.then((result) => console.log(result))
+						.catch((err) => console.log(err));
+
+					this.form['file'] = `private/${this.$store.getters['auth/user'].id}/${filename}`;
+					await API.graphql(graphqlOperation(sendRequest, { requestType: 'CREATE_TRADE', payload: this.form }));
+					// await API.graphql(graphqlOperation(sendRequest, { requestType: 'CREATE_TRADE', payload: this.form }));
+					this.loading = false;
+					console.log('Saved.');
+				} catch (error) {
+					this.loading = false;
+					console.error(error);
+				}
+			},
+			async getFileInputValue (fileInput) {
+				console.log(fileInput);
+
+				for(const file of fileInput){
+					const res = await this.$toBase64(file);
+					console.log(res);
+				}
+			},
+			listPublic() {
+				Storage.list('') // for listing ALL files without prefix, pass '' instead
+					.then((result) => console.log(result))
+					.catch((err) => console.log(err));
+			},
+			listProtected() {
+				Storage.list('', { level: 'protected' }) // for listing ALL files without prefix, pass '' instead
+					.then((result) => console.log(result))
+					.catch((err) => console.log(err));
+			},
+			listPrivate() {
+				Storage.list('', { level: 'private' })
+					.then((result) => console.log(result))
+					.catch((err) => console.log(err));
 			},
 		},
-	}
+	};
 </script>
