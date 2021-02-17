@@ -106,6 +106,7 @@ export default {
 				tin: this.userProfile.tin,
 				doy: this.userProfile.doy,
 				city: this.userProfile.city,
+				postcode: this.userProfile.postcode,
 				familyStatus: this.userProfile.familyStatus,
 				chamberRecordNumber: this.userProfile.chamberRecordNumber,
 				insuranceLicenseExpirationDate: this.userProfile.insuranceLicenseExpirationDate,
