@@ -11,7 +11,18 @@ type Office
   )
   @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
   @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
+  # Restrict to READ_ONLY
   id: ID!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: owner, ownerField: "members", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  # Info
   tradeName: String!
   ownerUsername: String!
   ownerId: ID!
@@ -41,12 +52,18 @@ type Office
   #Owner's UserProfile
   ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
 
-  # Paperwork
-  # Response structure: {"items":[...],"nextToken":"..."}
+  # Segregated CRUD API since filter/limit/nextToken should only apply to Reads, also payload is not needed
+  # Retrieve everything from here
   customers(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contracts(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+
+  # Create / Update / Delete from here
+  manageCustomers(action: CustomerResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageContracts(action: ContractResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageEmployees(action: EmployeeResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageContractors(action: ContractorResourceAction!, payload: String!): String @function(name: "resolver-${env}")
 }
 
 type UserProfile
@@ -60,11 +77,21 @@ type UserProfile
   )
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
   @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
-  id: ID! #Currently the user's email, guaranteed to always be unique
-  username: String!
+  #Currently the user's email, guaranteed to always be unique
+  id: ID!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "username", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
 
-  #Unique fields, not present anywhere else
+  # Cognito verified username/email pair, unique at all times.
+  username: String!
   email: String!
+
+  #Various info
   telephone: String!
   tin: String
   doy: String
@@ -88,7 +115,7 @@ type UserProfile
 type Vehicle
   @model(subscriptions: null)
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehicleByTradeName")
+  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
   @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
   id: ID!
   numberPlate: String!
@@ -159,7 +186,7 @@ type Customer
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"]) {
+  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
   id: ID!
   tin: String!
   tradeName: String!
@@ -184,6 +211,8 @@ type TradeUserConnection
   @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
   @key(name: "byEmployeeType", fields: ["employeeType"], queryField: "listTradeUserConnectionsByEmployeeType")
   @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
+  @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
+  @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
@@ -211,9 +240,9 @@ type TradeUserConnection
 
 type TradeContractConnection
   @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "tradeName"])
-  @key(name: "byTradeName", fields: ["tradeName", "tradeId"])
-  @key(name: "byContractId", fields: ["contractId", "tradeId"])
+  @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
+  @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
+  @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   tradeId: ID!
@@ -226,10 +255,10 @@ type TradeContractConnection
 
 type CompanyAccessConnection
   @model(subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"])
-  @key(name: "byToId", fields: ["toId", "fromId"])
-  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"])
-  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"])
+  @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listCompanyAccessConnectionByFromId")
+  @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
+  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
+  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   fromId: ID!
@@ -254,7 +283,7 @@ type UserCalendarEvent
 
 type UserWallet
   @model(subscriptions: null)
-  @key(name: "byUsername", fields: ["username"])
+  @key(name: "byUsername", fields: ["username"], queryField: "listUserWalletByUsername")
   @auth(
     rules: [
       { allow: owner, operations: [read], ownerField: "username" }
@@ -271,8 +300,16 @@ type UserWallet
 
 type TransactionHistory
   @model(subscriptions: null)
-  @key(name: "bySenderUsername", fields: ["senderUsername", "timestamp", "receiverUsername"])
-  @key(name: "byReceiverUsername", fields: ["receiverUsername", "timestamp", "senderUsername"])
+  @key(
+    name: "bySenderUsername"
+    fields: ["senderUsername", "timestamp", "receiverUsername"]
+    queryField: "listTransactionHistorybySenderUsername"
+  )
+  @key(
+    name: "byReceiverUsername"
+    fields: ["receiverUsername", "timestamp", "senderUsername"]
+    queryField: "listTransactionHistorybyReceiverUsername"
+  )
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID!
   senderUserProfileId: ID!
@@ -289,8 +326,8 @@ type TransactionHistory
 
 type Requests
   @model(subscriptions: null)
-  @key(name: "bySenderEmail", fields: ["senderEmail"])
-  @key(name: "byReceiverEmail", fields: ["receiverEmail"])
+  @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
+  @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
@@ -321,9 +358,9 @@ type Requests
 # Authentication is performed inside the lambda resolver
 type Query {
   #Utils
-  me: User @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  me: String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  user(username: String!): User
+  user(username: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
@@ -335,10 +372,6 @@ type Query {
 }
 
 type Mutation {
-  manageCustomers(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageContracts(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageEmployees(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
   # Update user balance
   sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
     @function(name: "resolver-${env}")
@@ -348,10 +381,18 @@ type Mutation {
 # ###################### ENUMS/TYPES ######################
 
 # CRUD specififc types
-enum ResourceAction {
-  CREATE
-  UPDATE
-  DELETE
+enum CustomerResourceAction {
+  TODO
+}
+enum EmployeeResourceAction {
+  UPDATE_PERMISSIONS
+  REMOVE
+}
+enum ContractorResourceAction {
+  TODO
+}
+enum ContractResourceAction {
+  TODO
 }
 
 enum RequestType {
@@ -402,19 +443,6 @@ type InsurancePackage {
   insuranceClass: String!
   coverage: [String]
   usages: String
-}
-
-# These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
-type User {
-  Username: String!
-  UserAttributes: [Value]
-  UserCreateDate: String
-  UserLastModifiedDate: String
-  Enabled: Boolean
-  UserStatus: UserStatus
-  MFAOptions: [MFAOption]
-  PreferredMfaSetting: String
-  UserMFASettingList: String
 }
 type Value {
   Name: String!

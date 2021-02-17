@@ -1,21 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const manageCustomers = /* GraphQL */ `
-  mutation ManageCustomers($action: ResourceAction!, $payload: String!) {
-    manageCustomers(action: $action, payload: $payload)
-  }
-`;
-export const manageContracts = /* GraphQL */ `
-  mutation ManageContracts($action: ResourceAction!, $payload: String!) {
-    manageContracts(action: $action, payload: $payload)
-  }
-`;
-export const manageEmployees = /* GraphQL */ `
-  mutation ManageEmployees($action: ResourceAction!, $payload: String!) {
-    manageEmployees(action: $action, payload: $payload)
-  }
-`;
 export const sendMoneyToUserWithUsername = /* GraphQL */ `
   mutation SendMoneyToUserWithUsername(
     $receiverUsername: String
@@ -45,6 +30,10 @@ export const createOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      manageCustomers
+      manageContracts
+      manageEmployees
+      manageContractors
       createdAt
       updatedAt
       remainingMembersAllowed
@@ -104,6 +93,10 @@ export const updateOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      manageCustomers
+      manageContracts
+      manageEmployees
+      manageContractors
       createdAt
       updatedAt
       remainingMembersAllowed
@@ -163,6 +156,10 @@ export const deleteOffice = /* GraphQL */ `
       contracts
       employees
       contractors
+      manageCustomers
+      manageContracts
+      manageEmployees
+      manageContractors
       createdAt
       updatedAt
       remainingMembersAllowed
@@ -255,6 +252,7 @@ export const createUserProfile = /* GraphQL */ `
         items {
           id
           expiresAt
+          senderUsername
           senderEmail
           receiverEmail
           type
@@ -319,6 +317,7 @@ export const updateUserProfile = /* GraphQL */ `
         items {
           id
           expiresAt
+          senderUsername
           senderEmail
           receiverEmail
           type
@@ -383,6 +382,7 @@ export const deleteUserProfile = /* GraphQL */ `
         items {
           id
           expiresAt
+          senderUsername
           senderEmail
           receiverEmail
           type
@@ -874,6 +874,10 @@ export const createTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -965,6 +969,10 @@ export const updateTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1056,6 +1064,10 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1139,6 +1151,10 @@ export const createTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1242,6 +1258,10 @@ export const updateTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1345,6 +1365,10 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1450,6 +1474,10 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1483,6 +1511,10 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1534,6 +1566,10 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1567,6 +1603,10 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1618,6 +1658,10 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -1651,6 +1695,10 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
         createdAt
         updatedAt
         remainingMembersAllowed
@@ -2066,6 +2114,7 @@ export const createRequests = /* GraphQL */ `
     createRequests(input: $input, condition: $condition) {
       id
       expiresAt
+      senderUsername
       senderEmail
       receiverEmail
       type
@@ -2084,6 +2133,7 @@ export const updateRequests = /* GraphQL */ `
     updateRequests(input: $input, condition: $condition) {
       id
       expiresAt
+      senderUsername
       senderEmail
       receiverEmail
       type
@@ -2102,6 +2152,7 @@ export const deleteRequests = /* GraphQL */ `
     deleteRequests(input: $input, condition: $condition) {
       id
       expiresAt
+      senderUsername
       senderEmail
       receiverEmail
       type
