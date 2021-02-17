@@ -130,6 +130,13 @@
     },
     "devTools": {
       "pageTitle": "Εργαλεία Προγραμματιστή"
+    },
+    "tradeCreationForm": {
+      "createYourTrade": "Αίτηση δημιουργίας επωνυμίας",
+      "personalInfo": "Προσωπικά στοιχεία",
+      "professionalInfo": "Επαγγελματικά στοιχεία",
+      "termsAndConditions": "Όροι και προϋποθέσεις",
+      "iAgreeToTheTermsAndConditions": "Συμφωνώ με τους όρους και τις προϋποθέσεις."
     }
   },
   "fields": {
@@ -180,7 +187,12 @@
     "locale": "Γλώσσα",
     "chamberRecordNumber": "Αρ. Μητρώου",
     "insuranceLicenseExpirationDate": "Ημ. Λήξης Άδειας",
-    "postcode": "Ταχ. Κώδικας"
+    "postcode": "Ταχ. Κώδικας",
+    "fathersName": "Πατρώνυμο",
+    "dragAndDropOrClick": "Σύρετε ή κάντε click για επιλογή αρχείων",
+    "clickToUpload": "Κάντε click για να ανεβάσετε τα αρχεία σας",
+    "chooseYourPostcode": "Επιλέξτε ταχ. κώδικα",
+    "comments": "Σχόλια"
   },
   "actions": {
     "submit": "Υποβολή",
@@ -255,5 +267,7 @@
   },
   "various": {
     "underConstruction": "Υπό κατασκευή"
-  }
+  },
+  "Choose your postcode": "",
+  "Comments-Message": ""
 }
