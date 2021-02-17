@@ -16,6 +16,7 @@
 		"greek-utils": "^1.3.0",
 		"lodash": "^4.17.20",
 		"mdbvue": "./mdb/mdbvue/mdbvue-6.7.1.tgz",
+		"mdb-file-upload": "./mdb/mdbvue/mdb-file-upload-6.0.0.tgz",
 		"register-service-worker": "^1.7.2",
 		"uuid": "^8.3.2",
 		"vue": "^2.6.12",
