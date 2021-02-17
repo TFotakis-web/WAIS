@@ -60,6 +60,7 @@ export const createOffice = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -138,6 +139,7 @@ export const updateOffice = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -216,6 +218,7 @@ export const deleteOffice = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -277,6 +280,7 @@ export const createUserProfile = /* GraphQL */ `
       birthdate
       address
       city
+      postcode
       profilePicture {
         bucket
         region
@@ -360,6 +364,7 @@ export const updateUserProfile = /* GraphQL */ `
       birthdate
       address
       city
+      postcode
       profilePicture {
         bucket
         region
@@ -443,6 +448,7 @@ export const deleteUserProfile = /* GraphQL */ `
       birthdate
       address
       city
+      postcode
       profilePicture {
         bucket
         region
@@ -1003,6 +1009,7 @@ export const createTradeUserConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1027,6 +1034,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -1121,6 +1129,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1145,6 +1154,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -1239,6 +1249,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1263,6 +1274,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -1349,6 +1361,7 @@ export const createTradeContractConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1460,6 +1473,7 @@ export const updateTradeContractConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1571,6 +1585,7 @@ export const deleteTradeContractConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1684,6 +1699,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1725,6 +1741,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1784,6 +1801,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1825,6 +1843,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1884,6 +1903,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1925,6 +1945,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -2051,6 +2072,7 @@ export const createTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2104,6 +2126,7 @@ export const createTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2189,6 +2212,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2242,6 +2266,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2327,6 +2352,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2380,6 +2406,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region

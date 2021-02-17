@@ -82,6 +82,7 @@ export const listTradeByName = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -144,6 +145,7 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -191,6 +193,7 @@ export const getOffice = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -271,6 +274,7 @@ export const listOffices = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -306,6 +310,7 @@ export const listUserProfiles = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -365,6 +370,7 @@ export const getUserProfile = /* GraphQL */ `
       birthdate
       address
       city
+      postcode
       profilePicture {
         bucket
         region
@@ -458,6 +464,7 @@ export const listUserProfileByEmail = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -530,6 +537,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -1228,6 +1236,7 @@ export const getTradeUserConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1252,6 +1261,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -1353,6 +1363,7 @@ export const listTradeUserConnections = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1432,6 +1443,7 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1509,6 +1521,7 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1588,6 +1601,7 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1643,6 +1657,7 @@ export const getTradeContractConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1823,6 +1838,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -1864,6 +1880,7 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -2027,6 +2044,7 @@ export const getTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2080,6 +2098,7 @@ export const getTransactionHistory = /* GraphQL */ `
         birthdate
         address
         city
+        postcode
         profilePicture {
           bucket
           region
@@ -2171,6 +2190,7 @@ export const listTransactionHistorys = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
@@ -2194,6 +2214,7 @@ export const listTransactionHistorys = /* GraphQL */ `
           birthdate
           address
           city
+          postcode
           preferences
           locale
           tin
