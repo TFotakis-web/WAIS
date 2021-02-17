@@ -1,37 +1,44 @@
 <template>
 	<div id="app" v-if="appSystemsLoaded && $store.getters.localesLoaded">
-		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0"/>
+		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0" />
 		<mdb-container v-if="!this.$store.getters['auth/user']" fluid style="height: 100vh">
 			<mdb-row class="h-100 justify-content-center align-items-center">
-				<auth/>
-				<!-- <amplify-authenticator/> -->
+				<mdb-col sm="10" md="6" lg="6" xl="4">
+					<auth />
+					<!-- <amplify-authenticator/> -->
+				</mdb-col>
 			</mdb-row>
 		</mdb-container>
-		<navigation v-else-if="$store.getters.globalPendingPromises === 0"/>
+		<template v-else-if="$store.getters.globalPendingPromises === 0">
+			<tradeCreationForm v-if="$store.getters['auth/userProfile'].tradeCon.items === undefined" />
+			<navigation v-else />
+		</template>
 	</div>
 </template>
 
 <script>
-	import navigation from '@/components/structure/navigation';
-	import auth from '@/components/auth/auth';
-	import fullScreenSpinner from '@/components/structure/fullScreenSpinner';
+	import navigation from '@/components/structure/navigation'
+	import auth from '@/components/auth/auth'
+	import fullScreenSpinner from '@/components/structure/fullScreenSpinner'
+	import TradeCreationForm from '@/components/structure/tradeCreationForm/tradeCreationForm.vue'
 
 	export default {
 		name: 'App',
 		components: {
 			navigation,
 			auth,
-			fullScreenSpinner
+			fullScreenSpinner,
+			TradeCreationForm,
 		},
 		data() {
 			return {
-				appSystemsLoaded: false
+				appSystemsLoaded: false,
 			}
 		},
 		mounted() {
-			this.appSystemsLoaded = true;
-		}
-	};
+			this.appSystemsLoaded = true
+		},
+	}
 </script>
 
 <style>
