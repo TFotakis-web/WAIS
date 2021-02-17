@@ -169,17 +169,9 @@
 			}
 		},
 		methods: {
+			...mapActions('auth', ['signOut']),
 			save() {
 				console.log('Saved.')
-			},
-			...mapActions({
-				signOutStore: 'auth/signOut',
-			}),
-			signOut: async function () {
-				await this.signOutStore()
-				if (this.$router.currentRoute.name !== 'Home') {
-					this.$router.push({ name: 'Home' })
-				}
 			},
 		},
 	}
