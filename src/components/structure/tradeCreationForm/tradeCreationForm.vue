@@ -76,13 +76,13 @@
 							</mdb-row>
 							<mdb-row>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 1" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<mdb-file-input textFieldTitle="File type 1" @getValue="getFileInputValue($event, 'File type 1')" sm btnColor="primary" icon="cloud-upload-alt"/>
 								</mdb-col>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 2" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<mdb-file-input textFieldTitle="File type 2" @getValue="getFileInputValue($event, 'File type 2')" sm btnColor="primary" icon="cloud-upload-alt"/>
 								</mdb-col>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 3" @getValue="getFileInputValue" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<mdb-file-input textFieldTitle="File type 3" @getValue="getFileInputValue($event, 'File type 3')" sm btnColor="primary" icon="cloud-upload-alt"/>
 								</mdb-col>
 								<mdb-col col="12">
 									<mdb-file-input textFieldTitle="Other files" @getValue="getFileInputValue" multiple sm btnColor="primary" icon="cloud-upload-alt"/>
@@ -135,8 +135,7 @@
 </template>
 <script>
 	import { mapActions } from 'vuex';
-	import { API, graphqlOperation, Storage } from 'aws-amplify';
-	import { sendRequest } from '@/graphql/queries';
+	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
 
@@ -150,12 +149,12 @@
 			return {
 				form: {
 					userId: this.$store.getters['auth/user'].id,
+					username: this.$store.getters['auth/user'].username,
 					type: 'Registration',
 					tradeName: '',
 					surname: '',
 					name: '',
 					fathersName: '',
-					username: '',
 					mobile: '',
 					phone: '',
 					address: '',
@@ -166,6 +165,7 @@
 					licenseExpirationDate: '',
 					message: '',
 					condition: false,
+					files: []
 				},
 				files: [],
 				loading: false,
@@ -176,38 +176,48 @@
 		},
 		methods: {
 			...mapActions('auth', ['signOut']),
+			...mapActions('request', ['sendRequest']),
 			async save() {
-				// Todo: Upload files to S3
-				// Todo: File size less than 10MB
-				// https://docs.amplify.aws/lib/storage/upload/q/platform/js?fbclid=IwAR2T3-Q-isZD70YhhNHsoSlgDLTW6EjkJ0joKGMUNs_WUQfTqG9748b9uRQ#private-level
 				this.loading = true;
 				try {
-					let filename = 'test1.txt';
-					Storage.put(filename, 'Private Content', {
-						level: 'private',
-						contentType: 'text/plain',
-					})
-						.then((result) => console.log(result))
-						.catch((err) => console.log(err));
+					for (const i in this.form.files) {
+						const response = await Storage.put(this.form.files[i].name, this.form.files[i].data, {
+							level: 'private',
+							contentType: this.form.files[i].type,
+						});
+						this.form.files[i] = `private/${this.$store.getters['auth/user'].id}/${response.key}`;
+					}
 
-					this.form['file'] = `private/${this.$store.getters['auth/user'].id}/${filename}`;
-					await API.graphql(graphqlOperation(sendRequest, { requestType: 'CREATE_TRADE', payload: this.form }));
-					// await API.graphql(graphqlOperation(sendRequest, { requestType: 'CREATE_TRADE', payload: this.form }));
+					await this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form });
 					this.loading = false;
-					console.log('Saved.');
+					console.log(this.form);
 				} catch (error) {
 					this.loading = false;
 					console.error(error);
 				}
 			},
-			async getFileInputValue (fileInput) {
-				console.log(fileInput);
-
-				for(const file of fileInput){
-					const res = await this.$toBase64(file);
-					console.log(res);
+			async getFileInputValue(fileInput, filename) {
+				const sizeLimitInMBs = 10; // File size in MB
+				const sizeLimitInBs = sizeLimitInMBs * 2 ** 20;
+				for (const file of fileInput) {
+					if (file.size > sizeLimitInBs) {
+						this.error.message += this.error.message === '' ? '' : ' ';
+						this.error.message += `File ${file.name} exceeds ${sizeLimitInMBs} MBs.`;
+						continue;
+					}
+					const data = await this.$toBase64(file);
+					let name = '';
+					if (filename) {
+						let extension = file.name.split('.');
+						extension = extension[extension.length - 1];
+						name = filename + '.' + extension;
+					} else {
+						name = file.name;
+					}
+					this.form.files.push({ name, data, type: file.type });
 				}
 			},
+			// Todo: Remove redundant methods
 			listPublic() {
 				Storage.list('') // for listing ALL files without prefix, pass '' instead
 					.then((result) => console.log(result))
