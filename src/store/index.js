@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { auth } from '@/store/auth/auth';
+import { request } from '@/store/request/request';
+
 import { API, graphqlOperation } from "aws-amplify";
 import { echo } from "@/graphql/queries";
 // import { vehicle } from '@/store/vehicle/vehicle';
@@ -11,6 +13,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	modules: {
 		auth,
+		request,
 		// vehicle,
 		// trade,
 		// platformData
