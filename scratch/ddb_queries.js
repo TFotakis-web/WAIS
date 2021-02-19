@@ -132,7 +132,7 @@ module.exports = {
     return resp
   },
   getRequestById: async (id) => {
-    console.log('getRequestById id: ' + email)
+    console.log('getRequestById id: ' + id)
     let resp = { data: '', error: '' }
     try {
       resp.data = await ddb

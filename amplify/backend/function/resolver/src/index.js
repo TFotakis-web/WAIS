@@ -28,234 +28,118 @@ const resolvers = {
   Office: {
     customers: async event => {
       if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
+        throw new Error('Invalid credentials.')
       }
-      try {
-        return await officeAPI.listCustomersForUserInOffice({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await officeAPI.listCustomersForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     contracts: async event => {
       if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
+        throw new Error('Invalid credentials.')
       }
-      try {
-        return await officeAPI.listContractsForUserInOffice({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await officeAPI.listContractsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     employees: async event => {
       if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
+        throw new Error('Invalid credentials.')
       }
-      try {
-        return await officeAPI.listEmployeesForUserInOffice({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await officeAPI.listEmployeesForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     contractors: async event => {
       if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
+        throw new Error('Invalid credentials.')
       }
-      try {
-        return await officeAPI.listContractorsForUserInOffice({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await officeAPI.listContractorsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     manageEmployees: async event => {
       if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
+        throw new Error('Invalid credentials.')
       }
-      try {
-        return await officeAPI.manageEmployees({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          action: event.arguments.action,
-          payload: event.arguments.payload,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await officeAPI.manageEmployees({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+      })
     },
     manageCustomers: async event => {
-      return {
-        data: [],
-        errors: [{ message: 'Not implemented yet.' }],
-      }
+      throw new Error('Not implemented yet.')
     },
     manageContracts: async event => {
-      return {
-        data: [],
-        errors: [{ message: 'Not implemented yet.' }],
-      }
+      throw new Error('Not implemented yet.')
     },
     manageContractors: async event => {
-      return {
-        data: [],
-        errors: [{ message: 'Not implemented yet.' }],
-      }
+      throw new Error('Not implemented yet.')
     },
   },
   Query: {
     echo: async event => {
-      try {
-        return event.arguments.msg
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return event.arguments.msg
     },
     me: async event => {
-      if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
-      }
-      try {
-        return await cognitoIdentityServiceProvider
-          .adminGetUser({
-            UserPoolId: COGNITO_USERPOOL_ID,
-            Username: event.identity.claims['cognito:username'],
-          })
-          .promise()
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+      return await cognitoIdentityServiceProvider.adminGetUser({
+        UserPoolId: COGNITO_USERPOOL_ID,
+        Username: event.identity.claims['cognito:username'],
+      })
     },
     user: async event => {
-      if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
-      }
-      try {
-        return await cognitoIdentityServiceProvider
-          .adminGetUser({
-            UserPoolId: COGNITO_USERPOOL_ID,
-            Username: event.arguments.username,
-          })
-          .promise()
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
-    },
-    sendRequest: async event => {
-      if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
-      }
-      try {
-        return await requestsAPI.sendRequest({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
+      return await cognitoIdentityServiceProvider
+        .adminGetUser({
+          UserPoolId: COGNITO_USERPOOL_ID,
+          Username: event.arguments.username,
         })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
-    },
-    resolveRequest: async event => {
-      if (!event.identity.claims) {
-        return {
-          data: [],
-          errors: [{ message: 'Invalid credentials.' }],
-        }
-      }
-      try {
-        return await requestsAPI.resolveRequest({
-          username: event.identity.claims['cognito:username'],
-          office: event.source,
-          limit: event.arguments.limit,
-          nextToken: event.arguments.nextToken,
-          filter: event.arguments.filter,
-        })
-      } catch (e) {
-        return {
-          data: [],
-          errors: [{ message: JSON.stringify(e) }],
-        }
-      }
+        .promise()
     },
   },
 
   Mutation: {
     sendMoneyToUserWithUsername: async event => {
-      return null
+      throw new Error('Not implemented yet.')
+    },
+    sendRequest: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return await requestsAPI.sendRequest({
+        username: event.identity.claims['cognito:username'],
+        requestType: event.arguments.requestType,
+        payload: event.arguments.payload,
+      })
+    },
+    resolveRequest: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return await requestsAPI.resolveRequest({
+        username: event.identity.claims['cognito:username'],
+        email: event.identity.claims['email'],
+        groups: event.identity.claims['cognito:groups'],
+        id: event.arguments.id,
+        payload: event.arguments.payload,
+      })
     },
   },
 }
@@ -282,7 +166,7 @@ exports.handler = async event => {
         return res
       } catch (err) {
         console.log('Resolver error is ' + JSON.stringify(err))
-        return err
+        throw err //This will format the resolver's result in a specific way
       }
     }
   }

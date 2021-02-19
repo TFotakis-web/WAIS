@@ -4,11 +4,9 @@ const gqlAPI = require('../api/gql_queries')
 module.exports = {
   /**
    * Retrieves all customers the input user can access.
+   * @param {Dict} input
    */
-  listCustomersForUserInOffice: async args => {
-    //Unpack args and validate
-    const input = Object.keys(args).map(e => ({ Key: e, Value: args[e] }))
-
+  listCustomersForUserInOffice: async input => {
     //User Permissions check
     const permissions = await gqlAPI.getUserPermissions(input.username)
     if (!permissions.items.length) {

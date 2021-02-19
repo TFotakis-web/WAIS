@@ -1,13 +1,19 @@
 # WAIS Requests between users
 
+This sectiom describes the payloads for each type of request.
+
 ## CREATE_TRADE
 
 ```json
 {
-  "tradeName": "...",
-  "message": "..."
+  "name": "name1",
+  "tin": "12345678",
+  "phone": "697",
+  "email": "a@b.com"
 }
 ```
+
+
 
 ## CREATE_COMPANY_CONNECTION
 

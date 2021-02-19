@@ -11,7 +11,7 @@ AWS.config.update({
   },
 })
 const ses = new AWS.SES({ region: 'us-west-2' })
-const SourceEmailAddress = '' //TODO
+const SourceEmailAddress = 'giorgoshstam@gmail.com' //TODO - CHANGE ON PRODUCTION!!
 
 module.exports = {
   /**
