@@ -8,12 +8,10 @@
 Amplify Params - DO NOT EDIT */
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
-const urlParse = require('url').URL
-const ddbQueries = require('./ddb_queries.js')
-const utils = require('./utils.js')
-const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
-const REGION = process.env.REGION
-const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
+
+//API
+const requestsAPI = require('./queries/requests')
+const officeAPI = require('./queries/office')
 
 /**
  * Get user pool information from environment variables.
@@ -28,462 +26,120 @@ if (!COGNITO_USERPOOL_ID) {
  */
 const resolvers = {
   Office: {
-    customers: async (event) => {
-      console.log('Resolving Office.customers')
-
-      //Username and permissions
-      let username = 'IAM'
-      let permissions = ''
-
-      if (event.identity.claims) {
-        console.log('Credentials found..')
-        username = event.identity.claims['cognito:username']
-        permissions = utils.getUserPermissions(username, event.source.tradeName)
+    customers: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
       }
-
-      //List customers request input item
-      let item = utils.getDefaultFunctionArgs(event)
-
-      //Attempt the request
-      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
-
-      //Response structure:
-      //{ data: { listCustomers: { items: [], nextToken: null } }, errors: [{ path: '', location: '', message: '' }] }
-      const customersResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(ENDPOINT, { input: item }, queries.listCustomers, 'listCustomers', REGION, APPSYNC_URL),
-      )
-
-      // Filter out customer fields based on permissions
-      if (permissions) {
-        //TODO
-      }
-
-      //Result
-      const resolverResponse = customersResponse.data.listCustomers
-
-      //Log the result
-      console.log('Response of ' + item + ' was ' + resolverResponse)
-      return resolverResponse
+      return await officeAPI.listCustomersForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
-    contracts: async (event) => {
-      console.log('Resolving Office.contracts')
-
-      //Username and permissions
-      let username = 'IAM'
-      let permissions = ''
-
-      if (event.identity.claims) {
-        console.log('Credentials found..')
-        username = event.identity.claims['cognito:username']
-        permissions = utils.getUserPermissions(username, event.source.tradeName)
+    contracts: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
       }
-
-      let item = utils.getDefaultFunctionArgs(event)
-
-      //Attempt the request
-      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
-
-      //Attempt the request
-      const contractsResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(ENDPOINT, { input: item }, queries.listContracts, 'listContracts', REGION, APPSYNC_URL),
-      )
-
-      // Filter out customer fields based on permissions
-      if (permissions) {
-        //TODO
-      }
-
-      //Result
-      const resolverResponse = contractsResponse.data.listContracts
-
-      //Filter out things..
-      console.log('Response of ' + item + ' was ' + resolverResponse)
-      return resolverResponse
+      return await officeAPI.listContractsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
-    employees: async (event) => {
-      console.log('Resolving Office.employees')
-
-      //Username and permissions
-      let username = 'IAM'
-      let permissions = ''
-
-      if (event.identity.claims) {
-        console.log('Credentials found..')
-        username = event.identity.claims['cognito:username']
-        permissions = utils.getUserPermissions(username, event.source.tradeName)
+    employees: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
       }
-
-      //List employees request input item
-      let item = utils.getUserProfileFunctionArgs(event, 'STANDARD')
-      item.tradeName = tradeName
-
-      //Attempt the request
-      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
-
-      //Response structure:
-      const employeesResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(
-          ENDPOINT,
-          { input: item },
-          queries.listEmployeesByEmployeeType,
-          'listEmployeesByEmployeeType',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
-
-      // Filter out customer fields based on permissions
-      if (permissions) {
-        //TODO
-      }
-
-      //Result
-      const resolverResponse = employeesResponse.data.listEmployeesByEmployeeType
-
-      //Log the result
-      console.log('Response of ' + item + ' was ' + resolverResponse)
-      return resolverResponse
+      return await officeAPI.listEmployeesForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
-    contractors: async (event) => {
-      console.log('Resolving Office.contractors')
-
-      //Username and permissions
-      let username = 'IAM'
-      let permissions = ''
-
-      if (event.identity.claims) {
-        console.log('Credentials found..')
-        username = event.identity.claims['cognito:username']
-        permissions = utils.getUserPermissions(username, event.source.tradeName)
+    contractors: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
       }
-
-      //List contractors request input item
-      let item = utils.getUserProfileFunctionArgs(event, 'CONTRACTOR')
-      item.tradeName = tradeName
-
-      //Attempt the request
-      console.log('Resolving user ' + username + ' with permissions: ' + permissions)
-
-      //Response structure:
-      const contractorsResponse = utils.getResponseFromApi(
-        ENDPOINT,
-        utils.createSignedRequest(
-          ENDPOINT,
-          { input: item },
-          queries.listEmployeesByEmployeeType,
-          'listEmployeesByEmployeeType',
-          REGION,
-          APPSYNC_URL,
-        ),
-      )
-
-      // Filter out customer fields based on permissions
-      if (permissions) {
-        //TODO
+      return await officeAPI.listContractorsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
+    },
+    manageEmployees: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
       }
-
-      //Result
-      const resolverResponse = contractorsResponse.data.listEmployeesByEmployeeType
-
-      //Log the result
-      console.log('Response of ' + item + ' was ' + resolverResponse)
-      return resolverResponse
+      return await officeAPI.manageEmployees({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+      })
+    },
+    manageCustomers: async event => {
+      throw new Error('Not implemented yet.')
+    },
+    manageContracts: async event => {
+      throw new Error('Not implemented yet.')
+    },
+    manageContractors: async event => {
+      throw new Error('Not implemented yet.')
     },
   },
   Query: {
-    echo: async (event) => {
-      console.log('Resolving echo')
-      try {
-        return event.arguments.msg
-      } catch (error) {
-        throw new Error(e)
-      }
+    echo: async event => {
+      return event.arguments.msg
     },
-    me: async (event) => {
-      console.log('Resolving me')
-      try {
-        if (!event.identity.claims) {
-          throw new Error('This Query should only be called by authorized Users.')
-        }
-        return await cognitoIdentityServiceProvider
-          .adminGetUser({
-            UserPoolId: COGNITO_USERPOOL_ID,
-            Username: event.identity.claims['cognito:username'],
-          })
-          .promise()
-      } catch (e) {
-        throw new Error(e)
-      }
+    me: async event => {
+      return await cognitoIdentityServiceProvider.adminGetUser({
+        UserPoolId: COGNITO_USERPOOL_ID,
+        Username: event.identity.claims['cognito:username'],
+      })
     },
-    user: async (event) => {
-      console.log('Resolving user')
-      try {
-        return await cognitoIdentityServiceProvider
-          .adminGetUser({
-            UserPoolId: COGNITO_USERPOOL_ID,
-            Username: event.arguments.username,
-          })
-          .promise()
-      } catch (e) {
-        throw new Error(e)
-      }
-    },
-    sendRequest: async (event) => {
-      console.log('Resolving sendRequest')
-
-      // Retrieve username and permissions
-      if (!event.identity.claims) {
-        throw new Error('Credential not found.')
-      }
-
-      //Unpack arguments
-      let senderUsername = event.identity.claims['cognito:username']
-      let senderEmail = event.identity.claims.email
-      let payload = JSON.parse(event.arguments.payload)
-      let receiverEmail = payload.email
-      let message = payload.message
-      let tradeName = payload.tradeName
-      let requestType = event.arguments.requestType
-      let callerOffice //Will be populated if necessary later on
-      let metadata = {
-        forAdmin: 'false',
-      }
-
-      //Message size should be at most 1024 chars
-      if (message.length > 1024) {
-        throw new Error('Message size larger than 1024 characters.')
-      }
-
-      //Retrieve the UserProfiles
-      let senderUserProfile = await ddbQueries.getUserProfileByEmail(senderEmail)
-      if (!senderUserProfile) {
-        throw new Error('Failed to retrieve the user profile of ' + senderUsername)
-      }
-      if (senderUserProfile.error) {
-        throw new Error('Failed to retrieve the user profile of ' + senderUsername + ' with error ' + senderUserProfile.error)
-      }
-
-      //Expire this after 1 week
-      let curTS = Date.now()
-      let id = curTS + '_' + senderEmail
-      let expiresAt = new Date(curTS + 1000 * 60 * 60 * 24 * 7)
-
-      //Get the receiver of this request based on the request payload and type
-      switch (requestType) {
-        case 'CREATE_COMPANY_CONNECTION':
-          //Get the Office of the person sending this request
-          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
-          if (!callerOffice) {
-            throw new Error("User isn't an Office managers. Only office managers can send requests.")
-          }
-          if (callerOffice.error) {
-            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
-          }
-          if (!utils.validateEmail(receiverEmail)) {
-            throw new Error('Invalid receiver email')
-          }
-          receiverUserProfile = await ddbQueries.getUserProfileByEmail(receiverEmail)
-          if (!receiverUserProfile) {
-            throw new Error('Receiver office manager does not exist')
-          }
-          if (receiverUserProfile.error) {
-            throw new Error("Failed to retrieve the receiver's user profile with error " + receiverUserProfile.error)
-          }
-          break
-        case 'CREATE_TRADE':
-          if (tradeName.length < 4) {
-            throw new Error('Trade name length should be greater than 3')
-          }
-          receiverEmail = 'admin@wais.com' //TODO change to sth simillar
-          metadata.forAdmin = 'true'
-          break
-        case 'INVITE_EMPLOYEE_TO_OFFICE':
-          //Get the Office of the person sending this request
-          callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
-          if (!callerOffice) {
-            throw new Error("User isn't an Office managers. Only office managers can send requests.")
-          }
-          if (callerOffice.error) {
-            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
-          }
-          if (!utils.validateEmail(receiverEmail)) {
-            throw new Error('Invalid receiver email')
-          }
-          break
-        case 'INVITE_CONTRACTOR_TO_OFFICE':
-          //Get the Office of the person sending this request
-          let callerOffice = await ddbQueries.getOfficeByOwnerUsername(senderUsername)
-          if (!callerOffice) {
-            throw new Error("User isn't an Office managers. Only office managers can send requests.")
-          }
-          if (callerOffice.error) {
-            throw new Error("Failed to retrieve the user's office [" + senderUsername + '] with error ' + callerOffice.error)
-          }
-          if (!utils.validateEmail(receiverEmail)) {
-            throw new Error('Invalid receiver email')
-          }
-          break
-        default:
-          throw new Error('Request of type ' + requestType + ' with request id=[' + id + '] failed.')
-      }
-
-      //New request
-      const item = {
-        id: id,
-        expiresAt: expiresAt,
-        payload: { message: message },
-        type: requestType,
-        senderEmail: senderEmail,
-        receiverEmail: receiverEmail,
-        metadata: metadata,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }
-
-      //Attempt the request
-      let insertionRes = await ddbQueries.insertRequest(item)
-      if (insertionRes.error) {
-        throw new Error('Failed to insert request [' + JSON.stringify(item) + '] with error: ' + insertionRes.error)
-      }
-      return { requestId: id }
-    },
-
-    resolveRequest: async (event) => {
-      console.log('Resolving request')
-
-      //Username check, this shouldn't be called via IAM
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials')
-      }
-
-      //Lambda response
-      let resolverResponse = {
-        status: '',
-        errors: '',
-      }
-
-      //Input Args
-      const uuid = event.uuid
-      const requestId = event.arguments.id
-      const callerUsername = event.identity.claims['cognito:username']
-      const requestObject = await ddbQueries.getRequestById(requestId)
-      const requestType = requestObject.type
-      const receiverUsername = requestObject.receiverUsername
-      const receiverPayload = event.arguments.payload
-      const senderUsername = requestObject.senderUsername
-      const senderPayload = requestObject.payload
-      const decision = receiverPayload.decision
-
-      //Receiver and caller usernames must match
-      if (callerUsername !== receiverUsername) {
-        throw new Error('Caller and receiver usernames DONT match.')
-      }
-
-      //Receiver must have a decision field
-      if (decision !== 'ACCEPT' || decision !== 'REJECT') {
-        throw new Error("Receiver must make a decision that is either 'ACCEPT' or 'REJECT'.")
-      }
-
-      //Decide based on the request type and update the relevant entries
-      switch (requestType) {
-        case 'CREATE_TRADE':
-          if (decision === 'ACCEPT') {
-            let newOfficeItem = {
-              id: '',
-              tradeName: '',
-              ownerUsername: '',
-              ownerId: '',
-              tin: '',
-              logo: '',
-              info: '',
-              postcode: '',
-              createdAt: '',
-              updatedAt: '',
-            }
-            let newOfficeResult = await ddbQueries.insertOfficeIfNotExists(newOfficeItem)
-            if (newOfficeResult) {
-              resolverResponse.status = JSON.stringify(newOfficeResult)
-            }
-          } else {
-            console.log('Request with id=[' + requestId + '] was rejected by Admin')
-          }
-          break
-        case 'CREATE_COMPANY_CONNECTION':
-          break
-        case 'INVITE_EMPLOYEE_TO_OFFICE':
-          if (decision === 'ACCEPT') {
-            let newEmpResult = await ddbQueries.addEmployeeToOffice('office', receiverUsername, 'empEmail', uuid)
-          } else {
-            console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
-          }
-          break
-        case 'INVITE_CONTRACTOR_TO_OFFICE':
-          if (decision === 'ACCEPT') {
-            let newContractorResult = await ddbQueries.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
-          } else {
-            console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
-          }
-          break
-        default:
-          throw new Error('Invalid request type.')
-      }
-
-      //Delete request as it has been resolved
-      let delResponse = await ddbQueries.deleteRequest(uuid)
-      if (delResponse.error) {
-        resolverResponse.errors = delResponse
-      }
-
-      //Log and return
-      console.log('Response of resolveRequest was ' + JSON.stringify(delResponse))
-      return resolverResponse
+    user: async event => {
+      return await cognitoIdentityServiceProvider
+        .adminGetUser({
+          UserPoolId: COGNITO_USERPOOL_ID,
+          Username: event.arguments.username,
+        })
+        .promise()
     },
   },
 
   Mutation: {
-    manageEmployees: async (event) => {
-      console.log('Resolving manageOfficeEmployee')
-
-      //Username check, this shouldn't be called via IAM
+    sendMoneyToUserWithUsername: async event => {
+      throw new Error('Not implemented yet.')
+    },
+    sendRequest: async event => {
       if (!event.identity.claims) {
-        throw new Error('Invalid credentials')
+        throw new Error('Invalid credentials.')
       }
-
-      //Get args
-      let managerUsername = event.identity.claims['cognito:username']
-      let payload = event.arguments.payload
-      let action = event.arguments.action
-      let uuid = event.uuid
-
-      //Get caller Office
-      let office = utils.getOfficeByOwnerUsername(managerUsername)
-      if (!office) {
-        throw new Error('User is either not valid or not the owner of the provided trade name.')
-      } else {
-        console.log('Retrieved office: ' + JSON.stringify(office))
-      }
-
-      //Actions
-      let resolverResponse = ''
-      switch (action) {
-        case 'UPDATE_PERMISSIONS':
-          break
-        case 'REMOVE':
-          break
-        default:
-          throw new Error('Invalid action.')
-      }
-
-      return resolverResponse
+      return await requestsAPI.sendRequest({
+        username: event.identity.claims['cognito:username'],
+        requestType: event.arguments.requestType,
+        payload: event.arguments.payload,
+      })
     },
-    manageCustomers: async (event) => {
-      return '{}'
-    },
-    manageContracts: async (event) => {
-      return '{}'
+    resolveRequest: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return await requestsAPI.resolveRequest({
+        username: event.identity.claims['cognito:username'],
+        email: event.identity.claims['email'],
+        groups: event.identity.claims['cognito:groups'],
+        id: event.arguments.id,
+        payload: event.arguments.payload,
+      })
     },
   },
 }
@@ -498,7 +154,7 @@ const resolvers = {
 //   "request": { /* AppSync request object. Contains things like headers. */ },
 //   "prev": { /* If using the built-in pipeline resolver support, this contains the object returned by the previous function. */ },
 // }
-exports.handler = async (event) => {
+exports.handler = async event => {
   console.log('Resolving event: ' + JSON.stringify(event))
   const typeHandler = resolvers[event.typeName]
   if (typeHandler) {
@@ -506,11 +162,11 @@ exports.handler = async (event) => {
     if (resolver) {
       try {
         const res = await resolver(event)
-        console.log('Resolver result is ' + JSON.stringify(res))
+        console.log('Resolver result is ' + res)
         return res
       } catch (err) {
         console.log('Resolver error is ' + JSON.stringify(err))
-        return err
+        throw err //This will format the resolver's result in a specific way
       }
     }
   }

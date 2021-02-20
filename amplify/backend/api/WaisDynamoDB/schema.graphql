@@ -3,7 +3,7 @@ type Office
   @model(subscriptions: null)
   @auth(
     rules: [
-      { allow: owner, ownerField: "ownerUsername", operations: [read, update] }
+      { allow: owner, ownerField: "ownerUsername", operations: [read] }
       { allow: owner, ownerField: "members", operations: [read] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
@@ -11,17 +11,34 @@ type Office
   )
   @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
   @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
-  id: ID!
+  # UID of this office
+  id: ID
+
+  # Protected info
   tradeName: String!
   ownerUsername: String!
-  ownerId: ID!
-  tin: String!
-  logo: String!
-  info: String!
-  postcode: String!
+  address: String
+  office_email: String!
+  zip_code: String
+  mobile: String
+  phone: String!
+  partnersNumberLimit: Int
+  employeesNumberLimit: Int
+  verified: Boolean
 
-  # The amount of employees (or contractors) left that can join this Office
-  remainingMembersAllowed: Int!
+  # Private data
+  # Consider making this a connection if there is a need to search for an office based on such data.
+  privateData: OfficePrivateDetails!
+    @auth(
+      rules: [
+        { allow: owner, ownerField: "ownerUsername", operations: [read] }
+        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+        { allow: private, provider: iam, operations: [create, read, update, delete] }
+      ]
+    )
+
+  # Users that can access this object, excludes Owner (manager), Admins, AWS Services (IAM)
+  members: [String]
     @auth(
       rules: [
         { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
@@ -29,81 +46,99 @@ type Office
       ]
     )
 
-  # Users that can access this object (excluding Admins/Lambdas)
-  members: [String]!
-    @auth(
-      rules: [
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
-
-  #Owner's UserProfile
-  ownerProfile: UserProfile @connection(fields: ["ownerId"]) @auth(rules: [{ allow: owner, ownerField: "members", operations: [] }])
-
-  # Paperwork
-  # Response structure: {"items":[...],"nextToken":"..."}
+  # Segregated CRUD API since filter/limit/nextToken should only apply to Reads, also payload is not needed
+  # Retrieve everything from here
   customers(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contracts(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+
+  # Create / Update / Delete from here
+  manageCustomers(action: CustomerResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageContracts(action: ContractResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageEmployees(action: EmployeeResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+  manageContractors(action: ContractorResourceAction!, payload: String!): String @function(name: "resolver-${env}")
+
+  # Attempt to update fields in this object,
+  # Input is an array of dictionaries with attribute names as keys and attribute values with field values
+  # Output is a JSON style map with attributes as keys and a boolean value that indicates wether an attribute changed or not
+  # EXAMPLE: Input  -> [{"logo": "s3://..." } , { "tin": "..." }]
+  #          Output -> [{"logo": "true} , {"tin":"false"}]
+  updateFields(fields: String): String @function(name: "resolver-${env}")
+}
+
+# Office details restricted to office owner and WAIS services
+type OfficePrivateDetails {
+  tin: String!
+  professionStartDate: AWSDateTime
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDateTime
+  civilLiabilityExpirationDate: AWSDateTime
+  bankAccountInfo: String
+
+  # Store S3 files in this field
+  files: [S3Object]
 }
 
 type UserProfile
   @model(subscriptions: null)
   @auth(
     rules: [
-      { allow: owner, ownerField: "username", operations: [read, update] }
+      { allow: owner, ownerField: "username", operations: [read] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
   @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
-  id: ID! #Currently the user's email, guaranteed to always be unique
-  username: String!
+  #Currently the user's username, guaranteed to always be unique
+  id: ID
 
-  #Unique fields, not present anywhere else
+  # Get these on singup via trigger
+  username: String!
   email: String!
-  telephone: AWSPhone!
+  telephone: String!
+
+  # Fill this AFTER login
+  surname: String
   name: String
+  fathers_name: String
+  address: String
+  zip_code: String
+  mobile: String
+  phone: String
+  tin: String
+
+  # Merged..
   family_name: String
   gender: String
   birthdate: AWSDate
-  address: String
   city: String
-  postcode: String
   profilePicture: S3Object
   preferences: AWSJSON
   locale: String
 
-  tin: String
-  doy: String
-  familyStatus: String
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDateTime
-  partnersNumberLimit: Int
-  professionStartDate: AWSDateTime
-  file: [S3Object]
+  # Store S3 files in this field
+  files: [S3Object]
 
   permissions: [UserPermissions]
 
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
 
-  # Access to user's wallet
-  wallet: UserWallet @connection(fields: ["id"])
-
   # Access to pending requests with this user as receiver
   requests: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
+
+  # For field updates
+  updateFields(fields: String): String @function(name: "resolver-${env}")
 }
 
 type Vehicle
   @model(subscriptions: null)
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehicleByTradeName")
+  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
   @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
-  id: ID!
+  id: ID
   numberPlate: String!
   tradeName: String!
   color: String!
@@ -122,6 +157,9 @@ type Vehicle
   vin: String!
   value: Float!
   file: [S3Object]
+
+  # For field updates
+  updateFields(fields: String): String @function(name: "resolver-${env}")
 }
 
 type Contract
@@ -135,7 +173,7 @@ type Contract
   @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
   @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
   @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
-  id: ID!
+  id: ID
   contractId: ID! # Not unique, remember that we keep a history of each contract
   version: Int! # For history
   vehicleNumberPlate: String!
@@ -162,6 +200,9 @@ type Contract
   driversLicense: DriversLicense
   createdAt: String!
   vehicle: Vehicle @connection(fields: ["vehicleId"])
+
+  # For field updates
+  updateFields(fields: String): String @function(name: "resolver-${env}")
 }
 
 type Customer
@@ -172,8 +213,8 @@ type Customer
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
   )
-  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"]) {
-  id: ID!
+  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
+  id: ID
   tin: String!
   tradeName: String!
   firstName: String
@@ -190,6 +231,9 @@ type Customer
   creationDate: AWSTimestamp!
   files: [S3Object]
   driversLicense: DriversLicense
+
+  # For field updates
+  updateFields(fields: String): String @function(name: "resolver-${env}")
 }
 
 type TradeUserConnection
@@ -197,6 +241,8 @@ type TradeUserConnection
   @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
   @key(name: "byEmployeeType", fields: ["employeeType"], queryField: "listTradeUserConnectionsByEmployeeType")
   @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
+  @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
+  @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
@@ -204,31 +250,28 @@ type TradeUserConnection
       { allow: owner, ownerField: "members", operations: [read] }
     ]
   ) {
-  id: ID!
+  id: ID
   tradeId: ID!
   tradeName: String!
   userId: ID!
   username: String!
   trade: Office! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"]) #User ID and User email are the same
-  permissions: [UserPermissions]
+  permissions: [UserPermissions]!
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
   # Usernames that can view this connection (not edit)
   members: [String]!
-
-  #Extras
-  createdAt: AWSDateTime!
 }
 
 type TradeContractConnection
   @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "tradeName"])
-  @key(name: "byTradeName", fields: ["tradeName", "tradeId"])
-  @key(name: "byContractId", fields: ["contractId", "tradeId"])
+  @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
+  @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
+  @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
+  id: ID
   tradeId: ID!
   tradeName: String!
   contractId: ID!
@@ -239,12 +282,12 @@ type TradeContractConnection
 
 type CompanyAccessConnection
   @model(subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"])
-  @key(name: "byToId", fields: ["toId", "fromId"])
-  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"])
-  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"])
+  @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listCompanyAccessConnectionByFromId")
+  @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
+  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
+  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
+  id: ID
   fromId: ID!
   fromTradeName: String!
   toId: ID!
@@ -258,36 +301,28 @@ type CompanyAccessConnection
 #For callendar use
 type UserCalendarEvent
   @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
+  id: ID
   username: String!
   createdAt: String!
   payload: String
 }
 
-type UserWallet
-  @model(subscriptions: null)
-  @key(name: "byUsername", fields: ["username"])
-  @auth(
-    rules: [
-      { allow: owner, operations: [read], ownerField: "username" }
-      { allow: groups, groups: ["admin"] }
-      { allow: private, provider: iam }
-    ]
-  ) {
-  id: ID!
-  username: String!
-  balance: Float!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
 type TransactionHistory
   @model(subscriptions: null)
-  @key(name: "bySenderUsername", fields: ["senderUsername", "timestamp", "receiverUsername"])
-  @key(name: "byReceiverUsername", fields: ["receiverUsername", "timestamp", "senderUsername"])
+  @key(
+    name: "bySenderUsername"
+    fields: ["senderUsername", "timestamp", "receiverUsername"]
+    queryField: "listTransactionHistorybySenderUsername"
+  )
+  @key(
+    name: "byReceiverUsername"
+    fields: ["receiverUsername", "timestamp", "senderUsername"]
+    queryField: "listTransactionHistorybyReceiverUsername"
+  )
   @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID!
+  id: ID
   senderUserProfileId: ID!
   receiverUserProfileId: ID!
   timestamp: AWSTimestamp!
@@ -296,14 +331,12 @@ type TransactionHistory
   transactionAmount: Float!
   sender: UserProfile! @connection(fields: ["senderUserProfileId"])
   receiver: UserProfile! @connection(fields: ["receiverUserProfileId"])
-  senderWallet: UserWallet! @connection(fields: ["senderUserProfileId"])
-  receiverWallet: UserWallet! @connection(fields: ["receiverUserProfileId"])
 }
 
 type Requests
   @model(subscriptions: null)
-  @key(name: "bySenderEmail", fields: ["senderEmail"])
-  @key(name: "byReceiverEmail", fields: ["receiverEmail"])
+  @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
+  @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
@@ -312,10 +345,10 @@ type Requests
       { allow: owner, identityClaim: "email", ownerField: "receiverEmail", operations: [read] }
     ]
   ) {
-  id: ID!
-  expiresAt: AWSTimestamp!
+  id: ID
 
   # Users involved
+  senderUsername: String!
   senderEmail: String!
   receiverEmail: String!
 
@@ -333,37 +366,41 @@ type Requests
 # Authentication is performed inside the lambda resolver
 type Query {
   #Utils
-  me: User @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  me: String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  user(username: String!): User
+  user(username: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
   echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+}
+
+type Mutation {
+  # Update user balance
+  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: private }])
 
   # Request API
   sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
   resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
-type Mutation {
-  manageCustomers(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageContracts(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  manageEmployees(action: ResourceAction!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
-  # Update user balance
-  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-}
-
 # ###################### ENUMS/TYPES ######################
 
 # CRUD specififc types
-enum ResourceAction {
-  CREATE
-  UPDATE
-  DELETE
+enum CustomerResourceAction {
+  TODO
+}
+enum EmployeeResourceAction {
+  UPDATE_PERMISSIONS
+  REMOVE
+}
+enum ContractorResourceAction {
+  TODO
+}
+enum ContractResourceAction {
+  TODO
 }
 
 enum RequestType {
@@ -377,6 +414,14 @@ enum RequestType {
 enum EmployeeAction {
   UPDATE_PERMISSIONS # Overwrites the user's permissions iff they exist in the 'members' field
   REMOVE # Remove user, permissions field is ignored and thus can be omitted
+}
+
+# Standard CRUD general purpose enum
+enum CRUD_ACTION {
+  CREATE
+  REMOVE
+  UPDATE
+  DELETE
 }
 
 #Add all department-specific
@@ -395,6 +440,7 @@ type S3Object {
 enum EmployeeType {
   STANDARD
   CONTRACTOR
+  MANAGER
 }
 
 type DriversLicense {
@@ -414,19 +460,6 @@ type InsurancePackage {
   insuranceClass: String!
   coverage: [String]
   usages: String
-}
-
-# These types derived from https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
-type User {
-  Username: String!
-  UserAttributes: [Value]
-  UserCreateDate: String
-  UserLastModifiedDate: String
-  Enabled: Boolean
-  UserStatus: UserStatus
-  MFAOptions: [MFAOption]
-  PreferredMfaSetting: String
-  UserMFASettingList: String
 }
 type Value {
   Name: String!
@@ -450,23 +483,3 @@ enum ConnectionStatus {
   ACCEPTED
   REJECTED
 }
-
-# Used to model a Cognito user, not a 'real' DynamoDB type
-# type UserCognito {
-#   id: ID! # Custom attribute
-#   name: String! # Full Name (includes middle name)
-#   given_name: String! # First name
-#   family_name: String! # Surname
-#   middle_name: String! # Father's name!
-#   preferred_username: String!
-#   picture: String!
-#   email: String!
-#   email_verified: Boolean!
-#   gender: String!
-#   birthdate: String!
-#   locale: String!
-#   phone_number: String!
-#   phone_number_verified: Boolean!
-#   address: AWSJSON! # Specific json, check https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
-#   updated_at: AWSDateTime!
-# }
