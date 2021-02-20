@@ -246,7 +246,7 @@ type TradeUserConnection
   username: String!
   trade: Office! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"]) #User ID and User email are the same
-  permissions: [UserPermissions]
+  permissions: [UserPermissions]!
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
@@ -429,6 +429,7 @@ type S3Object {
 enum EmployeeType {
   STANDARD
   CONTRACTOR
+  MANAGER
 }
 
 type DriversLicense {
