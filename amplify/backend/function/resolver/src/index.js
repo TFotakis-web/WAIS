@@ -162,7 +162,7 @@ exports.handler = async event => {
     if (resolver) {
       try {
         const res = await resolver(event)
-        console.log('Resolver result is ' + JSON.stringify(res))
+        console.log('Resolver result is ' + res)
         return res
       } catch (err) {
         console.log('Resolver error is ' + JSON.stringify(err))

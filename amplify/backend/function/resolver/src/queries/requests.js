@@ -22,7 +22,7 @@ module.exports = {
     //Retrieve the UserProfiles
     let senderUserProfile
     try {
-      senderUserProfile = await ddbAPI.getUserProfileByUsername(senderUsername)
+      senderUserProfile = await gqlAPI.getUserProfileByUsername(senderUsername)
       if (!senderUserProfile) {
         throw new Error('Sender has no UserProfile [' + senderUsername + '].')
       }
@@ -109,17 +109,12 @@ module.exports = {
       metadata: JSON.stringify(metadata),
     }
 
-    //Attempt the request
-    try {
-      //Save the request and return the ID. Output example: {"id":"XXXX-XXXX-XXXX"}
-      const requestIDEntry = await gqlAPI.createRequest(params)
-      if (requestIDEntry == null) {
-        throw new Error('Failed to insert request [' + JSON.stringify(params) + '].')
-      }
-      return requestIDEntry
-    } catch (err) {
-      throw new Error('Failed to submit request, error: ' + err)
+    //Save the request and return the ID. Output example: {"id":"XXXX-XXXX-XXXX"}
+    const requestIDEntry = await gqlAPI.createRequest(params)
+    if (requestIDEntry == null) {
+      throw new Error('Failed to insert request [' + JSON.stringify(params) + '].')
     }
+    return JSON.stringify(requestIDEntry)
   },
   resolveRequest: async input => {
     console.log('Resolving request')
@@ -146,10 +141,10 @@ module.exports = {
     const decision = receiverPayload.decision
 
     //Get receiver UserProfile
-    let receiverUserProfile
+    let senderUserProfile
     try {
-      receiverUserProfile = await ddbAPI.getUserProfileByUsername(senderUsername)
-      if (receiverUserProfile == null) {
+      senderUserProfile = await ddbAPI.getUserProfileByUsername(senderUsername)
+      if (senderUserProfile == null) {
         throw new Error('User profile of caller not found.')
       }
     } catch (err) {
@@ -157,9 +152,9 @@ module.exports = {
     }
 
     //Receiver and caller emails must match
-    if (input.email !== requestObject.receiverEmail) {
-      throw new Error("Caller and receiver e-mails DON'T match: " + [input.email, requestObject.receiverEmail])
-    }
+    // if (input.email !== requestObject.receiverEmail) {
+    //   throw new Error("Caller and receiver e-mails DON'T match: " + [input.email, requestObject.receiverEmail])
+    // }
 
     //Receiver must have a decision field
     if (decision !== 'ACCEPT' && decision !== 'REJECT') {
@@ -167,15 +162,17 @@ module.exports = {
     }
 
     //Decide based on the request type and update the relevant entries
-    let body = ''
+    let body = {
+      office: '',
+      request: '',
+    }
     switch (requestObject.type) {
       case 'CREATE_TRADE': {
         console.log('Deciding on CREATE_TRADE: ' + decision)
         if (decision === 'ACCEPT') {
           const item = {
             input: {
-              // __typename: 'Office',
-              // id: receiverUserProfile.id,
+              id: senderUserProfile.id,
               tradeName: senderPayload.tradeName || 'undefined',
               ownerUsername: requestObject.senderUsername || 'undefined',
               address: senderPayload.address || null,
@@ -196,16 +193,13 @@ module.exports = {
                 bankAccountInfo: senderPayload.bankAccountInfo || null,
                 files: [],
               },
-              // createdAt: new Date().toISOString(),
-              // updatedAt: new Date().toISOString(),
             },
           }
 
           //Attempt to create the Office item
           let newOfficeResult = await gqlAPI.createOfficeIfNotExists(item)
           if (newOfficeResult) {
-            body = JSON.stringify(newOfficeResult)
-            console.log('Created Office: ' + JSON.stringify(body))
+            body.office = newOfficeResult
           } else {
             throw new Error('Request with id=[' + requestId + '] failed.')
           }
@@ -248,6 +242,7 @@ module.exports = {
     if (delResponse == null) {
       throw new Error('Failed to delete request [' + JSON.stringify(requestId) + '].')
     }
-    return delResponse
+    body.request = delResponse
+    return JSON.stringify(body)
   },
 }

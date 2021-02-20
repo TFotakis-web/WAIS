@@ -290,6 +290,7 @@ type CompanyAccessConnection
 #For callendar use
 type UserCalendarEvent
   @model(subscriptions: null)
+  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
   id: ID
   username: String!

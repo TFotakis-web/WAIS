@@ -199,7 +199,7 @@ module.exports = {
     }`
     const customersResponse = await gqlHelper(item, query, 'listCustomers')
     const result = {
-      items: customersResponse.listCustomers.items || [],
+      items: customersResponse.listCustomers.items || null,
       errors: customersResponse.errors || [],
     }
     console.log('getCustomers output: ' + JSON.stringify(result))
@@ -283,7 +283,7 @@ module.exports = {
     }`
     const contractsResponse = await gqlHelper(item, query, 'listContracts')
     const result = {
-      items: contractsResponse.listContracts.items || [],
+      items: contractsResponse.listContracts.items || null,
       errors: contractsResponse.errors || [],
     }
     console.log('getContracts output: ' + JSON.stringify(result))
@@ -327,7 +327,7 @@ module.exports = {
     }`
     const employeeResponse = await gqlHelper(item, query, 'listEmployeesByEmployeeType')
     const result = {
-      items: employeeResponse.listTradeUserConnectionsByTradeName.items || [],
+      items: employeeResponse.listTradeUserConnectionsByTradeName.items || null,
       errors: employeeResponse.errors || [],
     }
     console.log('getEmployeesByType output: ' + JSON.stringify(result))
@@ -418,9 +418,42 @@ module.exports = {
     }`
     console.log('Office params: ' + JSON.stringify(item))
     const response = await gqlHelper(item, query, 'createOffice')
-    console.log('Office creation result: ' + JSON.stringify(response))
     const result = response.data.createOffice || null
     console.log('createOfficeIfNotExists output: ' + JSON.stringify(result))
+    return result
+  },
+
+  getUserProfileByUsername: async username => {
+    console.log('getUserProfileByUsername input: ' + JSON.stringify(username))
+    const query = `query listUserProfileByUsername($username: String!) {
+      listUserProfileByUsername(username: $username) {
+        items {
+          id
+          address
+          createdAt
+          email
+          fathers_name
+          files {
+            bucket
+            key
+            name
+            region
+          }
+          mobile
+          name
+          phone
+          surname
+          telephone
+          tin
+          updatedAt
+          username
+          zip_code
+        }
+      }
+    }`
+    const employeeResponse = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
+    const result = employeeResponse.data.listUserProfileByUsername.items[0] || null
+    console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
     return result
   },
 }
