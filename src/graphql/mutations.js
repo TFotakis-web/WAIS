@@ -50,28 +50,7 @@ export const createOffice = /* GraphQL */ `
       updateFields
       createdAt
       updatedAt
-      remainingMembersAllowed
-      members
-      ownerProfile {
-        id
-        username
-        email
-        telephone
-        name
-        family_name
-        gender
-        birthdate
-        address
-        city
-        postcode
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
-        preferences
-        locale
+      privateData {
         tin
         professionStartDate
         chamberRecordNumber
@@ -83,26 +62,6 @@ export const createOffice = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-        wallet {
-          id
-          username
-          balance
-          createdAt
-          updatedAt
-        }
-        requests {
-          nextToken
         }
       }
       members
@@ -137,28 +96,7 @@ export const updateOffice = /* GraphQL */ `
       updateFields
       createdAt
       updatedAt
-      remainingMembersAllowed
-      members
-      ownerProfile {
-        id
-        username
-        email
-        telephone
-        name
-        family_name
-        gender
-        birthdate
-        address
-        city
-        postcode
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
-        preferences
-        locale
+      privateData {
         tin
         professionStartDate
         chamberRecordNumber
@@ -170,26 +108,6 @@ export const updateOffice = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-        wallet {
-          id
-          username
-          balance
-          createdAt
-          updatedAt
-        }
-        requests {
-          nextToken
         }
       }
       members
@@ -224,28 +142,7 @@ export const deleteOffice = /* GraphQL */ `
       updateFields
       createdAt
       updatedAt
-      remainingMembersAllowed
-      members
-      ownerProfile {
-        id
-        username
-        email
-        telephone
-        name
-        family_name
-        gender
-        birthdate
-        address
-        city
-        postcode
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
-        preferences
-        locale
+      privateData {
         tin
         professionStartDate
         chamberRecordNumber
@@ -257,26 +154,6 @@ export const deleteOffice = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
-        }
-        createdAt
-        updatedAt
-        tradeCon {
-          nextToken
-        }
-        wallet {
-          id
-          username
-          balance
-          createdAt
-          updatedAt
-        }
-        requests {
-          nextToken
         }
       }
       members
@@ -293,13 +170,18 @@ export const createUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      surname
       name
+      fathers_name
+      address
+      zip_code
+      mobile
+      phone
+      tin
       family_name
       gender
       birthdate
-      address
       city
-      postcode
       profilePicture {
         bucket
         region
@@ -308,7 +190,6 @@ export const createUserProfile = /* GraphQL */ `
       }
       preferences
       locale
-      tin
       files {
         bucket
         region
@@ -320,6 +201,7 @@ export const createUserProfile = /* GraphQL */ `
         read
         write
       }
+      updateFields
       createdAt
       updatedAt
       tradeCon {
@@ -364,13 +246,18 @@ export const updateUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      surname
       name
+      fathers_name
+      address
+      zip_code
+      mobile
+      phone
+      tin
       family_name
       gender
       birthdate
-      address
       city
-      postcode
       profilePicture {
         bucket
         region
@@ -379,7 +266,6 @@ export const updateUserProfile = /* GraphQL */ `
       }
       preferences
       locale
-      tin
       files {
         bucket
         region
@@ -391,6 +277,7 @@ export const updateUserProfile = /* GraphQL */ `
         read
         write
       }
+      updateFields
       createdAt
       updatedAt
       tradeCon {
@@ -435,13 +322,18 @@ export const deleteUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      surname
       name
+      fathers_name
+      address
+      zip_code
+      mobile
+      phone
+      tin
       family_name
       gender
       birthdate
-      address
       city
-      postcode
       profilePicture {
         bucket
         region
@@ -450,7 +342,6 @@ export const deleteUserProfile = /* GraphQL */ `
       }
       preferences
       locale
-      tin
       files {
         bucket
         region
@@ -462,6 +353,7 @@ export const deleteUserProfile = /* GraphQL */ `
         read
         write
       }
+      updateFields
       createdAt
       updatedAt
       tradeCon {
@@ -996,22 +888,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1026,13 +903,18 @@ export const createTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -1041,7 +923,6 @@ export const createTradeUserConnection = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -1053,6 +934,7 @@ export const createTradeUserConnection = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -1109,22 +991,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1139,13 +1006,18 @@ export const updateTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -1154,7 +1026,6 @@ export const updateTradeUserConnection = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -1166,6 +1037,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -1222,22 +1094,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1252,13 +1109,18 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -1267,7 +1129,6 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -1279,6 +1140,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -1327,22 +1189,7 @@ export const createTradeContractConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1447,22 +1294,7 @@ export const updateTradeContractConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1567,22 +1399,7 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1689,22 +1506,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1737,22 +1539,7 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1803,22 +1590,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1851,22 +1623,7 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1917,22 +1674,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -1965,22 +1707,7 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         updateFields
         createdAt
         updatedAt
-        remainingMembersAllowed
-        members
-        ownerProfile {
-          id
-          username
-          email
-          telephone
-          name
-          family_name
-          gender
-          birthdate
-          address
-          city
-          postcode
-          preferences
-          locale
+        privateData {
           tin
           professionStartDate
           chamberRecordNumber
@@ -2055,13 +1782,18 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2070,7 +1802,6 @@ export const createTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2082,6 +1813,7 @@ export const createTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2096,13 +1828,18 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2111,7 +1848,6 @@ export const createTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2123,6 +1859,7 @@ export const createTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2155,13 +1892,18 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2170,7 +1912,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2182,6 +1923,7 @@ export const updateTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2196,13 +1938,18 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2211,7 +1958,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2223,6 +1969,7 @@ export const updateTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2255,13 +2002,18 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2270,7 +2022,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2282,6 +2033,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2296,13 +2048,18 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        surname
         name
+        fathers_name
+        address
+        zip_code
+        mobile
+        phone
+        tin
         family_name
         gender
         birthdate
-        address
         city
-        postcode
         profilePicture {
           bucket
           region
@@ -2311,7 +2068,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         }
         preferences
         locale
-        tin
         files {
           bucket
           region
@@ -2323,6 +2079,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
           read
           write
         }
+        updateFields
         createdAt
         updatedAt
         tradeCon {
