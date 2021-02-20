@@ -7,7 +7,7 @@
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
-const api = require('./queries')
+const api = require('./api')
 const { CognitoIdentityServiceProvider } = require('aws-sdk')
 const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 

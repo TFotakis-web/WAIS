@@ -19,15 +19,16 @@ module.exports = {
       mobile: null,
       phone: null,
       tin: null,
-      verified: false,
       files: [],
     }
     return await gqlQueries.createUserProfile(userProfileItem)
   },
 
   checkUniqueEmail: async email => {
-    console.log('CheckUniqueEmail with event: ' + email)
-    let existingProfile = await gqlQueries.getUserProfileByEmailConsistently(email)
-    return Object.keys(existingProfile.data).length == 0 ? 'ACCEPT' : 'REJECT'
+    console.log('CheckUniqueEmail input: ' + email)
+    let existingProfile = await gqlQueries.getUserProfileByEmail(email)
+    let result = existingProfile ? 'REJECT' : 'ACCEPT'
+    console.log('CheckUniqueEmail output: ' + result)
+    return result
   },
 }

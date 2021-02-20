@@ -2,12 +2,13 @@
 
 This sectiom describes the payloads for each type of request.
 
-## CREATE_TRADE
+# CREATE_TRADE
 
 All candidate office fields must be placed in this JSON with the exact field names as described in the schema.graphql.
 Field and identity validations are performed when the request is sent.
+After a successful Office creation a new TradeUserConnection between Manager and New Office is created.
 
-## Request
+## Sender's payload
 
 Standard request input, mandatory fields have content in this example.
 Missing attributes are declared null (the numbers are an exception).
@@ -32,9 +33,15 @@ Missing attributes are declared null (the numbers are an exception).
 }
 ```
 
-# Response
+## Receiver's payload
 
-The ID of the completed request and created Office are returned.
+```json
+{ "decision": "[ACCEPT|REJECT]" }
+```
+
+## Receiver's response
+
+The ID of the completed request (now deleted) and created Office are returned.
 
 ```json
 {
@@ -43,33 +50,47 @@ The ID of the completed request and created Office are returned.
   },
   "request": {
     "id": "XXXX-XXXX"
+  },
+  "connection": {
+    "id": "XXXX-XXXX"
   }
 }
 ```
 
-## CREATE_COMPANY_CONNECTION
+# INVITE_EMPLOYEE_TO_OFFICE / INVITE_CONTRACTOR_TO_OFFICE
+
+## Sender's payload
 
 ```json
 {
-  "email": "name@email.com", // The email address of the company manager you want to connect with. Address must be present in the WAIS DB
-  "message": "..."
+  "employee_email": "name@email.com" // The email address of the company manager you want to connect with. Address must be present in the WAIS DB
 }
 ```
 
-## INVITE_EMPLOYEE_TO_OFFICE / INVITE_CONTRACTOR_TO_OFFICE
+## Receiver's payload
+
+```json
+{ "id": "XXX-XXX", "decision": "[ACCEPT|REJECT]" }
+```
+
+## Receiver's response
+
+The ID of the completed request (now deleted) and created Office are returned.
 
 ```json
 {
-  "email": "...", //The email address of the employee/contractor you want to connect with. The email may or may not exist at the time the request is submitted.
-  "message": "..."
+  "office": {
+    "id": "XXXX-XXXX"
+  },
+  "request": {
+    "id": "XXXX-XXXX"
+  },
+  "connection": {
+    "id": "XXXX-XXXX"
+  }
 }
 ```
 
-# Responses
+# CREATE_COMPANY_CONNECTION
 
-```json
-{
-  "id": "...",
-  "decision": "[ACCEPT|REJECT]"
-}
-```
+### TBD

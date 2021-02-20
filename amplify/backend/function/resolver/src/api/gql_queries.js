@@ -429,7 +429,7 @@ module.exports = {
    * @param {String} username
    */
   getUserProfileByUsername: async username => {
-    console.log('getUserProfileByUsername input: ' + JSON.stringify(username))
+    console.log('getUserProfileByUsername input: ' + username)
     const query = `query listUserProfileByUsername($username: String!) {
       listUserProfileByUsername(username: $username) {
         items {
@@ -459,6 +459,45 @@ module.exports = {
     const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
     const result = response.data.listUserProfileByUsername.items[0] || null
     console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
+    return result
+  },
+
+  /**
+   * Retrieve a UserProfie via the GSI 'byEmail'.
+   *
+   * @param {String} email
+   */
+  getUserProfileByEmail: async email => {
+    console.log('getUserProfileByEmail input: ' + email)
+    const query = `query listUserProfileByEmail($email: String!) {
+      listUserProfileByEmail(email: $email) {
+        items {
+          id
+          address
+          createdAt
+          email
+          fathers_name
+          files {
+            bucket
+            key
+            name
+            region
+          }
+          mobile
+          name
+          phone
+          surname
+          telephone
+          tin
+          updatedAt
+          username
+          zip_code
+        }
+      }
+    }`
+    const response = await gqlHelper({ email: email }, query, 'listUserProfileByEmail')
+    const result = response.data.listUserProfileByUsername.items[0] || null
+    console.log('getUserProfileByEmail output: ' + JSON.stringify(result))
     return result
   },
 
@@ -513,7 +552,7 @@ module.exports = {
    * @param {String} username
    */
   getOfficeByOwnerUsername: async username => {
-    console.log('getOfficeByOwnerUsername input: ' + JSON.stringify(username))
+    console.log('getOfficeByOwnerUsername input: ' + username)
     const query = `query listTradeByOwnerUsername($ownerUsername: String!) {
       listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
         items {
@@ -548,9 +587,41 @@ module.exports = {
         }
       }
     }`
-    const response = await gqlHelper({ username: username }, query, 'listRequestss')
+    const response = await gqlHelper({ ownerUsername: username }, query, 'listTradeByOwnerUsername')
     const result = response.data.listTradeByOwnerUsername.items[0] || null
     console.log('getOfficeByOwnerUsername output: ' + JSON.stringify(result))
+    return result
+  },
+
+  getUserIdFromUsername: async username => {
+    console.log('getUserIdFromUsername input: ' + username)
+    const query = `query listUserProfileByUsername($username: String!) {
+      listUserProfileByUsername(username: $username) {
+        items {
+          id
+        }
+      }
+    }`
+    const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
+    const result = response.data.listUserProfileByUsername.items[0].id || null
+    console.log('getUserIdFromUsername output: ' + JSON.stringify(result))
+    return result
+  },
+
+  checkIfUserIsUnemployed: async username => {
+    console.log('checkIfUserIsUnemployed input: ' + username)
+    const query = `query listUserProfileByUsername($username: String!){
+      listUserProfileByUsername(username: $username){
+        items{
+          tradeCon {
+            nextToken
+          }
+        }
+      }
+    }`
+    const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
+    const result = response.data.listUserProfileByUsername.items[0].tradeCon.nextToken == null
+    console.log('checkIfUserIsUnemployed output: ' + result)
     return result
   },
 }

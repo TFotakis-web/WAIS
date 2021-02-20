@@ -21,108 +21,70 @@ module.exports = {
    *
    * @param {*} office
    * @param {*} empUsername
-   * @param {*} empEmail
+   * @param {*} userId
    * @param {*} uuid
    */
-  addEmployeeToOffice: async (office, empUsername, uuid) => {
-    console.log('Attempting to create new employee to office ' + JSON.stringify(office))
-    try {
-      //Have an updated member list prepared
-      let newMembers = office.members
-      if (!newMembers.includes(empUsername)) {
-        newMembers.push(empUsername)
-      }
-      const now = new Date().toISOString()
-      const resp = await ddb
-        .transactWriteItems({
-          TransactItems: [
-            {
-              Update: {
-                TableName: 'Office' + ddbSuffix,
-                Key: {
-                  id: office.id,
-                },
-                ConditionExpression: 'not_contains(members,:new_emp_username) and remainingMembersAllowed > 0',
-                UpdateExpression: 'SET members = list_append(members, :new_emp_username), updatedAt = :now',
-                ExpressionAttributeValues: {
-                  ':new_emp_username': empUsername,
-                  ':now': now,
-                },
-                ReturnValues: 'UPDATED_NEW',
-              },
-            },
-            {
-              Put: {
-                TableName: 'TradeUserConnection' + ddbSuffix,
-                Item: {
-                  id: uuid,
-                  tradeId: office.tradeId,
-                  tradeName: office.tradeName,
-                  userId: '',
-                  username: empUsername,
-                  permissions: [],
-                  employeeType: 'STANDARD',
-                  preferences: '',
-                  createdAt: new Date().toISOString(),
-                  updatedAt: new Date().toISOString(),
-                },
-              },
-            },
-          ],
-        })
-        .promise()
-      console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(resp))
-      return resp
-    } catch (err) {
-      return err
+  addEmployeeToOffice: async (office, empUsername, connId, userId) => {
+    console.log('Attempting to create new employee to office with arguments:' + [JSON.stringify(office), empUsername, connId, userId])
+    //Have an updated member list prepared
+    let newMembers = office.members
+    if (!newMembers.includes(empUsername)) {
+      newMembers.push(empUsername)
     }
-  },
-
-  /**
-   * Initializes the data structures of a new user.
-   * Called by Cognito PostConfirmationTrigger.
-   * Add other Put operations if more tables need to be populated with ACID properties.
-   *
-   * @param {Dict<String>} input
-   */
-  addNewUserToDB: async input => {
-    console.log('Attempting to add a new user to DB: ' + JSON.stringify(input))
-    try {
-      const resp = await ddb
-        .transactWriteItems({
-          TransactItems: [
-            {
-              Put: {
-                TableName: 'UserProfile' + ddbSuffix,
-                Item: {
-                  username: input.username,
-                  email: input.email,
-                  telephone: input.phone_number,
-                  professionStartDate: input.professionStartDate || null,
-                  surname: input.surname || null,
-                  name: input.name || null,
-                  fathers_name: input.fathers_name || null,
-                  address: input.address || null,
-                  zip_code: input.zip_code || null,
-                  mobile: input.mobile || null,
-                  phone: input.phone || null,
-                  tin: input.tin || null,
-                  createdAt: new Date().toISOString(),
-                  updatedAt: new Date().toISOString(),
-                  files: [],
-                },
+    const now = new Date().toISOString()
+    const resp = await ddb
+      .transactWrite({
+        TransactItems: [
+          {
+            // Add the User to the members array in Office
+            Update: {
+              TableName: 'Office' + ddbSuffix,
+              Key: {
+                id: office.id,
+              },
+              ConditionExpression: '(not contains(#members, :new_emp_username)) and (#employeesNumberLimit > :zero)',
+              UpdateExpression:
+                'SET #members = list_append(#members, :new_emp_username), #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit - :dec',
+              ExpressionAttributeNames: {
+                '#members': 'members',
+                '#updatedAt': 'updatedAt',
+                '#employeesNumberLimit': 'employeesNumberLimit',
+              },
+              ExpressionAttributeValues: {
+                ':new_emp_username': [empUsername],
+                ':now': now,
+                ':dec': 1,
+                ':zero': 0,
+              },
+              ReturnValues: 'UPDATED_NEW',
+            },
+          },
+          {
+            //Add the user's connection with the Office
+            Put: {
+              TableName: 'TradeUserConnection' + ddbSuffix,
+              Item: {
+                __typename: 'TradeUserConnection',
+                id: connId,
+                tradeId: office.id,
+                tradeName: office.tradeName,
+                userId: userId,
+                username: empUsername,
+                permissions: [],
+                members: [empUsername, office.ownerUsername],
+                employeeType: 'STANDARD',
+                preferences: '',
+                createdAt: now,
+                updatedAt: now,
               },
             },
-          ],
-        })
-        .promise()
-      console.log("Result of 'addNewUserToDB': " + JSON.stringify(resp))
-      return resp
-    } catch (err) {
-      return err
-    }
+          },
+        ],
+      })
+      .promise()
+    console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(resp))
+    return resp
   },
-
   /**
    * Remove a user from the given office.
    * The index of the user's username in the office members index is necessary.
