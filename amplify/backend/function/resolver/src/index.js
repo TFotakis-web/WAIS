@@ -31,7 +31,7 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return []
       // return await officeAPI.listCustomersForUserInOffice({
       //   username: event.identity.claims['cognito:username'],
       //   office: event.source,
@@ -44,7 +44,7 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return []
       // return await officeAPI.listContractsForUserInOffice({
       //   username: event.identity.claims['cognito:username'],
       //   office: event.source,
@@ -57,7 +57,7 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return []
       // return await officeAPI.listEmployeesForUserInOffice({
       //   username: event.identity.claims['cognito:username'],
       //   office: event.source,
@@ -70,7 +70,7 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return []
       // return await officeAPI.listContractorsForUserInOffice({
       //   username: event.identity.claims['cognito:username'],
       //   office: event.source,

@@ -44,11 +44,6 @@ export const listTradeByName = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -96,11 +91,6 @@ export const listTradeByOfficeEmail = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -150,11 +140,6 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -189,11 +174,6 @@ export const getOffice = /* GraphQL */ `
       contracts
       employees
       contractors
-      manageCustomers
-      manageContracts
-      manageEmployees
-      manageContractors
-      updateFields
       createdAt
       updatedAt
       privateData {
@@ -237,11 +217,6 @@ export const listOffices = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -295,7 +270,6 @@ export const listUserProfiles = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -341,7 +315,6 @@ export const getUserProfile = /* GraphQL */ `
         key
         name
       }
-      updateFields
       createdAt
       updatedAt
       tradeCon {
@@ -421,7 +394,6 @@ export const listUserProfileByEmail = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -480,7 +452,6 @@ export const listUserProfileByUsername = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -526,7 +497,6 @@ export const listVehicles = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -561,7 +531,6 @@ export const getVehicle = /* GraphQL */ `
         key
         name
       }
-      updateFields
       createdAt
       updatedAt
     }
@@ -609,7 +578,6 @@ export const listVehiclesByTradeName = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -659,7 +627,6 @@ export const listVehiclesByOwner = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -704,7 +671,6 @@ export const listContracts = /* GraphQL */ `
           DriversLicenseType
         }
         createdAt
-        updateFields
         updatedAt
         vehicle {
           id
@@ -725,7 +691,6 @@ export const listContracts = /* GraphQL */ `
           taxableHorsepower
           vin
           value
-          updateFields
           createdAt
           updatedAt
         }
@@ -771,7 +736,6 @@ export const getContract = /* GraphQL */ `
         }
       }
       createdAt
-      updateFields
       updatedAt
       vehicle {
         id
@@ -798,7 +762,6 @@ export const getContract = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -852,7 +815,6 @@ export const listContractsByTradeName = /* GraphQL */ `
           DriversLicenseType
         }
         createdAt
-        updateFields
         updatedAt
         vehicle {
           id
@@ -873,7 +835,6 @@ export const listContractsByTradeName = /* GraphQL */ `
           taxableHorsepower
           vin
           value
-          updateFields
           createdAt
           updatedAt
         }
@@ -929,7 +890,6 @@ export const listContractsByVehicleNumberPlates = /* GraphQL */ `
           DriversLicenseType
         }
         createdAt
-        updateFields
         updatedAt
         vehicle {
           id
@@ -950,7 +910,6 @@ export const listContractsByVehicleNumberPlates = /* GraphQL */ `
           taxableHorsepower
           vin
           value
-          updateFields
           createdAt
           updatedAt
         }
@@ -1006,7 +965,6 @@ export const listContractsByCustomerId = /* GraphQL */ `
           DriversLicenseType
         }
         createdAt
-        updateFields
         updatedAt
         vehicle {
           id
@@ -1027,7 +985,6 @@ export const listContractsByCustomerId = /* GraphQL */ `
           taxableHorsepower
           vin
           value
-          updateFields
           createdAt
           updatedAt
         }
@@ -1069,7 +1026,6 @@ export const getCustomer = /* GraphQL */ `
           expiresAt
         }
       }
-      updateFields
       createdAt
       updatedAt
     }
@@ -1108,7 +1064,6 @@ export const listCustomers = /* GraphQL */ `
           LicenseID
           DriversLicenseType
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -1159,7 +1114,6 @@ export const listCustomersByTradeName = /* GraphQL */ `
           LicenseID
           DriversLicenseType
         }
-        updateFields
         createdAt
         updatedAt
       }
@@ -1201,11 +1155,6 @@ export const getTradeUserConnection = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -1248,7 +1197,6 @@ export const getTradeUserConnection = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -1304,11 +1252,6 @@ export const listTradeUserConnections = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1331,7 +1274,6 @@ export const listTradeUserConnections = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -1389,11 +1331,6 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1416,7 +1353,85 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
+  query ListTradeUserConnectionsByEmployeeType(
+    $employeeType: EmployeeType
+    $usernameTradeName: ModelTradeUserConnectionByEmployeeTypeCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelTradeUserConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeUserConnectionsByEmployeeType(
+      employeeType: $employeeType
+      usernameTradeName: $usernameTradeName
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeId
+        tradeName
+        userId
+        username
+        permissions {
+          department
+          read
+          write
+        }
+        employeeType
+        preferences
+        members
+        createdAt
+        updatedAt
+        trade {
+          id
+          tradeName
+          ownerUsername
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          partnersNumberLimit
+          employeesNumberLimit
+          verified
+          customers
+          contracts
+          employees
+          contractors
+          createdAt
+          updatedAt
+          members
+        }
+        user {
+          id
+          username
+          email
+          telephone
+          surname
+          name
+          fathers_name
+          address
+          zip_code
+          mobile
+          tin
+          family_name
+          gender
+          birthdate
+          city
+          preferences
+          locale
           createdAt
           updatedAt
         }
@@ -1474,11 +1489,6 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1501,7 +1511,6 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -1559,11 +1568,6 @@ export const listTradeUserConnectionsByTradeAndUser = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1586,7 +1590,6 @@ export const listTradeUserConnectionsByTradeAndUser = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -1644,11 +1647,6 @@ export const listTradeUserConnectionsByUsername = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1671,7 +1669,6 @@ export const listTradeUserConnectionsByUsername = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -1706,11 +1703,6 @@ export const getTradeContractConnection = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -1753,7 +1745,6 @@ export const getTradeContractConnection = /* GraphQL */ `
           DriversLicenseType
         }
         createdAt
-        updateFields
         updatedAt
         vehicle {
           id
@@ -1774,7 +1765,6 @@ export const getTradeContractConnection = /* GraphQL */ `
           taxableHorsepower
           vin
           value
-          updateFields
           createdAt
           updatedAt
         }
@@ -1817,11 +1807,6 @@ export const listTradeContractConnections = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1852,7 +1837,6 @@ export const listTradeContractConnections = /* GraphQL */ `
           jointWorth
           netWorth
           createdAt
-          updateFields
           updatedAt
         }
       }
@@ -1901,11 +1885,6 @@ export const listTradeContractConnectionByTradeId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -1936,7 +1915,6 @@ export const listTradeContractConnectionByTradeId = /* GraphQL */ `
           jointWorth
           netWorth
           createdAt
-          updateFields
           updatedAt
         }
       }
@@ -1985,11 +1963,6 @@ export const listTradeContractConnectionByTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2020,7 +1993,6 @@ export const listTradeContractConnectionByTradeName = /* GraphQL */ `
           jointWorth
           netWorth
           createdAt
-          updateFields
           updatedAt
         }
       }
@@ -2069,11 +2041,6 @@ export const listTradeContractConnectionByContractId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2104,7 +2071,6 @@ export const listTradeContractConnectionByContractId = /* GraphQL */ `
           jointWorth
           netWorth
           createdAt
-          updateFields
           updatedAt
         }
       }
@@ -2140,11 +2106,6 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -2173,11 +2134,6 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contracts
         employees
         contractors
-        manageCustomers
-        manageContracts
-        manageEmployees
-        manageContractors
-        updateFields
         createdAt
         updatedAt
         privateData {
@@ -2230,11 +2186,6 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2255,11 +2206,6 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2312,11 +2258,6 @@ export const listCompanyAccessConnectionByFromId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2337,11 +2278,6 @@ export const listCompanyAccessConnectionByFromId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2394,11 +2330,6 @@ export const listCompanyAccessConnectionByToId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2419,11 +2350,6 @@ export const listCompanyAccessConnectionByToId = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2476,11 +2402,6 @@ export const listCompanyAccessConnectionByFromTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2501,11 +2422,6 @@ export const listCompanyAccessConnectionByFromTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2558,11 +2474,6 @@ export const listCompanyAccessConnectionByToTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2583,11 +2494,6 @@ export const listCompanyAccessConnectionByToTradeName = /* GraphQL */ `
           contracts
           employees
           contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
           createdAt
           updatedAt
           members
@@ -2700,7 +2606,6 @@ export const getTransactionHistory = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2740,7 +2645,6 @@ export const getTransactionHistory = /* GraphQL */ `
           key
           name
         }
-        updateFields
         createdAt
         updatedAt
         tradeCon {
@@ -2792,7 +2696,6 @@ export const listTransactionHistorys = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -2814,7 +2717,6 @@ export const listTransactionHistorys = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -2868,7 +2770,6 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -2890,7 +2791,6 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -2944,7 +2844,6 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
@@ -2966,7 +2865,6 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           city
           preferences
           locale
-          updateFields
           createdAt
           updatedAt
         }
