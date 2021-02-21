@@ -12,6 +12,7 @@ const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 //API
 const requestsAPI = require('./queries/requests')
 const officeAPI = require('./queries/office')
+const gql_queries = require('./api/gql_queries')
 
 /**
  * Get user pool information from environment variables.
@@ -30,69 +31,53 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await officeAPI.listCustomersForUserInOffice({
-        username: event.identity.claims['cognito:username'],
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
+      return {}
+      // return await officeAPI.listCustomersForUserInOffice({
+      //   username: event.identity.claims['cognito:username'],
+      //   office: event.source,
+      //   limit: event.arguments.limit,
+      //   nextToken: event.arguments.nextToken,
+      //   filter: event.arguments.filter,
+      // })
     },
     contracts: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await officeAPI.listContractsForUserInOffice({
-        username: event.identity.claims['cognito:username'],
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
+      return {}
+      // return await officeAPI.listContractsForUserInOffice({
+      //   username: event.identity.claims['cognito:username'],
+      //   office: event.source,
+      //   limit: event.arguments.limit,
+      //   nextToken: event.arguments.nextToken,
+      //   filter: event.arguments.filter,
+      // })
     },
     employees: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await officeAPI.listEmployeesForUserInOffice({
-        username: event.identity.claims['cognito:username'],
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
+      return {}
+      // return await officeAPI.listEmployeesForUserInOffice({
+      //   username: event.identity.claims['cognito:username'],
+      //   office: event.source,
+      //   limit: event.arguments.limit,
+      //   nextToken: event.arguments.nextToken,
+      //   filter: event.arguments.filter,
+      // })
     },
     contractors: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await officeAPI.listContractorsForUserInOffice({
-        username: event.identity.claims['cognito:username'],
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
-    },
-    manageEmployees: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.manageEmployees({
-        username: event.identity.claims['cognito:username'],
-        office: event.source,
-        action: event.arguments.action,
-        payload: event.arguments.payload,
-      })
-    },
-    manageCustomers: async event => {
-      throw new Error('Not implemented yet.')
-    },
-    manageContracts: async event => {
-      throw new Error('Not implemented yet.')
-    },
-    manageContractors: async event => {
-      throw new Error('Not implemented yet.')
+      return {}
+      // return await officeAPI.listContractorsForUserInOffice({
+      //   username: event.identity.claims['cognito:username'],
+      //   office: event.source,
+      //   limit: event.arguments.limit,
+      //   nextToken: event.arguments.nextToken,
+      //   filter: event.arguments.filter,
+      // })
     },
   },
   Query: {
@@ -100,10 +85,10 @@ const resolvers = {
       return event.arguments.msg
     },
     me: async event => {
-      return await cognitoIdentityServiceProvider.adminGetUser({
-        UserPoolId: COGNITO_USERPOOL_ID,
-        Username: event.identity.claims['cognito:username'],
-      })
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return await gql_queries.getUserProfileByUsername(event.identity.username)
     },
     user: async event => {
       return await cognitoIdentityServiceProvider
@@ -116,6 +101,42 @@ const resolvers = {
   },
 
   Mutation: {
+    manageCustomers: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return {}
+    },
+    manageContracts: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return {}
+    },
+    manageEmployees: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return {}
+      // return await officeAPI.manageEmployees({
+      //   username: event.identity.claims['cognito:username'],
+      //   office: event.source,
+      //   action: event.arguments.action,
+      //   payload: event.arguments.payload,
+      // })
+    },
+    manageContractors: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return {}
+    },
+    updateFields: async event => {
+      if (!event.identity.claims) {
+        throw new Error('Invalid credentials.')
+      }
+      return {}
+    },
     sendMoneyToUserWithUsername: async event => {
       throw new Error('Not implemented yet.')
     },
@@ -136,7 +157,7 @@ const resolvers = {
       return await requestsAPI.resolveRequest({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
-        groups: event.identity.claims['cognito:groups'],
+        groups: event.identity.groups,
         id: event.arguments.id,
         payload: event.arguments.payload,
       })

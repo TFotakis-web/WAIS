@@ -28,14 +28,9 @@ module.exports = {
     }
 
     //Retrieve the UserProfiles
-    let senderUserProfile
-    try {
-      senderUserProfile = await gqlAPI.getUserProfileByUsername(senderUsername)
-      if (!senderUserProfile) {
-        throw new Error('Sender has no UserProfile [' + senderUsername + '].')
-      }
-    } catch (err) {
-      throw new Error('Failed to retrieve the user profile of ' + senderUsername)
+    const senderUserProfile = await gqlAPI.getUserProfileByUsername(senderUsername)
+    if (!senderUserProfile) {
+      throw new Error('Sender has no UserProfile [' + senderUsername + '].')
     }
 
     //Decide the request info along the way
@@ -63,23 +58,11 @@ module.exports = {
           throw new Error('Trade name length should be greater than 3')
         }
 
-        //Designate ADMIN as the receiver of this request and send a notification e-mail
         receiverEmail = ADMIN_EMAIL
-        try {
-          let emailSentRes = await utilsAPI.sendEmail('New request for Office creation', JSON.stringify(payload), receiverEmail)
-          console.log('Email sent to ADMIN with result: ' + JSON.stringify(emailSentRes))
-        } catch (err) {
-          console.log('Error while sending email: ' + JSON.stringify(err))
-        }
         metadata.forAdmin = 'true'
         break
       }
       case 'INVITE_EMPLOYEE_TO_OFFICE': {
-        // Managers can't invite themselves,  also covered as is since their is already a connection between Office and Manager
-        // if (senderUserProfile.email === payload.employee_email) {
-        //   throw new Error('Sender and receiver emails are the same.')
-        // }
-
         //Get the Office of the person sending this request
         const callerOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
         if (!callerOffice) {
@@ -88,17 +71,85 @@ module.exports = {
         if (!('employee_email' in payload)) {
           throw new Error("Payload field 'employee_email' missing!")
         }
-        let employee_email = payload.employee_email
+        const employee_email = payload.employee_email
+
+        //Quick validation check
         if (!utilsAPI.validateEmail(employee_email)) {
           throw new Error('Invalid employee email (syntax check)')
         }
+
+        // Managers can't invite themselves,  also covered as is since their is already a connection between Office and Manager
+        if (senderUserProfile.email === employee_email) {
+          throw new Error('Sender and receiver emails are the same.')
+        }
+
         receiverEmail = employee_email
         break
       }
       case 'CREATE_COMPANY_CONNECTION': {
+        //Quick validation checks
+        if (!('office_email' in payload)) {
+          throw new Error("Payload field 'office_email' missing!")
+        }
+        const office_email = payload.office_email
+        if (!utilsAPI.validateEmail(office_email)) {
+          throw new Error('Invalid office email (syntax check)')
+        }
+
+        //Get the Offices of the people involved this request
+        const senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+        if (!senderOffice) {
+          throw new Error("Sender isn't an Office manager. Only Office managers can send requests.")
+        }
+        const receiverOffice = await gqlAPI.getOfficeByOfficeEmail(office_email)
+        if (!receiverOffice) {
+          throw new Error('Receiver Office email not found.')
+        }
+
+        //Check that the sender has enough slots
+        if (senderOffice.partnersNumberLimit <= 0) {
+          throw new Error("Sender Office doesn't have enough 'partent-slots' available.")
+        }
+        if (receiverOffice.partnersNumberLimit <= 0) {
+          throw new Error("Receiver Office doesn't have enough 'partent-slots' available.")
+        }
+
+        //Get the receiver's UP
+        let receiverUP = await gqlAPI.getUserProfileByUsername(receiverOffice.ownerUsername)
+        if (!receiverUP) {
+          throw new Error('Receiver has no UserProfile [' + receiverOffice.ownerUsername + '].')
+        }
+
+        // Managers can't invite themselves
+        if (senderUserProfile.email === receiverUP.email) {
+          throw new Error('Sender and receiver users have the same emails.')
+        }
+
+        receiverEmail = receiverUP.email
         break
       }
       case 'INVITE_CONTRACTOR_TO_OFFICE': {
+        //Get the Office of the person sending this request
+        const callerOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+        if (!callerOffice) {
+          throw new Error("User isn't an Office manager. Only Office managers can send requests.")
+        }
+        if (!('contractor_email' in payload)) {
+          throw new Error("Payload field 'contractor_email' missing!")
+        }
+        const contractor_email = payload.contractor_email
+
+        //Quick validation check
+        if (!utilsAPI.validateEmail(contractor_email)) {
+          throw new Error('Invalid contractor email (syntax check)')
+        }
+
+        // Managers can't invite themselves,  also covered as is since their is already a connection between Office and Manager
+        if (senderUserProfile.email === contractor_email) {
+          throw new Error('Sender and receiver emails are the same.')
+        }
+
+        receiverEmail = contractor_email
         break
       }
       default:
@@ -107,7 +158,7 @@ module.exports = {
 
     //Post field-population validation
     if (!receiverEmail) {
-      throw new Error('Receiver e-mail not set.')
+      throw new Error('Receiver e-mail missing.')
     }
 
     //New request
@@ -125,6 +176,16 @@ module.exports = {
     if (requestIDEntry == null) {
       throw new Error('Failed to insert request [' + JSON.stringify(params) + '].')
     }
+
+    //Designate ADMIN as the receiver of this request and send a notification e-mail
+    try {
+      const emailSentRes = await utilsAPI.sendEmail('New request from ' + senderUsername, JSON.stringify(payload), receiverEmail)
+      console.log('Email sent result: ' + JSON.stringify(emailSentRes))
+    } catch (err) {
+      console.log('Failed to send emai wtih result: ' + JSON.stringify(err))
+    }
+
+    //Return the ID of the request
     return JSON.stringify(requestIDEntry)
   },
   resolveRequest: async input => {
@@ -132,7 +193,7 @@ module.exports = {
 
     //Input Args
     const receiverUsername = input.username
-    const groups = input.groups
+    const groups = input.groups || []
     const requestId = input.id
 
     let requestObject
@@ -182,6 +243,9 @@ module.exports = {
     console.log(`Decision for ${requestObject.type}: ${decision}`)
     switch (requestObject.type) {
       case 'CREATE_TRADE': {
+        if (groups.indexOf('admin') === -1) {
+          throw new Error('Admin privilleges are required to resolve this request.')
+        }
         if (decision === 'ACCEPT') {
           //Create shared fields
           const tradeId = senderUserProfile.id //Also userID
@@ -215,7 +279,7 @@ module.exports = {
           }
 
           //Attempt to create the Office item
-          let newOfficeResult = await gqlAPI.createOfficeIfNotExists(officeParams)
+          const newOfficeResult = await gqlAPI.createOfficeIfNotExists(officeParams)
           if (newOfficeResult) {
             body.office = newOfficeResult
           } else {
@@ -237,7 +301,7 @@ module.exports = {
           }
 
           //Attempt to create the connection
-          let newConnResult = await gqlAPI.createTradeUserConnection(connParams)
+          const newConnResult = await gqlAPI.createTradeUserConnection(connParams)
           if (newConnResult) {
             body.connection = newConnResult
           } else {
@@ -250,7 +314,23 @@ module.exports = {
       }
       case 'CREATE_COMPANY_CONNECTION': {
         if (decision === 'ACCEPT') {
-          //
+          //Get the sencer and receiver offices
+          const senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          if (!senderOffice) {
+            throw new Error("Sender's Office not found.")
+          }
+          const receiverOffice = await gqlAPI.getOfficeByOwnerUsername(receiverUsername)
+          if (!receiverOffice) {
+            throw new Error("Receiver's Office not found.")
+          }
+          body.office = { id: [senderOffice.id, receiverOffice.id] }
+
+          //Transaction, add the new connection
+          try {
+            body.connection = await ddbAPI.addCompanyConnection(senderOffice, receiverOffice)
+          } catch (err) {
+            throw new Error('Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.')
+          }
         } else {
           console.log('Request with id=[' + requestId + '] was rejected.')
         }
@@ -259,11 +339,11 @@ module.exports = {
       case 'INVITE_EMPLOYEE_TO_OFFICE': {
         if (decision === 'ACCEPT') {
           //Get the sencer`s office
-          let callerOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
-          if (!callerOffice) {
+          let senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          if (!senderOffice) {
             throw new Error("Sender's Office not found.")
           }
-          body.office = { id: callerOffice.id }
+          body.office = { id: senderOffice.id }
 
           //Get employee`s profile
           let userId
@@ -277,14 +357,18 @@ module.exports = {
           }
 
           //Ensure that the User has no other connections
-          let isUnemployed = await gqlAPI.checkIfUserIsUnemployed(receiverUsername)
+          const isUnemployed = await gqlAPI.checkIfUserIsUnemployed(receiverUsername)
           if (!isUnemployed) {
             throw new Error("User is a member of another Office and therefore can't join a new one.")
           }
 
           //Add the Employee to the new Office and create the connection between User and Office
-          let connId = userId + '_' + callerOffice.id
-          await ddbAPI.addEmployeeToOffice(callerOffice, receiverUsername, connId, userId)
+          const connId = userId + '_' + senderOffice.id
+          try {
+            await ddbAPI.addEmployeeToOffice(senderOffice, receiverUsername, connId, userId)
+          } catch (err) {
+            throw new Error('Failed to add employee to Office, ensure that the Office is allowed to invite employees.')
+          }
           body.connection = connId
         } else {
           console.log('Request with id=[' + requestId + '] was rejected.')
@@ -292,10 +376,11 @@ module.exports = {
         break
       }
       case 'INVITE_CONTRACTOR_TO_OFFICE': {
+        //Create an unverified office
         if (decision === 'ACCEPT') {
           //let newContractorResult = await ddbAPI.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
         } else {
-          //console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+          console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
         }
         break
       }

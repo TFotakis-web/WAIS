@@ -29,7 +29,7 @@ Missing attributes are declared null (the numbers are an exception).
   "insuranceLicenseExpirationDate": "",
   "civilLiabilityExpirationDate": "",
   "bankAccountInfo": "",
-  "files": [{}]
+  "files": []
 }
 ```
 
@@ -41,7 +41,7 @@ Missing attributes are declared null (the numbers are an exception).
 
 ## Receiver's response
 
-The ID of the completed request (now deleted) and created Office are returned.
+The IDs of the completed request (now deleted),created Office and TradeUserConnection are returned.
 
 ```json
 {
@@ -57,13 +57,16 @@ The ID of the completed request (now deleted) and created Office are returned.
 }
 ```
 
-# INVITE_EMPLOYEE_TO_OFFICE / INVITE_CONTRACTOR_TO_OFFICE
+# INVITE_EMPLOYEE_TO_OFFICE
 
 ## Sender's payload
 
+The email address of the employee you want to connect with. Address can be absent from the WAIS DB.
+For employee:
+
 ```json
 {
-  "employee_email": "name@email.com" // The email address of the company manager you want to connect with. Address must be present in the WAIS DB
+  "employee_email": "name@email.com"
 }
 ```
 
@@ -75,7 +78,45 @@ The ID of the completed request (now deleted) and created Office are returned.
 
 ## Receiver's response
 
-The ID of the completed request (now deleted) and created Office are returned.
+The IDs of the completed request (now deleted), involved Office and TradeUserConnection are returned.
+
+```json
+{
+  "office": {
+    "id": "XXXX-XXXX"
+  },
+  "request": {
+    "id": "XXXX-XXXX"
+  },
+  "connection": {
+    "id": "XXXX-XXXX"
+  }
+}
+```
+
+# INVITE_CONTRACTOR_TO_OFFICE
+
+## Sender's payload
+
+The email address of the company manager you want to connect with. Address can be absent from the WAIS DB
+For contractor:
+
+```json
+{
+  "contractor_email": "name@email.com"
+}
+```
+
+## Receiver's payload
+
+```json
+{ "id": "XXX-XXX", "decision": "[ACCEPT|REJECT]" }
+```
+
+## Receiver's response
+
+The IDs of the completed request (now deleted),the Office that sent the invite and TradeUserConnection are returned.
+The Office ID is either the created contractor Office or the Office ID that invited the employee.
 
 ```json
 {
@@ -93,4 +134,37 @@ The ID of the completed request (now deleted) and created Office are returned.
 
 # CREATE_COMPANY_CONNECTION
 
-### TBD
+## Sender's payload
+
+The email address of the Office you want to connect with.
+The office with this email must be present in this.
+
+```json
+{
+  "office_email": "gstamatakis95@.com"
+}
+```
+
+## Receiver's payload
+
+```json
+{ "id": "XXX-XXX", "decision": "[ACCEPT|REJECT]" }
+```
+
+## Receiver's response
+
+The IDs of the completed request (now deleted), involved Offices and CompanyAccessConnection are returned.
+
+```json
+{
+  "office": {
+    "id": ["SENDER_OFFICE_ID", "RECEIVER_OFFICE_ID"]
+  },
+  "request": {
+    "id": "XXXX-XXXX"
+  },
+  "connection": {
+    "id": "XXXX-XXXX"
+  }
+}
+```

@@ -176,7 +176,6 @@ export const createUserProfile = /* GraphQL */ `
       address
       zip_code
       mobile
-      phone
       tin
       family_name
       gender
@@ -195,11 +194,6 @@ export const createUserProfile = /* GraphQL */ `
         region
         key
         name
-      }
-      permissions {
-        department
-        read
-        write
       }
       updateFields
       createdAt
@@ -252,7 +246,6 @@ export const updateUserProfile = /* GraphQL */ `
       address
       zip_code
       mobile
-      phone
       tin
       family_name
       gender
@@ -271,11 +264,6 @@ export const updateUserProfile = /* GraphQL */ `
         region
         key
         name
-      }
-      permissions {
-        department
-        read
-        write
       }
       updateFields
       createdAt
@@ -328,7 +316,6 @@ export const deleteUserProfile = /* GraphQL */ `
       address
       zip_code
       mobile
-      phone
       tin
       family_name
       gender
@@ -347,11 +334,6 @@ export const deleteUserProfile = /* GraphQL */ `
         region
         key
         name
-      }
-      permissions {
-        department
-        read
-        write
       }
       updateFields
       createdAt
@@ -909,7 +891,6 @@ export const createTradeUserConnection = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -928,11 +909,6 @@ export const createTradeUserConnection = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1012,7 +988,6 @@ export const updateTradeUserConnection = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1031,11 +1006,6 @@ export const updateTradeUserConnection = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1115,7 +1085,6 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1134,11 +1103,6 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1788,7 +1752,6 @@ export const createTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1807,11 +1770,6 @@ export const createTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1834,7 +1792,6 @@ export const createTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1853,11 +1810,6 @@ export const createTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1898,7 +1850,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1917,11 +1868,6 @@ export const updateTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1944,7 +1890,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1963,11 +1908,6 @@ export const updateTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -2008,7 +1948,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -2027,11 +1966,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -2054,7 +1988,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -2073,11 +2006,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt

@@ -75,31 +75,12 @@ module.exports = {
    *
    * @param {String} email
    */
-  getUserProfileByEmail: async email => {
+  getUserProfileIdByEmail: async email => {
     console.log('getUserProfileByEmail input: ' + email)
     const query = `query listUserProfileByEmail($email: String!) {
       listUserProfileByEmail(email: $email) {
         items {
           id
-          address
-          createdAt
-          email
-          fathers_name
-          files {
-            bucket
-            key
-            name
-            region
-          }
-          mobile
-          name
-          phone
-          surname
-          telephone
-          tin
-          updatedAt
-          username
-          zip_code
         }
       }
     }`

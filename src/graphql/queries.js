@@ -65,6 +65,58 @@ export const listTradeByName = /* GraphQL */ `
     }
   }
 `;
+export const listTradeByOfficeEmail = /* GraphQL */ `
+  query ListTradeByOfficeEmail(
+    $office_email: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelOfficeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTradeByOfficeEmail(
+      office_email: $office_email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tradeName
+        ownerUsername
+        address
+        office_email
+        zip_code
+        mobile
+        phone
+        partnersNumberLimit
+        employeesNumberLimit
+        verified
+        customers
+        contracts
+        employees
+        contractors
+        manageCustomers
+        manageContracts
+        manageEmployees
+        manageContractors
+        updateFields
+        createdAt
+        updatedAt
+        privateData {
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        members
+      }
+      nextToken
+    }
+  }
+`;
 export const listTradeByOwnerUsername = /* GraphQL */ `
   query ListTradeByOwnerUsername(
     $ownerUsername: String
@@ -224,7 +276,6 @@ export const listUserProfiles = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -243,11 +294,6 @@ export const listUserProfiles = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -276,7 +322,6 @@ export const getUserProfile = /* GraphQL */ `
       address
       zip_code
       mobile
-      phone
       tin
       family_name
       gender
@@ -295,11 +340,6 @@ export const getUserProfile = /* GraphQL */ `
         region
         key
         name
-      }
-      permissions {
-        department
-        read
-        write
       }
       updateFields
       createdAt
@@ -362,7 +402,6 @@ export const listUserProfileByEmail = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -381,11 +420,6 @@ export const listUserProfileByEmail = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -427,7 +461,6 @@ export const listUserProfileByUsername = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -446,11 +479,6 @@ export const listUserProfileByUsername = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1201,7 +1229,6 @@ export const getTradeUserConnection = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -1220,11 +1247,6 @@ export const getTradeUserConnection = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -1302,7 +1324,6 @@ export const listTradeUserConnections = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -1388,91 +1409,6 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          updateFields
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
-  query ListTradeUserConnectionsByEmployeeType(
-    $employeeType: EmployeeType
-    $sortDirection: ModelSortDirection
-    $filter: ModelTradeUserConnectionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTradeUserConnectionsByEmployeeType(
-      employeeType: $employeeType
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        tradeId
-        tradeName
-        userId
-        username
-        permissions {
-          department
-          read
-          write
-        }
-        employeeType
-        preferences
-        members
-        createdAt
-        updatedAt
-        trade {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          customers
-          contracts
-          employees
-          contractors
-          manageCustomers
-          manageContracts
-          manageEmployees
-          manageContractors
-          updateFields
-          createdAt
-          updatedAt
-          members
-        }
-        user {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          phone
           tin
           family_name
           gender
@@ -1558,7 +1494,6 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -1644,7 +1579,6 @@ export const listTradeUserConnectionsByTradeAndUser = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -1730,7 +1664,6 @@ export const listTradeUserConnectionsByUsername = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -2748,7 +2681,6 @@ export const getTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -2767,11 +2699,6 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -2794,7 +2721,6 @@ export const getTransactionHistory = /* GraphQL */ `
         address
         zip_code
         mobile
-        phone
         tin
         family_name
         gender
@@ -2813,11 +2739,6 @@ export const getTransactionHistory = /* GraphQL */ `
           region
           key
           name
-        }
-        permissions {
-          department
-          read
-          write
         }
         updateFields
         createdAt
@@ -2864,7 +2785,6 @@ export const listTransactionHistorys = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -2887,7 +2807,6 @@ export const listTransactionHistorys = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -2942,7 +2861,6 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -2965,7 +2883,6 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -3020,7 +2937,6 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender
@@ -3043,7 +2959,6 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           address
           zip_code
           mobile
-          phone
           tin
           family_name
           gender

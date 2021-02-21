@@ -85,6 +85,82 @@ module.exports = {
     console.log("Result of 'addEmployeeToOffice': " + JSON.stringify(resp))
     return resp
   },
+
+  /**
+   * Transaction.
+   * Connects 2 Companies via a CompanyAccessConnection.
+   */
+  addCompanyConnection: async (senderOffice, receiverOffice) => {
+    console.log('addCompanyConnection input: ' + [JSON.stringify(senderOffice), JSON.stringify(receiverOffice)])
+    const now = new Date().toISOString()
+    const connId = senderOffice.id + '_' + receiverOffice.id
+    await ddb.transactWrite({
+      TransactItems: [
+        {
+          // Decrement the partners counter in both offices iff its gtz.
+          Update: {
+            TableName: 'Office' + ddbSuffix,
+            Key: {
+              id: senderOffice.id,
+            },
+            ConditionExpression: '#partnersNumberLimit > :zero',
+            UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
+            ExpressionAttributeNames: {
+              '#updatedAt': 'updatedAt',
+              '#partnersNumberLimit': 'partnersNumberLimit',
+            },
+            ExpressionAttributeValues: {
+              ':now': now,
+              ':dec': 1,
+              ':zero': 0,
+            },
+            ReturnValues: 'UPDATED_NEW',
+          },
+        },
+        {
+          Update: {
+            TableName: 'Office' + ddbSuffix,
+            Key: {
+              id: receiverOffice.id,
+            },
+            ConditionExpression: '#partnersNumberLimit > :zero',
+            UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
+            ExpressionAttributeNames: {
+              '#updatedAt': 'updatedAt',
+              '#partnersNumberLimit': 'partnersNumberLimit',
+            },
+            ExpressionAttributeValues: {
+              ':now': now,
+              ':dec': 1,
+              ':zero': 0,
+            },
+            ReturnValues: 'UPDATED_NEW',
+          },
+        },
+        {
+          //Create the CompanyAccessConnection item
+          Put: {
+            TableName: 'TradeUserConnection' + ddbSuffix,
+            Item: {
+              __typename: 'TradeUserConnection',
+              id: senderOffice.id + '_' + receiverOffice.id,
+              fromId: senderOffice.id,
+              toId: receiverOffice.id,
+              fromTradeName: senderOffice.tradeName,
+              toTradeName: receiverOffice.tradeName,
+              expirationDate: new Date(new Date().getTime() + 1000 * 60 * 24 * 7).getTime(),
+              message: ' ',
+              createdAt: now,
+              updatedAt: now,
+              members: [senderOffice.ownerUsername, receiverOffice.ownerUsername],
+            },
+          },
+        },
+      ],
+    })
+    console.log('addCompanyConnection output: ' + connId)
+    return connId
+  },
   /**
    * Remove a user from the given office.
    * The index of the user's username in the office members index is necessary.

@@ -311,15 +311,29 @@ module.exports = {
           preferences
           updatedAt
           user {
-            doy
-            familyStatus
-            createdAt
-            tin
-            telephone
-            professionStartDate
-            partnersNumberLimit
-            insuranceLicenseExpirationDate
+            id
             username
+            email
+            telephone
+            surname
+            name
+            fathers_name
+            address
+            zip_code
+            mobile
+            tin
+            family_name
+            gender
+            birthdate
+            city
+            profilePicture{
+              bucket
+              region
+              key
+              name
+            }
+            preferences
+            locale
           }
         }
         nextToken
@@ -434,25 +448,36 @@ module.exports = {
       listUserProfileByUsername(username: $username) {
         items {
           id
-          address
-          createdAt
+          username
           email
+          telephone
+          surname
+          name
           fathers_name
+          address
+          zip_code
+          mobile
+          tin
+          family_name
+          gender
+          birthdate
+          city
+          profilePicture{
+            bucket
+            region
+            key
+            name
+          }
+          preferences
+          locale
+          createdAt
+          updatedAt
           files {
             bucket
             key
             name
             region
           }
-          mobile
-          name
-          phone
-          surname
-          telephone
-          tin
-          updatedAt
-          username
-          zip_code
         }
       }
     }`
@@ -473,25 +498,36 @@ module.exports = {
       listUserProfileByEmail(email: $email) {
         items {
           id
-          address
-          createdAt
+          username
           email
+          telephone
+          surname
+          name
           fathers_name
+          address
+          zip_code
+          mobile
+          tin
+          family_name
+          gender
+          birthdate
+          city
+          profilePicture{
+            bucket
+            region
+            key
+            name
+          }
+          preferences
+          locale
+          createdAt
+          updatedAt
           files {
             bucket
             key
             name
             region
           }
-          mobile
-          name
-          phone
-          surname
-          telephone
-          tin
-          updatedAt
-          username
-          zip_code
         }
       }
     }`
@@ -622,6 +658,48 @@ module.exports = {
     const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
     const result = response.data.listUserProfileByUsername.items[0].tradeCon.nextToken == null
     console.log('checkIfUserIsUnemployed output: ' + result)
+    return result
+  },
+
+  getOfficeByOfficeEmail: async email => {
+    console.log('getOfficeByOfficeEmail input: ' + email)
+    const query = `query listTradeByOfficeEmail($office_email: String!) {
+      listTradeByOfficeEmail(office_email: $office_email) {
+        items {
+          id
+          address
+          createdAt
+          employeesNumberLimit
+          members
+          mobile
+          office_email
+          ownerUsername
+          partnersNumberLimit
+          phone
+          tradeName
+          privateData {
+            bankAccountInfo
+            chamberRecordNumber
+            civilLiabilityExpirationDate
+            insuranceLicenseExpirationDate
+            professionStartDate
+            tin
+            files {
+              bucket
+              key
+              name
+              region
+            }
+          }
+          zip_code
+          verified
+          updatedAt
+        }
+      }
+    }`
+    const response = await gqlHelper({ office_email: email }, query, 'listTradeByOfficeEmail')
+    const result = response.data.listTradeByOfficeEmail.items[0] || null
+    console.log('getOfficeByOfficeEmail output: ' + JSON.stringify(result))
     return result
   },
 }
