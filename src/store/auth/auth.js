@@ -1,5 +1,4 @@
-import { Auth } from 'aws-amplify';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { listUserProfileByUsername } from '@/graphql/queries';
 import { updateUserProfile } from '@/graphql/mutations';
 
@@ -33,45 +32,36 @@ export const auth = {
 					}
 				};
 				Auth.signUp(params)
-					.then((response) => {
+					.then(() => {
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
 		confirmSignUp(_, { username, code }) {
 			return new Promise((resolve, reject) => {
 				Auth.confirmSignUp(username, code)
-					.then((response) => {
+					.then(() => {
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
 		resendSignUp(_, username) {
 			return new Promise((resolve, reject) => {
 				Auth.resendSignUp(username)
-					.then((response) => {
+					.then(() => {
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
@@ -79,8 +69,7 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				Auth.signIn({ username: username, password: old_password })
 					.then((response) => {
-						let cognitoUser = response;
-						Auth.completeNewPassword(cognitoUser, new_password)
+						Auth.completeNewPassword(response, new_password)
 							.then(() => {
 								dispatch("signIn", {
 									username: username,
@@ -92,9 +81,6 @@ export const auth = {
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
@@ -117,55 +103,43 @@ export const auth = {
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
 		signOut({ commit }) {
 			return new Promise((resolve, reject) => {
 				Auth.signOut()
-					.then((response) => {
+					.then(() => {
 						commit("setUser", null);
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
 		forgotPassword(_, username) {
 			return new Promise((resolve, reject) => {
 				Auth.forgotPassword(username)
-					.then((response) => {
+					.then(() => {
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
 		forgotPasswordSubmit(_, { username, code, password }) {
 			return new Promise((resolve, reject) => {
 				Auth.forgotPasswordSubmit(username, code, password)
-					.then((response) => {
+					.then(() => {
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
 						reject(error);
-					})
-					.finally(() => {
-
 					});
 			});
 		},
@@ -176,15 +150,16 @@ export const auth = {
 					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				})
 					.then((response) => {
-						let cognitoUser = response;
-						commit("setCognitoUser", cognitoUser);
+						commit("setCognitoUser", response);
 						dispatch("currentUserInfo");
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
-						Auth.signOut();
-						reject(error);
+						Auth.signOut()
+							.then(() => {
+								reject(error);
+							});
 					})
 					.finally(() => {
 						commit('decreaseGlobalPendingPromises', null, { root: true });
