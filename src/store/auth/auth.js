@@ -74,24 +74,25 @@ export const auth = {
 			}
 		},
 		async signIn({ commit, dispatch }, { username, password }) {
+			let cognitoUser;
 			try {
-				const cognitoUser = await Auth.signIn({
+				cognitoUser = await Auth.signIn({
 					username,
 					password
 				});
-				commit("setCognitoUser", cognitoUser);
-				if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
-					return Promise.reject({
-						name: 'NEW_PASSWORD_REQUIRED',
-						code: 'NEW_PASSWORD_REQUIRED'
-					});
-				}
-				await dispatch("currentUserInfo");
-				return Promise.resolve("Success");
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
 			}
+			commit("setCognitoUser", cognitoUser);
+			if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+				return Promise.reject({
+					name: 'NEW_PASSWORD_REQUIRED',
+					code: 'NEW_PASSWORD_REQUIRED'
+				});
+			}
+			await dispatch("currentUserInfo");
+			return Promise.resolve("Success");
 		},
 		async signOut({ commit }) {
 			try {
@@ -122,70 +123,73 @@ export const auth = {
 			}
 		},
 		async currentAuthenticatedUser({ commit, dispatch }) {
+			commit('increaseGlobalPendingPromises', null, { root: true });
+			let cognitoUser;
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
-				let cognitoUser = await Auth.currentAuthenticatedUser({
+				cognitoUser = await Auth.currentAuthenticatedUser({
 					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				}).catch(async error => {
 					console.log(error);
 					await Auth.signOut();
 				});
-				commit("setCognitoUser", cognitoUser);
-				await dispatch("currentUserInfo");
-
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-				return Promise.resolve();
 			} catch (error) {
 				await Auth.signOut();
 				console.error(error);
-				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 			}
+			commit("setCognitoUser", cognitoUser);
+			await dispatch("currentUserInfo");
+
+			return Promise.resolve();
 		},
 		async currentUserInfo({ commit, dispatch }) {
+			commit('increaseGlobalPendingPromises', null, { root: true });
+			let userInfo;
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
-				const userInfo = await Auth.currentUserInfo();
-				if (userInfo) {
-					commit("setUser", userInfo);
-					await dispatch("loadUserProfile");
-				}
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-				return Promise.resolve();
+				userInfo = await Auth.currentUserInfo();
 			} catch (error) {
 				console.error(error);
-				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 			}
+			if (userInfo) {
+				commit("setUser", userInfo);
+				await dispatch("loadUserProfile");
+			}
+			return Promise.resolve();
 		},
 		async loadUserProfile({ commit, getters }) {
+			commit('increaseGlobalPendingPromises', null, { root: true });
+			let userProfile;
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
-				let userProfile;
 				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }));
-				userProfile = userProfile.data.listUserProfileByUsername.items[0];
-				commit("setUserProfile", userProfile);
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-				return Promise.resolve();
 			} catch (error) {
-				console.error(error);
-				commit('decreaseGlobalPendingPromises', null, { root: true });
+				console.log(error);
 				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
 			}
+			userProfile = userProfile.data.listUserProfileByUsername.items[0];
+			commit("setUserProfile", userProfile);
+			return Promise.resolve();
 		},
 		async updateUserProfile({ commit }, userProfile) {
+			commit('increaseRouterViewPendingPromises', null, { root: true });
+			let response;
 			try {
-				commit('increaseRouterViewPendingPromises', null, { root: true });
-				let response = await API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }));
-				userProfile = response.data.updateUserProfile;
-				commit("setUserProfile", userProfile);
-				commit('decreaseRouterViewPendingPromises', null, { root: true });
-				return Promise.resolve();
+				response = await API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }));
 			} catch (error) {
 				console.error(error);
-				commit('decreaseRouterViewPendingPromises', null, { root: true });
 				return Promise.reject(error);
+			} finally {
+				commit('decreaseRouterViewPendingPromises', null, { root: true });
 			}
+			userProfile = response.data.updateUserProfile;
+			commit("setUserProfile", userProfile);
+			return Promise.resolve();
 		},
 	},
 	getters: {
