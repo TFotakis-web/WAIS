@@ -22,174 +22,231 @@ export const auth = {
 		}
 	},
 	actions: {
-		async signUp(_, { username, password, email, phone_number }) {
-			try {
-				await Auth.signUp({
+		signUp(_, { username, password, email, phone_number }) {
+			return new Promise((resolve, reject) => {
+				let params = {
 					username,
 					password,
 					attributes: {
 						email,
 						phone_number
 					}
-				});
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async confirmSignUp(_, { username, code }) {
-			try {
-				await Auth.confirmSignUp(username, code);
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async resendSignUp(_, username) {
-			try {
-				await Auth.resendSignUp(username);
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
-			try {
-				const cognitoUser = await Auth.signIn({
-					username: username,
-					password: old_password
-				});
-				await Auth.completeNewPassword(cognitoUser, new_password);
-				dispatch("signIn", {
-					username: username,
-					password: new_password
-				});
-				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async signIn({ commit, dispatch }, { username, password }) {
-			let cognitoUser;
-			try {
-				cognitoUser = await Auth.signIn({
-					username,
-					password
-				});
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-			commit("setCognitoUser", cognitoUser);
-			if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
-				return Promise.reject({
-					name: 'NEW_PASSWORD_REQUIRED',
-					code: 'NEW_PASSWORD_REQUIRED'
-				});
-			}
-			await dispatch("currentUserInfo");
-			return Promise.resolve("Success");
-		},
-		async signOut({ commit }) {
-			try {
-				await Auth.signOut();
-				commit("setUser", null);
-				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async forgotPassword(_, username) {
-			try {
-				await Auth.forgotPassword(username);
-				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async forgotPasswordSubmit(_, { username, code, password }) {
-			try {
-				await Auth.forgotPasswordSubmit(username, code, password);
-				return Promise.resolve("Success");
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
-		},
-		async currentAuthenticatedUser({ commit, dispatch }) {
-			commit('increaseGlobalPendingPromises', null, { root: true });
-			let cognitoUser;
-			try {
-				cognitoUser = await Auth.currentAuthenticatedUser({
-					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-				}).catch(async error => {
-					console.log(error);
-					await Auth.signOut();
-				});
-			} catch (error) {
-				await Auth.signOut();
-				console.error(error);
-				return Promise.reject(error);
-			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-			}
-			commit("setCognitoUser", cognitoUser);
-			await dispatch("currentUserInfo");
+				};
+				Auth.signUp(params)
+					.then((response) => {
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
 
-			return Promise.resolve();
+					});
+			});
 		},
-		async currentUserInfo({ commit, dispatch }) {
-			commit('increaseGlobalPendingPromises', null, { root: true });
-			let userInfo;
-			try {
-				userInfo = await Auth.currentUserInfo();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-			}
-			if (userInfo) {
-				commit("setUser", userInfo);
-				await dispatch("loadUserProfile");
-			}
-			return Promise.resolve();
+		confirmSignUp(_, { username, code }) {
+			return new Promise((resolve, reject) => {
+				Auth.confirmSignUp(username, code)
+					.then((response) => {
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
 		},
-		async loadUserProfile({ commit, getters }) {
-			commit('increaseGlobalPendingPromises', null, { root: true });
-			let userProfile;
-			try {
-				userProfile = await API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }));
-			} catch (error) {
-				console.log(error);
-				return Promise.reject(error);
-			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
-			}
-			userProfile = userProfile.data.listUserProfileByUsername.items[0];
-			commit("setUserProfile", userProfile);
-			return Promise.resolve();
+		resendSignUp(_, username) {
+			return new Promise((resolve, reject) => {
+				Auth.resendSignUp(username)
+					.then((response) => {
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
 		},
-		async updateUserProfile({ commit }, userProfile) {
-			commit('increaseRouterViewPendingPromises', null, { root: true });
-			let response;
-			try {
-				response = await API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }));
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			} finally {
-				commit('decreaseRouterViewPendingPromises', null, { root: true });
-			}
-			userProfile = response.data.updateUserProfile;
-			commit("setUserProfile", userProfile);
-			return Promise.resolve();
+		completeNewPassword({ dispatch }, { username, old_password, new_password }) {
+			return new Promise((resolve, reject) => {
+				Auth.signIn({ username: username, password: old_password })
+					.then((response) => {
+						let cognitoUser = response;
+						Auth.completeNewPassword(cognitoUser, new_password)
+							.then(() => {
+								dispatch("signIn", {
+									username: username,
+									password: new_password
+								});
+								resolve();
+							});
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
+		},
+		signIn({ commit, dispatch }, { username, password }) {
+			return new Promise((resolve, reject) => {
+				Auth.signIn({ username, password })
+					.then((response) => {
+						let cognitoUser = response;
+						commit("setCognitoUser", cognitoUser);
+						if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+							reject({
+								name: 'NEW_PASSWORD_REQUIRED',
+								code: 'NEW_PASSWORD_REQUIRED'
+							});
+						} else {
+							dispatch("currentUserInfo");
+							resolve();
+						}
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
+		},
+		signOut({ commit }) {
+			return new Promise((resolve, reject) => {
+				Auth.signOut()
+					.then((response) => {
+						commit("setUser", null);
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
+		},
+		forgotPassword(_, username) {
+			return new Promise((resolve, reject) => {
+				Auth.forgotPassword(username)
+					.then((response) => {
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
+		},
+		forgotPasswordSubmit(_, { username, code, password }) {
+			return new Promise((resolve, reject) => {
+				Auth.forgotPasswordSubmit(username, code, password)
+					.then((response) => {
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+
+					});
+			});
+		},
+		currentAuthenticatedUser({ commit, dispatch }) {
+			return new Promise((resolve, reject) => {
+				commit('increaseGlobalPendingPromises', null, { root: true });
+				Auth.currentAuthenticatedUser({
+					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+				})
+					.then((response) => {
+						let cognitoUser = response;
+						commit("setCognitoUser", cognitoUser);
+						dispatch("currentUserInfo");
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						Auth.signOut();
+						reject(error);
+					})
+					.finally(() => {
+						commit('decreaseGlobalPendingPromises', null, { root: true });
+					});
+			});
+		},
+		currentUserInfo({ commit, dispatch }) {
+			return new Promise((resolve, reject) => {
+				commit('increaseGlobalPendingPromises', null, { root: true });
+				Auth.currentUserInfo()
+					.then((response) => {
+						let userInfo = response;
+						if (userInfo) {
+							commit("setUser", userInfo);
+							dispatch("loadUserProfile");
+						}
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+						commit('decreaseGlobalPendingPromises', null, { root: true });
+					});
+			});
+		},
+		loadUserProfile({ commit, getters }) {
+			return new Promise((resolve, reject) => {
+				commit('increaseGlobalPendingPromises', null, { root: true });
+				API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
+					.then((response) => {
+						let userProfile = response.data.listUserProfileByUsername.items[0];
+						commit("setUserProfile", userProfile);
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+						commit('decreaseGlobalPendingPromises', null, { root: true });
+					});
+			});
+		},
+		updateUserProfile({ commit }, userProfile) {
+			return new Promise((resolve, reject) => {
+				commit('increaseRouterViewPendingPromises', null, { root: true });
+				API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }))
+					.then((response) => {
+						userProfile = response.data.updateUserProfile;
+						commit("setUserProfile", userProfile);
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					})
+					.finally(() => {
+						commit('decreaseRouterViewPendingPromises', null, { root: true });
+					});
+			});
 		},
 	},
 	getters: {
