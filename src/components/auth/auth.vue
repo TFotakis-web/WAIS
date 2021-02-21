@@ -38,7 +38,8 @@
 		},
 		mounted() {
 			this.loading = true;
-			this.$store.dispatch('auth/currentAuthenticatedUser').then(() => (this.loading = false));
+			this.$store.dispatch('auth/currentAuthenticatedUser')
+          .finally(() => (this.loading = false));
 		},
 	};
 </script>
