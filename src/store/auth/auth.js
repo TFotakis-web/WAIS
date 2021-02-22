@@ -229,6 +229,7 @@ export const auth = {
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
+		email: (state) => state.user.email,
 		userAttributes: (state) => state.user.attributes,
 		userProfile: (state) => state.userProfile,
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
