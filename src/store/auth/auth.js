@@ -1,6 +1,7 @@
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { listUserProfileByUsername } from '@/graphql/queries';
 import { updateUserProfile } from '@/graphql/mutations';
+import router from '@/router';
 
 export const auth = {
 	namespaced: true,
@@ -194,6 +195,7 @@ export const auth = {
 					.then((response) => {
 						let userProfile = response.data.listUserProfileByUsername.items[0];
 						commit("setUserProfile", userProfile);
+						router.$loadRoutesAsync();
 						resolve();
 					})
 					.catch((error) => {
