@@ -150,6 +150,7 @@
 				form: {
 					userId: this.$store.getters['auth/user'].id,
 					username: this.$store.getters['auth/user'].username,
+          office_email: this.$store.getters['auth/email'],
 					type: 'Registration',
 					tradeName: '',
 					surname: '',
