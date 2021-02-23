@@ -1,5 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { getRequests, sendRequest } from '@/graphql/queries';
+import { getRequests, listRequestsByReceiverEmail, listRequestsBySenderEmail, listRequestss } from '@/graphql/queries';
+import { sendRequest } from '@/graphql/mutations';
 
 export const request = {
 	namespaced: true,
@@ -12,23 +13,71 @@ export const request = {
 		}
 	},
 	actions: {
-		async getRequest(_, id) {
-			try {
-				const response = await API.graphql(graphqlOperation(getRequests, { id: id }));
-				return Promise.resolve(response.data.getRequest);
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
+		getRequest(_, id) {
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(getRequests, { id: id }))
+					.then((response) => {
+						resolve(response.data.getRequest);
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
 		},
-		async sendRequest(_, { requestType, payload }) {
-			try {
-				const response = await API.graphql(graphqlOperation(sendRequest, { requestType, payload }));
-				return Promise.resolve(response.data.getRequest);
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			}
+		listRequests({ commit }) {
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(listRequestss))
+					.then((response) => {
+						commit('setRequests', response.data.listRequestss)
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
+		},
+		listRequestsBySenderEmail({ commit, rootGetters }, senderEmail) {
+			senderEmail = senderEmail || rootGetters['auth/email'];
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(listRequestsBySenderEmail, { senderEmail }))
+					.then((response) => {
+						commit('setRequests', response.data.listRequestsBySenderEmail)
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
+		},
+		listRequestsByReceiverEmail({ commit }, receiverEmail) {
+			receiverEmail = receiverEmail || '';
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(listRequestsByReceiverEmail, { receiverEmail }))
+					.then((response) => {
+						commit('setRequests', response.data.listRequestsBySenderEmail)
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
+		},
+		sendRequest(_, { requestType, payload }) {
+			return new Promise((resolve, reject) => {
+				payload = JSON.stringify(payload);
+				API.graphql(graphqlOperation(sendRequest, { requestType, payload }))
+					.then((response) => {
+						resolve(response.data.sendRequest);
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
 		},
 	},
 	getters: {
