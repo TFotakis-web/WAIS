@@ -24,20 +24,36 @@ export default {
 			testAllMessage: '',
 			testAllDisabled: false,
 			tests: {
-				'Template Test': {
-					message: '',
-					disabled: false,
-					testFunc: () => {
-						this.tests['Template Test'].disabled = true;
-						this.tests['Template Test'].message = 'Running...';
+        'Template Test': {
+          message: '',
+          disabled: false,
+          testFunc: () => {
+            this.tests['Template Test'].disabled = true;
+            this.tests['Template Test'].message = 'Running...';
 
-						console.log("Test Passed!");
+            console.log("Test Passed!");
 
-						this.tests['Template Test'].message = 'OK';
-						this.tests['Template Test'].disabled = false;
-						return 0;
-					}
-				}
+            this.tests['Template Test'].message = 'OK';
+            this.tests['Template Test'].disabled = false;
+            return 0;
+          }
+        },
+        'Echo': {
+          message: '',
+          disabled: false,
+          testFunc: () => {
+            this.tests['Echo'].disabled = true;
+            this.tests['Echo'].message = 'Running...';
+
+            this.$store.dispatch('echo');
+
+            console.log("Test Passed!");
+
+            this.tests['Echo'].message = 'OK';
+            this.tests['Echo'].disabled = false;
+            return 0;
+          }
+        },
 			}
 		}
 	},
