@@ -1,5 +1,5 @@
 <template>
-	<mdb-side-nav-2 :value="true" :data="navigation" side slim expand-on-hover :slim-collapsed="collapsed" @toggleSlim="collapsed = $event" sidenav-class="blue accent-4" color="white">
+	<mdb-side-nav-2 :value="true" :data="sidenav" side slim expand-on-hover :slim-collapsed="collapsed" @toggleSlim="collapsed = $event" sidenav-class="blue accent-4" color="white">
 		<div slot="header" class="white-text">
 			<router-link :to="{ name: 'Trade' }" class="d-flex align-items-center my-4 justify-content-center white-text">
 				<mdb-avatar :width="40" style="flex: 0 0 auto">
@@ -8,90 +8,64 @@
 						class="img-fluid rounded-circle z-depth-1"
 					/> -->
 					<h1>
-						<mdb-icon far icon="building" />
+						<mdb-icon far icon="building"/>
 					</h1>
 				</mdb-avatar>
 				<p class="m-t mb-0 ml-4 p-0" style="flex: 0 2 auto" v-show="!collapsed">
 					<strong>MedInsCare</strong>
 				</p>
 			</router-link>
-			<hr class="w-100" />
+			<hr class="w-100"/>
 		</div>
 		<div slot="content" class="d-flex justify-content-center white-text">
 			<a type="button" class="mx-0">
-				<mdb-icon :icon="collapsed ? 'chevron-right' : 'chevron-left'" />
+				<mdb-icon :icon="collapsed ? 'chevron-right' : 'chevron-left'"/>
 			</a>
 		</div>
-
 		<mdb-navbar slot="nav" tag="div" :toggler="false" position="top" light color="white">
-			<mdb-navbar-nav class="nav-flex-icons" left>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'right' }" class="ml-5">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.home') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="home" />
+			<mdb-navbar-nav class="nav-flex-icons ml-5" left>
+				<mdb-tooltip v-for="navItem in navbarLeft" :key="navItem.name" material trigger="hover" :options="{ placement: 'bottom' }">
+					<span slot="tip">{{ navItem.name }}</span>
+					<mdb-nav-item slot="reference" :to="navItem.to" waves-fixed :fab="navItem.fab" :icon="navItem.icon">
+						<span v-if="navItem.label" class="ml-1">{{ navItem.label }}</span>
+					</mdb-nav-item>
 				</mdb-tooltip>
-				<mdb-nav-item :to="{ name: 'Home' }" waves-fixed icon="euro-sign">
-					<span class="ml-1">1345.85/1800.00</span>
-				</mdb-nav-item>
 			</mdb-navbar-nav>
 			<mdb-navbar-nav class="nav-flex-icons" right>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.devtools') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'DevTools' }" waves-fixed fab icon="dev" />
+				<mdb-tooltip v-for="navItem in navbarRight" :key="navItem.name" material trigger="hover" :options="{ placement: 'bottom' }">
+					<span slot="tip">{{ navItem.name }}</span>
+					<mdb-nav-item slot="reference" :to="navItem.to" waves-fixed :fab="navItem.fab" :icon="navItem.icon">
+						<span v-if="navItem.label" class="ml-1">{{ navItem.label }}</span>
+					</mdb-nav-item>
 				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.database') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'PlatformData' }" waves-fixed icon="table" />
-				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.contract-approval') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="file-signature" />
-				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.payment') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="shopping-cart" />
-				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.bank') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="university" />
-				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.collaboration') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="handshake" />
-				</mdb-tooltip>
-				<mdb-tooltip material trigger="hover" :options="{ placement: 'bottom' }">
-					<span slot="tip">{{ $t('components.navigation.navbar-item.notifications') }}</span>
-					<mdb-nav-item slot="reference" :to="{ name: 'Home' }" waves-fixed icon="bell" />
-				</mdb-tooltip>
-				<localeDropdown class="nav-item" style="border-left: 1px solid grey !important" />
+				<localeDropdown class="nav-item" style="border-left: 1px solid grey !important"/>
 				<mdb-dropdown tag="li" class="nav-item black-text">
 					<mdb-dropdown-toggle tag="a" navLink slot="toggle" waves-fixed>
-						<mdb-icon icon="user-circle" class="black-text" />
+						<mdb-icon icon="user-circle" class="black-text"/>
 					</mdb-dropdown-toggle>
 					<mdb-dropdown-menu left style="min-width: unset">
 						<mdb-dropdown-item :to="{ name: 'UserProfile' }" class="text-center">{{ $store.getters['auth/username'] }}</mdb-dropdown-item>
-						<hr class="m-0" />
+						<hr class="m-0"/>
 						<mdb-dropdown-item @click="signOut">
-							<mdb-icon class="black-text" icon="sign-out-alt" />
+							<mdb-icon class="black-text" icon="sign-out-alt"/>
 							{{ $t('components.navigation.navbar-item.signOut') }}
 						</mdb-dropdown-item>
 					</mdb-dropdown-menu>
 				</mdb-dropdown>
 			</mdb-navbar-nav>
 		</mdb-navbar>
-
 		<div class="py-5" slot="main" style="min-height: 100vh; position: relative">
 			<div v-show="$store.getters.routerViewPendingPromises > 0" style="position: absolute; left: 50%; top: 50%; transform: translate(-32px, -32px); z-index: 100000;">
-				<mdb-spinner big />
+				<mdb-spinner big/>
 			</div>
 			<div v-show="$store.getters.routerViewPendingPromises === 0">
 				<transition name="fadingSlide" mode="out-in">
-					<router-view />
+					<router-view/>
 				</transition>
 			</div>
 		</div>
 	</mdb-side-nav-2>
 </template>
-
 <script>
 	import { mapActions } from 'vuex';
 	import { waves } from 'mdbvue';
@@ -108,9 +82,21 @@
 				collapsed: true,
 			};
 		},
+		mixins: [waves],
+		methods: {
+			...mapActions({
+				signOutStore: 'auth/signOut',
+			}),
+			signOut: async function () {
+				await this.signOutStore();
+				if (this.$router.currentRoute.name !== 'Home') {
+					this.$router.push({ name: 'Home' });
+				}
+			},
+		},
 		computed: {
-			navigation: function() {
-				return [
+			sidenav: function () {
+				let allRoutes = [
 					{
 						name: this.$t('components.navigation.sidenav.pricing._groupName'),
 						icon: 'chart-line',
@@ -287,23 +273,108 @@
 					// 	href: "https://mdbootstrap.com/docs/vue/"
 					// }
 				];
-			},
-		},
-		mixins: [waves],
-		methods: {
-			...mapActions({
-				signOutStore: 'auth/signOut',
-			}),
-			signOut: async function() {
-				await this.signOutStore();
-				if (this.$router.currentRoute.name !== 'Home') {
-					this.$router.push({ name: 'Home' });
+				let routes = [];
+				const permissions = this.$store.getters['auth/permissions'];
+				for (let category of allRoutes) {
+					let children = [];
+					for (let child of category.children) {
+						const routeName = child.to.name;
+						if (routeName in permissions && permissions[routeName].read && permissions[routeName].write) {
+							children.push(child);
+						}
+					}
+					if (children.length) {
+						category.children = children;
+						routes.push(category);
+					}
 				}
+
+				return routes;
+			},
+			navbarLeft: function () {
+				let allRoutes = [
+					{
+						name: this.$t('components.navigation.navbar-item.home'),
+						to: { name: 'Home' },
+						icon: "home",
+						fab: false,
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.wallet'),
+						to: { name: 'Wallet' },
+						icon: "euro-sign",
+						fab: false,
+						label: '1345.85/1800.00'
+					},
+				];
+				let routes = [];
+				const permissions = this.$store.getters['auth/permissions'];
+				for (let navItem of allRoutes) {
+					const routeName = navItem.to.name;
+					if (routeName in permissions && permissions[routeName].read && permissions[routeName].write) {
+						routes.push(navItem);
+					}
+				}
+				return routes;
+			},
+			navbarRight: function () {
+				let allRoutes = [
+					{
+						name: this.$t('components.navigation.navbar-item.devtools'),
+						to: { name: 'DevTools' },
+						icon: "dev",
+						fab: true
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.database'),
+						to: { name: 'PlatformData' },
+						icon: "table",
+						fab: false
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.contract-approval'),
+						to: { name: 'ContractApproval' },
+						icon: "file-signature",
+						fab: false
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.payment'),
+						to: { name: 'Payment' },
+						icon: "shopping-cart",
+						fab: false
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.bank'),
+						to: { name: 'Bank' },
+						icon: "university",
+						fab: false
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.collaboration'),
+						to: { name: 'Collaboration' },
+						icon: "handshake",
+						fab: false
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.notifications'),
+						to: { name: 'Notifications' },
+						icon: "bell",
+						fab: false
+					},
+				];
+				let routes = [];
+				const permissions = this.$store.getters['auth/permissions'];
+				for (let navItem of allRoutes) {
+					const routeName = navItem.to.name;
+					if (routeName in permissions && permissions[routeName].read && permissions[routeName].write) {
+						routes.push(navItem);
+					}
+				}
+				return routes;
 			},
 		},
 	};
 </script>
-
 <style scoped>
 	.navbar i {
 		cursor: pointer;
