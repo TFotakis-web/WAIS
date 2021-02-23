@@ -194,6 +194,165 @@ export const auth = {
 				API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
 					.then((response) => {
 						let userProfile = response.data.listUserProfileByUsername.items[0];
+						// Todo: Remove when backend is correct
+						userProfile.permissions = {
+							'Home': {
+								read: true,
+								write: true
+							},
+							'VehiclePricing': {
+								read: true,
+								write: true
+							},
+							'IndustrialLiabilityPricing': {
+								read: true,
+								write: true
+							},
+							'FirePricing': {
+								read: true,
+								write: true
+							},
+							'LifePricing': {
+								read: true,
+								write: true
+							},
+							'ContractsFile': {
+								read: true,
+								write: true
+							},
+							'UncollectedContracts': {
+								read: true,
+								write: true
+							},
+							'CollectedContracts': {
+								read: true,
+								write: true
+							},
+							'ContractAdditionalActs': {
+								read: true,
+								write: true
+							},
+							'GreenCardContracts': {
+								read: true,
+								write: true
+							},
+							'UnclaimedContracts': {
+								read: true,
+								write: true
+							},
+							'InvalidContracts': {
+								read: true,
+								write: true
+							},
+							'NewContract': {
+								read: true,
+								write: true
+							},
+							'ProcessingDueDateRegister': {
+								read: true,
+								write: true
+							},
+							'ProcessingDuePayment': {
+								read: true,
+								write: true
+							},
+							'ProcessingPaid': {
+								read: true,
+								write: true
+							},
+							'ProcessingLosses': {
+								read: true,
+								write: true
+							},
+							'AccountingReceipts': {
+								read: true,
+								write: true
+							},
+							'AccountingRegisters': {
+								read: true,
+								write: true
+							},
+							'AccountingTodaysIncome': {
+								read: true,
+								write: true
+							},
+							'AccountingCommissionsUncollected': {
+								read: true,
+								write: true
+							},
+							'AccountingCommissionsCollected': {
+								read: true,
+								write: true
+							},
+							'AccountingMutualAccount': {
+								read: true,
+								write: true
+							},
+							'SupplierContractors': {
+								read: true,
+								write: true
+							},
+							'ContractorsExternalContractors': {
+								read: true,
+								write: true
+							},
+							'VehicleCards': {
+								read: true,
+								write: true
+							},
+							'VehicleCardsDetails': {
+								read: true,
+								write: true
+							},
+							'CustomerCards': {
+								read: true,
+								write: true
+							},
+							'Library': {
+								read: true,
+								write: true
+							},
+							'Trade': {
+								read: true,
+								write: true
+							},
+							'UserProfile': {
+								read: true,
+								write: true
+							},
+							'PlatformData': {
+								read: true,
+								write: true
+							},
+							'DevTools': {
+								read: true,
+								write: true
+							},
+							'ContractApproval': {
+								read: true,
+								write: true
+							},
+							'Payment': {
+								read: true,
+								write: true
+							},
+							'Bank': {
+								read: true,
+								write: true
+							},
+							'Collaboration': {
+								read: true,
+								write: true
+							},
+							'Notifications': {
+								read: true,
+								write: true
+							},
+							'Wallet': {
+								read: true,
+								write: true
+							},
+						};
 						commit("setUserProfile", userProfile);
 						router.$loadRoutesAsync();
 						resolve();
