@@ -28,6 +28,18 @@ Amplify.configure(aws_exports);
 Auth.configure(aws_exports);
 API.configure(aws_exports);
 
+// Add ID Token on every request (contains email on identity.claims and more)
+Amplify.configure({
+	API: {
+		graphql_headers: async () => {
+			const session = await Auth.currentSession();
+			return {
+				Authorization: session.getIdToken().getJwtToken(),
+			};
+		},
+	},
+});
+
 Vue.use(VueCookies);
 Vue.use(VueHead);
 Vue.use(Vue2TouchEvents);
