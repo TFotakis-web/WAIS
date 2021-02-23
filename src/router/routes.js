@@ -32,106 +32,51 @@ import UserProfile from '@/views/userProfile/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
 import DevTools from "@/views/devTools/DevTools";
 
-const routes = {
-	'Home': {
-		route: { path: '/', name: 'Home', component: Home }
-	},
-	'VehiclePricing': {
-		route: { path: '/pricing/vehicle', name: 'VehiclePricing', component: VehiclePricing }
-	},
-	'IndustrialLiabilityPricing': {
-		route: { path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: IndustrialLiabilityPricing }
-	},
-	'FirePricing': {
-		route: { path: '/pricing/fire', name: 'FirePricing', component: FirePricing }
-	},
-	'LifePricing': {
-		route: { path: '/pricing/life', name: 'LifePricing', component: LifePricing }
-	},
-	'ContractsFile': {
-		route: { path: '/contract/file', name: 'ContractsFile', component: ContractsFile }
-	},
-	'UncollectedContracts': {
-		route: { path: '/contract/uncollected', name: 'UncollectedContracts', component: UncollectedContracts }
-	},
-	'CollectedContracts': {
-		route: { path: '/contract/collected', name: 'CollectedContracts', component: CollectedContracts }
-	},
-	'ContractAdditionalActs': {
-		route: { path: '/contract/additionalActs', name: 'ContractAdditionalActs', component: ContractAdditionalActs }
-	},
-	'GreenCardContracts': {
-		route: { path: '/contract/greenCard', name: 'GreenCardContracts', component: GreenCardContracts }
-	},
-	'UnclaimedContracts': {
-		route: { path: '/contract/unclaimed', name: 'UnclaimedContracts', component: UnclaimedContracts }
-	},
-	'InvalidContracts': {
-		route: { path: '/contract/invalid', name: 'InvalidContracts', component: InvalidContracts }
-	},
-	'NewContract': {
-		route: { path: '/contract/new', name: 'NewContract', component: NewContract }
-	},
-	'ProcessingDueDateRegister': {
-		route: { path: '/processing/dueDateRegister', name: 'ProcessingDueDateRegister', component: ProcessingDueDateRegister }
-	},
-	'ProcessingDuePayment': {
-		route: { path: '/processing/duePayment', name: 'ProcessingDuePayment', component: ProcessingDuePayment }
-	},
-	'ProcessingPaid': {
-		route: { path: '/processing/paid', name: 'ProcessingPaid', component: ProcessingPaid }
-	},
-	'ProcessingLosses': {
-		route: { path: '/processing/losses', name: 'ProcessingLosses', component: ProcessingLosses }
-	},
-	'AccountingReceipts': {
-		route: { path: '/accounting/receipts', name: 'AccountingReceipts', component: AccountingReceipts }
-	},
-	'AccountingRegisters': {
-		route: { path: '/accounting/registers', name: 'AccountingRegisters', component: AccountingRegisters }
-	},
-	'AccountingTodaysIncome': {
-		route: { path: '/accounting/todaysIncome', name: 'AccountingTodaysIncome', component: AccountingTodaysIncome }
-	},
-	'AccountingCommissionsUncollected': {
-		route: { path: '/accounting/commissionsUncollected', name: 'AccountingCommissionsUncollected', component: AccountingCommissionsUncollected }
-	},
-	'AccountingCommissionsCollected': {
-		route: { path: '/accounting/commissionsCollected', name: 'AccountingCommissionsCollected', component: AccountingCommissionsCollected }
-	},
-	'AccountingMutualAccount': {
-		route: { path: '/accounting/mutualAccount', name: 'AccountingMutualAccount', component: AccountingMutualAccount }
-	},
-	'SupplierContractors': {
-		route: { path: '/contractors/suppliers', name: 'SupplierContractors', component: SupplierContractors }
-	},
-	'ContractorsExternalContractors': {
-		route: { path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: ContractorsExternalContractors }
-	},
-	'VehicleCards': {
-		route: { path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards }
-	},
-	'VehicleCardsDetails': {
-		route: { path: '/cards/vehicle/:id', name: 'VehicleCardsDetails', component: VehicleCardsDetails }
-	},
-	'CustomerCards': {
-		route: { path: '/cards/customers', name: 'CustomerCards', component: CustomerCards }
-	},
-	'Library': {
-		route: { path: '/library', name: 'Library', component: Library }
-	},
-	'Trade': {
-		route: { path: '/trade', name: 'Trade', component: Trade }
-	},
-	'UserProfile': {
-		route: { path: '/profile', name: 'UserProfile', component: UserProfile }
-	},
-	'PlatformData': {
-		route: { path: '/platformData', name: 'PlatformData', component: PlatformData }
-	},
-	'DevTools': {
-		route: { path: '/devTools', name: 'DevTools', component: DevTools }
-	},
-};
+let routesList = [
+	{ path: '/', name: 'Home', component: Home },
+	{ path: '/pricing/vehicle', name: 'VehiclePricing', component: VehiclePricing },
+	{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: IndustrialLiabilityPricing },
+	{ path: '/pricing/fire', name: 'FirePricing', component: FirePricing },
+	{ path: '/pricing/life', name: 'LifePricing', component: LifePricing },
+	{ path: '/contract/file', name: 'ContractsFile', component: ContractsFile },
+	{ path: '/contract/uncollected', name: 'UncollectedContracts', component: UncollectedContracts },
+	{ path: '/contract/collected', name: 'CollectedContracts', component: CollectedContracts },
+	{ path: '/contract/additionalActs', name: 'ContractAdditionalActs', component: ContractAdditionalActs },
+	{ path: '/contract/greenCard', name: 'GreenCardContracts', component: GreenCardContracts },
+	{ path: '/contract/unclaimed', name: 'UnclaimedContracts', component: UnclaimedContracts },
+	{ path: '/contract/invalid', name: 'InvalidContracts', component: InvalidContracts },
+	{ path: '/contract/new', name: 'NewContract', component: NewContract },
+	{ path: '/processing/dueDateRegister', name: 'ProcessingDueDateRegister', component: ProcessingDueDateRegister },
+	{ path: '/processing/duePayment', name: 'ProcessingDuePayment', component: ProcessingDuePayment },
+	{ path: '/processing/paid', name: 'ProcessingPaid', component: ProcessingPaid },
+	{ path: '/processing/losses', name: 'ProcessingLosses', component: ProcessingLosses },
+	{ path: '/accounting/receipts', name: 'AccountingReceipts', component: AccountingReceipts },
+	{ path: '/accounting/registers', name: 'AccountingRegisters', component: AccountingRegisters },
+	{ path: '/accounting/todaysIncome', name: 'AccountingTodaysIncome', component: AccountingTodaysIncome },
+	{ path: '/accounting/commissionsUncollected', name: 'AccountingCommissionsUncollected', component: AccountingCommissionsUncollected },
+	{ path: '/accounting/commissionsCollected', name: 'AccountingCommissionsCollected', component: AccountingCommissionsCollected },
+	{ path: '/accounting/mutualAccount', name: 'AccountingMutualAccount', component: AccountingMutualAccount },
+	{ path: '/contractors/suppliers', name: 'SupplierContractors', component: SupplierContractors },
+	{ path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: ContractorsExternalContractors },
+	{ path: '/cards/vehicle', name: 'VehicleCards', component: VehicleCards },
+	{ path: '/cards/vehicle/:id', name: 'VehicleCardsDetails', component: VehicleCardsDetails },
+	{ path: '/cards/customers', name: 'CustomerCards', component: CustomerCards },
+	{ path: '/library', name: 'Library', component: Library },
+	{ path: '/trade', name: 'Trade', component: Trade },
+	{ path: '/profile', name: 'UserProfile', component: UserProfile },
+	{ path: '/platformData', name: 'PlatformData', component: PlatformData },
+	{ path: '/devTools', name: 'DevTools', component: DevTools },
+	{ path: '/contractApproval', name: 'ContractApproval', component: Home },
+	{ path: '/payment', name: 'Payment', component: Home },
+	{ path: '/bank', name: 'Bank', component: Home },
+	{ path: '/collaboration', name: 'Collaboration', component: Home },
+	{ path: '/notifications', name: 'Notifications', component: Home },
+	{ path: '/wallet', name: 'Wallet', component: Home },
+];
+
+let routes = {};
+for(const route of routesList) {
+	routes[route.name] = {route};
+}
 
 export default routes;
