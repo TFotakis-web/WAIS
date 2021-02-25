@@ -7,12 +7,8 @@ async function customize(moduleName) {
 	const moduleCustomizationPath = '../' + codegenPath + 'custom-' + moduleName + '-description.js';
 	const newModulePath = './' + codegenPath + 'custom-' + moduleName + '.js';
 
-	const fs = await import('fs');
-	// let module = fs.readFileSync(modulePath, 'utf8');
-	// console.log(module.split(/.*`;/));
-
-	const module = await import( modulePath);
-	const moduleCustomization = (await import (moduleCustomizationPath)).default;
+	const module = await import(modulePath);
+	const moduleCustomization = (await import(moduleCustomizationPath)).default;
 	let outString = '';
 	for (let func in module) {
 		outString += 'export const ' + func + ' = `' + module[func] + '`;\n';
@@ -34,6 +30,7 @@ async function customize(moduleName) {
 		outString += 'export const ' + desc.name + ' = `' + query + '`;\n';
 	}
 
+	const fs = await import('fs');
 	fs.writeFileSync(newModulePath, outString);
 	console.log(newModulePath + ': OK');
 }
