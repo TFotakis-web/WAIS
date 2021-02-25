@@ -1,6 +1,6 @@
 const codegenPath = 'src/graphql/';
 
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 
 async function customize(moduleName) {
 	const modulePath = '../' + codegenPath + moduleName + '.js';
@@ -38,12 +38,7 @@ async function customize(moduleName) {
 	console.log(newModulePath + ': OK');
 }
 
-exec("amplify codegen", (error, stdout, stderr) => {
-	console.log('stdout', stdout);
-	console.log('stderr', stderr);
-	console.log('error', error);
-
-	customize('queries');
-	customize('mutations');
-	customize('subscriptions');
-});
+execSync("amplify codegen");
+customize('queries');
+customize('mutations');
+customize('subscriptions');
