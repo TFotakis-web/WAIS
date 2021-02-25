@@ -176,7 +176,13 @@
 			}
 		},
 		mounted() {
-			this.listRequestsBySenderEmail();
+			this.listRequestsBySenderEmail()
+				.then(() => {
+					const request = this.$store.getters['request/requests'][0];
+					this.form.id = request.id;
+					const payload = JSON.parse(request.payload);
+					Object.assign(this.form, payload);
+				});
 		},
 		methods: {
 			...mapActions('auth', ['signOut']),
