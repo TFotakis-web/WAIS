@@ -29,7 +29,7 @@ export const request = {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestssSimple))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestss)
+						commit('setRequests', response.data.listRequestss.items)
 						resolve();
 					})
 					.catch((error) => {
@@ -43,7 +43,7 @@ export const request = {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestsBySenderEmailSimple, { senderEmail }))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestsBySenderEmail)
+						commit('setRequests', response.data.listRequestsBySenderEmail.items)
 						resolve();
 					})
 					.catch((error) => {
@@ -57,7 +57,7 @@ export const request = {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestsByReceiverEmailSimple, { receiverEmail }))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestsBySenderEmail)
+						commit('setRequests', response.data.listRequestsByReceiverEmail.items)
 						resolve();
 					})
 					.catch((error) => {
