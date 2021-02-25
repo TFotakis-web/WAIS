@@ -6,7 +6,8 @@
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
-		"i18n:report": "vue-i18n-extract report -d -v \"./src/**/*.?(js|vue)\" -l \"./public/locales/**/*.json\" -a"
+		"i18n:report": "vue-i18n-extract report -d -v \"./src/**/*.?(js|vue)\" -l \"./public/locales/**/*.json\" -a",
+		"codegen": "node custom-scripts/custom-codegen.js"
 	},
 	"dependencies": {
 		"@aws-amplify/ui-vue": "^0.3.1",
