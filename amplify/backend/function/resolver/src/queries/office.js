@@ -1,5 +1,6 @@
 const ddbAPI = require('../api/ddb_queries')
 const gqlAPI = require('../api/gql_queries')
+const utils = require('../api/utils')
 
 module.exports = {
   /**
@@ -8,28 +9,22 @@ module.exports = {
    */
   listCustomersForUserInOffice: async input => {
     //User Permissions check
-    const permissions = await gqlAPI.getUserPermissions(input.username)
-    if (!permissions.items.length) {
-      return {
-        items: [],
-        errors: permissions.errors,
-      }
+    const permissions = await gqlAPI.getEmployeePermissions(input.username)
+    if (!permissions) {
+      throw new Error(`No permissions found for user ${input.username}.`)
     }
 
     //List customers request input item
-    const item = createOfficeDefaultItem(input.office, input.limit, input.nextToken, input.filter)
+    const item = createOfficeDefaultItem(input.office.tradeName, input.limit, input.nextToken, input.filter)
 
     //Retrieve the customers
     const allCustomers = await gqlAPI.getCustomers(item)
-    if (!allCustomers.items.length) {
-      return {
-        items: [],
-        errors: allCustomers.errors,
-      }
+    if (!allCustomers) {
+      return []
     }
 
     // Filter out customer fields based on permissions
-    let customers = allCustomers.items.slice()
+    let customers = allCustomers.slice()
     if (permissions) {
       //TODO
       //customers.remove(...)
@@ -41,12 +36,9 @@ module.exports = {
   /**
    * Retrieves all contracts the input user can access.
    */
-  listContractsForUserInOffice: async args => {
-    //Unpack args and validate
-    const input = Object.keys(args).map(e => ({ Key: e, Value: args[e] }))
-
+  listContractsForUserInOffice: async input => {
     //User Permissions check
-    const permissions = await gqlAPI.getUserPermissions(input.username)
+    const permissions = await gqlAPI.getEmployeePermissions(input.username)
     if (!permissions.items.length) {
       return {
         items: [],
@@ -55,7 +47,7 @@ module.exports = {
     }
 
     //List customers request input item
-    const item = createOfficeDefaultItem(input.office, input.limit, input.nextToken, input.filter)
+    const item = createOfficeDefaultItem(input.office.tradeName, input.limit, input.nextToken, input.filter)
 
     //Retrieve the customers
     const allContracts = await gqlAPI.getContracts(item)
@@ -84,7 +76,7 @@ module.exports = {
     const input = Object.keys(args).map(e => ({ Key: e, Value: args[e] }))
 
     //User Permissions check
-    const permissions = await gqlAPI.getUserPermissions(input.username)
+    const permissions = await gqlAPI.getEmployeePermissions(input.username)
     if (!permissions.items.length) {
       return {
         items: [],
@@ -123,7 +115,7 @@ module.exports = {
     const input = Object.keys(args).map(e => ({ Key: e, Value: args[e] }))
 
     //User Permissions check
-    const permissions = await gqlAPI.getUserPermissions(input.username)
+    const permissions = await gqlAPI.getEmployeePermissions(input.username)
     if (!permissions.items.length) {
       return {
         items: [],
@@ -161,9 +153,9 @@ module.exports = {
    * @param {String} action
    * @param {Dict} payload
    */
-  manageEmployees: async (callerUsername, office, action, payload) => {
+  manageEmployees: async (callerUsername, tradeName, action, payload) => {
     //User Permissions check
-    const callerPermissions = await gqlAPI.getUserPermissions(callerUsername, office)
+    const callerPermissions = await gqlAPI.getUserPermissionsForTrade(callerUsername, tradeName)
     if (!callerPermissions.length) {
       throw new Error('Insufficient permissions.')
     }
@@ -190,38 +182,89 @@ module.exports = {
     //Actions
     switch (action) {
       case 'UPDATE_PERMISSIONS': {
-        return await gqlAPI.updateUserPermissions(callerUsername, office.tradeName, newUserPermissions)
+        return await gqlAPI.updateUserPermissions(callerUsername, tradeName, newUserPermissions)
       }
       case 'REMOVE': {
         //Get the index of the username in the office members field
-        const membersIdx = office.members.indexOf(payload.username)
-        if (membersIdx < 0) {
-          throw new Error('User not found in Office.')
-        }
-        return await ddbAPI.removeEmployeeFromOffice(callerPermissions.id, office.tradeName, membersIdx)
+        // const membersIdx = office.members.indexOf(payload.username)
+        // if (membersIdx < 0) {
+        //   throw new Error('User not found in Office.')
+        // }
+        // return await ddbAPI.removeEmployeeFromOffice(callerPermissions.id, tradeName, membersIdx)
+        break
       }
       default: {
         throw new Error('Invalid action provided: ' + JSON.stringify(action))
       }
     }
   },
+
+  manageCustomers: async input => {
+    //Parse the payload
+    if (!input.payload) {
+      throw new Error('Empty payload.')
+    }
+    const payload = JSON.parse(input.payload)
+    const userGroups = input.groups || []
+    if (utils.itemContainsInvalidKeys(payload)) {
+      throw new Error(`The following keys are not permitted in this entry: [createdAt,updatedAt,__typename]`)
+    }
+    console.log('Input payload: ' + JSON.stringify(payload))
+
+    //User Permissions check
+    const userTradeConn = await gqlAPI.getUserPermissionsAndTrade(input.username, input.tradeName)
+    if (!userTradeConn) {
+      throw new Error('User and Trade have no connection')
+    }
+
+    //Actions
+    switch (input.action) {
+      case 'CREATE': {
+        let newCustomer = payload
+        delete newCustomer.id
+        console.log(`Attempting to add new customer: ${JSON.stringify(newCustomer)}`)
+        newCustomer.tradeName = input.tradeName
+        return await gqlAPI.createCustomer(newCustomer)
+      }
+      case 'UPDATE': {
+        let customerData = payload
+        if (!('admin' in userGroups || [])) {
+          if (!userTradeConn.trade.tradeName) {
+            throw new Error('Failed to retrieve tradeName')
+          }
+          customerData.tradeName = userTradeConn.trade.tradeName
+        }
+        console.log(`Attempting to update customer with the following data: ${JSON.stringify(customerData)}`)
+        customerData.tradeName = input.tradeName
+        return await gqlAPI.updateCustomer(customerData)
+      }
+      case 'DELETE': {
+        const customerData = payload
+        console.log(`Attempting to delete customer with the following data: ${JSON.stringify(customerData)}`)
+        return await gqlAPI.deleteCustomer(customerData)
+      }
+      default: {
+        throw new Error('Invalid action provided: ' + JSON.stringify(input.action))
+      }
+    }
+  },
 }
 
 //Initialize a REST API call item with the necessary GQL API params (e.g filter,nextToken,...)
-const createOfficeDefaultItem = (office, limit, nextToken, filter) => {
+const createOfficeDefaultItem = (tradeName, limit, nextToken, filter) => {
   let item = {}
   if (filter) {
     item.filter = {
       and: [
         {
-          tradeName: { eq: office.tradeName },
+          tradeName: { eq: tradeName },
         },
         filter,
       ],
     }
   } else {
     item.filter = {
-      tradeName: { eq: office.tradeName },
+      tradeName: { eq: tradeName },
     }
   }
   if (limit) {

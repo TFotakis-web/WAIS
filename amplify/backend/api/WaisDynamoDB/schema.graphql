@@ -169,7 +169,6 @@ type Contract
   insuranceCoverage: [String]
   insuranceUsage: String
   duration: String!
-  creationDate: String!
   startDate: String!
   endDate: String!
   data: String!
@@ -204,7 +203,6 @@ type Customer
   doy: String
   address: String
   familyStatus: String
-  creationDate: AWSTimestamp!
   files: [S3Object]
   driversLicense: DriversLicense
 }
@@ -328,9 +326,6 @@ type Requests
   # Request type and information
   type: RequestType!
   payload: String!
-
-  # Metadata (for AWS services and administrators)
-  metadata: String! @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 }
 
 # ####################################################################################################################################################################################
@@ -345,21 +340,21 @@ type Query {
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
-  echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
 }
 
 type Mutation {
   # Create / Update / Delete from here
-  manageCustomers(action: CustomerResourceAction!, payload: String!): String
+  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContracts(action: ContractResourceAction!, payload: String!): String
-    @function(name: "resolver-${env}") 
-    @auth(rules: [{ allow: private }])
-  manageEmployees(action: EmployeeResourceAction!, payload: String!): String
+  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContractors(action: ContractorResourceAction!, payload: String!): String
+  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): String
+    @function(name: "resolver-${env}")
+    @auth(rules: [{ allow: private }])
+  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): String
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
 
@@ -386,7 +381,9 @@ type Mutation {
 
 # CRUD specififc types
 enum CustomerResourceAction {
-  TODO
+  CREATE
+  UPDATE
+  DELETE
 }
 enum EmployeeResourceAction {
   UPDATE_PERMISSIONS

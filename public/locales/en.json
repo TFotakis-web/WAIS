@@ -11,7 +11,8 @@
         "home": "Home",
         "myAccount": "My account",
         "signOut": "Sign Out",
-        "devtools": "Developer Tools"
+        "devtools": "Developer Tools",
+        "wallet": "Wallet"
       },
       "sidenav": {
         "pricing": {

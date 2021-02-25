@@ -31,53 +31,49 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return []
-      // return await officeAPI.listCustomersForUserInOffice({
-      //   username: event.identity.claims['cognito:username'],
-      //   office: event.source,
-      //   limit: event.arguments.limit,
-      //   nextToken: event.arguments.nextToken,
-      //   filter: event.arguments.filter,
-      // })
+      return await officeAPI.listCustomersForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     contracts: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return []
-      // return await officeAPI.listContractsForUserInOffice({
-      //   username: event.identity.claims['cognito:username'],
-      //   office: event.source,
-      //   limit: event.arguments.limit,
-      //   nextToken: event.arguments.nextToken,
-      //   filter: event.arguments.filter,
-      // })
+      return await officeAPI.listContractsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     employees: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return []
-      // return await officeAPI.listEmployeesForUserInOffice({
-      //   username: event.identity.claims['cognito:username'],
-      //   office: event.source,
-      //   limit: event.arguments.limit,
-      //   nextToken: event.arguments.nextToken,
-      //   filter: event.arguments.filter,
-      // })
+      return await officeAPI.listEmployeesForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
     contractors: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return []
-      // return await officeAPI.listContractorsForUserInOffice({
-      //   username: event.identity.claims['cognito:username'],
-      //   office: event.source,
-      //   limit: event.arguments.limit,
-      //   nextToken: event.arguments.nextToken,
-      //   filter: event.arguments.filter,
-      // })
+      return await officeAPI.listContractorsForUserInOffice({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
     },
   },
   Query: {
@@ -88,7 +84,7 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await gql_queries.getUserProfileByUsername(event.identity.username)
+      return await gql_queries.getUserProfileByUsername(event.identity.claims['cognito:username'])
     },
     user: async event => {
       return await cognitoIdentityServiceProvider
@@ -105,7 +101,13 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return await officeAPI.manageCustomers({
+        username: event.identity.claims['cognito:username'],
+        tradeName: event.arguments.tradeName,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+        groups: event.identity.groups,
+      })
     },
     manageContracts: async event => {
       if (!event.identity.claims) {
@@ -183,7 +185,7 @@ exports.handler = async event => {
     if (resolver) {
       try {
         const res = await resolver(event)
-        console.log('Resolver result is ' + res)
+        console.log('Resolver result is ' + JSON.stringify(res))
         return res
       } catch (err) {
         console.log('Resolver error is ' + JSON.stringify(err))
