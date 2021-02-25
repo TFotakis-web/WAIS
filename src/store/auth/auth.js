@@ -1,6 +1,6 @@
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { listUserProfileByUsername } from '@/graphql/queries';
-import { updateUserProfile } from '@/graphql/mutations';
+import { listUserProfileByUsername } from '@/graphql/custom-queries';
+import { updateUserProfile } from '@/graphql/custom-mutations';
 
 export const auth = {
 	namespaced: true,

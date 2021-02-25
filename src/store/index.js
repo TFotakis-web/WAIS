@@ -4,7 +4,7 @@ import { auth } from '@/store/auth/auth';
 import { request } from '@/store/request/request';
 
 import { API, graphqlOperation } from "aws-amplify";
-import { echo } from "@/graphql/queries";
+import { echo, me } from "@/graphql/custom-queries";
 // import { vehicle } from '@/store/vehicle/vehicle';
 // import { trade } from '@/store/trade/trade';
 // import { platformData } from '@/store/platformData/platformData';
@@ -52,6 +52,19 @@ export default new Vuex.Store({
 				API.graphql(graphqlOperation(echo, { msg: 'Hello from echo' }))
 					.then((response) => {
 						console.log('Echo response:', response);
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
+		},
+		me() {
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(me))
+					.then((response) => {
+						console.log('Me response:', response);
 						resolve();
 					})
 					.catch((error) => {
