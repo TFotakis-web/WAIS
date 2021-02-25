@@ -13,9 +13,6 @@ module.exports = {
     const senderUsername = input.username
     const requestType = input.requestType
     const payload = JSON.parse(input.payload)
-    let metadata = {
-      forAdmin: 'false',
-    }
 
     if (!requestType) {
       throw new Error('Invalid request type.')
@@ -59,7 +56,6 @@ module.exports = {
         }
 
         receiverEmail = ADMIN_EMAIL
-        metadata.forAdmin = 'true'
         break
       }
       case 'INVITE_EMPLOYEE_TO_OFFICE': {
@@ -168,7 +164,6 @@ module.exports = {
       senderUsername: senderUsername,
       senderEmail: senderUserProfile.email,
       receiverEmail: receiverEmail,
-      metadata: JSON.stringify(metadata),
     }
 
     //Save the request and return the ID. Output example: {"id":"XXXX-XXXX-XXXX"}
