@@ -77,3 +77,133 @@ mutation createAdmin {
   }
 }
 ```
+
+# Create and retrieve Customers
+
+Create a customer via manageCustomers(action: CustomerResourceAction.CREATE, tradeName: "...", payload: "{}") with the following _STRING_ payload.
+Although the JSON version is present here you will need to Stringify this.
+
+```json
+{
+  "tin": "",
+  "firstName": "",
+  "lastName": "",
+  "fathersName": "",
+  "birthDate": "",
+  "gender": "",
+  "email": "",
+  "mobile": "",
+  "postcode": "",
+  "doy": "",
+  "address": "",
+  "familyStatus": "",
+  "files": [
+    {
+      "bucket": "",
+      "region": "",
+      "key": "",
+      "name": ""
+    }
+  ],
+  "driversLicense": {
+    "LicenseID": 0,
+    "DriversLicenseType": "",
+    "Category": [
+      {
+        "category": "",
+        "issueDate": "",
+        "expiresAt": ""
+      }
+    ]
+  }
+}
+```
+
+The response is the following:
+
+```json
+{
+  "id": "XXX-XXX"
+}
+```
+
+In order to retrieve customers call the customers(filter: String, limit: Int, nextToken: String) method in the Office model.
+The response is the follwoing stringified JSON (here the JSON version is present but you will need to parse it).
+You can pass a filter to the customers method to avoid over-fetching.
+
+```json
+[
+  {
+    "id": "XXX-XXX",
+    "...": "..."
+  }
+]
+```
+
+In order to update an existing customer simply provide the following payload with an action of CustomerResourceAction.UPDATE.
+Only the ID field is mandatory and is used to pinpoint the Customer's entry.
+The other fields will update (overwrite) the existing ones.
+Reminder that GQL does NOT support array index-specific updates which is why the entire array needs to be retransmitted. Will probably do a different API for File updates.
+When updating the Sort Key (firstName or lastName) both fields need to be provided, even if they haven't changed.
+
+```json
+{
+  "id": "",
+  "tin": "",
+  "tradeName": "",
+  "firstName": "",
+  "lastName": "",
+  "fathersName": "",
+  "birthDate": "",
+  "gender": "",
+  "email": "",
+  "mobile": "",
+  "postcode": "",
+  "doy": "",
+  "address": "",
+  "familyStatus": "",
+  "files": [
+    {
+      "bucket": "",
+      "region": "",
+      "key": "",
+      "name": ""
+    }
+  ],
+  "driversLicense": {
+    "LicenseID": 0,
+    "DriversLicenseType": "",
+    "Category": [
+      {
+        "category": "",
+        "issueDate": "",
+        "expiresAt": ""
+      }
+    ]
+  }
+}
+```
+
+The response is the following:
+
+```json
+{
+  "id": "XXX-XXX"
+}
+```
+
+In order to delete a Customer simply provide its id and set the action to CustomerResourceAction.DELETE.
+
+```json
+{
+  "id": "XXX-XXX"
+}
+```
+
+The response is:
+
+```json
+{
+  "id": "XXX-XXX"
+}
+```
