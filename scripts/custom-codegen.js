@@ -9,9 +9,16 @@ async function customize(moduleName) {
 
 	const module = await import(modulePath);
 	const moduleCustomization = (await import(moduleCustomizationPath)).default;
-	let outString = '';
+
+	let outString = '/* eslint-disable */\n';
+	outString += '// This is an auto generated file and will be overwritten with codegen.\n';
+	outString += '// DO NOT EDIT.\n';
+	outString += '// Please use custom-' + moduleName + '-description.js for editing.\n\n';
+
 	for (let func in module) {
-		outString += 'export const ' + func + ' = `' + module[func] + '`;\n';
+		let query = module[func];
+		query = query.replace(/ {2}/g, '\t');
+		outString += 'export const ' + func + ' = `' + query + '`;\n';
 	}
 
 	outString += '\n// --------- Custom ---------\n\n';
@@ -25,6 +32,7 @@ async function customize(moduleName) {
 			for (let field of desc.remove) {
 				const regex = new RegExp(' *' + field + '\n');
 				query = query.replace(regex, '');
+				query = query.replace(/ {2}/g, '\t');
 			}
 		}
 		outString += 'export const ' + desc.name + ' = `' + query + '`;\n';
