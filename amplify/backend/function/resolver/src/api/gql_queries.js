@@ -22,7 +22,7 @@ const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
  * @param {*} gql
  * @param {String} operation
  */
-const gqlHelper = async (item, gql, operation) => {
+const gqlHelper = async(item, gql, operation) => {
   const req = new AWS.HttpRequest(APPSYNC_URL, REGION)
   req.method = 'POST'
   req.path = '/graphql'
@@ -71,7 +71,7 @@ module.exports = {
    *  @param {String} username
    *  @param {String} tradeName
    */
-  getUserPermissionsAndTrade: async (username, tradeName) => {
+  getUserPermissionsAndTrade: async(username, tradeName) => {
     console.log('getUserPermissionsAndTrade input: ' + [username, tradeName])
     const query = `query getTradeConnection($tradeName: String!,$username: ModelStringKeyConditionInput!){
       listTradeUserConnectionsByTradeAndUser(tradeName:$tradeName, username: $username) {
@@ -119,18 +119,14 @@ module.exports = {
     return result
   },
 
-  /**
-   * Retrieves input user permissions.
-   * Assumes that the input User only works in *1* office.
-   *
-   * @param {String} username
-   * @param {String} tradeName
-   */
-  getEmployeePermissions: async username => {
-    console.log('getTradeConnectionForUserAndTrade input: ' + username)
-    const query = `query userPermissions($filter: ModelTradeUserConnectionFilterInput!) {
-      listTradeUserConnectionsByUsername(filter: $filter) {
+  getEmployeeTradeConnectionsForTradeName: async tradeName => {
+    console.log('getTradeConnectionForUserAndTrade input: ' + tradeName)
+    const query = `query listTradeUserConnectionsByTradeAndUser($tradeName: String) {
+      listTradeUserConnectionsByTradeAndUser(tradeName: $tradeName, filter: { employeeType: { eq: STANDARD } }) {
         items {
+          id
+          username
+          employeeType
           permissions {
             department
             read
@@ -139,26 +135,45 @@ module.exports = {
         }
       }
     }`
-    const resp = await gqlHelper(
-      {
-        filter: { employeeType: { eq: 'STANDARD' } },
-        username: username,
-      },
-      query,
-      'listTradeUserConnectionsByUsername',
-    )
-    const result = firstOrNull(resp.data.listTradeUserConnectionsByUsername)
+    const resp = await gqlHelper({
+      tradeName: tradeName
+    }, query, 'listTradeUserConnectionsByTradeAndUser')
+    const result = resp.data.listTradeUserConnectionsByTradeAndUser.items
     console.log('getTradeConnectionForUserAndTrade output: ' + JSON.stringify(result))
+    return result
+  },
+
+  getContractorTradeConnectionsForTradeName: async tradeName => {
+    console.log('getContractorTradeConnectionsForTradeName input: ' + tradeName)
+    const query = `query listTradeUserConnectionsByTradeAndUser($tradeName: String) {
+      listTradeUserConnectionsByTradeAndUser(tradeName: $tradeName, filter: { employeeType: { eq: CONTRACTOR } }) {
+        items {
+          id
+          username
+          employeeType
+          permissions {
+            department
+            read
+            write
+          }
+        }
+      }
+    }`
+    const resp = await gqlHelper({
+      tradeName: tradeName
+    }, query, 'listTradeUserConnectionsByTradeAndUser')
+    const result = resp.data.listTradeUserConnectionsByTradeAndUser.items
+    console.log('getContractorTradeConnectionsForTradeName output: ' + JSON.stringify(result))
     return result
   },
 
   /**
    * Get all customers based on input arguments.
    */
-  getCustomers: async item => {
+  listCustomers: async item => {
     console.log('getCustomers input: ' + JSON.stringify(item))
-    const query = `query listCustomers($filter: ModelCustomerFilterInput,$limit: Int,$nextToken: String){
-      listCustomers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    const query = `query listCustomersByTradeName($tradeName: String, $filter: ModelCustomerFilterInput,$limit: Int,$nextToken: String){
+      listCustomersByTradeName(tradeName: $tradeName,filter: $filter, limit: $limit, nextToken: $nextToken) {
         items {
           address
           birthDate
@@ -194,8 +209,8 @@ module.exports = {
         nextToken
       }
     }`
-    const customersResponse = await gqlHelper(item, query, 'listCustomers')
-    const result = customersResponse.listCustomers.items
+    const customersResponse = await gqlHelper(item, query, 'listCustomersByTradeName')
+    const result = customersResponse.data.listCustomersByTradeName.items
     console.log('getCustomers output: ' + JSON.stringify(result))
     return result
   },
@@ -205,10 +220,10 @@ module.exports = {
    *
    * @param {Dict} item
    */
-  getContracts: async item => {
+  listContracts: async item => {
     console.log('getContracts input: ' + JSON.stringify(item))
-    const query = `query listContracts($filter: ModelContractFilterInput, $limit: Int, $nextToken: String){
-      listContracts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    const query = `query listContractsByTradeName($tradeName: String!, $filter: ModelContractFilterInput, $limit: Int, $nextToken: String){
+      listContractsByTradeName(tradeName: $tradeName,filter: $filter, limit: $limit, nextToken: $nextToken) {
         items {
           co_name
           co_TRN
@@ -274,8 +289,8 @@ module.exports = {
         nextToken
       }
     }`
-    const contractsResponse = await gqlHelper(item, query, 'listContracts')
-    const result = contractsResponse.listContracts.items
+    const contractsResponse = await gqlHelper(item, query, 'listContractsByTradeName')
+    const result = contractsResponse.data.listContractsByTradeName.items
     console.log('getContracts output: ' + JSON.stringify(result))
     return result
   },
@@ -391,7 +406,7 @@ module.exports = {
    * @param {String} tradeName
    * @param {Array[Dict<String>]} permissions
    */
-  updateUserPermissions: async (username, tradeName, permissions) => {
+  updateUserPermissions: async(username, tradeName, permissions) => {
     console.log('updateUserPermissions request: ' + [username, tradeName, permissions])
 
     //Get the connection entry

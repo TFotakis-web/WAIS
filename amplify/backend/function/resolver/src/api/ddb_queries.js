@@ -185,10 +185,18 @@ module.exports = {
               Update: {
                 TableName: 'Office' + ddbSuffix,
                 Key: { id: officeId },
-                UpdateExpression: 'REMOVE members[:idx]',
+                UpdateExpression: 'REMOVE #members[:idx] SET #updatedAt = :now SET #employeesNumberLimit = #employeesNumberLimit + :inc',
+                ExpressionAttributeNames: {
+                  '#members': 'members',
+                  '#updatedAt': 'updatedAt',
+                  '#employeesNumberLimit': 'employeesNumberLimit',
+                },
                 ExpressionAttributeValues: {
                   ':idx': memberIndex,
+                  ':inc': 1,
+                  ':now': new Date().toISOString(),
                 },
+                ReturnValues: 'UPDATED_NEW',
               },
             },
           ],
@@ -200,7 +208,6 @@ module.exports = {
       return err
     }
   },
-
   getRequestById: async id => {
     console.log('getRequestById id: ' + id)
     try {
