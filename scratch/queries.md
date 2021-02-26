@@ -208,7 +208,7 @@ The response is:
 }
 ```
 
-# Create and retrieve Customers
+# Create and retrieve Employees
 
 Manage an Employee via manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!) with the following _STRING_ payload.
 Although the JSON version is present here you will need to Stringify this.
