@@ -234,7 +234,30 @@ export const createUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -303,7 +326,30 @@ export const updateUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -372,7 +418,30 @@ export const deleteUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -917,7 +986,13 @@ export const createTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1008,7 +1083,13 @@ export const updateTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1099,7 +1180,13 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1714,7 +1801,13 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1753,7 +1846,13 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1810,7 +1909,13 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1849,7 +1954,13 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1906,7 +2017,13 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1945,7 +2062,13 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }

@@ -111,8 +111,12 @@ type UserProfile
   # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
   tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
 
-  # Access to pending requests with this user as receiver
-  requests: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
+  # Access to requests
+  requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
+  requestsForMe: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
+
+  # Get all clallendar events
+  callendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
 }
 
 type Vehicle

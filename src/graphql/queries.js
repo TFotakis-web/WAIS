@@ -275,7 +275,13 @@ export const listUserProfiles = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -332,7 +338,30 @@ export const getUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -399,7 +428,13 @@ export const listUserProfileByEmail = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -457,7 +492,13 @@ export const listUserProfileByUsername = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1202,7 +1243,13 @@ export const getTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -2611,7 +2658,13 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -2650,7 +2703,13 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }

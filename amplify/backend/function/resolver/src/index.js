@@ -119,13 +119,12 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
-      // return await officeAPI.manageEmployees({
-      //   username: event.identity.claims['cognito:username'],
-      //   office: event.source,
-      //   action: event.arguments.action,
-      //   payload: event.arguments.payload,
-      // })
+      return await officeAPI.manageEmployees({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+      })
     },
     manageContractors: async event => {
       if (!event.identity.claims) {
