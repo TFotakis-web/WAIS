@@ -3,7 +3,90 @@
 
 export const me = /* GraphQL */ `
   query Me {
-    me
+    me {
+      id
+      username
+      email
+      telephone
+      surname
+      name
+      fathers_name
+      address
+      zip_code
+      mobile
+      tin
+      family_name
+      gender
+      birthdate
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
+      files {
+        bucket
+        region
+        key
+        name
+      }
+      createdAt
+      updatedAt
+      tradeCon {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
   }
 `;
 export const listTradeByName = /* GraphQL */ `

@@ -42,17 +42,6 @@ export const updateFields = /* GraphQL */ `
     updateFields(typename: $typename, id: $id, fields: $fields)
   }
 `;
-export const sendMoneyToUserWithUsername = /* GraphQL */ `
-  mutation SendMoneyToUserWithUsername(
-    $receiverUsername: String
-    $amount: Float!
-  ) {
-    sendMoneyToUserWithUsername(
-      receiverUsername: $receiverUsername
-      amount: $amount
-    )
-  }
-`;
 export const sendRequest = /* GraphQL */ `
   mutation SendRequest($requestType: RequestType!, $payload: String!) {
     sendRequest(requestType: $requestType, payload: $payload)
