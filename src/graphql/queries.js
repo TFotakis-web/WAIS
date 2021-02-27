@@ -50,6 +50,21 @@ export const me = /* GraphQL */ `
         }
         nextToken
       }
+      offices {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       callendarEvents {
         items {
           id
@@ -462,6 +477,9 @@ export const listUserProfiles = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -511,6 +529,21 @@ export const getUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       tradeCon {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      offices {
         items {
           id
           tradeId
@@ -614,6 +647,9 @@ export const listUserProfileByEmail = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -676,6 +712,9 @@ export const listUserProfileByUsername = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {
@@ -1427,6 +1466,9 @@ export const getTradeUserConnection = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {
@@ -2783,6 +2825,9 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -2826,6 +2871,9 @@ export const getTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {

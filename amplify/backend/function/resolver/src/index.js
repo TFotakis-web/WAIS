@@ -146,7 +146,14 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return await officeAPI.updateFields({
+        username: event.identity.claims['cognito:username'],
+        email: event.identity.claims['email'],
+        groups: event.identity.groups,
+        typename: event.arguments.typename,
+        id: event.arguments.id,
+        fields: event.arguments.fields,
+      })
     },
     sendRequest: async event => {
       if (!event.identity.claims) {

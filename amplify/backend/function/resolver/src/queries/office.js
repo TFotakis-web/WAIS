@@ -304,6 +304,30 @@ module.exports = {
       }
     }
   },
+
+  updateFields: async input => {
+    //Validate the fields
+    if (!input.fields) {
+      throw new Error(`Empty 'fields' field.`)
+    }
+    if (!input.id) {
+      throw new Error(`Empty 'id' field.`)
+    }
+    if (!input.typename) {
+      throw new Error(`Empty 'typename' field.`)
+    }
+    const fields = JSON.parse(input.fields)
+    const id = input.id
+    const typename = input.typename
+    const userGroups = input.groups || []
+
+    //Update data
+    const defaults = {
+      id: id,
+    }
+    const updateData = { ...defaults, ...fields }
+    return await gqlAPI.updateEntry(updateData, typename)
+  },
 }
 
 //Initialize a REST API call item with the necessary GQL API params (e.g filter,nextToken,...)

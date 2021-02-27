@@ -119,6 +119,9 @@ type UserProfile
 
   # Get all clallendar events
   callendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
+
+  # Access to Office (or Offices iff a Contractor)
+  officeConnections: [TradeUserConnection] @connection(keyName: "byTradeUsername", fields: ["username"])
 }
 
 type Vehicle
