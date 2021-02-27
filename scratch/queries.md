@@ -78,7 +78,7 @@ mutation createAdmin {
 }
 ```
 
-# Create and retrieve Customers
+# Customers CRUD
 
 Manage a customer entry via manageCustomers(action: CustomerResourceAction.CREATE, tradeName: "...", payload: "{}") with the following _STRING_ payload.
 Although the JSON version is present here you will need to Stringify this.
@@ -208,16 +208,16 @@ The response is:
 }
 ```
 
-# Create and retrieve Employees
+# Contractor/Employees CRUD
 
-Manage an Employee via manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!) with the following _STRING_ payload.
+Manage an Employee or a Contractor via manageEmployees/manageContractors(action: EmployeeResourceAction/ContractorResourceAction!, tradeName: String!, payload: String!) with the following _STRING_ payload.
 Although the JSON version is present here you will need to Stringify this.
 
-To update an Employee's permissions send the employee's _ENTIRE_ permission array as a payload with the an action of EmployeeResourceAction.UPDATE_PERMISSIONS.
+To update permissions send the user's _ENTIRE_ permission array as a payload with the an action of UPDATE_PERMISSIONS.
 
 ```json
 {
-  "username": "target_employee_username",
+  "username": "target_username",
   "permissions": [
     {
       "department": "",
@@ -232,6 +232,10 @@ To remove an employee from the office send the following payload with an action 
 
 ```json
 {
-  "username": "target_employee_username"
+  "username": "target_username"
 }
 ```
+
+# Contact CRUD
+# TODO - simillar to Customers
+

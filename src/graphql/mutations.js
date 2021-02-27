@@ -80,10 +80,87 @@ export const createOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
-      customers
-      contracts
-      employees
-      contractors
+      customers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      employees {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractors {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -121,10 +198,87 @@ export const updateOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
-      customers
-      contracts
-      employees
-      contractors
+      customers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      employees {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractors {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -162,10 +316,87 @@ export const deleteOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
-      customers
-      contracts
-      employees
-      contractors
+      customers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      employees {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractors {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -238,7 +469,30 @@ export const createUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -306,7 +560,30 @@ export const updateUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -374,7 +651,30 @@ export const deleteUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      requests {
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
         items {
           id
           senderUsername
@@ -861,10 +1161,18 @@ export const createTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -912,7 +1220,13 @@ export const createTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -952,10 +1266,18 @@ export const updateTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1003,7 +1325,13 @@ export const updateTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1043,10 +1371,18 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1094,7 +1430,13 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1126,10 +1468,18 @@ export const createTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1223,10 +1573,18 @@ export const updateTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1320,10 +1678,18 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1419,10 +1785,18 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1447,10 +1821,18 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1493,10 +1875,18 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1521,10 +1911,18 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1567,10 +1965,18 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1595,10 +2001,18 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1706,7 +2120,13 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1745,7 +2165,13 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1802,7 +2228,13 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1841,7 +2273,13 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1898,7 +2336,13 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }
@@ -1937,7 +2381,13 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        requests {
+        callendarEvents {
+          nextToken
+        }
+        requestsSentByMe {
+          nextToken
+        }
+        requestsForMe {
           nextToken
         }
       }

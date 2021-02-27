@@ -47,12 +47,14 @@ type Office
       ]
     )
 
-  # Retrieve paperwork from these fields
-  # Default limit is 25
-  customers(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
-  contracts(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
-  employees(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
-  contractors(filter: String, limit: Int, nextToken: String): String @function(name: "resolver-${env}")
+  # Retrieve paperwork from these fields, all arguments are optional
+  # Default limit is 100
+  # The ModelTradeUserConnections will not return sensitive data like userId/preferences
+  # The filter arg is a stringified GQL-filter as JSON. e.g "{\"id\": {\"eq\": \"123\"}}"
+  customers(filter: String, limit: Int, nextToken: String): ModelCustomerConnection @function(name: "resolver-${env}")
+  contracts(filter: String, limit: Int, nextToken: String): ModelContractConnection @function(name: "resolver-${env}")
+  employees(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
+  contractors(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
 }
 
 # Office details restricted to office owner and WAIS services
@@ -121,7 +123,12 @@ type UserProfile
 
 type Vehicle
   @model(subscriptions: null)
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [create, read, update, delete] }
+    ]
+  )
   @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
   @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
   id: ID
@@ -338,7 +345,7 @@ type Requests
 # Authentication is performed inside the lambda resolver
 type Query {
   #Utils
-  me: String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   user(username: String!): String
     @function(name: "resolver-${env}")
@@ -371,11 +378,6 @@ type Mutation {
   #          Output -> [{"logo": "true} , {"tin":"false"}]
   updateFields(typename: String!, id: ID!, fields: String): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  # Update user balance
-  sendMoneyToUserWithUsername(receiverUsername: String, amount: Float!): String
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-
   # Request API
   sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
   resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
@@ -394,10 +396,13 @@ enum EmployeeResourceAction {
   REMOVE
 }
 enum ContractorResourceAction {
-  TODO
+  UPDATE_PERMISSIONS
+  REMOVE
 }
 enum ContractResourceAction {
-  TODO
+  CREATE
+  UPDATE
+  DELETE
 }
 
 enum RequestType {
@@ -411,14 +416,6 @@ enum RequestType {
 enum EmployeeAction {
   UPDATE_PERMISSIONS # Overwrites the user's permissions iff they exist in the 'members' field
   REMOVE # Remove user, permissions field is ignored and thus can be omitted
-}
-
-# Standard CRUD general purpose enum
-enum CRUD_ACTION {
-  CREATE
-  REMOVE
-  UPDATE
-  DELETE
 }
 
 #Add all department-specific
@@ -462,21 +459,19 @@ type Value {
   Name: String!
   Value: String
 }
-type MFAOption {
-  DeliveryMedium: String
-  AttributeName: String
-}
-enum UserStatus {
-  UNCONFIRMED
-  CONFIRMED
-  ARCHIVED
-  COMPROMISED
-  UNKNOWN
-  RESET_REQUIRED
-  FORCE_CHANGE_PASSWORD
+
+#### Should be AUTO-GENERATED #####
+type ModelCustomerConnection {
+  items: [Customer]
+  nextToken: String
 }
 
-enum ConnectionStatus {
-  ACCEPTED
-  REJECTED
+type ModelContractConnection {
+  items: [Contract]
+  nextToken: String
+}
+
+type ModelTradeUserConnectionConnection {
+  items: [TradeUserConnection]
+  nextToken: String
 }
