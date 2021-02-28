@@ -22,10 +22,10 @@ export const auth = {
 			state.userProfile = payload;
 		},
 		pushRequestsSentByMe(state, payload) {
-			state.userProfile.requestsSentByMe.push(payload);
+			state.userProfile.requestsSentByMe.items.push(payload);
 		},
 		pushRequestsForMe(state, payload) {
-			state.userProfile.requestsForMe.push(payload);
+			state.userProfile.requestsForMe.items.push(payload);
 		}
 	},
 	actions: {
