@@ -1,5 +1,6 @@
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { listUserProfileByUsername } from '@/graphql/custom-queries';
+// import { listUserProfileByUsername } from '@/graphql/custom-queries';
+import { me } from '@/graphql/custom-queries';
 import { updateUserProfile } from '@/graphql/custom-mutations';
 import router from '@/router';
 
@@ -188,12 +189,15 @@ export const auth = {
 					});
 			});
 		},
-		loadUserProfile({ commit, getters }) {
+		loadUserProfile({ commit }) {
+		// loadUserProfile({ commit, getters }) {
 			return new Promise((resolve, reject) => {
 				commit('increaseGlobalPendingPromises', null, { root: true });
-				API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
+				API.graphql(graphqlOperation(me))
+				// API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
 					.then((response) => {
-						let userProfile = response.data.listUserProfileByUsername.items[0];
+						let userProfile = response.data.me;
+						// let userProfile = response.data.listUserProfileByUsername.items[0];
 						// Todo: Remove when backend is correct
 						userProfile.permissions = {
 							'Home': {
