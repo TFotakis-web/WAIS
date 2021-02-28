@@ -164,6 +164,25 @@ export const createOffice = /* GraphQL */ `
         }
         nextToken
       }
+      partnerOffices {
+        items {
+          id
+          tradeName
+          ownerUsername
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          partnersNumberLimit
+          employeesNumberLimit
+          verified
+          createdAt
+          updatedAt
+          members
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -181,6 +200,57 @@ export const createOffice = /* GraphQL */ `
         }
       }
       members
+      officeContracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      officeCustomers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       companyConnections {
         items {
           id
@@ -296,6 +366,25 @@ export const updateOffice = /* GraphQL */ `
         }
         nextToken
       }
+      partnerOffices {
+        items {
+          id
+          tradeName
+          ownerUsername
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          partnersNumberLimit
+          employeesNumberLimit
+          verified
+          createdAt
+          updatedAt
+          members
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -313,6 +402,57 @@ export const updateOffice = /* GraphQL */ `
         }
       }
       members
+      officeContracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      officeCustomers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       companyConnections {
         items {
           id
@@ -428,6 +568,25 @@ export const deleteOffice = /* GraphQL */ `
         }
         nextToken
       }
+      partnerOffices {
+        items {
+          id
+          tradeName
+          ownerUsername
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          partnersNumberLimit
+          employeesNumberLimit
+          verified
+          createdAt
+          updatedAt
+          members
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -445,6 +604,57 @@ export const deleteOffice = /* GraphQL */ `
         }
       }
       members
+      officeContracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      officeCustomers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       companyConnections {
         items {
           id
@@ -1263,6 +1473,9 @@ export const createTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1274,6 +1487,12 @@ export const createTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1374,6 +1593,9 @@ export const updateTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1385,6 +1607,12 @@ export const updateTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1485,6 +1713,9 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1496,6 +1727,12 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1588,6 +1825,9 @@ export const createTradeContractConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1599,6 +1839,12 @@ export const createTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1696,6 +1942,9 @@ export const updateTradeContractConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1707,6 +1956,12 @@ export const updateTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1804,6 +2059,9 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1815,6 +2073,12 @@ export const deleteTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1914,6 +2178,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1925,6 +2192,12 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1953,6 +2226,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1964,6 +2240,12 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2010,6 +2292,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2021,6 +2306,12 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2049,6 +2340,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2060,6 +2354,12 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2106,6 +2406,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2117,6 +2420,12 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2145,6 +2454,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2156,6 +2468,12 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }

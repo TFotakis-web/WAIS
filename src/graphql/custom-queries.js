@@ -44,6 +44,9 @@ export const getCompanyAccessConnection = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -55,6 +58,15 @@ export const getCompanyAccessConnection = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			to {
 				id
@@ -80,6 +92,9 @@ export const getCompanyAccessConnection = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -91,6 +106,15 @@ export const getCompanyAccessConnection = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 		}
 	}
@@ -295,6 +319,25 @@ export const getOffice = `
 				}
 				nextToken
 			}
+			partnerOffices {
+				items {
+					id
+					tradeName
+					ownerUsername
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					partnersNumberLimit
+					employeesNumberLimit
+					verified
+					createdAt
+					updatedAt
+					members
+				}
+				nextToken
+			}
 			createdAt
 			updatedAt
 			privateData {
@@ -312,6 +355,71 @@ export const getOffice = `
 				}
 			}
 			members
+			officeContracts {
+				items {
+					id
+					contractId
+					version
+					vehicleNumberPlate
+					vehicleId
+					voucherId
+					customerId
+					tradeName
+					second_tradeId
+					contractorId
+					co_name
+					co_TRN
+					contractState
+					insuranceClass
+					insuranceCoverage
+					insuranceUsage
+					duration
+					startDate
+					endDate
+					data
+					discount
+					jointWorth
+					netWorth
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			officeCustomers {
+				items {
+					id
+					tin
+					tradeName
+					firstName
+					lastName
+					fathersName
+					birthDate
+					gender
+					email
+					mobile
+					postcode
+					doy
+					address
+					familyStatus
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			companyConnections {
+				items {
+					id
+					fromId
+					fromTradeName
+					toId
+					toTradeName
+					expirationDate
+					message
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
 		}
 	}
 `;
@@ -363,6 +471,9 @@ export const getTradeContractConnection = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -374,6 +485,15 @@ export const getTradeContractConnection = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			contract {
 				id
@@ -473,6 +593,9 @@ export const getTradeUserConnection = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -484,6 +607,15 @@ export const getTradeUserConnection = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			user {
 				id
@@ -1512,6 +1644,9 @@ export const listOffices = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1523,6 +1658,15 @@ export const listOffices = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			nextToken
 		}
@@ -1648,6 +1792,9 @@ export const listTradeByName = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1659,6 +1806,15 @@ export const listTradeByName = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			nextToken
 		}
@@ -1703,6 +1859,9 @@ export const listTradeByOfficeEmail = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1714,6 +1873,15 @@ export const listTradeByOfficeEmail = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			nextToken
 		}
@@ -1760,6 +1928,9 @@ export const listTradeByOwnerUsername = `
 				contractors {
 					nextToken
 				}
+				partnerOffices {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1771,6 +1942,15 @@ export const listTradeByOwnerUsername = `
 					bankAccountInfo
 				}
 				members
+				officeContracts {
+					nextToken
+				}
+				officeCustomers {
+					nextToken
+				}
+				companyConnections {
+					nextToken
+				}
 			}
 			nextToken
 		}
@@ -3207,7 +3387,105 @@ export const me = `
 `;
 export const user = `
 	query User($username: String!) {
-		user(username: $username)
+		user(username: $username) {
+			id
+			username
+			email
+			telephone
+			surname
+			name
+			fathers_name
+			address
+			zip_code
+			mobile
+			tin
+			family_name
+			gender
+			birthdate
+			city
+			profilePicture {
+				bucket
+				region
+				key
+				name
+			}
+			preferences
+			locale
+			files {
+				bucket
+				region
+				key
+				name
+			}
+			createdAt
+			updatedAt
+			tradeCon {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			officeConnections {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			callendarEvents {
+				items {
+					id
+					username
+					createdAt
+					payload
+					updatedAt
+				}
+				nextToken
+			}
+			requestsSentByMe {
+				items {
+					id
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			requestsForMe {
+				items {
+					id
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+		}
 	}
 `;
 
