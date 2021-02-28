@@ -803,7 +803,7 @@ module.exports = {
     //Update the connection's permissions
     const response = await gqlHelper({ input: data }, query, `update${typename}`)
     const result = response.data[`update${typename}`]
-    console.log('deleteContract output: ' + JSON.stringify(result))
+    console.log('updateEntry output: ' + JSON.stringify(result))
     return result
   },
 }
