@@ -134,7 +134,7 @@
 	</mdb-container>
 </template>
 <script>
-	import { mapActions } from 'vuex';
+	import { mapActions, mapMutations } from 'vuex';
 	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
@@ -168,6 +168,7 @@
 					condition: false,
 					files: []
 				},
+				request: {},
 				files: [],
 				loading: false,
 				error: {
@@ -176,34 +177,53 @@
 			}
 		},
 		mounted() {
-			this.listRequestsBySenderEmail()
-				.then(() => {
-					const request = this.$store.getters['request/requests'][0];
-					this.form.id = request.id;
-					const payload = JSON.parse(request.payload);
-					Object.assign(this.form, payload);
-				});
+			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items;
+			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === "CREATE_TRADE");
+			if (requestsForNewTrade.length) {
+				this.request = requestsForNewTrade[0];
+				const payload = JSON.parse(this.request.payload);
+				Object.assign(this.form, payload);
+			}
 		},
 		methods: {
 			...mapActions('auth', ['signOut']),
-			...mapActions('request', ['sendRequest', 'listRequestsBySenderEmail']),
+			...mapActions('request', ['sendRequest', 'updateRequest', 'getRequest']),
+			...mapMutations('request', ['pushRequest']),
+			...mapMutations('auth', ['pushRequestsSentByMe']),
 			async save() {
 				this.loading = true;
 				try {
-					for (const i in this.form.files) {
-						const response = await Storage.put(this.form.files[i].name, this.form.files[i].data, {
+					for (const i in this.files) {
+						const response = await Storage.put(this.files[i].name, this.files[i].data, {
 							level: 'private',
-							contentType: this.form.files[i].type,
+							contentType: this.files[i].type,
 						});
 						this.form.files[i] = `private/${this.$store.getters['auth/user'].id}/${response.key}`;
 					}
-
-					await this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form });
-					this.loading = false;
-					console.log(this.form);
 				} catch (error) {
-					this.loading = false;
 					console.error(error);
+				}
+
+				if (Object.keys(this.request).length === 0) {
+					this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form })
+						.then((res) => {
+							this.$notifyAction.saveSuccess();
+							this.getRequest(res.id)
+							.then((res) => {
+								this.pushRequest(res);
+								this.pushRequestsSentByMe(res);
+								console.log(res);
+								this.request = res;
+							})
+						})
+						.catch((error) => console.error(error))
+						.finally(() => this.loading = false);
+				} else {
+					this.request.payload = JSON.stringify(this.form);
+					this.updateRequest({ request: this.request })
+						.then(() => this.$notifyAction.saveSuccess())
+						.catch((error) => console.error(error))
+						.finally(() => this.loading = false);
 				}
 			},
 			async getFileInputValue(fileInput, filename) {
@@ -224,25 +244,11 @@
 					} else {
 						name = file.name;
 					}
-					this.form.files.push({ name, data, type: file.type });
+					this.files.push({ name, data, type: file.type });
 				}
 			},
-			// Todo: Remove redundant methods
-			listPublic() {
-				Storage.list('') // for listing ALL files without prefix, pass '' instead
-					.then((result) => console.log(result))
-					.catch((err) => console.log(err));
-			},
-			listProtected() {
-				Storage.list('', { level: 'protected' }) // for listing ALL files without prefix, pass '' instead
-					.then((result) => console.log(result))
-					.catch((err) => console.log(err));
-			},
-			listPrivate() {
-				Storage.list('', { level: 'private' })
-					.then((result) => console.log(result))
-					.catch((err) => console.log(err));
-			},
-		},
-	};
+		}
+		,
+	}
+	;
 </script>
