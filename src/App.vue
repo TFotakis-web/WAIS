@@ -10,8 +10,9 @@
 			</mdb-row>
 		</mdb-container>
 		<template v-else-if="$store.getters.globalPendingPromises === 0">
-			<tradeCreationForm v-if="$store.getters['auth/userProfile'].tradeCon.items === undefined" />
+			<tradeCreationForm v-if="$store.getters['auth/userProfile'].tradeCon.items === undefined || $store.getters['auth/userProfile'].tradeCon.items.length === 0" />
 			<navigation v-else />
+<!--			<navigation/>-->
 		</template>
 	</div>
 </template>
