@@ -1,15 +1,20 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { getRequestsSimple, listRequestsByReceiverEmailSimple, listRequestsBySenderEmailSimple, listRequestssSimple } from '@/graphql/custom-queries';
 import { sendRequest } from '@/graphql/custom-mutations';
+import { updateRequests } from '@/graphql/custom-mutations';
+// import { updateFields } from '@/graphql/custom-mutations';
 
 export const request = {
 	namespaced: true,
 	state: {
-		requests: null,
+		requests: [],
 	},
 	mutations: {
 		setRequests(state, payload) {
 			state.requests = payload;
+		},
+		pushRequest(state, payload) {
+			state.requests.push(payload);
 		}
 	},
 	actions: {
@@ -17,7 +22,7 @@ export const request = {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(getRequestsSimple, { id: id }))
 					.then((response) => {
-						resolve(response.data.getRequest);
+						resolve(response.data.getRequests);
 					})
 					.catch((error) => {
 						console.error(error);
@@ -71,7 +76,24 @@ export const request = {
 				payload = JSON.stringify(payload);
 				API.graphql(graphqlOperation(sendRequest, { requestType, payload }))
 					.then((response) => {
-						resolve(response.data.sendRequest);
+						response = JSON.parse(response.data.sendRequest);
+						resolve(response);
+					})
+					.catch((error) => {
+						console.error(error);
+						reject(error);
+					});
+			});
+		},
+		updateRequest(_, { request }) {
+			delete request.createdAt;
+			delete request.updatedAt;
+			return new Promise((resolve, reject) => {
+				API.graphql(graphqlOperation(updateRequests, { input: request }))
+				// Todo: Check if ok to use that
+				// API.graphql(graphqlOperation(updateFields, { typename: 'Requests', id: request.id, fields: request }))
+					.then((response) => {
+						resolve(response.data.updateFields);
 					})
 					.catch((error) => {
 						console.error(error);
