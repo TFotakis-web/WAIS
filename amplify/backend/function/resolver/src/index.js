@@ -113,7 +113,12 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return await officeAPI.manageContracts({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+      })
     },
     manageEmployees: async event => {
       if (!event.identity.claims) {
@@ -130,16 +135,25 @@ const resolvers = {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
+      return await officeAPI.manageContractors({
+        username: event.identity.claims['cognito:username'],
+        office: event.source,
+        action: event.arguments.action,
+        payload: event.arguments.payload,
+      })
     },
     updateFields: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return {}
-    },
-    sendMoneyToUserWithUsername: async event => {
-      throw new Error('Not implemented yet.')
+      return await officeAPI.updateFields({
+        username: event.identity.claims['cognito:username'],
+        email: event.identity.claims['email'],
+        groups: event.identity.groups,
+        typename: event.arguments.typename,
+        id: event.arguments.id,
+        fields: event.arguments.fields,
+      })
     },
     sendRequest: async event => {
       if (!event.identity.claims) {

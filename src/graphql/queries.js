@@ -3,7 +3,105 @@
 
 export const me = /* GraphQL */ `
   query Me {
-    me
+    me {
+      id
+      username
+      email
+      telephone
+      surname
+      name
+      fathers_name
+      address
+      zip_code
+      mobile
+      tin
+      family_name
+      gender
+      birthdate
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
+      files {
+        bucket
+        region
+        key
+        name
+      }
+      createdAt
+      updatedAt
+      tradeCon {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      offices {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
   }
 `;
 export const echo = /* GraphQL */ `
@@ -40,10 +138,18 @@ export const listTradeByName = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -87,10 +193,18 @@ export const listTradeByOfficeEmail = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -136,10 +250,18 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -170,10 +292,87 @@ export const getOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
-      customers
-      contracts
-      employees
-      contractors
+      customers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      employees {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      contractors {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -213,10 +412,18 @@ export const listOffices = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -275,6 +482,9 @@ export const listUserProfiles = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -324,6 +534,21 @@ export const getUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       tradeCon {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      offices {
         items {
           id
           tradeId
@@ -428,6 +653,9 @@ export const listUserProfileByEmail = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -490,6 +718,9 @@ export const listUserProfileByUsername = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {
@@ -1192,10 +1423,18 @@ export const getTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1241,6 +1480,9 @@ export const getTradeUserConnection = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {
@@ -1295,10 +1537,6 @@ export const listTradeUserConnections = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1374,10 +1612,6 @@ export const listTradeUserConnectionsByTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1453,10 +1687,6 @@ export const listTradeUserConnectionsByEmployeeType = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1532,10 +1762,6 @@ export const listTradeUserConnectionsByUserId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1611,10 +1837,6 @@ export const listTradeUserConnectionsByTradeAndUser = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1690,10 +1912,6 @@ export const listTradeUserConnectionsByUsername = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1746,10 +1964,18 @@ export const getTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1850,10 +2076,6 @@ export const listTradeContractConnections = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -1928,10 +2150,6 @@ export const listTradeContractConnectionByTradeId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2006,10 +2224,6 @@ export const listTradeContractConnectionByTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2084,10 +2298,6 @@ export const listTradeContractConnectionByContractId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2149,10 +2359,18 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2177,10 +2395,18 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers
-        contracts
-        employees
-        contractors
+        customers {
+          nextToken
+        }
+        contracts {
+          nextToken
+        }
+        employees {
+          nextToken
+        }
+        contractors {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2229,10 +2455,6 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2249,10 +2471,6 @@ export const listCompanyAccessConnections = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2301,10 +2519,6 @@ export const listCompanyAccessConnectionByFromId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2321,10 +2535,6 @@ export const listCompanyAccessConnectionByFromId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2373,10 +2583,6 @@ export const listCompanyAccessConnectionByToId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2393,10 +2599,6 @@ export const listCompanyAccessConnectionByToId = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2445,10 +2647,6 @@ export const listCompanyAccessConnectionByFromTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2465,10 +2663,6 @@ export const listCompanyAccessConnectionByFromTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2517,10 +2711,6 @@ export const listCompanyAccessConnectionByToTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2537,10 +2727,6 @@ export const listCompanyAccessConnectionByToTradeName = /* GraphQL */ `
           partnersNumberLimit
           employeesNumberLimit
           verified
-          customers
-          contracts
-          employees
-          contractors
           createdAt
           updatedAt
           members
@@ -2658,6 +2844,9 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
+        offices {
+          nextToken
+        }
         callendarEvents {
           nextToken
         }
@@ -2701,6 +2890,9 @@ export const getTransactionHistory = /* GraphQL */ `
         createdAt
         updatedAt
         tradeCon {
+          nextToken
+        }
+        offices {
           nextToken
         }
         callendarEvents {
