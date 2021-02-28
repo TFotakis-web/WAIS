@@ -792,4 +792,18 @@ module.exports = {
     console.log('getCompanyConnectionBetweenTwoOffices output: ' + JSON.stringify(result))
     return result
   },
+
+  updateEntry: async (data, typename) => {
+    console.log('updateEntry input: ' + JSON.stringify(data, typename))
+    const query = `mutation update${typename}($input: Update${typename}Input!) {
+      update${typename}(input: $input) {
+        id
+      }
+    }`
+    //Update the connection's permissions
+    const response = await gqlHelper({ input: data }, query, `update${typename}`)
+    const result = response.data[`update${typename}`]
+    console.log('deleteContract output: ' + JSON.stringify(result))
+    return result
+  },
 }
