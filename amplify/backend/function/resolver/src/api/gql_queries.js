@@ -748,17 +748,48 @@ module.exports = {
     return result
   },
 
-  updateEntry: async (data, typename) => {
-    console.log('updateEntry input: ' + JSON.stringify(data, typename))
-    const query = `mutation update${typename}($input: Update${typename}Input!) {
-      update${typename}(input: $input) {
-        id
+  listOfficePartners: async item => {
+    console.log('listOfficePartners input: ' + JSON.stringify(item))
+    const query = `query listOfficePartners($tradeName: String, $filter: ModelCompanyAccessConnectionFilterInput, $limit: Int, $nextToken: String) {
+      listTradeByName(tradeName: $tradeName){
+        items{
+          companyConnections(filter:$filter ,limit: $limit, nextToken: $nextToken){
+            items{
+              to{
+                id
+                tradeName
+              }
+            }
+            nextToken
+          }
+        }
       }
     }`
-    //Update the connection's permissions
-    const response = await gqlHelper({ input: data }, query, `update${typename}`)
-    const result = response.data[`update${typename}`]
-    console.log('deleteContract output: ' + JSON.stringify(result))
+    const response = await gqlHelper(item, query, 'listOfficePartners')
+    const result = response.data.listTradeByName.items[0].companyConnections
+    console.log('listOfficePartners output: ' + JSON.stringify(result))
+    return result
+  },
+
+  getCompanyConnectionBetweenTwoOffices: async (tradeNameFrom, tradeNameTo) => {
+    console.log('listOfficePartners input: ' + [tradeNameFrom, tradeNameTo])
+    const query = `query listCompanyAccessConnectionByFromTradeName {
+      listCompanyAccessConnectionByFromTradeName(fromTradeName: "${tradeNameFrom}", toTradeName: {eq: "${tradeNameTo}"}) {
+        items {
+          from {
+            id
+            tradeName
+          }
+          to {
+            id
+            tradeName
+          }
+        }
+      }
+    }`
+    const response = await gqlHelper({}, query, 'listCompanyAccessConnectionByFromTradeName')
+    const result = response.data.listCompanyAccessConnectionByFromTradeName.items
+    console.log('getCompanyConnectionBetweenTwoOffices output: ' + JSON.stringify(result))
     return result
   },
 }
