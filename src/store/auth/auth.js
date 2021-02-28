@@ -20,6 +20,12 @@ export const auth = {
 		},
 		setUserProfile(state, payload) {
 			state.userProfile = payload;
+		},
+		pushRequestsSentByMe(state, payload) {
+			state.userProfile.requestsSentByMe.push(payload);
+		},
+		pushRequestsForMe(state, payload) {
+			state.userProfile.requestsForMe.push(payload);
 		}
 	},
 	actions: {
