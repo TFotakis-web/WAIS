@@ -32,10 +32,18 @@ export const getCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -60,10 +68,18 @@ export const getCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -99,7 +115,6 @@ export const getContract = `
 			insuranceCoverage
 			insuranceUsage
 			duration
-			creationDate
 			startDate
 			endDate
 			data
@@ -165,7 +180,6 @@ export const getCustomer = `
 			doy
 			address
 			familyStatus
-			creationDate
 			files {
 				bucket
 				region
@@ -200,10 +214,87 @@ export const getOffice = `
 			partnersNumberLimit
 			employeesNumberLimit
 			verified
-			customers
-			contracts
-			employees
-			contractors
+			customers {
+				items {
+					id
+					tin
+					tradeName
+					firstName
+					lastName
+					fathersName
+					birthDate
+					gender
+					email
+					mobile
+					postcode
+					doy
+					address
+					familyStatus
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			contracts {
+				items {
+					id
+					contractId
+					version
+					vehicleNumberPlate
+					vehicleId
+					voucherId
+					customerId
+					tradeName
+					second_tradeId
+					contractorId
+					co_name
+					co_TRN
+					contractState
+					insuranceClass
+					insuranceCoverage
+					insuranceUsage
+					duration
+					startDate
+					endDate
+					data
+					discount
+					jointWorth
+					netWorth
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			employees {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			contractors {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
 			createdAt
 			updatedAt
 			privateData {
@@ -235,7 +326,6 @@ export const getRequests = `
 			payload
 			createdAt
 			updatedAt
-			metadata
 		}
 	}
 `;
@@ -261,10 +351,18 @@ export const getTradeContractConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -295,7 +393,6 @@ export const getTradeContractConnection = `
 				insuranceCoverage
 				insuranceUsage
 				duration
-				creationDate
 				startDate
 				endDate
 				data
@@ -364,10 +461,18 @@ export const getTradeUserConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -415,7 +520,16 @@ export const getTradeUserConnection = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -469,7 +583,16 @@ export const getTransactionHistory = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -508,7 +631,16 @@ export const getTransactionHistory = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -575,7 +707,32 @@ export const getUserProfile = `
 				}
 				nextToken
 			}
-			requests {
+			officeConnections {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			callendarEvents {
+				items {
+					id
+					username
+					createdAt
+					payload
+					updatedAt
+				}
+				nextToken
+			}
+			requestsSentByMe {
 				items {
 					id
 					senderUsername
@@ -585,7 +742,19 @@ export const getUserProfile = `
 					payload
 					createdAt
 					updatedAt
-					metadata
+				}
+				nextToken
+			}
+			requestsForMe {
+				items {
+					id
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload
+					createdAt
+					updatedAt
 				}
 				nextToken
 			}
@@ -663,10 +832,6 @@ export const listCompanyAccessConnectionByFromId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -683,10 +848,6 @@ export const listCompanyAccessConnectionByFromId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -735,10 +896,6 @@ export const listCompanyAccessConnectionByFromTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -755,10 +912,6 @@ export const listCompanyAccessConnectionByFromTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -807,10 +960,6 @@ export const listCompanyAccessConnectionByToId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -827,10 +976,6 @@ export const listCompanyAccessConnectionByToId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -879,10 +1024,6 @@ export const listCompanyAccessConnectionByToTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -899,10 +1040,6 @@ export const listCompanyAccessConnectionByToTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -945,10 +1082,6 @@ export const listCompanyAccessConnections = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -965,10 +1098,6 @@ export const listCompanyAccessConnections = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -1003,7 +1132,6 @@ export const listContracts = `
 				insuranceCoverage
 				insuranceUsage
 				duration
-				creationDate
 				startDate
 				endDate
 				data
@@ -1078,7 +1206,6 @@ export const listContractsByCustomerId = `
 				insuranceCoverage
 				insuranceUsage
 				duration
-				creationDate
 				startDate
 				endDate
 				data
@@ -1153,7 +1280,6 @@ export const listContractsByTradeName = `
 				insuranceCoverage
 				insuranceUsage
 				duration
-				creationDate
 				startDate
 				endDate
 				data
@@ -1228,7 +1354,6 @@ export const listContractsByVehicleNumberPlates = `
 				insuranceCoverage
 				insuranceUsage
 				duration
-				creationDate
 				startDate
 				endDate
 				data
@@ -1290,7 +1415,6 @@ export const listCustomers = `
 				doy
 				address
 				familyStatus
-				creationDate
 				files {
 					bucket
 					region
@@ -1340,7 +1464,6 @@ export const listCustomersByTradeName = `
 				doy
 				address
 				familyStatus
-				creationDate
 				files {
 					bucket
 					region
@@ -1377,10 +1500,18 @@ export const listOffices = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1421,7 +1552,6 @@ export const listRequestsByReceiverEmail = `
 				payload
 				createdAt
 				updatedAt
-				metadata
 			}
 			nextToken
 		}
@@ -1451,7 +1581,6 @@ export const listRequestsBySenderEmail = `
 				payload
 				createdAt
 				updatedAt
-				metadata
 			}
 			nextToken
 		}
@@ -1473,7 +1602,6 @@ export const listRequestss = `
 				payload
 				createdAt
 				updatedAt
-				metadata
 			}
 			nextToken
 		}
@@ -1508,10 +1636,18 @@ export const listTradeByName = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1555,10 +1691,18 @@ export const listTradeByOfficeEmail = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1604,10 +1748,18 @@ export const listTradeByOwnerUsername = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers
-				contracts
-				employees
-				contractors
+				customers {
+					nextToken
+				}
+				contracts {
+					nextToken
+				}
+				employees {
+					nextToken
+				}
+				contractors {
+					nextToken
+				}
 				createdAt
 				updatedAt
 				privateData {
@@ -1661,10 +1813,6 @@ export const listTradeContractConnectionByContractId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -1687,7 +1835,6 @@ export const listTradeContractConnectionByContractId = `
 					insuranceCoverage
 					insuranceUsage
 					duration
-					creationDate
 					startDate
 					endDate
 					data
@@ -1739,10 +1886,6 @@ export const listTradeContractConnectionByTradeId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -1765,7 +1908,6 @@ export const listTradeContractConnectionByTradeId = `
 					insuranceCoverage
 					insuranceUsage
 					duration
-					creationDate
 					startDate
 					endDate
 					data
@@ -1817,10 +1959,6 @@ export const listTradeContractConnectionByTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -1843,7 +1981,6 @@ export const listTradeContractConnectionByTradeName = `
 					insuranceCoverage
 					insuranceUsage
 					duration
-					creationDate
 					startDate
 					endDate
 					data
@@ -1889,10 +2026,6 @@ export const listTradeContractConnections = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -1915,7 +2048,6 @@ export const listTradeContractConnections = `
 					insuranceCoverage
 					insuranceUsage
 					duration
-					creationDate
 					startDate
 					endDate
 					data
@@ -1969,10 +2101,6 @@ export const listTradeUserConnections = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2048,10 +2176,6 @@ export const listTradeUserConnectionsByEmployeeType = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2127,10 +2251,6 @@ export const listTradeUserConnectionsByTradeAndUser = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2206,10 +2326,6 @@ export const listTradeUserConnectionsByTradeName = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2285,10 +2401,6 @@ export const listTradeUserConnectionsByUserId = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2364,10 +2476,6 @@ export const listTradeUserConnectionsByUsername = `
 					partnersNumberLimit
 					employeesNumberLimit
 					verified
-					customers
-					contracts
-					employees
-					contractors
 					createdAt
 					updatedAt
 					members
@@ -2714,7 +2822,16 @@ export const listUserProfileByEmail = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -2772,7 +2889,16 @@ export const listUserProfileByUsername = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -2822,7 +2948,16 @@ export const listUserProfiles = `
 				tradeCon {
 					nextToken
 				}
-				requests {
+				officeConnections {
+					nextToken
+				}
+				callendarEvents {
+					nextToken
+				}
+				requestsSentByMe {
+					nextToken
+				}
+				requestsForMe {
 					nextToken
 				}
 			}
@@ -2969,7 +3104,105 @@ export const listVehiclesByTradeName = `
 `;
 export const me = `
 	query Me {
-		me
+		me {
+			id
+			username
+			email
+			telephone
+			surname
+			name
+			fathers_name
+			address
+			zip_code
+			mobile
+			tin
+			family_name
+			gender
+			birthdate
+			city
+			profilePicture {
+				bucket
+				region
+				key
+				name
+			}
+			preferences
+			locale
+			files {
+				bucket
+				region
+				key
+				name
+			}
+			createdAt
+			updatedAt
+			tradeCon {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			officeConnections {
+				items {
+					id
+					tradeId
+					tradeName
+					userId
+					username
+					employeeType
+					preferences
+					members
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			callendarEvents {
+				items {
+					id
+					username
+					createdAt
+					payload
+					updatedAt
+				}
+				nextToken
+			}
+			requestsSentByMe {
+				items {
+					id
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+			requestsForMe {
+				items {
+					id
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload
+					createdAt
+					updatedAt
+				}
+				nextToken
+			}
+		}
 	}
 `;
 export const user = `

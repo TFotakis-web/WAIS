@@ -50,7 +50,7 @@ export const me = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -102,11 +102,6 @@ export const me = /* GraphQL */ `
         nextToken
       }
     }
-  }
-`;
-export const echo = /* GraphQL */ `
-  query Echo($msg: String!) {
-    echo(msg: $msg)
   }
 `;
 export const listTradeByName = /* GraphQL */ `
@@ -482,7 +477,7 @@ export const listUserProfiles = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -548,7 +543,7 @@ export const getUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -596,7 +591,6 @@ export const getUserProfile = /* GraphQL */ `
           payload
           createdAt
           updatedAt
-          metadata
         }
         nextToken
       }
@@ -653,7 +647,7 @@ export const listUserProfileByEmail = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -720,7 +714,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -931,7 +925,6 @@ export const listContracts = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -991,7 +984,6 @@ export const getContract = /* GraphQL */ `
       insuranceCoverage
       insuranceUsage
       duration
-      creationDate
       startDate
       endDate
       data
@@ -1075,7 +1067,6 @@ export const listContractsByTradeName = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -1150,7 +1141,6 @@ export const listContractsByVehicleNumberPlates = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -1225,7 +1215,6 @@ export const listContractsByCustomerId = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -1282,7 +1271,6 @@ export const getCustomer = /* GraphQL */ `
       doy
       address
       familyStatus
-      creationDate
       files {
         bucket
         region
@@ -1325,7 +1313,6 @@ export const listCustomers = /* GraphQL */ `
         doy
         address
         familyStatus
-        creationDate
         files {
           bucket
           region
@@ -1375,7 +1362,6 @@ export const listCustomersByTradeName = /* GraphQL */ `
         doy
         address
         familyStatus
-        creationDate
         files {
           bucket
           region
@@ -1482,7 +1468,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2006,7 +1992,6 @@ export const getTradeContractConnection = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -2098,7 +2083,6 @@ export const listTradeContractConnections = /* GraphQL */ `
           insuranceCoverage
           insuranceUsage
           duration
-          creationDate
           startDate
           endDate
           data
@@ -2172,7 +2156,6 @@ export const listTradeContractConnectionByTradeId = /* GraphQL */ `
           insuranceCoverage
           insuranceUsage
           duration
-          creationDate
           startDate
           endDate
           data
@@ -2246,7 +2229,6 @@ export const listTradeContractConnectionByTradeName = /* GraphQL */ `
           insuranceCoverage
           insuranceUsage
           duration
-          creationDate
           startDate
           endDate
           data
@@ -2320,7 +2302,6 @@ export const listTradeContractConnectionByContractId = /* GraphQL */ `
           insuranceCoverage
           insuranceUsage
           duration
-          creationDate
           startDate
           endDate
           data
@@ -2844,7 +2825,7 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2892,7 +2873,7 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -3124,6 +3105,41 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
     }
   }
 `;
+export const getRequests = /* GraphQL */ `
+  query GetRequests($id: ID!) {
+    getRequests(id: $id) {
+      id
+      senderUsername
+      senderEmail
+      receiverEmail
+      type
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRequestss = /* GraphQL */ `
+  query ListRequestss(
+    $filter: ModelRequestsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        senderUsername
+        senderEmail
+        receiverEmail
+        type
+        payload
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listRequestsBySenderEmail = /* GraphQL */ `
   query ListRequestsBySenderEmail(
     $senderEmail: String
@@ -3148,7 +3164,6 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
         payload
         createdAt
         updatedAt
-        metadata
       }
       nextToken
     }
@@ -3178,44 +3193,6 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
         payload
         createdAt
         updatedAt
-        metadata
-      }
-      nextToken
-    }
-  }
-`;
-export const getRequests = /* GraphQL */ `
-  query GetRequests($id: ID!) {
-    getRequests(id: $id) {
-      id
-      senderUsername
-      senderEmail
-      receiverEmail
-      type
-      payload
-      createdAt
-      updatedAt
-      metadata
-    }
-  }
-`;
-export const listRequestss = /* GraphQL */ `
-  query ListRequestss(
-    $filter: ModelRequestsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        senderUsername
-        senderEmail
-        receiverEmail
-        type
-        payload
-        createdAt
-        updatedAt
-        metadata
       }
       nextToken
     }
@@ -3224,5 +3201,10 @@ export const listRequestss = /* GraphQL */ `
 export const user = /* GraphQL */ `
   query User($username: String!) {
     user(username: $username)
+  }
+`;
+export const echo = /* GraphQL */ `
+  query Echo($msg: String!) {
+    echo(msg: $msg)
   }
 `;

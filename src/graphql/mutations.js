@@ -4,33 +4,37 @@
 export const manageCustomers = /* GraphQL */ `
   mutation ManageCustomers(
     $action: CustomerResourceAction!
+    $tradeName: String!
     $payload: String!
   ) {
-    manageCustomers(action: $action, payload: $payload)
+    manageCustomers(action: $action, tradeName: $tradeName, payload: $payload)
   }
 `;
 export const manageContracts = /* GraphQL */ `
   mutation ManageContracts(
     $action: ContractResourceAction!
+    $tradeName: String!
     $payload: String!
   ) {
-    manageContracts(action: $action, payload: $payload)
+    manageContracts(action: $action, tradeName: $tradeName, payload: $payload)
   }
 `;
 export const manageEmployees = /* GraphQL */ `
   mutation ManageEmployees(
     $action: EmployeeResourceAction!
+    $tradeName: String!
     $payload: String!
   ) {
-    manageEmployees(action: $action, payload: $payload)
+    manageEmployees(action: $action, tradeName: $tradeName, payload: $payload)
   }
 `;
 export const manageContractors = /* GraphQL */ `
   mutation ManageContractors(
     $action: ContractorResourceAction!
+    $tradeName: String!
     $payload: String!
   ) {
-    manageContractors(action: $action, payload: $payload)
+    manageContractors(action: $action, tradeName: $tradeName, payload: $payload)
   }
 `;
 export const updateFields = /* GraphQL */ `
@@ -454,7 +458,7 @@ export const createUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -502,7 +506,6 @@ export const createUserProfile = /* GraphQL */ `
           payload
           createdAt
           updatedAt
-          metadata
         }
         nextToken
       }
@@ -561,7 +564,7 @@ export const updateUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -609,7 +612,6 @@ export const updateUserProfile = /* GraphQL */ `
           payload
           createdAt
           updatedAt
-          metadata
         }
         nextToken
       }
@@ -668,7 +670,7 @@ export const deleteUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -716,7 +718,6 @@ export const deleteUserProfile = /* GraphQL */ `
           payload
           createdAt
           updatedAt
-          metadata
         }
         nextToken
       }
@@ -851,7 +852,6 @@ export const createContract = /* GraphQL */ `
       insuranceCoverage
       insuranceUsage
       duration
-      creationDate
       startDate
       endDate
       data
@@ -923,7 +923,6 @@ export const updateContract = /* GraphQL */ `
       insuranceCoverage
       insuranceUsage
       duration
-      creationDate
       startDate
       endDate
       data
@@ -995,7 +994,6 @@ export const deleteContract = /* GraphQL */ `
       insuranceCoverage
       insuranceUsage
       duration
-      creationDate
       startDate
       endDate
       data
@@ -1064,7 +1062,6 @@ export const createCustomer = /* GraphQL */ `
       doy
       address
       familyStatus
-      creationDate
       files {
         bucket
         region
@@ -1105,7 +1102,6 @@ export const updateCustomer = /* GraphQL */ `
       doy
       address
       familyStatus
-      creationDate
       files {
         bucket
         region
@@ -1146,7 +1142,6 @@ export const deleteCustomer = /* GraphQL */ `
       doy
       address
       familyStatus
-      creationDate
       files {
         bucket
         region
@@ -1259,7 +1254,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1367,7 +1362,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1475,7 +1470,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1558,7 +1553,6 @@ export const createTradeContractConnection = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -1664,7 +1658,6 @@ export const updateTradeContractConnection = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -1770,7 +1763,6 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         insuranceCoverage
         insuranceUsage
         duration
-        creationDate
         startDate
         endDate
         data
@@ -2171,7 +2163,7 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2219,7 +2211,7 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2285,7 +2277,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2333,7 +2325,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2399,7 +2391,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2447,7 +2439,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2477,7 +2469,6 @@ export const createRequests = /* GraphQL */ `
       payload
       createdAt
       updatedAt
-      metadata
     }
   }
 `;
@@ -2495,7 +2486,6 @@ export const updateRequests = /* GraphQL */ `
       payload
       createdAt
       updatedAt
-      metadata
     }
   }
 `;
@@ -2513,7 +2503,6 @@ export const deleteRequests = /* GraphQL */ `
       payload
       createdAt
       updatedAt
-      metadata
     }
   }
 `;
