@@ -7,7 +7,7 @@
 		</mdb-card-header>
 		<mdb-card-body>
 			<form @submit.prevent="signIn">
-				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-4" name="username" autocomplete="username" outline :active="false"/>
+				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-4" name="username" autocomplete="username" outline/>
 				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="current-password" outline/>
 				<span @click="$emit('auth-page-changed', 'forgotPassword')" class="a-tag">{{ $t('views.auth.forgotYourPassword') }}</span>
 				<div class="text-center">
