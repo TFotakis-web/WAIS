@@ -38,10 +38,8 @@
 		mounted() {
 			this.loading = true;
 			this.$store.dispatch('auth/currentAuthenticatedUser')
-				.then(() => {
-					if (!this.$store.getters['auth/user']) {
-						this.authPage = 'signIn';
-					}
+				.catch(() => {
+					this.authPage = 'signIn';
 				})
 				.finally(() => (this.loading = false));
 		},
