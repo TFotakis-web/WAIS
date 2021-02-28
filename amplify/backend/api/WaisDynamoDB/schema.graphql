@@ -5,8 +5,7 @@ type Office
     rules: [
       { allow: owner, ownerField: "ownerUsername", operations: [read] }
       { allow: owner, ownerField: "members", operations: [read] }
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
+      { allow: private, provider: iam }
     ]
   )
   @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
@@ -30,31 +29,31 @@ type Office
   # Private data
   # Consider making this a connection if there is a need to search for an office based on such data.
   privateData: OfficePrivateDetails!
-    @auth(
-      rules: [
-        { allow: owner, ownerField: "ownerUsername", operations: [read] }
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+    @auth(rules: [{ allow: owner, ownerField: "ownerUsername", operations: [read] }, { allow: private, provider: iam }])
 
   # Users that can access this object, excludes Owner (manager), Admins, AWS Services (IAM)
-  members: [String]
-    @auth(
-      rules: [
-        { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-        { allow: private, provider: iam, operations: [create, read, update, delete] }
-      ]
-    )
+  members: [String] @auth(rules: [{ allow: private, provider: iam }])
+
+  # Access to connected offices, private access
+  companyConnections: [CompanyAccessConnection]
+    @connection(keyName: "byFromTradeName", fields: ["tradeName"])
+    @auth(rules: [{ allow: private, provider: iam }])
+
+  # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
+  officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
+
+  # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
+  officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
 
   # Retrieve paperwork from these fields, all arguments are optional
   # Default limit is 100
   # The ModelTradeUserConnections will not return sensitive data like userId/preferences
   # The filter arg is a stringified GQL-filter as JSON. e.g "{\"id\": {\"eq\": \"123\"}}"
-  customers(filter: String, limit: Int, nextToken: String): ModelCustomerConnection @function(name: "resolver-${env}")
-  contracts(filter: String, limit: Int, nextToken: String): ModelContractConnection @function(name: "resolver-${env}")
+  customers(filter: String, limit: Int, nextToken: String, tradeName: String): ModelCustomerConnection @function(name: "resolver-${env}")
+  contracts(filter: String, limit: Int, nextToken: String, tradeName: String): ModelContractConnection @function(name: "resolver-${env}")
   employees(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
+  partnerOffices(filter: String, limit: Int, nextToken: String): CompanyAccessConnectionConnection @function(name: "resolver-${env}")
 }
 
 # Office details restricted to office owner and WAIS services
@@ -350,7 +349,7 @@ type Query {
   #Utils
   me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  user(username: String!): String
+  user(username: String!): UserProfile
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
@@ -359,16 +358,16 @@ type Query {
 
 type Mutation {
   # Create / Update / Delete from here
-  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): String
+  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): String
+  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): String
+  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): String
+  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
 
@@ -376,10 +375,10 @@ type Mutation {
   # 'typename' is the @model-Type as described in this file. Case sensitive. (eg. 'UserProfile')
   # 'id' The entry ID.
   # 'fields' is an array of dictionaries with attribute names as keys and attribute values with field values
-  # Output is a JSON style map with attributes as keys and a boolean value that indicates wether an attribute changed or not
+  # Output is just the ID of the updated entry.
   # EXAMPLE: Input  -> [{"logo": "s3://..." } , { "tin": "..." }]
-  #          Output -> [{"logo": "true} , {"tin":"false"}]
-  updateFields(typename: String!, id: ID!, fields: String): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  #          Output -> {"id": "XXX-XXX"}
+  updateFields(typename: String!, id: ID!, fields: String): IDOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   # Request API
   sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
@@ -477,4 +476,12 @@ type ModelContractConnection {
 type ModelTradeUserConnectionConnection {
   items: [TradeUserConnection]
   nextToken: String
+}
+type CompanyAccessConnectionConnection {
+  items: [CompanyAccessConnection]
+  nextToken: String
+}
+
+type IDOutput {
+  id: String!
 }

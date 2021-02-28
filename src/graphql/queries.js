@@ -50,7 +50,7 @@ export const me = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -156,6 +156,9 @@ export const listTradeByName = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       nextToken
     }
@@ -211,6 +214,9 @@ export const listTradeByOfficeEmail = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       nextToken
     }
@@ -268,6 +274,9 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       nextToken
     }
@@ -385,6 +394,20 @@ export const getOffice = /* GraphQL */ `
         }
       }
       members
+      companyConnections {
+        items {
+          id
+          fromId
+          fromTradeName
+          toId
+          toTradeName
+          expirationDate
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -430,6 +453,9 @@ export const listOffices = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       nextToken
     }
@@ -477,7 +503,7 @@ export const listUserProfiles = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -543,7 +569,7 @@ export const getUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -647,7 +673,7 @@ export const listUserProfileByEmail = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -714,7 +740,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1432,6 +1458,9 @@ export const getTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       user {
         id
@@ -1468,7 +1497,7 @@ export const getTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1973,6 +2002,9 @@ export const getTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       contract {
         id
@@ -2363,6 +2395,9 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       to {
         id
@@ -2399,6 +2434,9 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
     }
   }
@@ -2825,7 +2863,7 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2873,7 +2911,7 @@ export const getTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -3200,7 +3238,105 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
 `;
 export const user = /* GraphQL */ `
   query User($username: String!) {
-    user(username: $username)
+    user(username: $username) {
+      id
+      username
+      email
+      telephone
+      surname
+      name
+      fathers_name
+      address
+      zip_code
+      mobile
+      tin
+      family_name
+      gender
+      birthdate
+      city
+      profilePicture {
+        bucket
+        region
+        key
+        name
+      }
+      preferences
+      locale
+      files {
+        bucket
+        region
+        key
+        name
+      }
+      createdAt
+      updatedAt
+      tradeCon {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      officeConnections {
+        items {
+          id
+          tradeId
+          tradeName
+          userId
+          username
+          employeeType
+          preferences
+          members
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      callendarEvents {
+        items {
+          id
+          username
+          createdAt
+          payload
+          updatedAt
+        }
+        nextToken
+      }
+      requestsSentByMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      requestsForMe {
+        items {
+          id
+          senderUsername
+          senderEmail
+          receiverEmail
+          type
+          payload
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
   }
 `;
 export const echo = /* GraphQL */ `

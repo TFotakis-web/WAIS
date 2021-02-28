@@ -6,8 +6,8 @@
 	REGION
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
-const { CognitoIdentityServiceProvider } = require('aws-sdk')
-const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
+//const { CognitoIdentityServiceProvider } = require('aws-sdk')
+//const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 
 //API
 const requestsAPI = require('./queries/requests')
@@ -28,35 +28,25 @@ if (!COGNITO_USERPOOL_ID) {
 const resolvers = {
   Office: {
     customers: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
       return await officeAPI.listCustomersForUserInOffice({
-        username: event.identity.claims['cognito:username'],
         office: event.source,
         limit: event.arguments.limit,
         nextToken: event.arguments.nextToken,
+        tradeName: event.arguments.tradeName,
         filter: event.arguments.filter,
       })
     },
     contracts: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
       return await officeAPI.listContractsForUserInOffice({
-        username: event.identity.claims['cognito:username'],
         office: event.source,
         limit: event.arguments.limit,
         nextToken: event.arguments.nextToken,
+        tradeName: event.arguments.tradeName,
         filter: event.arguments.filter,
       })
     },
     employees: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
       return await officeAPI.listEmployeesForUserInOffice({
-        username: event.identity.claims['cognito:username'],
         office: event.source,
         limit: event.arguments.limit,
         nextToken: event.arguments.nextToken,
@@ -64,11 +54,18 @@ const resolvers = {
       })
     },
     contractors: async event => {
+      return await officeAPI.listContractorsForUserInOffice({
+        office: event.source,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+        filter: event.arguments.filter,
+      })
+    },
+    partnerOffices: async event => {
       if (!event.identity.claims) {
         throw new Error('Invalid credentials.')
       }
-      return await officeAPI.listContractorsForUserInOffice({
-        username: event.identity.claims['cognito:username'],
+      return await officeAPI.listOfficePartners({
         office: event.source,
         limit: event.arguments.limit,
         nextToken: event.arguments.nextToken,
@@ -87,12 +84,7 @@ const resolvers = {
       return await gql_queries.getUserProfileByUsername(event.identity.claims['cognito:username'])
     },
     user: async event => {
-      return await cognitoIdentityServiceProvider
-        .adminGetUser({
-          UserPoolId: COGNITO_USERPOOL_ID,
-          Username: event.arguments.username,
-        })
-        .promise()
+      return await gql_queries.getUserProfileByUsername(event.arguments.username)
     },
   },
 

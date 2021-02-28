@@ -7,7 +7,9 @@ export const manageCustomers = /* GraphQL */ `
     $tradeName: String!
     $payload: String!
   ) {
-    manageCustomers(action: $action, tradeName: $tradeName, payload: $payload)
+    manageCustomers(action: $action, tradeName: $tradeName, payload: $payload) {
+      id
+    }
   }
 `;
 export const manageContracts = /* GraphQL */ `
@@ -16,7 +18,9 @@ export const manageContracts = /* GraphQL */ `
     $tradeName: String!
     $payload: String!
   ) {
-    manageContracts(action: $action, tradeName: $tradeName, payload: $payload)
+    manageContracts(action: $action, tradeName: $tradeName, payload: $payload) {
+      id
+    }
   }
 `;
 export const manageEmployees = /* GraphQL */ `
@@ -25,7 +29,9 @@ export const manageEmployees = /* GraphQL */ `
     $tradeName: String!
     $payload: String!
   ) {
-    manageEmployees(action: $action, tradeName: $tradeName, payload: $payload)
+    manageEmployees(action: $action, tradeName: $tradeName, payload: $payload) {
+      id
+    }
   }
 `;
 export const manageContractors = /* GraphQL */ `
@@ -34,12 +40,20 @@ export const manageContractors = /* GraphQL */ `
     $tradeName: String!
     $payload: String!
   ) {
-    manageContractors(action: $action, tradeName: $tradeName, payload: $payload)
+    manageContractors(
+      action: $action
+      tradeName: $tradeName
+      payload: $payload
+    ) {
+      id
+    }
   }
 `;
 export const updateFields = /* GraphQL */ `
   mutation UpdateFields($typename: String!, $id: ID!, $fields: String) {
-    updateFields(typename: $typename, id: $id, fields: $fields)
+    updateFields(typename: $typename, id: $id, fields: $fields) {
+      id
+    }
   }
 `;
 export const sendRequest = /* GraphQL */ `
@@ -167,6 +181,20 @@ export const createOffice = /* GraphQL */ `
         }
       }
       members
+      companyConnections {
+        items {
+          id
+          fromId
+          fromTradeName
+          toId
+          toTradeName
+          expirationDate
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -285,6 +313,20 @@ export const updateOffice = /* GraphQL */ `
         }
       }
       members
+      companyConnections {
+        items {
+          id
+          fromId
+          fromTradeName
+          toId
+          toTradeName
+          expirationDate
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -403,6 +445,20 @@ export const deleteOffice = /* GraphQL */ `
         }
       }
       members
+      companyConnections {
+        items {
+          id
+          fromId
+          fromTradeName
+          toId
+          toTradeName
+          expirationDate
+          message
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -458,7 +514,7 @@ export const createUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -564,7 +620,7 @@ export const updateUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -670,7 +726,7 @@ export const deleteUserProfile = /* GraphQL */ `
         }
         nextToken
       }
-      offices {
+      officeConnections {
         items {
           id
           tradeId
@@ -1218,6 +1274,9 @@ export const createTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       user {
         id
@@ -1254,7 +1313,7 @@ export const createTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1326,6 +1385,9 @@ export const updateTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       user {
         id
@@ -1362,7 +1424,7 @@ export const updateTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1434,6 +1496,9 @@ export const deleteTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       user {
         id
@@ -1470,7 +1535,7 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -1534,6 +1599,9 @@ export const createTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       contract {
         id
@@ -1639,6 +1707,9 @@ export const updateTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       contract {
         id
@@ -1744,6 +1815,9 @@ export const deleteTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       contract {
         id
@@ -1851,6 +1925,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       to {
         id
@@ -1887,6 +1964,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
     }
   }
@@ -1941,6 +2021,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       to {
         id
@@ -1977,6 +2060,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
     }
   }
@@ -2031,6 +2117,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
       to {
         id
@@ -2067,6 +2156,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        companyConnections {
+          nextToken
+        }
       }
     }
   }
@@ -2163,7 +2255,7 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2211,7 +2303,7 @@ export const createTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2277,7 +2369,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2325,7 +2417,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2391,7 +2483,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {
@@ -2439,7 +2531,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         tradeCon {
           nextToken
         }
-        offices {
+        officeConnections {
           nextToken
         }
         callendarEvents {

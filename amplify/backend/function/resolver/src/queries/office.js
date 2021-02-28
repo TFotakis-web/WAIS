@@ -14,9 +14,16 @@ module.exports = {
     if (!office) {
       throw new Error('Office not found.')
     }
+    if (office.tradeName !== input.tradeName) {
+      const partnership = await gqlAPI.getCompanyConnectionBetweenTwoOffices(office.tradeName, input.tradeName)
+      if (!partnership) {
+        throw new Error(`Partnership between ${office.tradeName} and ${input.tradeName} not found.`)
+      }
+    }
+
     const filter = JSON.parse(input.filter || '{"id":{"ne":" "}}')
     let item = createOfficeDefaultItem(input.limit, input.nextToken, filter)
-    item.tradeName = office.tradeName
+    item.tradeName = input.tradeName || office.tradeName
 
     //Retrieve the customers
     const allCustomers = await gqlAPI.listCustomers(item)
@@ -36,11 +43,16 @@ module.exports = {
     if (!office) {
       throw new Error('Office not found.')
     }
+    if (office.tradeName !== input.tradeName) {
+      const partnership = await gqlAPI.getCompanyConnectionBetweenTwoOffices(office.tradeName, input.tradeName)
+      if (!partnership) {
+        throw new Error(`Partnership between ${office.tradeName} and ${input.tradeName} not found.`)
+      }
+    }
 
-    //List customers request input item
     const filter = JSON.parse(input.filter || '{"id":{"ne":" "}}')
     let item = createOfficeDefaultItem(input.limit, input.nextToken, filter)
-    item.tradeName = office.tradeName
+    item.tradeName = input.tradeName || office.tradeName
 
     const allContracts = await gqlAPI.listContracts(item)
     if (!allContracts) {
@@ -103,7 +115,22 @@ module.exports = {
     }
     return connections
   },
+  listOfficePartners: async input => {
+    //Office
+    const office = input.office
+    if (!office) {
+      throw new Error('Office not found.')
+    }
+    const filter = JSON.parse(input.filter || '{"id":{"ne":" "}}')
+    let item = createOfficeDefaultItem(input.limit, input.nextToken, filter)
+    item.tradeName = office.tradeName
 
+    const partners = await gqlAPI.listOfficePartners(item)
+    if (!partners) {
+      return []
+    }
+    return partners
+  },
   manageEmployees: async input => {
     //Parse the payload
     if (!input.payload) {
