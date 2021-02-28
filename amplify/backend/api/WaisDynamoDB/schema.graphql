@@ -375,7 +375,7 @@ type Mutation {
   # 'typename' is the @model-Type as described in this file. Case sensitive. (eg. 'UserProfile')
   # 'id' The entry ID.
   # 'fields' is an array of dictionaries with attribute names as keys and attribute values with field values
-  # Output is just the ID of the updated entry.
+  # Output is just the ID of the target entry.
   # EXAMPLE: Input  -> [{"logo": "s3://..." } , { "tin": "..." }]
   #          Output -> {"id": "XXX-XXX"}
   updateFields(typename: String!, id: ID!, fields: String): IDOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
