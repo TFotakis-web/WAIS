@@ -91,7 +91,7 @@ export const request = {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(updateRequests, { input: request }))
 				// Todo: Check if ok to use that
-				// API.graphql(graphqlOperation(updateFields, { typename: 'Requests', id: request.id, fields: request }))
+				// API.graphql(graphqlOperation(updateFields, { typename: 'Requests', id: request.id, fields: JSON.stringify(request) }))
 					.then((response) => {
 						resolve(response.data.updateFields);
 					})
