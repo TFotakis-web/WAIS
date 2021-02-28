@@ -53,7 +53,7 @@ type Office
   contracts(filter: String, limit: Int, nextToken: String, tradeName: String): ModelContractConnection @function(name: "resolver-${env}")
   employees(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
   contractors(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
-  partnerOffices(filter: String, limit: Int, nextToken: String): CompanyAccessConnectionConnection @function(name: "resolver-${env}")
+  partnerOffices(filter: String, limit: Int, nextToken: String): PartialOfficeConnection @function(name: "resolver-${env}")
 }
 
 # Office details restricted to office owner and WAIS services
@@ -477,8 +477,8 @@ type ModelTradeUserConnectionConnection {
   items: [TradeUserConnection]
   nextToken: String
 }
-type CompanyAccessConnectionConnection {
-  items: [CompanyAccessConnection]
+type PartialOfficeConnection {
+  items: [Office]
   nextToken: String
 }
 

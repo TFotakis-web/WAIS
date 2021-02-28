@@ -750,7 +750,7 @@ module.exports = {
 
   listOfficePartners: async item => {
     console.log('listOfficePartners input: ' + JSON.stringify(item))
-    const query = `query listOfficePartners($tradeName: String, $filter: ModelCompanyAccessConnectionConditionInput, $limit: Int, $nextToken: String) {
+    const query = `query listOfficePartners($tradeName: String, $filter: ModelCompanyAccessConnectionFilterInput, $limit: Int, $nextToken: String) {
       listTradeByName(tradeName: $tradeName){
         items{
           companyConnections(filter:$filter ,limit: $limit, nextToken: $nextToken){
@@ -774,7 +774,7 @@ module.exports = {
   getCompanyConnectionBetweenTwoOffices: async (tradeNameFrom, tradeNameTo) => {
     console.log('listOfficePartners input: ' + [tradeNameFrom, tradeNameTo])
     const query = `query listCompanyAccessConnectionByFromTradeName {
-      getCompanyConnectionBetweenTwoOffices(fromTradeName: "${tradeNameFrom}", filter: {toTradeName: {eq: "${tradeNameTo}"}}) {
+      listCompanyAccessConnectionByFromTradeName(fromTradeName: "${tradeNameFrom}", toTradeName: {eq: "${tradeNameTo}"}) {
         items {
           from {
             id

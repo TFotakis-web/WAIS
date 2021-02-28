@@ -14,7 +14,7 @@ module.exports = {
     if (!office) {
       throw new Error('Office not found.')
     }
-    if (office.tradeName !== input.tradeName) {
+    if (input.tradeName && (office.tradeName !== input.tradeName)) {
       const partnership = await gqlAPI.getCompanyConnectionBetweenTwoOffices(office.tradeName, input.tradeName)
       if (!partnership) {
         throw new Error(`Partnership between ${office.tradeName} and ${input.tradeName} not found.`)
@@ -43,7 +43,7 @@ module.exports = {
     if (!office) {
       throw new Error('Office not found.')
     }
-    if (office.tradeName !== input.tradeName) {
+    if (input.tradeName && (office.tradeName !== input.tradeName)) {
       const partnership = await gqlAPI.getCompanyConnectionBetweenTwoOffices(office.tradeName, input.tradeName)
       if (!partnership) {
         throw new Error(`Partnership between ${office.tradeName} and ${input.tradeName} not found.`)
@@ -129,7 +129,13 @@ module.exports = {
     if (!partners) {
       return []
     }
-    return partners
+
+    let items = []
+    partners.items.forEach(element => items.push(element.to))
+    return {
+      items: items,
+      nextToken: partners.nextToken,
+    }
   },
   manageEmployees: async input => {
     //Parse the payload
