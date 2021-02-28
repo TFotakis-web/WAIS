@@ -325,7 +325,7 @@ type Requests
     rules: [
       { allow: groups, groups: ["admin"] }
       { allow: private, provider: iam }
-      { allow: owner, identityClaim: "email", ownerField: "senderEmail", operations: [read, delete] }
+      { allow: owner, identityClaim: "email", ownerField: "senderEmail", operations: [read, update, delete] }
       { allow: owner, identityClaim: "email", ownerField: "receiverEmail", operations: [read] }
     ]
   ) {
