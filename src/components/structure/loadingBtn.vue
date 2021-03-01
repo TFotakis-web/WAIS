@@ -1,10 +1,23 @@
 <template>
-	<mdb-btn :color="color" :type="type" :rounded="rounded" :disabled="loading">
-		<span v-if="loading" class="spinner-border spinner-border-sm mr-1" />
+	<mdb-btn
+		:color="color"
+		:type="type"
+		:rounded="rounded"
+		:disabled="loading"
+		:size="size"
+		:outline="outline"
+		:floating="floating"
+		:flat="flat"
+		:transparent="transparent"
+		:gradient="gradient"
+		:icon="icon"
+		:iconLeft="iconLeft"
+		:iconRight="iconRight"
+	>
 		<span>{{ loading ? loadingText : text }}</span>
+		<span v-if="loading" class="spinner-border spinner-border-sm ml-2"/>
 	</mdb-btn>
 </template>
-
 <script>
 	export default {
 		name: 'LoadingBtn',
@@ -15,7 +28,7 @@
 			},
 			type: {
 				type: String,
-				default: '',
+				default: 'button',
 			},
 			rounded: {
 				type: Boolean,
@@ -32,6 +45,42 @@
 			loadingText: {
 				type: String,
 				default: 'Loading Button',
+			},
+			size: {
+				type: String,
+				default: ''
+			},
+			outline: {
+				type: String,
+				default: ''
+			},
+			floating: {
+				type: Boolean,
+				default: false
+			},
+			flat: {
+				type: Boolean,
+				default: false
+			},
+			transparent: {
+				type: Boolean,
+				default: false
+			},
+			gradient: {
+				type: String,
+				default: ''
+			},
+			icon: {
+				type: String,
+				default: ''
+			},
+			iconLeft: {
+				type: Boolean,
+				default: false
+			},
+			iconRight: {
+				type: Boolean,
+				default: false
 			},
 		},
 	};
