@@ -76,16 +76,16 @@
 							</mdb-row>
 							<mdb-row>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 1" @getValue="getFileInputValue($event, 'File type 1')" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<file-input textFieldTitle="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInBytes="10" size="sm"/>
 								</mdb-col>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 2" @getValue="getFileInputValue($event, 'File type 2')" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<file-input textFieldTitle="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInBytes="10" size="sm"/>
 								</mdb-col>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="File type 3" @getValue="getFileInputValue($event, 'File type 3')" sm btnColor="primary" icon="cloud-upload-alt"/>
+									<file-input textFieldTitle="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInBytes="10" size="sm"/>
 								</mdb-col>
 								<mdb-col col="12">
-									<mdb-file-input textFieldTitle="Other files" @getValue="getFileInputValue" multiple sm btnColor="primary" icon="cloud-upload-alt"/>
+									<file-input textFieldTitle="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInBytes="10" multiple size="sm"/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
@@ -135,15 +135,16 @@
 </template>
 <script>
 	import { mapActions, mapMutations } from 'vuex';
-	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
+	import fileInput from '@/components/structure/fileInput/fileInput';
 
 	export default {
 		name: 'tradeCreationForm',
 		components: {
 			loadingBtn,
 			localeDropdown,
+			fileInput
 		},
 		data() {
 			return {
@@ -174,6 +175,10 @@
 				error: {
 					message: '',
 				},
+				fileType1: {},
+				fileType2: {},
+				fileType3: {},
+				otherFiles: []
 			}
 		},
 		mounted() {
@@ -183,6 +188,29 @@
 				this.request = requestsForNewTrade[0];
 				const payload = JSON.parse(this.request.payload);
 				Object.assign(this.form, payload);
+
+				const fileType1List = this.form.files.filter(el => el.filename.match('File type 1'));
+				if (fileType1List.length) {
+					this.fileType1 = fileType1List[0];
+				}
+
+				const fileType2List = this.form.files.filter(el => el.filename.match('File type 2'));
+				if (fileType1List.length) {
+					this.fileType2 = fileType2List[0];
+				}
+
+				const fileType3List = this.form.files.filter(el => el.filename.match('File type 3'));
+				if (fileType1List.length) {
+					this.fileType3 = fileType3List[0];
+				}
+
+				this.otherFiles = this.form.files.filter(el => {
+					let flag = false;
+					flag |= Boolean(el.filename.match('File type 1'));
+					flag |= Boolean(el.filename.match('File type 2'));
+					flag |= Boolean(el.filename.match('File type 3'));
+					return !flag;
+				});
 			}
 		},
 		methods: {
@@ -192,29 +220,25 @@
 			...mapMutations('auth', ['pushRequestsSentByMe']),
 			async save() {
 				this.loading = true;
-				try {
-					for (const i in this.files) {
-						const response = await Storage.put(this.files[i].name, this.files[i].data, {
-							level: 'private',
-							contentType: this.files[i].type,
-						});
-						this.form.files[i] = `private/${this.$store.getters['auth/user'].id}/${response.key}`;
-					}
-				} catch (error) {
-					console.error(error);
-				}
+
+				let files = [];
+				if (Object.keys(this.fileType1).length) files.push(this.fileType1);
+				if (Object.keys(this.fileType2).length) files.push(this.fileType2);
+				if (Object.keys(this.fileType3).length) files.push(this.fileType3);
+				if (this.otherFiles.length)
+					this.form.files = files.concat(this.otherFiles);
 
 				if (Object.keys(this.request).length === 0) {
 					this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form })
 						.then((res) => {
 							this.$notifyAction.saveSuccess();
 							this.getRequest(res.id)
-							.then((res) => {
-								this.pushRequest(res);
-								this.pushRequestsSentByMe(res);
-								console.log(res);
-								this.request = res;
-							})
+								.then((res) => {
+									this.pushRequest(res);
+									this.pushRequestsSentByMe(res);
+									console.log(res);
+									this.request = res;
+								})
 						})
 						.catch((error) => console.error(error))
 						.finally(() => this.loading = false);
@@ -226,29 +250,6 @@
 						.finally(() => this.loading = false);
 				}
 			},
-			async getFileInputValue(fileInput, filename) {
-				const sizeLimitInMBs = 10; // File size in MB
-				const sizeLimitInBs = sizeLimitInMBs * 2 ** 20;
-				for (const file of fileInput) {
-					if (file.size > sizeLimitInBs) {
-						this.error.message += this.error.message === '' ? '' : ' ';
-						this.error.message += `File ${file.name} exceeds ${sizeLimitInMBs} MBs.`;
-						continue;
-					}
-					const data = await this.$toBase64(file);
-					let name = '';
-					if (filename) {
-						let extension = file.name.split('.');
-						extension = extension[extension.length - 1];
-						name = filename + '.' + extension;
-					} else {
-						name = file.name;
-					}
-					this.files.push({ name, data, type: file.type });
-				}
-			},
-		}
-		,
-	}
-	;
+		},
+	};
 </script>
