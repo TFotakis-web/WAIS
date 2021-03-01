@@ -209,7 +209,8 @@
     "updating": "Ενημερώνεται...",
     "edit": "Επεξεργασία",
     "save": "Αποθήκευση",
-    "saving": "Αποθηκεύεται..."
+    "saving": "Αποθηκεύεται...",
+    "uploading": "Ανεβαίνει"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",

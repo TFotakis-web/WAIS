@@ -209,7 +209,8 @@
     "updating": "Updating...",
     "edit": "Edit",
     "save": "Save",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "uploading": "Uploading..."
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",
