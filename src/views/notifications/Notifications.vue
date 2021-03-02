@@ -12,7 +12,7 @@
 	export default {
 		name: "Notifications",
 		mounted() {
-			this.listRequestsByReceiverEmail('info@wais.com')
+			this.listRequestsByReceiverEmail("wais@admin.com")
 			.then((response) => {
 				console.log(response);
 			});
