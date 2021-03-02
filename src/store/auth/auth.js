@@ -118,6 +118,7 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				Auth.signOut()
 					.then(() => {
+						router.go(0); // Reload page
 						commit("setUser", null);
 						resolve();
 					})
@@ -166,6 +167,7 @@ export const auth = {
 						console.error(error);
 						Auth.signOut()
 							.then(() => {
+								// router.go(0); // Reload page
 								reject(error);
 							});
 					})
