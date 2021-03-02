@@ -399,14 +399,8 @@ export const auth = {
 	},
 	getters: {
 		cognitoUser: (state) => state.cognitoUser,
-		userGroups: (state) => state.cognitoUser ? state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'] : null,
-		isAdmin: (state) => {
-			if (!state.cognitoUser){
-				return false;
-			}
-			const groups = state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'];
-			return groups.includes('admin');
-		},
+		userGroups: (state) => state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'] || [],
+		isAdmin: (state, getters) => getters.userGroups.includes('admin'),
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
