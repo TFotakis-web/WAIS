@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { getRequestsSimple, listRequestsByReceiverEmailSimple, listRequestsBySenderEmailSimple, listRequestssSimple } from '@/graphql/custom-queries';
+import { getRequests, listRequestsByReceiverEmail, listRequestsBySenderEmail, listRequestss } from '@/graphql/custom-queries';
 import { sendRequest } from '@/graphql/custom-mutations';
 import { updateRequests } from '@/graphql/custom-mutations';
 // import { updateFields } from '@/graphql/custom-mutations';
@@ -20,7 +20,7 @@ export const request = {
 	actions: {
 		getRequest(_, id) {
 			return new Promise((resolve, reject) => {
-				API.graphql(graphqlOperation(getRequestsSimple, { id: id }))
+				API.graphql(graphqlOperation(getRequests, { id: id }))
 					.then((response) => {
 						resolve(response.data.getRequests);
 					})
@@ -32,7 +32,7 @@ export const request = {
 		},
 		listRequests({ commit }) {
 			return new Promise((resolve, reject) => {
-				API.graphql(graphqlOperation(listRequestssSimple))
+				API.graphql(graphqlOperation(listRequestss))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestss.items)
 						resolve();
@@ -46,7 +46,7 @@ export const request = {
 		listRequestsBySenderEmail({ commit, rootGetters }, senderEmail) {
 			senderEmail = senderEmail || rootGetters['auth/email'];
 			return new Promise((resolve, reject) => {
-				API.graphql(graphqlOperation(listRequestsBySenderEmailSimple, { senderEmail }))
+				API.graphql(graphqlOperation(listRequestsBySenderEmail, { senderEmail }))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestsBySenderEmail.items)
 						resolve();
@@ -60,7 +60,7 @@ export const request = {
 		listRequestsByReceiverEmail({ commit }, receiverEmail) {
 			receiverEmail = receiverEmail || '';
 			return new Promise((resolve, reject) => {
-				API.graphql(graphqlOperation(listRequestsByReceiverEmailSimple, { receiverEmail }))
+				API.graphql(graphqlOperation(listRequestsByReceiverEmail, { receiverEmail }))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestsByReceiverEmail.items)
 						resolve();
