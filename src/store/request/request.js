@@ -35,7 +35,7 @@ export const request = {
 				API.graphql(graphqlOperation(listRequestss))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestss.items)
-						resolve();
+						resolve(response.data.listRequestss.items);
 					})
 					.catch((error) => {
 						console.error(error);
@@ -49,7 +49,7 @@ export const request = {
 				API.graphql(graphqlOperation(listRequestsBySenderEmail, { senderEmail }))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestsBySenderEmail.items)
-						resolve();
+						resolve(response.data.listRequestsBySenderEmail.items);
 					})
 					.catch((error) => {
 						console.error(error);
@@ -63,7 +63,7 @@ export const request = {
 				API.graphql(graphqlOperation(listRequestsByReceiverEmail, { receiverEmail }))
 					.then((response) => {
 						commit('setRequests', response.data.listRequestsByReceiverEmail.items)
-						resolve();
+						resolve(response.data.listRequestsByReceiverEmail.items);
 					})
 					.catch((error) => {
 						console.error(error);
