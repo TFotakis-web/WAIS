@@ -138,6 +138,9 @@
       "professionalInfo": "Professional Information",
       "termsAndConditions": "Terms and Conditions",
       "iAgreeToTheTermsAndConditions": "I agree to the terms and conditions."
+    },
+    "notifications": {
+      "pageTitle": "Notifications"
     }
   },
   "fields": {
@@ -210,7 +213,11 @@
     "edit": "Edit",
     "save": "Save",
     "saving": "Saving...",
-    "uploading": "Uploading..."
+    "uploading": "Uploading...",
+    "accept": "Accept",
+    "accepting": "Accepting",
+    "reject": "Reject",
+    "rejecting": "Rejecting"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",

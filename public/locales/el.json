@@ -138,6 +138,9 @@
       "professionalInfo": "Επαγγελματικά στοιχεία",
       "termsAndConditions": "Όροι και προϋποθέσεις",
       "iAgreeToTheTermsAndConditions": "Συμφωνώ με τους όρους και τις προϋποθέσεις."
+    },
+    "notifications": {
+      "pageTitle": "Ειδοποιήσεις"
     }
   },
   "fields": {
@@ -210,7 +213,11 @@
     "edit": "Επεξεργασία",
     "save": "Αποθήκευση",
     "saving": "Αποθηκεύεται...",
-    "uploading": "Ανεβαίνει"
+    "uploading": "Ανεβαίνει",
+    "accept": "Αποδοχή",
+    "accepting": "Αποδέχεται",
+    "reject": "Απόρριψη",
+    "rejecting": "Απορρίπτεται"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",
