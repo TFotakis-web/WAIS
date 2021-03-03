@@ -145,6 +145,9 @@ export const listTradeByName = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -156,6 +159,12 @@ export const listTradeByName = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -203,6 +212,9 @@ export const listTradeByOfficeEmail = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -214,6 +226,12 @@ export const listTradeByOfficeEmail = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -263,6 +281,9 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -274,6 +295,12 @@ export const listTradeByOwnerUsername = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -377,6 +404,25 @@ export const getOffice = /* GraphQL */ `
         }
         nextToken
       }
+      partnerOffices {
+        items {
+          id
+          tradeName
+          ownerUsername
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          partnersNumberLimit
+          employeesNumberLimit
+          verified
+          createdAt
+          updatedAt
+          members
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       privateData {
@@ -394,6 +440,57 @@ export const getOffice = /* GraphQL */ `
         }
       }
       members
+      officeContracts {
+        items {
+          id
+          contractId
+          version
+          vehicleNumberPlate
+          vehicleId
+          voucherId
+          customerId
+          tradeName
+          second_tradeId
+          contractorId
+          co_name
+          co_TRN
+          contractState
+          insuranceClass
+          insuranceCoverage
+          insuranceUsage
+          duration
+          startDate
+          endDate
+          data
+          discount
+          jointWorth
+          netWorth
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      officeCustomers {
+        items {
+          id
+          tin
+          tradeName
+          firstName
+          lastName
+          fathersName
+          birthDate
+          gender
+          email
+          mobile
+          postcode
+          doy
+          address
+          familyStatus
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       companyConnections {
         items {
           id
@@ -442,6 +539,9 @@ export const listOffices = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -453,6 +553,12 @@ export const listOffices = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1447,6 +1553,9 @@ export const getTradeUserConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -1458,6 +1567,12 @@ export const getTradeUserConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -1991,6 +2106,9 @@ export const getTradeContractConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2002,6 +2120,12 @@ export const getTradeContractConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2384,6 +2508,9 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2395,6 +2522,12 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }
@@ -2423,6 +2556,9 @@ export const getCompanyAccessConnection = /* GraphQL */ `
         contractors {
           nextToken
         }
+        partnerOffices {
+          nextToken
+        }
         createdAt
         updatedAt
         privateData {
@@ -2434,6 +2570,12 @@ export const getCompanyAccessConnection = /* GraphQL */ `
           bankAccountInfo
         }
         members
+        officeContracts {
+          nextToken
+        }
+        officeCustomers {
+          nextToken
+        }
         companyConnections {
           nextToken
         }

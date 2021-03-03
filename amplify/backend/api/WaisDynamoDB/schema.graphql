@@ -59,11 +59,11 @@ type Office
 # Office details restricted to office owner and WAIS services
 type OfficePrivateDetails {
   tin: String!
-  professionStartDate: AWSDateTime
+  professionStartDate: AWSDate
   chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDateTime
-  civilLiabilityExpirationDate: AWSDateTime
-  bankAccountInfo: String
+  insuranceLicenseExpirationDate: AWSDate
+  civilLiabilityExpirationDate: AWSDate
+  bankAccountInfo: AWSJSON
 
   # Store S3 files in this field
   files: [S3Object]
@@ -287,7 +287,7 @@ type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID
+  id: ID 
   username: String!
   createdAt: String!
   payload: String
