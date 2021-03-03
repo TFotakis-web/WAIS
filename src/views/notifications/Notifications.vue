@@ -42,13 +42,21 @@
 				this.resolveRequest({
 					id: request.id,
 					payload: { decision: 'ACCEPT' }
-				});
+				})
+				.then(() => {
+					this.$notifyAction.saveSuccess();
+				})
+				.catch((err) => this.$notifyAction.error(err));
 			},
 			rejectRequest(request) {
 				this.resolveRequest({
 					id: request.id,
 					payload: { decision: 'REJECT' }
-				});
+				})
+				.then(() => {
+					this.$notifyAction.saveSuccess();
+				})
+				.catch((err) => this.$notifyAction.error(err));
 			}
 		},
 		computed: {
