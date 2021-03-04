@@ -287,10 +287,10 @@ type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID 
+  id: ID
   username: String!
   createdAt: String!
-  payload: String
+  payload: AWSJSON
 }
 
 type TransactionHistory
@@ -338,7 +338,7 @@ type Requests
 
   # Request type and information
   type: RequestType!
-  payload: String!
+  payload: AWSJSON!
 }
 
 # ####################################################################################################################################################################################
@@ -358,16 +358,16 @@ type Query {
 
 type Mutation {
   # Create / Update / Delete from here
-  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): IDOutput
+  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: AWSJSON!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): IDOutput
+  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: AWSJSON!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): IDOutput
+  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: AWSJSON!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
-  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): IDOutput
+  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: AWSJSON!): IDOutput
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: private }])
 
@@ -381,8 +381,8 @@ type Mutation {
   updateFields(typename: String!, id: ID!, fields: String): IDOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   # Request API
-  sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  sendRequest(requestType: RequestType!, payload: AWSJSON!): IDOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
+  resolveRequest(id: ID!, payload: AWSJSON!): AWSJSON @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 }
 
 # ###################### ENUMS/TYPES ######################

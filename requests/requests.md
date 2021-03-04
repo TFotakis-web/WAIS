@@ -36,7 +36,10 @@ Missing attributes are declared null (the numbers are an exception).
 ## Receiver's payload
 
 ```json
-{ "decision": "[ACCEPT|REJECT]" }
+{
+  "decision": "[ACCEPT|REJECT]",
+  "manager_permission": [{ "name": "name1", "read": true, "write": false }]
+}
 ```
 
 ## Receiver's response

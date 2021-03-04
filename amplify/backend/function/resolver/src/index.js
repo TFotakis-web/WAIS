@@ -190,10 +190,10 @@ exports.handler = async event => {
     if (resolver) {
       try {
         const res = await resolver(event)
-        console.log('Resolver result is ' + JSON.stringify(res))
+        console.log('Resolver result is ' + res)
         return res
       } catch (err) {
-        console.log('Resolver error is ' + JSON.stringify(err))
+        console.log('Resolver error is ' + err)
         throw err //This will format the resolver's result in a specific way
       }
     }
