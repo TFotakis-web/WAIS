@@ -3,37 +3,51 @@
 		<fullScreenSpinner v-show="$store.getters.globalPendingPromises > 0"/>
 		<mdb-container v-if="!this.$store.getters['auth/user']" fluid style="height: 100vh">
 			<mdb-row class="h-100 justify-content-center align-items-center">
-				<auth/>
-				<!-- <amplify-authenticator/> -->
+				<mdb-col sm="10" md="6" lg="6" xl="4">
+					<auth/>
+					<!-- <amplify-authenticator/> -->
+				</mdb-col>
 			</mdb-row>
 		</mdb-container>
-		<navigation v-else-if="$store.getters.globalPendingPromises === 0"/>
+		<template v-else-if="$store.getters.globalPendingPromises === 0">
+			<tradeCreationForm v-if="showTradeCreationForm"/>
+			<navigation v-else/>
+			<!--			<navigation/>-->
+		</template>
 	</div>
 </template>
-
 <script>
-	import navigation from '@/components/structure/navigation';
-	import auth from '@/components/auth/auth';
-	import fullScreenSpinner from '@/components/structure/fullScreenSpinner';
+	import navigation from '@/components/structure/navigation'
+	import auth from '@/components/auth/auth'
+	import fullScreenSpinner from '@/components/structure/fullScreenSpinner'
+	import TradeCreationForm from '@/components/structure/tradeCreationForm/tradeCreationForm.vue'
 
 	export default {
 		name: 'App',
 		components: {
 			navigation,
 			auth,
-			fullScreenSpinner
+			fullScreenSpinner,
+			TradeCreationForm,
 		},
 		data() {
 			return {
-				appSystemsLoaded: false
+				appSystemsLoaded: false,
 			}
 		},
 		mounted() {
-			this.appSystemsLoaded = true;
-		}
-	};
+			this.appSystemsLoaded = true
+		},
+		computed: {
+			showTradeCreationForm() {
+				if (this.$store.getters['auth/isAdmin']) return false;
+				let flag = this.$store.getters['auth/userProfile'].tradeCon.items === undefined;
+				flag |= this.$store.getters['auth/userProfile'].tradeCon.items.length === 0;
+				return flag;
+			}
+		},
+	}
 </script>
-
 <style>
 	/* @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"); */
 
@@ -93,11 +107,13 @@
 	.cascading-admin-card {
 		margin-top: 20px;
 	}
+
 	.cascading-admin-card .admin-up {
 		margin-left: 4%;
 		margin-right: 4%;
 		margin-top: -20px;
 	}
+
 	.cascading-admin-card .admin-up .fas,
 	.cascading-admin-card .admin-up .far,
 	.cascading-admin-card .admin-up .fab {
@@ -108,11 +124,13 @@
 		-webkit-border-radius: 3px;
 		border-radius: 3px;
 	}
+
 	.cascading-admin-card .admin-up .data {
 		float: right;
 		margin-top: 2rem;
 		text-align: right;
 	}
+
 	.cascading-admin-card .admin-up .data p {
 		color: #999999;
 		font-size: 12px;
@@ -123,14 +141,17 @@
 		margin-bottom: 0;
 		padding: 0.9rem;
 	}
+
 	.classic-admin-card .card-body p {
 		font-size: 13px;
 		opacity: 0.7;
 		margin-bottom: 0;
 	}
+
 	.classic-admin-card .card-body h4 {
 		margin-top: 10px;
 	}
+
 	.classic-admin-card .card-body .float-right .fas,
 	.classic-admin-card .card-body .float-right .far,
 	.classic-admin-card .card-body .float-right .fab {

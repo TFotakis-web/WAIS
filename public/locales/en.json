@@ -131,6 +131,16 @@
     },
     "devTools": {
       "pageTitle": "Developer Tools"
+    },
+    "tradeCreationForm": {
+      "createYourTrade": "Trade creation application",
+      "personalInfo": "Personal Information",
+      "professionalInfo": "Professional Information",
+      "termsAndConditions": "Terms and Conditions",
+      "iAgreeToTheTermsAndConditions": "I agree to the terms and conditions."
+    },
+    "notifications": {
+      "pageTitle": "Notifications"
     }
   },
   "fields": {
@@ -181,7 +191,12 @@
     "locale": "Locale",
     "chamberRecordNumber": "Chamber Record Number",
     "insuranceLicenseExpirationDate": "Insurance License Exp. Date",
-    "postcode": "Postcode"
+    "postcode": "Postcode",
+    "dragAndDropOrClick": "Drag and Drop files here or click",
+    "clickToUpload": "Click here to upload files",
+    "fathersName": "Father's name",
+    "chooseYourPostcode": "Choose your postcode",
+    "comments": "Comments"
   },
   "actions": {
     "submit": "Submit",
@@ -197,7 +212,12 @@
     "updating": "Updating...",
     "edit": "Edit",
     "save": "Save",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "uploading": "Uploading...",
+    "accept": "Accept",
+    "accepting": "Accepting",
+    "reject": "Reject",
+    "rejecting": "Rejecting"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",

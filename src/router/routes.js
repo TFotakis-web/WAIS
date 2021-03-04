@@ -31,6 +31,7 @@ import Trade from '@/views/trade/Trade';
 import UserProfile from '@/views/userProfile/UserProfile';
 import PlatformData from '@/views/platformData/PlatformData';
 import DevTools from "@/views/devTools/DevTools";
+import Notifications from "@/views/notifications/Notifications";
 
 let routesList = [
 	{ path: '/', name: 'Home', component: Home },
@@ -70,7 +71,7 @@ let routesList = [
 	{ path: '/payment', name: 'Payment', component: Home },
 	{ path: '/bank', name: 'Bank', component: Home },
 	{ path: '/collaboration', name: 'Collaboration', component: Home },
-	{ path: '/notifications', name: 'Notifications', component: Home },
+	{ path: '/notifications', name: 'Notifications', component: Notifications },
 	{ path: '/wallet', name: 'Wallet', component: Home },
 ];
 

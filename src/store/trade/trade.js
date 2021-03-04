@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { createTrade as createTradeMutation } from '@/graphql/mutations';
-import { getTrade as getTradeQuery } from '@/graphql/queries';
-import { listTrades as listTradesQuery } from '@/graphql/queries';
+import { createTrade as createTradeMutation } from '@/graphql/custom-mutations';
+import { getTrade as getTradeQuery } from '@/graphql/custom-queries';
+import { listTrades as listTradesQuery } from '@/graphql/custom-queries';
 import { v4 as uuid } from 'uuid';
 
 export const trade = {

@@ -1,6 +1,7 @@
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { listUserProfileByUsername } from '@/graphql/queries';
-import { updateUserProfile } from '@/graphql/mutations';
+// import { listUserProfileByUsername } from '@/graphql/custom-queries';
+import { me } from '@/graphql/custom-queries';
+import { updateUserProfile } from '@/graphql/custom-mutations';
 import router from '@/router';
 
 export const auth = {
@@ -19,6 +20,12 @@ export const auth = {
 		},
 		setUserProfile(state, payload) {
 			state.userProfile = payload;
+		},
+		pushRequestsSentByMe(state, payload) {
+			state.userProfile.requestsSentByMe.items.push(payload);
+		},
+		pushRequestsForMe(state, payload) {
+			state.userProfile.requestsForMe.items.push(payload);
 		}
 	},
 	actions: {
@@ -111,6 +118,7 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				Auth.signOut()
 					.then(() => {
+						router.go(0); // Reload page
 						commit("setUser", null);
 						resolve();
 					})
@@ -159,6 +167,7 @@ export const auth = {
 						console.error(error);
 						Auth.signOut()
 							.then(() => {
+								// router.go(0); // Reload page
 								reject(error);
 							});
 					})
@@ -188,12 +197,15 @@ export const auth = {
 					});
 			});
 		},
-		loadUserProfile({ commit, getters }) {
+		loadUserProfile({ commit }) {
+		// loadUserProfile({ commit, getters }) {
 			return new Promise((resolve, reject) => {
 				commit('increaseGlobalPendingPromises', null, { root: true });
-				API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
+				API.graphql(graphqlOperation(me))
+				// API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
 					.then((response) => {
-						let userProfile = response.data.listUserProfileByUsername.items[0];
+						let userProfile = response.data.me;
+						// let userProfile = response.data.listUserProfileByUsername.items[0];
 						// Todo: Remove when backend is correct
 						userProfile.permissions = {
 							'Home': {
@@ -387,9 +399,12 @@ export const auth = {
 	},
 	getters: {
 		cognitoUser: (state) => state.cognitoUser,
+		userGroups: (state) => state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'] || [],
+		isAdmin: (state, getters) => getters.userGroups.includes('admin'),
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
+		email: (state) => state.user.attributes.email,
 		userAttributes: (state) => state.user.attributes,
 		userProfile: (state) => state.userProfile,
 		permissions: (state) => state.userProfile.permissions,

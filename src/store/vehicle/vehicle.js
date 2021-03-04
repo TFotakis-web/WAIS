@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { createVehicle as createVehicleMutation } from '@/graphql/mutations';
-import { getVehicle as getVehicleQuery } from '@/graphql/queries';
-import { listVehicles as listVehiclesQuery } from '@/graphql/queries';
+import { createVehicle as createVehicleMutation } from '@/graphql/custom-mutations';
+import { getVehicle as getVehicleQuery } from '@/graphql/custom-queries';
+import { listVehicles as listVehiclesQuery } from '@/graphql/custom-queries';
 import { v4 as uuid } from 'uuid';
 
 export const vehicle = {
