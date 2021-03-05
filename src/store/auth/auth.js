@@ -26,6 +26,12 @@ export const auth = {
 		},
 		pushRequestsForMe(state, payload) {
 			state.userProfile.requestsForMe.items.push(payload);
+		},
+		concatRequestsSentByMe(state, payload) {
+			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.concat(payload);
+		},
+		concatRequestsForMe(state, payload) {
+			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.concat(payload);
 		}
 	},
 	actions: {
@@ -409,5 +415,7 @@ export const auth = {
 		userProfile: (state) => state.userProfile,
 		permissions: (state) => state.userProfile.permissions,
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
+		requestsSentByMe: (state) => state.userProfile.requestsSentByMe.items,
+		requestsForMe: (state) => state.userProfile.requestsForMe.items,
 	}
 }
