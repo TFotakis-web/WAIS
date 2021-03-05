@@ -226,7 +226,8 @@
 				if (Object.keys(this.fileType2).length) files.push(this.fileType2);
 				if (Object.keys(this.fileType3).length) files.push(this.fileType3);
 				if (this.otherFiles.length)
-					this.form.files = files.concat(this.otherFiles);
+					files = files.concat(this.otherFiles);
+				this.form.files = files;
 
 				if (Object.keys(this.request).length === 0) {
 					this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form })
