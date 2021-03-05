@@ -196,7 +196,9 @@
     "clickToUpload": "Click here to upload files",
     "fathersName": "Father's name",
     "chooseYourPostcode": "Choose your postcode",
-    "comments": "Comments"
+    "comments": "Comments",
+    "full_name": "Full Name",
+    "files": "Files"
   },
   "actions": {
     "submit": "Submit",

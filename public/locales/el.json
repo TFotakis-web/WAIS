@@ -196,7 +196,9 @@
     "dragAndDropOrClick": "Σύρετε ή κάντε click για επιλογή αρχείων",
     "clickToUpload": "Κάντε click για να ανεβάσετε τα αρχεία σας",
     "chooseYourPostcode": "Επιλέξτε ταχ. κώδικα",
-    "comments": "Σχόλια"
+    "comments": "Σχόλια",
+    "full_name": "Ονοματεπώνυμο",
+    "files": "Αρχεία"
   },
   "actions": {
     "submit": "Υποβολή",
