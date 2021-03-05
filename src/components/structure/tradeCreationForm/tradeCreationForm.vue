@@ -62,7 +62,7 @@
 									<mdb-input type="text" :label="$t('fields.tin')" v-model="form.tin" far icon="id-badge" required outline/>
 								</mdb-col>
 								<mdb-col lg="6">
-									<mdb-input type="text" :label="$t('fields.chamberRecordNumber')" v-model="form.chamberRegistryNumber" icon="book" required outline/>
+									<mdb-input type="text" :label="$t('fields.chamberRecordNumber')" v-model="form.chamberRecordNumber" icon="book" required outline/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
@@ -90,7 +90,7 @@
 							</mdb-row>
 							<mdb-row>
 								<mdb-col>
-									<mdb-input type="textarea" :label="$t('fields.comments')" v-model="form.message" icon="pencil-alt" required outline class="my-4"/>
+									<mdb-input type="textarea" :label="$t('fields.comments')" v-model="form.comments" icon="pencil-alt" outline class="my-4"/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
@@ -162,10 +162,10 @@
 					address: '',
 					postcode: '',
 					tin: '',
-					chamberRegistryNumber: '',
+					chamberRecordNumber: '',
 					professionStartDate: '',
 					licenseExpirationDate: '',
-					message: '',
+					comments: '',
 					condition: false,
 					files: []
 				},
