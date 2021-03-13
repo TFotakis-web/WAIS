@@ -251,4 +251,8 @@
 	.no-arrows input[type=number] {
 		-moz-appearance:textfield; /* Firefox */
 	}
+
+  .modal {
+    z-index: 1070;
+  }
 </style>
