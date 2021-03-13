@@ -6,17 +6,8 @@ import { updateRequests } from '@/graphql/custom-mutations';
 
 export const request = {
 	namespaced: true,
-	state: {
-		requests: [],
-	},
-	mutations: {
-		setRequests(state, payload) {
-			state.requests = payload;
-		},
-		pushRequest(state, payload) {
-			state.requests.push(payload);
-		}
-	},
+	state: {},
+	mutations: {},
 	actions: {
 		getRequest(_, id) {
 			return new Promise((resolve, reject) => {
@@ -30,11 +21,10 @@ export const request = {
 					});
 			});
 		},
-		listRequests({ commit }) {
+		listRequests(_) {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestss))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestss.items)
 						resolve(response.data.listRequestss.items);
 					})
 					.catch((error) => {
@@ -43,12 +33,11 @@ export const request = {
 					});
 			});
 		},
-		listRequestsBySenderEmail({ commit, rootGetters }, senderEmail) {
+		listRequestsBySenderEmail({ rootGetters }, senderEmail) {
 			senderEmail = senderEmail || rootGetters['auth/email'];
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestsBySenderEmail, { senderEmail }))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestsBySenderEmail.items)
 						resolve(response.data.listRequestsBySenderEmail.items);
 					})
 					.catch((error) => {
@@ -57,12 +46,11 @@ export const request = {
 					});
 			});
 		},
-		listRequestsByReceiverEmail({ commit }, receiverEmail) {
+		listRequestsByReceiverEmail(_, receiverEmail) {
 			receiverEmail = receiverEmail || '';
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestsByReceiverEmail, { receiverEmail }))
 					.then((response) => {
-						commit('setRequests', response.data.listRequestsByReceiverEmail.items)
 						resolve(response.data.listRequestsByReceiverEmail.items);
 					})
 					.catch((error) => {
@@ -90,8 +78,8 @@ export const request = {
 			delete request.updatedAt;
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(updateRequests, { input: request }))
-				// Todo: Check if ok to use that
-				// API.graphql(graphqlOperation(updateFields, { typename: 'Requests', id: request.id, fields: JSON.stringify(request) }))
+					// Todo: Check if ok to use that
+					// API.graphql(graphqlOperation(updateFields, { typename: 'Requests', id: request.id, fields: JSON.stringify(request) }))
 					.then((response) => {
 						resolve(response.data.updateFields);
 					})
