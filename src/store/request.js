@@ -21,7 +21,7 @@ export const request = {
 					});
 			});
 		},
-		listRequests(_) {
+		listRequests() {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(listRequestss))
 					.then((response) => {

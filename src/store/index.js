@@ -1,15 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { auth } from '@/store/auth/auth';
-import { request } from '@/store/request/request';
+import { auth } from '@/store/auth';
+import { request } from '@/store/request';
+// import { vehicle } from '@/store/vehicle';
+// import { trade } from '@/store/trade';
+// import { platformData } from '@/store/platformData';
 
 import { API, graphqlOperation } from "aws-amplify";
 import { echo, me } from "@/graphql/custom-queries";
-// import { vehicle } from '@/store/vehicle/vehicle';
-// import { trade } from '@/store/trade/trade';
-// import { platformData } from '@/store/platformData/platformData';
 
 Vue.use(Vuex);
+
 export default new Vuex.Store({
 	modules: {
 		auth,
