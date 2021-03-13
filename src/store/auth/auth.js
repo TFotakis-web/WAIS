@@ -209,8 +209,8 @@ export const auth = {
 					});
 			});
 		},
-		loadUserProfile({ commit }) {
-		// loadUserProfile({ commit, getters }) {
+		loadUserProfile({ commit, dispatch, getters }) {
+			// loadUserProfile({ commit, getters }) {
 			return new Promise((resolve, reject) => {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				API.graphql(graphqlOperation(me))
@@ -378,6 +378,16 @@ export const auth = {
 							},
 						};
 						commit("setUserProfile", userProfile);
+
+						if (getters.isAdmin) {
+							dispatch('request/listRequestsByReceiverEmail', 'wais@admin.com', { root: true })
+								.then((response) => {
+									for (let request of response) {
+										request.payload = JSON.parse(request.payload);
+									}
+									commit('concatRequestsForMe', response);
+								});
+						}
 						router.$loadRoutesAsync();
 						resolve();
 					})
