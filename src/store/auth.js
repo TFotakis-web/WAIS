@@ -406,8 +406,8 @@ export const auth = {
 				API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }))
 					.then((response) => {
 						userProfile = response.data.updateUserProfile;
-						commit("setUserProfile", userProfile);
-						resolve();
+						// commit("setUserProfile", userProfile);
+						resolve(userProfile);
 					})
 					.catch((error) => {
 						console.error(error);
