@@ -73,7 +73,7 @@ type UserProfile
   @model(subscriptions: null)
   @auth(
     rules: [
-      { allow: owner, ownerField: "username", operations: [read] }
+      { allow: owner, ownerField: "username", operations: [read, update] }
       { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
       { allow: private, provider: iam, operations: [create, read, update, delete] }
     ]
