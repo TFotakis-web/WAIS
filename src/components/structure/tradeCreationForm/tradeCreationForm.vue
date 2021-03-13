@@ -49,12 +49,12 @@
 							</mdb-row>
 							<mdb-row>
 								<mdb-col md="6">
-									<mdb-input type="text" :label="$t('fields.address')" v-model="form.address" icon="map-marker-alt" required outline/>
+									<mdb-input type="text" :label="$t('fields.address')" v-model="form.address" icon="map-marker-alt" outline/>
 								</mdb-col>
 								<mdb-col md="6">
 									<!-- Todo: Enable postcode select -->
 									<!-- <mdb-select search v-model="$root.PostcodeOptions" :label="$t('fields.postcode')" :placeholder="$t('fields.chooseYourPostcode')" icon="crosshairs" /> -->
-									<mdb-input type="text" :label="$t('fields.postcode')" v-model="form.postcode" icon="crosshairs" required outline/>
+									<mdb-input type="text" :label="$t('fields.postcode')" v-model="form.postcode" icon="crosshairs" outline/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
@@ -62,16 +62,16 @@
 									<mdb-input type="text" :label="$t('fields.tin')" v-model="form.tin" far icon="id-badge" required outline/>
 								</mdb-col>
 								<mdb-col lg="6">
-									<mdb-input type="text" :label="$t('fields.chamberRecordNumber')" v-model="form.chamberRecordNumber" icon="book" required outline/>
+									<mdb-input type="text" :label="$t('fields.chamberRecordNumber')" v-model="form.chamberRecordNumber" icon="book" outline/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
 								<mdb-col lg="6">
-									<mdb-date-picker :label="$t('fields.professionStartDate')" v-model="form.professionStartDate" autoHide disabledFuture :option="$datepickerOptions()" far icon="calendar-alt" required outline/>
+									<mdb-date-picker :label="$t('fields.professionStartDate')" v-model="form.professionStartDate" autoHide disabledFuture :option="$datepickerOptions()" far icon="calendar-alt" outline/>
 								</mdb-col>
 								<mdb-col lg="6">
-									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" far icon="-" class="d-lg-none" required outline/>
-									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" class="d-none d-lg-block" required outline/>
+									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" far icon="-" class="d-lg-none" outline/>
+									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" class="d-none d-lg-block" outline/>
 								</mdb-col>
 							</mdb-row>
 							<mdb-row>
