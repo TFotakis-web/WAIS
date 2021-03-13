@@ -198,7 +198,14 @@
     "chooseYourPostcode": "Choose your postcode",
     "comments": "Comments",
     "full_name": "Full Name",
-    "files": "Files"
+    "files": "Files",
+    "subscriptionExpirationDate": "Subscription exp. date",
+    "partnersNumberLimit": "Partners number limit",
+    "featureAccess": "Feature access",
+    "companyAccess": "Company access",
+    "employeesNumberLimit": "Employees number limit",
+    "billing": "Billing",
+    "issuing": "Issuing"
   },
   "actions": {
     "submit": "Submit",

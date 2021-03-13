@@ -198,7 +198,14 @@
     "chooseYourPostcode": "Επιλέξτε ταχ. κώδικα",
     "comments": "Σχόλια",
     "full_name": "Ονοματεπώνυμο",
-    "files": "Αρχεία"
+    "files": "Αρχεία",
+    "subscriptionExpirationDate": "Ημ. λήξης συνδρομής",
+    "partnersNumberLimit": "Όριο συννεργατών",
+    "featureAccess": "Πρόσβαση δυνατοτήτων",
+    "companyAccess": "Πρόσβαση εταιριών",
+    "employeesNumberLimit": "Όριο υπαλλήλων",
+    "billing": "Τιμολόγηση",
+    "issuing": "Έκδοση"
   },
   "actions": {
     "submit": "Υποβολή",
@@ -278,7 +285,5 @@
   },
   "various": {
     "underConstruction": "Υπό κατασκευή"
-  },
-  "Choose your postcode": "",
-  "Comments-Message": ""
+  }
 }
