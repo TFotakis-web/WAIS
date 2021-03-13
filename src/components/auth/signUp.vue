@@ -16,7 +16,7 @@
 						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" outline/>
 					</mdb-col>
 					<mdb-col>
-						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" outline/>
+						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" outline class="no-arrows"/>
 					</mdb-col>
 				</mdb-row>
 
