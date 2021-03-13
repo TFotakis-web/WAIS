@@ -63,7 +63,7 @@
 						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="2">
-						<mdb-input v-model="userProfile.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.zip_code" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
 					</mdb-col>
 <!--					<mdb-col sm="6">-->
 <!--						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>-->
@@ -108,7 +108,7 @@ export default {
 				mobile: this.userProfile.mobile,
 				address: this.userProfile.address,
 				city: this.userProfile.city,
-				zip_code: this.userProfile.postcode,
+				zip_code: this.userProfile.zip_code,
 				locale: this.userProfile.locale,
 				// gender: this.userProfile.gender,
 				// birthdate: this.userProfile.birthdate,
