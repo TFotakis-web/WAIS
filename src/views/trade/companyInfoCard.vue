@@ -3,7 +3,7 @@
 		<mdb-view cascade class="blue lighten-1 p-3">
 			<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }">
 				<mdb-view hover class="h-100 w-100 rounded-circle">
-					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style=" overflow-wrap: anywhere; text-align: center;"/>
+					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style="overflow-wrap: anywhere; text-align: center;"/>
 				</mdb-view>
 			</div>
 		</mdb-view>
@@ -21,31 +21,31 @@
 				</mdb-row>
 				<mdb-row class="mb-4">
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.registrationNumber" :label="$t('fields.registrationNumber')" :small="validation.registrationNumber" type="text" outline required class="my-2"/>
+						<mdb-input v-model="fields.registrationNumber" :label="$t('fields.registrationNumber')" :small="validation.registrationNumber" type="text" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
 						<mdb-input v-model="fields.tin" :label="$t('fields.tin')" :small="validation.tin" type="text" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.professionStartDate" :label="$t('fields.professionStartDate')" :small="validation.professionStartDate" type="text" outline required class="my-2"/>
+						<mdb-input v-model="fields.professionStartDate" :label="$t('fields.professionStartDate')" :small="validation.professionStartDate" type="text" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.licenseExpirationDate" :label="$t('fields.licenseExpirationDate')" :small="validation.licenseExpirationDate" type="text" outline required class="my-2"/>
+						<mdb-input v-model="fields.licenseExpirationDate" :label="$t('fields.licenseExpirationDate')" :small="validation.licenseExpirationDate" type="text" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.address" :label="$t('fields.address')" :small="validation.address" type="text" name="address" autocomplete="street-address" outline required class="my-2"/>
+						<mdb-input v-model="fields.address" :label="$t('fields.address')" :small="validation.address" type="text" name="address" autocomplete="street-address" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.city" :label="$t('fields.city')" :small="validation.city" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
+						<mdb-input v-model="fields.city" :label="$t('fields.city')" :small="validation.city" type="text" name="city" autocomplete="address-level2" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+						<mdb-input v-model="fields.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
 						<mdb-input v-model="fields.phone" :label="$t('fields.phone')" :small="validation.phone" type="text" name="phone" autocomplete="tel" outline required class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
-						<mdb-input v-model="fields.mobile" :label="$t('fields.mobile')" :small="validation.mobile" type="text" name="mobile" autocomplete="tel" outline required class="my-2"/>
+						<mdb-input v-model="fields.mobile" :label="$t('fields.mobile')" :small="validation.mobile" type="text" name="mobile" autocomplete="tel" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="6">
 						<mdb-input v-model="fields.email" :label="$t('fields.email')" :small="validation.email" type="text" name="email" autocomplete="email" outline required class="my-2"/>
@@ -62,8 +62,8 @@
 							</mdb-col>
 						</mdb-row>
 						<div v-for="(account, i) in companyAccounts" :key="'companyAccounts' + i" class="d-flex flex-row mb-2 align-items-baseline">
-							<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline class="flex-fill mr-2"/>
-							<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline class="flex-fill mr-2"/>
+							<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline required class="flex-fill mr-2"/>
+							<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline required class="flex-fill mr-2"/>
 							<mdb-icon icon="trash" class="clickable"/>
 						</div>
 					</mdb-col>
@@ -78,7 +78,7 @@
 						</mdb-row>
 						<div v-for="(companyCode, i) in companyCodes" :key="'companyCodes' + i" class="d-flex flex-row mb-2 align-items-baseline">
 							<mdb-select search v-model="companyOptions" :label="$t('fields.company')" :small="validation.companyCodes[i].name" type="text" outline required class="flex-fill mr-2"/>
-							<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline class="flex-fill mr-2"/>
+							<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline required class="flex-fill mr-2"/>
 							<mdb-icon icon="trash" class="clickable"/>
 						</div>
 					</mdb-col>
