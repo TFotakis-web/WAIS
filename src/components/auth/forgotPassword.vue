@@ -21,7 +21,9 @@
 
 			<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
 				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" outline/>
-				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" type="password" required class="mb-3" name="password" autocomplete="new-password" outline/>
+				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required class="mb-3" name="password" autocomplete="new-password" outline>
+					<mdb-btn @click.native="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
+				</mdb-input>
 				<div class="text-center">
 					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-3" />
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
@@ -55,6 +57,7 @@
 				showVerificationForm: false,
 				verificationCode: '',
 				newPassword: '',
+				passwordVisible: false,
 			};
 		},
 		methods: {
