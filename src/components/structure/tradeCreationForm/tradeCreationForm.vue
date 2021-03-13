@@ -216,7 +216,6 @@
 		methods: {
 			...mapActions('auth', ['signOut']),
 			...mapActions('request', ['sendRequest', 'updateRequest', 'getRequest']),
-			...mapMutations('request', ['pushRequest']),
 			...mapMutations('auth', ['pushRequestsSentByMe']),
 			async save() {
 				this.loading = true;
@@ -225,8 +224,9 @@
 				if (Object.keys(this.fileType1).length) files.push(this.fileType1);
 				if (Object.keys(this.fileType2).length) files.push(this.fileType2);
 				if (Object.keys(this.fileType3).length) files.push(this.fileType3);
-				if (this.otherFiles.length)
+				if (this.otherFiles.length) {
 					files = files.concat(this.otherFiles);
+				}
 				this.form.files = files;
 
 				if (Object.keys(this.request).length === 0) {
@@ -235,9 +235,7 @@
 							this.$notifyAction.saveSuccess();
 							this.getRequest(res.id)
 								.then((res) => {
-									this.pushRequest(res);
 									this.pushRequestsSentByMe(res);
-									console.log(res);
 									this.request = res;
 								})
 						})
