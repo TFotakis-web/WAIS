@@ -32,7 +32,13 @@ export const auth = {
 		},
 		concatRequestsForMe(state, payload) {
 			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.concat(payload);
-		}
+		},
+		removeRequestSentByMe(state, request) {
+			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.filter(r => r.id !== request.id);
+		},
+		removeRequestForMe(state, request) {
+			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.filter(r => r.id !== request.id);
+		},
 	},
 	actions: {
 		signUp(_, { username, password, email, phone_number }) {
