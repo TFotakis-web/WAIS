@@ -8,7 +8,9 @@
 		<mdb-card-body>
 			<form @submit.prevent="signUp">
 				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-4" outline/>
-				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" type="password" required name="password" autocomplete="current-password" class="mb-4" outline/>
+				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required name="password" autocomplete="current-password" class="mb-4" outline>
+					<mdb-btn @click.native="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
+				</mdb-input>
 				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" class="mb-4" outline/>
 
 				<mdb-row>
@@ -266,6 +268,7 @@
 					{ text: '+996', value: '+996' },
 					{ text: '+998', value: '+998' },
 				],
+				passwordVisible: false,
 			};
 		},
 		methods: {
