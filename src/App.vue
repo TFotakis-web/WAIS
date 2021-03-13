@@ -241,4 +241,14 @@
 		padding-top: 0 !important;
 		padding-bottom: 0 !important;
 	}
+
+	.no-arrows input::-webkit-outer-spin-button,
+	.no-arrows input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	.no-arrows input[type=number] {
+		-moz-appearance:textfield; /* Firefox */
+	}
 </style>
