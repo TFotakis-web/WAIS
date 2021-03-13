@@ -27,7 +27,7 @@
 				</mdb-row>
 				<mdb-row>
 					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.tin" :label="$t('fields.tin')" type="text" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.tin" :label="$t('fields.tin')" type="text" outline class="my-2"/>
 					</mdb-col>
 <!--					<mdb-col sm="6">-->
 <!--						<mdb-input v-model="userProfile.birthdate" :label="$t('fields.birthdate')" type="text" outline  required class="my-2"/>-->
@@ -43,10 +43,10 @@
 				</mdb-row>
 				<mdb-row>
 					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.telephone" :label="$t('fields.phone')" type="number" name="phone" autocomplete="tel" outline required class="my-2 no-arrows"/>
+						<mdb-input v-model="userProfile.mobile" :label="$t('fields.mobile')" type="number" name="mobile" autocomplete="tel" outline class="my-2 no-arrows"/>
 					</mdb-col>
 					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.mobile" :label="$t('fields.mobile')" type="number" name="mobile" autocomplete="tel" outline required class="my-2 no-arrows"/>
+						<mdb-input v-model="userProfile.telephone" :label="$t('fields.phone')" type="number" name="phone" autocomplete="tel" outline required class="my-2 no-arrows"/>
 					</mdb-col>
 				</mdb-row>
 				<mdb-row>
@@ -54,16 +54,16 @@
 <!--						<mdb-input v-model="userProfile.familyStatus" :label="$t('fields.familyStatus')" type="text" outline required class="my-2"/>-->
 <!--					</mdb-col>-->
 					<mdb-col sm="8">
-						<mdb-input v-model="userProfile.address" :label="$t('fields.address')" type="text" name="address" autocomplete="street-address" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.address" :label="$t('fields.address')" type="text" name="address" autocomplete="street-address" outline class="my-2"/>
 					</mdb-col>
 <!--					<mdb-col sm="6">-->
 <!--						<mdb-input v-model="userProfile.doy" :label="$t('fields.doy')" type="text" outline required class="my-2"/>-->
 <!--					</mdb-col>-->
 					<mdb-col sm="2">
-						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline class="my-2"/>
 					</mdb-col>
 					<mdb-col sm="2">
-						<mdb-input v-model="userProfile.zip_code" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.zip_code" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline class="my-2"/>
 					</mdb-col>
 <!--					<mdb-col sm="6">-->
 <!--						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>-->
