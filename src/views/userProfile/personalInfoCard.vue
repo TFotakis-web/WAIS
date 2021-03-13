@@ -8,69 +8,75 @@
 			</div>
 		</mdb-view>
 		<mdb-card-body>
-			<!--			<div class="text-center mb-3">
-							<mdb-btn @click.native="getProfile">Get</mdb-btn>
-							<mdb-btn @click.native="listProfiles">List</mdb-btn>
-							<mdb-btn @click.native="createProfile">Create</mdb-btn>
-							<mdb-btn @click.native="updateProfile">Update</mdb-btn>
-							<mdb-btn @click.native="deleteProfile">Delete</mdb-btn>
-							<mdb-btn @click.native="$store.dispatch('auth/updateUserAttributes')">UpdateAttributes</mdb-btn>
-						</div>-->
 			<form @submit.prevent="save">
 				<mdb-row>
 					<mdb-col>
 						<h6 class="text-left">{{ $t('views.userProfile.personalInfo') }}</h6>
 					</mdb-col>
 				</mdb-row>
-				<mdb-row class="mb-4">
-					<mdb-col sm="6">
+				<mdb-row>
+					<mdb-col sm="4">
 						<mdb-input v-model="userProfile.name" :label="$t('fields.name')" type="text" name="name" autocomplete="given-name" outline required class="my-2"/>
 					</mdb-col>
-					<mdb-col sm="6">
+					<mdb-col sm="4">
 						<mdb-input v-model="userProfile.family_name" :label="$t('fields.surname')" type="text" name="lname" autocomplete="family-name" outline required class="my-2"/>
 					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.birthdate" :label="$t('fields.birthdate')" type="text" outline  required class="my-2"/>
+					<mdb-col sm="4">
+						<mdb-input v-model="userProfile.fathers_name" :label="$t('fields.fathersName')" type="text" outline required class="my-2"/>
 					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.gender" :label="$t('fields.gender')" type="text" outline  required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.email" :label="$t('fields.email')" type="text" name="email" autocomplete="email" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.telephone" :label="$t('fields.phone')" type="text" name="phone" autocomplete="tel" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.familyStatus" :label="$t('fields.familyStatus')" type="text" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.address" :label="$t('fields.address')" type="text" name="address" autocomplete="street-address" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.doy" :label="$t('fields.doy')" type="text" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.chamberRecordNumber" :label="$t('fields.chamberRecordNumber')" type="text" outline required class="my-2"/>
-					</mdb-col>
+				</mdb-row>
+				<mdb-row>
 					<mdb-col sm="6">
 						<mdb-input v-model="userProfile.tin" :label="$t('fields.tin')" type="text" outline required class="my-2"/>
 					</mdb-col>
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.birthdate" :label="$t('fields.birthdate')" type="text" outline  required class="my-2"/>-->
+<!--					</mdb-col>-->
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.gender" :label="$t('fields.gender')" type="text" outline  required class="my-2"/>-->
+<!--					</mdb-col>-->
+				</mdb-row>
+				<mdb-row>
 					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.insuranceLicenseExpirationDate" :label="$t('fields.insuranceLicenseExpirationDate')" type="text" outline required class="my-2"/>
+						<mdb-input v-model="userProfile.email" :label="$t('fields.email')" type="text" name="email" autocomplete="email" outline required class="my-2"/>
 					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.professionStartDate" :label="$t('fields.professionStartDate')" type="text" outline required class="my-2"/>
+				</mdb-row>
+				<mdb-row>
+					<mdb-col sm="4">
+						<mdb-input v-model="userProfile.telephone" :label="$t('fields.phone')" type="number" name="phone" autocomplete="tel" outline required class="my-2 no-arrows"/>
 					</mdb-col>
+					<mdb-col sm="4">
+						<mdb-input v-model="userProfile.mobile" :label="$t('fields.mobile')" type="number" name="mobile" autocomplete="tel" outline required class="my-2 no-arrows"/>
+					</mdb-col>
+				</mdb-row>
+				<mdb-row>
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.familyStatus" :label="$t('fields.familyStatus')" type="text" outline required class="my-2"/>-->
+<!--					</mdb-col>-->
+					<mdb-col sm="8">
+						<mdb-input v-model="userProfile.address" :label="$t('fields.address')" type="text" name="address" autocomplete="street-address" outline required class="my-2"/>
+					</mdb-col>
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.doy" :label="$t('fields.doy')" type="text" outline required class="my-2"/>-->
+<!--					</mdb-col>-->
+					<mdb-col sm="2">
+						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline required class="my-2"/>
+					</mdb-col>
+					<mdb-col sm="2">
+						<mdb-input v-model="userProfile.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline required class="my-2"/>
+					</mdb-col>
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>-->
+<!--					</mdb-col>-->
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.chamberRecordNumber" :label="$t('fields.chamberRecordNumber')" type="text" outline required class="my-2"/>-->
+<!--					</mdb-col>-->
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.insuranceLicenseExpirationDate" :label="$t('fields.insuranceLicenseExpirationDate')" type="text" outline required class="my-2"/>-->
+<!--					</mdb-col>-->
+<!--					<mdb-col sm="6">-->
+<!--						<mdb-input v-model="userProfile.professionStartDate" :label="$t('fields.professionStartDate')" type="text" outline required class="my-2"/>-->
+<!--					</mdb-col>-->
 				</mdb-row>
 				<mdb-row>
 					<mdb-col class="text-center">
@@ -93,24 +99,26 @@ export default {
 			let userProfile = {
 				id: this.userProfile.id,
 				username: this.userProfile.username,
-				email: this.userProfile.email,
-				telephone: this.userProfile.telephone,
 				name: this.userProfile.name,
 				family_name: this.userProfile.family_name,
-				gender: this.userProfile.gender,
-				birthdate: this.userProfile.birthdate,
+				fathers_name: this.userProfile.fathers_name,
+				tin: this.userProfile.tin,
+				email: this.userProfile.email,
+				telephone: this.userProfile.telephone,
+				mobile: this.userProfile.mobile,
 				address: this.userProfile.address,
+				city: this.userProfile.city,
+				zip_code: this.userProfile.postcode,
+				locale: this.userProfile.locale,
+				// gender: this.userProfile.gender,
+				// birthdate: this.userProfile.birthdate,
 				// profilePicture: this.userProfile.profilePicture,
 				// preferences: this.userProfile.preferences,
-				locale: this.userProfile.locale,
-				tin: this.userProfile.tin,
-				doy: this.userProfile.doy,
-				city: this.userProfile.city,
-				postcode: this.userProfile.postcode,
-				familyStatus: this.userProfile.familyStatus,
-				chamberRecordNumber: this.userProfile.chamberRecordNumber,
-				insuranceLicenseExpirationDate: this.userProfile.insuranceLicenseExpirationDate,
-				professionStartDate: this.userProfile.professionStartDate,
+				// doy: this.userProfile.doy,
+				// familyStatus: this.userProfile.familyStatus,
+				// chamberRecordNumber: this.userProfile.chamberRecordNumber,
+				// insuranceLicenseExpirationDate: this.userProfile.insuranceLicenseExpirationDate,
+				// professionStartDate: this.userProfile.professionStartDate,
 			}
 			this.updateUserProfile(userProfile);
 		},
