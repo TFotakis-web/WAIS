@@ -32,12 +32,12 @@ let routesList = [
 	{ path: '/profile', name: 'UserProfile', component: () => import('@/views/userProfile/UserProfile') },
 	{ path: '/platformData', name: 'PlatformData', component: () => import('@/views/platformData/PlatformData') },
 	{ path: '/devTools', name: 'DevTools', component: () => import("@/views/devTools/DevTools") },
-	{ path: '/contractApproval', name: 'ContractApproval', component: () => import('@/view/home/Home') },
-	{ path: '/payment', name: 'Payment', component: () => import('@/view/home/Home') },
-	{ path: '/bank', name: 'Bank', component: () => import('@/view/home/Home') },
-	{ path: '/collaboration', name: 'Collaboration', component: () => import('@/view/home/Home') },
+	{ path: '/contractApproval', name: 'ContractApproval', component: () => import('@/views/home/Home') },
+	{ path: '/payment', name: 'Payment', component: () => import('@/views/home/Home') },
+	{ path: '/bank', name: 'Bank', component: () => import('@/views/home/Home') },
+	{ path: '/collaboration', name: 'Collaboration', component: () => import('@/views/home/Home') },
 	{ path: '/notifications', name: 'Notifications', component: () => import('@/views/notifications/Notifications') },
-	{ path: '/wallet', name: 'Wallet', component: () => import('@/view/home/Home') },
+	{ path: '/wallet', name: 'Wallet', component: () => import('@/views/home/Home') },
 ];
 
 let routes = {};
