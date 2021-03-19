@@ -7,7 +7,7 @@
 				<mdb-card>
 					<mdb-card-body>
 						<mdb-list-group>
-							<mdb-list-group-item v-for="request in createTradeList" :key="request.id" @click.native="edit(request)" :action="true">
+							<mdb-list-group-item v-for="request in createTradeList" :key="request.id" @click="edit(request)" :action="true">
 							<span>
 								<strong>{{ request.payload.tradeName }}: </strong>
 								{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
@@ -92,7 +92,7 @@
 							<mdb-select multiple selectAll search v-model="form.companyOptions" :visibleOptions="8" :label="$t('fields.companyAccess')" required outline class="mt-3"/>
 							<div class="text-center">
 								<mdb-btn type="submit" color="success" size="sm" icon="check">{{ $t('actions.accept') }}</mdb-btn>
-								<mdb-btn @click.native="rejectRequest(selectedRequest)" color="danger" size="sm" icon="times">{{ $t('actions.reject') }}</mdb-btn>
+								<mdb-btn @click="rejectRequest(selectedRequest)" color="danger" size="sm" icon="times">{{ $t('actions.reject') }}</mdb-btn>
 							</div>
 						</form>
 					</mdb-container>
@@ -102,11 +102,11 @@
 	</div>
 </template>
 <script>
-	import { mapActions, mapGetters, mapMutations } from "vuex";
-	import { Storage } from "aws-amplify";
+	import { mapActions, mapGetters, mapMutations } from 'vuex';
+	import { Storage } from 'aws-amplify';
 
 	export default {
-		name: "Notifications",
+		name: 'Notifications',
 		data() {
 			return {
 				modal: false,
@@ -116,7 +116,7 @@
 					partnersNumberLimit: '',
 					employeesNumberLimit: '',
 					featureAccessOptions: [],
-					companyOptions: []
+					companyOptions: [],
 				},
 			};
 		},
@@ -150,27 +150,27 @@
 						{ text: this.$t('fields.issuing'), value: 'Issuing', selected: false },
 					],
 					companyOptions: [
-						{ text: "Am Trust", value: "Am Trust", selected: false },
-						{ text: "Brokers Union / Ergo", value: "Brokers Union / Ergo", selected: false },
-						{ text: "Brokers Union / Prime", value: "Brokers Union / Prime", selected: false },
-						{ text: "Cromar/Lloyds", value: "Cromar/Lloyds", selected: false },
-						{ text: "Euroins", value: "Euroins", selected: false },
-						{ text: "Europrotection / Am Trust", value: "Europrotection / Am Trust", selected: false },
-						{ text: "Europrotection / Eurolife", value: "Europrotection / Eurolife", selected: false },
-						{ text: "Express Ηρακλειου", value: "Express Ηρακλειου", selected: false },
-						{ text: "Express Χανίων", value: "Express Χανίων", selected: false },
-						{ text: "Generali", value: "Generali", selected: false },
-						{ text: "Interamerican", value: "Interamerican", selected: false },
-						{ text: "Interlife", value: "Interlife", selected: false },
-						{ text: "Intersalonica", value: "Intersalonica", selected: false },
-						{ text: "Oracle", value: "Oracle", selected: false },
-						{ text: "Personal Brokers / Generali", value: "Personal Brokers / Generali", selected: false },
-						{ text: "Personal Brokers / Interamerican", value: "Personal Brokers / Interamerican", selected: false },
-						{ text: "Personal Brokers / Intersalonica", value: "Personal Brokers / Intersalonica", selected: false },
-						{ text: "Personal Brokers / Ατλαντική Ένωση", value: "Personal Brokers / Ατλαντική Ένωση", selected: false },
-						{ text: "Personal Insurance", value: "Personal Insurance", selected: false },
-						{ text: "Εθνική", value: "Εθνική", selected: false },
-						{ text: "Ευρωπαϊκή Πίστη", value: "Ευρωπαϊκή Πίστη", selected: false },
+						{ text: 'Am Trust', value: 'Am Trust', selected: false },
+						{ text: 'Brokers Union / Ergo', value: 'Brokers Union / Ergo', selected: false },
+						{ text: 'Brokers Union / Prime', value: 'Brokers Union / Prime', selected: false },
+						{ text: 'Cromar/Lloyds', value: 'Cromar/Lloyds', selected: false },
+						{ text: 'Euroins', value: 'Euroins', selected: false },
+						{ text: 'Europrotection / Am Trust', value: 'Europrotection / Am Trust', selected: false },
+						{ text: 'Europrotection / Eurolife', value: 'Europrotection / Eurolife', selected: false },
+						{ text: 'Express Ηρακλειου', value: 'Express Ηρακλειου', selected: false },
+						{ text: 'Express Χανίων', value: 'Express Χανίων', selected: false },
+						{ text: 'Generali', value: 'Generali', selected: false },
+						{ text: 'Interamerican', value: 'Interamerican', selected: false },
+						{ text: 'Interlife', value: 'Interlife', selected: false },
+						{ text: 'Intersalonica', value: 'Intersalonica', selected: false },
+						{ text: 'Oracle', value: 'Oracle', selected: false },
+						{ text: 'Personal Brokers / Generali', value: 'Personal Brokers / Generali', selected: false },
+						{ text: 'Personal Brokers / Interamerican', value: 'Personal Brokers / Interamerican', selected: false },
+						{ text: 'Personal Brokers / Intersalonica', value: 'Personal Brokers / Intersalonica', selected: false },
+						{ text: 'Personal Brokers / Ατλαντική Ένωση', value: 'Personal Brokers / Ατλαντική Ένωση', selected: false },
+						{ text: 'Personal Insurance', value: 'Personal Insurance', selected: false },
+						{ text: 'Εθνική', value: 'Εθνική', selected: false },
+						{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη', selected: false },
 					],
 				};
 				this.modal = true;
@@ -179,14 +179,14 @@
 				let featureAccess = [];
 				for (const feature of this.form.featureAccessOptions) {
 					if (feature.selected) {
-						featureAccess.push(feature.value)
+						featureAccess.push(feature.value);
 					}
 				}
 
 				let companyAccess = [];
 				for (const company of this.form.companyOptions) {
 					if (company.selected) {
-						companyAccess.push(company.value)
+						companyAccess.push(company.value);
 					}
 				}
 
@@ -195,127 +195,127 @@
 					manager_permissions: {
 						'Home': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'VehiclePricing': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'IndustrialLiabilityPricing': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'FirePricing': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'LifePricing': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ContractsFile': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'UncollectedContracts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'CollectedContracts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ContractAdditionalActs': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'GreenCardContracts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'UnclaimedContracts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'InvalidContracts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'NewContract': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ProcessingDueDateRegister': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ProcessingDuePayment': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ProcessingPaid': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ProcessingLosses': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingReceipts': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingRegisters': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingTodaysIncome': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingCommissionsUncollected': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingCommissionsCollected': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'AccountingMutualAccount': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'SupplierContractors': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'ContractorsExternalContractors': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'VehicleCards': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'VehicleCardsDetails': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'CustomerCards': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Library': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Trade': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'UserProfile': {
 							read: true,
-							write: true
+							write: true,
 						},
 						// 'PlatformData': {
 						// 	read: true,
@@ -327,27 +327,27 @@
 						// },
 						'ContractApproval': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Payment': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Bank': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Collaboration': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Notifications': {
 							read: true,
-							write: true
+							write: true,
 						},
 						'Wallet': {
 							read: true,
-							write: true
+							write: true,
 						},
 					},
 					subscriptionExpirationDate: this.form.subscriptionExpirationDate,
@@ -374,13 +374,13 @@
 						this.$notifyAction.saveSuccess();
 					})
 					.catch((err) => this.$notifyAction.error(err));
-			}
+			},
 		},
 		computed: {
 			...mapGetters('auth', ['requestsForMe']),
 			createTradeList() {
 				return this.requestsForMe.filter(el => el.type === 'CREATE_TRADE');
-			}
-		}
-	}
+			},
+		},
+	};
 </script>

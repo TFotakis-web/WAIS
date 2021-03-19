@@ -296,15 +296,15 @@
 					{
 						name: this.$t('components.navigation.navbar-item.home'),
 						to: { name: 'Home' },
-						icon: "home",
+						icon: 'home',
 						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.wallet'),
 						to: { name: 'Wallet' },
-						icon: "euro-sign",
+						icon: 'euro-sign',
 						fab: false,
-						label: '1345.85/1800.00'
+						label: '1345.85/1800.00',
 					},
 				];
 				let routes = [];
@@ -322,44 +322,44 @@
 					{
 						name: this.$t('components.navigation.navbar-item.devtools'),
 						to: { name: 'DevTools' },
-						icon: "dev",
-						fab: true
+						icon: 'dev',
+						fab: true,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.database'),
 						to: { name: 'PlatformData' },
-						icon: "table",
-						fab: false
+						icon: 'table',
+						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.contract-approval'),
 						to: { name: 'ContractApproval' },
-						icon: "file-signature",
-						fab: false
+						icon: 'file-signature',
+						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.payment'),
 						to: { name: 'Payment' },
-						icon: "shopping-cart",
-						fab: false
+						icon: 'shopping-cart',
+						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.bank'),
 						to: { name: 'Bank' },
-						icon: "university",
-						fab: false
+						icon: 'university',
+						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.collaboration'),
 						to: { name: 'Collaboration' },
-						icon: "handshake",
-						fab: false
+						icon: 'handshake',
+						fab: false,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.notifications'),
 						to: { name: 'Notifications' },
-						icon: "bell",
-						fab: false
+						icon: 'bell',
+						fab: false,
 					},
 				];
 				let routes = [];

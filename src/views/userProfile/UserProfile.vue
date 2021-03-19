@@ -7,12 +7,12 @@
 	</div>
 </template>
 <script>
-import PersonalInfoCard from "@/views/userProfile/personalInfoCard";
+	import PersonalInfoCard from '@/views/userProfile/personalInfoCard';
 
-export default {
-	name: 'UserProfile',
-	components: {
-		PersonalInfoCard
-	},
-};
+	export default {
+		name: 'UserProfile',
+		components: {
+			PersonalInfoCard,
+		},
+	};
 </script>

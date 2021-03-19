@@ -43,13 +43,13 @@ export const auth = {
 	actions: {
 		signUp(_, { username, password, email, phone_number }) {
 			return new Promise((resolve, reject) => {
-				let params = {
+				const params = {
 					username,
 					password,
 					attributes: {
 						email,
-						phone_number
-					}
+						phone_number,
+					},
 				};
 				Auth.signUp(params)
 					.then(() => {
@@ -91,9 +91,9 @@ export const auth = {
 					.then((response) => {
 						Auth.completeNewPassword(response, new_password)
 							.then(() => {
-								dispatch("signIn", {
+								dispatch('signIn', {
 									username: username,
-									password: new_password
+									password: new_password,
 								});
 								resolve();
 							});
@@ -108,15 +108,15 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				Auth.signIn({ username, password })
 					.then((response) => {
-						let cognitoUser = response;
-						commit("setCognitoUser", cognitoUser);
+						const cognitoUser = response;
+						commit('setCognitoUser', cognitoUser);
 						if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
 							reject({
 								name: 'NEW_PASSWORD_REQUIRED',
-								code: 'NEW_PASSWORD_REQUIRED'
+								code: 'NEW_PASSWORD_REQUIRED',
 							});
 						} else {
-							dispatch("currentUserInfo");
+							dispatch('currentUserInfo');
 							resolve();
 						}
 					})
@@ -131,7 +131,7 @@ export const auth = {
 				Auth.signOut()
 					.then(() => {
 						router.go(0); // Reload page
-						commit("setUser", null);
+						commit('setUser', null);
 						resolve();
 					})
 					.catch((error) => {
@@ -168,11 +168,11 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				Auth.currentAuthenticatedUser({
-					bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+					bypassCache: true,  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				})
 					.then((response) => {
-						commit("setCognitoUser", response);
-						dispatch("currentUserInfo");
+						commit('setCognitoUser', response);
+						dispatch('currentUserInfo');
 						resolve();
 					})
 					.catch((error) => {
@@ -193,10 +193,10 @@ export const auth = {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				Auth.currentUserInfo()
 					.then((response) => {
-						let userInfo = response;
+						const userInfo = response;
 						if (userInfo) {
-							commit("setUser", userInfo);
-							dispatch("loadUserProfile");
+							commit('setUser', userInfo);
+							dispatch('loadUserProfile');
 						}
 						resolve();
 					})
@@ -214,175 +214,175 @@ export const auth = {
 			return new Promise((resolve, reject) => {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				API.graphql(graphqlOperation(me))
-				// API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
+					// API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
 					.then((response) => {
-						let userProfile = response.data.me;
+						const userProfile = response.data.me;
 						// let userProfile = response.data.listUserProfileByUsername.items[0];
 						// Todo: Remove when backend is correct
 						userProfile.permissions = {
 							'Home': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'VehiclePricing': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'IndustrialLiabilityPricing': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'FirePricing': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'LifePricing': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ContractsFile': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'UncollectedContracts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'CollectedContracts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ContractAdditionalActs': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'GreenCardContracts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'UnclaimedContracts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'InvalidContracts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'NewContract': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ProcessingDueDateRegister': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ProcessingDuePayment': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ProcessingPaid': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ProcessingLosses': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingReceipts': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingRegisters': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingTodaysIncome': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingCommissionsUncollected': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingCommissionsCollected': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'AccountingMutualAccount': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'SupplierContractors': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ContractorsExternalContractors': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'VehicleCards': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'VehicleCardsDetails': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'CustomerCards': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Library': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Trade': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'UserProfile': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'PlatformData': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'DevTools': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'ContractApproval': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Payment': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Bank': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Collaboration': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Notifications': {
 								read: true,
-								write: true
+								write: true,
 							},
 							'Wallet': {
 								read: true,
-								write: true
+								write: true,
 							},
 						};
-						commit("setUserProfile", userProfile);
+						commit('setUserProfile', userProfile);
 
 						if (getters.isAdmin) {
 							dispatch('request/listRequestsByReceiverEmail', 'wais@admin.com', { root: true })
 								.then((response) => {
-									for (let request of response) {
+									for (const request of response) {
 										request.payload = JSON.parse(request.payload);
 									}
 									commit('concatRequestsForMe', response);
@@ -433,5 +433,5 @@ export const auth = {
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
 		requestsSentByMe: (state) => state.userProfile.requestsSentByMe.items,
 		requestsForMe: (state) => state.userProfile.requestsForMe.items,
-	}
-}
+	},
+};

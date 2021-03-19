@@ -9,10 +9,9 @@
 			<form @submit.prevent="signUp">
 				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required name="username" autocomplete="username" class="mb-4" outline/>
 				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required name="password" autocomplete="current-password" class="mb-4" outline>
-					<mdb-btn @click.native="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
+					<mdb-btn @click="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
 				</mdb-input>
 				<mdb-input v-model="credentials.email" :label="$t('fields.email')" icon="envelope" type="email" required name="email" autocomplete="email" class="mb-4" outline/>
-
 				<mdb-row>
 					<mdb-col>
 						<mdb-select v-model="telephoneCodeOptions" @getValue="(code) => (selectedTelephoneCode = code)" :label="$t('fields.countryCode')" icon="phone" outline/>
@@ -21,22 +20,20 @@
 						<mdb-input v-model="phone_number" :label="$t('fields.phoneNumber')" type="number" required name="phone" autocomplete="tel" outline class="no-arrows"/>
 					</mdb-col>
 				</mdb-row>
-
 				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="my-4" />
+					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="my-4"/>
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-					<hr />
+					<hr/>
 					<p class="mt-4">
 						<span>{{ $t('views.auth.haveAnAccount') }} </span>
 						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.signIn') }}</span>
 					</p>
-					<localeDropdown />
+					<localeDropdown/>
 				</div>
 			</form>
 		</mdb-card-body>
 	</mdb-card>
 </template>
-
 <script>
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
@@ -278,7 +275,7 @@
 				resendSignUpStore: 'auth/resendSignUp',
 				signInStore: 'auth/signIn',
 			}),
-			signUp: async function() {
+			signUp: async function () {
 				this.loading = true;
 				this.error = {};
 				this.credentials.phone_number = this.selectedTelephoneCode + this.phone_number.toString();

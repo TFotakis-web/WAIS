@@ -1,28 +1,31 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import dynamicRoutes from '@/router/routes';
-import store from '@/store';
+import { createRouter, createWebHistory } from '@ionic/vue-router';
 
-Vue.use(VueRouter);
+import { store } from '@/store';
+import dynamicRoutes from '@/router/routes';
 
 const routes = [
-	{ path: '/404-page-not-found', alias: '*', name: 'NotFound', component: () => import('@/views/errorPages/NotFound') },
+	{
+		path: '',
+		redirect: '/folder/Inbox',
+	},
+	{
+		path: '/folder/:id',
+		component: () => import('../views/Folder.vue'),
+	},
+
+	{
+		path: '/auth/signIn',
+		component: () => import('../views/auth/AuthPage.vue'),
+	},
+	// { path: '/404-page-not-found', alias: '*', name: 'NotFound', component: () => import('@/views/errorPages/NotFound') },
 ];
 
-const router = new VueRouter({
-	mode: 'history',
-	base: process.env.BASE_URL,
+const router = createRouter({
+	history: createWebHistory(process.env.BASE_URL),
 	routes,
-	scrollBehavior: function (to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition;
-		}
-		return { x: 0, y: 0 };
-	},
-	linkActiveClass: 'active'
 });
 
-VueRouter.prototype.$loadRoutesAsync = async function () {
+router.$loadRoutesAsync = async function () {
 	const permissions = store.getters['auth/permissions'];
 
 	for (const p in permissions) {
@@ -32,6 +35,6 @@ VueRouter.prototype.$loadRoutesAsync = async function () {
 		}
 	}
 	return Promise.resolve();
-}
+};
 
 export default router;

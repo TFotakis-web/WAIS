@@ -120,7 +120,7 @@
 										/>
 										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 										<localeDropdown/>
-										<mdb-btn flat darkWaves @click.native="signOut" icon="sign-out-alt">
+										<mdb-btn flat darkWaves @click="signOut" icon="sign-out-alt">
 											{{ $t('components.navigation.navbar-item.signOut') }}
 										</mdb-btn>
 									</div>
@@ -144,7 +144,7 @@
 		components: {
 			loadingBtn,
 			localeDropdown,
-			fileInput
+			fileInput,
 		},
 		data() {
 			return {
@@ -167,7 +167,7 @@
 					licenseExpirationDate: '',
 					comments: '',
 					condition: false,
-					files: []
+					files: [],
 				},
 				request: {},
 				files: [],
@@ -178,12 +178,12 @@
 				fileType1: {},
 				fileType2: {},
 				fileType3: {},
-				otherFiles: []
-			}
+				otherFiles: [],
+			};
 		},
 		mounted() {
 			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items;
-			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === "CREATE_TRADE");
+			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === 'CREATE_TRADE');
 			if (requestsForNewTrade.length) {
 				this.request = requestsForNewTrade[0];
 				const payload = JSON.parse(this.request.payload);
@@ -237,7 +237,7 @@
 								.then((res) => {
 									this.pushRequestsSentByMe(res);
 									this.request = res;
-								})
+								});
 						})
 						.catch((error) => console.error(error))
 						.finally(() => this.loading = false);

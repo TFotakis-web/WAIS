@@ -1,4 +1,5 @@
 ## Invariants
 
-# e-mail 
+# e-mail
+
 A user can never change their email address.

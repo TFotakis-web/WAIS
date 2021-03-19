@@ -1,22 +1,22 @@
 export default [
 	{
-		name: "getRequestsSimple",
+		name: 'getRequestsSimple',
 		source: 'getRequests',
-		remove: ['metadata']
+		remove: ['metadata'],
 	},
 	{
-		name: "listRequestssSimple",
+		name: 'listRequestssSimple',
 		source: 'listRequestss',
-		remove: ['metadata']
+		remove: ['metadata'],
 	},
 	{
-		name: "listRequestsBySenderEmailSimple",
+		name: 'listRequestsBySenderEmailSimple',
 		source: 'listRequestsBySenderEmail',
-		remove: ['metadata']
+		remove: ['metadata'],
 	},
 	{
-		name: "listRequestsByReceiverEmailSimple",
+		name: 'listRequestsByReceiverEmailSimple',
 		source: 'listRequestsByReceiverEmail',
-		remove: ['metadata']
+		remove: ['metadata'],
 	},
 ];

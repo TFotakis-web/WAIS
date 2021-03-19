@@ -9,7 +9,7 @@
 			:multiple="multiple"
 		/>
 		<loading-btn
-			@click.native="$refs.fileInput.click()"
+			@click="$refs.fileInput.click()"
 			:color="btnColor"
 			:rounded="rounded"
 			:size="size"
@@ -27,106 +27,106 @@
 		/>
 		<span v-for="(file, fileIndex) in files" :key="file.url + fileIndex">
 			<a :href="downloadUrls[fileIndex]" target="_blank" class="mr-1">{{ file.filename }}</a>
-			<mdb-icon far icon="times-circle" @click.native="deleteFile(fileIndex)" class="clickable"/>
+			<mdb-icon far icon="times-circle" @click="deleteFile(fileIndex)" class="clickable"/>
 			<span v-if="fileIndex !== files.length - 1">, </span>
 		</span>
 	</div>
 </template>
 <script>
-	import { Storage } from "aws-amplify";
+	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
-		name: "fileInput",
+		name: 'fileInput',
 		components: {
-			loadingBtn
+			loadingBtn,
 		},
 		props: {
 			value: {
 				type: [Object, Array],
 				default: function () {
-					return this.multiple ? [] : {}
-				}
+					return this.multiple ? [] : {};
+				},
 			},
 			accept: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			btnColor: {
 				type: String,
-				default: 'primary'
+				default: 'primary',
 			},
 			btnTitle: {
 				type: String,
-				default: 'Choose file'
+				default: 'Choose file',
 			},
 			multiple: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			textFieldTitle: {
 				type: String,
-				default: 'Upload your file'
+				default: 'Upload your file',
 			},
 			rounded: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			size: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			outline: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			floating: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			flat: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			transparent: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			gradient: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			icon: {
 				type: String,
-				default: 'cloud-upload-alt'
+				default: 'cloud-upload-alt',
 			},
 			iconLeft: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			iconRight: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			sizeLimitInMBs: {
 				type: Number,
-				default: 1
+				default: 1,
 			},
 			renameTo: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			filePath: {
 				type: String,
-				default: ''
+				default: '',
 			},
 		},
 		data() {
 			return {
 				files: [],
 				downloadUrls: [],
-				loading: false
-			}
+				loading: false,
+			};
 		},
 		methods: {
 			async onFilePicked(event) {
@@ -170,12 +170,12 @@
 				const file = this.files[fileIndex];
 				await Storage.remove(this.filePath + file.filename, { level: 'private' });
 				this.files.splice(fileIndex, 1);
-			}
+			},
 		},
 		computed: {
 			sizeLimitInBytes() {
 				return this.sizeLimitInMBs * 2 ** 20;
-			}
+			},
 		},
 		watch: {
 			files(newValue) {
@@ -198,7 +198,7 @@
 					const response = await Storage.get(this.filePath + this.files[fileIndex].filename, { level: 'private' });
 					this.downloadUrls.push(response);
 				}
-			}
+			},
 		},
 	};
 </script>

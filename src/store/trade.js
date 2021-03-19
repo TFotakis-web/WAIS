@@ -12,14 +12,14 @@ export const trade = {
 	mutations: {
 		setTrades(state, payload) {
 			state.trades = payload;
-		}
+		},
 	},
 	actions: {
 		async createTrade({ dispatch }, newTrade) {
 			try {
 				newTrade.id = uuid();
 				await API.graphql(graphqlOperation(createTradeMutation, { input: newTrade }));
-				dispatch("getTradesData");
+				dispatch('getTradesData');
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
@@ -36,10 +36,10 @@ export const trade = {
 		},
 		async getTradesData({ commit }) {
 			const tradesData = await API.graphql(graphqlOperation(listTradesQuery));
-			commit("setTrades", tradesData.data.listTrades.items);
+			commit('setTrades', tradesData.data.listTrades.items);
 		},
 	},
 	getters: {
-		trades: (state) => state.trades
-	}
-}
+		trades: (state) => state.trades,
+	},
+};

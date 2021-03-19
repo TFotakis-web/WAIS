@@ -30,41 +30,9 @@ export const createCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			to {
 				id
@@ -78,41 +46,9 @@ export const createCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 		}
 	}
@@ -149,11 +85,6 @@ export const createContract = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -176,12 +107,6 @@ export const createContract = `
 				taxableHorsepower
 				vin
 				value
-				file {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
 			}
@@ -217,11 +142,6 @@ export const createCustomer = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -246,103 +166,18 @@ export const createOffice = `
 			employeesNumberLimit
 			verified
 			customers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			employees {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contractors {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			partnerOffices {
-				items {
-					id
-					tradeName
-					ownerUsername
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					partnersNumberLimit
-					employeesNumberLimit
-					verified
-					createdAt
-					updatedAt
-					members
-				}
 				nextToken
 			}
 			createdAt
@@ -354,77 +189,15 @@ export const createOffice = `
 				insuranceLicenseExpirationDate
 				civilLiabilityExpirationDate
 				bankAccountInfo
-				files {
-					bucket
-					region
-					key
-					name
-				}
 			}
 			members
 			officeContracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeCustomers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			companyConnections {
-				items {
-					id
-					fromId
-					fromTradeName
-					toId
-					toTradeName
-					expirationDate
-					message
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}
@@ -472,41 +245,9 @@ export const createTradeContractConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			contract {
 				id
@@ -532,34 +273,8 @@ export const createTradeContractConnection = `
 				discount
 				jointWorth
 				netWorth
-				driversLicense {
-					LicenseID
-					DriversLicenseType
-				}
 				createdAt
 				updatedAt
-				vehicle {
-					id
-					numberPlate
-					tradeName
-					color
-					manufacturer
-					model
-					vehicle_owner
-					trim
-					fuelType
-					usage
-					displacement
-					eurotax
-					firstRegistrationDate
-					passengers
-					purchaseDate
-					taxableHorsepower
-					vin
-					value
-					createdAt
-					updatedAt
-				}
 			}
 		}
 	}
@@ -597,41 +312,9 @@ export const createTradeUserConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			user {
 				id
@@ -649,37 +332,10 @@ export const createTradeUserConnection = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -715,37 +371,10 @@ export const createTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 			receiver {
 				id
@@ -763,37 +392,10 @@ export const createTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -850,69 +452,18 @@ export const createUserProfile = `
 			createdAt
 			updatedAt
 			tradeCon {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeConnections {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			callendarEvents {
-				items {
-					id
-					username
-					createdAt
-					payload
-					updatedAt
-				}
 				nextToken
 			}
 			requestsSentByMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			requestsForMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}
@@ -980,41 +531,9 @@ export const deleteCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			to {
 				id
@@ -1028,41 +547,9 @@ export const deleteCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 		}
 	}
@@ -1099,11 +586,6 @@ export const deleteContract = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -1126,12 +608,6 @@ export const deleteContract = `
 				taxableHorsepower
 				vin
 				value
-				file {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
 			}
@@ -1167,11 +643,6 @@ export const deleteCustomer = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -1196,103 +667,18 @@ export const deleteOffice = `
 			employeesNumberLimit
 			verified
 			customers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			employees {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contractors {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			partnerOffices {
-				items {
-					id
-					tradeName
-					ownerUsername
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					partnersNumberLimit
-					employeesNumberLimit
-					verified
-					createdAt
-					updatedAt
-					members
-				}
 				nextToken
 			}
 			createdAt
@@ -1304,77 +690,15 @@ export const deleteOffice = `
 				insuranceLicenseExpirationDate
 				civilLiabilityExpirationDate
 				bankAccountInfo
-				files {
-					bucket
-					region
-					key
-					name
-				}
 			}
 			members
 			officeContracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeCustomers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			companyConnections {
-				items {
-					id
-					fromId
-					fromTradeName
-					toId
-					toTradeName
-					expirationDate
-					message
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}
@@ -1422,41 +746,9 @@ export const deleteTradeContractConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			contract {
 				id
@@ -1482,34 +774,8 @@ export const deleteTradeContractConnection = `
 				discount
 				jointWorth
 				netWorth
-				driversLicense {
-					LicenseID
-					DriversLicenseType
-				}
 				createdAt
 				updatedAt
-				vehicle {
-					id
-					numberPlate
-					tradeName
-					color
-					manufacturer
-					model
-					vehicle_owner
-					trim
-					fuelType
-					usage
-					displacement
-					eurotax
-					firstRegistrationDate
-					passengers
-					purchaseDate
-					taxableHorsepower
-					vin
-					value
-					createdAt
-					updatedAt
-				}
 			}
 		}
 	}
@@ -1547,41 +813,9 @@ export const deleteTradeUserConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			user {
 				id
@@ -1599,37 +833,10 @@ export const deleteTradeUserConnection = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -1665,37 +872,10 @@ export const deleteTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 			receiver {
 				id
@@ -1713,37 +893,10 @@ export const deleteTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -1800,69 +953,18 @@ export const deleteUserProfile = `
 			createdAt
 			updatedAt
 			tradeCon {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeConnections {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			callendarEvents {
-				items {
-					id
-					username
-					createdAt
-					payload
-					updatedAt
-				}
 				nextToken
 			}
 			requestsSentByMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			requestsForMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}
@@ -1988,41 +1090,9 @@ export const updateCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			to {
 				id
@@ -2036,41 +1106,9 @@ export const updateCompanyAccessConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 		}
 	}
@@ -2107,11 +1145,6 @@ export const updateContract = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -2134,12 +1167,6 @@ export const updateContract = `
 				taxableHorsepower
 				vin
 				value
-				file {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
 			}
@@ -2175,11 +1202,6 @@ export const updateCustomer = `
 			driversLicense {
 				LicenseID
 				DriversLicenseType
-				Category {
-					category
-					issueDate
-					expiresAt
-				}
 			}
 			createdAt
 			updatedAt
@@ -2211,103 +1233,18 @@ export const updateOffice = `
 			employeesNumberLimit
 			verified
 			customers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			employees {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			contractors {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			partnerOffices {
-				items {
-					id
-					tradeName
-					ownerUsername
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					partnersNumberLimit
-					employeesNumberLimit
-					verified
-					createdAt
-					updatedAt
-					members
-				}
 				nextToken
 			}
 			createdAt
@@ -2319,77 +1256,15 @@ export const updateOffice = `
 				insuranceLicenseExpirationDate
 				civilLiabilityExpirationDate
 				bankAccountInfo
-				files {
-					bucket
-					region
-					key
-					name
-				}
 			}
 			members
 			officeContracts {
-				items {
-					id
-					contractId
-					version
-					vehicleNumberPlate
-					vehicleId
-					voucherId
-					customerId
-					tradeName
-					second_tradeId
-					contractorId
-					co_name
-					co_TRN
-					contractState
-					insuranceClass
-					insuranceCoverage
-					insuranceUsage
-					duration
-					startDate
-					endDate
-					data
-					discount
-					jointWorth
-					netWorth
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeCustomers {
-				items {
-					id
-					tin
-					tradeName
-					firstName
-					lastName
-					fathersName
-					birthDate
-					gender
-					email
-					mobile
-					postcode
-					doy
-					address
-					familyStatus
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			companyConnections {
-				items {
-					id
-					fromId
-					fromTradeName
-					toId
-					toTradeName
-					expirationDate
-					message
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}
@@ -2437,41 +1312,9 @@ export const updateTradeContractConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			contract {
 				id
@@ -2497,34 +1340,8 @@ export const updateTradeContractConnection = `
 				discount
 				jointWorth
 				netWorth
-				driversLicense {
-					LicenseID
-					DriversLicenseType
-				}
 				createdAt
 				updatedAt
-				vehicle {
-					id
-					numberPlate
-					tradeName
-					color
-					manufacturer
-					model
-					vehicle_owner
-					trim
-					fuelType
-					usage
-					displacement
-					eurotax
-					firstRegistrationDate
-					passengers
-					purchaseDate
-					taxableHorsepower
-					vin
-					value
-					createdAt
-					updatedAt
-				}
 			}
 		}
 	}
@@ -2562,41 +1379,9 @@ export const updateTradeUserConnection = `
 				partnersNumberLimit
 				employeesNumberLimit
 				verified
-				customers {
-					nextToken
-				}
-				contracts {
-					nextToken
-				}
-				employees {
-					nextToken
-				}
-				contractors {
-					nextToken
-				}
-				partnerOffices {
-					nextToken
-				}
 				createdAt
 				updatedAt
-				privateData {
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-				}
 				members
-				officeContracts {
-					nextToken
-				}
-				officeCustomers {
-					nextToken
-				}
-				companyConnections {
-					nextToken
-				}
 			}
 			user {
 				id
@@ -2614,37 +1399,10 @@ export const updateTradeUserConnection = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -2680,37 +1438,10 @@ export const updateTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 			receiver {
 				id
@@ -2728,37 +1459,10 @@ export const updateTransactionHistory = `
 				gender
 				birthdate
 				city
-				profilePicture {
-					bucket
-					region
-					key
-					name
-				}
 				preferences
 				locale
-				files {
-					bucket
-					region
-					key
-					name
-				}
 				createdAt
 				updatedAt
-				tradeCon {
-					nextToken
-				}
-				officeConnections {
-					nextToken
-				}
-				callendarEvents {
-					nextToken
-				}
-				requestsSentByMe {
-					nextToken
-				}
-				requestsForMe {
-					nextToken
-				}
 			}
 		}
 	}
@@ -2815,69 +1519,18 @@ export const updateUserProfile = `
 			createdAt
 			updatedAt
 			tradeCon {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			officeConnections {
-				items {
-					id
-					tradeId
-					tradeName
-					userId
-					username
-					employeeType
-					preferences
-					members
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			callendarEvents {
-				items {
-					id
-					username
-					createdAt
-					payload
-					updatedAt
-				}
 				nextToken
 			}
 			requestsSentByMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 			requestsForMe {
-				items {
-					id
-					senderUsername
-					senderEmail
-					receiverEmail
-					type
-					payload
-					createdAt
-					updatedAt
-				}
 				nextToken
 			}
 		}

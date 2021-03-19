@@ -84,103 +84,18 @@ export const createOffice = /* GraphQL */ `
       employeesNumberLimit
       verified
       customers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       employees {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contractors {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       partnerOffices {
-        items {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          createdAt
-          updatedAt
-          members
-        }
         nextToken
       }
       createdAt
@@ -192,77 +107,15 @@ export const createOffice = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
       }
       members
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -286,103 +139,18 @@ export const updateOffice = /* GraphQL */ `
       employeesNumberLimit
       verified
       customers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       employees {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contractors {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       partnerOffices {
-        items {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          createdAt
-          updatedAt
-          members
-        }
         nextToken
       }
       createdAt
@@ -394,77 +162,15 @@ export const updateOffice = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
       }
       members
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -488,103 +194,18 @@ export const deleteOffice = /* GraphQL */ `
       employeesNumberLimit
       verified
       customers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       employees {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       contractors {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       partnerOffices {
-        items {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          createdAt
-          updatedAt
-          members
-        }
         nextToken
       }
       createdAt
@@ -596,77 +217,15 @@ export const deleteOffice = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
       }
       members
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -710,69 +269,18 @@ export const createUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       tradeCon {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeConnections {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       callendarEvents {
-        items {
-          id
-          username
-          createdAt
-          payload
-          updatedAt
-        }
         nextToken
       }
       requestsSentByMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       requestsForMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -816,69 +324,18 @@ export const updateUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       tradeCon {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeConnections {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       callendarEvents {
-        items {
-          id
-          username
-          createdAt
-          payload
-          updatedAt
-        }
         nextToken
       }
       requestsSentByMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       requestsForMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -922,69 +379,18 @@ export const deleteUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       tradeCon {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeConnections {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          employeeType
-          preferences
-          members
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       callendarEvents {
-        items {
-          id
-          username
-          createdAt
-          payload
-          updatedAt
-        }
         nextToken
       }
       requestsSentByMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       requestsForMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverEmail
-          type
-          payload
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -1127,11 +533,6 @@ export const createContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1154,12 +555,6 @@ export const createContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1198,11 +593,6 @@ export const updateContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1225,12 +615,6 @@ export const updateContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1269,11 +653,6 @@ export const deleteContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1296,12 +675,6 @@ export const deleteContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1337,11 +710,6 @@ export const createCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1377,11 +745,6 @@ export const updateCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1417,11 +780,6 @@ export const deleteCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1461,41 +819,9 @@ export const createTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       user {
         id
@@ -1513,37 +839,10 @@ export const createTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }
@@ -1581,41 +880,9 @@ export const updateTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       user {
         id
@@ -1633,37 +900,10 @@ export const updateTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }
@@ -1701,41 +941,9 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       user {
         id
@@ -1753,37 +961,10 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }
@@ -1813,41 +994,9 @@ export const createTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       contract {
         id
@@ -1873,34 +1022,8 @@ export const createTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
-        vehicle {
-          id
-          numberPlate
-          tradeName
-          color
-          manufacturer
-          model
-          vehicle_owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -1930,41 +1053,9 @@ export const updateTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       contract {
         id
@@ -1990,34 +1081,8 @@ export const updateTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
-        vehicle {
-          id
-          numberPlate
-          tradeName
-          color
-          manufacturer
-          model
-          vehicle_owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -2047,41 +1112,9 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       contract {
         id
@@ -2107,34 +1140,8 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
-        vehicle {
-          id
-          numberPlate
-          tradeName
-          color
-          manufacturer
-          model
-          vehicle_owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -2166,41 +1173,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       to {
         id
@@ -2214,41 +1189,9 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
     }
   }
@@ -2280,41 +1223,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       to {
         id
@@ -2328,41 +1239,9 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
     }
   }
@@ -2394,41 +1273,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       to {
         id
@@ -2442,41 +1289,9 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
-        customers {
-          nextToken
-        }
-        contracts {
-          nextToken
-        }
-        employees {
-          nextToken
-        }
-        contractors {
-          nextToken
-        }
-        partnerOffices {
-          nextToken
-        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
         members
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
     }
   }
@@ -2554,37 +1369,10 @@ export const createTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
       receiver {
         id
@@ -2602,37 +1390,10 @@ export const createTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }
@@ -2668,37 +1429,10 @@ export const updateTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
       receiver {
         id
@@ -2716,37 +1450,10 @@ export const updateTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }
@@ -2782,37 +1489,10 @@ export const deleteTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
       receiver {
         id
@@ -2830,37 +1510,10 @@ export const deleteTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
-        tradeCon {
-          nextToken
-        }
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
     }
   }

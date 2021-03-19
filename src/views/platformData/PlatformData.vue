@@ -11,7 +11,6 @@
 							<span v-else>{{ item }}</span>
 						</mdb-breadcrumb-item>
 					</mdb-breadcrumb>
-
 					<mdb-list-group>
 						<mdb-list-group-item
 							v-for="(el, key, index) in curData"
@@ -21,24 +20,19 @@
 							<template v-if="Array.isArray(el)">
 								<span @click="selectKey(key)" class="a-tag">{{ key }}</span>
 							</template>
-
 							<template v-else-if="typeof el === 'string' && el !== null">
 								<span v-if="!Array.isArray(curData)" class="mr-1">{{ key }}:</span>
 								<span>{{ el }}</span>
 							</template>
-
 							<template v-else-if="typeof el === 'number' && el !== null">
 								<span v-if="!Array.isArray(curData)" class="mr-1">{{ key }}:</span>
 								<span>{{ el }}</span>
 							</template>
-
 							<template v-else-if="el.constructor === Object">
 								<span @click="selectKey(key)" class="a-tag">{{ key }}</span>
 							</template>
-
-							<mdb-icon icon="trash" @click.native="deleteItem(key)" class="clickable ml-auto" />
+							<mdb-icon icon="trash" @click="deleteItem(key)" class="clickable ml-auto"/>
 						</mdb-list-group-item>
-
 						<mdb-list-group-item :justify-content-between="false" class="mt-3">
 							<template v-if="newItemType === ''">
 								<span class="mr-1">{{ $t('actions.add') }}:</span>
@@ -47,14 +41,14 @@
 										class="a-tag"
 										v-if="curData[0] === undefined || typeof curData[0] === 'string'"
 										@click="addNewItem('String')"
-										>{{ $t('views.platformData.string') }}</span
+									>{{ $t('views.platformData.string') }}</span
 									>
 									<span v-if="curData[0] === undefined" class="mr-1">,</span>
 									<span
 										class="a-tag"
 										v-if="curData[0] === undefined || typeof curData[0] === 'number'"
 										@click="addNewItem('Number')"
-										>{{ $t('views.platformData.number') }}</span
+									>{{ $t('views.platformData.number') }}</span
 									>
 								</template>
 								<template v-else-if="curData.constructor === Object">
@@ -65,29 +59,24 @@
 								</template>
 							</template>
 							<template v-else>
-								<mdb-input v-if="curData.constructor === Object" v-model="newItemKey" label="Key" class="my-0 mr-1" />
-
+								<mdb-input v-if="curData.constructor === Object" v-model="newItemKey" label="Key" class="my-0 mr-1"/>
 								<template v-if="newItemType === 'String'">
-									<mdb-input v-model="newItemValue" label="Value" class="my-0" />
+									<mdb-input v-model="newItemValue" label="Value" class="my-0"/>
 								</template>
-
 								<template v-else-if="newItemType === 'Number'">
-									<mdb-input v-model="newItemValue" type="number" label="Value" class="my-0" />
+									<mdb-input v-model="newItemValue" type="number" label="Value" class="my-0"/>
 								</template>
-
-								<mdb-icon icon="save" @click.native="saveNewItem" class="ml-auto mr-1" />
-								<mdb-icon icon="times" @click.native="cancelSaveNewItem" />
+								<mdb-icon icon="save" @click="saveNewItem" class="ml-auto mr-1"/>
+								<mdb-icon icon="times" @click="cancelSaveNewItem"/>
 							</template>
 						</mdb-list-group-item>
 					</mdb-list-group>
-
-					<mdb-btn color="success" :disabled="saveIsDisabled" @click.native="save">{{ $t('actions.save') }}</mdb-btn>
+					<mdb-btn color="success" :disabled="saveIsDisabled" @click="save">{{ $t('actions.save') }}</mdb-btn>
 				</mdb-col>
 			</mdb-row>
 		</mdb-container>
 	</div>
 </template>
-
 <script>
 	export default {
 		name: 'PlatformData',

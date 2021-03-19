@@ -5,9 +5,8 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	export default {
-		name: 'fullScreenSpinner'
+		name: 'fullScreenSpinner',
 	};
 </script>

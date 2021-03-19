@@ -29,62 +29,62 @@
 			<mdb-row>
 				<mdb-col class="text-center">
 					<hr/>
-					<mdb-btn outline="primary" darkWaves rounded @click.native="addUser">{{ $t('actions.add') }}</mdb-btn>
-					<mdb-btn outline="primary" darkWaves rounded @click.native="save">{{ $t('actions.save') }}</mdb-btn>
+					<mdb-btn outline="primary" darkWaves rounded @click="addUser">{{ $t('actions.add') }}</mdb-btn>
+					<mdb-btn outline="primary" darkWaves rounded @click="save">{{ $t('actions.save') }}</mdb-btn>
 				</mdb-col>
 			</mdb-row>
 		</mdb-card-body>
 	</mdb-card>
 </template>
 <script>
-export default {
-	name: "userPermissionsTableCard",
-	data() {
-		return {
-			permissionsTable: [
-				'Home',
-				'VehiclePricing',
-				'IndustrialLiabilityPricing',
-				'FirePricing',
-				'LifePricing',
-				'ContractsFile',
-				'UncollectedContracts',
-				'CollectedContracts',
-				'ContractAdditionalActs',
-				'GreenCardContracts',
-				'UnclaimedContracts',
-				'InvalidContracts',
-				'NewContract',
-				'ProcessingDueDateRegister',
-				'ProcessingDuePayment',
-				'ProcessingPaid',
-				'ProcessingLosses',
-				'AccountingReceipts',
-				'AccountingRegisters',
-				'AccountingTodaysIncome',
-				'AccountingCommissionsUncollected',
-				'AccountingCommissionsCollected',
-				'AccountingMutualAccount',
-				'SupplierContractors',
-				'ContractorsExternalContractors',
-				'VehicleCards',
-				'VehicleCardsDetails',
-				'CustomerCards',
-				'Library',
-				'Trade',
-				'UserProfile',
-				'PlatformData',
-			],
-			usersPermissions: {}
-		}
-	},
-	mounted() {
-		this.loadUserPermissions();
-	},
-	methods: {
-		loadUserPermissions() {
-			const user = {
-				'Home': false,
+	export default {
+		name: 'userPermissionsTableCard',
+		data() {
+			return {
+				permissionsTable: [
+					'Home',
+					'VehiclePricing',
+					'IndustrialLiabilityPricing',
+					'FirePricing',
+					'LifePricing',
+					'ContractsFile',
+					'UncollectedContracts',
+					'CollectedContracts',
+					'ContractAdditionalActs',
+					'GreenCardContracts',
+					'UnclaimedContracts',
+					'InvalidContracts',
+					'NewContract',
+					'ProcessingDueDateRegister',
+					'ProcessingDuePayment',
+					'ProcessingPaid',
+					'ProcessingLosses',
+					'AccountingReceipts',
+					'AccountingRegisters',
+					'AccountingTodaysIncome',
+					'AccountingCommissionsUncollected',
+					'AccountingCommissionsCollected',
+					'AccountingMutualAccount',
+					'SupplierContractors',
+					'ContractorsExternalContractors',
+					'VehicleCards',
+					'VehicleCardsDetails',
+					'CustomerCards',
+					'Library',
+					'Trade',
+					'UserProfile',
+					'PlatformData',
+				],
+				usersPermissions: {},
+			};
+		},
+		mounted() {
+			this.loadUserPermissions();
+		},
+		methods: {
+			loadUserPermissions() {
+				const user = {
+					'Home': false,
 					'VehiclePricing': false,
 					'IndustrialLiabilityPricing': false,
 					'FirePricing': false,
@@ -116,55 +116,55 @@ export default {
 					'Trade': false,
 					'UserProfile': false,
 					'PlatformData': false,
-			};
-			const numCopies = 20;
-			for(let i = 0; i < numCopies; i++) {
-				this.$set(this.usersPermissions, 'user' + i.toString(), Object.assign({}, user));
-			}
+				};
+				const numCopies = 20;
+				for (let i = 0; i < numCopies; i++) {
+					this.$set(this.usersPermissions, 'user' + i.toString(), Object.assign({}, user));
+				}
+			},
+			addUser() {
+				console.log('Add User.');
+			},
+			save() {
+				console.log('Saved.');
+			},
 		},
-		addUser() {
-			console.log('Add User.');
-		},
-		save() {
-			console.log('Saved.');
-		},
-	},
-}
+	};
 </script>
 <style scoped>
-div .fixed-header-column {
-	position: relative;
-}
+	div .fixed-header-column {
+		position: relative;
+	}
 
-.fixed-header-column table {
-	position: relative;
-	border-collapse: collapse;
-}
+	.fixed-header-column table {
+		position: relative;
+		border-collapse: collapse;
+	}
 
-.fixed-header-column td,
-th {
-	z-index: 1;
-}
+	.fixed-header-column td,
+	th {
+		z-index: 1;
+	}
 
-.fixed-header-column thead th {
-	position: -webkit-sticky; /* for Safari */
-	position: sticky;
-	top: 0;
-	background: #FFF;
-	color: #000;
-	z-index: 2;
-}
+	.fixed-header-column thead th {
+		position: -webkit-sticky; /* for Safari */
+		position: sticky;
+		top: 0;
+		background: #FFF;
+		color: #000;
+		z-index: 2;
+	}
 
-.fixed-header-column thead th:first-child {
-	left: 0;
-	z-index: 3;
-}
+	.fixed-header-column thead th:first-child {
+		left: 0;
+		z-index: 3;
+	}
 
-.fixed-header-column tbody th {
-	position: -webkit-sticky; /* for Safari */
-	position: sticky;
-	left: 0;
-	background: #FFF;
-	z-index: 2;
-}
+	.fixed-header-column tbody th {
+		position: -webkit-sticky; /* for Safari */
+		position: sticky;
+		left: 0;
+		background: #FFF;
+		z-index: 2;
+	}
 </style>

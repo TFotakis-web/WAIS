@@ -105,6 +105,6 @@ export const request = {
 		},
 	},
 	getters: {
-		requests: (state) => state.requests
-	}
-}
+		requests: (state) => state.requests,
+	},
+};

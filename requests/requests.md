@@ -4,14 +4,11 @@ This sectiom describes the payloads for each type of request.
 
 # CREATE_TRADE
 
-All candidate office fields must be placed in this JSON with the exact field names as described in the schema.graphql.
-Field and identity validations are performed when the request is sent.
-After a successful Office creation a new TradeUserConnection between Manager and New Office is created.
+All candidate office fields must be placed in this JSON with the exact field names as described in the schema.graphql. Field and identity validations are performed when the request is sent. After a successful Office creation a new TradeUserConnection between Manager and New Office is created.
 
 ## Sender's payload
 
-Standard request input, mandatory fields have content in this example.
-Missing attributes are declared null (the numbers are an exception).
+Standard request input, mandatory fields have content in this example. Missing attributes are declared null (the numbers are an exception).
 
 ```json
 {
@@ -64,8 +61,7 @@ The IDs of the completed request (now deleted),created Office and TradeUserConne
 
 ## Sender's payload
 
-The email address of the employee you want to connect with. Address can be absent from the WAIS DB.
-For employee:
+The email address of the employee you want to connect with. Address can be absent from the WAIS DB. For employee:
 
 ```json
 {
@@ -101,8 +97,7 @@ The IDs of the completed request (now deleted), involved Office and TradeUserCon
 
 ## Sender's payload
 
-The email address of the company manager you want to connect with. Address can be absent from the WAIS DB
-For contractor:
+The email address of the company manager you want to connect with. Address can be absent from the WAIS DB For contractor:
 
 ```json
 {
@@ -118,8 +113,7 @@ For contractor:
 
 ## Receiver's response
 
-The IDs of the completed request (now deleted),the Office that sent the invite and TradeUserConnection are returned.
-The Office ID is either the created contractor Office or the Office ID that invited the employee.
+The IDs of the completed request (now deleted),the Office that sent the invite and TradeUserConnection are returned. The Office ID is either the created contractor Office or the Office ID that invited the employee.
 
 ```json
 {
@@ -139,8 +133,7 @@ The Office ID is either the created contractor Office or the Office ID that invi
 
 ## Sender's payload
 
-The email address of the Office you want to connect with.
-The office with this email must be present in this.
+The email address of the Office you want to connect with. The office with this email must be present in this.
 
 ```json
 {

@@ -1,14 +1,14 @@
 module.exports = {
 	root: true,
 	env: {
-		node: true
+		node: true,
 	},
 	'extends': [
-		'plugin:vue/essential',
-		'eslint:recommended'
+		'plugin:vue/vue3-essential',
+		'eslint:recommended',
 	],
 	parserOptions: {
-		parser: 'babel-eslint'
+		ecmaVersion: 2020,
 	},
 	rules: {
 		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -19,6 +19,18 @@ module.exports = {
 		'vue/custom-event-name-casing': 'off',
 		'vue/experimental-script-setup-vars': 'off',
 		'vue/no-mutating-props': 'off',
-		'vue/no-unused-components': 'warn'
-	}
-}
+		'vue/no-unused-components': 'warn',
+		'vue/no-deprecated-slot-attribute': 'off'
+	},
+	overrides: [
+		{
+			files: [
+				'**/__tests__/*.{j,t}s?(x)',
+				'**/tests/unit/**/*.spec.{j,t}s?(x)',
+			],
+			env: {
+				jest: true,
+			},
+		},
+	],
+};

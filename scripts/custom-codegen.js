@@ -43,7 +43,7 @@ async function customize(moduleName) {
 	console.log(newModulePath + ': OK');
 }
 
-execSync("amplify codegen");
+execSync('amplify codegen');
 customize('queries');
 customize('mutations');
-customize('subscriptions');
+// customize('subscriptions');

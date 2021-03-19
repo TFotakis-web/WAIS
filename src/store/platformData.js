@@ -1,4 +1,4 @@
-import $http from "@/axios";
+import $http from '@/axios';
 import $i18n from '@/i18n';
 
 class TranslatableItem {
@@ -21,14 +21,14 @@ class TranslatableItemList {
 		}
 		this._list = [];
 		for (const item of inputList) {
-			this._list.push(new ItemClass(item))
+			this._list.push(new ItemClass(item));
 		}
 	}
 
 	get list() {
 		let list = [];
 		for (const item of this._list) {
-			list.push(item.name)
+			list.push(item.name);
 		}
 		return list;
 	}
@@ -50,7 +50,7 @@ class VehicleList {
 		for (let i = 0; i < inputList.length; i++) {
 			let vehicle = new Vehicle(inputList[i]);
 			this.list.push(vehicle);
-			this.byType
+			this.byType;
 		}
 	}
 }
@@ -76,7 +76,6 @@ class PostcodeList {
 	}
 }
 
-
 class Usage extends TranslatableItem {
 	constructor(branch, locales, translations) {
 		super(locales, translations);
@@ -96,9 +95,9 @@ class UsageList extends TranslatableItemList {
 
 class PlatformData {
 	BranchesList = new TranslatableItemList([]);
-	VehicleManufacturerList = []
+	VehicleManufacturerList = [];
 	DOYList = new TranslatableItemList([]);
-	VehicleList = new VehicleList([])
+	VehicleList = new VehicleList([]);
 	PostcodeList = new PostcodeList([]);
 	UsageList = new UsageList([]);
 	DriversLicenseTypeList = new TranslatableItemList([]);
@@ -127,13 +126,13 @@ export const platformData = {
 		setData(state, payload) {
 			// state.data = payload;
 			state.data = new PlatformData(payload);
-		}
+		},
 	},
 	actions: {
 		async createData({ dispatch }, newData) {
 			try {
 				console.log(newData);
-				dispatch("getPlatformData");
+				dispatch('getPlatformData');
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
@@ -152,7 +151,7 @@ export const platformData = {
 			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
 				let res = await $http.get('/enumData.json');
-				await commit("setData", res.data);
+				await commit('setData', res.data);
 				commit('decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
@@ -162,6 +161,6 @@ export const platformData = {
 		},
 	},
 	getters: {
-		data: (state) => state.data
-	}
+		data: (state) => state.data,
+	},
 };

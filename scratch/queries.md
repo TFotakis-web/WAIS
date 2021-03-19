@@ -80,8 +80,7 @@ mutation createAdmin {
 
 # Customers CRUD
 
-Manage a customer entry via manageCustomers(action: CustomerResourceAction.CREATE, tradeName: "...", payload: "{}") with the following _STRING_ payload.
-Although the JSON version is present here you will need to Stringify this.
+Manage a customer entry via manageCustomers(action: CustomerResourceAction.CREATE, tradeName: "...", payload: "{}") with the following _STRING_ payload. Although the JSON version is present here you will need to Stringify this.
 
 ```json
 {
@@ -127,9 +126,7 @@ The response is the following:
 }
 ```
 
-In order to retrieve customers call the customers(filter: String, limit: Int, nextToken: String) method in the Office model.
-The response is the follwoing stringified JSON (here the JSON version is present but you will need to parse it).
-You can pass a filter to the customers method to avoid over-fetching.
+In order to retrieve customers call the customers(filter: String, limit: Int, nextToken: String) method in the Office model. The response is the follwoing stringified JSON (here the JSON version is present but you will need to parse it). You can pass a filter to the customers method to avoid over-fetching.
 
 ```json
 [
@@ -140,11 +137,7 @@ You can pass a filter to the customers method to avoid over-fetching.
 ]
 ```
 
-In order to update an existing customer simply provide the following payload with an action of CustomerResourceAction.UPDATE.
-Only the ID field is mandatory and is used to pinpoint the Customer's entry.
-The other fields will update (overwrite) the existing ones.
-Reminder that GQL does NOT support array index-specific updates which is why the entire array needs to be retransmitted. Will probably do a different API for File updates.
-When updating the Sort Key (firstName or lastName) both fields need to be provided, even if they haven't changed.
+In order to update an existing customer simply provide the following payload with an action of CustomerResourceAction.UPDATE. Only the ID field is mandatory and is used to pinpoint the Customer's entry. The other fields will update (overwrite) the existing ones. Reminder that GQL does NOT support array index-specific updates which is why the entire array needs to be retransmitted. Will probably do a different API for File updates. When updating the Sort Key (firstName or lastName) both fields need to be provided, even if they haven't changed.
 
 ```json
 {
@@ -210,8 +203,7 @@ The response is:
 
 # Contractor/Employees CRUD
 
-Manage an Employee or a Contractor via manageEmployees/manageContractors(action: EmployeeResourceAction/ContractorResourceAction!, tradeName: String!, payload: String!) with the following _STRING_ payload.
-Although the JSON version is present here you will need to Stringify this.
+Manage an Employee or a Contractor via manageEmployees/manageContractors(action: EmployeeResourceAction/ContractorResourceAction!, tradeName: String!, payload: String!) with the following _STRING_ payload. Although the JSON version is present here you will need to Stringify this.
 
 To update permissions send the user's _ENTIRE_ permission array as a payload with the an action of UPDATE_PERMISSIONS.
 
@@ -237,5 +229,6 @@ To remove an employee from the office send the following payload with an action 
 ```
 
 # Contact CRUD
+
 # TODO - simillar to Customers
 

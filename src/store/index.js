@@ -1,17 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 import { auth } from '@/store/auth';
 import { request } from '@/store/request';
 // import { vehicle } from '@/store/vehicle';
 // import { trade } from '@/store/trade';
 // import { platformData } from '@/store/platformData';
 
-import { API, graphqlOperation } from "aws-amplify";
-import { echo, me } from "@/graphql/custom-queries";
+import { API, graphqlOperation } from 'aws-amplify';
+import { echo, me } from '@/graphql/custom-queries';
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export const store = createStore({
 	modules: {
 		auth,
 		request,
@@ -22,7 +19,7 @@ export default new Vuex.Store({
 	state: {
 		globalPendingPromises: 0,
 		localesLoaded: false,
-		routerViewPendingPromises: 0
+		routerViewPendingPromises: 0,
 	},
 	mutations: {
 		increaseGlobalPendingPromises(state) {
@@ -31,7 +28,7 @@ export default new Vuex.Store({
 		decreaseGlobalPendingPromises(state) {
 			state.globalPendingPromises--;
 			if (state.globalPendingPromises < 0) {
-				console.error("Pending Promises:", state.globalPendingPromises);
+				console.error('Pending Promises:', state.globalPendingPromises);
 			}
 		},
 		increaseRouterViewPendingPromises(state) {
@@ -40,12 +37,12 @@ export default new Vuex.Store({
 		decreaseRouterViewPendingPromises(state) {
 			state.routerViewPendingPromises--;
 			if (state.routerViewPendingPromises < 0) {
-				console.error("Pending Promises:", state.routerViewPendingPromises);
+				console.error('Pending Promises:', state.routerViewPendingPromises);
 			}
 		},
 		setLocalesLoaded(state, loaded) {
 			state.localesLoaded = loaded;
-		}
+		},
 	},
 	actions: {
 		echo() {
@@ -73,11 +70,11 @@ export default new Vuex.Store({
 						reject(error);
 					});
 			});
-		}
+		},
 	},
 	getters: {
 		globalPendingPromises: (state) => state.globalPendingPromises,
 		routerViewPendingPromises: (state) => state.routerViewPendingPromises,
-		localesLoaded: (state) => state.localesLoaded
-	}
+		localesLoaded: (state) => state.localesLoaded,
+	},
 });

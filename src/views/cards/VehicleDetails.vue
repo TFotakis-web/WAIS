@@ -5,28 +5,27 @@
 		<span>{{ vehicle }}</span>
 	</div>
 </template>
-
 <script>
 	export default {
 		name: 'VehicleDetails',
 		data() {
 			return {
-				vehicle: {}
-			}
+				vehicle: {},
+			};
 		},
-		mounted () {
+		mounted() {
 			this.getVehicle();
 		},
 		methods: {
-			getVehicle: async function() {
+			getVehicle: async function () {
 				this.vehicle = await this.$store.dispatch('vehicle/getVehicle', this.vehicleId);
 				console.log(this.vehicle);
-			}
+			},
 		},
 		computed: {
 			vehicleId() {
 				return this.$route.params.id;
-			}
+			},
 		},
 	};
 </script>

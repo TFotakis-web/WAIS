@@ -15,16 +15,16 @@
 	</div>
 </template>
 <script>
-import TestingCard from "@/views/devTools/testingCard";
-import DevOptionsCard from "@/views/devTools/devOptionsCard";
+	import TestingCard from '@/views/devTools/testingCard';
+	import DevOptionsCard from '@/views/devTools/devOptionsCard';
 
-export default {
-	name: "DevTools",
-	components: {
-		TestingCard,
-		DevOptionsCard
-	},
-}
+	export default {
+		name: 'DevTools',
+		components: {
+			TestingCard,
+			DevOptionsCard,
+		},
+	};
 </script>
 <style scoped>
 </style>

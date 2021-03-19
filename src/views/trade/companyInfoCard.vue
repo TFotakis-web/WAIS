@@ -3,7 +3,7 @@
 		<mdb-view cascade class="blue lighten-1 p-3">
 			<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }">
 				<mdb-view hover class="h-100 w-100 rounded-circle">
-					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click.native="save" style="overflow-wrap: anywhere; text-align: center;"/>
+					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click="save" style="overflow-wrap: anywhere; text-align: center;"/>
 				</mdb-view>
 			</div>
 		</mdb-view>
@@ -110,87 +110,87 @@
 	</mdb-card>
 </template>
 <script>
-export default {
-	name: 'CompanyInfoCard',
-	data() {
-		return {
-			companyOptions: [
-				{text: 'Option nr 1', value: 'Option 1'},
-				{text: 'Option nr 2', value: 'Option 2'},
-				{text: 'Option nr 3', value: 'Option 3'},
-				{text: 'Option nr 4', value: 'Option 4'},
-				{text: 'Option nr 5', value: 'Option 5'},
-			],
-			fields: {
-				trade: '',
-				tradeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
-				registrationNumber: '',
-				tin: '',
-				professionStartDate: '',
-				licenseExpirationDate: '',
-				address: '',
-				city: '',
-				phone: '',
-				mobile: '',
-				email: '',
-				companyAccounts: [],
-				companyCodes: [],
-				companyFiles: [],
-			},
-			validation: {
-				trade: '',
-				tradeLogo: '',
-				registrationNumber: '',
-				tin: '',
-				professionStartDate: '',
-				licenseExpirationDate: '',
-				address: '',
-				city: '',
-				phone: '',
-				mobile: '',
-				email: '',
+	export default {
+		name: 'CompanyInfoCard',
+		data() {
+			return {
+				companyOptions: [
+					{ text: 'Option nr 1', value: 'Option 1' },
+					{ text: 'Option nr 2', value: 'Option 2' },
+					{ text: 'Option nr 3', value: 'Option 3' },
+					{ text: 'Option nr 4', value: 'Option 4' },
+					{ text: 'Option nr 5', value: 'Option 5' },
+				],
+				fields: {
+					trade: '',
+					tradeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
+					registrationNumber: '',
+					tin: '',
+					professionStartDate: '',
+					licenseExpirationDate: '',
+					address: '',
+					city: '',
+					phone: '',
+					mobile: '',
+					email: '',
+					companyAccounts: [],
+					companyCodes: [],
+					companyFiles: [],
+				},
+				validation: {
+					trade: '',
+					tradeLogo: '',
+					registrationNumber: '',
+					tin: '',
+					professionStartDate: '',
+					licenseExpirationDate: '',
+					address: '',
+					city: '',
+					phone: '',
+					mobile: '',
+					email: '',
+					companyAccounts: [
+						{ name: '', iban: '' },
+						{ name: '', iban: '' },
+					],
+					companyCodes: [
+						{ name: '', code: '' },
+						{ name: '', code: '' },
+					],
+					companyFiles: [
+						{ name: '', url: '' },
+						{ name: '', url: '' },
+					],
+				},
 				companyAccounts: [
-					{name: '', iban: ''},
-					{name: '', iban: ''},
+					{ name: 'Account 1', iban: 'GR111222333444555666777888999' },
+					{ name: 'Account 2', iban: 'GR000111222333444555666777888' },
 				],
 				companyCodes: [
-					{name: '', code: ''},
-					{name: '', code: ''},
+					{ name: 'Company 1', code: '12345' },
+					{ name: 'Company 2', code: '67890' },
 				],
 				companyFiles: [
-					{name: '', url: ''},
-					{name: '', url: ''},
+					{ name: 'File 1', url: '#file1' },
+					{ name: 'File 2', url: '#file2' },
 				],
-			},
-			companyAccounts: [
-				{name: 'Account 1', iban: 'GR111222333444555666777888999'},
-				{name: 'Account 2', iban: 'GR000111222333444555666777888'},
-			],
-			companyCodes: [
-				{name: 'Company 1', code: '12345'},
-				{name: 'Company 2', code: '67890'},
-			],
-			companyFiles: [
-				{name: 'File 1', url: '#file1'},
-				{name: 'File 2', url: '#file2'},
-			],
-		};
-	},
-	methods: {
-		save() {
-			console.log('Saved.');
+			};
 		},
-	},
-};
+		methods: {
+			save() {
+				console.log('Saved.');
+			},
+		},
+	};
 </script>
 <style>
-.tradeImg {
-	height: 88px;
-	width: 88px;
-	background-size: cover;
-	background-repeat: inherit;
-	background-position: 50% center;
-	border-radius: 50% !important;
-	border: 5px solid white;
-}
+	.tradeImg {
+		height: 88px;
+		width: 88px;
+		background-size: cover;
+		background-repeat: inherit;
+		background-position: 50% center;
+		border-radius: 50% !important;
+		border: 5px solid white;
+	}
 </style>

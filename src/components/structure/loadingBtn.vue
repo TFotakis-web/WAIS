@@ -1,5 +1,5 @@
 <template>
-	<mdb-btn
+	<ion-button
 		:color="color"
 		:type="type"
 		:rounded="rounded"
@@ -15,10 +15,12 @@
 		:iconRight="iconRight"
 	>
 		<span>{{ loading ? loadingText : text }}</span>
-		<span v-if="loading" class="spinner-border spinner-border-sm ml-2"/>
-	</mdb-btn>
+		<ion-spinner v-if="loading"/>
+	</ion-button>
 </template>
 <script>
+	import { IonButton, IonSpinner } from '@ionic/vue';
+
 	export default {
 		name: 'LoadingBtn',
 		props: {
@@ -48,40 +50,44 @@
 			},
 			size: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			outline: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			floating: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			flat: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			transparent: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			gradient: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			icon: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			iconLeft: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
 			iconRight: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
+		},
+		components: {
+			IonButton,
+			IonSpinner,
 		},
 	};
 </script>

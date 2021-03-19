@@ -1,40 +1,66 @@
 <template>
-	<mdb-card>
-		<mdb-card-header class="blue-gradient m-0">
-			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.signInToYourWaisAccount') }}</h3>
-			</mdb-row>
-		</mdb-card-header>
-		<mdb-card-body>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>{{ $t('views.auth.signInToYourWaisAccount') }}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
 			<form @submit.prevent="signIn">
-				<mdb-input v-model="credentials.username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-4" name="username" autocomplete="username" outline/>
-				<mdb-input v-model="credentials.password" :label="$t('fields.password')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required class="mb-3" name="password" autocomplete="current-password" outline>
-					<mdb-btn @click.native="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
-				</mdb-input>
-				<span @click="$emit('auth-page-changed', 'forgotPassword')" class="a-tag d-block">{{ $t('views.auth.forgotYourPassword') }}</span>
+				<ion-item>
+					<ion-icon :icon="personOutline" slot="start" align-self-center/>
+					<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
+					<ion-input v-model="credentials.username" type="text" name="username" autocomplete="username" required/>
+				</ion-item>
+				<ion-item>
+					<ion-icon :icon="keyOutline" slot="start" align-self-center/>
+					<ion-label position="floating">{{ $t('fields.password') }}</ion-label>
+					<ion-input v-model="credentials.password" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="current-password" required/>
+					<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear">
+						<ion-icon slot="icon-only" :icon="passwordVisible ? eyeOffOutline : eyeOutline" align-self-center/>
+					</ion-button>
+				</ion-item>
+				<ion-button :router-link="{ name: 'Home' }" fill="clear">{{ $t('views.auth.forgotYourPassword') }}</ion-button>
 				<div class="text-center">
 					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="my-3"/>
 					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 					<hr/>
-					<p class="mt-4">
-						<span>{{ $t('views.auth.dontHaveAnAccount') }} </span>
-						<span @click="$emit('auth-page-changed', 'signUp')" class="a-tag">{{ $t('views.auth.createAccount') }}</span>
-					</p>
-					<localeDropdown/>
-				</div>
+					<p class="mt-4"><span>{{ $t('views.auth.dontHaveAnAccount') }} </span>
+						<ion-button :router-link="{ name: 'Home' }" fill="clear">{{ $t('views.auth.createAccount') }}</ion-button>
+					</p><!-- <localeDropdown /> --></div>
 			</form>
-		</mdb-card-body>
-	</mdb-card>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
+	import {
+		IonCard,
+		IonCardHeader,
+		IonCardContent,
+		IonCardTitle,
+		IonIcon,
+		IonItem,
+		IonLabel,
+		IonButton,
+		IonInput,
+	} from '@ionic/vue';
+	import { eyeOutline, eyeOffOutline, keyOutline, personOutline } from 'ionicons/icons';
+
 	import { mapActions } from 'vuex';
-	import localeDropdown from '@/components/structure/localeDropdown';
+	// import localeDropdown from "@/components/structure/localeDropdown";
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'signIn',
 		components: {
-			localeDropdown,
+			IonCard,
+			IonCardHeader,
+			IonCardContent,
+			IonCardTitle,
+			IonIcon,
+			IonItem,
+			IonLabel,
+			IonButton,
+			IonInput,
+			// localeDropdown,
 			loadingBtn,
 		},
 		data() {
@@ -46,6 +72,10 @@
 				},
 				error: {},
 				passwordVisible: false,
+				personOutline,
+				keyOutline,
+				eyeOutline,
+				eyeOffOutline,
 			};
 		},
 		methods: {
@@ -72,7 +102,9 @@
 						});
 					}
 					this.error = error;
+				} finally {
 					this.loading = false;
+					this.$router.push({ name: 'Home' });
 				}
 			},
 		},

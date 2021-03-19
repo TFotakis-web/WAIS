@@ -4,9 +4,8 @@
 		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
 	</div>
 </template>
-
 <script>
-export default {
-	name: 'ContractAdditionalActs',
-};
+	export default {
+		name: 'ContractAdditionalActs',
+	};
 </script>

@@ -84,16 +84,16 @@
 	</div>
 </template>
 <script>
-import calendarCard from "@/views/home/calendarCard";
-import performanceCard from "@/views/home/performanceCard";
-import newsfeedCard from "@/views/home/newsfeedCard";
+	import calendarCard from '@/views/home/calendarCard';
+	import performanceCard from '@/views/home/performanceCard';
+	import newsfeedCard from '@/views/home/newsfeedCard';
 
-export default {
-	name: 'Home',
-	components: {
-		calendarCard,
-		performanceCard,
-		newsfeedCard
-	}
-};
+	export default {
+		name: 'Home',
+		components: {
+			calendarCard,
+			performanceCard,
+			newsfeedCard,
+		},
+	};
 </script>

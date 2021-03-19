@@ -5,8 +5,8 @@
 		<mdb-container>
 			<mdb-row>
 				<mdb-col>
-					<mdb-input v-model="numberPlate" label="Vehicle Name" />
-					<mdb-btn @click.native="createVehicle">Save</mdb-btn>
+					<mdb-input v-model="numberPlate" label="Vehicle Name"/>
+					<mdb-btn @click="createVehicle">Save</mdb-btn>
 				</mdb-col>
 			</mdb-row>
 			<mdb-row>
@@ -15,7 +15,7 @@
 						<mdb-list-group-item
 							v-for="(vehicle, index) in vehicles"
 							:key="index"
-							@click.native="openVehicleDetail(vehicle)"
+							@click="openVehicleDetail(vehicle)"
 							:justify-content-between="false"
 							action
 						>
@@ -27,9 +27,9 @@
 		</mdb-container>
 	</div>
 </template>
-
 <script>
 	import { mapGetters } from 'vuex';
+
 	export default {
 		name: 'VehicleCards',
 		data() {
@@ -38,14 +38,14 @@
 				error: '',
 			};
 		},
-		mounted: async function() {
+		mounted: async function () {
 			this.$store.dispatch('vehicle/getVehiclesData');
 		},
 		methods: {
 			openVehicleDetail(vehicle) {
 				this.$router.push({ name: 'VehicleCardsDetails', params: { id: vehicle.id } });
 			},
-			createVehicle: async function() {
+			createVehicle: async function () {
 				this.error = '';
 				if (!this.numberPlate) {
 					this.error = 'Pleas enter a vehicle name';

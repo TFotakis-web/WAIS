@@ -12,14 +12,14 @@ export const vehicle = {
 	mutations: {
 		setVehicles(state, payload) {
 			state.vehicles = payload;
-		}
+		},
 	},
 	actions: {
 		async createVehicle({ dispatch }, newVehicle) {
 			try {
 				newVehicle.id = uuid();
 				await API.graphql(graphqlOperation(createVehicleMutation, { input: newVehicle }));
-				dispatch("getVehiclesData");
+				dispatch('getVehiclesData');
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
@@ -32,10 +32,10 @@ export const vehicle = {
 		},
 		async getVehiclesData({ commit }) {
 			const vehiclesData = await API.graphql(graphqlOperation(listVehiclesQuery));
-			commit("setVehicles", vehiclesData.data.listVehicles.items);
+			commit('setVehicles', vehiclesData.data.listVehicles.items);
 		},
 	},
 	getters: {
-		vehicles: (state) => state.vehicles
-	}
-}
+		vehicles: (state) => state.vehicles,
+	},
+};

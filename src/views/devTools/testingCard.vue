@@ -5,11 +5,11 @@
 		</mdb-view>
 		<mdb-card-body>
 			<div>
-				<mdb-btn @click.native="testAll" :disabled="testAllDisabled" outline="primary">Test All</mdb-btn>
+				<mdb-btn @click="testAll" :disabled="testAllDisabled" outline="primary">Test All</mdb-btn>
 				<span>{{ testAllMessage }}</span>
 			</div>
 			<div v-for="(test, testName) in tests" :key="testName">
-				<mdb-btn @click.native="test.testFunc" :disabled="test.disabled" color="primary">{{ testName }}</mdb-btn>
+				<mdb-btn @click="test.testFunc" :disabled="test.disabled" color="primary">{{ testName }}</mdb-btn>
 				<span>{{ test.message }}</span>
 			</div>
 		</mdb-card-body>
@@ -17,7 +17,7 @@
 </template>
 <script>
 	export default {
-		name: "testingCard",
+		name: 'testingCard',
 		data() {
 			return {
 				testAllMessage: '',
@@ -30,12 +30,12 @@
 							this.tests['Template Test'].disabled = true;
 							this.tests['Template Test'].message = 'Running...';
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Template Test'].message = 'OK';
 							this.tests['Template Test'].disabled = false;
 							return 0;
-						}
+						},
 					},
 					'Echo': {
 						message: '',
@@ -46,12 +46,12 @@
 
 							this.$store.dispatch('echo');
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Echo'].message = 'OK';
 							this.tests['Echo'].disabled = false;
 							return 0;
-						}
+						},
 					},
 					'Me': {
 						message: '',
@@ -62,15 +62,15 @@
 
 							this.$store.dispatch('me');
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Me'].message = 'OK';
 							this.tests['Me'].disabled = false;
 							return 0;
-						}
+						},
 					},
-				}
-			}
+				},
+			};
 		},
 		methods: {
 			testAll() {
@@ -86,9 +86,9 @@
 					this.testAllMessage = 'OK';
 				}
 				this.testAllDisabled = false;
-			}
+			},
 		},
-	}
+	};
 </script>
 <style scoped>
 </style>

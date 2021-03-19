@@ -16,14 +16,14 @@
 	</div>
 </template>
 <script>
-import companyInfoCard from "@/views/trade/companyInfoCard";
-import UserPermissionsTableCard from "@/views/trade/userPermissionsTableCard";
+	import companyInfoCard from '@/views/trade/companyInfoCard';
+	import UserPermissionsTableCard from '@/views/trade/userPermissionsTableCard';
 
-export default {
-	name: 'Trade',
-	components: {
-		UserPermissionsTableCard,
-		companyInfoCard
-	},
-};
+	export default {
+		name: 'Trade',
+		components: {
+			UserPermissionsTableCard,
+			companyInfoCard,
+		},
+	};
 </script>
