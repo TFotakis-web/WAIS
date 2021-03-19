@@ -1,57 +1,85 @@
 <template>
 	<ion-menu content-id="main-content" type="overlay">
 		<ion-content>
+			<ion-list>
+				<ion-item :router-link="{name: 'Trade'}" button>
+					<ion-thumbnail slot="start">
+						<ion-img src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg"/>
+					</ion-thumbnail>
+					<ion-label>
+						<!-- Todo: Replace with real trade name -->
+						<h1>Trade Name</h1>
+					</ion-label>
+				</ion-item>
+				<ion-item :router-link="{name: 'UserProfile'}" button>
+					<ion-thumbnail slot="start">
+						<ion-img src="https://www.w3schools.com/howto/img_avatar.png"/>
+					</ion-thumbnail>
+					<ion-label>
+						<h2>{{ $store.getters['auth/fullName'] }}</h2>
+						<p>{{ $store.getters['auth/username'] }}</p>
+					</ion-label>
+				</ion-item>
+			</ion-list>
 			<ion-list id="categories-list">
-				<ion-list-header>Inbox</ion-list-header>
-				<ion-note>hi@ionicframework.com</ion-note>
-				<side-navigation-category v-for="route in sidenav" :key="route.name" :route="route"/>
+				<side-navigation-category v-for="routeCategory in sidenav" :key="routeCategory.name" :routeCategory="routeCategory"/>
 			</ion-list>
 			<ion-list>
 				<ion-item lines="full">
-					<ion-icon slot="start" :icon="moon"></ion-icon>
-					<ion-label> Toggle Dark Theme</ion-label>
+					<ion-icon slot="start" :icon="ionicons.moonOutline"></ion-icon>
+					<ion-label>Toggle Dark Theme</ion-label>
 					<ion-toggle id="themeToggle" slot="end" :checked="colorTheme === 'dark'" @ionChange="toggleTheme"/>
+				</ion-item>
+				<ion-item lines="full" @click="$i18n.$loadLanguageAsync($i18n.locale === 'en' ? 'el' : 'en')" button>
+					<ion-icon slot="start" :icon="ionicons.languageOutline"></ion-icon>
+					<ion-label>{{ $t('fields.locale') }}: {{ $i18n.locale === 'en' ? 'el' : 'en' }}</ion-label>
+				</ion-item>
+				<ion-item lines="full" @click="signOut" button>
+					<ion-icon slot="start" :icon="ionicons.logOutOutline"></ion-icon>
+					<ion-label>{{ $t('components.navigation.navbar-item.signOut') }}</ion-label>
 				</ion-item>
 			</ion-list>
 		</ion-content>
 	</ion-menu>
 </template>
 <script>
-	import { ref } from 'vue';
-	import { useRoute } from 'vue-router';
-
 	import {
 		IonContent,
 		IonIcon,
 		IonItem,
 		IonLabel,
 		IonList,
-		IonListHeader,
 		IonMenu,
-		IonNote,
 		IonToggle,
+		IonThumbnail,
+		IonImg,
 	} from '@ionic/vue';
 	import {
-		archiveOutline,
-		archiveSharp,
-		bookmarkOutline,
-		bookmarkSharp,
-		heartOutline,
-		heartSharp,
-		mailOutline,
-		mailSharp,
-		paperPlaneOutline,
-		paperPlaneSharp,
-		trashOutline,
-		trashSharp,
-		warningOutline,
-		warningSharp,
 		chevronForwardOutline,
 		chevronDownOutline,
-		moon,
+		moonOutline,
+		logOutOutline,
+		languageOutline,
+		barChartOutline,
+		documentTextOutline,
+		listOutline,
+		cartOutline,
+		peopleOutline,
+		idCardOutline,
+		bookOutline,
+		homeOutline,
+		walletOutline,
+		bugOutline,
+		cogOutline,
+		bagCheckOutline,
+		cardOutline,
+		briefcaseOutline,
+		personAddOutline,
+		notificationsOutline,
 	} from 'ionicons/icons';
 
 	import SideNavigationCategory from '@/components/base/SideNavigationCategory';
+	import { mapActions } from 'vuex';
 
 	export default {
 		name: 'SideNavigation',
@@ -61,107 +89,66 @@
 			IonItem,
 			IonLabel,
 			IonList,
-			IonListHeader,
 			IonMenu,
-			IonNote,
 			IonToggle,
+			IonThumbnail,
+			IonImg,
 			SideNavigationCategory,
 		},
 		data() {
 			return {
 				shown: false,
 				colorTheme: 'light',
-			};
-		},
-		setup() {
-			const appPages = [
-				{
-					title: 'Inbox',
-					url: '/folder/Inbox',
-					iosIcon: mailOutline,
-					mdIcon: mailSharp,
+				ionicons: {
+					chevronForwardOutline,
+					chevronDownOutline,
+					moonOutline,
+					logOutOutline,
+					languageOutline,
+					barChartOutline,
+					documentTextOutline,
+					listOutline,
+					cartOutline,
+					peopleOutline,
+					idCardOutline,
+					bookOutline,
+					homeOutline,
+					walletOutline,
+					bugOutline,
+					cogOutline,
+					bagCheckOutline,
+					cardOutline,
+					briefcaseOutline,
+					notificationsOutline,
 				},
-				{
-					title: 'Outbox',
-					url: '/folder/Outbox',
-					iosIcon: paperPlaneOutline,
-					mdIcon: paperPlaneSharp,
-				},
-				{
-					title: 'Favorites',
-					url: '/folder/Favorites',
-					iosIcon: heartOutline,
-					mdIcon: heartSharp,
-				},
-				{
-					title: 'Archived',
-					url: '/folder/Archived',
-					iosIcon: archiveOutline,
-					mdIcon: archiveSharp,
-				},
-				{
-					title: 'Trash',
-					url: '/folder/Trash',
-					iosIcon: trashOutline,
-					mdIcon: trashSharp,
-				},
-				{
-					title: 'Spam',
-					url: '/folder/Spam',
-					iosIcon: warningOutline,
-					mdIcon: warningSharp,
-				},
-			];
-
-			const selectedIndex = ref(0);
-
-			const path = window.location.pathname.split('folder/')[1];
-			if (path !== undefined) {
-				selectedIndex.value = appPages.findIndex(
-					(page) => page.title.toLowerCase() === path.toLowerCase(),
-				);
-			}
-
-			const route = useRoute();
-
-			return {
-				appPages,
-				archiveOutline,
-				archiveSharp,
-				bookmarkOutline,
-				bookmarkSharp,
-				heartOutline,
-				heartSharp,
-				mailOutline,
-				mailSharp,
-				paperPlaneOutline,
-				paperPlaneSharp,
-				trashOutline,
-				trashSharp,
-				warningOutline,
-				warningSharp,
-				chevronForwardOutline,
-				chevronDownOutline,
-				moon,
-				selectedIndex,
-				isSelected: (url) => (url === route.path ? 'selected' : ''),
 			};
 		},
 		methods: {
 			toggleTheme() {
 				this.colorTheme = this.colorTheme === 'light' ? 'dark' : 'light';
 				document.body.setAttribute('color-theme', this.colorTheme);
-				console.log('Color theme', this.colorTheme);
+				console.log(this.colorTheme);
 			},
+			...mapActions({
+				signOut: 'auth/signOut',
+			}),
 		},
 		computed: {
 			sidenav: function () {
 				const allRoutes = [
 					{
-						name: this.$t(
-							'components.navigation.sidenav.pricing._groupName',
-						),
-						icon: 'chart-line',
+						name: this.$t('views.homePage.pageTitle'),
+						icon: homeOutline,
+						to: { name: 'Home' },
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.notifications',),
+						to: { name: 'Notifications' },
+						icon: notificationsOutline,
+					},
+					{
+						name: this.$t('components.navigation.sidenav.pricing._groupName'),
+						icon: barChartOutline,
 						children: [
 							{
 								name: this.$t(
@@ -193,7 +180,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.contracts._groupName',
 						),
-						icon: 'file-contract',
+						icon: documentTextOutline,
 						children: [
 							{
 								name: this.$t(
@@ -249,7 +236,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.processing._groupName',
 						),
-						icon: 'list-ul',
+						icon: listOutline,
 						children: [
 							{
 								name: this.$t(
@@ -281,7 +268,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.accounting._groupName',
 						),
-						icon: 'cash-register',
+						icon: cartOutline,
 						children: [
 							{
 								name: this.$t(
@@ -325,7 +312,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.contractors._groupName',
 						),
-						icon: 'user-friends',
+						icon: peopleOutline,
 						children: [
 							{
 								name: this.$t(
@@ -345,7 +332,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.cards._groupName',
 						),
-						icon: 'wpforms',
+						icon: idCardOutline,
 						fab: true,
 						children: [
 							{
@@ -366,7 +353,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.library._groupName',
 						),
-						icon: 'book',
+						icon: bookOutline,
 						children: [
 							{
 								name: 'Book 1',
@@ -378,141 +365,74 @@
 							},
 						],
 					},
-					// {
-					// 	name: "Getting started",
-					// 	icon: "mdb",
-					// 	fab: true,
-					// 	children: [
-					// 		{
-					// 			name: "Quick start",
-					// 			href: "https://mdbootstrap.com/docs/vue/getting-started/quick-start/"
-					// 		},
-					// 		{
-					// 			name: "Technical Support",
-					// 			href: "https://mdbootstrap.com/support/"
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	name: "Documentation",
-					// 	icon: "graduation-cap",
-					// 	href: "https://mdbootstrap.com/docs/vue/"
-					// }
-				];
-				const routes = allRoutes;
-				// const routes = [];
-				// const permissions = this.$store.getters["auth/permissions"];
-				// for (const category of allRoutes) {
-				// 	const children = [];
-				// 	for (const child of category.children) {
-				// 		const routeName = child.to.name;
-				// 		if (
-				// 			routeName in permissions &&
-				// 			permissions[routeName].read &&
-				// 			permissions[routeName].write
-				// 		) {
-				// 			children.push(child);
-				// 		}
-				// 	}
-				// 	if (children.length) {
-				// 		category.children = children;
-				// 		routes.push(category);
-				// 	}
-				// }
-
-				return routes;
-			},
-			navbarLeft: function () {
-				const allRoutes = [
-					{
-						name: this.$t('components.navigation.navbar-item.home'),
-						to: { name: 'Home' },
-						icon: 'home',
-						fab: false,
-					},
 					{
 						name: this.$t('components.navigation.navbar-item.wallet'),
 						to: { name: 'Wallet' },
-						icon: 'euro-sign',
-						fab: false,
-						label: '1345.85/1800.00',
-					},
-				];
-				const routes = allRoutes;
-				// const routes = [];
-				// const permissions = this.$store.getters['auth/permissions'];
-				// for (const navItem of allRoutes) {
-				// 	const routeName = navItem.to.name;
-				// 	if (routeName in permissions && permissions[routeName].read && permissions[routeName].write) {
-				// 		routes.push(navItem);
-				// 	}
-				// }
-				return routes;
-			},
-			navbarRight: function () {
-				const allRoutes = [
-					{
-						name: this.$t('components.navigation.navbar-item.devtools'),
-						to: { name: 'DevTools' },
-						icon: 'dev',
-						fab: true,
+						icon: walletOutline,
 					},
 					{
-						name: this.$t('components.navigation.navbar-item.database'),
-						to: { name: 'PlatformData' },
-						icon: 'table',
-						fab: false,
-					},
-					{
-						name: this.$t(
-							'components.navigation.navbar-item.contract-approval',
-						),
+						name: this.$t('components.navigation.navbar-item.contract-approval',),
 						to: { name: 'ContractApproval' },
-						icon: 'file-signature',
-						fab: false,
+						icon: bagCheckOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.payment'),
 						to: { name: 'Payment' },
-						icon: 'shopping-cart',
-						fab: false,
+						icon: cardOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.bank'),
 						to: { name: 'Bank' },
-						icon: 'university',
-						fab: false,
+						icon: briefcaseOutline,
 					},
 					{
-						name: this.$t(
-							'components.navigation.navbar-item.collaboration',
-						),
+						name: this.$t('components.navigation.navbar-item.collaboration',),
 						to: { name: 'Collaboration' },
-						icon: 'handshake',
-						fab: false,
+						icon: personAddOutline,
 					},
 					{
-						name: this.$t(
-							'components.navigation.navbar-item.notifications',
-						),
-						to: { name: 'Notifications' },
-						icon: 'bell',
-						fab: false,
+						name: this.$t('components.navigation.navbar-item.devtools'),
+						to: { name: 'DevTools' },
+						icon: bugOutline,
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.database'),
+						to: { name: 'PlatformData' },
+						icon: cogOutline,
 					},
 				];
-				const routes = allRoutes;
-				// const routes = [];
-				// const permissions = this.$store.getters["auth/permissions"];
-				// for (const navItem of allRoutes) {
-				// 	const routeName = navItem.to.name;
-				// 	if (
-				// 		routeName in permissions &&
-				// 		permissions[routeName].read &&
-				// 		permissions[routeName].write
-				// 	) {
-				// 		routes.push(navItem);
-				// 	}
-				// }
+
+				const routes = [];
+				const permissions = this.$store.getters['auth/permissions'];
+				for (const category of allRoutes) {
+					if (category.children) {
+						const children = [];
+						for (const child of category.children) {
+							const routeName = child.to.name;
+							if (
+								routeName in permissions &&
+								permissions[routeName].read &&
+								permissions[routeName].write
+							) {
+								children.push(child);
+							}
+						}
+						if (children.length) {
+							category.children = children;
+							routes.push(category);
+						}
+					} else {
+						const routeName = category.to.name
+						let hasPermissions = routeName in permissions;
+						hasPermissions &= permissions[routeName]?.read;
+						hasPermissions &= permissions[routeName]?.write;
+						if (hasPermissions) {
+							routes.push(category);
+						}
+					}
+
+				}
+
 				return routes;
 			},
 		},
@@ -570,14 +490,6 @@
 		border-radius: 4px;
 	}
 
-	ion-menu.md ion-item.selected {
-		--background: rgba(var(--ion-color-primary-rgb), 0.14);
-	}
-
-	ion-menu.md ion-item.selected ion-icon {
-		color: var(--ion-color-primary);
-	}
-
 	ion-menu.md ion-item ion-icon {
 		color: #616e7e;
 	}
@@ -605,10 +517,6 @@
 		--min-height: 50px;
 	}
 
-	ion-menu.ios ion-item.selected ion-icon {
-		color: var(--ion-color-primary);
-	}
-
 	ion-menu.ios ion-item ion-icon {
 		font-size: 24px;
 		color: #73849a;
@@ -633,9 +541,5 @@
 		font-size: 16px;
 
 		color: var(--ion-color-medium-shade);
-	}
-
-	ion-item.selected {
-		--color: var(--ion-color-primary);
 	}
 </style>
