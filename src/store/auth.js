@@ -85,46 +85,37 @@ export const auth = {
 					});
 			});
 		},
-		completeNewPassword({ dispatch }, { username, old_password, new_password }) {
-			return new Promise((resolve, reject) => {
-				Auth.signIn({ username: username, password: old_password })
-					.then((response) => {
-						Auth.completeNewPassword(response, new_password)
-							.then(() => {
-								dispatch('signIn', {
-									username: username,
-									password: new_password,
-								});
-								resolve();
-							});
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
+			try {
+				const response = await Auth.signIn({ username: username, password: old_password });
+				await Auth.completeNewPassword(response, new_password);
+				await dispatch('signIn', {
+					username: username,
+					password: new_password,
+				});
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
-		signIn({ commit, dispatch }, { username, password }) {
-			return new Promise((resolve, reject) => {
-				Auth.signIn({ username, password })
-					.then((response) => {
-						const cognitoUser = response;
-						commit('setCognitoUser', cognitoUser);
-						if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
-							reject({
-								name: 'NEW_PASSWORD_REQUIRED',
-								code: 'NEW_PASSWORD_REQUIRED',
-							});
-						} else {
-							dispatch('currentUserInfo');
-							resolve();
-						}
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
+		async signIn({ commit, dispatch }, { username, password }) {
+			try {
+				const cognitoUser = await Auth.signIn({ username, password });
+				commit('setCognitoUser', cognitoUser);
+				if (cognitoUser.challengeName === 'NEW_PASSWORD_REQUIRED') {
+					return Promise.reject({
+						name: 'NEW_PASSWORD_REQUIRED',
+						code: 'NEW_PASSWORD_REQUIRED',
 					});
-			});
+				} else {
+					await dispatch('currentUserInfo');
+					return Promise.resolve();
+				}
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
 		signOut({ commit }) {
 			return new Promise((resolve, reject) => {
@@ -164,241 +155,222 @@ export const auth = {
 					});
 			});
 		},
-		currentAuthenticatedUser({ commit, dispatch }) {
-			return new Promise((resolve, reject) => {
+		async currentAuthenticatedUser({ commit, dispatch }) {
+			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
-				Auth.currentAuthenticatedUser({
+				const response = await Auth.currentAuthenticatedUser({
 					bypassCache: true,  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-				})
-					.then((response) => {
-						commit('setCognitoUser', response);
-						dispatch('currentUserInfo');
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						Auth.signOut()
-							.then(() => {
-								// router.go(0); // Reload page
-								reject(error);
-							});
-					})
-					.finally(() => {
-						commit('decreaseGlobalPendingPromises', null, { root: true });
-					});
-			});
+				});
+				commit('setCognitoUser', response);
+				await dispatch('currentUserInfo');
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				await Auth.signOut();
+				// router.go(0); // Reload page
+				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
+			}
 		},
-		currentUserInfo({ commit, dispatch }) {
-			return new Promise((resolve, reject) => {
+		async currentUserInfo({ commit, dispatch }) {
+			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
-				Auth.currentUserInfo()
-					.then((response) => {
-						const userInfo = response;
-						if (userInfo) {
-							commit('setUser', userInfo);
-							dispatch('loadUserProfile');
-						}
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					})
-					.finally(() => {
-						commit('decreaseGlobalPendingPromises', null, { root: true });
-					});
-			});
+				const userInfo = await Auth.currentUserInfo();
+				if (userInfo) {
+					commit('setUser', userInfo);
+					await dispatch('loadUserProfile');
+				}
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
+			}
 		},
-		loadUserProfile({ commit, dispatch, getters }) {
-			// loadUserProfile({ commit, getters }) {
-			return new Promise((resolve, reject) => {
+		async loadUserProfile({ commit, dispatch, getters }) {
+			try {
 				commit('increaseGlobalPendingPromises', null, { root: true });
-				API.graphql(graphqlOperation(me))
-					// API.graphql(graphqlOperation(listUserProfileByUsername, { username: getters.username }))
-					.then((response) => {
-						const userProfile = response.data.me;
-						// let userProfile = response.data.listUserProfileByUsername.items[0];
-						// Todo: Remove when backend is correct
-						userProfile.permissions = {
-							'Home': {
-								read: true,
-								write: true,
-							},
-							'VehiclePricing': {
-								read: true,
-								write: true,
-							},
-							'IndustrialLiabilityPricing': {
-								read: true,
-								write: true,
-							},
-							'FirePricing': {
-								read: true,
-								write: true,
-							},
-							'LifePricing': {
-								read: true,
-								write: true,
-							},
-							'ContractsFile': {
-								read: true,
-								write: true,
-							},
-							'UncollectedContracts': {
-								read: true,
-								write: true,
-							},
-							'CollectedContracts': {
-								read: true,
-								write: true,
-							},
-							'ContractAdditionalActs': {
-								read: true,
-								write: true,
-							},
-							'GreenCardContracts': {
-								read: true,
-								write: true,
-							},
-							'UnclaimedContracts': {
-								read: true,
-								write: true,
-							},
-							'InvalidContracts': {
-								read: true,
-								write: true,
-							},
-							'NewContract': {
-								read: true,
-								write: true,
-							},
-							'ProcessingDueDateRegister': {
-								read: true,
-								write: true,
-							},
-							'ProcessingDuePayment': {
-								read: true,
-								write: true,
-							},
-							'ProcessingPaid': {
-								read: true,
-								write: true,
-							},
-							'ProcessingLosses': {
-								read: true,
-								write: true,
-							},
-							'AccountingReceipts': {
-								read: true,
-								write: true,
-							},
-							'AccountingRegisters': {
-								read: true,
-								write: true,
-							},
-							'AccountingTodaysIncome': {
-								read: true,
-								write: true,
-							},
-							'AccountingCommissionsUncollected': {
-								read: true,
-								write: true,
-							},
-							'AccountingCommissionsCollected': {
-								read: true,
-								write: true,
-							},
-							'AccountingMutualAccount': {
-								read: true,
-								write: true,
-							},
-							'SupplierContractors': {
-								read: true,
-								write: true,
-							},
-							'ContractorsExternalContractors': {
-								read: true,
-								write: true,
-							},
-							'VehicleCards': {
-								read: true,
-								write: true,
-							},
-							'VehicleCardsDetails': {
-								read: true,
-								write: true,
-							},
-							'CustomerCards': {
-								read: true,
-								write: true,
-							},
-							'Library': {
-								read: true,
-								write: true,
-							},
-							'Trade': {
-								read: true,
-								write: true,
-							},
-							'UserProfile': {
-								read: true,
-								write: true,
-							},
-							'PlatformData': {
-								read: true,
-								write: true,
-							},
-							'DevTools': {
-								read: true,
-								write: true,
-							},
-							'ContractApproval': {
-								read: true,
-								write: true,
-							},
-							'Payment': {
-								read: true,
-								write: true,
-							},
-							'Bank': {
-								read: true,
-								write: true,
-							},
-							'Collaboration': {
-								read: true,
-								write: true,
-							},
-							'Notifications': {
-								read: true,
-								write: true,
-							},
-							'Wallet': {
-								read: true,
-								write: true,
-							},
-						};
-						commit('setUserProfile', userProfile);
+				let response = await API.graphql(graphqlOperation(me));
+				const userProfile = response.data.me;
+				// let userProfile = response.data.listUserProfileByUsername.items[0];
+				// Todo: Remove when backend is correct
+				userProfile.permissions = {
+					'Home': {
+						read: true,
+						write: true,
+					},
+					'VehiclePricing': {
+						read: true,
+						write: true,
+					},
+					'IndustrialLiabilityPricing': {
+						read: true,
+						write: true,
+					},
+					'FirePricing': {
+						read: true,
+						write: true,
+					},
+					'LifePricing': {
+						read: true,
+						write: true,
+					},
+					'ContractsFile': {
+						read: true,
+						write: true,
+					},
+					'UncollectedContracts': {
+						read: true,
+						write: true,
+					},
+					'CollectedContracts': {
+						read: true,
+						write: true,
+					},
+					'ContractAdditionalActs': {
+						read: true,
+						write: true,
+					},
+					'GreenCardContracts': {
+						read: true,
+						write: true,
+					},
+					'UnclaimedContracts': {
+						read: true,
+						write: true,
+					},
+					'InvalidContracts': {
+						read: true,
+						write: true,
+					},
+					'NewContract': {
+						read: true,
+						write: true,
+					},
+					'ProcessingDueDateRegister': {
+						read: true,
+						write: true,
+					},
+					'ProcessingDuePayment': {
+						read: true,
+						write: true,
+					},
+					'ProcessingPaid': {
+						read: true,
+						write: true,
+					},
+					'ProcessingLosses': {
+						read: true,
+						write: true,
+					},
+					'AccountingReceipts': {
+						read: true,
+						write: true,
+					},
+					'AccountingRegisters': {
+						read: true,
+						write: true,
+					},
+					'AccountingTodaysIncome': {
+						read: true,
+						write: true,
+					},
+					'AccountingCommissionsUncollected': {
+						read: true,
+						write: true,
+					},
+					'AccountingCommissionsCollected': {
+						read: true,
+						write: true,
+					},
+					'AccountingMutualAccount': {
+						read: true,
+						write: true,
+					},
+					'SupplierContractors': {
+						read: true,
+						write: true,
+					},
+					'ContractorsExternalContractors': {
+						read: true,
+						write: true,
+					},
+					'VehicleCards': {
+						read: true,
+						write: true,
+					},
+					'VehicleCardsDetails': {
+						read: true,
+						write: true,
+					},
+					'CustomerCards': {
+						read: true,
+						write: true,
+					},
+					'Library': {
+						read: true,
+						write: true,
+					},
+					'Trade': {
+						read: true,
+						write: true,
+					},
+					'UserProfile': {
+						read: true,
+						write: true,
+					},
+					'PlatformData': {
+						read: true,
+						write: true,
+					},
+					'DevTools': {
+						read: true,
+						write: true,
+					},
+					'ContractApproval': {
+						read: true,
+						write: true,
+					},
+					'Payment': {
+						read: true,
+						write: true,
+					},
+					'Bank': {
+						read: true,
+						write: true,
+					},
+					'Collaboration': {
+						read: true,
+						write: true,
+					},
+					'Notifications': {
+						read: true,
+						write: true,
+					},
+					'Wallet': {
+						read: true,
+						write: true,
+					},
+				};
+				commit('setUserProfile', userProfile);
 
-						if (getters.isAdmin) {
-							dispatch('request/listRequestsByReceiverEmail', 'wais@admin.com', { root: true })
-								.then((response) => {
-									for (const request of response) {
-										request.payload = JSON.parse(request.payload);
-									}
-									commit('concatRequestsForMe', response);
-								});
-						}
-						router.$loadRoutesAsync();
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					})
-					.finally(() => {
-						commit('decreaseGlobalPendingPromises', null, { root: true });
-					});
-			});
+				if (getters.isAdmin) {
+					response = await dispatch('request/listRequestsByReceiverEmail', 'wais@admin.com', { root: true });
+					for (const request of response) {
+						request.payload = JSON.parse(request.payload);
+					}
+					commit('concatRequestsForMe', response);
+				}
+				// router.$loadRoutesAsync();
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('decreaseGlobalPendingPromises', null, { root: true });
+			}
 		},
 		updateUserProfile({ commit }, userProfile) {
 			return new Promise((resolve, reject) => {
