@@ -2,7 +2,7 @@
 	<IonSplitPane content-id="main-content">
 		<side-navigation/>
 		<ion-page id="main-content">
-			<toolbar/>
+			<toolbar :page-title="pageTitle"/>
 			<ion-content :fullscreen="true">
 				<slot/>
 			</ion-content>
@@ -27,5 +27,11 @@
 			SideNavigation,
 			Toolbar,
 		},
+		props: {
+			pageTitle: {
+				type: String,
+				default: ''
+			}
+		}
 	};
 </script>
