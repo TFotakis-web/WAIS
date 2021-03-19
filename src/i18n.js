@@ -28,14 +28,12 @@ $i18n.global.$loadLanguageAsync = async function (lang) {
 	if (!loadedLanguages.includes(lang)) {
 		store.commit('setLocalesLoaded', false);
 		const messages = await $http.get(`/locales/${lang}.json`);
-		store.commit('setLocalesLoaded', true);
 		$i18n.global.setLocaleMessage(lang, messages.data);
 		loadedLanguages.push(lang);
+		store.commit('setLocalesLoaded', true);
 	}
 
 	setI18nLanguage(lang);
-	console.log('tzanis');
-	return new Promise();
 };
 
 export default $i18n;

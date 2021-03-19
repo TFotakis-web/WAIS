@@ -15,18 +15,11 @@
 		},
 		data() {
 			return {
-				loading: 1,
+				loading: 0,
 			};
 		},
-		mounted: function () {
-			this.loading++;
+		created: async function () {
 			this.initLocale();
-			this.loading--;
-			this.loading--;
-			console.log('tzanis 2');
-			// setTimeout(() => {
-			// 	this.loading--;
-			// }, 5000);
 			// Todo: Enable loadEnumData
 			// this.loadEnumData();
 		},
@@ -35,11 +28,15 @@
 				this.$store.dispatch('platformData/getPlatformData');
 			},
 			initLocale: function () {
+				this.loading++;
 				const userLang =
 					this.$cookies.get('locale') ||
 					navigator.language ||
 					navigator.userLanguage;
-				this.$i18n.$loadLanguageAsync(userLang);
+				this.$i18n.$loadLanguageAsync(userLang)
+					.then(() => {
+						this.loading--;
+					});
 			},
 		},
 	});
