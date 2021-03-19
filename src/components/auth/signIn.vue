@@ -87,6 +87,7 @@
 				this.error = {};
 				try {
 					await this.signInStore(this.credentials);
+					await this.$router.push({ name: 'Home' });
 				} catch (error) {
 					if (error.name === 'UserNotConfirmedException') {
 						this.$emit('auth-page-changed', 'confirmSignUp');
@@ -104,7 +105,6 @@
 					this.error = error;
 				} finally {
 					this.loading = false;
-					this.$router.push({ name: 'Home' });
 				}
 			},
 		},
