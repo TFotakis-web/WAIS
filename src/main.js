@@ -93,9 +93,6 @@ app.config.globalProperties.$clearCookies = function () {
 	}
 };
 
-// -------------- Assignments ------------------------------------------
-window.WaisVue = app;
-
 // -------------- Mount --------------
 router.isReady().then(() => {
 	app.mount('#app');

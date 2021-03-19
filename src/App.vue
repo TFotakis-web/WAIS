@@ -23,6 +23,7 @@
 			this.initLocale();
 			// Todo: Enable loadEnumData
 			// this.loadEnumData();
+			window.WaisVue = this;
 		},
 		methods: {
 			loadEnumData: function () {
