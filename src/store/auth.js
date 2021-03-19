@@ -398,6 +398,7 @@ export const auth = {
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
+		fullName: (state) => state.userProfile.name + ' ' + state.userProfile.family_name,
 		email: (state) => state.user.attributes.email,
 		userAttributes: (state) => state.user.attributes,
 		userProfile: (state) => state.userProfile,
