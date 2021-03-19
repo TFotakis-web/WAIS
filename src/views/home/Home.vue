@@ -1,5 +1,10 @@
 <template>
-	<div class="text-center pt-5">
+	<base-layout :page-title="$t('views.homePage.pageTitle')">
+		<div style="text-align: center; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);">
+			<h1>{{ $t('various.underConstruction') }}</h1>
+		</div>
+	</base-layout>
+<!--	<div class="text-center pt-5">
 		<h1>{{ $t('views.homePage.pageTitle') }}</h1>
 		<h5 class="text-info mb-5">{{ $t('various.underConstruction') }}</h5>
 		<mdb-container fluid>
@@ -81,19 +86,21 @@
 				</mdb-col>
 			</mdb-row>
 		</mdb-container>
-	</div>
+	</div>-->
 </template>
 <script>
-	import calendarCard from '@/views/home/calendarCard';
-	import performanceCard from '@/views/home/performanceCard';
-	import newsfeedCard from '@/views/home/newsfeedCard';
+	import BaseLayout from '@/components/base/BaseLayout';
+	// import calendarCard from '@/views/home/calendarCard';
+	// import performanceCard from '@/views/home/performanceCard';
+	// import newsfeedCard from '@/views/home/newsfeedCard';
 
 	export default {
 		name: 'Home',
 		components: {
-			calendarCard,
-			performanceCard,
-			newsfeedCard,
+			// calendarCard,
+			// performanceCard,
+			// newsfeedCard,
+			BaseLayout,
 		},
 	};
 </script>
