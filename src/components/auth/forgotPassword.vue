@@ -1,50 +1,98 @@
 <template>
-	<mdb-card>
-		<mdb-card-header class="blue-gradient m-0">
-			<mdb-row class="d-flex justify-content-center">
-				<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.auth.resetYourPassword') }}</h3>
-			</mdb-row>
-		</mdb-card-header>
-		<mdb-card-body>
-			<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
-				<mdb-input v-model="username" :label="$t('fields.username')" icon="user-circle" type="text" required class="mb-3" name="username" autocomplete="username" outline/>
-				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="my-3"/>
-					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-					<hr/>
-					<p class="mt-4">
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.backToSignIn') }}</span>
-					</p>
-					<localeDropdown/>
-				</div>
-			</form>
-			<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
-				<mdb-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" outline/>
-				<mdb-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required class="mb-3" name="password" autocomplete="new-password" outline>
-					<mdb-btn @click="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>
-				</mdb-input>
-				<div class="text-center">
-					<loadingBtn color="primary" type="submit" :rounded="true" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="my-3"/>
-					<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-					<hr/>
-					<p class="mt-4">
-						<span @click="$emit('auth-page-changed', 'signIn')" class="a-tag">{{ $t('views.auth.backToSignIn') }}</span>
-					</p>
-					<localeDropdown/>
-				</div>
-			</form>
-		</mdb-card-body>
-	</mdb-card>
+	<ion-grid fixed>
+		<ion-row class="ion-justify-content-center">
+			<ion-col size-sm="10" size-md="8" size-lg="6" size-xl="6">
+				<ion-card>
+					<ion-card-header>
+						<ion-card-title>{{ $t('views.auth.resetYourPassword') }}</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
+						<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
+							<ion-item>
+								<ion-icon :icon="ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
+								<ion-input v-model="username" type="text" name="username" autocomplete="username" required/>
+							</ion-item>
+							<div class="ion-margin-top">
+								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="ion-margin-bottom3"/>
+								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
+								<hr class="ion-margin-vertical"/>
+								<p>
+									<router-link :to="{name: 'SignIn'}">{{ $t('views.auth.backToSignIn') }}</router-link>
+								</p>
+								<!--								<localeDropdown/>-->
+							</div>
+						</form>
+						<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
+							<!--							<ion-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" outline/>-->
+							<!--							<ion-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required class="mb-3" name="password" autocomplete="new-password" outline>-->
+							<!--								<ion-button @click="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>-->
+							<!--							</ion-input>-->
+							<ion-item>
+								<ion-icon :icon="ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.verificationCode') }}</ion-label>
+								<ion-input v-model="verificationCode" type="text" name="verificationCode" autocomplete="verificationCode" required/>
+							</ion-item>
+							<ion-item>
+								<ion-icon :icon="ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.newPassword') }}</ion-label>
+								<ion-input v-model="newPassword" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="new-password" required/>
+								<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">
+									<ion-icon slot="icon-only" :icon="passwordVisible ? ionicons.eyeOffOutline : ionicons.eyeOutline"/>
+								</ion-button>
+							</ion-item>
+							<div class="ion-margin-top">
+								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="ion-margin-bottom3"/>
+								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
+								<hr class="ion-margin-vertical"/>
+								<p>
+									<router-link :to="{name: 'SignIn'}">{{ $t('views.auth.backToSignIn') }}</router-link>
+								</p>
+								<!--								<localeDropdown/>-->
+							</div>
+						</form>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </template>
 <script>
 	import { mapActions } from 'vuex';
-	import localeDropdown from '@/components/structure/localeDropdown';
+	import {
+		IonCard,
+		IonCardHeader,
+		IonCardContent,
+		IonCardTitle,
+		IonIcon,
+		IonItem,
+		IonLabel,
+		IonButton,
+		IonInput,
+		IonGrid,
+		IonRow,
+		IonCol,
+	} from '@ionic/vue';
+	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, qrCodeOutline } from 'ionicons/icons';
+	// import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'forgotPassword',
 		components: {
-			localeDropdown,
+			IonCard,
+			IonCardHeader,
+			IonCardContent,
+			IonCardTitle,
+			IonIcon,
+			IonItem,
+			IonLabel,
+			IonButton,
+			IonInput,
+			IonGrid,
+			IonRow,
+			IonCol,
+			// localeDropdown,
 			loadingBtn,
 		},
 		data() {
@@ -56,6 +104,13 @@
 				verificationCode: '',
 				newPassword: '',
 				passwordVisible: false,
+				ionicons: {
+					personOutline,
+					keyOutline,
+					eyeOutline,
+					eyeOffOutline,
+					qrCodeOutline,
+				},
 			};
 		},
 		methods: {
@@ -84,7 +139,7 @@
 						code: this.verificationCode,
 						password: this.newPassword,
 					});
-					this.$emit('auth-page-changed', 'signIn');
+					await this.$router.push({ name: 'SignIn' });
 				} catch (error) {
 					this.error = error;
 					this.loading = false;
