@@ -1,18 +1,15 @@
 <template>
 	<ion-app v-if="loading === 0">
-<!--		<ion-router-outlet/>-->
 		<router-view/>
 	</ion-app>
 </template>
 <script>
 	import { IonApp } from '@ionic/vue';
-	// import { IonRouterOutlet } from '@ionic/vue';
 
 	export default {
 		name: 'App',
 		components: {
 			IonApp,
-			// IonRouterOutlet,
 		},
 		data() {
 			return {
@@ -43,3 +40,27 @@
 		},
 	};
 </script>
+<style>
+	input:-webkit-autofill {
+		height: 0;
+		-webkit-box-shadow:0 0 0 10px white inset;
+		-webkit-text-fill-color: black;
+		font-weight: 500;
+	}
+
+	input:-webkit-autofill:focus {
+		height: 0;
+		-webkit-box-shadow: 0 0 0 10px white inset;
+		-webkit-text-fill-color: black;
+		font-weight: 500;
+	}
+
+	hr {
+		background-color: var(--ion-color-medium);
+	}
+
+	a {
+		display: inline-block;
+		text-decoration: none;
+	}
+</style>
