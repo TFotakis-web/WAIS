@@ -9,16 +9,16 @@
 					<ion-card-content>
 						<form @submit.prevent="signIn">
 							<ion-item>
-								<ion-icon :icon="personOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
 								<ion-input v-model="credentials.username" type="text" name="username" autocomplete="username" required/>
 							</ion-item>
 							<ion-item>
-								<ion-icon :icon="keyOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.password') }}</ion-label>
 								<ion-input v-model="credentials.password" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="current-password" required/>
 								<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">
-									<ion-icon slot="icon-only" :icon="passwordVisible ? eyeOffOutline : eyeOutline"/>
+									<ion-icon slot="icon-only" :icon="passwordVisible ? ionicons.eyeOffOutline : ionicons.eyeOutline"/>
 								</ion-button>
 							</ion-item>
 							<router-link :to="{ name: 'ForgotPassword' }" class="ion-margin-vertical">{{ $t('views.auth.forgotYourPassword') }}</router-link>
@@ -87,10 +87,12 @@
 				},
 				error: {},
 				passwordVisible: false,
-				personOutline,
-				keyOutline,
-				eyeOutline,
-				eyeOffOutline,
+				ionicons: {
+					personOutline,
+					keyOutline,
+					eyeOutline,
+					eyeOffOutline,
+				}
 			};
 		},
 		methods: {
