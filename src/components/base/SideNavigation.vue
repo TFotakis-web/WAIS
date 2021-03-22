@@ -25,16 +25,13 @@
 				<side-navigation-category v-for="routeCategory in sidenav" :key="routeCategory.name" :routeCategory="routeCategory"/>
 			</ion-list>
 			<ion-list>
-				<ion-item lines="full">
+				<ion-item lines="full" class="topLevelRoute">
 					<ion-icon slot="start" :icon="ionicons.moonOutline"></ion-icon>
 					<ion-label>Toggle Dark Theme</ion-label>
 					<ion-toggle id="themeToggle" slot="end" :checked="colorTheme === 'dark'" @ionChange="toggleTheme"/>
 				</ion-item>
-				<ion-item lines="full" @click="$i18n.$loadLanguageAsync($i18n.locale === 'en' ? 'el' : 'en')" button>
-					<ion-icon slot="start" :icon="ionicons.languageOutline"></ion-icon>
-					<ion-label>{{ $t('fields.locale') }}: {{ $i18n.locale === 'en' ? 'el' : 'en' }}</ion-label>
-				</ion-item>
-				<ion-item lines="full" @click="signOut" button>
+				<localeDropdown class="topLevelRoute"/>
+				<ion-item lines="full" @click="signOut" button class="topLevelRoute">
 					<ion-icon slot="start" :icon="ionicons.logOutOutline"></ion-icon>
 					<ion-label>{{ $t('components.navigation.navbar-item.signOut') }}</ion-label>
 				</ion-item>
@@ -79,6 +76,8 @@
 	} from 'ionicons/icons';
 
 	import SideNavigationCategory from '@/components/base/SideNavigationCategory';
+	import localeDropdown from '@/components/structure/localeDropdown';
+
 	import { mapActions } from 'vuex';
 
 	export default {
@@ -94,6 +93,7 @@
 			IonThumbnail,
 			IonImg,
 			SideNavigationCategory,
+			localeDropdown,
 		},
 		data() {
 			return {
@@ -142,7 +142,7 @@
 						to: { name: 'Home' },
 					},
 					{
-						name: this.$t('components.navigation.navbar-item.notifications',),
+						name: this.$t('components.navigation.navbar-item.notifications'),
 						to: { name: 'Notifications' },
 						icon: notificationsOutline,
 					},
@@ -371,7 +371,7 @@
 						icon: walletOutline,
 					},
 					{
-						name: this.$t('components.navigation.navbar-item.contract-approval',),
+						name: this.$t('components.navigation.navbar-item.contract-approval'),
 						to: { name: 'ContractApproval' },
 						icon: bagCheckOutline,
 					},
@@ -386,7 +386,7 @@
 						icon: briefcaseOutline,
 					},
 					{
-						name: this.$t('components.navigation.navbar-item.collaboration',),
+						name: this.$t('components.navigation.navbar-item.collaboration'),
 						to: { name: 'Collaboration' },
 						icon: personAddOutline,
 					},
@@ -422,7 +422,7 @@
 							routes.push(category);
 						}
 					} else {
-						const routeName = category.to.name
+						const routeName = category.to.name;
 						let hasPermissions = routeName in permissions;
 						hasPermissions &= permissions[routeName]?.read;
 						hasPermissions &= permissions[routeName]?.write;
@@ -438,108 +438,41 @@
 		},
 	};
 </script>
-<style scoped>
-	ion-menu ion-content {
-		--background: var(--ion-item-background, var(--ion-background-color, #fff));
+<style lang="scss">
+	ion-menu {
+		ion-content {
+			--padding-start: 8px;
+			--padding-end: 8px;
+			--padding-top: 20px;
+			--padding-bottom: 20px;
+			--background: var(--ion-item-background, var(--ion-background-color, #fff));
+
+			ion-list {
+				padding: 20px 0;
+				border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+
+				ion-list-header {
+					font-size: 22px;
+					font-weight: 600;
+					min-height: 20px;
+					padding-left: 10px;
+				}
+
+				ion-item {
+					--padding-start: 10px;
+					--padding-end: 10px;
+					border-radius: 4px;
+
+					ion-icon {
+						color: #616e7e;
+					}
+
+				}
+			}
+		}
 	}
 
-	ion-menu.md ion-content {
-		--padding-start: 8px;
-		--padding-end: 8px;
-		--padding-top: 20px;
-		--padding-bottom: 20px;
-	}
-
-	ion-menu.md ion-list {
-		padding: 20px 0;
-	}
-
-	ion-menu.md ion-note {
-		margin-bottom: 30px;
-	}
-
-	ion-menu.md ion-list-header,
-	ion-menu.md ion-note {
-		padding-left: 10px;
-	}
-
-	ion-menu.md ion-list#categories-list {
-		border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
-	}
-
-	ion-menu.md ion-list#categories-list ion-list-header {
-		font-size: 22px;
-		font-weight: 600;
-
-		min-height: 20px;
-	}
-
-	ion-menu.md ion-list#labels-list ion-list-header {
-		font-size: 16px;
-
-		margin-bottom: 18px;
-
-		color: #757575;
-
-		min-height: 26px;
-	}
-
-	ion-menu.md ion-item {
-		--padding-start: 10px;
-		--padding-end: 10px;
-		border-radius: 4px;
-	}
-
-	ion-menu.md ion-item ion-icon {
-		color: #616e7e;
-	}
-
-	ion-menu.md ion-item ion-label {
+	.topLevelRoute ion-label {
 		font-weight: 500;
-	}
-
-	ion-menu.ios ion-content {
-		--padding-bottom: 20px;
-	}
-
-	ion-menu.ios ion-list {
-		padding: 20px 0 0 0;
-	}
-
-	ion-menu.ios ion-note {
-		line-height: 24px;
-		margin-bottom: 20px;
-	}
-
-	ion-menu.ios ion-item {
-		--padding-start: 16px;
-		--padding-end: 16px;
-		--min-height: 50px;
-	}
-
-	ion-menu.ios ion-item ion-icon {
-		font-size: 24px;
-		color: #73849a;
-	}
-
-	ion-menu.ios ion-list#labels-list ion-list-header {
-		margin-bottom: 8px;
-	}
-
-	ion-menu.ios ion-list-header,
-	ion-menu.ios ion-note {
-		padding-left: 16px;
-		padding-right: 16px;
-	}
-
-	ion-menu.ios ion-note {
-		margin-bottom: 8px;
-	}
-
-	ion-note {
-		display: inline-block;
-		font-size: 16px;
-
-		color: var(--ion-color-medium-shade);
 	}
 </style>
