@@ -1,29 +1,27 @@
 <template>
-	<ion-item v-if="routeCategory.children" button @click="shown = !shown" detail="false">
+	<ion-item v-if="routeCategory.children" button @click="shown = !shown" detail="false" class="topLevelRoute">
 		<ion-icon :icon="routeCategory.icon" slot="start"/>
 		<ion-label>{{ routeCategory.name }}</ion-label>
 		<ion-icon :icon="shown ? ionicons.chevronDownOutline : ionicons.chevronForwardOutline" slot="end"/>
 	</ion-item>
-	<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }">
+	<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" class="topLevelRoute">
 		<ion-icon :icon="routeCategory.icon" slot="start"/>
 		<ion-label>{{ routeCategory.name }}</ion-label>
 	</ion-item>
 	<ion-list v-if="shown && routeCategory.children">
-		<ion-menu-toggle auto-hide="false" v-for="(route, i) in routeCategory.children" :key="i">
-			<ion-item button router-direction="root" :router-link="route.to" lines="none" detail="false" class="hydrated" :class="{ selected: isSelected(route) }">
-				<ion-icon slot="start"/>
-				<ion-label>{{ route.name }}</ion-label>
-			</ion-item>
-		</ion-menu-toggle>
+		<ion-item v-for="(route, i) in routeCategory.children" :key="i" button router-direction="root" :router-link="route.to" lines="none" detail="false" class="hydrated" :class="{ selected: isSelected(route) }">
+			<ion-icon slot="start"/>
+			<ion-label>{{ route.name }}</ion-label>
+		</ion-item>
 	</ion-list>
 </template>
 <script>
-	import { IonIcon, IonItem, IonLabel, IonList, IonMenuToggle } from '@ionic/vue';
+	import { IonIcon, IonItem, IonLabel, IonList } from '@ionic/vue';
 	import { chevronForwardOutline, chevronDownOutline } from 'ionicons/icons';
 
 	export default {
 		name: 'SideNavigationCategory',
-		components: { IonIcon, IonItem, IonLabel, IonList, IonMenuToggle },
+		components: { IonIcon, IonItem, IonLabel, IonList },
 		props: ['routeCategory'],
 		data() {
 			return {
@@ -42,15 +40,15 @@
 	};
 </script>
 <style>
-	ion-menu.md ion-item.selected {
+	ion-menu ion-item.selected {
 		--background: rgba(var(--ion-color-primary-rgb), 0.14);
 	}
 
-	ion-menu.md ion-item.selected ion-icon {
+	ion-menu ion-item.selected ion-icon {
 		color: var(--ion-color-primary);
 	}
 
-	ion-menu.ios ion-item.selected ion-icon {
+	ion-menu ion-item.selected ion-icon {
 		color: var(--ion-color-primary);
 	}
 
