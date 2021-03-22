@@ -27,10 +27,10 @@
 								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 								<hr class="ion-margin-vertical"/>
 								<p>
-									<span>{{ $t('views.auth.dontHaveAnAccount') + ' '}}</span>
+									<span>{{ $t('views.auth.dontHaveAnAccount') + ' ' }}</span>
 									<router-link :to="{ name: 'SignUp' }">{{ $t('views.auth.createAccount') }}</router-link>
 								</p>
-								<!-- <localeDropdown /> -->
+								<localeDropdown/>
 							</div>
 						</form>
 					</ion-card-content>
@@ -57,7 +57,7 @@
 	import { eyeOutline, eyeOffOutline, keyOutline, personOutline } from 'ionicons/icons';
 
 	import { mapActions } from 'vuex';
-	// import localeDropdown from "@/components/structure/localeDropdown";
+	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -75,7 +75,7 @@
 			IonGrid,
 			IonRow,
 			IonCol,
-			// localeDropdown,
+			localeDropdown,
 			loadingBtn,
 		},
 		data() {
@@ -92,7 +92,7 @@
 					keyOutline,
 					eyeOutline,
 					eyeOffOutline,
-				}
+				},
 			};
 		},
 		methods: {

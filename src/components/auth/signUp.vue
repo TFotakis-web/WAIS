@@ -51,7 +51,7 @@
 									<span>{{ $t('views.auth.haveAnAccount') + ' ' }}</span>
 									<router-link :to="{ name: 'SignIn' }">{{ $t('views.auth.signIn') }}</router-link>
 								</p>
-								<!-- <localeDropdown /> -->
+								<localeDropdown/>
 							</div>
 						</form>
 					</ion-card-content>
@@ -79,7 +79,7 @@
 	} from '@ionic/vue';
 	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, mailOutline, callOutline } from 'ionicons/icons';
 	import { mapActions } from 'vuex';
-	// import localeDropdown from '@/components/structure/localeDropdown';
+	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -99,7 +99,7 @@
 			IonCol,
 			IonSelect,
 			IonSelectOption,
-			// localeDropdown,
+			localeDropdown,
 			loadingBtn,
 		},
 		data() {

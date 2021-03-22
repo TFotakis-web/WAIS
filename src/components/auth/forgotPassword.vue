@@ -20,14 +20,10 @@
 								<p>
 									<router-link :to="{name: 'SignIn'}">{{ $t('views.auth.backToSignIn') }}</router-link>
 								</p>
-								<!--								<localeDropdown/>-->
+								<localeDropdown/>
 							</div>
 						</form>
 						<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
-							<!--							<ion-input v-model="verificationCode" :label="$t('fields.verificationCode')" icon="qrcode" type="text" required class="mb-3" name="verificationCode" autocomplete="verificationCode" outline/>-->
-							<!--							<ion-input v-model="newPassword" :label="$t('fields.newPassword')" icon="lock" :type="passwordVisible ? 'text' : 'password'" required class="mb-3" name="password" autocomplete="new-password" outline>-->
-							<!--								<ion-button @click="passwordVisible = !passwordVisible" :icon="passwordVisible ? 'eye-slash' : 'eye'" flat slot="append" class="p-0"/>-->
-							<!--							</ion-input>-->
 							<ion-item>
 								<ion-icon :icon="ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.verificationCode') }}</ion-label>
@@ -48,7 +44,7 @@
 								<p>
 									<router-link :to="{name: 'SignIn'}">{{ $t('views.auth.backToSignIn') }}</router-link>
 								</p>
-								<!--								<localeDropdown/>-->
+								<localeDropdown/>
 							</div>
 						</form>
 					</ion-card-content>
@@ -74,7 +70,7 @@
 		IonCol,
 	} from '@ionic/vue';
 	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, qrCodeOutline } from 'ionicons/icons';
-	// import localeDropdown from '@/components/structure/localeDropdown';
+	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -92,7 +88,7 @@
 			IonGrid,
 			IonRow,
 			IonCol,
-			// localeDropdown,
+			localeDropdown,
 			loadingBtn,
 		},
 		data() {

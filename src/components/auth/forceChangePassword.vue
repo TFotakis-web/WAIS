@@ -23,7 +23,7 @@
 								<p>
 									<router-link :to="{name: 'SignIn'}">{{ $t('views.auth.backToSignIn') }}</router-link>
 								</p>
-								<!--								<localeDropdown/>-->
+								<localeDropdown/>
 							</div>
 						</form>
 					</ion-card-content>
@@ -50,7 +50,7 @@
 	import { eyeOutline, eyeOffOutline, keyOutline, personOutline } from 'ionicons/icons';
 
 	import { mapActions } from 'vuex';
-	// import localeDropdown from '@/components/structure/localeDropdown';
+	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -68,7 +68,7 @@
 			IonGrid,
 			IonRow,
 			IonCol,
-			// localeDropdown,
+			localeDropdown,
 			loadingBtn,
 		},
 		props: {
@@ -105,7 +105,7 @@
 						old_password: this.credentials.password,
 						new_password: this.newPassword,
 					});
-					await this.$router.push({name: 'SignIn'});
+					await this.$router.push({ name: 'SignIn' });
 					this.loading = false;
 				} catch (error) {
 					this.error = error;

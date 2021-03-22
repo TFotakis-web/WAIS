@@ -27,7 +27,7 @@
 									<span>{{ $t('views.auth.haveAnAccount') + ' ' }}</span>
 									<router-link :to="{ name: 'SignIn' }">{{ $t('views.auth.signIn') }}</router-link>
 								</p>
-								<!-- <localeDropdown /> -->
+								<localeDropdown/>
 							</div>
 						</form>
 					</ion-card-content>
@@ -53,7 +53,7 @@
 	} from '@ionic/vue';
 	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, qrCodeOutline } from 'ionicons/icons';
 	import { mapActions } from 'vuex';
-	// import localeDropdown from '@/components/structure/localeDropdown';
+	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -71,7 +71,7 @@
 			IonGrid,
 			IonRow,
 			IonCol,
-			// localeDropdown,
+			localeDropdown,
 			loadingBtn,
 		},
 		props: {
@@ -113,7 +113,7 @@
 						code: this.verificationCode,
 					});
 					// await this.signInStore(this.credentials);
-					await this.$router.push({name: 'SignIn'});
+					await this.$router.push({ name: 'SignIn' });
 					this.loading = false;
 				} catch (error) {
 					this.error = error;
