@@ -63,4 +63,14 @@
 		display: inline-block;
 		text-decoration: none;
 	}
+
+	.no-arrows input::-webkit-outer-spin-button,
+	.no-arrows input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	.no-arrows input[type=number] {
+		-moz-appearance:textfield; /* Firefox */
+	}
 </style>
