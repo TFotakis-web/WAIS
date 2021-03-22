@@ -226,7 +226,9 @@
     "accept": "Accept",
     "accepting": "Accepting",
     "reject": "Reject",
-    "rejecting": "Rejecting"
+    "rejecting": "Rejecting",
+    "ok": "OK",
+    "cancel": "Cancel"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",

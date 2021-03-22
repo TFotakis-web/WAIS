@@ -226,7 +226,9 @@
     "accept": "Αποδοχή",
     "accepting": "Αποδέχεται",
     "reject": "Απόρριψη",
-    "rejecting": "Απορρίπτεται"
+    "rejecting": "Απορρίπτεται",
+    "ok": "OK",
+    "cancel": "Άκυρο"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",
