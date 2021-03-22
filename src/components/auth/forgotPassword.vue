@@ -14,7 +14,7 @@
 								<ion-input v-model="username" type="text" name="username" autocomplete="username" required/>
 							</ion-item>
 							<div class="ion-margin-top">
-								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="ion-margin-bottom3"/>
+								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.sendCode')" :loadingText="$t('actions.sendingCode')" class="ion-margin-bottom"/>
 								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 								<hr class="ion-margin-vertical"/>
 								<p>
@@ -42,7 +42,7 @@
 								</ion-button>
 							</ion-item>
 							<div class="ion-margin-top">
-								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="ion-margin-bottom3"/>
+								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="ion-margin-bottom"/>
 								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 								<hr class="ion-margin-vertical"/>
 								<p>
