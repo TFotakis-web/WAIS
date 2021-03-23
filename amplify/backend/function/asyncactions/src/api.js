@@ -25,6 +25,8 @@ module.exports = {
       profilePicture: null,
       preferences: null,
       locale: null,
+      pagePermissions: JSON.stringify({}),
+      modelPermissions: JSON.stringify({}),
       files: [],
     }
     return await gqlQueries.createUserProfile(userProfileItem)

@@ -6,167 +6,290 @@
 	REGION
 	STORAGE_WAISSTORAGE_BUCKETNAME
 Amplify Params - DO NOT EDIT */
-//const { CognitoIdentityServiceProvider } = require('aws-sdk')
-//const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider()
 
 //API
-const requestsAPI = require('./queries/requests')
-const officeAPI = require('./queries/office')
-const gql_queries = require('./api/gql_queries')
-
-/**
- * Get user pool information from environment variables.
- */
-const COGNITO_USERPOOL_ID = process.env.AUTH_WAISAUTH_USERPOOLID
-if (!COGNITO_USERPOOL_ID) {
-  throw new Error(`Function requires a valid pool ID`)
-}
+const api = require('./queries/api')
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
+ * User permission checks are done inside the API.
+ * Exceptions will be thrown on error.
  */
 const resolvers = {
-  Office: {
-    customers: async event => {
-      return await officeAPI.listCustomersForUserInOffice({
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        tradeName: event.arguments.tradeName,
-        filter: event.arguments.filter,
-      })
-    },
-    contracts: async event => {
-      return await officeAPI.listContractsForUserInOffice({
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        tradeName: event.arguments.tradeName,
-        filter: event.arguments.filter,
-      })
-    },
-    employees: async event => {
-      return await officeAPI.listEmployeesForUserInOffice({
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
-    },
-    contractors: async event => {
-      return await officeAPI.listContractorsForUserInOffice({
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
-    },
-    partnerOffices: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.listOfficePartners({
-        office: event.source,
-        limit: event.arguments.limit,
-        nextToken: event.arguments.nextToken,
-        filter: event.arguments.filter,
-      })
-    },
-  },
   Query: {
     echo: async event => {
       return event.arguments.msg
     },
     me: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await gql_queries.getUserProfileByUsername(event.identity.claims['cognito:username'])
+      return await api.user(event.identity.claims['cognito:username'])
     },
     user: async event => {
-      return await gql_queries.getUserProfileByUsername(event.arguments.username)
+      return await api.user(event.arguments.username)
+    },
+    getOfficesIWorkIn: async event => {
+      return await api.getOfficesOfUser({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getMyUserCalendarEvents: async event => {
+      return await api.getCallendarEventsOfUser({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getMySentRequests: async event => {
+      return await api.getRequestsFromUser({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getRequestsForMe: async event => {
+      return await api.getRequestsForUser({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getEmployeeUserProfiles: async event => {
+      return await api.getEmployeeUserProfilesForManagerUsername({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getContractorUserProfiles: async event => {
+      return await api.getContractorUserProfilesForManagerUsername({
+        username: event.identity.claims['cognito:username'],
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getCustomersForOfficeId: async event => {
+      return await api.getCustomersForOfficeId({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getContractsForOfficeId: async event => {
+      return await api.getContractsForOfficeId({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
+    },
+    getPartnerOfficeConnections: async event => {
+      return await api.getPartnerOfficeConnections({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        filter: event.arguments.filter,
+        limit: event.arguments.limit,
+        nextToken: event.arguments.nextToken,
+      })
     },
   },
 
   Mutation: {
-    manageCustomers: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.manageCustomers({
+    updateOfficeDetails: async event => {
+      return await api.updateOfficeDetails({
         username: event.identity.claims['cognito:username'],
-        tradeName: event.arguments.tradeName,
-        action: event.arguments.action,
-        payload: event.arguments.payload,
-        groups: event.identity.groups,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
-    manageContracts: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.manageContracts({
+    updateUserProfileDetails: async event => {
+      return await api.updateUserProfileDetails({
         username: event.identity.claims['cognito:username'],
-        office: event.source,
-        action: event.arguments.action,
-        payload: event.arguments.payload,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
-    manageEmployees: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.manageEmployees({
+    createVehicleForOffice: async event => {
+      return await api.createVehicleForOffice({
         username: event.identity.claims['cognito:username'],
-        office: event.source,
-        action: event.arguments.action,
-        payload: event.arguments.payload,
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
-    manageContractors: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.manageContractors({
+    updateVehicleForOffice: async event => {
+      return await api.updateVehicleForOffice({
         username: event.identity.claims['cognito:username'],
-        office: event.source,
-        action: event.arguments.action,
-        payload: event.arguments.payload,
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
-    updateFields: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await officeAPI.updateFields({
+    deleteVehicleForOffice: async event => {
+      return await api.deleteVehicleForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    createContractForOffice: async event => {
+      return await api.createContractForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    updateContractForOffice: async event => {
+      return await api.updateContractForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    deleteContractForOffice: async event => {
+      return await api.deleteContractForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    createCustomerForOffice: async event => {
+      return await api.createCustomerForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    createRequest: async event => {
+      return await api.sendRequest({
+        username: event.identity.claims['cognito:username'],
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    updateRequestsSentByMe: async event => {
+      return await api.resolveRequest({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
-        typename: event.arguments.typename,
         id: event.arguments.id,
-        fields: event.arguments.fields,
-      })
-    },
-    sendRequest: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await requestsAPI.sendRequest({
-        username: event.identity.claims['cognito:username'],
-        requestType: event.arguments.requestType,
         payload: event.arguments.payload,
       })
     },
-    resolveRequest: async event => {
-      if (!event.identity.claims) {
-        throw new Error('Invalid credentials.')
-      }
-      return await requestsAPI.resolveRequest({
+    deleteRequestsSentByMe: async event => {
+      return await api.resolveRequest({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
         id: event.arguments.id,
         payload: event.arguments.payload,
+      })
+    },
+    createCompanyAccessConnectionForOffice: async event => {
+      return await api.createCompanyAccessConnectionForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    updateCompanyAccessConnectionForOffice: async event => {
+      return await api.updateCompanyAccessConnectionForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    deleteCompanyAccessConnectionForOffice: async event => {
+      return await api.deleteCompanyAccessConnectionForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+
+    createMyUserCalendarEvent: async event => {
+      return await api.createMyUserCalendarEvent({
+        username: event.identity.claims['cognito:username'],
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    updateMyUserCalendarEvents: async event => {
+      return await api.updateMyUserCalendarEvents({
+        username: event.identity.claims['cognito:username'],
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    deleteMyUserCalendarEvents: async event => {
+      return await api.deleteMyUserCalendarEvents({
+        username: event.identity.claims['cognito:username'],
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
+      })
+    },
+    addEmployeeToOffice: async event => {
+      return await api.addEmployeeToOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        empUsername: event.arguments.empUsername,
+        permissions: event.arguments.permissions,
+      })
+    },
+    updateEmployeePermissionsForOffice: async event => {
+      return await api.updateEmployeePermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        empUsername: event.arguments.empUsername,
+        permissions: event.arguments.permissions,
+      })
+    },
+    deleteEmployeeForOffice: async event => {
+      return await api.deleteEmployeeForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        empUsername: event.arguments.empUsername,
+      })
+    },
+    addContractorToOffice: async event => {
+      return await api.addContractorToOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        contractorUsername: event.arguments.contractorUsername,
+        permissions: event.arguments.permissions,
+      })
+    },
+    updateContractorPermissionsForOffice: async event => {
+      return await api.updateContractorPermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        contractorUsername: event.arguments.contractorUsername,
+        permissions: event.arguments.permissions,
+      })
+    },
+    deleteContractorForOffice: async event => {
+      return await api.deleteContractorForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        contractorUsername: event.arguments.contractorUsername,
+        permissions: event.arguments.permissions,
       })
     },
   },
@@ -189,6 +312,9 @@ exports.handler = async event => {
     const resolver = typeHandler[event.fieldName]
     if (resolver) {
       try {
+        if (!event.identity.claims) {
+          throw new Error('Invalid credentials.')
+        }
         const res = await resolver(event)
         console.log('Resolver result is ' + JSON.stringify(res))
         return res

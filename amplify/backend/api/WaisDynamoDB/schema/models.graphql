@@ -45,15 +45,8 @@ type Office
   # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
   officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
 
-  # Retrieve paperwork from these fields, all arguments are optional
-  # Default limit is 100
-  # The ModelTradeUserConnections will not return sensitive data like userId/preferences
-  # The filter arg is a stringified GQL-filter as JSON. e.g "{\"id\": {\"eq\": \"123\"}}"
-  customers(filter: String, limit: Int, nextToken: String, tradeName: String): ModelCustomerConnection @function(name: "resolver-${env}")
-  contracts(filter: String, limit: Int, nextToken: String, tradeName: String): ModelContractConnection @function(name: "resolver-${env}")
-  employees(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
-  contractors(filter: String, limit: Int, nextToken: String): ModelTradeUserConnectionConnection @function(name: "resolver-${env}")
-  partnerOffices(filter: String, limit: Int, nextToken: String): PartialOfficeConnection @function(name: "resolver-${env}")
+  # Employees and contractors of this Office
+  workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
 }
 
 # Office details restricted to office owner and WAIS services
@@ -97,7 +90,6 @@ type UserProfile
   mobile: String
   tin: String
 
-  # Merged..
   family_name: String
   gender: String
   birthdate: AWSDate
@@ -108,9 +100,6 @@ type UserProfile
 
   # Store S3 files in this field
   files: [S3Object]
-
-  # Connected with ONE trade if its a STANDARD user or multiple trades if its a CONTRACTOR
-  tradeCon: [TradeUserConnection] @connection(keyName: "byUserId", fields: ["id"])
 
   # Access to requests
   requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
@@ -240,8 +229,9 @@ type TradeUserConnection
   userId: ID!
   username: String!
   trade: Office! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"]) #User ID and User email are the same
-  permissions: [UserPermissions]!
+  user: UserProfile! @connection(fields: ["userId"])
+  pagePermissions: AWSJSON!
+  modelPermissions: AWSJSON!
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
@@ -287,7 +277,7 @@ type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
-  id: ID 
+  id: ID
   username: String!
   createdAt: String!
   payload: String
@@ -321,6 +311,8 @@ type Requests
   @model(subscriptions: null)
   @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
   @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
+  @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
+  @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
@@ -333,155 +325,11 @@ type Requests
 
   # Users involved
   senderUsername: String!
+  receiverUsername: String!
   senderEmail: String!
   receiverEmail: String!
 
   # Request type and information
   type: RequestType!
   payload: String!
-}
-
-# ####################################################################################################################################################################################
-
-# Everyone can call this queries
-# Authentication is performed inside the lambda resolver
-type Query {
-  #Utils
-  me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
-  user(username: String!): UserProfile
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-}
-
-type Mutation {
-  # Create / Update / Delete from here
-  manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): IDOutput
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-  manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): IDOutput
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-  manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): IDOutput
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-  manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): IDOutput
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: private }])
-
-  # Attempt to update fields in this object,
-  # 'typename' is the @model-Type as described in this file. Case sensitive. (eg. 'UserProfile')
-  # 'id' The entry ID.
-  # 'fields' is an array of dictionaries with attribute names as keys and attribute values with field values
-  # Output is just the ID of the target entry.
-  # EXAMPLE: Input  -> [{"logo": "s3://..." } , { "tin": "..." }]
-  #          Output -> {"id": "XXX-XXX"}
-  updateFields(typename: String!, id: ID!, fields: String): IDOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
-  # Request API
-  sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-}
-
-# ###################### ENUMS/TYPES ######################
-
-# CRUD specififc types
-enum CustomerResourceAction {
-  CREATE
-  UPDATE
-  DELETE
-}
-enum EmployeeResourceAction {
-  UPDATE_PERMISSIONS
-  REMOVE
-}
-enum ContractorResourceAction {
-  UPDATE_PERMISSIONS
-  REMOVE
-}
-enum ContractResourceAction {
-  CREATE
-  UPDATE
-  DELETE
-}
-
-enum RequestType {
-  CREATE_TRADE
-  CREATE_COMPANY_CONNECTION
-  INVITE_EMPLOYEE_TO_OFFICE
-  INVITE_CONTRACTOR_TO_OFFICE
-}
-
-# Employee management API
-enum EmployeeAction {
-  UPDATE_PERMISSIONS # Overwrites the user's permissions iff they exist in the 'members' field
-  REMOVE # Remove user, permissions field is ignored and thus can be omitted
-}
-
-#Add all department-specific
-type UserPermissions {
-  department: String #User defined
-  read: Boolean
-  write: Boolean
-}
-type S3Object {
-  bucket: String!
-  region: String!
-  key: String!
-  name: String!
-}
-
-enum EmployeeType {
-  STANDARD
-  CONTRACTOR
-  MANAGER
-}
-
-type DriversLicense {
-  LicenseID: Int
-  DriversLicenseType: String # Erasitexniko/Epaggelmatiko
-  Category: [DriversLicenseCategory]
-}
-
-type DriversLicenseCategory {
-  category: String
-  issueDate: String
-  expiresAt: String
-}
-
-type InsurancePackage {
-  name: String!
-  insuranceClass: String!
-  coverage: [String]
-  usages: String
-}
-type Value {
-  Name: String!
-  Value: String
-}
-
-#### Should be AUTO-GENERATED #####
-type ModelCustomerConnection {
-  items: [Customer]
-  nextToken: String
-}
-
-type ModelContractConnection {
-  items: [Contract]
-  nextToken: String
-}
-
-type ModelTradeUserConnectionConnection {
-  items: [TradeUserConnection]
-  nextToken: String
-}
-type PartialOfficeConnection {
-  items: [Office]
-  nextToken: String
-}
-
-type IDOutput {
-  id: String!
 }
