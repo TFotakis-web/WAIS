@@ -22,15 +22,27 @@ export const auth = {
 			state.userProfile = payload;
 		},
 		pushRequestsSentByMe(state, payload) {
+			if (state.userProfile.requestsSentByMe.items === undefined) {
+				state.userProfile.requestsSentByMe.items = [];
+			}
 			state.userProfile.requestsSentByMe.items.push(payload);
 		},
 		pushRequestsForMe(state, payload) {
+			if (state.userProfile.requestsForMe.items === undefined) {
+				state.userProfile.requestsForMe.items = [];
+			}
 			state.userProfile.requestsForMe.items.push(payload);
 		},
 		concatRequestsSentByMe(state, payload) {
+			if (state.userProfile.requestsSentByMe.items === undefined) {
+				state.userProfile.requestsSentByMe.items = [];
+			}
 			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.concat(payload);
 		},
 		concatRequestsForMe(state, payload) {
+			if (state.userProfile.requestsForMe.items === undefined) {
+				state.userProfile.requestsForMe.items = [];
+			}
 			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.concat(payload);
 		},
 		removeRequestSentByMe(state, request) {
