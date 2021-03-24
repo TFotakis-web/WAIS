@@ -213,7 +213,7 @@
 				if (Object.keys(this.request).length === 0) {
 					this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form })
 						.then((res) => {
-							this.$notifyAction.saveSuccess();
+							this.$toast.saveSuccess();
 							this.getRequest(res.id)
 								.then((res) => {
 									this.pushRequestsSentByMe(res);
@@ -225,7 +225,7 @@
 				} else {
 					this.request.payload = JSON.stringify(this.form);
 					this.updateRequest({ request: this.request })
-						.then(() => this.$notifyAction.saveSuccess())
+						.then(() => this.$toast.saveSuccess())
 						.catch((error) => console.error(error))
 						.finally(() => this.loading = false);
 				}
