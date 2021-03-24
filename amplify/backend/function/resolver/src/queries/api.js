@@ -1,5 +1,5 @@
 const ddbAPI = require('../api/ddb_queries')
-const gqlAPI = require('../api/new_glq_queries')
+const gqlAPI = require('../api/new_gql_queries')
 const utils = require('../api/utils')
 
 /**
@@ -37,5 +37,15 @@ module.exports = {
   },
   getPartnerOfficeConnections: async args => {
     return gqlAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
+  },
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateOfficeDetails: async args => {
+    return gqlAPI.updateOfficeDetails(args.username, args.requestInput, args.condition)
+  },
+  updateUserProfileDetails: async args => {
+    return gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
+  },
+  createVehicleForOffice: async args => {
+    return gqlAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
   },
 }

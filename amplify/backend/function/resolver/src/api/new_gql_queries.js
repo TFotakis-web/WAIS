@@ -568,4 +568,186 @@ module.exports = {
     console.log('getPartnerOfficeConnections output: ' + JSON.stringify(result))
     return result
   },
+
+  updateOfficeDetails: async (username, input, condition) => {
+    console.log('updateOfficeDetails input: ' + [username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username')
+    }
+
+    //Sanitize input
+    const allowed = ['address', 'office_email', 'zip_code', 'mobile', 'privateData']
+    let sanitized_input = Object.keys(input)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = input[key]
+        return obj
+      }, {})
+
+    const allowed_private = ['bankAccountInfo']
+    if ('private_data' in sanitized_input) {
+      sanitized_input.private_data = Object.keys(sanitized_input.private_data)
+        .filter(key => allowed_private.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = sanitized_input.private_data[key]
+          return obj
+        }, {})
+    }
+
+    //Expand the condition to require that the caller is also the manager of that office
+    const expanded_condition = { and: [condition ?? {}, { ownerUsername: { eq: username } }] }
+    const mutation = /* GraphQL */ `
+      mutation updateOfficeDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
+        updateOffice(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateOfficeDetails')
+    const result = response.data.updateOfficeDetails
+    console.log('updateOfficeDetails output: ' + JSON.stringify(result))
+    return result
+  },
+
+  updateUserProfileDetails: async (username, input, condition) => {
+    console.log('updateUserProfileDetails input: ' + [username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username')
+    }
+
+    //Sanitize input
+    const allowed = [
+      'id',
+      'telephone',
+      'name',
+      'fathers_name',
+      'surname',
+      'zip_code',
+      'gender',
+      'family_name',
+      'preferences',
+      'locale',
+      'files',
+      'tin',
+      'city',
+      'profilePicture',
+    ]
+    const sanitized_input = Object.keys(input)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = input[key]
+        return obj
+      }, {})
+
+    //Expand the condition to require that the caller is also the owner of the profile
+    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const mutation = /* GraphQL */ `
+      mutation updateUserProfileDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
+        updateUserProfile(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateUserProfileDetails')
+    const result = response.data.updateUserProfileDetails
+    console.log('updateUserProfileDetails output: ' + JSON.stringify(result))
+    return result
+  },
+
+  createVehicleForOffice: async (office_id, username, input, condition) => {
+    console.log('createVehicleForOffice input: ' + [office_id, username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username')
+    }
+    if (!office_id) {
+      throw new Error('Invalid office ID')
+    }
+
+    //Get caller's office
+    const officeDetailsAndPermissions = this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: office_id } }, 1, null)
+    if (!officeDetailsAndPermissions) {
+      throw new Error('Insufficient permissions')
+    }
+
+    //Expand the condition to require that the caller is also the owner of the profile
+    const expanded_condition = { and: [condition ?? {}, { officeId: { eq: office_id } }] }
+    const mutation = /* GraphQL */ `
+      mutation createVehicleForOffice($input: CreateVehicleInput!, $condition: ModelVehicleConditionInput) {
+        createVehicle(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'createVehicleForOffice')
+    const result = response.data.createVehicleForOffice
+    console.log('createVehicleForOffice output: ' + JSON.stringify(result))
+    return result
+  },
+
+  updateVehicleForOffice: async (office_id, username, input, condition) => {
+    console.log('updateVehicleForOffice input: ' + [office_id, username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username')
+    }
+    if (!office_id) {
+      throw new Error('Invalid office ID')
+    }
+
+    //Get caller's office
+    const officeDetailsAndPermissions = this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: office_id } }, 1, null)
+    if (!officeDetailsAndPermissions) {
+      throw new Error('Insufficient permissions')
+    }
+
+    //Sanitize input
+    const allowed = [
+      'id',
+      'numberPlate',
+      'color',
+      'manufacturer',
+      'model',
+      'vehicle_owner',
+      'trim',
+      'fuelType',
+      'usage',
+      'displacement',
+      'eurotax',
+      'firstRegistrationDate',
+      'passengers',
+      'purchaseDate',
+      'taxableHorsepower',
+      'vin',
+      'value',
+      'file',
+    ]
+    let sanitized_input = Object.keys(input)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = input[key]
+        return obj
+      }, {})
+    sanitized_input.tradeId = officeDetailsAndPermissions[0].tradeId
+    sanitized_input.tradeName = officeDetailsAndPermissions[0].tradeName
+    if (!('file' in sanitized_input)) {
+      sanitized_input.file = []
+    }
+
+    //Expand the condition to require that the caller is also the owner of the profile
+    const expanded_condition = { and: [condition ?? {}, { officeId: { eq: office_id } }] }
+    const mutation = /* GraphQL */ `
+      mutation updateVehicleForOffice($input: UpdateVehicleInput!, $condition: ModelVehicleConditionInput) {
+        updateVehicle(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateVehicleForOffice')
+    const result = response.data.updateVehicleForOffice
+    console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
+    return result
+  },
 }

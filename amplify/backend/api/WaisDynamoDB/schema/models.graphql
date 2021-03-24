@@ -1,13 +1,7 @@
 # Each office has one owner and each owner hast one office, always!
 type Office
   @model(subscriptions: null)
-  @auth(
-    rules: [
-      { allow: owner, ownerField: "ownerUsername", operations: [read] }
-      { allow: owner, ownerField: "members", operations: [read] }
-      { allow: private, provider: iam }
-    ]
-  )
+  @auth(rules: [{ allow: private, provider: iam }])
   @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
   @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listTradeByOfficeEmail")
   @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
@@ -28,29 +22,6 @@ type Office
 
   # Private data
   # Consider making this a connection if there is a need to search for an office based on such data.
-  privateData: OfficePrivateDetails!
-    @auth(rules: [{ allow: owner, ownerField: "ownerUsername", operations: [read] }, { allow: private, provider: iam }])
-
-  # Users that can access this object, excludes Owner (manager), Admins, AWS Services (IAM)
-  members: [String] @auth(rules: [{ allow: private, provider: iam }])
-
-  # Access to connected offices, private access
-  companyConnections: [CompanyAccessConnection]
-    @connection(keyName: "byFromTradeName", fields: ["tradeName"])
-    @auth(rules: [{ allow: private, provider: iam }])
-
-  # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
-  officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
-
-  # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
-  officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
-
-  # Employees and contractors of this Office
-  workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"]) @auth(rules: [{ allow: private, provider: iam }])
-}
-
-# Office details restricted to office owner and WAIS services
-type OfficePrivateDetails {
   tin: String!
   professionStartDate: AWSDate
   chamberRecordNumber: String
@@ -60,17 +31,26 @@ type OfficePrivateDetails {
 
   # Store S3 files in this field
   files: [S3Object]
+
+  # Users that can access this object, excludes Owner (manager), Admins, AWS Services (IAM)
+  members: [String]
+
+  # Access to connected offices, private access
+  companyConnections: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"])
+
+  # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
+  officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"])
+
+  # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
+  officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"])
+
+  # Employees and contractors of this Office
+  workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
 }
 
 type UserProfile
   @model(subscriptions: null)
-  @auth(
-    rules: [
-      { allow: owner, ownerField: "username", operations: [read, update] }
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
-    ]
-  )
+  @auth(rules: [{ allow: private, provider: iam }])
   @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
   @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
   #Currently the user's username, guaranteed to always be unique
@@ -114,16 +94,12 @@ type UserProfile
 
 type Vehicle
   @model(subscriptions: null)
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
-    ]
-  )
+  @auth(rules: [{ allow: private, provider: iam }])
   @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
   @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
   id: ID
   numberPlate: String!
+  officeId: ID!
   tradeName: String!
   color: String!
   manufacturer: String!
@@ -145,12 +121,7 @@ type Vehicle
 
 type Contract
   @model(subscriptions: null)
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
-    ]
-  )
+  @auth(rules: [{ allow: private, provider: iam }])
   @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
   @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
   @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
@@ -184,12 +155,7 @@ type Contract
 
 type Customer
   @model(subscriptions: null)
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
-    ]
-  )
+  @auth(rules: [{ allow: private, provider: iam }])
   @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
   id: ID
   tin: String!
@@ -216,13 +182,7 @@ type TradeUserConnection
   @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
   @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
   @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"], operations: [create, read, update, delete] }
-      { allow: private, provider: iam, operations: [create, read, update, delete] }
-      { allow: owner, ownerField: "members", operations: [read] }
-    ]
-  ) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
   tradeId: ID!
   tradeName: String!
@@ -231,7 +191,7 @@ type TradeUserConnection
   trade: Office! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"])
   pagePermissions: AWSJSON!
-  modelPermissions: AWSJSON!
+  modelPermissions: [ModelPermission]
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 
@@ -244,7 +204,7 @@ type TradeContractConnection
   @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
   @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
   @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
   tradeId: ID!
   tradeName: String!
@@ -260,7 +220,7 @@ type CompanyAccessConnection
   @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
   @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
   @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
   fromId: ID!
   fromTradeName: String!
@@ -276,7 +236,7 @@ type CompanyAccessConnection
 type UserCalendarEvent
   @model(subscriptions: null)
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
-  @auth(rules: [{ allow: owner, ownerField: "username" }, { allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
   username: String!
   createdAt: String!
@@ -295,7 +255,7 @@ type TransactionHistory
     fields: ["receiverUsername", "timestamp", "senderUsername"]
     queryField: "listTransactionHistorybyReceiverUsername"
   )
-  @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }]) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
   senderUserProfileId: ID!
   receiverUserProfileId: ID!
@@ -313,14 +273,7 @@ type Requests
   @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
   @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
   @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
-  @auth(
-    rules: [
-      { allow: groups, groups: ["admin"] }
-      { allow: private, provider: iam }
-      { allow: owner, identityClaim: "email", ownerField: "senderEmail", operations: [read, update, delete] }
-      { allow: owner, identityClaim: "email", ownerField: "receiverEmail", operations: [read] }
-    ]
-  ) {
+  @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
 
   # Users involved

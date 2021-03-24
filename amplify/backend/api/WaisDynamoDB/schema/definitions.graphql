@@ -37,17 +37,18 @@ enum RequestType {
   INVITE_CONTRACTOR_TO_OFFICE
 }
 
-##########################
-
-input OfficePrivateDetailsInput {
-  tin: String!
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
-  files: [S3ObjectInput]
+enum ModelPermission {
+  OFFICE_INFO_QUERY
+  OFFICE_INFO_MUTATE
+  VEHICLES_QUERY
+  VEHICLES_MUTATE
+  CONTRACTS_QUERY
+  CONTRACTS_MUTATE
+  CUSTOMERS_QUERY
+  CUSTOMERS_MUTATE
 }
+
+##########################
 
 input S3ObjectInput {
   bucket: String!
@@ -151,6 +152,12 @@ input ModelOfficeFilterInput {
   partnersNumberLimit: ModelIntInput
   employeesNumberLimit: ModelIntInput
   verified: ModelBooleanInput
+  tin: ModelStringInput
+  professionStartDate: ModelStringInput
+  chamberRecordNumber: ModelStringInput
+  insuranceLicenseExpirationDate: ModelStringInput
+  civilLiabilityExpirationDate: ModelStringInput
+  bankAccountInfo: ModelStringInput
   members: ModelStringInput
   and: [ModelOfficeFilterInput]
   or: [ModelOfficeFilterInput]
@@ -182,7 +189,13 @@ input CreateOfficeInput {
   partnersNumberLimit: Int
   employeesNumberLimit: Int
   verified: Boolean
-  privateData: OfficePrivateDetailsInput!
+  tin: String!
+  professionStartDate: AWSDate
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDate
+  civilLiabilityExpirationDate: AWSDate
+  bankAccountInfo: AWSJSON
+  files: [S3ObjectInput]
   members: [String]
 }
 
@@ -198,7 +211,13 @@ input UpdateOfficeInput {
   partnersNumberLimit: Int
   employeesNumberLimit: Int
   verified: Boolean
-  privateData: OfficePrivateDetailsInput
+  tin: String
+  professionStartDate: AWSDate
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDate
+  civilLiabilityExpirationDate: AWSDate
+  bankAccountInfo: AWSJSON
+  files: [S3ObjectInput]
   members: [String]
 }
 
@@ -208,6 +227,7 @@ input DeleteOfficeInput {
 
 input ModelOfficeConditionInput {
   tradeName: ModelStringInput
+  ownerUsername: ModelStringInput
   address: ModelStringInput
   office_email: ModelStringInput
   zip_code: ModelStringInput
@@ -216,6 +236,13 @@ input ModelOfficeConditionInput {
   partnersNumberLimit: ModelIntInput
   employeesNumberLimit: ModelIntInput
   verified: ModelBooleanInput
+  tin: ModelStringInput
+  professionStartDate: ModelStringInput
+  chamberRecordNumber: ModelStringInput
+  insuranceLicenseExpirationDate: ModelStringInput
+  civilLiabilityExpirationDate: ModelStringInput
+  bankAccountInfo: ModelStringInput
+  members: ModelStringInput
   and: [ModelOfficeConditionInput]
   or: [ModelOfficeConditionInput]
   not: ModelOfficeConditionInput
@@ -298,6 +325,7 @@ input DeleteUserProfileInput {
 }
 
 input ModelUserProfileConditionInput {
+  username: ModelStringInput
   email: ModelStringInput
   telephone: ModelStringInput
   surname: ModelStringInput
@@ -326,6 +354,7 @@ type ModelVehicleConnection {
 input ModelVehicleFilterInput {
   id: ModelIDInput
   numberPlate: ModelStringInput
+  officeId: ModelIDInput
   tradeName: ModelStringInput
   color: ModelStringInput
   manufacturer: ModelStringInput
@@ -350,6 +379,7 @@ input ModelVehicleFilterInput {
 input CreateVehicleInput {
   id: ID
   numberPlate: String!
+  officeId: ID!
   tradeName: String!
   color: String!
   manufacturer: String!
@@ -372,6 +402,7 @@ input CreateVehicleInput {
 input UpdateVehicleInput {
   id: ID!
   numberPlate: String
+  officeId: ID
   tradeName: String
   color: String
   manufacturer: String
@@ -397,6 +428,7 @@ input DeleteVehicleInput {
 
 input ModelVehicleConditionInput {
   numberPlate: ModelStringInput
+  officeId: ModelIDInput
   tradeName: ModelStringInput
   color: ModelStringInput
   manufacturer: ModelStringInput
@@ -645,6 +677,13 @@ type ModelTradeUserConnectionConnection {
   nextToken: String
 }
 
+input ModelModelPermissionListInput {
+  eq: [ModelPermission]
+  ne: [ModelPermission]
+  contains: ModelPermission
+  notContains: ModelPermission
+}
+
 input ModelEmployeeTypeInput {
   eq: EmployeeType
   ne: EmployeeType
@@ -657,7 +696,7 @@ input ModelTradeUserConnectionFilterInput {
   userId: ModelIDInput
   username: ModelStringInput
   pagePermissions: ModelStringInput
-  modelPermissions: ModelStringInput
+  modelPermissions: ModelModelPermissionListInput
   employeeType: ModelEmployeeTypeInput
   preferences: ModelStringInput
   members: ModelStringInput
@@ -673,7 +712,7 @@ input CreateTradeUserConnectionInput {
   userId: ID!
   username: String!
   pagePermissions: AWSJSON!
-  modelPermissions: AWSJSON!
+  modelPermissions: [ModelPermission]
   employeeType: EmployeeType!
   preferences: String
   members: [String]!
@@ -686,7 +725,7 @@ input UpdateTradeUserConnectionInput {
   userId: ID
   username: String
   pagePermissions: AWSJSON
-  modelPermissions: AWSJSON
+  modelPermissions: [ModelPermission]
   employeeType: EmployeeType
   preferences: String
   members: [String]
@@ -702,9 +741,10 @@ input ModelTradeUserConnectionConditionInput {
   userId: ModelIDInput
   username: ModelStringInput
   pagePermissions: ModelStringInput
-  modelPermissions: ModelStringInput
+  modelPermissions: ModelModelPermissionListInput
   employeeType: ModelEmployeeTypeInput
   preferences: ModelStringInput
+  members: ModelStringInput
   and: [ModelTradeUserConnectionConditionInput]
   or: [ModelTradeUserConnectionConditionInput]
   not: ModelTradeUserConnectionConditionInput
@@ -844,6 +884,7 @@ input DeleteUserCalendarEventInput {
 }
 
 input ModelUserCalendarEventConditionInput {
+  username: ModelStringInput
   createdAt: ModelStringInput
   payload: ModelStringInput
   and: [ModelUserCalendarEventConditionInput]
@@ -955,6 +996,8 @@ input DeleteRequestsInput {
 input ModelRequestsConditionInput {
   senderUsername: ModelStringInput
   receiverUsername: ModelStringInput
+  senderEmail: ModelStringInput
+  receiverEmail: ModelStringInput
   type: ModelRequestTypeInput
   payload: ModelStringInput
   and: [ModelRequestsConditionInput]
