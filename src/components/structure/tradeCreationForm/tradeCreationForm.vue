@@ -47,7 +47,7 @@
 								<ion-item>
 									<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-									<ion-input v-model="form.phone" type="text" name="address" autocomplete="street-address"/>
+									<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
 								</ion-item>
 								<ion-item>
 									<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
@@ -74,10 +74,18 @@
 									<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
 									<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
 								</ion-item>
-<!--								<file-input textFieldTitle="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInBytes="10" size="sm"/>
-								<file-input textFieldTitle="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInBytes="10" size="sm"/>
-								<file-input textFieldTitle="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInBytes="10" size="sm"/>
-								<file-input textFieldTitle="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInBytes="10" multiple size="sm"/>-->
+								<ion-item>
+									<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
+								</ion-item>
+								<ion-item>
+									<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
+								</ion-item>
+								<ion-item>
+									<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
+								</ion-item>
+								<ion-item>
+									<file-input color="primary" text="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
+								</ion-item>
 								<ion-item>
 									<ion-icon :icon="$ionicons.chatbubbleOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.comments') }}</ion-label>
@@ -86,25 +94,21 @@
 							</ion-list>
 							<ion-list>
 								<ion-list-header>{{ $t('views.tradeCreationForm.termsAndConditions') }}</ion-list-header>
-
 								<ion-item>
 									<ion-checkbox v-model="form.condition" slot="start" required/>
 									<ion-label>{{ $t('views.tradeCreationForm.iAgreeToTheTermsAndConditions') }}</ion-label>
 								</ion-item>
 							</ion-list>
-
 							<div class="ion-margin-top">
 								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
 								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-
 								<hr class="ion-margin-vertical"/>
-
 								<localeDropdown class="ion-margin-top"/>
 								<div class="ion-text-center">
-								<ion-button @click="signOut" fill="clear" class="ion-margin-vertical">
-									<ion-icon :icon="$ionicons.logOutOutline" slot="start"/>
-									<span>{{ $t('components.navigation.navbar-item.signOut') }}</span>
-								</ion-button>
+									<ion-button @click="signOut" fill="clear" class="ion-margin-vertical">
+										<ion-icon :icon="$ionicons.logOutOutline" slot="start"/>
+										<span>{{ $t('components.navigation.navbar-item.signOut') }}</span>
+									</ion-button>
 								</div>
 							</div>
 						</form>
@@ -118,14 +122,14 @@
 	import { mapActions, mapMutations } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
-	// import fileInput from '@/components/structure/fileInput/fileInput';
+	import fileInput from '@/components/structure/fileInput/fileInput';
 
 	export default {
 		name: 'tradeCreationForm',
 		components: {
 			loadingBtn,
 			localeDropdown,
-			// fileInput,
+			fileInput,
 		},
 		data() {
 			return {
@@ -163,7 +167,7 @@
 			};
 		},
 		mounted() {
-			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items;
+			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items || [];
 			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === 'CREATE_TRADE');
 			if (requestsForNewTrade.length) {
 				this.request = requestsForNewTrade[0];
