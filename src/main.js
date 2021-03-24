@@ -59,7 +59,25 @@ app.use(store);
 app.use(i18n);
 app.use(VueAxios, axios);
 
+import * as IonComponents from '@ionic/vue';
+
+Object.keys(IonComponents).forEach(key => {
+	if (/^Ion[A-Z]\w+$/.test(key)) {
+		app.component(key, IonComponents[key]);
+	}
+});
+
+import * as Ionicons from 'ionicons/icons';
+
+const ioniconsOutline = {}
+Object.keys(Ionicons).forEach(key => {
+	if (/[a-zA-Z]+Outline/.test(key)) {
+		ioniconsOutline[key] = Ionicons[key];
+	}
+});
+
 // -------------- Prototype expansion ----------------------------------
+app.config.globalProperties.$ionicons = ioniconsOutline;
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$cookies = Cookies;
 app.config.globalProperties.$toBase64 = file => new Promise((resolve, reject) => {
