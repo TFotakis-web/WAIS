@@ -14,6 +14,7 @@ const routes = [
 			{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/components/auth/forgotPassword.vue'), meta: { guest: true } },
 			{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/components/auth/signIn.vue'), meta: { guest: true } },
 			{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/components/auth/signUp.vue'), meta: { guest: true } },
+			{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/components/structure/tradeCreationForm/tradeCreationForm.vue'), meta: { requiresAuth: true } },
 		],
 	},
 
