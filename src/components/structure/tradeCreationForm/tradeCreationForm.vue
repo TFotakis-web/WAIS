@@ -1,150 +1,131 @@
 <template>
-	<mdb-container>
-		<mdb-row class="h-100 justify-content-center align-items-center my-5">
-			<mdb-col md="10" lg="8">
-				<mdb-card>
-					<mdb-card-header class="blue-gradient m-0">
-						<mdb-row class="d-flex justify-content-center">
-							<h3 class="white-text m-0 p-5 font-weight-bold">{{ $t('views.tradeCreationForm.createYourTrade') }}</h3>
-						</mdb-row>
-					</mdb-card-header>
-					<mdb-card-body>
+	<ion-grid fixed>
+		<ion-row class="ion-justify-content-center">
+			<ion-col size-sm="10" size-md="8" size-lg="6" size-xl="6">
+				<ion-card>
+					<ion-card-header>
+						<ion-card-title>{{ $t('views.tradeCreationForm.createYourTrade') }}</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
 						<form @submit.prevent="save">
-							<mdb-row>
-								<mdb-col>
-									<h4 class="text-center font-weight-bold my-4">{{ $store.getters['auth/username'] }}</h4>
-									<h5 class="font-weight-bold pl-0 my-4">{{ $t('views.tradeCreationForm.personalInfo') }}</h5>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col md="4">
-									<mdb-input type="text" :label="$t('fields.surname')" v-model="form.surname" far icon="user" class="my-0" required outline/>
-								</mdb-col>
-								<mdb-col md="4">
-									<mdb-input type="text" :label="$t('fields.name')" v-model="form.name" far icon="-" class="mt-0 d-md-none" required outline/>
-									<mdb-input type="text" :label="$t('fields.name')" v-model="form.name" far class="mt-0 d-none d-md-block" required outline/>
-								</mdb-col>
-								<mdb-col md="4">
-									<mdb-input type="text" :label="$t('fields.fathersName')" v-model="form.fathersName" far icon="-" class="my-0 d-md-none" required outline/>
-									<mdb-input type="text" :label="$t('fields.fathersName')" v-model="form.fathersName" far class="my-0 d-none d-md-block" required outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<h5 class="font-weight-bold pl-0 my-4">{{ $t('views.tradeCreationForm.professionalInfo') }}</h5>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<mdb-input type="text" :label="$t('fields.trade')" v-model="form.tradeName" far icon="building" required outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col md="6">
-									<mdb-input type="text" :label="$t('fields.mobile')" v-model="form.mobile" icon="mobile-alt" required outline/>
-								</mdb-col>
-								<mdb-col md="6">
-									<mdb-input type="text" :label="$t('fields.phone')" v-model="form.phone" icon="phone" required outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col md="6">
-									<mdb-input type="text" :label="$t('fields.address')" v-model="form.address" icon="map-marker-alt" outline/>
-								</mdb-col>
-								<mdb-col md="6">
-									<!-- Todo: Enable postcode select -->
-									<!-- <mdb-select search v-model="$root.PostcodeOptions" :label="$t('fields.postcode')" :placeholder="$t('fields.chooseYourPostcode')" icon="crosshairs" /> -->
-									<mdb-input type="text" :label="$t('fields.postcode')" v-model="form.postcode" icon="crosshairs" outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col lg="6">
-									<mdb-input type="text" :label="$t('fields.tin')" v-model="form.tin" far icon="id-badge" required outline/>
-								</mdb-col>
-								<mdb-col lg="6">
-									<mdb-input type="text" :label="$t('fields.chamberRecordNumber')" v-model="form.chamberRecordNumber" icon="book" outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col lg="6">
-									<mdb-date-picker :label="$t('fields.professionStartDate')" v-model="form.professionStartDate" autoHide disabledFuture :option="$datepickerOptions()" far icon="calendar-alt" outline/>
-								</mdb-col>
-								<mdb-col lg="6">
-									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" far icon="-" class="d-lg-none" outline/>
-									<mdb-date-picker :label="$t('fields.insuranceLicenseExpirationDate')" v-model="form.licenseExpirationDate" autoHide disabledPast :option="$datepickerOptions()" class="d-none d-lg-block" outline/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col col="12">
-									<file-input textFieldTitle="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInBytes="10" size="sm"/>
-								</mdb-col>
-								<mdb-col col="12">
-									<file-input textFieldTitle="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInBytes="10" size="sm"/>
-								</mdb-col>
-								<mdb-col col="12">
-									<file-input textFieldTitle="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInBytes="10" size="sm"/>
-								</mdb-col>
-								<mdb-col col="12">
-									<file-input textFieldTitle="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInBytes="10" multiple size="sm"/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<mdb-input type="textarea" :label="$t('fields.comments')" v-model="form.comments" icon="pencil-alt" outline class="my-4"/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<h3 class="font-weight-bold pl-0 my-4">
-										<strong>{{ $t('views.tradeCreationForm.termsAndConditions') }}</strong>
-									</h3>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<mdb-input type="checkbox" :label="$t('views.tradeCreationForm.iAgreeToTheTermsAndConditions')" v-model="form.condition" true-value="true" false-value="false" id="termsAndConditions" required/>
-								</mdb-col>
-							</mdb-row>
-							<mdb-row>
-								<mdb-col>
-									<hr/>
-									<div class="text-center">
-										<loadingBtn
-											:text="$t('actions.save')"
-											:loading="loading"
-											:loadingText="$t('actions.saving')"
-											color="primary"
-											type="submit"
-											rounded
-											class="my-3"
-										/>
-										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
-										<localeDropdown/>
-										<mdb-btn flat darkWaves @click="signOut" icon="sign-out-alt">
-											{{ $t('components.navigation.navbar-item.signOut') }}
-										</mdb-btn>
-									</div>
-								</mdb-col>
-							</mdb-row>
+							<ion-title>{{ $store.getters['auth/username'] }}</ion-title>
+							<ion-list>
+								<ion-list-header>{{ $t('views.tradeCreationForm.personalInfo') }}</ion-list-header>
+								<ion-item>
+									<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.surname') }}</ion-label>
+									<ion-input v-model="form.surname" type="text" name="fname" autocomplete="family-name" required/>
+								</ion-item>
+								<ion-item>
+									<ion-icon slot="start"/>
+									<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
+									<ion-input v-model="form.name" type="text" name="name" autocomplete="given-name" required/>
+								</ion-item>
+								<ion-item>
+									<ion-icon slot="start"/>
+									<ion-label position="floating">{{ $t('fields.fathersName') }}</ion-label>
+									<ion-input v-model="form.fathersName" type="text" name="name" autocomplete="additional-name" required/>
+								</ion-item>
+							</ion-list>
+							<ion-list>
+								<ion-list-header>{{ $t('views.tradeCreationForm.professionalInfo') }}</ion-list-header>
+								<ion-item>
+									<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.trade') }}</ion-label>
+									<ion-input v-model="form.tradeName" type="text" name="tradeName" required/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
+									<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
+									<ion-input v-model="form.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
+									<ion-input v-model="form.phone" type="text" name="address" autocomplete="street-address"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+									<ion-input v-model="form.postcode" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
+									<ion-input v-model="form.tin" type="text" name="tin"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
+									<ion-input v-model="form.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
+									<ion-datetime v-model="form.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+								</ion-item>
+								<ion-item>
+									<ion-icon slot="start"/>
+									<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
+									<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+								</ion-item>
+<!--								<file-input textFieldTitle="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInBytes="10" size="sm"/>
+								<file-input textFieldTitle="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInBytes="10" size="sm"/>
+								<file-input textFieldTitle="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInBytes="10" size="sm"/>
+								<file-input textFieldTitle="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInBytes="10" multiple size="sm"/>-->
+								<ion-item>
+									<ion-icon :icon="$ionicons.chatbubbleOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.comments') }}</ion-label>
+									<ion-textarea v-model="form.comments" :auto-grow="true" name="comments"/>
+								</ion-item>
+							</ion-list>
+							<ion-list>
+								<ion-list-header>{{ $t('views.tradeCreationForm.termsAndConditions') }}</ion-list-header>
+
+								<ion-item>
+									<ion-checkbox v-model="form.condition" slot="start" required/>
+									<ion-label>{{ $t('views.tradeCreationForm.iAgreeToTheTermsAndConditions') }}</ion-label>
+								</ion-item>
+							</ion-list>
+
+							<div class="ion-margin-top">
+								<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
+								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
+
+								<hr class="ion-margin-vertical"/>
+
+								<localeDropdown class="ion-margin-top"/>
+								<div class="ion-text-center">
+								<ion-button @click="signOut" fill="clear" class="ion-margin-vertical">
+									<ion-icon :icon="$ionicons.logOutOutline" slot="start"/>
+									<span>{{ $t('components.navigation.navbar-item.signOut') }}</span>
+								</ion-button>
+								</div>
+							</div>
 						</form>
-					</mdb-card-body>
-				</mdb-card>
-			</mdb-col>
-		</mdb-row>
-	</mdb-container>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </template>
 <script>
 	import { mapActions, mapMutations } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
-	import fileInput from '@/components/structure/fileInput/fileInput';
+	// import fileInput from '@/components/structure/fileInput/fileInput';
 
 	export default {
 		name: 'tradeCreationForm',
 		components: {
 			loadingBtn,
 			localeDropdown,
-			fileInput,
+			// fileInput,
 		},
 		data() {
 			return {
