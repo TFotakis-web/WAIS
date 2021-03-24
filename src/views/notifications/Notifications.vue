@@ -361,9 +361,9 @@
 					.then(() => {
 						this.$store.commit('auth/removeRequestForMe', request);
 						this.modal = false;
-						this.$notifyAction.saveSuccess();
+						this.$toast.saveSuccess();
 					})
-					.catch((err) => this.$notifyAction.error(err));
+					.catch((err) => this.$toast.error(err));
 			},
 			rejectRequest(request) {
 				const payload = { decision: 'REJECT' };
@@ -371,9 +371,9 @@
 					.then(() => {
 						this.$store.commit('auth/removeRequestForMe', request);
 						this.modal = false;
-						this.$notifyAction.saveSuccess();
+						this.$toast.saveSuccess();
 					})
-					.catch((err) => this.$notifyAction.error(err));
+					.catch((err) => this.$toast.error(err));
 			},
 		},
 		computed: {

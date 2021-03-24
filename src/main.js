@@ -110,6 +110,40 @@ app.config.globalProperties.$clearCookies = function () {
 		this.$cookies.remove(cookie);
 	}
 };
+app.config.globalProperties.$toast = {
+	error: async err => {
+		// eslint-disable-next-line no-console
+		console.error(err);
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.somethingWentWrong'),
+				duration: 10000,
+				color: 'danger',
+				position: 'top'
+			})
+		return toast.present();
+	},
+	saveSuccess: async () => {
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.saveSuccess'),
+				duration: 10000,
+				color: 'success',
+				position: 'top'
+			})
+		return toast.present();
+	},
+	deleteSuccess: async () => {
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.deleteSuccess'),
+				duration: 10000,
+				color: 'success',
+				position: 'top'
+			})
+		return toast.present();
+	},
+};
 
 // -------------- Mount --------------
 router.isReady().then(() => {
