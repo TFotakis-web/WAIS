@@ -353,6 +353,10 @@ export const auth = {
 						read: true,
 						write: true,
 					},
+					'TradeCreationForm': {
+						read: true,
+						write: true,
+					},
 				};
 				commit('setUserProfile', userProfile);
 
