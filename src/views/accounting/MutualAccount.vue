@@ -1,17 +1,12 @@
 <template>
-	<base-layout :page-title="$t('components.navigation.sidenav.accounting.mutualAccount')">
-		<div style="text-align: center; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);">
-			<h1>{{ $t('various.underConstruction') }}</h1>
-		</div>
-	</base-layout>
+	<h1 style="text-align: center; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);">{{ $t('various.underConstruction') }}</h1>
 </template>
 <script>
-	import BaseLayout from '@/components/base/BaseLayout';
-
 	export default {
-		name: 'AccountingMutualAccount',
-		components: {
-			BaseLayout
-		}
+		name: 'AccountingCommissionsCollected',
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('components.navigation.sidenav.accounting.mutualAccount'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 	};
 </script>
