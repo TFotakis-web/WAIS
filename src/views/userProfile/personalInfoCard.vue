@@ -1,101 +1,97 @@
 <template>
-	<mdb-card cascade>
-		<mdb-view cascade class="blue lighten-1 p-3">
-			<div class="mx-auto profileImg" :style="{ 'background-image': 'url(' + userProfile.profilePicture + ')' }">
-				<mdb-view hover class="h-100 w-100 rounded-circle">
-					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click="save" style=" overflow-wrap: anywhere; text-align: center;"/>
-				</mdb-view>
-			</div>
-		</mdb-view>
-		<mdb-card-body>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>{{ $t('views.userProfile.personalInfo') }}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
 			<form @submit.prevent="save">
-				<mdb-row>
-					<mdb-col>
-						<h6 class="text-left">{{ $t('views.userProfile.personalInfo') }}</h6>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.name" :label="$t('fields.name')" type="text" name="name" autocomplete="given-name" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.family_name" :label="$t('fields.surname')" type="text" name="lname" autocomplete="family-name" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.fathers_name" :label="$t('fields.fathersName')" type="text" outline required class="my-2"/>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.tin" :label="$t('fields.tin')" type="text" outline class="my-2"/>
-					</mdb-col>
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.birthdate" :label="$t('fields.birthdate')" type="text" outline  required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.gender" :label="$t('fields.gender')" type="text" outline  required class="my-2"/>-->
-					<!--					</mdb-col>-->
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="6">
-						<mdb-input v-model="userProfile.email" :label="$t('fields.email')" type="text" name="email" autocomplete="email" outline required class="my-2"/>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.mobile" :label="$t('fields.mobile')" type="number" name="mobile" autocomplete="tel" outline class="my-2 no-arrows"/>
-					</mdb-col>
-					<mdb-col sm="4">
-						<mdb-input v-model="userProfile.telephone" :label="$t('fields.phone')" type="number" name="phone" autocomplete="tel" outline required class="my-2 no-arrows"/>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.familyStatus" :label="$t('fields.familyStatus')" type="text" outline required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<mdb-col sm="8">
-						<mdb-input v-model="userProfile.address" :label="$t('fields.address')" type="text" name="address" autocomplete="street-address" outline class="my-2"/>
-					</mdb-col>
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.doy" :label="$t('fields.doy')" type="text" outline required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<mdb-col sm="2">
-						<mdb-input v-model="userProfile.city" :label="$t('fields.city')" type="text" name="city" autocomplete="address-level2" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="2">
-						<mdb-input v-model="userProfile.zip_code" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline class="my-2"/>
-					</mdb-col>
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.locale" :label="$t('fields.locale')" type="text" outline  required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.chamberRecordNumber" :label="$t('fields.chamberRecordNumber')" type="text" outline required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.insuranceLicenseExpirationDate" :label="$t('fields.insuranceLicenseExpirationDate')" type="text" outline required class="my-2"/>-->
-					<!--					</mdb-col>-->
-					<!--					<mdb-col sm="6">-->
-					<!--						<mdb-input v-model="userProfile.professionStartDate" :label="$t('fields.professionStartDate')" type="text" outline required class="my-2"/>-->
-					<!--					</mdb-col>-->
-				</mdb-row>
-				<mdb-row>
-					<mdb-col class="text-center">
-						<hr/>
-						<mdb-btn outline="primary" darkWaves rounded type="submit">{{ $t('actions.save') }}</mdb-btn>
-					</mdb-col>
-				</mdb-row>
+				<ion-list>
+					<ion-item>
+						<ion-thumbnail class="ion-margin-end">
+							<ion-img :src="profilePicture"/>
+						</ion-thumbnail>
+<!--						Todo: Enable when backend is ready -->
+<!--						<file-input @update:downloadUrls="profilePicture = $event" color="primary" :text="$t('actions.edit')" rename-to="profile" file-path="profile/" level="protected" v-model="userProfile.profilePicture" :sizeLimitInMBs="10" size="small"/>-->
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.surname') }}</ion-label>
+						<ion-input v-model="userProfile.family_name" type="text" name="fname" autocomplete="family-name" required/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
+						<ion-input v-model="userProfile.name" type="text" name="name" autocomplete="given-name" required/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.fathersName') }}</ion-label>
+						<ion-input v-model="userProfile.fathers_name" type="text" name="name" autocomplete="additional-name" required/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
+						<ion-input v-model="userProfile.tin" type="text" name="tin"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
+						<ion-input v-model="userProfile.email" type="email" name="email" autocomplete="email" required/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
+						<ion-input v-model="userProfile.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
+						<ion-input v-model="userProfile.telephone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
+						<ion-input v-model="userProfile.address" type="text" name="address" autocomplete="street-address"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
+						<ion-input v-model="userProfile.city" type="text" name="city" autocomplete="address-level2"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+						<ion-input v-model="userProfile.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+					</ion-item>
+				</ion-list>
+				<div class="ion-margin-top">
+					<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+				</div>
 			</form>
-		</mdb-card-body>
-	</mdb-card>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
 	import { mapActions, mapGetters } from 'vuex';
+	import loadingBtn from '@/components/structure/loadingBtn';
+	// import fileInput from '@/components/structure/fileInput/fileInput';
 
 	export default {
 		name: 'personalInfoCard',
+		components: {
+			loadingBtn,
+			// fileInput
+		},
+		data() {
+			return {
+				loading: false,
+				profilePicture: 'https://www.w3schools.com/howto/img_avatar.png'
+			};
+		},
 		methods: {
 			...mapActions('auth', ['updateUserProfile']),
 			save() {
+				this.loading = true;
 				let userProfile = {
 					id: this.userProfile.id,
 					username: this.userProfile.username,
@@ -110,17 +106,18 @@
 					city: this.userProfile.city,
 					zip_code: this.userProfile.zip_code,
 					locale: this.userProfile.locale,
-					// gender: this.userProfile.gender,
-					// birthdate: this.userProfile.birthdate,
-					// profilePicture: this.userProfile.profilePicture,
-					// preferences: this.userProfile.preferences,
-					// doy: this.userProfile.doy,
-					// familyStatus: this.userProfile.familyStatus,
-					// chamberRecordNumber: this.userProfile.chamberRecordNumber,
-					// insuranceLicenseExpirationDate: this.userProfile.insuranceLicenseExpirationDate,
-					// professionStartDate: this.userProfile.professionStartDate,
+					// Todo: Update when backend is ready
+					profilePicture: {
+						bucket: '',
+						region: '',
+						key: '',
+						name: ''
+					}
 				};
-				this.updateUserProfile(userProfile);
+				this.updateUserProfile(userProfile)
+					.then(() => this.$toast.saveSuccess())
+					.catch(this.$toast.error)
+					.finally(() => this.loading = false);
 			},
 		},
 		computed: {
@@ -128,14 +125,3 @@
 		},
 	};
 </script>
-<style scoped>
-	.profileImg {
-		height: 88px;
-		width: 88px;
-		background-size: cover;
-		background-repeat: inherit;
-		background-position: 50% center;
-		border-radius: 50% !important;
-		border: 5px solid white;
-	}
-</style>
