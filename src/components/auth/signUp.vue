@@ -9,12 +9,12 @@
 					<ion-card-content>
 						<form @submit.prevent="signUp">
 							<ion-item>
-								<ion-icon :icon="ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
 								<ion-input v-model="credentials.username" type="text" name="username" autocomplete="username" required/>
 							</ion-item>
 							<ion-item>
-								<ion-icon :icon="ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.password') }}</ion-label>
 								<ion-input v-model="credentials.password" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="current-password" required/>
 								<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">
@@ -22,14 +22,14 @@
 								</ion-button>
 							</ion-item>
 							<ion-item>
-								<ion-icon :icon="ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
 								<ion-input v-model="credentials.email" type="email" name="email" autocomplete="email" required/>
 							</ion-item>
 							<ion-row>
 								<ion-col>
 									<ion-item>
-										<ion-icon :icon="ionicons.callOutline" slot="start" class="ion-align-self-center"/>
+										<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
 										<ion-label position="floating">{{ $t('fields.countryCode') }}</ion-label>
 										<ion-select :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')">
 											<ion-select-option v-for="o in telephoneCodeOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>

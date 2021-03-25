@@ -9,7 +9,7 @@
 					<ion-card-content>
 						<form @submit.prevent="completeNewPassword">
 							<ion-item>
-								<ion-icon :icon="ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.newPassword') }}</ion-label>
 								<ion-input v-model="newPassword" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="new-password" required/>
 								<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">

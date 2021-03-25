@@ -9,12 +9,12 @@
 					<ion-card-content>
 						<form @submit.prevent="confirmSignUp">
 							<ion-item>
-								<ion-icon :icon="ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
 								<ion-input v-model="credentials.username" type="text" name="username" autocomplete="username" required/>
 							</ion-item>
 							<ion-item>
-								<ion-icon :icon="ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.verificationCode') }}</ion-label>
 								<ion-input v-model="verificationCode" type="text" required/>
 							</ion-item>

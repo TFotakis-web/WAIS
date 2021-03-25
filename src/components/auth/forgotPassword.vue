@@ -9,7 +9,7 @@
 					<ion-card-content>
 						<form v-if="!showVerificationForm" @submit.prevent="forgotPassword">
 							<ion-item>
-								<ion-icon :icon="ionicons.personOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.username') }}</ion-label>
 								<ion-input v-model="username" type="text" name="username" autocomplete="username" required/>
 							</ion-item>
@@ -25,12 +25,12 @@
 						</form>
 						<form v-else-if="showVerificationForm" @submit.prevent="forgotPasswordSubmit">
 							<ion-item>
-								<ion-icon :icon="ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.qrCodeOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.verificationCode') }}</ion-label>
 								<ion-input v-model="verificationCode" type="text" name="verificationCode" autocomplete="verificationCode" required/>
 							</ion-item>
 							<ion-item>
-								<ion-icon :icon="ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
+								<ion-icon :icon="$ionicons.keyOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.newPassword') }}</ion-label>
 								<ion-input v-model="newPassword" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="new-password" required/>
 								<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">

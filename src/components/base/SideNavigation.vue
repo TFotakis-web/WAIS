@@ -26,13 +26,13 @@
 			</ion-list>
 			<ion-list>
 				<ion-item lines="full" class="topLevelRoute">
-					<ion-icon slot="start" :icon="ionicons.moonOutline"></ion-icon>
+					<ion-icon slot="start" :icon="$ionicons.moonOutline"></ion-icon>
 					<ion-label>Toggle Dark Theme</ion-label>
 					<ion-toggle id="themeToggle" slot="end" :checked="colorTheme === 'dark'" @ionChange="toggleTheme"/>
 				</ion-item>
 				<localeDropdown class="topLevelRoute"/>
 				<ion-item lines="full" @click="signOut" button class="topLevelRoute">
-					<ion-icon slot="start" :icon="ionicons.logOutOutline"></ion-icon>
+					<ion-icon slot="start" :icon="$ionicons.logOutOutline"></ion-icon>
 					<ion-label>{{ $t('components.navigation.navbar-item.signOut') }}</ion-label>
 				</ion-item>
 			</ion-list>
