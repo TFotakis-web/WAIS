@@ -1,105 +1,94 @@
 <template>
-	<div>
-		<div class="text-center pt-5">
-			<h1>{{ $t('views.notifications.pageTitle') }}</h1>
-			<h5 class="text-info mb-5">{{ $t('various.underConstruction') }}</h5>
-			<mdb-container>
-				<mdb-card>
-					<mdb-card-body>
-						<mdb-list-group>
-							<mdb-list-group-item v-for="request in createTradeList" :key="request.id" @click="edit(request)" :action="true">
-							<span>
-								<strong>{{ request.payload.tradeName }}: </strong>
-								{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
-							</mdb-list-group-item>
-						</mdb-list-group>
-					</mdb-card-body>
-				</mdb-card>
-			</mdb-container>
-		</div>
-		<div>
-			<mdb-modal @close="modal = false" size="lg" centered v-if="modal">
-				<mdb-modal-header>
-					<mdb-modal-title>{{ selectedRequest.payload.tradeName }}</mdb-modal-title>
-				</mdb-modal-header>
-				<mdb-modal-body>
-					<mdb-container fluid>
-						<strong>{{ $t('fields.username') }}: </strong>
-						<span>{{ selectedRequest.payload.username }}</span>
-						<br>
-						<strong>{{ $t('fields.full_name') }}: </strong>
-						<span>{{ selectedRequest.payload.surname + ' ' + selectedRequest.payload.name + ' ' + selectedRequest.payload.fathersName }}</span>
-						<br>
-						<strong>{{ $t('fields.mobile') }}: </strong>
-						<span>{{ selectedRequest.payload.mobile }}</span>
-						<br>
-						<strong>{{ $t('fields.phone') }}: </strong>
-						<span>{{ selectedRequest.payload.phone }}</span>
-						<br>
-						<strong>{{ $t('fields.address') }}: </strong>
-						<span>{{ selectedRequest.payload.address + ', ' + selectedRequest.payload.postcode }}</span>
-						<br>
-						<strong>{{ $t('fields.tin') }}: </strong>
-						<span>{{ selectedRequest.payload.tin }}</span>
-						<br>
-						<strong>{{ $t('fields.chamberRecordNumber') }}: </strong>
-						<span>{{ selectedRequest.payload.chamberRecordNumber }}</span>
-						<br>
-						<strong>{{ $t('fields.professionStartDate') }}: </strong>
-						<span>{{ selectedRequest.payload.professionStartDate }}</span>
-						<br>
-						<strong>{{ $t('fields.licenseExpirationDate') }}: </strong>
-						<span>{{ selectedRequest.payload.licenseExpirationDate }}</span>
-						<br>
-						<strong>{{ $t('fields.comments') }}: </strong>
-						<span>{{ selectedRequest.payload.comments }}</span>
-						<br>
-						<strong>{{ $t('fields.files') }}: </strong>
-						<span v-for="(file, fileIndex) in selectedRequest.payload.files" :key="file.url + fileIndex">
-							<a :href="file.url" target="_blank" class="mr-1">{{ file.filename }}</a>
-							<span v-if="fileIndex !== selectedRequest.payload.files.length - 1">, </span>
-						</span>
-						<form @submit.prevent="acceptRequest(selectedRequest)">
-							<mdb-date-picker
-								disabledPast
-								v-model="form.subscriptionExpirationDate"
-								:label="$t('fields.subscriptionExpirationDate')"
-								:option="$datepickerOptions()"
-								required
-								autoHide
-								outline
-								class="mt-3"
-							/>
-							<mdb-input
-								v-model="form.partnersNumberLimit"
-								type="number"
-								:min="0"
-								:label="$t('fields.partnersNumberLimit')"
-								required
-								outline
-								class="mt-3"
-							/>
-							<mdb-input
-								v-model="form.employeesNumberLimit"
-								type="number"
-								:min="0"
-								:label="$t('fields.employeesNumberLimit')"
-								required
-								outline
-								class="mt-3"
-							/>
-							<mdb-select multiple selectAll search v-model="form.featureAccessOptions" :label="$t('fields.featureAccess')" required outline class="mt-3"/>
-							<mdb-select multiple selectAll search v-model="form.companyOptions" :visibleOptions="8" :label="$t('fields.companyAccess')" required outline class="mt-3"/>
-							<div class="text-center">
-								<mdb-btn type="submit" color="success" size="sm" icon="check">{{ $t('actions.accept') }}</mdb-btn>
-								<mdb-btn @click="rejectRequest(selectedRequest)" color="danger" size="sm" icon="times">{{ $t('actions.reject') }}</mdb-btn>
-							</div>
-						</form>
-					</mdb-container>
-				</mdb-modal-body>
-			</mdb-modal>
-		</div>
-	</div>
+	<ion-grid fixed>
+		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
+		<ion-card>
+			<ion-card-content>
+				<ion-list>
+					<ion-item v-for="request in createTradeList" :key="request.id" @click="edit(request)" button>
+						<strong>{{ request.payload.tradeName }}: </strong>
+						<span>{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
+					</ion-item>
+				</ion-list>
+			</ion-card-content>
+		</ion-card>
+		<ion-modal :is-open="modal" @onDidDismiss="modal = false" v-if="modal">
+			<div>
+				<ion-title>{{ selectedRequest.payload.tradeName }}</ion-title>
+				<strong>{{ $t('fields.username') }}: </strong>
+				<span>{{ selectedRequest.payload.username }}</span>
+				<br>
+				<strong>{{ $t('fields.full_name') }}: </strong>
+				<span>{{ selectedRequest.payload.surname + ' ' + selectedRequest.payload.name + ' ' + selectedRequest.payload.fathersName }}</span>
+				<br>
+				<strong>{{ $t('fields.mobile') }}: </strong>
+				<span>{{ selectedRequest.payload.mobile }}</span>
+				<br>
+				<strong>{{ $t('fields.phone') }}: </strong>
+				<span>{{ selectedRequest.payload.phone }}</span>
+				<br>
+				<strong>{{ $t('fields.address') }}: </strong>
+				<span>{{ selectedRequest.payload.address + ', ' + selectedRequest.payload.postcode }}</span>
+				<br>
+				<strong>{{ $t('fields.tin') }}: </strong>
+				<span>{{ selectedRequest.payload.tin }}</span>
+				<br>
+				<strong>{{ $t('fields.chamberRecordNumber') }}: </strong>
+				<span>{{ selectedRequest.payload.chamberRecordNumber }}</span>
+				<br>
+				<strong>{{ $t('fields.professionStartDate') }}: </strong>
+				<span>{{ selectedRequest.payload.professionStartDate }}</span>
+				<br>
+				<strong>{{ $t('fields.licenseExpirationDate') }}: </strong>
+				<span>{{ selectedRequest.payload.licenseExpirationDate }}</span>
+				<br>
+				<strong>{{ $t('fields.comments') }}: </strong>
+				<span>{{ selectedRequest.payload.comments }}</span>
+				<br>
+				<strong>{{ $t('fields.files') }}: </strong>
+				<span v-for="(file, fileIndex) in selectedRequest.payload.files" :key="file.url + fileIndex">
+					<a :href="file.url" target="_blank" class="mr-1">{{ file.filename }}</a>
+					<span v-if="fileIndex !== selectedRequest.payload.files.length - 1">, </span>
+				</span>
+				<form @submit.prevent="acceptRequest(selectedRequest)">
+					<ion-list>
+						<ion-item>
+							<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
+							<ion-label position="floating">{{ $t('fields.subscriptionExpirationDate') }}</ion-label>
+							<ion-datetime v-model="form.subscriptionExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="subscriptionExpirationDate" required/>
+						</ion-item>
+						<ion-item>
+							<ion-icon :icon="$ionicons.peopleOutline" slot="start" class="ion-align-self-center"/>
+							<ion-label position="floating">{{ $t('fields.partnersNumberLimit') }}</ion-label>
+							<ion-input v-model="form.partnersNumberLimit" :min="0" type="number" name="partnersNumberLimit" required class="no-arrows"/>
+						</ion-item>
+						<ion-item>
+							<ion-icon slot="start"/>
+							<ion-label position="floating">{{ $t('fields.employeesNumberLimit') }}</ion-label>
+							<ion-input v-model="form.employeesNumberLimit" :min="0" type="number" name="employeesNumberLimit" required class="no-arrows"/>
+						</ion-item>
+						<ion-item>
+							<ion-icon :icon="$ionicons.appsOutline" slot="start" class="ion-align-self-center"/>
+							<ion-label position="floating">{{ $t('fields.featureAccess') }}</ion-label>
+							<ion-select multiple :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')" required>
+								<ion-select-option v-for="o in form.featureAccessOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
+							</ion-select>
+						</ion-item>
+						<ion-item>
+							<ion-icon :icon="$ionicons.cubeOutline" slot="start" class="ion-align-self-center"/>
+							<ion-label position="floating">{{ $t('fields.featureAccess') }}</ion-label>
+							<ion-select multiple :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')" required>
+								<ion-select-option v-for="o in form.companyOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
+							</ion-select>
+						</ion-item>
+					</ion-list>
+					<div class="text-center">
+						<ion-button type="submit" color="success" size="sm" icon="check">{{ $t('actions.accept') }}</ion-button>
+						<ion-button @click="rejectRequest(selectedRequest)" color="danger" size="sm" icon="times">{{ $t('actions.reject') }}</ion-button>
+					</div>
+				</form>
+			</div>
+		</ion-modal>
+	</ion-grid>
 </template>
 <script>
 	import { mapActions, mapGetters, mapMutations } from 'vuex';
@@ -120,18 +109,17 @@
 				},
 			};
 		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.notifications.pageTitle'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		methods: {
 			...mapActions('request', ['listRequestsByReceiverEmail', 'resolveRequest']),
 			...mapMutations('auth', ['concatRequestsForMe']),
 			async edit(request) {
 				this.selectedRequest = request;
 				for (const file of request.payload.files) {
-					let url = file.url;
-					const urlParts = url.split('/');
-					const level = urlParts[0];
-					const identityId = urlParts[1];
-					const filePath = urlParts.slice(2).join('/');
-					file.url = await Storage.get(filePath, { level, identityId });
+					file.url = await Storage.get(file.filePath + file.filename, { level: file.level, identityId: file.idToken });
 					// file.url = await Storage.get('createTradeRequest/File type 1.pdf', {
 					// level: 'private',
 					// customPrefix: {
