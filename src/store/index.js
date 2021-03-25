@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { pageStructure } from '@/store/pageStructure';
 import { auth } from '@/store/auth';
 import { request } from '@/store/request';
 // import { vehicle } from '@/store/vehicle';
@@ -10,6 +11,7 @@ import { echo, me } from '@/graphql/custom-queries';
 
 export const store = createStore({
 	modules: {
+		pageStructure,
 		auth,
 		request,
 		// vehicle,
