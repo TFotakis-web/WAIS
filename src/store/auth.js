@@ -420,7 +420,7 @@ export const auth = {
 		userProfile: (state) => state.userProfile,
 		permissions: (state) => state.userProfile.permissions,
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
-		requestsSentByMe: (state) => state.userProfile.requestsSentByMe.items,
-		requestsForMe: (state) => state.userProfile.requestsForMe.items,
+		requestsSentByMe: (state) => state.userProfile.requestsSentByMe.items || [],
+		requestsForMe: (state) => state.userProfile.requestsForMe.items || [],
 	},
 };
