@@ -151,27 +151,19 @@
 						icon: barChartOutline,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.pricing.vehicle',
-								),
+								name: this.$t('components.navigation.sidenav.pricing.vehicle'),
 								to: { name: 'VehiclePricing' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.pricing.industrialLiability',
-								),
+								name: this.$t('components.navigation.sidenav.pricing.industrialLiability'),
 								to: { name: 'IndustrialLiabilityPricing' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.pricing.fire',
-								),
+								name: this.$t('components.navigation.sidenav.pricing.fire'),
 								to: { name: 'FirePricing' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.pricing.life',
-								),
+								name: this.$t('components.navigation.sidenav.pricing.life'),
 								to: { name: 'LifePricing' },
 							},
 						],
@@ -183,51 +175,35 @@
 						icon: documentTextOutline,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.file',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.file'),
 								to: { name: 'ContractsFile' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.uncollected',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.uncollected'),
 								to: { name: 'UncollectedContracts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.collected',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.collected'),
 								to: { name: 'CollectedContracts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.additionalActs',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.additionalActs'),
 								to: { name: 'ContractAdditionalActs' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.greenCard',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.greenCard'),
 								to: { name: 'GreenCardContracts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.unclaimed',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.unclaimed'),
 								to: { name: 'UnclaimedContracts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.invalid',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.invalid'),
 								to: { name: 'InvalidContracts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contracts.new',
-								),
+								name: this.$t('components.navigation.sidenav.contracts.new'),
 								to: { name: 'NewContract' },
 							},
 						],
@@ -239,27 +215,19 @@
 						icon: listOutline,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.processing.dueDateRegister',
-								),
+								name: this.$t('components.navigation.sidenav.processing.dueDateRegister'),
 								to: { name: 'ProcessingDueDateRegister' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.processing.duePayment',
-								),
+								name: this.$t('components.navigation.sidenav.processing.duePayment'),
 								to: { name: 'ProcessingDuePayment' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.processing.paid',
-								),
+								name: this.$t('components.navigation.sidenav.processing.paid'),
 								to: { name: 'ProcessingPaid' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.processing.losses',
-								),
+								name: this.$t('components.navigation.sidenav.processing.losses'),
 								to: { name: 'ProcessingLosses' },
 							},
 						],
@@ -271,39 +239,27 @@
 						icon: cartOutline,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.receipts',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.receipts'),
 								to: { name: 'AccountingReceipts' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.registers',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.registers'),
 								to: { name: 'AccountingRegisters' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.todaysIncome',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.todaysIncome'),
 								to: { name: 'AccountingTodaysIncome' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.commissionsUncollected',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.commissionsUncollected'),
 								to: { name: 'AccountingCommissionsUncollected' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.commissionsCollected',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.commissionsCollected'),
 								to: { name: 'AccountingCommissionsCollected' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.accounting.mutualAccount',
-								),
+								name: this.$t('components.navigation.sidenav.accounting.mutualAccount'),
 								to: { name: 'AccountingMutualAccount' },
 							},
 						],
@@ -315,15 +271,11 @@
 						icon: peopleOutline,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contractors.suppliers',
-								),
+								name: this.$t('components.navigation.sidenav.contractors.suppliers'),
 								to: { name: 'SupplierContractors' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.contractors.externalContractors',
-								),
+								name: this.$t('components.navigation.sidenav.contractors.externalContractors'),
 								to: { name: 'ContractorsExternalContractors' },
 							},
 						],
@@ -336,15 +288,11 @@
 						fab: true,
 						children: [
 							{
-								name: this.$t(
-									'components.navigation.sidenav.cards.vehicleCards',
-								),
+								name: this.$t('components.navigation.sidenav.cards.vehicleCards'),
 								to: { name: 'VehicleCards' },
 							},
 							{
-								name: this.$t(
-									'components.navigation.sidenav.cards.customerCards',
-								),
+								name: this.$t('components.navigation.sidenav.cards.customerCards'),
 								to: { name: 'CustomerCards' },
 							},
 						],
