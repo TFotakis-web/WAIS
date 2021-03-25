@@ -127,7 +127,6 @@
 			toggleTheme() {
 				this.colorTheme = this.colorTheme === 'light' ? 'dark' : 'light';
 				document.body.setAttribute('color-theme', this.colorTheme);
-				console.log(this.colorTheme);
 			},
 			...mapActions({
 				signOut: 'auth/signOut',
