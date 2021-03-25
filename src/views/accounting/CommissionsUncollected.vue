@@ -1,11 +1,17 @@
 <template>
-	<div class="text-center pt-5">
-		<h1>{{ $t('components.navigation.sidenav.accounting.commissionsUncollected') }}</h1>
-		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
-	</div>
+	<base-layout :page-title="$t('components.navigation.sidenav.accounting.commissionsUncollected')">
+		<div style="text-align: center; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);">
+			<h1>{{ $t('various.underConstruction') }}</h1>
+		</div>
+	</base-layout>
 </template>
 <script>
+	import BaseLayout from '@/components/base/BaseLayout';
+
 	export default {
 		name: 'AccountingCommissionsUncollected',
+		components: {
+			BaseLayout
+		}
 	};
 </script>
