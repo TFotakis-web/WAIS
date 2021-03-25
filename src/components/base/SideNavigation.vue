@@ -98,7 +98,7 @@
 		data() {
 			return {
 				shown: false,
-				colorTheme: 'light',
+				colorTheme: this.$cookies.get('color-theme') || 'light',
 				ionicons: {
 					chevronForwardOutline,
 					chevronDownOutline,
@@ -123,10 +123,17 @@
 				},
 			};
 		},
+		mounted() {
+			this.setColorTheme();
+		},
 		methods: {
 			toggleTheme() {
 				this.colorTheme = this.colorTheme === 'light' ? 'dark' : 'light';
+				this.setColorTheme();
+			},
+			setColorTheme() {
 				document.body.setAttribute('color-theme', this.colorTheme);
+				this.$cookies.set('color-theme', this.colorTheme);
 			},
 			...mapActions({
 				signOut: 'auth/signOut',
