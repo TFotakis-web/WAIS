@@ -129,40 +129,59 @@ type Mutation {
     input: CreateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  
   updateCompanyAccessConnectionForOffice(
     officeId: ID!
     input: UpdateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  
   deleteCompanyAccessConnectionForOffice(
     officeId: ID!
     input: DeleteCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  
   createMyUserCalendarEvent(input: CreateUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+
   updateMyUserCalendarEvents(input: UpdateUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+
   deleteMyUserCalendarEvents(input: DeleteUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
-  addEmployeeToOffice(officeId: ID!, empUsername: String!, permissions: AWSJSON!): ID
+
+  addEmployeeToOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!, pagePermissions: AWSJSON!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
-  updateEmployeePermissionsForOffice(officeId: ID!, empUsername: String!, permissions: AWSJSON!): ID
+
+  updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+
+  updateEmployeePagePermissionsForOffice(officeId: ID!, empUsername: String!, pagePermissions: AWSJSON!): ID
+    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @function(name: "resolver-${env}")
+
   deleteEmployeeForOffice(officeId: ID!, empUsername: String!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
-  addContractorToOffice(officeId: ID!, contractorUsername: String!, permissions: AWSJSON!): ID
+
+  addContractorToOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!, pagePermissions: AWSJSON!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
-  updateContractorPermissionsForOffice(officeId: ID!, contractorUsername: String!, permissions: AWSJSON!): ID
+
+  updateContractorModelPermissionsForOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+
+  updateContractorPagePermissionsForOffice(officeId: ID!, contractorUsername: String!, pagePermissions: AWSJSON!): ID
+    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @function(name: "resolver-${env}")
+
   deleteContractorForOffice(officeId: ID!, contractorUsername: String!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")

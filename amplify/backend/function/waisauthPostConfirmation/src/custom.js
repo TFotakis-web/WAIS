@@ -13,14 +13,14 @@ exports.handler = async (event, context, callback) => {
     phone_number: event.request.userAttributes.phone_number,
   }
   try {
-    let result = await lambda
+    const result = await lambda
       .invoke({
         FunctionName: targetFunctionName,
         Payload: JSON.stringify(payload),
       })
       .promise()
 
-    let returnedPayload = JSON.parse(result.Payload)
+    const returnedPayload = JSON.parse(result.Payload)
     if (returnedPayload.body.code == 200) {
       console.log('User added successfully: ' + event.userName)
       callback(null, event)

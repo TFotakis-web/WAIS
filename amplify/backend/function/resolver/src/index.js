@@ -186,8 +186,8 @@ const resolvers = {
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
-        id: event.arguments.id,
-        payload: event.arguments.payload,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
     deleteRequestsSentByMe: async event => {
@@ -195,8 +195,8 @@ const resolvers = {
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
-        id: event.arguments.id,
-        payload: event.arguments.payload,
+        requestInput: event.arguments.input,
+        condition: event.arguments.condition,
       })
     },
     createCompanyAccessConnectionForOffice: async event => {
@@ -250,15 +250,24 @@ const resolvers = {
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         empUsername: event.arguments.empUsername,
-        permissions: event.arguments.permissions,
+        modelPermissions: event.arguments.modelPermissions,
+        pagePermissions: event.arguments.pagePermissions,
       })
     },
-    updateEmployeePermissionsForOffice: async event => {
-      return await api.updateEmployeePermissionsForOffice({
+    updateEmployeeModelPermissionsForOffice: async event => {
+      return await api.updateEmployeeModelPermissionsForOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         empUsername: event.arguments.empUsername,
-        permissions: event.arguments.permissions,
+        modelPermissions: event.arguments.modelPermissions,
+      })
+    },
+    updateEmployeePagePermissionsForOffice: async event => {
+      return await api.updateEmployeePagePermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        empUsername: event.arguments.empUsername,
+        pagePermissions: event.arguments.pagePermissions,
       })
     },
     deleteEmployeeForOffice: async event => {
@@ -268,20 +277,30 @@ const resolvers = {
         empUsername: event.arguments.empUsername,
       })
     },
+
     addContractorToOffice: async event => {
       return await api.addContractorToOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         contractorUsername: event.arguments.contractorUsername,
-        permissions: event.arguments.permissions,
+        modelPermissions: event.arguments.modelPermissions,
+        pagePermissions: event.arguments.pagePermissions,
       })
     },
-    updateContractorPermissionsForOffice: async event => {
-      return await api.updateContractorPermissionsForOffice({
+    updateContractorModelPermissionsForOffice: async event => {
+      return await api.updateContractorModelPermissionsForOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         contractorUsername: event.arguments.contractorUsername,
-        permissions: event.arguments.permissions,
+        modelPermissions: event.arguments.modelPermissions,
+      })
+    },
+    updateContractorPagePermissionsForOffice: async event => {
+      return await api.updateContractorPagePermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+        contractorUsername: event.arguments.contractorUsername,
+        pagePermissions: event.arguments.pagePermissions,
       })
     },
     deleteContractorForOffice: async event => {

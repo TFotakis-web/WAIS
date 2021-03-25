@@ -34,8 +34,8 @@ module.exports = {
 
   checkUniqueEmail: async email => {
     console.log('CheckUniqueEmail input: ' + email)
-    let existingProfile = await gqlQueries.getUserProfileIdByEmail(email)
-    let result = existingProfile ? 'REJECT' : 'ACCEPT'
+    const existingProfile = await gqlQueries.getUserProfileIdByEmail(email)
+    const result = existingProfile ? 'REJECT' : 'ACCEPT'
     console.log('CheckUniqueEmail output: ' + result)
     return result
   },

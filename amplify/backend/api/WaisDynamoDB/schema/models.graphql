@@ -191,7 +191,7 @@ type TradeUserConnection
   trade: Office! @connection(fields: ["tradeId"])
   user: UserProfile! @connection(fields: ["userId"])
   pagePermissions: AWSJSON!
-  modelPermissions: [ModelPermission]
+  modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
 

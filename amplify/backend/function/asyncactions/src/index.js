@@ -68,7 +68,7 @@ exports.handler = async event => {
   //Delete user on failure since that means that the user credentials are already present in the Wais DB
   if (response.code !== 200) {
     try {
-      let resp = await cognitoIdentityServiceProvider
+      const resp = await cognitoIdentityServiceProvider
         .adminDeleteUser({
           UserPoolId: COGNITO_USERPOOL_ID,
           Username: event.username,

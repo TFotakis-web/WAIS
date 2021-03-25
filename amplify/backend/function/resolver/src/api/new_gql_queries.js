@@ -97,7 +97,7 @@ module.exports = {
       }
     `
     const response = await gqlHelper({ username: username }, query, 'getUserProfileByUsername')
-    const result = response.data.getUserProfileByUsername
+    const result = response.data.listUserProfileByUsername
     console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
     return result
   },
@@ -149,7 +149,7 @@ module.exports = {
       }
     `
     const response = await gqlHelper({ email: email }, query, 'getUserProfileByEmail')
-    const result = response.data.getUserProfileByEmail
+    const result = response.data.listUserProfileByEmail
     console.log('getUserProfileByEmail output: ' + JSON.stringify(result))
     return result
   },
@@ -162,7 +162,8 @@ module.exports = {
     if (!username) {
       throw new Error('Invalid username')
     }
-    const query = /* GraphQL */ `query getOfficeDetailsAndPermissionsByUsername($username: String!, filter: ModelOfficeFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+      query getOfficeDetailsAndPermissionsByUsername($username: String!, filter: ModelOfficeFilterInput, limit: Int, nextToken: String ) {
         listUserProfileByUsername(username: $username) {
             items {
               officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -185,9 +186,13 @@ module.exports = {
       query,
       'getOfficeDetailsAndPermissionsByUsername',
     )
-    const result = response.data.getOfficeDetailsAndPermissionsByUsername
+    const result = response.data.listUserProfileByUsername
     console.log('getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
     return result
+  },
+
+  getUserModelPermissions: async (username, officeId) => {
+    return new Set(this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: officeId } }, 1, null))
   },
 
   getCallendarEventsForUser: async (username, filter, limit, nextToken) => {
@@ -195,7 +200,8 @@ module.exports = {
     if (!username) {
       throw new Error('Invalid username')
     }
-    const query = /* GraphQL */ `query getCallendarEventsForUser($username: String!, filter: ModelUserCalendarEventFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+      query getCallendarEventsForUser($username: String!, filter: ModelUserCalendarEventFilterInput, limit: Int, nextToken: String ) {
         listUserCalendarEventsByUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
             items {
                 username
@@ -212,7 +218,7 @@ module.exports = {
       query,
       'getCallendarEventsForUser',
     )
-    const result = response.data.getCallendarEventsForUser
+    const result = response.data.listUserCalendarEventsByUsername
     console.log('getCallendarEventsForUser output: ' + JSON.stringify(result))
     return result
   },
@@ -222,7 +228,8 @@ module.exports = {
     if (!username) {
       throw new Error('Invalid username')
     }
-    const query = /* GraphQL */ `query getRequestsFromUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+      query getRequestsFromUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
         listRequestsBySenderUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
             items {
                 id
@@ -242,7 +249,7 @@ module.exports = {
       query,
       'getRequestsFromUser',
     )
-    const result = response.data.getRequestsFromUser
+    const result = response.data.listRequestsBySenderUsername
     console.log('getRequestsFromUser output: ' + JSON.stringify(result))
     return result
   },
@@ -252,7 +259,8 @@ module.exports = {
     if (!username) {
       throw new Error('Invalid username')
     }
-    const query = /* GraphQL */ `query getRequestsForUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+      query getRequestsForUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
         listRequestsByReceiverUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
             items {
                 id
@@ -272,7 +280,7 @@ module.exports = {
       query,
       'getRequestsForUser',
     )
-    const result = response.data.getRequestsForUser
+    const result = response.data.listRequestsByReceiverUsername
     console.log('getRequestsForUser output: ' + JSON.stringify(result))
     return result
   },
@@ -283,50 +291,47 @@ module.exports = {
       throw new Error('Invalid manager username')
     }
     let emp_filter = { and: [filter ?? {}, { employeeType: { eq: 'STANDARD' } }] }
-    const query = /* GraphQL */ `query getEmployeeUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
-      listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
-        items {
-          workforce(limit: $limit, nextToken: $nextToken, filter: $filter){
-            items {
-              workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
-                items {
-                  user {
-                    username
-                    email
-                    telephone
-                    surname
-                    name
-                    fathers_name
-                    address
-                    zip_code
-                    city
-                    createdAt
-                    family_name
-                    gender
-                    id
-                    locale
-                    mobile
-                    preferences
-                    updatedAt
-                    tin
-                    birthdate
-                  }
+    const query = /* GraphQL */ `
+      query getEmployeeUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
+        listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+          items {
+            workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
+              items {
+                user {
+                  username
+                  email
+                  telephone
+                  surname
+                  name
+                  fathers_name
+                  address
+                  zip_code
+                  city
+                  createdAt
+                  family_name
+                  gender
+                  id
+                  locale
+                  mobile
+                  preferences
+                  updatedAt
+                  tin
+                  birthdate
                 }
-                nextToken
               }
+              nextToken
             }
           }
         }
-      }
-    }`
+      }`
     const response = await gqlHelper(
       { ownerUsername: managerUsername, filter: emp_filter, limit: limit ?? 50, nextToken },
       query,
       'getEmployeeUserProfilesForManagerUsername',
     )
-    let result = response.data.getEmployeeUserProfilesForManagerUsername.listTradeByOwnerUsername.items
+    let result = response.data.listTradeByOwnerUsername.items
     if (result) {
-      result = result.workforce
+      result = result[0].workforce
     }
     console.log('getEmployeeUserProfilesForManagerUsername output: ' + JSON.stringify(result))
     return result
@@ -338,38 +343,35 @@ module.exports = {
       throw new Error('Invalid manager username')
     }
     let emp_filter = { and: [filter ?? {}, { employeeType: { eq: 'CONTRACTOR' } }] }
-    const query = /* GraphQL */ `query getContractorUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+    query getContractorUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
       listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
         items {
-          workforce(limit: $limit, nextToken: $nextToken, filter: $filter){
+          workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
             items {
-              workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
-                items {
-                  user {
-                    username
-                    email
-                    telephone
-                    surname
-                    name
-                    fathers_name
-                    address
-                    zip_code
-                    city
-                    createdAt
-                    family_name
-                    gender
-                    id
-                    locale
-                    mobile
-                    preferences
-                    updatedAt
-                    tin
-                    birthdate
-                  }
-                }
-                nextToken
+              user {
+                username
+                email
+                telephone
+                surname
+                name
+                fathers_name
+                address
+                zip_code
+                city
+                createdAt
+                family_name
+                gender
+                id
+                locale
+                mobile
+                preferences
+                updatedAt
+                tin
+                birthdate
               }
             }
+            nextToken
           }
         }
       }
@@ -379,9 +381,9 @@ module.exports = {
       query,
       'getContractorUserProfilesForManagerUsername',
     )
-    let result = response.data.getContractorUserProfilesForManagerUsername.listTradeByOwnerUsername.items
+    let result = response.data.listTradeByOwnerUsername.items
     if (result) {
-      result = result.workforce
+      result = result[0].workforce
     }
     console.log('getContractorUserProfilesForManagerUsername output: ' + JSON.stringify(result))
     return result
@@ -392,7 +394,8 @@ module.exports = {
     if (!officeId) {
       throw new Error('Invalid office ID')
     }
-    const query = /* GraphQL */ `query getCustomersForOfficeId($officeId: String!, filter: ModelCustomerFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+    query getCustomersForOfficeId($officeId: String!, filter: ModelCustomerFilterInput, limit: Int, nextToken: String ) {
       listOffices(filter: {id: {eq: $officeId}}) {
         items {
           officeCustomers(limit: $limit, filter: $filter, nextToken: $nextToken) {
@@ -439,7 +442,7 @@ module.exports = {
       query,
       'getCustomersForOfficeId',
     )
-    let result = response.data.getCustomersForOfficeId.listOffices.items
+    let result = response.data.listOffices.items
     if (result) {
       result = result[0].officeCustomers
     }
@@ -452,7 +455,8 @@ module.exports = {
     if (!officeId) {
       throw new Error('Invalid office ID')
     }
-    const query = /* GraphQL */ `query getContractsForOfficeId($officeId: String!, filter: ModelContractFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+    query getContractsForOfficeId($officeId: String!, filter: ModelContractFilterInput, limit: Int, nextToken: String ) {
       listOffices(filter: {id: {eq: $officeId}}) {
         items {
           officeContracts(limit: $limit, filter: $filter, nextToken: $nextToken) {
@@ -522,7 +526,10 @@ module.exports = {
       query,
       'getContractsForOfficeId',
     )
-    const result = response.data.getContractsForOfficeId
+    let result = response.data.listOffices
+    if (result) {
+      result = result[0].officeCustomers
+    }
     console.log('getContractsForOfficeId output: ' + JSON.stringify(result))
     return result
   },
@@ -536,7 +543,8 @@ module.exports = {
       throw new Error('Invalid office ID')
     }
     const user_filter = { and: [filter ?? {}, { fromId: { eq: officeId } }] }
-    const query = /* GraphQL */ `query getPartnerOfficeConnections($officeId: String!, filter: ModelCompanyAccessConnectionFilterInput, limit: Int, nextToken: String ) {
+    const query = /* GraphQL */ `
+    query getPartnerOfficeConnections($officeId: String!, filter: ModelCompanyAccessConnectionFilterInput, limit: Int, nextToken: String ) {
       listCompanyAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
         items {
           createdAt
@@ -560,7 +568,7 @@ module.exports = {
       query,
       'getPartnerOfficeConnections',
     )
-    const temp_result = response.data.getPartnerOfficeConnections
+    const temp_result = response.data.listCompanyAccessConnections
     const _nextToken = temp_result.nextToken
     let _items = temp_result.items
     _items = _items.filter(entry => entry.from.members.contains(username))
@@ -605,7 +613,7 @@ module.exports = {
     `
 
     const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateOfficeDetails')
-    const result = response.data.updateOfficeDetails
+    const result = response.data.updateOffice
     console.log('updateOfficeDetails output: ' + JSON.stringify(result))
     return result
   },
@@ -651,7 +659,7 @@ module.exports = {
     `
 
     const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateUserProfileDetails')
-    const result = response.data.updateUserProfileDetails
+    const result = response.data.updateUserProfile
     console.log('updateUserProfileDetails output: ' + JSON.stringify(result))
     return result
   },
@@ -666,7 +674,7 @@ module.exports = {
     }
 
     //Get caller's office
-    const officeDetailsAndPermissions = this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: office_id } }, 1, null)
+    const officeDetailsAndPermissions = this.getUserModelPermissions(username, office_id)
     if (!officeDetailsAndPermissions) {
       throw new Error('Insufficient permissions')
     }
@@ -682,7 +690,7 @@ module.exports = {
     `
 
     const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'createVehicleForOffice')
-    const result = response.data.createVehicleForOffice
+    const result = response.data.createVehicle
     console.log('createVehicleForOffice output: ' + JSON.stringify(result))
     return result
   },
@@ -697,7 +705,7 @@ module.exports = {
     }
 
     //Get caller's office
-    const officeDetailsAndPermissions = this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: office_id } }, 1, null)
+    const officeDetailsAndPermissions = this.getUserModelPermissions(username, office_id)
     if (!officeDetailsAndPermissions) {
       throw new Error('Insufficient permissions')
     }
@@ -723,12 +731,14 @@ module.exports = {
       'value',
       'file',
     ]
+
     let sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
         obj[key] = input[key]
         return obj
       }, {})
+
     sanitized_input.tradeId = officeDetailsAndPermissions[0].tradeId
     sanitized_input.tradeName = officeDetailsAndPermissions[0].tradeName
     if (!('file' in sanitized_input)) {
