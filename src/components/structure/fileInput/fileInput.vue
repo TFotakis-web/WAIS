@@ -101,8 +101,12 @@
 				type: String,
 				default: '',
 			},
+			level: {
+				type: String,
+				default: 'private',
+			},
 		},
-		emits: ['update:modelValue'],
+		emits: ['update:modelValue', 'update:downloadUrls'],
 		data() {
 			return {
 				files: [],
@@ -136,19 +140,19 @@
 
 					try {
 						await Storage.put(this.filePath + filename, file, {
-							level: 'private',
+							level: this.level,
 							contentType: contentType,
 						});
 
 						this.files.push({
 							filePath: this.filePath,
 							filename,
-							level: 'private',
+							level: this.level,
 							contentType,
 							idToken: this.$store.getters['auth/user'].id,
 						});
 
-						const response = await Storage.get(this.filePath + filename, { level: 'private' });
+						const response = await Storage.get(this.filePath + filename, { level: this.level });
 						this.downloadUrls.push(response);
 					} catch (error) {
 						console.error(error);
@@ -158,8 +162,9 @@
 				this.loading = false;
 				if (this.multiple) {
 					this.$emit('update:modelValue', this.files);
+					this.$emit('update:downloadUrls', this.downloadUrls);
 				} else {
-					this.$emit('update:modelValue', this.files[0]);
+					this.$emit('update:downloadUrls', this.downloadUrls[0]);
 				}
 			},
 			async deleteFile(fileIndex) {
@@ -170,8 +175,10 @@
 
 				if (this.multiple) {
 					this.$emit('update:modelValue', this.files);
+					this.$emit('update:downloadUrls', this.downloadUrls);
 				} else {
 					this.$emit('update:modelValue', this.files[0]);
+					this.$emit('update:downloadUrls', this.downloadUrls[0]);
 				}
 			},
 		},
