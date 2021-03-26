@@ -4,21 +4,21 @@ import { store } from '@/plugins/store/store';
 
 const routes = [
 	{
-		path: '/auth', name: 'Auth', component: () => import('@/views/auth/AuthPage.vue'), meta: { guest: true },
+		path: '/auth', name: 'Auth', component: () => import('@/views/auth/AuthPage'), meta: { guest: true },
 		children: [
-			{ path: '/auth/confirmSignUp', name: 'ConfirmSignUp', component: () => import('@/components/auth/confirmSignUp.vue'), meta: { guest: true } },
-			{ path: '/auth/forceChangePassword', name: 'ForceChangePassword', component: () => import('@/components/auth/forceChangePassword.vue'), meta: { guest: true } },
-			{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/components/auth/forgotPassword.vue'), meta: { guest: true } },
-			{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/components/auth/signIn.vue'), meta: { guest: true } },
-			{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/components/auth/signUp.vue'), meta: { guest: true } },
-			{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/components/structure/tradeCreationForm/tradeCreationForm.vue'), meta: { requiresAuth: true } },
+			{ path: '/auth/confirmSignUp', name: 'ConfirmSignUp', component: () => import('@/components/auth/confirmSignUp'), meta: { guest: true } },
+			{ path: '/auth/forceChangePassword', name: 'ForceChangePassword', component: () => import('@/components/auth/forceChangePassword'), meta: { guest: true } },
+			{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/components/auth/forgotPassword'), meta: { guest: true } },
+			{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/components/auth/signIn'), meta: { guest: true } },
+			{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/components/auth/signUp'), meta: { guest: true } },
+			{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/components/structure/tradeCreationForm/tradeCreationForm'), meta: { requiresAuth: true } },
 		],
 	},
 
 	{
 		path: '', name: 'BaseLayout', component: () => import('@/components/base/BaseLayout'), meta: { requiresAuth: true },
 		children: [
-			{ path: '', name: 'Home', component: () => import('@/views/home/Home.vue'), meta: { requiresAuth: true } },
+			{ path: '', name: 'Home', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
 			{ path: '/pricing/vehicle', name: 'VehiclePricing', component: () => import('@/views/pricing/Vehicle'), meta: { requiresAuth: true } },
 			{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: () => import('@/views/pricing/IndustrialLiability'), meta: { requiresAuth: true } },
 			{ path: '/pricing/fire', name: 'FirePricing', component: () => import('@/views/pricing/Fire'), meta: { requiresAuth: true } },
@@ -51,12 +51,12 @@ const routes = [
 			{ path: '/profile', name: 'UserProfile', component: () => import('@/views/userProfile/UserProfile'), meta: { requiresAuth: true } },
 			{ path: '/platformData', name: 'PlatformData', component: () => import('@/views/platformData/PlatformData'), meta: { requiresAuth: true, isAdmin: true } },
 			{ path: '/devTools', name: 'DevTools', component: () => import('@/views/devTools/DevTools'), meta: { requiresAuth: true, isAdmin: true } },
-			{ path: '/contractApproval', name: 'ContractApproval', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
-			{ path: '/payment', name: 'Payment', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
-			{ path: '/bank', name: 'Bank', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
-			{ path: '/collaboration', name: 'Collaboration', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
+			{ path: '/contractApproval', name: 'ContractApproval', component: () => import('@/views/contractApproval/ContractApproval'), meta: { requiresAuth: true } },
+			{ path: '/payment', name: 'Payment', component: () => import('@/views/payment/Payment'), meta: { requiresAuth: true } },
+			{ path: '/bank', name: 'Bank', component: () => import('@/views/bank/Bank'), meta: { requiresAuth: true } },
+			{ path: '/collaboration', name: 'Collaboration', component: () => import('@/views/collaboration/Collaboration'), meta: { requiresAuth: true } },
 			{ path: '/notifications', name: 'Notifications', component: () => import('@/views/notifications/Notifications'), meta: { requiresAuth: true } },
-			{ path: '/wallet', name: 'Wallet', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
+			{ path: '/wallet', name: 'Wallet', component: () => import('@/views/wallet/Wallet'), meta: { requiresAuth: true } },
 		],
 	},
 	{ path: '/:catchAll(.*)', name: 'NotFound', component: () => import('@/views/errorPages/NotFound') },
