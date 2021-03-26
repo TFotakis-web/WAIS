@@ -40,41 +40,6 @@
 	</ion-menu>
 </template>
 <script>
-	import {
-		IonContent,
-		IonIcon,
-		IonItem,
-		IonLabel,
-		IonList,
-		IonMenu,
-		IonToggle,
-		IonThumbnail,
-		IonImg,
-	} from '@ionic/vue';
-	import {
-		chevronForwardOutline,
-		chevronDownOutline,
-		moonOutline,
-		logOutOutline,
-		languageOutline,
-		barChartOutline,
-		documentTextOutline,
-		listOutline,
-		cartOutline,
-		peopleOutline,
-		idCardOutline,
-		bookOutline,
-		homeOutline,
-		walletOutline,
-		bugOutline,
-		cogOutline,
-		bagCheckOutline,
-		cardOutline,
-		briefcaseOutline,
-		personAddOutline,
-		notificationsOutline,
-	} from 'ionicons/icons';
-
 	import SideNavigationCategory from '@/components/base/SideNavigationCategory';
 	import localeDropdown from '@/components/structure/localeDropdown';
 
@@ -83,15 +48,6 @@
 	export default {
 		name: 'SideNavigation',
 		components: {
-			IonContent,
-			IonIcon,
-			IonItem,
-			IonLabel,
-			IonList,
-			IonMenu,
-			IonToggle,
-			IonThumbnail,
-			IonImg,
 			SideNavigationCategory,
 			localeDropdown,
 		},
@@ -99,28 +55,6 @@
 			return {
 				shown: false,
 				colorTheme: this.$cookies.get('color-theme') || 'light',
-				ionicons: {
-					chevronForwardOutline,
-					chevronDownOutline,
-					moonOutline,
-					logOutOutline,
-					languageOutline,
-					barChartOutline,
-					documentTextOutline,
-					listOutline,
-					cartOutline,
-					peopleOutline,
-					idCardOutline,
-					bookOutline,
-					homeOutline,
-					walletOutline,
-					bugOutline,
-					cogOutline,
-					bagCheckOutline,
-					cardOutline,
-					briefcaseOutline,
-					notificationsOutline,
-				},
 			};
 		},
 		mounted() {
@@ -144,17 +78,17 @@
 				const allRoutes = [
 					{
 						name: this.$t('views.homePage.pageTitle'),
-						icon: homeOutline,
+						icon: this.$ionicons.homeOutline,
 						to: { name: 'Home' },
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.notifications'),
 						to: { name: 'Notifications' },
-						icon: notificationsOutline,
+						icon: this.$ionicons.notificationsOutline,
 					},
 					{
 						name: this.$t('components.navigation.sidenav.pricing._groupName'),
-						icon: barChartOutline,
+						icon: this.$ionicons.barChartOutline,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.pricing.vehicle'),
@@ -178,7 +112,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.contracts._groupName',
 						),
-						icon: documentTextOutline,
+						icon: this.$ionicons.documentTextOutline,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.contracts.file'),
@@ -218,7 +152,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.processing._groupName',
 						),
-						icon: listOutline,
+						icon: this.$ionicons.listOutline,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.processing.dueDateRegister'),
@@ -242,7 +176,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.accounting._groupName',
 						),
-						icon: cartOutline,
+						icon: this.$ionicons.cartOutline,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.accounting.receipts'),
@@ -274,7 +208,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.contractors._groupName',
 						),
-						icon: peopleOutline,
+						icon: this.$ionicons.peopleOutline,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.contractors.suppliers'),
@@ -290,7 +224,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.cards._groupName',
 						),
-						icon: idCardOutline,
+						icon: this.$ionicons.idCardOutline,
 						fab: true,
 						children: [
 							{
@@ -307,7 +241,7 @@
 						name: this.$t(
 							'components.navigation.sidenav.library._groupName',
 						),
-						icon: bookOutline,
+						icon: this.$ionicons.bookOutline,
 						children: [
 							{
 								name: 'Book 1',
@@ -322,37 +256,37 @@
 					{
 						name: this.$t('components.navigation.navbar-item.wallet'),
 						to: { name: 'Wallet' },
-						icon: walletOutline,
+						icon: this.$ionicons.walletOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.contract-approval'),
 						to: { name: 'ContractApproval' },
-						icon: bagCheckOutline,
+						icon: this.$ionicons.bagCheckOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.payment'),
 						to: { name: 'Payment' },
-						icon: cardOutline,
+						icon: this.$ionicons.cardOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.bank'),
 						to: { name: 'Bank' },
-						icon: briefcaseOutline,
+						icon: this.$ionicons.briefcaseOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.collaboration'),
 						to: { name: 'Collaboration' },
-						icon: personAddOutline,
+						icon: this.$ionicons.personAddOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.devtools'),
 						to: { name: 'DevTools' },
-						icon: bugOutline,
+						icon: this.$ionicons.bugOutline,
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.database'),
 						to: { name: 'PlatformData' },
-						icon: cogOutline,
+						icon: this.$ionicons.cogOutline,
 					},
 				];
 

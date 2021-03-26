@@ -15,7 +15,7 @@
 										<ion-label position="floating">{{ $t('fields.newPassword') }}</ion-label>
 										<ion-input v-model="newPassword" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="new-password" required/>
 										<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">
-											<ion-icon slot="icon-only" :icon="passwordVisible ? ionicons.eyeOffOutline : ionicons.eyeOutline"/>
+											<ion-icon slot="icon-only" :icon="passwordVisible ? $ionicons.eyeOffOutline : $ionicons.eyeOutline"/>
 										</ion-button>
 									</ion-item>
 									<div class="ion-margin-top">
@@ -37,22 +37,6 @@
 	</ion-page>
 </template>
 <script>
-	import {
-		IonCard,
-		IonCardHeader,
-		IonCardContent,
-		IonCardTitle,
-		IonIcon,
-		IonItem,
-		IonLabel,
-		IonButton,
-		IonInput,
-		IonGrid,
-		IonRow,
-		IonCol,
-	} from '@ionic/vue';
-	import { eyeOutline, eyeOffOutline, keyOutline, personOutline } from 'ionicons/icons';
-
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
@@ -60,18 +44,6 @@
 	export default {
 		name: 'forceChangePassword',
 		components: {
-			IonCard,
-			IonCardHeader,
-			IonCardContent,
-			IonCardTitle,
-			IonIcon,
-			IonItem,
-			IonLabel,
-			IonButton,
-			IonInput,
-			IonGrid,
-			IonRow,
-			IonCol,
 			localeDropdown,
 			loadingBtn,
 		},
@@ -88,12 +60,6 @@
 				error: {},
 				newPassword: '',
 				passwordVisible: false,
-				ionicons: {
-					personOutline,
-					keyOutline,
-					eyeOutline,
-					eyeOffOutline,
-				},
 			};
 		},
 		methods: {

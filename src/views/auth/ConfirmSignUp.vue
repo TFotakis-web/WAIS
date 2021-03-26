@@ -41,21 +41,6 @@
 	</ion-page>
 </template>
 <script>
-	import {
-		IonCard,
-		IonCardHeader,
-		IonCardContent,
-		IonCardTitle,
-		IonIcon,
-		IonItem,
-		IonLabel,
-		IonButton,
-		IonInput,
-		IonGrid,
-		IonRow,
-		IonCol,
-	} from '@ionic/vue';
-	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, qrCodeOutline } from 'ionicons/icons';
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
@@ -63,18 +48,6 @@
 	export default {
 		name: 'confirmSignUp',
 		components: {
-			IonCard,
-			IonCardHeader,
-			IonCardContent,
-			IonCardTitle,
-			IonIcon,
-			IonItem,
-			IonLabel,
-			IonButton,
-			IonInput,
-			IonGrid,
-			IonRow,
-			IonCol,
 			localeDropdown,
 			loadingBtn,
 		},
@@ -93,13 +66,6 @@
 				resendLoading: false,
 				loading: false,
 				error: {},
-				ionicons: {
-					personOutline,
-					keyOutline,
-					eyeOutline,
-					eyeOffOutline,
-					qrCodeOutline,
-				},
 			};
 		},
 		methods: {

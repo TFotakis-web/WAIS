@@ -8,30 +8,11 @@
 	</ion-item>
 </template>
 <script>
-	import { languageOutline } from 'ionicons/icons';
-	import {
-		IonItem,
-		IonIcon,
-		IonLabel,
-		IonSelect,
-		IonSelectOption,
-	} from '@ionic/vue';
-
 	export default {
 		name: 'LocaleDropdown',
-		components: {
-			IonItem,
-			IonIcon,
-			IonLabel,
-			IonSelect,
-			IonSelectOption,
-		},
 		data() {
 			return {
 				selectedLocale: this.$i18n.locale,
-				ionicons: {
-					languageOutline,
-				},
 			};
 		},
 	};

@@ -22,8 +22,6 @@
 	</ion-button>
 </template>
 <script>
-	import { IonButton, IonSpinner } from '@ionic/vue';
-
 	export default {
 		name: 'LoadingBtn',
 		props: [
@@ -47,9 +45,5 @@
 			'target',
 			'type',
 		],
-		components: {
-			IonButton,
-			IonSpinner,
-		},
 	};
 </script>

@@ -13,25 +13,8 @@
 	</ion-header>
 </template>
 <script>
-	import {
-		IonButtons,
-		IonHeader,
-		IonMenuButton,
-		IonTitle,
-		IonToolbar,
-		IonBackButton,
-	} from '@ionic/vue';
-
 	export default {
 		name: 'Toolbar',
-		components: {
-			IonButtons,
-			IonHeader,
-			IonMenuButton,
-			IonTitle,
-			IonToolbar,
-			IonBackButton,
-		},
 		props: {
 			backButtonDefaultHref: {
 				type: String,

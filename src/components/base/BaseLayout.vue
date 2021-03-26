@@ -10,20 +10,12 @@
 	</IonSplitPane>
 </template>
 <script>
-	import {
-		IonContent,
-		IonSplitPane,
-		IonPage,
-	} from '@ionic/vue';
 	import SideNavigation from '@/components/base/SideNavigation';
 	import Toolbar from '@/components/base/Toolbar';
 
 	export default {
 		name: 'BaseLayout',
 		components: {
-			IonContent,
-			IonSplitPane,
-			IonPage,
 			SideNavigation,
 			Toolbar,
 		},

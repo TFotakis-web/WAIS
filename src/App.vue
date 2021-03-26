@@ -4,13 +4,8 @@
 	</ion-app>
 </template>
 <script>
-	import { IonApp } from '@ionic/vue';
-
 	export default {
 		name: 'App',
-		components: {
-			IonApp,
-		},
 		data() {
 			return {
 				loading: 0,

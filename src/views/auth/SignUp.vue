@@ -20,7 +20,7 @@
 										<ion-label position="floating">{{ $t('fields.password') }}</ion-label>
 										<ion-input v-model="credentials.password" :type="passwordVisible ? 'text' : 'password'" name="password" autocomplete="current-password" required/>
 										<ion-button @click="passwordVisible = !passwordVisible" slot="end" fill="clear" class="ion-align-self-center">
-											<ion-icon slot="icon-only" :icon="passwordVisible ? ionicons.eyeOffOutline : ionicons.eyeOutline"/>
+											<ion-icon slot="icon-only" :icon="passwordVisible ? $ionicons.eyeOffOutline : $ionicons.eyeOutline"/>
 										</ion-button>
 									</ion-item>
 									<ion-item>
@@ -65,23 +65,6 @@
 	</ion-page>
 </template>
 <script>
-	import {
-		IonCard,
-		IonCardHeader,
-		IonCardContent,
-		IonCardTitle,
-		IonIcon,
-		IonItem,
-		IonLabel,
-		IonButton,
-		IonInput,
-		IonGrid,
-		IonRow,
-		IonCol,
-		IonSelect,
-		IonSelectOption,
-	} from '@ionic/vue';
-	import { eyeOutline, eyeOffOutline, keyOutline, personOutline, mailOutline, callOutline } from 'ionicons/icons';
 	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
@@ -89,33 +72,11 @@
 	export default {
 		name: 'signUp',
 		components: {
-			IonCard,
-			IonCardHeader,
-			IonCardContent,
-			IonCardTitle,
-			IonIcon,
-			IonItem,
-			IonLabel,
-			IonButton,
-			IonInput,
-			IonGrid,
-			IonRow,
-			IonCol,
-			IonSelect,
-			IonSelectOption,
 			localeDropdown,
 			loadingBtn,
 		},
 		data() {
 			return {
-				ionicons: {
-					personOutline,
-					keyOutline,
-					eyeOutline,
-					eyeOffOutline,
-					mailOutline,
-					callOutline,
-				},
 				loading: false,
 				credentials: {
 					username: '',

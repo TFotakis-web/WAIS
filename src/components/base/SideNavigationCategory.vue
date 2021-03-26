@@ -2,7 +2,7 @@
 	<ion-item v-if="routeCategory.children" button @click="shown = !shown" detail="false" class="topLevelRoute">
 		<ion-icon :icon="routeCategory.icon" slot="start"/>
 		<ion-label>{{ routeCategory.name }}</ion-label>
-		<ion-icon :icon="shown ? ionicons.chevronDownOutline : ionicons.chevronForwardOutline" slot="end"/>
+		<ion-icon :icon="shown ? $ionicons.chevronDownOutline : $ionicons.chevronForwardOutline" slot="end"/>
 	</ion-item>
 	<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" class="topLevelRoute">
 		<ion-icon :icon="routeCategory.icon" slot="start"/>
@@ -16,20 +16,12 @@
 	</ion-list>
 </template>
 <script>
-	import { IonIcon, IonItem, IonLabel, IonList } from '@ionic/vue';
-	import { chevronForwardOutline, chevronDownOutline } from 'ionicons/icons';
-
 	export default {
 		name: 'SideNavigationCategory',
-		components: { IonIcon, IonItem, IonLabel, IonList },
 		props: ['routeCategory'],
 		data() {
 			return {
 				shown: false,
-				ionicons: {
-					chevronForwardOutline,
-					chevronDownOutline,
-				},
 			};
 		},
 		methods: {
