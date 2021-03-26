@@ -1,19 +1,21 @@
 <template>
-	<mdb-card cascade narrow>
-		<mdb-view cascade class="gradient-card-header blue">
-			<h5 class="mb-0">Testing</h5>
-		</mdb-view>
-		<mdb-card-body>
-			<div>
-				<mdb-btn @click="testAll" :disabled="testAllDisabled" outline="primary">Test All</mdb-btn>
-				<span>{{ testAllMessage }}</span>
-			</div>
-			<div v-for="(test, testName) in tests" :key="testName">
-				<mdb-btn @click="test.testFunc" :disabled="test.disabled" color="primary">{{ testName }}</mdb-btn>
-				<span>{{ test.message }}</span>
-			</div>
-		</mdb-card-body>
-	</mdb-card>
+	<ion-card cascade narrow>
+		<ion-card-header>
+			<ion-card-title>Testing</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list>
+				<ion-item>
+					<ion-button @click="testAll" :disabled="testAllDisabled" class="ion-margin-end">Test All</ion-button>
+					<span>{{ testAllMessage }}</span>
+				</ion-item>
+				<ion-item v-for="(test, testName) in tests" :key="testName">
+					<ion-button @click="test.testFunc" :disabled="test.disabled" class="ion-margin-end">{{ testName }}</ion-button>
+					<span>{{ test.message }}</span>
+				</ion-item>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
 	export default {
