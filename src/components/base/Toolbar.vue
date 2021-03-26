@@ -3,7 +3,7 @@
 		<ion-toolbar>
 			<ion-buttons slot="start">
 				<ion-menu-button color="primary" v-if="!showBackButton"/>
-				<ion-back-button :default-href="pageDefaultBackLink" v-if="showBackButton"/>
+				<ion-back-button :default-href="backButtonDefaultHref" v-if="showBackButton"/>
 			</ion-buttons>
 			<ion-title>{{ pageTitle }}</ion-title>
 			<ion-buttons slot="end">
@@ -33,7 +33,7 @@
 			IonBackButton,
 		},
 		props: {
-			pageDefaultBackLink: {
+			backButtonDefaultHref: {
 				type: String,
 				default: '/',
 			},
