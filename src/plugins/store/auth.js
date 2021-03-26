@@ -361,6 +361,10 @@ export const auth = {
 						read: true,
 						write: true,
 					},
+					'NotificationDetails': {
+						read: true,
+						write: true,
+					},
 					'Wallet': {
 						read: true,
 						write: true,
