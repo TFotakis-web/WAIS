@@ -3,17 +3,12 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { store } from '@/plugins/store/store';
 
 const routes = [
-	{
-		path: '/auth', name: 'Auth', component: () => import('@/views/auth/AuthPage'), meta: { guest: true },
-		children: [
-			{ path: '/auth/confirmSignUp', name: 'ConfirmSignUp', component: () => import('@/components/auth/confirmSignUp'), meta: { guest: true } },
-			{ path: '/auth/forceChangePassword', name: 'ForceChangePassword', component: () => import('@/components/auth/forceChangePassword'), meta: { guest: true } },
-			{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/components/auth/forgotPassword'), meta: { guest: true } },
-			{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/components/auth/signIn'), meta: { guest: true } },
-			{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/components/auth/signUp'), meta: { guest: true } },
-			{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/components/structure/tradeCreationForm/tradeCreationForm'), meta: { requiresAuth: true } },
-		],
-	},
+	{ path: '/auth/confirmSignUp', name: 'ConfirmSignUp', component: () => import('@/views/auth/ConfirmSignUp'), meta: { guest: true } },
+	{ path: '/auth/forceChangePassword', name: 'ForceChangePassword', component: () => import('@/views/auth/ForceChangePassword'), meta: { guest: true } },
+	{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/views/auth/ForgotPassword'), meta: { guest: true } },
+	{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/views/auth/SignIn'), meta: { guest: true } },
+	{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/views/auth/SignUp'), meta: { guest: true } },
+	{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/views/auth/TradeCreationForm'), meta: { requiresAuth: true } },
 
 	{
 		path: '', name: 'BaseLayout', component: () => import('@/components/base/BaseLayout'), meta: { requiresAuth: true },
