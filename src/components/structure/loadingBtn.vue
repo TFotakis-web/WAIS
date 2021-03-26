@@ -18,7 +18,7 @@
 		:type="type"
 	>
 		<span>{{ loading ? loadingText : text }}</span>
-		<ion-spinner v-if="loading"/>
+		<ion-spinner v-if="loading" class="ion-margin-start"/>
 	</ion-button>
 </template>
 <script>
