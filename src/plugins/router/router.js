@@ -78,10 +78,10 @@ function hasPermissions(route) {
 }
 
 router.beforeEach((to, from, next) => {
+	let user = store.getters['auth/user'];
 	if (to.meta.requiresAuth) {
-		let user = store.getters['auth/user'];
 		if (!user) {
-			store.dispatch('auth/currentAuthenticatedUser')
+			return store.dispatch('auth/currentAuthenticatedUser')
 				.then(() => {
 					if (!hasPermissions(to)) {
 						next({ name: 'Home' });
@@ -92,20 +92,23 @@ router.beforeEach((to, from, next) => {
 				.catch(() => {
 					next({ name: 'SignIn' });
 				});
-			return;
 		}
-		if (user) {
-			if (!hasPermissions(to)) {
-				next({ name: 'Home' });
-			} else {
-				next();
-			}
-		} else {
-			next({ name: 'SignIn' });
+		if (!hasPermissions(to)) {
+			return next({ name: 'Home' });
 		}
-	} else {
-		next();
+	} else if (to.meta.guest) {
+		if (!user) {
+			return store.dispatch('auth/currentAuthenticatedUser')
+				.then(() => {
+					next({ name: 'Home' });
+				})
+				.catch(() => {
+					next();
+				});
+		}
+		return next({ name: 'Home' });
 	}
+	next();
 });
 
 export default router;
