@@ -109,9 +109,7 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.contracts._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.contracts._groupName'),
 						icon: this.$ionicons.documentTextOutline,
 						children: [
 							{
@@ -149,9 +147,7 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.processing._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.processing._groupName'),
 						icon: this.$ionicons.listOutline,
 						children: [
 							{
@@ -173,9 +169,7 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.accounting._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.accounting._groupName'),
 						icon: this.$ionicons.cartOutline,
 						children: [
 							{
@@ -205,9 +199,7 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.contractors._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.contractors._groupName'),
 						icon: this.$ionicons.peopleOutline,
 						children: [
 							{
@@ -221,11 +213,8 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.cards._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.cards._groupName'),
 						icon: this.$ionicons.idCardOutline,
-						fab: true,
 						children: [
 							{
 								name: this.$t('components.navigation.sidenav.cards.vehicleCards'),
@@ -238,20 +227,9 @@
 						],
 					},
 					{
-						name: this.$t(
-							'components.navigation.sidenav.library._groupName',
-						),
+						name: this.$t('components.navigation.sidenav.library._groupName'),
+						to: { name: 'Library' },
 						icon: this.$ionicons.bookOutline,
-						children: [
-							{
-								name: 'Book 1',
-								to: { name: 'Library' },
-							},
-							{
-								name: 'Book 2',
-								to: { name: 'Library' },
-							},
-						],
 					},
 					{
 						name: this.$t('components.navigation.navbar-item.wallet'),
