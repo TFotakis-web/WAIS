@@ -178,20 +178,9 @@
 				const payload = JSON.parse(this.request.payload);
 				Object.assign(this.form, payload);
 
-				const fileType1List = this.form.files.filter(el => el.filename.match('File type 1'));
-				if (fileType1List.length) {
-					this.fileType1 = fileType1List[0];
-				}
-
-				const fileType2List = this.form.files.filter(el => el.filename.match('File type 2'));
-				if (fileType1List.length) {
-					this.fileType2 = fileType2List[0];
-				}
-
-				const fileType3List = this.form.files.filter(el => el.filename.match('File type 3'));
-				if (fileType1List.length) {
-					this.fileType3 = fileType3List[0];
-				}
+				this.fileType1 = this.form.files.find(el => el.filename.match('File type 1')) || {};
+				this.fileType2 = this.form.files.find(el => el.filename.match('File type 2')) || {};
+				this.fileType3 = this.form.files.find(el => el.filename.match('File type 3')) || {};
 
 				this.otherFiles = this.form.files.filter(el => {
 					let flag = false;
