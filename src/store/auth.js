@@ -2,7 +2,7 @@ import { API, Auth, graphqlOperation } from 'aws-amplify';
 // import { listUserProfileByUsername } from '@/graphql/custom-queries';
 import { me } from '@/graphql/custom-queries';
 import { updateUserProfile } from '@/graphql/custom-mutations';
-import router from '@/router';
+import router from '@/plugins/router/router';
 
 export const auth = {
 	namespaced: true,

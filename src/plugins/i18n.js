@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n';
-import $http from '@/axios';
+import $http from '@/plugins/axios';
 import { store } from '@/store';
 import Cookies from 'js-cookie';
 

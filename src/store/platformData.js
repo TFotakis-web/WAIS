@@ -1,5 +1,5 @@
-import $http from '@/axios';
-import $i18n from '@/i18n';
+import $http from '@/plugins/axios';
+import $i18n from '@/plugins/i18n';
 
 class TranslatableItem {
 	constructor({ locales, translations }) {
