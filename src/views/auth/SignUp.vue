@@ -33,7 +33,7 @@
 											<ion-item>
 												<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
 												<ion-label position="floating">{{ $t('fields.countryCode') }}</ion-label>
-												<ion-select :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')">
+												<ion-select v-model="selectedTelephoneCode" :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')">
 													<ion-select-option v-for="o in telephoneCodeOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
 												</ion-select>
 											</ion-item>
