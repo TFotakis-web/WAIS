@@ -58,6 +58,15 @@ const resolvers = {
         nextToken: event.arguments.nextToken,
       })
     },
+    resolveRequest: async event => {
+      return await api.resolveRequest({
+        username: event.identity.claims['cognito:username'],
+        groups: event.identity.groups,
+        id: event.arguments.requestId,
+        decission: event.arguments.decission,
+        payload: event.arguments.payload,
+      })
+    },
     getEmployeeUserProfiles: async event => {
       return await api.getEmployeeUserProfilesForManagerUsername({
         username: event.identity.claims['cognito:username'],
@@ -175,14 +184,15 @@ const resolvers = {
       })
     },
     createRequest: async event => {
-      return await api.sendRequest({
+      return await api.createRequest({
         username: event.identity.claims['cognito:username'],
+        email: event.identity.claims['email'],
         requestInput: event.arguments.input,
         condition: event.arguments.condition,
       })
     },
     updateRequestsSentByMe: async event => {
-      return await api.resolveRequest({
+      return await api.updateRequestsSentByMe({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
@@ -191,7 +201,7 @@ const resolvers = {
       })
     },
     deleteRequestsSentByMe: async event => {
-      return await api.resolveRequest({
+      return await api.deleteRequestsSentByMe({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
         groups: event.identity.groups,
@@ -309,6 +319,18 @@ const resolvers = {
         officeId: event.arguments.officeId,
         contractorUsername: event.arguments.contractorUsername,
         permissions: event.arguments.permissions,
+      })
+    },
+    getUserModelPermissionsForOffice: async event => {
+      return await api.getUserModelPermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
+      })
+    },
+    getUserPagePermissionsForOffice: async event => {
+      return await api.getUserPagePermissionsForOffice({
+        username: event.identity.claims['cognito:username'],
+        officeId: event.arguments.officeId,
       })
     },
   },

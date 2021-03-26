@@ -46,9 +46,77 @@ enum ModelPermission {
   CONTRACTS_MUTATE
   CUSTOMERS_QUERY
   CUSTOMERS_MUTATE
+  EMPLOYEE_ADD
+  EMPLOYEE_REMOVE
+  CONTRACTOR_ADD
+  CONTRACTOR_REMOVE
+  COMPANY_CONN_CREATE
+  COMPANY_CONN_DELETE
 }
 
-##########################
+enum RequestDecision {
+  ACCEPT
+  REJECT
+}
+
+type RequestCreateOfficePayload {
+  tradeName: String!
+  address: String
+  office_email: String!
+  zip_code: String
+  mobile: String
+  phone: String!
+  tin: String!
+  professionStartDate: AWSDate
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDate
+  civilLiabilityExpirationDate: AWSDate
+  bankAccountInfo: AWSJSON
+  files: [S3Object]
+}
+
+type RequestCompanyAccessConnectionPayload {
+  office_email: String!
+}
+
+type RequestInviteEmployeePayload {
+  email: String!
+}
+
+type RequestInviteContractorPayload {
+  email: String!
+}
+
+type CreateRequestPayloadInput {
+  createTradePayload: RequestCreateOfficePayload
+  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
+  inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
+  inviteContractorToOfficePayload: RequestInviteContractorPayload
+}
+
+input ResolveCreateOfficePayload {
+  managerModelPermissions: [ModelPermission!]!
+  managerPagePermissions: AWSJSON!
+}
+input ResolveCompanyAccessConnectionPayload {
+  expirationDate: AWSTimestamp!
+}
+input ResolveInviteEmployeePayload {
+  managerModelPermissions: [ModelPermission!]!
+  managerPagePermissions: AWSJSON!
+}
+input ResolveInviteContractorPayload {
+  managerModelPermissions: [ModelPermission!]!
+  managerPagePermissions: AWSJSON!
+}
+input ResolveRequestPayloadInput {
+  createTradePayload: ResolveCreateOfficePayload
+  createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
+  inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
+  inviteContractorToOfficePayload: ResolveInviteContractorPayload
+}
+
+##################################################################################################################################
 
 input S3ObjectInput {
   bucket: String!
@@ -158,7 +226,6 @@ input ModelOfficeFilterInput {
   insuranceLicenseExpirationDate: ModelStringInput
   civilLiabilityExpirationDate: ModelStringInput
   bankAccountInfo: ModelStringInput
-  members: ModelStringInput
   and: [ModelOfficeFilterInput]
   or: [ModelOfficeFilterInput]
   not: ModelOfficeFilterInput
@@ -196,7 +263,6 @@ input CreateOfficeInput {
   civilLiabilityExpirationDate: AWSDate
   bankAccountInfo: AWSJSON
   files: [S3ObjectInput]
-  members: [String]
 }
 
 input UpdateOfficeInput {
@@ -218,7 +284,6 @@ input UpdateOfficeInput {
   civilLiabilityExpirationDate: AWSDate
   bankAccountInfo: AWSJSON
   files: [S3ObjectInput]
-  members: [String]
 }
 
 input DeleteOfficeInput {
@@ -242,7 +307,6 @@ input ModelOfficeConditionInput {
   insuranceLicenseExpirationDate: ModelStringInput
   civilLiabilityExpirationDate: ModelStringInput
   bankAccountInfo: ModelStringInput
-  members: ModelStringInput
   and: [ModelOfficeConditionInput]
   or: [ModelOfficeConditionInput]
   not: ModelOfficeConditionInput
@@ -699,7 +763,6 @@ input ModelTradeUserConnectionFilterInput {
   modelPermissions: ModelModelPermissionListInput
   employeeType: ModelEmployeeTypeInput
   preferences: ModelStringInput
-  members: ModelStringInput
   and: [ModelTradeUserConnectionFilterInput]
   or: [ModelTradeUserConnectionFilterInput]
   not: ModelTradeUserConnectionFilterInput
@@ -712,10 +775,9 @@ input CreateTradeUserConnectionInput {
   userId: ID!
   username: String!
   pagePermissions: AWSJSON!
-  modelPermissions: [ModelPermission]
+  modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType!
   preferences: String
-  members: [String]!
 }
 
 input UpdateTradeUserConnectionInput {
@@ -725,10 +787,9 @@ input UpdateTradeUserConnectionInput {
   userId: ID
   username: String
   pagePermissions: AWSJSON
-  modelPermissions: [ModelPermission]
+  modelPermissions: [ModelPermission!]
   employeeType: EmployeeType
   preferences: String
-  members: [String]
 }
 
 input DeleteTradeUserConnectionInput {
@@ -744,7 +805,6 @@ input ModelTradeUserConnectionConditionInput {
   modelPermissions: ModelModelPermissionListInput
   employeeType: ModelEmployeeTypeInput
   preferences: ModelStringInput
-  members: ModelStringInput
   and: [ModelTradeUserConnectionConditionInput]
   or: [ModelTradeUserConnectionConditionInput]
   not: ModelTradeUserConnectionConditionInput
@@ -946,6 +1006,41 @@ input ModelTransactionHistoryConditionInput {
   not: ModelTransactionHistoryConditionInput
 }
 
+input CreateRequestPayloadInputInput {
+  createTradePayload: RequestCreateOfficePayloadInput
+  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayloadInput
+  inviteEmployeeToOfficePayload: RequestInviteEmployeePayloadInput
+  inviteContractorToOfficePayload: RequestInviteContractorPayloadInput
+}
+
+input RequestCreateOfficePayloadInput {
+  tradeName: String!
+  address: String
+  office_email: String!
+  zip_code: String
+  mobile: String
+  phone: String!
+  tin: String!
+  professionStartDate: AWSDate
+  chamberRecordNumber: String
+  insuranceLicenseExpirationDate: AWSDate
+  civilLiabilityExpirationDate: AWSDate
+  bankAccountInfo: AWSJSON
+  files: [S3ObjectInput]
+}
+
+input RequestCompanyAccessConnectionPayloadInput {
+  office_email: String!
+}
+
+input RequestInviteEmployeePayloadInput {
+  email: String!
+}
+
+input RequestInviteContractorPayloadInput {
+  email: String!
+}
+
 type ModelRequestsConnection {
   items: [Requests]
   nextToken: String
@@ -959,11 +1054,10 @@ input ModelRequestTypeInput {
 input ModelRequestsFilterInput {
   id: ModelIDInput
   senderUsername: ModelStringInput
-  receiverUsername: ModelStringInput
   senderEmail: ModelStringInput
+  receiverUsername: ModelStringInput
   receiverEmail: ModelStringInput
   type: ModelRequestTypeInput
-  payload: ModelStringInput
   and: [ModelRequestsFilterInput]
   or: [ModelRequestsFilterInput]
   not: ModelRequestsFilterInput
@@ -972,21 +1066,21 @@ input ModelRequestsFilterInput {
 input CreateRequestsInput {
   id: ID
   senderUsername: String!
-  receiverUsername: String!
   senderEmail: String!
+  receiverUsername: String!
   receiverEmail: String!
   type: RequestType!
-  payload: String!
+  payload: CreateRequestPayloadInputInput!
 }
 
 input UpdateRequestsInput {
   id: ID!
   senderUsername: String
-  receiverUsername: String
   senderEmail: String
+  receiverUsername: String
   receiverEmail: String
   type: RequestType
-  payload: String
+  payload: CreateRequestPayloadInputInput
 }
 
 input DeleteRequestsInput {
@@ -995,11 +1089,10 @@ input DeleteRequestsInput {
 
 input ModelRequestsConditionInput {
   senderUsername: ModelStringInput
-  receiverUsername: ModelStringInput
   senderEmail: ModelStringInput
+  receiverUsername: ModelStringInput
   receiverEmail: ModelStringInput
   type: ModelRequestTypeInput
-  payload: ModelStringInput
   and: [ModelRequestsConditionInput]
   or: [ModelRequestsConditionInput]
   not: ModelRequestsConditionInput

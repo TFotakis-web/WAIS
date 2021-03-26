@@ -1,6 +1,4 @@
-const ddbAPI = require('../api/ddb_queries')
 const gqlAPI = require('../api/new_gql_queries')
-const utils = require('../api/utils')
 
 /**
  * High-level API.
@@ -24,6 +22,9 @@ module.exports = {
   getRequestsForUser: async args => {
     return gqlAPI.getRequestsForUser(args.username, args.filter, args.limit, args.nextToken)
   },
+  resolveRequest: async args => {
+    return gqlAPI.resolveRequest(args.username, args.groups, args.id, args.decission, args.payload)
+  },
   getEmployeeUserProfilesForManagerUsername: async args => {
     return gqlAPI.getEmployeeUserProfilesForManagerUsername(args.username, args.filter, args.limit, args.nextToken)
   },
@@ -39,19 +40,25 @@ module.exports = {
   getPartnerOfficeConnections: async args => {
     return gqlAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
   },
+  getUserModelPermissionsForOffice: async args => {
+    return gqlAPI.getUserModelPermissionsForOffice(args.officeId, args.username)
+  },
+  getUserPagePermissionsForOffice: async args => {
+    return gqlAPI.getUserPagePermissionsForOffice(args.officeId, args.username)
+  },
 
   /* Mutations */
   updateOfficeDetails: async args => {
-    return gqlAPI.updateOfficeDetails(args.username, args.requestInput, args.condition)
+    return gqlAPI.updateOfficeDetails(args.username, args.requestInput, args.condition) // OK
   },
   updateUserProfileDetails: async args => {
-    return gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
+    return gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition) // OK
   },
   createVehicleForOffice: async args => {
-    return gqlAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
+    return gqlAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
   },
   updateVehicleForOffice: async args => {
-    return gqlAPI.updateVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
+    return gqlAPI.updateVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
   },
   deleteVehicleForOffice: async args => {
     return gqlAPI.deleteVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
@@ -69,13 +76,13 @@ module.exports = {
     return gqlAPI.createCustomerForOffice(args.officeId, args.username, args.requestInput, args.condition)
   },
   createRequest: async args => {
-    return gqlAPI.createRequest(args.username, args.requestInput, args.condition)
+    return gqlAPI.createRequest(args.username, args.email, args.requestInput, args.condition) // OK
   },
   updateRequestsSentByMe: async args => {
-    return gqlAPI.updateRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition)
+    return gqlAPI.updateRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition) // OK
   },
   deleteRequestsSentByMe: async args => {
-    return gqlAPI.deleteRequestsSentByMe(args.officeId, args.username, args.requestInput, args.condition)
+    return gqlAPI.deleteRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition) // OK
   },
   createCompanyAccessConnectionForOffice: async args => {
     return gqlAPI.createCompanyAccessConnectionForOffice(args.officeId, args.username, args.requestInput, args.condition)
@@ -87,16 +94,16 @@ module.exports = {
     return gqlAPI.deleteCompanyAccessConnectionForOffice(args.username, args.requestInput, args.condition)
   },
   createMyUserCalendarEvent: async args => {
-    return gqlAPI.createMyUserCalendarEvent(args.username, args.requestInput, args.condition)
+    return gqlAPI.createMyUserCalendarEvent(args.username, args.requestInput, args.condition) // OK
   },
   updateMyUserCalendarEvents: async args => {
-    return gqlAPI.updateMyUserCalendarEvents(args.username, args.requestInput, args.condition)
+    return gqlAPI.updateMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
   },
   deleteMyUserCalendarEvents: async args => {
-    return gqlAPI.deleteMyUserCalendarEvents(args.username, args.requestInput, args.condition)
+    return gqlAPI.deleteMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
   },
   addEmployeeToOffice: async args => {
-    return gqlAPI.addEmployeeToOffice(args.officeId, args.username, args.empUsername, args.modelPermissions, args.pagePermissions)
+    return gqlAPI.addEmployeeToOffice(args.officeId, args.username, args.empUsername, args.modelPermissions, args.pagePermissions) // OK
   },
   updateEmployeeModelPermissionsForOffice: async args => {
     return gqlAPI.updateEmployeeModelPermissionsForOffice(args.officeId, args.username, args.empUsername, args.modelPermissions)

@@ -1,8 +1,8 @@
 type Query {
   #Utils
-  me: ModelUserProfileConnection @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+  me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
 
-  user(username: String!): ModelUserProfileConnection
+  user(username: String!): UserProfile
     @function(name: "resolver-${env}")
     @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
 
@@ -50,38 +50,17 @@ type Query {
   ): ModelCompanyAccessConnectionConnection
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+
+  getUserModelPermissionsForOffice(officeId: ID!): [ModelPermission!]!
+    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @function(name: "resolver-${env}")
+
+  getUserPagePermissionsForOffice(officeId: ID!): AWSJSON!
+    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @function(name: "resolver-${env}")
 }
 
 type Mutation {
-  # # Create / Update / Delete from here
-  # manageCustomers(action: CustomerResourceAction!, tradeName: String!, payload: String!): ID
-  #   @function(name: "resolver-${env}")
-  #   @auth(rules: [{ allow: private }])
-  # manageContracts(action: ContractResourceAction!, tradeName: String!, payload: String!): ID
-  #   @function(name: "resolver-${env}")
-  #   @auth(rules: [{ allow: private }])
-  # manageEmployees(action: EmployeeResourceAction!, tradeName: String!, payload: String!): ID
-  #   @function(name: "resolver-${env}")
-  #   @auth(rules: [{ allow: private }])
-  # manageContractors(action: ContractorResourceAction!, tradeName: String!, payload: String!): ID
-  #   @function(name: "resolver-${env}")
-  #   @auth(rules: [{ allow: private }])
-
-  # # Attempt to update fields in this object,
-  # # 'typename' is the @model-Type as described in this file. Case sensitive. (eg. 'UserProfile')
-  # # 'id' The entry ID.
-  # # 'fields' is an array of dictionaries with attribute names as keys and attribute values with field values
-  # # Output is just the ID of the target entry.
-  # # EXAMPLE: Input  -> [{"logo": "s3://..." } , { "tin": "..." }]
-  # #          Output -> {"id": "XXX-XXX"}
-  # updateFields(typename: String!, id: ID!, fields: String): ID @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
-  # # Request API
-  # sendRequest(requestType: RequestType!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-  # resolveRequest(id: ID!, payload: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
-
-  # ###########################################################################################################################################################################
-
   updateOfficeDetails(input: UpdateOfficeInput!, condition: ModelOfficeConditionInput): Office
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
@@ -124,24 +103,28 @@ type Mutation {
   deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): Requests
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
+  resolveRequest(requestId: ID!, decission: RequestDecision!, payload: ResolveRequestPayloadInput!): ID
+    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @function(name: "resolver-${env}")
+
   createCompanyAccessConnectionForOffice(
     officeId: ID!
     input: CreateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
-  
+
   updateCompanyAccessConnectionForOffice(
     officeId: ID!
     input: UpdateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
-  
+
   deleteCompanyAccessConnectionForOffice(
     officeId: ID!
     input: DeleteCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
-  
+
   createMyUserCalendarEvent(input: CreateUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")

@@ -32,9 +32,6 @@ type Office
   # Store S3 files in this field
   files: [S3Object]
 
-  # Users that can access this object, excludes Owner (manager), Admins, AWS Services (IAM)
-  members: [String]
-
   # Access to connected offices, private access
   companyConnections: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"])
 
@@ -194,9 +191,6 @@ type TradeUserConnection
   modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType! # e.g Contractor
   preferences: String
-
-  # Usernames that can view this connection (not edit)
-  members: [String]!
 }
 
 type TradeContractConnection
@@ -238,7 +232,7 @@ type UserCalendarEvent
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
-  username: String!
+  username: String! # Populated server-side
   createdAt: String!
   payload: String
 }
@@ -274,15 +268,14 @@ type Requests
   @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
   @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
   @auth(rules: [{ allow: private, provider: iam }]) {
+  # Auto generated data (populated/overwritten server-side)
   id: ID
-
-  # Users involved
   senderUsername: String!
-  receiverUsername: String!
   senderEmail: String!
-  receiverEmail: String!
 
-  # Request type and information
+  # User data (required)
+  receiverUsername: String!
+  receiverEmail: String!
   type: RequestType!
-  payload: String!
+  payload: CreateRequestPayloadInput!
 }

@@ -97,7 +97,12 @@ module.exports = {
       }
     `
     const response = await gqlHelper({ username: username }, query, 'getUserProfileByUsername')
-    const result = response.data.listUserProfileByUsername
+    let result = response.data.listUserProfileByUsername
+    if (result.items.length > 0) {
+      result = result.items[0]
+    } else {
+      result = null
+    }
     console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
     return result
   },
@@ -160,20 +165,29 @@ module.exports = {
   getOfficeDetailsAndPermissionsByUsername: async (username, filter, limit, nextToken) => {
     console.log('getOfficeDetailsAndPermissionsByUsername input: ' + [username, filter, limit, nextToken])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getOfficeDetailsAndPermissionsByUsername($username: String!, filter: ModelOfficeFilterInput, limit: Int, nextToken: String ) {
+      query getOfficeDetailsAndPermissionsByUsername($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int, nextToken: String ) {
         listUserProfileByUsername(username: $username) {
             items {
               officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
                 items {
+                  username
+                  userId
                   pagePermissions
                   modelPermissions
                   preferences
                   tradeId
+                  tradeName
+                  employeeType
+                  preferences
                   trade {
-                    tradeName
+                    ownerUsername
+                  }
+                  user {
+                    username
+                    email
                   }
                 }
                 nextToken
@@ -182,7 +196,7 @@ module.exports = {
         }
     }`
     const response = await gqlHelper(
-      { username: username, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { username: username, filter: filter ?? {}, limit: limit ?? 100, nextToken },
       query,
       'getOfficeDetailsAndPermissionsByUsername',
     )
@@ -191,14 +205,64 @@ module.exports = {
     return result
   },
 
-  getUserModelPermissions: async (username, officeId) => {
-    return new Set(this.getOfficeDetailsAndPermissionsByUsername(username, { tradeId: { eq: officeId } }, 1, null))
+  getUserModelPermissionsForOffice: async (username, officeId) => {
+    console.log('getUserModelPermissionsForOffice input: ' + [username])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+    const query = /* GraphQL */ `
+      query getUserModelPermissionsForOffice($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int) {
+        listUserProfileByUsername(username: $username) {
+          items {
+            officeConnections(filter: $filter, limit: $limit) {
+              items {
+                modelPermissions
+              }
+            }
+          }
+        }
+      }`
+    const response = await gqlHelper(
+      { username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+      query,
+      'getUserModelPermissionsForOffice',
+    )
+    const result = response.data.listUserProfileByUsername.items[0].officeConnections.items
+    console.log('getUserModelPermissionsForOffice output: ' + JSON.stringify(result))
+    return new Set(result)
+  },
+
+  getUserPagePermissionsForOffice: async (username, officeId) => {
+    console.log('getUserPagePermissionsForOffice input: ' + [username])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+    const query = /* GraphQL */ `
+      query getUserPagePermissionsForOffice($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int) {
+        listUserProfileByUsername(username: $username) {
+          items {
+            officeConnections(filter: $filter, limit: $limit) {
+              items {
+                pagePermissions
+              }
+            }
+          }
+        }
+      }`
+    const response = await gqlHelper(
+      { username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+      query,
+      'getUserPagePermissionsForOffice',
+    )
+    const result = response.data.listUserProfileByUsername.items[0].officeConnections.items
+    console.log('getUserPagePermissionsForOffice output: ' + JSON.stringify(result))
+    return new Set(result)
   },
 
   getCallendarEventsForUser: async (username, filter, limit, nextToken) => {
     console.log('getCallendarEventsForUser input: ' + [username, filter, limit, nextToken])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
       query getCallendarEventsForUser($username: String!, filter: ModelUserCalendarEventFilterInput, limit: Int, nextToken: String ) {
@@ -226,7 +290,7 @@ module.exports = {
   getRequestsFromUser: async (username, filter, limit, nextToken) => {
     console.log('getRequestsFromUser input: ' + [username, filter, limit, nextToken])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
       query getRequestsFromUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
@@ -257,7 +321,7 @@ module.exports = {
   getRequestsForUser: async (username, filter, limit, nextToken) => {
     console.log('getRequestsForUser input: ' + [username, filter, limit, nextToken])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
       query getRequestsForUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
@@ -282,6 +346,173 @@ module.exports = {
     )
     const result = response.data.listRequestsByReceiverUsername
     console.log('getRequestsForUser output: ' + JSON.stringify(result))
+    return result
+  },
+
+  resolveRequest: async (username, groups, id, decision, payload) => {
+    console.log('resolveRequest input: ' + [username, id, decision, payload])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    //Retrieve the request
+    const query = /* GraphQL */ `
+      query getRequestById($filter: ModelRequestsFilterInput!) {
+        listRequestss(filter: $filter) {
+          items {
+            id
+            senderUsername
+            createdAt
+            payload
+            receiverEmail
+            senderEmail
+            type
+            updatedAt
+          }
+        }
+      }
+    `
+    const retrieveRequestResponse = await gqlHelper({ filter: { id: { eq: id } } }, query, 'listRequestss')
+    const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
+    if (requestObject == null) {
+      throw new Error('Request with provided ID was not found.')
+    }
+
+    //Retrieve the caller's UserProfile
+    const senderUserProfile = this.getUserProfileByUsername(requestObject.senderUsername)
+    if (senderUserProfile == null) {
+      throw new Error(`User profile for ${requestObject.senderUsername} was not found.`)
+    }
+
+    //Resolve the request
+    console.log(`Decision for ${requestObject.type}: ${decision}`)
+    switch (requestObject.type) {
+      case 'CREATE_TRADE': {
+        if (groups.indexOf('admin') === -1) {
+          throw new Error('Admin privilleges are required to resolve this request.')
+        }
+        if (decision === 'ACCEPT') {
+          //Create shared fields
+          const managerUserId = senderUserProfile.id
+          const tradeName = senderPayload.tradeName
+          const managerUsername = senderUsername
+
+          //Create the new Office
+          //...
+          
+          //Attempt to create the Office item
+          const newOfficeResult = await gql.createOfficeIfNotExists(officeParams)
+          if (newOfficeResult) {
+            body.office = newOfficeResult
+          } else {
+            throw new Error('Office creation on request with id=[' + id + '] failed.')
+          }
+
+          //TODO make this a DDB Trasaction
+          //Create a connection between the new Office and the manager.
+          const connParams = {
+            id: managerUserId + '_' + tradeId, //Smart way to prevent duplicates and ensure uniqueness, also allows text matching queries
+            employeeType: 'MANAGER',
+            members: [managerUsername],
+            permissions: [],
+            preferences: '',
+            tradeId: tradeId,
+            tradeName: tradeName,
+            userId: managerUserId, //User and Trade ID are the same
+            username: managerUsername,
+          }
+
+          //Attempt to create the connection
+          const newConnResult = await gqlAPI.createTradeUserConnection(connParams)
+          if (newConnResult) {
+            body.connection = newConnResult
+          } else {
+            throw new Error('TradeUserConnection creation on request with id=[' + id + '] failed.')
+          }
+        } else {
+          console.log('Request with id=[' + id + '] was rejected.')
+        }
+        break
+      }
+      case 'CREATE_COMPANY_CONNECTION': {
+        if (decision === 'ACCEPT') {
+          //Get the sencer and receiver offices
+          const senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          if (!senderOffice) {
+            throw new Error("Sender's Office not found.")
+          }
+          const receiverOffice = await gqlAPI.getOfficeByOwnerUsername(receiverUsername)
+          if (!receiverOffice) {
+            throw new Error("Receiver's Office not found.")
+          }
+          body.office = { id: [senderOffice.id, receiverOffice.id] }
+
+          //Transaction, add the new connection
+          try {
+            body.connection = await ddbAPI.addCompanyConnection(senderOffice, receiverOffice)
+          } catch (err) {
+            throw new Error('Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.')
+          }
+        } else {
+          console.log('Request with id=[' + requestId + '] was rejected.')
+        }
+        break
+      }
+      case 'INVITE_EMPLOYEE_TO_OFFICE': {
+        if (decision === 'ACCEPT') {
+          //Get the sencer`s office
+          let senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          if (!senderOffice) {
+            throw new Error("Sender's Office not found.")
+          }
+          body.office = { id: senderOffice.id }
+
+          //Get employee`s profile
+          let userId
+          try {
+            userId = await gqlAPI.getUserIdFromUsername(receiverUsername)
+            if (!userId) {
+              throw new Error('User ID of receiver not found.')
+            }
+          } catch (err) {
+            throw new Error('User ID of receiver not found with error: ' + err)
+          }
+
+          //Ensure that the User has no other connections
+          const isUnemployed = await gqlAPI.checkIfUserIsUnemployed(receiverUsername)
+          if (!isUnemployed) {
+            throw new Error("User is a member of another Office and therefore can't join a new one.")
+          }
+
+          //Add the Employee to the new Office and create the connection between User and Office
+          const connId = userId + '_' + senderOffice.id
+          try {
+            await ddbAPI.addEmployeeToOffice(senderOffice, receiverUsername, connId, userId)
+          } catch (err) {
+            throw new Error('Failed to add employee to Office, ensure that the Office is allowed to invite employees.')
+          }
+          body.connection = connId
+        } else {
+          console.log('Request with id=[' + requestId + '] was rejected.')
+        }
+        break
+      }
+      case 'INVITE_CONTRACTOR_TO_OFFICE': {
+        //Create an unverified office
+        if (decision === 'ACCEPT') {
+          //let newContractorResult = await ddbAPI.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
+        } else {
+          console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+        }
+        break
+      }
+      default: {
+        throw new Error('Invalid request type.')
+      }
+    }
+
+    const result = ''
+    console.log('resolveRequest output: ' + JSON.stringify(result))
     return result
   },
 
@@ -537,7 +768,7 @@ module.exports = {
   getPartnerOfficeConnections: async (officeId, username, filter, limit, nextToken) => {
     console.log('getPartnerOfficeConnections input: ' + [officeId, username, filter, limit, nextToken])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     if (!officeId) {
       throw new Error('Invalid office ID')
@@ -549,9 +780,6 @@ module.exports = {
         items {
           createdAt
           expirationDate
-          from {
-            members
-          }
           fromId
           fromTradeName
           id
@@ -568,11 +796,7 @@ module.exports = {
       query,
       'getPartnerOfficeConnections',
     )
-    const temp_result = response.data.listCompanyAccessConnections
-    const _nextToken = temp_result.nextToken
-    let _items = temp_result.items
-    _items = _items.filter(entry => entry.from.members.contains(username))
-    const result = { items: _items, nextToken: _nextToken }
+    const result = response.data.listCompanyAccessConnections
     console.log('getPartnerOfficeConnections output: ' + JSON.stringify(result))
     return result
   },
@@ -580,11 +804,10 @@ module.exports = {
   updateOfficeDetails: async (username, input, condition) => {
     console.log('updateOfficeDetails input: ' + [username, input, condition])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
-
     //Sanitize input
-    const allowed = ['address', 'office_email', 'zip_code', 'mobile', 'privateData']
+    const allowed = ['id', 'address', 'office_email', 'zip_code', 'mobile', 'privateData']
     let sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
@@ -621,7 +844,7 @@ module.exports = {
   updateUserProfileDetails: async (username, input, condition) => {
     console.log('updateUserProfileDetails input: ' + [username, input, condition])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
 
     //Sanitize input
@@ -667,14 +890,14 @@ module.exports = {
   createVehicleForOffice: async (office_id, username, input, condition) => {
     console.log('createVehicleForOffice input: ' + [office_id, username, input, condition])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     if (!office_id) {
       throw new Error('Invalid office ID')
     }
 
     //Get caller's office
-    const officeDetailsAndPermissions = this.getUserModelPermissions(username, office_id)
+    const officeDetailsAndPermissions = await this.getUserModelPermissionsForOffice(username, office_id)
     if (!officeDetailsAndPermissions) {
       throw new Error('Insufficient permissions')
     }
@@ -698,14 +921,14 @@ module.exports = {
   updateVehicleForOffice: async (office_id, username, input, condition) => {
     console.log('updateVehicleForOffice input: ' + [office_id, username, input, condition])
     if (!username) {
-      throw new Error('Invalid username')
+      throw new Error('Invalid username or unauthenticated user.')
     }
     if (!office_id) {
       throw new Error('Invalid office ID')
     }
 
     //Get caller's office
-    const officeDetailsAndPermissions = this.getUserModelPermissions(username, office_id)
+    const officeDetailsAndPermissions = await this.getUserModelPermissionsForOffice(username, office_id)
     if (!officeDetailsAndPermissions) {
       throw new Error('Insufficient permissions')
     }
@@ -756,8 +979,204 @@ module.exports = {
     `
 
     const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateVehicleForOffice')
-    const result = response.data.updateVehicleForOffice
+    const result = response.data.updateVehicle
     console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
+    return result
+  },
+
+  createRequest: async (username, email, groups, input, condition) => {
+    console.log('createRequest input: ' + [username, email, groups, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    // Populate/Overwrite user identity claims
+    input.senderUsername = username
+    input.senderEmail = email
+
+    // Expand the condition to require that the caller is also the owner of the profile
+    const mutation = /* GraphQL */ `
+      mutation createRequest($input: CreateRequestsInput!, $condition: ModelRequestsConditionInput) {
+        createRequests(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: input, condition: condition }, mutation, 'createRequest')
+    const result = response.data.createRequests
+    console.log('createRequest output: ' + JSON.stringify(result))
+    return result
+  },
+
+  updateRequestsSentByMe: async (username, email, groups, input, condition) => {
+    console.log('updateRequestsSentByMe input: ' + [username, email, groups, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    const allowed = ['id', 'receiverUsername', 'receiverEmail', 'type', 'payload']
+    const sanitized_input = Object.keys(input)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = input[key]
+        return obj
+      }, {})
+    const expanded_condition = { and: [condition ?? {}, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }] }
+    const mutation = /* GraphQL */ `
+      mutation updateRequestsSentByMe($input: UpdateRequestsInput!, $condition: ModelRequestsConditionInput) {
+        updateRequests(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+    const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateRequestsSentByMe')
+    const result = response.data.updateRequests
+    console.log('updateRequestsSentByMe output: ' + JSON.stringify(result))
+    return result
+  },
+
+  deleteRequestsSentByMe: async (username, email, groups, input, condition) => {
+    console.log('deleteRequestsSentByMe input: ' + [username, email, groups, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    const expanded_condition = { and: [condition ?? {}, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }] }
+    const mutation = /* GraphQL */ `
+      mutation deleteRequestsSentByMe($input: DeleteRequestsInput!, $condition: ModelRequestsConditionInput) {
+        deleteRequests(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'deleteRequestsSentByMe')
+    const result = response.data.deleteRequests
+    console.log('deleteRequestsSentByMe output: ' + JSON.stringify(result))
+    return result
+  },
+
+  createMyUserCalendarEvent: async (username, input, condition) => {
+    console.log('createMyUserCalendarEvent input: ' + [username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    // Populate/Overwrite user identity claims
+    input.username = username
+
+    // Expand the condition to require that the caller is also the owner of the profile
+    const mutation = /* GraphQL */ `
+      mutation createMyUserCalendarEvent($input: CreateUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
+        createUserCalendarEvent(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: input, condition: condition }, mutation, 'createMyUserCalendarEvent')
+    const result = response.data.createUserCalendarEvent
+    console.log('createRequest output: ' + JSON.stringify(result))
+    return result
+  },
+
+  updateMyUserCalendarEvents: async (username, input, condition) => {
+    console.log('updateMyUserCalendarEvents input: ' + [username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    const allowed = ['id', 'username', 'payload']
+    const sanitized_input = Object.keys(input)
+      .filter(key => allowed.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = input[key]
+        return obj
+      }, {})
+    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const mutation = /* GraphQL */ `
+      mutation updateMyUserCalendarEvents($input: UpdateUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
+        updateUserCalendarEvent(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+    const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateMyUserCalendarEvents')
+    const result = response.data.updateUserCalendarEvent
+    console.log('updateMyUserCalendarEvents output: ' + JSON.stringify(result))
+    return result
+  },
+
+  deleteMyUserCalendarEvents: async (username, input, condition) => {
+    console.log('deleteMyUserCalendarEvents input: ' + [username, input, condition])
+    if (!username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
+
+    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const mutation = /* GraphQL */ `
+      mutation deleteMyUserCalendarEvents($input: DeleteUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
+        deleteUserCalendarEvent(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'deleteMyUserCalendarEvents')
+    const result = response.data.deleteUserCalendarEvent
+    console.log('deleteMyUserCalendarEvents output: ' + JSON.stringify(result))
+    return result
+  },
+
+  addEmployeeToOffice: async (office_id, caller_username, empUsername, modelPermissions, pagePermissions) => {
+    console.log('addEmployeeToOffice input: ' + [office_id, caller_username, empUsername, modelPermissions, pagePermissions])
+    if (!office_id) {
+      throw new Error('Invalid office ID')
+    }
+
+    if (!caller_username) {
+      throw new Error('Invalid office ID')
+    }
+
+    //Get caller information
+    const tuc_filter = { and: [{ tradeId: { eq: office_id } }, { username: { eq: caller_username } }] }
+    const officeDetailsAndPermissions = await this.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
+    const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items
+    const callerModelPermissions = tucItem.modelPermissions
+    const callerPagePermissions = tucItem.pagePermissions
+    if (!('EMPLOYEE_ADD' in callerModelPermissions)) {
+      throw new Error('User doesn`t have permission to create a add a new Employee.')
+    }
+
+    //Get candidate employee information
+    const empUserProfile = await this.getUserProfileByUsername(empUsername)
+    if (empUserProfile == null) {
+      throw new Error('Candidate employee does not exist.')
+    }
+
+    const input = {
+      treadeId: tucItem.tradeId,
+      tradeName: tucItem.tradeName,
+      userId: empUserProfile.id,
+      username: empUserProfile.username,
+      pagePermissions: pagePermissions,
+      modelPermissions: modelPermissions,
+      employeeType: 'STANDARD',
+      preferences: '',
+    }
+
+    const expanded_condition = { and: [{ ownerUsername: { eq: caller_username } }, { id: { eq: office_id } }] }
+    const mutation = /* GraphQL */ `
+      mutation addOfficeEmployee($input: CreateTradeUserConnectionInput!, $condition: ModelTradeUserConnectionConditionInput) {
+        createTradeUserConnection(input: $input, condition: $condition) {
+          id
+        }
+      }
+    `
+
+    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'addEmployeeToOffice')
+    const result = response.data.createTradeUserConnection
+    console.log('addEmployeeToOffice output: ' + JSON.stringify(result))
+
     return result
   },
 }
