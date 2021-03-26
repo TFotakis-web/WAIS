@@ -1,5 +1,7 @@
 <template>
-	<div class="text-center pt-5">
+	<ion-grid fixed>
+		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
+<!--	<div class="text-center pt-5">
 		<h1>{{ $t('views.platformData.pageTitle') }}</h1>
 		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
 		<mdb-container>
@@ -75,11 +77,16 @@
 				</mdb-col>
 			</mdb-row>
 		</mdb-container>
-	</div>
+	</div>-->
+	</ion-grid>
 </template>
 <script>
 	export default {
 		name: 'PlatformData',
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.platformData.pageTitle'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		data() {
 			return {
 				breadcrumbItems: ['Home'],

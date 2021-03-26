@@ -1,6 +1,8 @@
 <template>
-	<div class="pt-5">
-		<!-- <h1>{{ $t('components.navigation.sidenav.contracts.new') }}</h1> -->
+	<ion-grid fixed>
+		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
+<!--	<div class="pt-5">
+		&lt;!&ndash; <h1>{{ $t('components.navigation.sidenav.contracts.new') }}</h1> &ndash;&gt;
 		<h5 class="text-info text-center mb-5">{{ $t('various.underConstruction') }}</h5>
 		<mdb-container>
 			<mdb-card cascade narrow>
@@ -133,11 +135,16 @@
 				</mdb-card-body>
 			</mdb-card>
 		</mdb-container>
-	</div>
+	</div>-->
+	</ion-grid>
 </template>
 <script>
 	export default {
 		name: 'NewContract',
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('components.navigation.sidenav.contracts.new'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		data() {
 			return {
 				collaboratorOptions: [
