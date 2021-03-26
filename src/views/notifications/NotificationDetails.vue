@@ -185,8 +185,8 @@
 			...mapGetters('auth', ['requestsForMe']),
 			request() {
 				const requestId = this.$route.params.id;
-				const requests = this.requestsForMe.filter(el => el.id === requestId) || [];
-				return requests[0];
+				const request = this.requestsForMe.find(el => el.id === requestId) || {};
+				return request;
 			},
 		},
 	};
