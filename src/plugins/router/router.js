@@ -51,6 +51,7 @@ const routes = [
 			{ path: '/bank', name: 'Bank', component: () => import('@/views/bank/Bank'), meta: { requiresAuth: true } },
 			{ path: '/collaboration', name: 'Collaboration', component: () => import('@/views/collaboration/Collaboration'), meta: { requiresAuth: true } },
 			{ path: '/notifications', name: 'Notifications', component: () => import('@/views/notifications/Notifications'), meta: { requiresAuth: true } },
+			{ path: '/notifications/:id', name: 'NotificationDetails', component: () => import('@/views/notifications/NotificationDetails'), meta: { requiresAuth: true } },
 			{ path: '/wallet', name: 'Wallet', component: () => import('@/views/wallet/Wallet'), meta: { requiresAuth: true } },
 		],
 	},
