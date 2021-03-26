@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
-import { pageStructure } from '@/store/pageStructure';
-import { auth } from '@/store/auth';
-import { request } from '@/store/request';
+import { pageStructure } from '@/plugins/store/pageStructure';
+import { auth } from '@/plugins/store/auth';
+import { request } from '@/plugins/store/request';
 // import { vehicle } from '@/store/vehicle';
 // import { trade } from '@/store/trade';
 // import { platformData } from '@/store/platformData';

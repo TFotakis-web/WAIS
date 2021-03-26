@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 
-import { store } from '@/store';
+import { store } from '@/plugins/store/store';
 
 const routes = [
 	{

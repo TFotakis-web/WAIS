@@ -5,7 +5,7 @@ import i18n from '@/plugins/i18n';
 import axios from '@/plugins/axios';
 import VueAxios from 'vue-axios';
 import Cookies from 'js-cookie';
-import { store } from '@/store/index.js';
+import { store } from '@/plugins/store/store';
 
 import Amplify from 'aws-amplify';
 import { Auth } from '@aws-amplify/auth';
