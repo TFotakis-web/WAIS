@@ -15,10 +15,11 @@ export const pageStructure = {
 			state.pageBackButton = false;
 			state.backButtonDefaultHref = '/';
 			state.metaTitle = document.querySelector('head title');
-			state.globalPendingPromises = 0;
-			state.routerViewPendingPromises = 0;
 			state.localesLoaded = false;
-			console.log('Init pageStructure');
+
+			// Initialize in this order for security purposes
+			state.routerViewPendingPromises = 0;
+			state.globalPendingPromises = 0;
 		},
 		setPageTitle(state, payload) {
 			state.pageTitle = payload;
@@ -37,6 +38,7 @@ export const pageStructure = {
 			state.globalPendingPromises--;
 			if (state.globalPendingPromises < 0) {
 				console.error('Pending Promises:', state.globalPendingPromises);
+				state.globalPendingPromises = 0;
 			}
 		},
 		increaseRouterViewPendingPromises(state) {
@@ -46,6 +48,7 @@ export const pageStructure = {
 			state.routerViewPendingPromises--;
 			if (state.routerViewPendingPromises < 0) {
 				console.error('Pending Promises:', state.routerViewPendingPromises);
+				state.routerViewPendingPromises = 0;
 			}
 		},
 		setLocalesLoaded(state, loaded) {
