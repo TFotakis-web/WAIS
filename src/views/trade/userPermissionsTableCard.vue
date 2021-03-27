@@ -1,47 +1,100 @@
 <template>
-	<mdb-card cascade narrow>
-		<mdb-view cascade class="gradient-card-header blue">
-			<h5 class="mb-0">{{ $t('views.Trade.userPermissionsTableCard.cardTitle') }}</h5>
-		</mdb-view>
-		<mdb-card-body>
-			<mdb-row>
-				<mdb-col>
-					<mdb-tbl sm striped bordered scrollY maxHeight="40em" class="fixed-header-column">
-						<mdb-tbl-head>
-							<tr>
-								<th>{{ $t('views.Trade.userPermissionsTableCard.tablePermissionHeader') }}</th>
-								<th v-for="(userObject, username) in usersPermissions" :key="username">
-									<strong>{{ username }}</strong>
-								</th>
-							</tr>
-						</mdb-tbl-head>
-						<mdb-tbl-body>
-							<tr v-for="permission in permissionsTable" :key="permission + 'row'" scope="row">
-								<th><strong>{{ permission }}</strong></th>
-								<td v-for="(userObject, username) in usersPermissions" :key="permission + username" class="p-0 align-middle">
-									<mdb-input type="checkbox" :id="permission + username" v-model="userObject[permission]" class="mx-auto p-0" style="height: 18px; width: 18px; margin-top: -4px;"/>
-								</td>
-							</tr>
-						</mdb-tbl-body>
-					</mdb-tbl>
-				</mdb-col>
-			</mdb-row>
-			<mdb-row>
-				<mdb-col class="text-center">
-					<hr/>
-					<mdb-btn outline="primary" darkWaves rounded @click="addUser">{{ $t('actions.add') }}</mdb-btn>
-					<mdb-btn outline="primary" darkWaves rounded @click="save">{{ $t('actions.save') }}</mdb-btn>
-				</mdb-col>
-			</mdb-row>
-		</mdb-card-body>
-	</mdb-card>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>{{ $t('views.Trade.userPermissionsTableCard.cardTitle') }}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-item v-for="user in users" :key="user.username">
+				<ion-label position="floating">{{ user.username }}</ion-label>
+				<ion-select v-model="user.permissions" multiple required>
+					<ion-select-option v-for="o in permissionOptions" :key="user.username + o" :value="o">{{ o }}</ion-select-option>
+				</ion-select>
+			</ion-item>
+<!--			<mdb-tbl sm striped bordered scrollY maxHeight="40em" class="fixed-header-column">
+				<mdb-tbl-head>
+					<tr>
+						<th>{{ $t('views.Trade.userPermissionsTableCard.tablePermissionHeader') }}</th>
+						<th v-for="(userObject, username) in usersPermissions" :key="username">
+							<strong>{{ username }}</strong>
+						</th>
+					</tr>
+				</mdb-tbl-head>
+				<mdb-tbl-body>
+					<tr v-for="permission in permissionsTable" :key="permission + 'row'" scope="row">
+						<th><strong>{{ permission }}</strong></th>
+						<td v-for="(userObject, username) in usersPermissions" :key="permission + username" class="p-0 align-middle">
+							<mdb-input type="checkbox" :id="permission + username" v-model="userObject[permission]" class="mx-auto p-0" style="height: 18px; width: 18px; margin-top: -4px;"/>
+						</td>
+					</tr>
+				</mdb-tbl-body>
+			</mdb-tbl>-->
+			<div class="ion-margin-top">
+				<ion-button @click="addUser" fill="clear">
+					<ion-icon :icon="$ionicons.addOutline" slot="start"/>
+					<span>{{ $t('actions.add') }}</span>
+				</ion-button>
+				<loadingBtn @click="save" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+			</div>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
+	import loadingBtn from '@/components/structure/loadingBtn';
+
 	export default {
 		name: 'userPermissionsTableCard',
+		components: {
+			loadingBtn,
+		},
 		data() {
 			return {
-				permissionsTable: [
+				// permissionsTable: [
+				// 	'Home',
+				// 	'VehiclePricing',
+				// 	'IndustrialLiabilityPricing',
+				// 	'FirePricing',
+				// 	'LifePricing',
+				// 	'ContractsFile',
+				// 	'UncollectedContracts',
+				// 	'CollectedContracts',
+				// 	'ContractAdditionalActs',
+				// 	'GreenCardContracts',
+				// 	'UnclaimedContracts',
+				// 	'InvalidContracts',
+				// 	'NewContract',
+				// 	'ProcessingDueDateRegister',
+				// 	'ProcessingDuePayment',
+				// 	'ProcessingPaid',
+				// 	'ProcessingLosses',
+				// 	'AccountingReceipts',
+				// 	'AccountingRegisters',
+				// 	'AccountingTodaysIncome',
+				// 	'AccountingCommissionsUncollected',
+				// 	'AccountingCommissionsCollected',
+				// 	'AccountingMutualAccount',
+				// 	'SupplierContractors',
+				// 	'ContractorsExternalContractors',
+				// 	'VehicleCards',
+				// 	'VehicleCardsDetails',
+				// 	'CustomerCards',
+				// 	'Library',
+				// 	'Trade',
+				// 	'UserProfile',
+				// 	'PlatformData',
+				// ],
+				// usersPermissions: {},
+				loading: false,
+				users: (() => {
+					const arr = [];
+					for(let i = 0; i < 20; i++) {
+						arr.push({
+							username: `user${i}`,
+							permissions: [],
+						});
+					}
+					return arr;
+				})(),
+				permissionOptions: [
 					'Home',
 					'VehiclePricing',
 					'IndustrialLiabilityPricing',
@@ -74,63 +127,75 @@
 					'Trade',
 					'UserProfile',
 					'PlatformData',
+					'DevTools',
+					'ContractApproval',
+					'Payment',
+					'Bank',
+					'Collaboration',
+					'Notifications',
+					'NotificationDetails',
+					'Wallet',
+					'TradeCreationForm',
 				],
-				usersPermissions: {},
 			};
 		},
 		mounted() {
-			this.loadUserPermissions();
+			// this.loadUserPermissions();
 		},
 		methods: {
-			loadUserPermissions() {
-				const user = {
-					'Home': false,
-					'VehiclePricing': false,
-					'IndustrialLiabilityPricing': false,
-					'FirePricing': false,
-					'LifePricing': false,
-					'ContractsFile': false,
-					'UncollectedContracts': false,
-					'CollectedContracts': false,
-					'ContractAdditionalActs': false,
-					'GreenCardContracts': false,
-					'UnclaimedContracts': false,
-					'InvalidContracts': false,
-					'NewContract': false,
-					'ProcessingDueDateRegister': false,
-					'ProcessingDuePayment': false,
-					'ProcessingPaid': false,
-					'ProcessingLosses': false,
-					'AccountingReceipts': false,
-					'AccountingRegisters': false,
-					'AccountingTodaysIncome': false,
-					'AccountingCommissionsUncollected': false,
-					'AccountingCommissionsCollected': false,
-					'AccountingMutualAccount': false,
-					'SupplierContractors': false,
-					'ContractorsExternalContractors': false,
-					'VehicleCards': false,
-					'VehicleCardsDetails': false,
-					'CustomerCards': false,
-					'Library': false,
-					'Trade': false,
-					'UserProfile': false,
-					'PlatformData': false,
-				};
-				const numCopies = 20;
-				for (let i = 0; i < numCopies; i++) {
-					this.$set(this.usersPermissions, 'user' + i.toString(), Object.assign({}, user));
-				}
-			},
+			// loadUserPermissions() {
+			// 	const user = {
+			// 		'Home': false,
+			// 		'VehiclePricing': false,
+			// 		'IndustrialLiabilityPricing': false,
+			// 		'FirePricing': false,
+			// 		'LifePricing': false,
+			// 		'ContractsFile': false,
+			// 		'UncollectedContracts': false,
+			// 		'CollectedContracts': false,
+			// 		'ContractAdditionalActs': false,
+			// 		'GreenCardContracts': false,
+			// 		'UnclaimedContracts': false,
+			// 		'InvalidContracts': false,
+			// 		'NewContract': false,
+			// 		'ProcessingDueDateRegister': false,
+			// 		'ProcessingDuePayment': false,
+			// 		'ProcessingPaid': false,
+			// 		'ProcessingLosses': false,
+			// 		'AccountingReceipts': false,
+			// 		'AccountingRegisters': false,
+			// 		'AccountingTodaysIncome': false,
+			// 		'AccountingCommissionsUncollected': false,
+			// 		'AccountingCommissionsCollected': false,
+			// 		'AccountingMutualAccount': false,
+			// 		'SupplierContractors': false,
+			// 		'ContractorsExternalContractors': false,
+			// 		'VehicleCards': false,
+			// 		'VehicleCardsDetails': false,
+			// 		'CustomerCards': false,
+			// 		'Library': false,
+			// 		'Trade': false,
+			// 		'UserProfile': false,
+			// 		'PlatformData': false,
+			// 	};
+			// 	const numCopies = 20;
+			// 	for (let i = 0; i < numCopies; i++) {
+			// 		this.$set(this.usersPermissions, 'user' + i.toString(), Object.assign({}, user));
+			// 	}
+			// },
 			addUser() {
 				console.log('Add User.');
 			},
 			save() {
+				this.loading = true;
 				console.log('Saved.');
+				this.loading = false;
+				this.$toast.saveSuccess();
 			},
 		},
 	};
 </script>
+<!--
 <style scoped>
 	div .fixed-header-column {
 		position: relative;
@@ -168,3 +233,4 @@
 		z-index: 2;
 	}
 </style>
+-->
