@@ -89,7 +89,8 @@
       "signingUp": "Εγγραφή...",
       "resetYourPassword": "Επαναφορά κωδικού",
       "forgotYourPassword": "Ξεχάσατε τον κωδικό σας;",
-      "changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας."
+      "changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας.",
+      "confirmSignUp": "Επιβεβαίωση"
     },
     "error404": {
       "header": "Σφάλμα 404! Η σελίδα δεν βρέθηκε.",
