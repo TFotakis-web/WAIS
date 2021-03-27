@@ -205,7 +205,8 @@
     "companyAccess": "Company access",
     "employeesNumberLimit": "Employees number limit",
     "billing": "Billing",
-    "issuing": "Issuing"
+    "issuing": "Issuing",
+    "chooseFile": "Choose file"
   },
   "actions": {
     "submit": "Submit",

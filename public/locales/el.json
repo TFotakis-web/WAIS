@@ -205,7 +205,8 @@
     "companyAccess": "Πρόσβαση εταιριών",
     "employeesNumberLimit": "Όριο υπαλλήλων",
     "billing": "Τιμολόγηση",
-    "issuing": "Έκδοση"
+    "issuing": "Έκδοση",
+    "chooseFile": "Επιλέξτε αρχείο"
   },
   "actions": {
     "submit": "Υποβολή",
