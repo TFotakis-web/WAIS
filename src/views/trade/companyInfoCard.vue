@@ -1,196 +1,224 @@
 <template>
-	<mdb-card cascade>
-		<mdb-view cascade class="blue lighten-1 p-3">
-			<div class="mx-auto tradeImg" :style="{ 'background-image': 'url(' + fields.tradeLogo + ')' }">
-				<mdb-view hover class="h-100 w-100 rounded-circle">
-					<mdb-mask flex-center overlay="black-strong" :text="$t('actions.edit')" class="clickable" @click="save" style="overflow-wrap: anywhere; text-align: center;"/>
-				</mdb-view>
-			</div>
-		</mdb-view>
-		<mdb-card-body>
+	<ion-card>
+		<ion-card-content>
+			<ion-item>
+				<ion-thumbnail class="ion-margin-end">
+					<ion-img :src="form.tradeLogo"/>
+				</ion-thumbnail>
+				<!--						Todo: Enable when backend is ready -->
+				<!--						<file-input @update:downloadUrls="fields.tradeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="tradeLogo" file-path="trade/" level="protected" v-model="form.tradeLogo" :sizeLimitInMBs="10" size="small"/>-->
+			</ion-item>
 			<form @submit.prevent="save">
-				<mdb-row class="mb-4">
-					<mdb-col sm="6" offsetSm="3" md="4" offsetMd="4">
-						<mdb-input v-model="fields.trade" :label="$t('fields.trade')" :small="validation.trade" type="text" outline required class="my-2 white"/>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col>
-						<h6 class="text-left">{{ $t('views.Trade.companyInfo') }}</h6>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row class="mb-4">
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.registrationNumber" :label="$t('fields.registrationNumber')" :small="validation.registrationNumber" type="text" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.tin" :label="$t('fields.tin')" :small="validation.tin" type="text" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.professionStartDate" :label="$t('fields.professionStartDate')" :small="validation.professionStartDate" type="text" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.licenseExpirationDate" :label="$t('fields.licenseExpirationDate')" :small="validation.licenseExpirationDate" type="text" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.address" :label="$t('fields.address')" :small="validation.address" type="text" name="address" autocomplete="street-address" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.city" :label="$t('fields.city')" :small="validation.city" type="text" name="city" autocomplete="address-level2" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.postcode" :label="$t('fields.postcode')" type="text" name="postal" autocomplete="postal-code" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.phone" :label="$t('fields.phone')" :small="validation.phone" type="text" name="phone" autocomplete="tel" outline required class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.mobile" :label="$t('fields.mobile')" :small="validation.mobile" type="text" name="mobile" autocomplete="tel" outline class="my-2"/>
-					</mdb-col>
-					<mdb-col sm="6">
-						<mdb-input v-model="fields.email" :label="$t('fields.email')" :small="validation.email" type="text" name="email" autocomplete="email" outline required class="my-2"/>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row class="mb-4">
-					<mdb-col lg="6">
-						<mdb-row>
-							<mdb-col>
-								<h6>
-									<span>{{ $t('views.Trade.companyAccounts') }}</span>
-									<mdb-icon icon="plus" class="ml-3"/>
-								</h6>
-							</mdb-col>
-						</mdb-row>
-						<div v-for="(account, i) in companyAccounts" :key="'companyAccounts' + i" class="d-flex flex-row mb-2 align-items-baseline">
-							<mdb-input v-model="account.name" :label="$t('fields.name')" :small="validation.companyAccounts[i].name" type="text" outline required class="flex-fill mr-2"/>
-							<mdb-input v-model="account.iban" :label="$t('fields.iban')" :small="validation.companyAccounts[i].iban" type="text" outline required class="flex-fill mr-2"/>
-							<mdb-icon icon="trash" class="clickable"/>
-						</div>
-					</mdb-col>
-					<mdb-col lg="6">
-						<mdb-row>
-							<mdb-col>
-								<h6>
-									<span>{{ $t('views.Trade.companyCodes') }}</span>
-									<mdb-icon icon="plus" class="ml-3"/>
-								</h6>
-							</mdb-col>
-						</mdb-row>
-						<div v-for="(companyCode, i) in companyCodes" :key="'companyCodes' + i" class="d-flex flex-row mb-2 align-items-baseline">
-							<mdb-select search v-model="companyOptions" :label="$t('fields.company')" :small="validation.companyCodes[i].name" type="text" outline required class="flex-fill mr-2"/>
-							<mdb-input v-model="companyCode.code" :label="$t('fields.code')" :small="validation.companyCodes[i].code" type="text" outline required class="flex-fill mr-2"/>
-							<mdb-icon icon="trash" class="clickable"/>
-						</div>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="6">
-						<h6>
-							<span>{{ $t('views.Trade.companyFiles') }}</span>
-							<mdb-icon icon="plus" class="ml-3"/>
-						</h6>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col sm="6" md="4" lg="3" v-for="(file, i) in companyFiles" :key="'companyCodes' + i">
-						<mdb-list-group-item>
-							<a :href="file.url" target="_blank">{{ file.name }}</a>
-							<mdb-icon icon="trash" class="clickable float-right"/>
-						</mdb-list-group-item>
-					</mdb-col>
-				</mdb-row>
-				<mdb-row>
-					<mdb-col class="text-center">
-						<hr/>
-						<mdb-btn outline="primary" darkWaves rounded type="submit">{{ $t('actions.save') }}</mdb-btn>
-					</mdb-col>
-				</mdb-row>
+				<ion-list>
+					<ion-list-header>
+						<h1>{{ $t('views.Trade.companyInfo') }}</h1>
+					</ion-list-header>
+					<ion-item>
+						<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.trade') }}</ion-label>
+						<ion-input v-model="form.trade" type="text" name="tradeName" required/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
+						<ion-input v-model="form.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
+						<ion-input v-model="form.tin" type="text" name="tin"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
+						<ion-datetime v-model="form.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
+						<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
+						<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon slot="start"/>
+						<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
+						<ion-input v-model="form.city" type="text" name="city" autocomplete="address-level2"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+						<ion-input v-model="form.postcode" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
+						<ion-input v-model="form.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
+						<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
+					</ion-item>
+					<ion-item>
+						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
+						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
+						<ion-input v-model="form.email" type="email" name="email" autocomplete="email" required/>
+					</ion-item>
+				</ion-list>
+				<ion-list class="ion-margin-top">
+					<ion-list-header>
+						<h1>{{ $t('views.Trade.companyAccounts') }}</h1>
+						<ion-button fill="clear">
+							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
+						</ion-button>
+					</ion-list-header>
+					<ion-row v-for="(account, i) in form.companyAccounts" :key="'companyAccounts' + i" class="ion-align-items-end">
+						<ion-col>
+							<ion-item>
+								<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
+								<ion-input v-model="account.name" type="text" required/>
+							</ion-item>
+						</ion-col>
+						<ion-col>
+							<ion-item>
+								<ion-label position="floating">{{ $t('fields.iban') }}</ion-label>
+								<ion-input v-model="account.iban" type="text" required/>
+							</ion-item>
+						</ion-col>
+						<ion-col>
+							<ion-item>
+								<ion-button fill="clear" class="ion-align-self-center">
+									<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+								</ion-button>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-list>
+				<ion-list>
+					<ion-list-header>
+						<h1>{{ $t('views.Trade.companyCodes') }}</h1>
+						<ion-button fill="clear">
+							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
+						</ion-button>
+					</ion-list-header>
+
+					<ion-row v-for="(companyCode, i) in form.companyCodes" :key="'companyCodes' + i" class="ion-align-items-end">
+						<ion-col>
+							<ion-item>
+								<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
+								<ion-select v-model="companyCode.company" required>
+									<ion-select-option v-for="o in companyOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
+								</ion-select>
+							</ion-item>
+						</ion-col>
+						<ion-col>
+							<ion-item>
+								<ion-label position="floating">{{ $t('fields.code') }}</ion-label>
+								<ion-input v-model="companyCode.code" type="text" required/>
+							</ion-item>
+						</ion-col>
+						<ion-col>
+							<ion-item>
+								<ion-button fill="clear" class="ion-align-self-center">
+									<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+								</ion-button>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-list>
+				<ion-list>
+					<ion-list-header>
+						<h1>{{ $t('views.Trade.companyFiles') }}</h1>
+						<ion-button fill="clear">
+							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
+						</ion-button>
+					</ion-list-header>
+					<ion-item v-for="(file, i) in form.companyFiles" :key="'companyCodes' + i">
+						<ion-button :href="file.url" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
+						<ion-button fill="clear" size="small">
+							<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+						</ion-button>
+					</ion-item>
+				</ion-list>
+				<div class="ion-margin-top">
+					<loadingBtn type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+				</div>
 			</form>
-		</mdb-card-body>
-	</mdb-card>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
+	import loadingBtn from '@/components/structure/loadingBtn';
+
 	export default {
 		name: 'CompanyInfoCard',
+		components: {
+			loadingBtn,
+		},
 		data() {
 			return {
+				loading: false,
 				companyOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
+					{ text: 'Am Trust', value: 'Am Trust', selected: false },
+					{ text: 'Brokers Union / Ergo', value: 'Brokers Union / Ergo', selected: false },
+					{ text: 'Brokers Union / Prime', value: 'Brokers Union / Prime', selected: false },
+					{ text: 'Cromar/Lloyds', value: 'Cromar/Lloyds', selected: false },
+					{ text: 'Euroins', value: 'Euroins', selected: false },
+					{ text: 'Europrotection / Am Trust', value: 'Europrotection / Am Trust', selected: false },
+					{ text: 'Europrotection / Eurolife', value: 'Europrotection / Eurolife', selected: false },
+					{ text: 'Express Ηρακλειου', value: 'Express Ηρακλειου', selected: false },
+					{ text: 'Express Χανίων', value: 'Express Χανίων', selected: false },
+					{ text: 'Generali', value: 'Generali', selected: false },
+					{ text: 'Interamerican', value: 'Interamerican', selected: false },
+					{ text: 'Interlife', value: 'Interlife', selected: false },
+					{ text: 'Intersalonica', value: 'Intersalonica', selected: false },
+					{ text: 'Oracle', value: 'Oracle', selected: false },
+					{ text: 'Personal Brokers / Generali', value: 'Personal Brokers / Generali', selected: false },
+					{ text: 'Personal Brokers / Interamerican', value: 'Personal Brokers / Interamerican', selected: false },
+					{ text: 'Personal Brokers / Intersalonica', value: 'Personal Brokers / Intersalonica', selected: false },
+					{ text: 'Personal Brokers / Ατλαντική Ένωση', value: 'Personal Brokers / Ατλαντική Ένωση', selected: false },
+					{ text: 'Personal Insurance', value: 'Personal Insurance', selected: false },
+					{ text: 'Εθνική', value: 'Εθνική', selected: false },
+					{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη', selected: false },
 				],
-				fields: {
+				form: {
 					trade: '',
 					tradeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
-					registrationNumber: '',
+					chamberRecordNumber: '',
 					tin: '',
 					professionStartDate: '',
-					licenseExpirationDate: '',
-					address: '',
-					city: '',
-					phone: '',
-					mobile: '',
-					email: '',
-					companyAccounts: [],
-					companyCodes: [],
-					companyFiles: [],
-				},
-				validation: {
-					trade: '',
-					tradeLogo: '',
-					registrationNumber: '',
-					tin: '',
-					professionStartDate: '',
-					licenseExpirationDate: '',
+					insuranceLicenseExpirationDate: '',
 					address: '',
 					city: '',
 					phone: '',
 					mobile: '',
 					email: '',
 					companyAccounts: [
-						{ name: '', iban: '' },
-						{ name: '', iban: '' },
+						{ name: 'Account 1', iban: 'GR111222333444555666777888999' },
+						{ name: 'Account 2', iban: 'GR000111222333444555666777888' },
 					],
 					companyCodes: [
-						{ name: '', code: '' },
-						{ name: '', code: '' },
+						{ company: 'Generali', code: '12345' },
+						{ company: 'Oracle', code: '67890' },
 					],
 					companyFiles: [
-						{ name: '', url: '' },
-						{ name: '', url: '' },
+						{ filename: 'File 1.pdf', url: '#file1' },
+						{ filename: 'File 2.pdf', url: '#file2' },
 					],
 				},
-				companyAccounts: [
-					{ name: 'Account 1', iban: 'GR111222333444555666777888999' },
-					{ name: 'Account 2', iban: 'GR000111222333444555666777888' },
-				],
-				companyCodes: [
-					{ name: 'Company 1', code: '12345' },
-					{ name: 'Company 2', code: '67890' },
-				],
-				companyFiles: [
-					{ name: 'File 1', url: '#file1' },
-					{ name: 'File 2', url: '#file2' },
-				],
 			};
 		},
 		methods: {
 			save() {
+				this.loading = true;
 				console.log('Saved.');
+				this.loading = false;
+				this.$toast.saveSuccess();
 			},
 		},
 	};
 </script>
-<style>
-	.tradeImg {
-		height: 88px;
-		width: 88px;
-		background-size: cover;
-		background-repeat: inherit;
-		background-position: 50% center;
-		border-radius: 50% !important;
-		border: 5px solid white;
-	}
-</style>
