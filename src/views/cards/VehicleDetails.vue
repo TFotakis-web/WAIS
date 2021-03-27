@@ -17,7 +17,7 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.Vehicle Cards Details.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Vehicle Cards Details.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 			// this.getVehicle();
 		},

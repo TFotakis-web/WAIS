@@ -63,7 +63,7 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.auth.changeYourPassword'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.auth.changeYourPassword'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {

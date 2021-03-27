@@ -15,7 +15,8 @@
 			this.initLocale();
 			// Todo: Enable loadEnumData
 			// this.loadEnumData();
-			window.WaisVue = this;
+			window.vm = this;
+			this.$store.dispatch('initModules');
 		},
 		methods: {
 			loadEnumData: function () {

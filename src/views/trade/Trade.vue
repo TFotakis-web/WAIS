@@ -24,7 +24,7 @@
 			companyInfoCard,
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.Trade.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Trade.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

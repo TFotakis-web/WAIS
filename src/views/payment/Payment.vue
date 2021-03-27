@@ -5,7 +5,7 @@
 	export default {
 		name: 'ContractApproval',
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('components.navigation.navbar-item.payment'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('components.navigation.navbar-item.payment'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

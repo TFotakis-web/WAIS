@@ -5,7 +5,7 @@
 	export default {
 		name: 'AccountingCommissionsCollected',
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('components.navigation.sidenav.accounting.todaysIncome'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('components.navigation.sidenav.accounting.todaysIncome'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

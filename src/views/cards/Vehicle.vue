@@ -42,7 +42,7 @@
 			};
 		},
 		mounted: function () {
-			this.$store.commit('pageStructure/setPageTitle', () => this.$t('components.navigation.sidenav.cards.vehicleCards'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('components.navigation.sidenav.cards.vehicleCards'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 			// this.$store.dispatch('vehicle/getVehiclesData');
 		},
