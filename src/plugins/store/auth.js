@@ -16,7 +16,6 @@ export const auth = {
 			state.cognitoUser = null;
 			state.user = null;
 			state.userProfile = null;
-			console.log('Init auth');
 		},
 		setCognitoUser(state, payload) {
 			state.cognitoUser = payload;
@@ -135,19 +134,18 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		signOut({ commit }) {
-			return new Promise((resolve, reject) => {
-				Auth.signOut()
-					.then(() => {
-						router.go(0); // Reload page
-						commit('setUser', null);
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async signOut({ commit, dispatch }) {
+			try {
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
+				await Auth.signOut();
+				commit('setUser', null)
+				await router.push({ name: 'SignIn' });
+				await dispatch('initModules', null, { root: true });
+				return Promise.resolve();
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
 		forgotPassword(_, username) {
 			return new Promise((resolve, reject) => {
