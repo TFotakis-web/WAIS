@@ -1,5 +1,5 @@
 <template>
-	<ion-menu content-id="main-content" type="overlay">
+	<ion-menu content-id="main-content" type="push">
 		<ion-content>
 			<ion-list>
 				<ion-item :router-link="{name: 'Trade'}" button>

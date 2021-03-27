@@ -1,5 +1,5 @@
 <template>
-	<IonSplitPane content-id="main-content">
+	<ion-split-pane content-id="main-content">
 		<side-navigation/>
 		<ion-page id="main-content">
 			<toolbar/>
@@ -15,7 +15,7 @@
 				</router-view>
 			</ion-content>
 		</ion-page>
-	</IonSplitPane>
+	</ion-split-pane>
 </template>
 <script>
 	import SideNavigation from '@/components/base/SideNavigation';
