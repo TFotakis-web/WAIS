@@ -28,7 +28,7 @@
 										<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
 										<ion-input v-model="credentials.email" type="email" name="email" autocomplete="email" required/>
 									</ion-item>
-									<ion-row>
+									<ion-row class="ion-align-items-end">
 										<ion-col>
 											<ion-item>
 												<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
