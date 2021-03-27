@@ -97,17 +97,19 @@ type CreateRequestPayloadInput {
 input ResolveCreateOfficePayload {
   managerModelPermissions: [ModelPermission!]!
   managerPagePermissions: AWSJSON!
+  partnersNumberLimit: Int!
+  employeesNumberLimit: Int!
 }
 input ResolveCompanyAccessConnectionPayload {
   expirationDate: AWSTimestamp!
 }
 input ResolveInviteEmployeePayload {
-  managerModelPermissions: [ModelPermission!]!
-  managerPagePermissions: AWSJSON!
+  empModelPermissions: [ModelPermission!]!
+  empPagePermissions: AWSJSON!
 }
 input ResolveInviteContractorPayload {
-  managerModelPermissions: [ModelPermission!]!
-  managerPagePermissions: AWSJSON!
+  ctrModelPermissions: [ModelPermission!]!
+  ctrPagePermissions: AWSJSON!
 }
 input ResolveRequestPayloadInput {
   createTradePayload: ResolveCreateOfficePayload

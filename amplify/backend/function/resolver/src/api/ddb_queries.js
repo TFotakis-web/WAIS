@@ -24,13 +24,8 @@ module.exports = {
    * @param {*} userId
    * @param {*} uuid
    */
-  addEmployeeToOffice: async (office, empUsername, connId, userId) => {
+  addEmployeeToOffice: async (office, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
     console.log('Attempting to create new employee to office with arguments:' + [JSON.stringify(office), empUsername, connId, userId])
-    //Have an updated member list prepared
-    let newMembers = office.members
-    if (!newMembers.includes(empUsername)) {
-      newMembers.push(empUsername)
-    }
     const now = new Date().toISOString()
     const resp = await ddb
       .transactWrite({
@@ -42,11 +37,9 @@ module.exports = {
               Key: {
                 id: office.id,
               },
-              ConditionExpression: '(not contains(#members, :new_emp_username)) and (#employeesNumberLimit > :zero)',
-              UpdateExpression:
-                'SET #members = list_append(#members, :new_emp_username), #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit - :dec',
+              ConditionExpression: '#employeesNumberLimit > :zero',
+              UpdateExpression: 'SET #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit - :dec',
               ExpressionAttributeNames: {
-                '#members': 'members',
                 '#updatedAt': 'updatedAt',
                 '#employeesNumberLimit': 'employeesNumberLimit',
               },
@@ -70,8 +63,8 @@ module.exports = {
                 tradeName: office.tradeName,
                 userId: userId,
                 username: empUsername,
-                permissions: [],
-                members: [empUsername, office.ownerUsername],
+                modelPermissions: empModelPermissions,
+                pagePermissions: empPagePermissions,
                 employeeType: 'STANDARD',
                 preferences: '',
                 createdAt: now,

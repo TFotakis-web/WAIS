@@ -15,6 +15,8 @@ const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 
+const ddbAPI = require('./ddb_queries')
+
 /**
  * Wrapper for GQL API calls.
  *
@@ -318,6 +320,68 @@ module.exports = {
     return result
   },
 
+  checkIfUserIsUnemployed: async username => {
+    console.log('checkIfUserIsUnemployed input: ' + username)
+    const query = /* GraphQL */ `
+      query listUserProfileByUsername($username: String!) {
+        listUserProfileByUsername(username: $username) {
+          items {
+            tradeCon {
+              nextToken
+            }
+          }
+        }
+      }
+    `
+    const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
+    const result = response.data.listUserProfileByUsername.items[0].tradeCon.nextToken == null
+    console.log('checkIfUserIsUnemployed output: ' + result)
+    return result
+  },
+
+  getOfficeByOwnerUsername: async username => {
+    console.log('getOfficeByOwnerUsername input: ' + username)
+    const query = /* GraphQL */ `
+      query listTradeByOwnerUsername($ownerUsername: String!) {
+        listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+          items {
+            id
+            address
+            createdAt
+            employeesNumberLimit
+            members
+            mobile
+            office_email
+            ownerUsername
+            partnersNumberLimit
+            phone
+            tradeName
+            privateData {
+              bankAccountInfo
+              chamberRecordNumber
+              civilLiabilityExpirationDate
+              insuranceLicenseExpirationDate
+              professionStartDate
+              tin
+              files {
+                bucket
+                key
+                name
+                region
+              }
+            }
+            zip_code
+            verified
+            updatedAt
+          }
+        }
+      }
+    `
+    const response = await gqlHelper({ ownerUsername: username }, query, 'listTradeByOwnerUsername')
+    const result = response.data.listTradeByOwnerUsername.items[0] || null
+    console.log('getOfficeByOwnerUsername output: ' + JSON.stringify(result))
+    return result
+  },
   getRequestsForUser: async (username, filter, limit, nextToken) => {
     console.log('getRequestsForUser input: ' + [username, filter, limit, nextToken])
     if (!username) {
@@ -349,14 +413,14 @@ module.exports = {
     return result
   },
 
-  resolveRequest: async (username, groups, id, decision, payload) => {
-    console.log('resolveRequest input: ' + [username, id, decision, payload])
+  resolveRequest: async (username, groups, id, decision, callerPayload) => {
+    console.log('resolveRequest input: ' + [username, groups, id, decision, callerPayload])
     if (!username) {
       throw new Error('Invalid username or unauthenticated user.')
     }
 
-    //Retrieve the request
-    const query = /* GraphQL */ `
+    // Fetch the request with the provided ID
+    const query1 = /* GraphQL */ `
       query getRequestById($filter: ModelRequestsFilterInput!) {
         listRequestss(filter: $filter) {
           items {
@@ -372,16 +436,21 @@ module.exports = {
         }
       }
     `
-    const retrieveRequestResponse = await gqlHelper({ filter: { id: { eq: id } } }, query, 'listRequestss')
+    const retrieveRequestResponse = await gqlHelper({ filter: { id: { eq: id } } }, query1, 'listRequestss')
     const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
     if (requestObject == null) {
       throw new Error('Request with provided ID was not found.')
     }
 
-    //Retrieve the caller's UserProfile
+    //Retrieve the sender's UserProfile
     const senderUserProfile = this.getUserProfileByUsername(requestObject.senderUsername)
     if (senderUserProfile == null) {
-      throw new Error(`User profile for ${requestObject.senderUsername} was not found.`)
+      throw new Error(`User profile for ${requestObject.receiverUsername} was not found.`)
+    }
+
+    const receiverUserProfile = this.getUserProfileByUsername(requestObject.receiverUsername)
+    if (receiverUserProfile == null) {
+      throw new Error(`User profile for ${requestObject.receiverUsername} was not found.`)
     }
 
     //Resolve the request
@@ -391,109 +460,117 @@ module.exports = {
         if (groups.indexOf('admin') === -1) {
           throw new Error('Admin privilleges are required to resolve this request.')
         }
+
+        //TODO make this a DDB Trasaction
         if (decision === 'ACCEPT') {
-          //Create shared fields
-          const managerUserId = senderUserProfile.id
-          const tradeName = senderPayload.tradeName
-          const managerUsername = senderUsername
-
           //Create the new Office
-          //...
-          
-          //Attempt to create the Office item
-          const newOfficeResult = await gql.createOfficeIfNotExists(officeParams)
-          if (newOfficeResult) {
-            body.office = newOfficeResult
-          } else {
-            throw new Error('Office creation on request with id=[' + id + '] failed.')
+          const createOfficeInput = requestObject.payload.createTradePayload
+          if (!createOfficeInput) {
+            throw new Error('Request has invalid payload.')
+          }
+          createOfficeInput.partnersNumberLimit = callerPayload.partnersNumberLimit
+          createOfficeInput.employeesNumberLimit = callerPayload.employeesNumberLimit
+          createOfficeInput.verified = true
+
+          const query2 = /* GraphQL */ `
+            query createOffice($input: CreateOfficeInput!) {
+              createOffice(input: $$input) {
+                id
+              }
+            }
+          `
+          const createOfficeResponse = await gqlHelper({ input: createOfficeInput }, query2, 'createOffice')
+          const createdOfficeId = createOfficeResponse.data.createOffice.id
+          if (!createdOfficeId) {
+            throw new Error('Failed to create new office.')
           }
 
-          //TODO make this a DDB Trasaction
           //Create a connection between the new Office and the manager.
-          const connParams = {
-            id: managerUserId + '_' + tradeId, //Smart way to prevent duplicates and ensure uniqueness, also allows text matching queries
+          const createTUCInput = {
+            tradeId: createdOfficeId,
+            tradeName: createOfficeInput.tradeName,
+            userId: senderUserProfile.id,
+            username: senderUserProfile.username,
+            pagePermissions: callerPayload.createTradePayload.managerPagePermissions,
+            modelPermissions: callerPayload.createTradePayload.managerModelPermissions,
             employeeType: 'MANAGER',
-            members: [managerUsername],
-            permissions: [],
             preferences: '',
-            tradeId: tradeId,
-            tradeName: tradeName,
-            userId: managerUserId, //User and Trade ID are the same
-            username: managerUsername,
           }
 
-          //Attempt to create the connection
-          const newConnResult = await gqlAPI.createTradeUserConnection(connParams)
-          if (newConnResult) {
-            body.connection = newConnResult
-          } else {
-            throw new Error('TradeUserConnection creation on request with id=[' + id + '] failed.')
+          const query3 = /* GraphQL */ `
+            query createTradeUserConnection($input: CreateTradeUserConnectionInput!) {
+              createTradeUserConnection(input: $$input) {
+                id
+              }
+            }
+          `
+          const createTUCResponse = await gqlHelper({ input: createTUCInput }, query3, 'createTradeUserConnection')
+          const createdTUCId = createTUCResponse.data.createTradeUserConnection.id
+          if (!createdTUCId) {
+            throw new Error('Failed to create new Trade-User connection.')
           }
+          console.log(`Request with ID ${id} was accepted.`)
         } else {
-          console.log('Request with id=[' + id + '] was rejected.')
+          console.log(`Request with ID ${id} was rejected.`)
         }
         break
       }
       case 'CREATE_COMPANY_CONNECTION': {
         if (decision === 'ACCEPT') {
           //Get the sencer and receiver offices
-          const senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          const senderOffice = await this.getOfficeByOwnerUsername(requestObject.senderUsername)
           if (!senderOffice) {
             throw new Error("Sender's Office not found.")
           }
-          const receiverOffice = await gqlAPI.getOfficeByOwnerUsername(receiverUsername)
+          const receiverOffice = await this.getOfficeByOwnerUsername(requestObject.receiverUsername)
           if (!receiverOffice) {
             throw new Error("Receiver's Office not found.")
           }
-          body.office = { id: [senderOffice.id, receiverOffice.id] }
 
           //Transaction, add the new connection
           try {
-            body.connection = await ddbAPI.addCompanyConnection(senderOffice, receiverOffice)
+            const connId = await ddbAPI.addCompanyConnection(senderOffice, receiverOffice)
           } catch (err) {
             throw new Error('Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.')
           }
+          console.log(`Request with ID ${id} was accepted.`)
         } else {
-          console.log('Request with id=[' + requestId + '] was rejected.')
+          console.log(`Request with ID ${id} was rejected.`)
         }
         break
       }
       case 'INVITE_EMPLOYEE_TO_OFFICE': {
         if (decision === 'ACCEPT') {
           //Get the sencer`s office
-          let senderOffice = await gqlAPI.getOfficeByOwnerUsername(senderUsername)
+          const senderOffice = await this.getOfficeByOwnerUsername(requestObject.senderUsername)
           if (!senderOffice) {
             throw new Error("Sender's Office not found.")
           }
-          body.office = { id: senderOffice.id }
-
-          //Get employee`s profile
-          let userId
-          try {
-            userId = await gqlAPI.getUserIdFromUsername(receiverUsername)
-            if (!userId) {
-              throw new Error('User ID of receiver not found.')
-            }
-          } catch (err) {
-            throw new Error('User ID of receiver not found with error: ' + err)
-          }
 
           //Ensure that the User has no other connections
-          const isUnemployed = await gqlAPI.checkIfUserIsUnemployed(receiverUsername)
+          const isUnemployed = await this.checkIfUserIsUnemployed(requestObject.receiverUsername)
           if (!isUnemployed) {
             throw new Error("User is a member of another Office and therefore can't join a new one.")
           }
 
           //Add the Employee to the new Office and create the connection between User and Office
-          const connId = userId + '_' + senderOffice.id
+          let empAddRes
           try {
-            await ddbAPI.addEmployeeToOffice(senderOffice, receiverUsername, connId, userId)
+            //office, empUsername, connId, userId, empModelPermissions, empPagePermissions
+            empAddRes = await ddbAPI.addEmployeeToOffice(
+              senderOffice.id,
+              requestObject.receiverUsername,
+              requestObject.id,
+              receiverUserProfile.id,
+              callerPayload.inviteEmployeeToOfficePayload.managerPagePermissions,
+              callerPayload.inviteEmployeeToOfficePayload.empPagePermissions,
+            )
           } catch (err) {
             throw new Error('Failed to add employee to Office, ensure that the Office is allowed to invite employees.')
           }
-          body.connection = connId
+          console.log(`Request with ID ${id} was accepted.`)
         } else {
-          console.log('Request with id=[' + requestId + '] was rejected.')
+          console.log(`Request with ID ${id} was rejected.`)
         }
         break
       }
@@ -502,7 +579,7 @@ module.exports = {
         if (decision === 'ACCEPT') {
           //let newContractorResult = await ddbAPI.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
         } else {
-          console.log('Request with id=[' + requestId + '] was rejected by ' + receiverUsername)
+          console.log(`Request with ID ${id} was rejected.`)
         }
         break
       }

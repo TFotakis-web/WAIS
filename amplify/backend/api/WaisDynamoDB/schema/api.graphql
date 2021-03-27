@@ -137,10 +137,6 @@ type Mutation {
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
 
-  addEmployeeToOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!, pagePermissions: AWSJSON!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
-
   updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
@@ -150,10 +146,6 @@ type Mutation {
     @function(name: "resolver-${env}")
 
   deleteEmployeeForOffice(officeId: ID!, empUsername: String!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
-
-  addContractorToOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!, pagePermissions: AWSJSON!): ID
     @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
     @function(name: "resolver-${env}")
 
