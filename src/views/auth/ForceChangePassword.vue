@@ -62,6 +62,10 @@
 				passwordVisible: false,
 			};
 		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.changeYourPassword'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		methods: {
 			...mapActions({
 				completeNewPasswordStore: 'auth/completeNewPassword',

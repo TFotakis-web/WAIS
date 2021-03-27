@@ -171,6 +171,9 @@
 			};
 		},
 		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.tradeCreationForm.createYourTrade'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+
 			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items || [];
 			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === 'CREATE_TRADE');
 			if (requestsForNewTrade.length) {

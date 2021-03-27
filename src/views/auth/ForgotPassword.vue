@@ -79,6 +79,10 @@
 				passwordVisible: false,
 			};
 		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.resetYourPassword'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		methods: {
 			...mapActions({
 				forgotPasswordStore: 'auth/forgotPassword',

@@ -298,6 +298,10 @@
 				passwordVisible: false,
 			};
 		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.createANewWaisAccount'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
 		methods: {
 			...mapActions({
 				signUpStore: 'auth/signUp',

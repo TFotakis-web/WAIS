@@ -6,7 +6,7 @@
 					<ion-col size-sm="10" size-md="8" size-lg="6" size-xl="6">
 						<ion-card>
 							<ion-card-header>
-								<ion-card-title>{{ $t('views.auth.createANewWaisAccount') }}</ion-card-title>
+								<ion-card-title>{{ $t('views.auth.confirmSignUp') }}</ion-card-title>
 							</ion-card-header>
 							<ion-card-content>
 								<form @submit.prevent="confirmSignUp">
@@ -67,6 +67,10 @@
 				loading: false,
 				error: {},
 			};
+		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.confirmSignUp'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {
 			...mapActions({
