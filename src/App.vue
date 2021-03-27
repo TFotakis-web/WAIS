@@ -1,6 +1,7 @@
 <template>
 	<ion-app v-if="loading === 0">
-		<router-view/>
+		<ion-loading :is-open="$store.getters['pageStructure/globalPendingPromises']"/>
+		<router-view v-if="$store.getters['pageStructure/globalPendingPromises'] === 0"/>
 	</ion-app>
 </template>
 <script>
