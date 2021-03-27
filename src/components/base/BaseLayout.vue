@@ -4,6 +4,10 @@
 		<ion-page id="main-content">
 			<toolbar/>
 			<ion-content :fullscreen="true">
+				<ion-refresher slot="fixed" @ionRefresh="$router.go(0)">
+					<ion-refresher-content>
+					</ion-refresher-content>
+				</ion-refresher>
 				<router-view v-slot="{ Component }">
 					<transition name="route" mode="out-in">
 						<component :is="Component"/>
