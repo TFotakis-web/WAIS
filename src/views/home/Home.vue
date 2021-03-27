@@ -104,7 +104,7 @@
 			// newsfeedCard,
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.homePage.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.homePage.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

@@ -66,7 +66,7 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.signInToYourWaisAccount'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.auth.signInToYourWaisAccount'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {

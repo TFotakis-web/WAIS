@@ -69,7 +69,7 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.auth.confirmSignUp'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.auth.confirmSignUp'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {

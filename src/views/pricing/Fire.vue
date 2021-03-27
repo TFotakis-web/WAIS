@@ -5,7 +5,7 @@
 	export default {
 		name: 'AccountingCommissionsCollected',
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('components.navigation.sidenav.pricing.fire'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('components.navigation.sidenav.pricing.fire'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

@@ -1,7 +1,7 @@
 export const pageStructure = {
 	namespaced: true,
 	state: {
-		pageTitle: '',
+		pageTitle: () => 'WAIS',
 		pageBackButton: false,
 		backButtonDefaultHref: '/',
 		metaTitle: document.querySelector('head title')
@@ -9,8 +9,7 @@ export const pageStructure = {
 	mutations: {
 		setPageTitle(state, payload) {
 			state.pageTitle = payload;
-			const tabTitle = payload ? `${payload} | WAIS` : 'WAIS';
-			state.metaTitle.textContent = tabTitle;
+			state.metaTitle.textContent = payload ? `${payload()} | WAIS` : 'WAIS';
 		},
 		setPageBackButton(state, payload) {
 			state.pageBackButton = payload;

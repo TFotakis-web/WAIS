@@ -2,10 +2,10 @@
 	<ion-header :translucent="true">
 		<ion-toolbar>
 			<ion-buttons slot="start">
-				<ion-menu-button color="primary" v-if="!showBackButton"/>
-				<ion-back-button :default-href="backButtonDefaultHref" v-if="showBackButton"/>
+				<ion-menu-button color="primary" v-if="!$store.getters['pageStructure/pageBackButton']"/>
+				<ion-back-button :default-href="$store.getters['pageStructure/backButtonDefaultHref']" v-if="$store.getters['pageStructure/pageBackButton']"/>
 			</ion-buttons>
-			<ion-title>{{ pageTitle }}</ion-title>
+			<ion-title>{{ $store.getters['pageStructure/pageTitle']() }}</ion-title>
 			<ion-buttons slot="end">
 				<slot name="actions-end"/>
 			</ion-buttons>
@@ -15,22 +15,5 @@
 <script>
 	export default {
 		name: 'Toolbar',
-		props: {
-			backButtonDefaultHref: {
-				type: String,
-				default: '/',
-			},
-			showBackButton: {
-				type: Boolean,
-				default: false
-			},
-			pageTitle: {
-				type: String,
-				default: ''
-			}
-		},
-		setup() {
-			return {};
-		},
 	};
 </script>

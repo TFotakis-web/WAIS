@@ -22,7 +22,7 @@
 			DevOptionsCard,
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.devTools.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.devTools.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

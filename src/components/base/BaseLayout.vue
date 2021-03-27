@@ -2,7 +2,7 @@
 	<IonSplitPane content-id="main-content">
 		<side-navigation/>
 		<ion-page id="main-content">
-			<toolbar :page-title="$store.getters['pageStructure/pageTitle']" :show-back-button="$store.getters['pageStructure/pageBackButton']" :back-button-default-href="$store.getters['pageStructure/backButtonDefaultHref']"/>
+			<toolbar/>
 			<ion-content :fullscreen="true">
 				<router-view v-slot="{ Component }">
 					<transition name="route" mode="out-in">

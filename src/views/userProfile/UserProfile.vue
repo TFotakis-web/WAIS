@@ -17,7 +17,7 @@
 			PersonalInfoCard,
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.userProfile.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.userProfile.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};

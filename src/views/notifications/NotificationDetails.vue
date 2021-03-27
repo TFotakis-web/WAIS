@@ -127,7 +127,8 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', `${this.$t('views.notifications.pageTitle')} - ${this.request.payload.tradeName}: ${this.request.payload.surname} ${this.request.payload.name} ${this.request.payload.fathersName}`);
+			const pageDesc = ` - ${this.request.payload.tradeName}: ${this.request.payload.surname} ${this.request.payload.name} ${this.request.payload.fathersName}`;
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.notifications.pageTitle') + pageDesc);
 			this.$store.commit('pageStructure/setPageBackButton', true);
 			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Notifications' }).fullPath);
 			for (const file of this.request.payload.files) {

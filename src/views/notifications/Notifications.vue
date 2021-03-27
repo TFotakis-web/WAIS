@@ -19,7 +19,7 @@
 	export default {
 		name: 'Notifications',
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.notifications.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.notifications.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		computed: {

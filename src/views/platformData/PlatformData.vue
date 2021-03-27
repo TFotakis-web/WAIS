@@ -84,7 +84,7 @@
 	export default {
 		name: 'PlatformData',
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', this.$t('views.platformData.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => this.$t('views.platformData.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		data() {
