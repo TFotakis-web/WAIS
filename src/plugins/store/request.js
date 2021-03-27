@@ -8,9 +8,7 @@ export const request = {
 	namespaced: true,
 	state: {},
 	mutations: {
-		init() {
-			console.log('Init request');
-		},
+		init() {},
 	},
 	actions: {
 		getRequest(_, id) {
