@@ -20,9 +20,7 @@ export const store = createStore({
 	},
 	state: {},
 	mutations: {
-		init() {
-			console.log('Init root');
-		},
+		init() {},
 	},
 	actions: {
 		initModules({ commit }) {
