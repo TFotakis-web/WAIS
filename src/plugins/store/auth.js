@@ -12,6 +12,12 @@ export const auth = {
 		userProfile: null,
 	},
 	mutations: {
+		init(state) {
+			state.cognitoUser = null;
+			state.user = null;
+			state.userProfile = null;
+			console.log('Init auth');
+		},
 		setCognitoUser(state, payload) {
 			state.cognitoUser = payload;
 		},
@@ -169,7 +175,7 @@ export const auth = {
 		},
 		async currentAuthenticatedUser({ commit, dispatch }) {
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				const response = await Auth.currentAuthenticatedUser({
 					bypassCache: true,  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
 				});
@@ -182,12 +188,12 @@ export const auth = {
 				// router.go(0); // Reload page
 				return Promise.reject(error);
 			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 			}
 		},
 		async currentUserInfo({ commit, dispatch }) {
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				const userInfo = await Auth.currentUserInfo();
 				if (userInfo) {
 					commit('setUser', userInfo);
@@ -198,12 +204,12 @@ export const auth = {
 				console.error(error);
 				return Promise.reject(error);
 			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 			}
 		},
 		async loadUserProfile({ commit, dispatch, getters }) {
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				let response = await API.graphql(graphqlOperation(me));
 				const userProfile = response.data.me;
 				// let userProfile = response.data.listUserProfileByUsername.items[0];
@@ -389,12 +395,12 @@ export const auth = {
 				console.error(error);
 				return Promise.reject(error);
 			} finally {
-				commit('decreaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 			}
 		},
 		updateUserProfile({ commit }, userProfile) {
 			return new Promise((resolve, reject) => {
-				commit('increaseRouterViewPendingPromises', null, { root: true });
+				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
 				API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }))
 					.then((response) => {
 						userProfile = response.data.updateUserProfile;
@@ -406,7 +412,7 @@ export const auth = {
 						reject(error);
 					})
 					.finally(() => {
-						commit('decreaseRouterViewPendingPromises', null, { root: true });
+						commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
 					});
 			});
 		},

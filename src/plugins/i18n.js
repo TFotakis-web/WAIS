@@ -26,11 +26,11 @@ $i18n.global.$loadLanguageAsync = async function (lang) {
 
 	// If the language hasn't been loaded yet
 	if (!loadedLanguages.includes(lang)) {
-		store.commit('setLocalesLoaded', false);
+		store.commit('pageStructure/setLocalesLoaded', false);
 		const messages = await $http.get(`/locales/${lang}.json`);
 		$i18n.global.setLocaleMessage(lang, messages.data);
 		loadedLanguages.push(lang);
-		store.commit('setLocalesLoaded', true);
+		store.commit('pageStructure/setLocalesLoaded', true);
 	}
 
 	setI18nLanguage(lang);

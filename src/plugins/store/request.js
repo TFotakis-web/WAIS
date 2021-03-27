@@ -7,7 +7,11 @@ import { updateRequests } from '@/graphql/custom-mutations';
 export const request = {
 	namespaced: true,
 	state: {},
-	mutations: {},
+	mutations: {
+		init() {
+			console.log('Init request');
+		},
+	},
 	actions: {
 		getRequest(_, id) {
 			return new Promise((resolve, reject) => {

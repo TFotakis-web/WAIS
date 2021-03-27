@@ -18,35 +18,19 @@ export const store = createStore({
 		// trade,
 		// platformData
 	},
-	state: {
-		globalPendingPromises: 0,
-		localesLoaded: false,
-		routerViewPendingPromises: 0,
-	},
+	state: {},
 	mutations: {
-		increaseGlobalPendingPromises(state) {
-			state.globalPendingPromises++;
-		},
-		decreaseGlobalPendingPromises(state) {
-			state.globalPendingPromises--;
-			if (state.globalPendingPromises < 0) {
-				console.error('Pending Promises:', state.globalPendingPromises);
-			}
-		},
-		increaseRouterViewPendingPromises(state) {
-			state.routerViewPendingPromises++;
-		},
-		decreaseRouterViewPendingPromises(state) {
-			state.routerViewPendingPromises--;
-			if (state.routerViewPendingPromises < 0) {
-				console.error('Pending Promises:', state.routerViewPendingPromises);
-			}
-		},
-		setLocalesLoaded(state, loaded) {
-			state.localesLoaded = loaded;
+		init() {
+			console.log('Init root');
 		},
 	},
 	actions: {
+		initModules({ commit }) {
+			commit('init');
+			commit('auth/init');
+			commit('pageStructure/init');
+			commit('request/init');
+		},
 		echo() {
 			return new Promise((resolve, reject) => {
 				API.graphql(graphqlOperation(echo, { msg: 'Hello from echo' }))
@@ -74,9 +58,7 @@ export const store = createStore({
 			});
 		},
 	},
-	getters: {
-		globalPendingPromises: (state) => state.globalPendingPromises,
-		routerViewPendingPromises: (state) => state.routerViewPendingPromises,
-		localesLoaded: (state) => state.localesLoaded,
-	},
+	getters: {},
 });
+
+

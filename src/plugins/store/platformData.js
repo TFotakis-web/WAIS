@@ -149,10 +149,10 @@ export const platformData = {
 			// 	});
 
 			try {
-				commit('increaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				let res = await $http.get('/enumData.json');
 				await commit('setData', res.data);
-				commit('decreaseGlobalPendingPromises', null, { root: true });
+				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 				return Promise.resolve();
 			} catch (error) {
 				console.error(error);
