@@ -4,11 +4,15 @@ import { resolveRequest, sendRequest } from '@/graphql/custom-mutations';
 import { updateRequests } from '@/graphql/custom-mutations';
 // import { updateFields } from '@/graphql/custom-mutations';
 
+const initState = () => ({});
+
 export const request = {
 	namespaced: true,
-	state: {},
+	state: initState(),
 	mutations: {
-		init() {},
+		init(state) {
+			Object.assign(state, initState());
+		},
 	},
 	actions: {
 		getRequest(_, id) {
