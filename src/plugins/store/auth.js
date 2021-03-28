@@ -4,18 +4,18 @@ import { me } from '@/graphql/custom-queries';
 import { updateUserProfile } from '@/graphql/custom-mutations';
 import router from '@/plugins/router/router';
 
+const initState = () => ({
+	cognitoUser: null,
+	user: null,
+	userProfile: null,
+});
+
 export const auth = {
 	namespaced: true,
-	state: {
-		cognitoUser: null,
-		user: null,
-		userProfile: null,
-	},
+	state: initState(),
 	mutations: {
 		init(state) {
-			state.cognitoUser = null;
-			state.user = null;
-			state.userProfile = null;
+			Object.assign(state, initState());
 		},
 		setCognitoUser(state, payload) {
 			state.cognitoUser = payload;
@@ -138,7 +138,7 @@ export const auth = {
 			try {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				await Auth.signOut();
-				commit('setUser', null)
+				commit('setUser', null);
 				await router.push({ name: 'SignIn' });
 				await dispatch('initModules', null, { root: true });
 				return Promise.resolve();
