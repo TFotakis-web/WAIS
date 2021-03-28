@@ -9,6 +9,8 @@ import { request } from '@/plugins/store/request';
 import { API, graphqlOperation } from 'aws-amplify';
 import { echo, me } from '@/graphql/custom-queries';
 
+const initState = () => ({});
+
 export const store = createStore({
 	modules: {
 		pageStructure,
@@ -18,9 +20,11 @@ export const store = createStore({
 		// trade,
 		// platformData
 	},
-	state: {},
+	state: initState(),
 	mutations: {
-		init() {},
+		init(state) {
+			Object.assign(state, initState());
+		},
 	},
 	actions: {
 		initModules({ commit }) {
