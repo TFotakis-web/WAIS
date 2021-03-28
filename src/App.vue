@@ -17,7 +17,6 @@
 			// Todo: Enable loadEnumData
 			// this.loadEnumData();
 			window.vm = this;
-			this.$store.dispatch('initModules');
 		},
 		methods: {
 			loadEnumData: function () {
