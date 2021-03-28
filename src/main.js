@@ -69,7 +69,7 @@ Object.keys(IonComponents).forEach(key => {
 
 import * as Ionicons from 'ionicons/icons';
 
-const ioniconsOutline = {}
+const ioniconsOutline = {};
 Object.keys(Ionicons).forEach(key => {
 	if (/[a-zA-Z]+Outline/.test(key)) {
 		ioniconsOutline[key] = Ionicons[key];
@@ -119,8 +119,8 @@ app.config.globalProperties.$toast = {
 				message: window.WaisVue.$t('defaultNotification.somethingWentWrong'),
 				duration: 10000,
 				color: 'danger',
-				position: 'top'
-			})
+				position: 'top',
+			});
 		return toast.present();
 	},
 	saveSuccess: async () => {
@@ -129,8 +129,8 @@ app.config.globalProperties.$toast = {
 				message: window.WaisVue.$t('defaultNotification.saveSuccess'),
 				duration: 10000,
 				color: 'success',
-				position: 'top'
-			})
+				position: 'top',
+			});
 		return toast.present();
 	},
 	deleteSuccess: async () => {
@@ -139,13 +139,15 @@ app.config.globalProperties.$toast = {
 				message: window.WaisVue.$t('defaultNotification.deleteSuccess'),
 				duration: 10000,
 				color: 'success',
-				position: 'top'
-			})
+				position: 'top',
+			});
 		return toast.present();
 	},
 };
 
 // -------------- Mount --------------
+store.commit('pageStructure/increaseGlobalPendingPromises');
 router.isReady().then(() => {
-	app.mount('#app');
+	store.commit('pageStructure/decreaseGlobalPendingPromises');
 });
+app.mount('#app');
