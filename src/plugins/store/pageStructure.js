@@ -1,25 +1,19 @@
+const initState = () => ({
+	pageTitle: () => 'WAIS',
+	pageBackButton: false,
+	backButtonDefaultHref: '/',
+	metaTitle: document.querySelector('head title'),
+	globalPendingPromises: 0,
+	routerViewPendingPromises: 0,
+	localesLoaded: false,
+});
+
 export const pageStructure = {
 	namespaced: true,
-	state: {
-		pageTitle: () => 'WAIS',
-		pageBackButton: false,
-		backButtonDefaultHref: '/',
-		metaTitle: document.querySelector('head title'),
-		globalPendingPromises: 0,
-		routerViewPendingPromises: 0,
-		localesLoaded: false,
-	},
+	state: initState(),
 	mutations: {
 		init(state) {
-			state.pageTitle = () => 'WAIS';
-			state.pageBackButton = false;
-			state.backButtonDefaultHref = '/';
-			state.metaTitle = document.querySelector('head title');
-			state.localesLoaded = false;
-
-			// Initialize in this order for security purposes
-			state.routerViewPendingPromises = 0;
-			state.globalPendingPromises = 0;
+			Object.assign(state, initState());
 		},
 		setPageTitle(state, payload) {
 			state.pageTitle = payload;
