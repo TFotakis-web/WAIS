@@ -23,9 +23,6 @@ const resolvers = {
     me: async event => {
       return await api.user(event.identity.claims['cognito:username'])
     },
-    user: async event => {
-      return await api.user(event.arguments.username)
-    },
     getOfficesIWorkIn: async event => {
       return await api.getOfficesOfUser({
         username: event.identity.claims['cognito:username'],

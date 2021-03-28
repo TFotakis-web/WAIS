@@ -170,35 +170,41 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getOfficeDetailsAndPermissionsByUsername($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int, nextToken: String ) {
+      query getOfficeDetailsAndPermissionsByUsername(
+        $username: String!
+        $filter: ModelTradeUserConnectionConditionInput
+        $limit: Int
+        $nextToken: String
+      ) {
         listUserProfileByUsername(username: $username) {
-            items {
-              officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
-                items {
-                  username
-                  userId
-                  pagePermissions
-                  modelPermissions
-                  preferences
-                  tradeId
-                  tradeName
-                  employeeType
-                  preferences
-                  trade {
-                    ownerUsername
-                  }
-                  user {
-                    username
-                    email
-                  } 
+          items {
+            officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+              items {
+                username
+                userId
+                pagePermissions
+                modelPermissions
+                preferences
+                tradeId
+                tradeName
+                employeeType
+                preferences
+                trade {
+                  ownerUsername
                 }
-                nextToken
+                user {
+                  username
+                  email
+                }
               }
+              nextToken
             }
+          }
         }
-    }`
+      }
+    `
     const response = await gqlHelper(
-      { username: username, filter: filter ?? {}, limit: limit ?? 100, nextToken },
+      { username: username, filter: filter || { id: { ne: '' } }, limit: limit || 100, nextToken: nextToken },
       query,
       'getOfficeDetailsAndPermissionsByUsername',
     )
@@ -213,7 +219,7 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getUserModelPermissionsForOffice($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int) {
+      query getUserModelPermissionsForOffice($username: String!, $filter: ModelTradeUserConnectionConditionInput, $limit: Int) {
         listUserProfileByUsername(username: $username) {
           items {
             officeConnections(filter: $filter, limit: $limit) {
@@ -223,7 +229,8 @@ module.exports = {
             }
           }
         }
-      }`
+      }
+    `
     const response = await gqlHelper(
       { username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
       query,
@@ -240,7 +247,7 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getUserPagePermissionsForOffice($username: String!, filter: ModelTradeUserConnectionConditionInput, limit: Int) {
+      query getUserPagePermissionsForOffice($username: String!, $filter: ModelTradeUserConnectionConditionInput, $limit: Int) {
         listUserProfileByUsername(username: $username) {
           items {
             officeConnections(filter: $filter, limit: $limit) {
@@ -250,7 +257,8 @@ module.exports = {
             }
           }
         }
-      }`
+      }
+    `
     const response = await gqlHelper(
       { username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
       query,
@@ -267,20 +275,21 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getCallendarEventsForUser($username: String!, filter: ModelUserCalendarEventFilterInput, limit: Int, nextToken: String ) {
+      query getCallendarEventsForUser($username: String!, $filter: ModelUserCalendarEventFilterInput, $limit: Int, $nextToken: String) {
         listUserCalendarEventsByUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
-            items {
-                username
-                updatedAt
-                payload
-                id
-                createdAt
-            }
-            nextToken
+          items {
+            username
+            updatedAt
+            payload
+            id
+            createdAt
+          }
+          nextToken
         }
-    }`
+      }
+    `
     const response = await gqlHelper(
-      { username: username, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { username: username, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
       query,
       'getCallendarEventsForUser',
     )
@@ -295,23 +304,54 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getRequestsFromUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
+      query getRequestsFromUser($username: String!, $filter: ModelRequestsFilterInput, $limit: Int, $nextToken: String) {
         listRequestsBySenderUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
-            items {
-                id
-                updatedAt
-                type
-                senderUsername
-                senderEmail
-                receiverEmail
-                payload
-                createdAt
+          items {
+            id
+            updatedAt
+            type
+            senderUsername
+            senderEmail
+            receiverEmail
+            payload {
+              createTradePayload {
+                tradeName
+                zip_code
+                tin
+                professionStartDate
+                phone
+                office_email
+                mobile
+                insuranceLicenseExpirationDate
+                address
+                bankAccountInfo
+                chamberRecordNumber
+                civilLiabilityExpirationDate
+                files {
+                  bucket
+                  key
+                  name
+                  region
+                }
+              }
+              createCompanyConnectionPayload {
+                office_email
+              }
+              inviteEmployeeToOfficePayload {
+                email
+              }
+              inviteContractorToOfficePayload {
+                email
+              }
             }
-            nextToken
+            createdAt
+          }
+          nextToken
         }
-    }`
+      }
+    `
     const response = await gqlHelper(
-      { username: username, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { username: username, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
       query,
       'getRequestsFromUser',
     )
@@ -388,23 +428,54 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     const query = /* GraphQL */ `
-      query getRequestsForUser($username: String!, filter: ModelRequestsFilterInput, limit: Int, nextToken: String ) {
-        listRequestsByReceiverUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
-            items {
-                id
-                updatedAt
-                type
-                senderUsername
-                senderEmail
-                receiverEmail
-                payload
-                createdAt
+      query getRequestsForUser($username: String!, $filter: ModelRequestsFilterInput, $limit: Int, $nextToken: String) {
+        listRequestsByReceiverUsername(limit: $limit, nextToken: $nextToken, filter: $filter, receiverUsername: $username) {
+          items {
+            id
+            updatedAt
+            type
+            senderUsername
+            senderEmail
+            receiverEmail
+            payload {
+              createTradePayload {
+                tradeName
+                zip_code
+                tin
+                professionStartDate
+                phone
+                office_email
+                mobile
+                insuranceLicenseExpirationDate
+                address
+                bankAccountInfo
+                chamberRecordNumber
+                civilLiabilityExpirationDate
+                files {
+                  bucket
+                  key
+                  name
+                  region
+                }
+              }
+              createCompanyConnectionPayload {
+                office_email
+              }
+              inviteEmployeeToOfficePayload {
+                email
+              }
+              inviteContractorToOfficePayload {
+                email
+              }
             }
-            nextToken
+            createdAt
+          }
+          nextToken
         }
-    }`
+      }
+    `
     const response = await gqlHelper(
-      { username: username, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { username: username, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
       query,
       'getRequestsForUser',
     )
@@ -427,7 +498,37 @@ module.exports = {
             id
             senderUsername
             createdAt
-            payload
+            payload {
+              createTradePayload {
+                tradeName
+                zip_code
+                tin
+                professionStartDate
+                phone
+                office_email
+                mobile
+                insuranceLicenseExpirationDate
+                address
+                bankAccountInfo
+                chamberRecordNumber
+                civilLiabilityExpirationDate
+                files {
+                  bucket
+                  key
+                  name
+                  region
+                }
+              }
+              createCompanyConnectionPayload {
+                office_email
+              }
+              inviteEmployeeToOfficePayload {
+                email
+              }
+              inviteContractorToOfficePayload {
+                email
+              }
+            }
             receiverEmail
             senderEmail
             type
@@ -598,9 +699,14 @@ module.exports = {
     if (!managerUsername) {
       throw new Error('Invalid manager username')
     }
-    let emp_filter = { and: [filter ?? {}, { employeeType: { eq: 'STANDARD' } }] }
+    let emp_filter = { and: [filter || { id: { ne: '' } }, { employeeType: { eq: 'STANDARD' } }] }
     const query = /* GraphQL */ `
-      query getEmployeeUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
+      query getEmployeeUserProfilesForManagerUsername(
+        $ownerUsername: String!
+        $filter: ModelTradeUserConnectionFilterInput
+        $limit: Int
+        $nextToken: String
+      ) {
         listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
           items {
             workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -631,9 +737,10 @@ module.exports = {
             }
           }
         }
-      }`
+      }
+    `
     const response = await gqlHelper(
-      { ownerUsername: managerUsername, filter: emp_filter, limit: limit ?? 50, nextToken },
+      { ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken },
       query,
       'getEmployeeUserProfilesForManagerUsername',
     )
@@ -650,42 +757,48 @@ module.exports = {
     if (!managerUsername) {
       throw new Error('Invalid manager username')
     }
-    let emp_filter = { and: [filter ?? {}, { employeeType: { eq: 'CONTRACTOR' } }] }
+    let emp_filter = { and: [filter || { id: { ne: '' } }, { employeeType: { eq: 'CONTRACTOR' } }] }
     const query = /* GraphQL */ `
-    query getContractorUserProfilesForManagerUsername($ownerUsername: String!, filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String ) {
-      listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
-        items {
-          workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-              user {
-                username
-                email
-                telephone
-                surname
-                name
-                fathers_name
-                address
-                zip_code
-                city
-                createdAt
-                family_name
-                gender
-                id
-                locale
-                mobile
-                preferences
-                updatedAt
-                tin
-                birthdate
+      query getContractorUserProfilesForManagerUsername(
+        $ownerUsername: String!
+        $filter: ModelTradeUserConnectionFilterInput
+        $limit: Int
+        $nextToken: String
+      ) {
+        listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+          items {
+            workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
+              items {
+                user {
+                  username
+                  email
+                  telephone
+                  surname
+                  name
+                  fathers_name
+                  address
+                  zip_code
+                  city
+                  createdAt
+                  family_name
+                  gender
+                  id
+                  locale
+                  mobile
+                  preferences
+                  updatedAt
+                  tin
+                  birthdate
+                }
               }
+              nextToken
             }
-            nextToken
           }
         }
       }
-    }`
+    `
     const response = await gqlHelper(
-      { ownerUsername: managerUsername, filter: emp_filter, limit: limit ?? 50, nextToken },
+      { ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken },
       query,
       'getContractorUserProfilesForManagerUsername',
     )
@@ -703,50 +816,51 @@ module.exports = {
       throw new Error('Invalid office ID')
     }
     const query = /* GraphQL */ `
-    query getCustomersForOfficeId($officeId: String!, filter: ModelCustomerFilterInput, limit: Int, nextToken: String ) {
-      listOffices(filter: {id: {eq: $officeId}}) {
-        items {
-          officeCustomers(limit: $limit, filter: $filter, nextToken: $nextToken) {
-            items {
-              address
-              birthDate
-              doy
-              createdAt
-              email
-              driversLicense {
-                Category {
-                  category
-                  expiresAt
-                  issueDate
+      query getCustomersForOfficeId($officeId: String!, $filter: ModelCustomerFilterInput, $limit: Int, $nextToken: String) {
+        listOffices(filter: { id: { eq: $officeId } }) {
+          items {
+            officeCustomers(limit: $limit, filter: $filter, nextToken: $nextToken) {
+              items {
+                address
+                birthDate
+                doy
+                createdAt
+                email
+                driversLicense {
+                  Category {
+                    category
+                    expiresAt
+                    issueDate
+                  }
+                  DriversLicenseType
+                  LicenseID
                 }
-                DriversLicenseType
-                LicenseID
+                familyStatus
+                fathersName
+                files {
+                  bucket
+                  name
+                  key
+                  region
+                }
+                firstName
+                gender
+                id
+                lastName
+                mobile
+                postcode
+                tin
+                tradeName
+                updatedAt
               }
-              familyStatus
-              fathersName
-              files {
-                bucket
-                name
-                key
-                region
-              }
-              firstName
-              gender
-              id
-              lastName
-              mobile
-              postcode
-              tin
-              tradeName
-              updatedAt
+              nextToken
             }
-            nextToken
           }
         }
       }
-    }`
+    `
     const response = await gqlHelper(
-      { officeId: officeId, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
       query,
       'getCustomersForOfficeId',
     )
@@ -764,73 +878,74 @@ module.exports = {
       throw new Error('Invalid office ID')
     }
     const query = /* GraphQL */ `
-    query getContractsForOfficeId($officeId: String!, filter: ModelContractFilterInput, limit: Int, nextToken: String ) {
-      listOffices(filter: {id: {eq: $officeId}}) {
-        items {
-          officeContracts(limit: $limit, filter: $filter, nextToken: $nextToken) {
-            items {
-              id
-              contractId
-              version
-              vehicleNumberPlate
-              vehicleId
-              voucherId
-              customerId
-              tradeName
-              second_tradeId
-              contractorId
-              co_name
-              co_TRN
-              contractState
-              insuranceClass
-              insuranceCoverage
-              insuranceUsage
-              duration
-              startDate
-              endDate
-              data
-              discount
-              jointWorth
-              netWorth
-              driversLicense
-              createdAt
-              updatedAt
-              vehicle{
-                color
-                createdAt
-                displacement
-                eurotax
-                file {
-                  bucket
-                  key
-                  name
-                  region
-                }
-                firstRegistrationDate
-                fuelType
+      query getContractsForOfficeId($officeId: String!, $filter: ModelContractFilterInput, $limit: Int, $nextToken: String) {
+        listOffices(filter: { id: { eq: $officeId } }) {
+          items {
+            officeContracts(limit: $limit, filter: $filter, nextToken: $nextToken) {
+              items {
                 id
-                manufacturer
-                model
-                vin
-                vehicle_owner
-                value
-                usage
-                updatedAt
-                trim
+                contractId
+                version
+                vehicleNumberPlate
+                vehicleId
+                voucherId
+                customerId
                 tradeName
-                taxableHorsepower
-                purchaseDate
-                passengers
-                numberPlate
+                second_tradeId
+                contractorId
+                co_name
+                co_TRN
+                contractState
+                insuranceClass
+                insuranceCoverage
+                insuranceUsage
+                duration
+                startDate
+                endDate
+                data
+                discount
+                jointWorth
+                netWorth
+                driversLicense
+                createdAt
+                updatedAt
+                vehicle {
+                  color
+                  createdAt
+                  displacement
+                  eurotax
+                  file {
+                    bucket
+                    key
+                    name
+                    region
+                  }
+                  firstRegistrationDate
+                  fuelType
+                  id
+                  manufacturer
+                  model
+                  vin
+                  vehicle_owner
+                  value
+                  usage
+                  updatedAt
+                  trim
+                  tradeName
+                  taxableHorsepower
+                  purchaseDate
+                  passengers
+                  numberPlate
+                }
               }
+              nextToken
             }
-            nextToken
           }
         }
       }
-    }`
+    `
     const response = await gqlHelper(
-      { officeId: officeId, filter: filter ?? {}, limit: limit ?? 50, nextToken },
+      { officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
       query,
       'getContractsForOfficeId',
     )
@@ -850,26 +965,32 @@ module.exports = {
     if (!officeId) {
       throw new Error('Invalid office ID')
     }
-    const user_filter = { and: [filter ?? {}, { fromId: { eq: officeId } }] }
+    const user_filter = { and: [filter || { id: { ne: '' } }, { fromId: { eq: officeId } }] }
     const query = /* GraphQL */ `
-    query getPartnerOfficeConnections($officeId: String!, filter: ModelCompanyAccessConnectionFilterInput, limit: Int, nextToken: String ) {
-      listCompanyAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        items {
-          createdAt
-          expirationDate
-          fromId
-          fromTradeName
-          id
-          message
-          toId
-          toTradeName
-          updatedAt
+      query getPartnerOfficeConnections(
+        $officeId: String!
+        $filter: ModelCompanyAccessConnectionFilterInput
+        $limit: Int
+        $nextToken: String
+      ) {
+        listCompanyAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          items {
+            createdAt
+            expirationDate
+            fromId
+            fromTradeName
+            id
+            message
+            toId
+            toTradeName
+            updatedAt
+          }
+          nextToken
         }
-        nextToken
       }
-    }`
+    `
     const response = await gqlHelper(
-      { officeId: officeId, filter: user_filter, limit: limit ?? 50, nextToken },
+      { officeId: officeId, filter: user_filter, limit: limit || 50, nextToken: nextToken },
       query,
       'getPartnerOfficeConnections',
     )
@@ -884,7 +1005,7 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     //Sanitize input
-    const allowed = ['id', 'address', 'office_email', 'zip_code', 'mobile', 'privateData']
+    const allowed = ['address', 'office_email', 'zip_code', 'mobile', 'privateData']
     let sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
@@ -903,7 +1024,7 @@ module.exports = {
     }
 
     //Expand the condition to require that the caller is also the manager of that office
-    const expanded_condition = { and: [condition ?? {}, { ownerUsername: { eq: username } }] }
+    const expanded_condition = { and: [condition || { ownerUsername: { ne: '' } }, { ownerUsername: { eq: username } }] }
     const mutation = /* GraphQL */ `
       mutation updateOfficeDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
         updateOffice(input: $input, condition: $condition) {
@@ -926,7 +1047,6 @@ module.exports = {
 
     //Sanitize input
     const allowed = [
-      'id',
       'telephone',
       'name',
       'fathers_name',
@@ -949,7 +1069,7 @@ module.exports = {
       }, {})
 
     //Expand the condition to require that the caller is also the owner of the profile
-    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const expanded_condition = { and: [condition || { username: { ne: '' } }, { username: { eq: username } }] }
     const mutation = /* GraphQL */ `
       mutation updateUserProfileDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
         updateUserProfile(input: $input, condition: $condition) {
@@ -980,7 +1100,7 @@ module.exports = {
     }
 
     //Expand the condition to require that the caller is also the owner of the profile
-    const expanded_condition = { and: [condition ?? {}, { officeId: { eq: office_id } }] }
+    const expanded_condition = { and: [condition || { officeId: { ne: '' } }, { officeId: { eq: office_id } }] }
     const mutation = /* GraphQL */ `
       mutation createVehicleForOffice($input: CreateVehicleInput!, $condition: ModelVehicleConditionInput) {
         createVehicle(input: $input, condition: $condition) {
@@ -1012,7 +1132,6 @@ module.exports = {
 
     //Sanitize input
     const allowed = [
-      'id',
       'numberPlate',
       'color',
       'manufacturer',
@@ -1046,7 +1165,7 @@ module.exports = {
     }
 
     //Expand the condition to require that the caller is also the owner of the profile
-    const expanded_condition = { and: [condition ?? {}, { officeId: { eq: office_id } }] }
+    const expanded_condition = { and: [condition || { officeId: { ne: '' } }, { officeId: { eq: office_id } }] }
     const mutation = /* GraphQL */ `
       mutation updateVehicleForOffice($input: UpdateVehicleInput!, $condition: ModelVehicleConditionInput) {
         updateVehicle(input: $input, condition: $condition) {
@@ -1092,14 +1211,16 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
 
-    const allowed = ['id', 'receiverUsername', 'receiverEmail', 'type', 'payload']
+    const allowed = ['receiverUsername', 'receiverEmail', 'type', 'payload']
     const sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
         obj[key] = input[key]
         return obj
       }, {})
-    const expanded_condition = { and: [condition ?? {}, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }] }
+    const expanded_condition = {
+      and: [condition || { senderUsername: { ne: '' } }, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }],
+    }
     const mutation = /* GraphQL */ `
       mutation updateRequestsSentByMe($input: UpdateRequestsInput!, $condition: ModelRequestsConditionInput) {
         updateRequests(input: $input, condition: $condition) {
@@ -1119,7 +1240,9 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
 
-    const expanded_condition = { and: [condition ?? {}, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }] }
+    const expanded_condition = {
+      and: [condition || { senderUsername: { ne: '' } }, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }],
+    }
     const mutation = /* GraphQL */ `
       mutation deleteRequestsSentByMe($input: DeleteRequestsInput!, $condition: ModelRequestsConditionInput) {
         deleteRequests(input: $input, condition: $condition) {
@@ -1163,14 +1286,14 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
 
-    const allowed = ['id', 'username', 'payload']
+    const allowed = ['username', 'payload']
     const sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
         obj[key] = input[key]
         return obj
       }, {})
-    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const expanded_condition = { and: [condition || { username: { ne: '' } }, { username: { eq: username } }] }
     const mutation = /* GraphQL */ `
       mutation updateMyUserCalendarEvents($input: UpdateUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
         updateUserCalendarEvent(input: $input, condition: $condition) {
@@ -1190,7 +1313,7 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
 
-    const expanded_condition = { and: [condition ?? {}, { username: { eq: username } }] }
+    const expanded_condition = { and: [condition || { senderUsername: { ne: '' } }, { username: { eq: username } }] }
     const mutation = /* GraphQL */ `
       mutation deleteMyUserCalendarEvents($input: DeleteUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
         deleteUserCalendarEvent(input: $input, condition: $condition) {

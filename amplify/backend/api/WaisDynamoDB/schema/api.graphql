@@ -1,45 +1,41 @@
 type Query {
   #Utils
-  me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+  me: UserProfile @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-  user(username: String!): UserProfile
-    @function(name: "resolver-${env}")
-    @auth(rules: [{ allow: groups, groups: ["admin"] }, { allow: private, provider: iam }])
-
-  echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+  echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
   getOfficesIWorkIn(filter: ModelOfficeFilterInput, limit: Int, nextToken: String): ModelOfficeConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getMyUserCalendarEvents(filter: ModelUserCalendarEventFilterInput, limit: Int, nextToken: String): ModelUserCalendarEventConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getMySentRequests(filter: ModelRequestsFilterInput, limit: Int, nextToken: String): ModelRequestsConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getRequestsForMe(filter: ModelRequestsFilterInput, limit: Int, nextToken: String): ModelRequestsConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   # Manager query
   getEmployeeUserProfiles(filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String): ModelUserProfileConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   # Manager query
   getContractorUserProfiles(filter: ModelTradeUserConnectionFilterInput, limit: Int, nextToken: String): ModelUserProfileConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getCustomersForOfficeId(officeId: ID!, filter: ModelCustomerFilterInput, limit: Int, nextToken: String): ModelCustomerConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getContractsForOfficeId(officeId: ID!, filter: ModelContractFilterInput, limit: Int, nextToken: String): ModelContractConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   getPartnerOfficeConnectionsForOfficeId(
@@ -47,117 +43,109 @@ type Query {
     filter: ModelCompanyAccessConnectionFilterInput
     limit: Int
     nextToken: String
-  ): ModelCompanyAccessConnectionConnection
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
+  ): ModelCompanyAccessConnectionConnection @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-  getUserModelPermissionsForOffice(officeId: ID!): [ModelPermission!]!
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
+  getUserModelPermissionsForOffice(officeId: ID!): [ModelPermission!]! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-  getUserPagePermissionsForOffice(officeId: ID!): AWSJSON!
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
+  getUserPagePermissionsForOffice(officeId: ID!): AWSJSON! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {
   updateOfficeDetails(input: UpdateOfficeInput!, condition: ModelOfficeConditionInput): Office
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   updateUserProfileDetails(input: UpdateUserProfileInput!, condition: ModelUserProfileConditionInput): UserProfile
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   createVehicleForOffice(officeId: ID!, input: CreateVehicleInput!, condition: ModelVehicleConditionInput): Vehicle
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   updateVehicleForOffice(officeId: ID!, input: UpdateVehicleInput!, condition: ModelVehicleConditionInput): Vehicle
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   deleteVehicleForOffice(officeId: ID!, input: DeleteVehicleInput!, condition: ModelVehicleConditionInput): Vehicle
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   createContractForOffice(officeId: ID!, input: CreateContractInput!, condition: ModelContractConditionInput): Contract
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   updateContractForOffice(officeId: ID!, input: UpdateContractInput!, condition: ModelContractConditionInput): Contract
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   deleteContractForOffice(officeId: ID!, input: DeleteContractInput!, condition: ModelContractConditionInput): Contract
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   createCustomerForOffice(officeId: ID!, input: CreateCustomerInput!, condition: ModelCustomerConditionInput): Customer
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   updateCustomerForOffice(officeId: ID!, input: UpdateCustomerInput!, condition: ModelCustomerConditionInput): Customer
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   deleteCustomerForOffice(officeId: ID!, input: DeleteCustomerInput!, condition: ModelCustomerConditionInput): Customer
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   createRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): Requests
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   updateRequestsSentByMe(input: UpdateRequestsInput!, condition: ModelRequestsConditionInput): Requests
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): Requests
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
   resolveRequest(requestId: ID!, decission: RequestDecision!, payload: ResolveRequestPayloadInput!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   createCompanyAccessConnectionForOffice(
     officeId: ID!
     input: CreateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
-  ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  ): CompanyAccessConnection @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
   updateCompanyAccessConnectionForOffice(
     officeId: ID!
     input: UpdateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
-  ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  ): CompanyAccessConnection @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
   deleteCompanyAccessConnectionForOffice(
     officeId: ID!
     input: DeleteCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
-  ): CompanyAccessConnection @auth(rules: [{ allow: private }, { allow: private, provider: iam }]) @function(name: "resolver-${env}")
+  ): CompanyAccessConnection @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
   createMyUserCalendarEvent(input: CreateUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   updateMyUserCalendarEvents(input: UpdateUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   deleteMyUserCalendarEvents(input: DeleteUserCalendarEventInput!, condition: ModelUserCalendarEventConditionInput): UserCalendarEvent
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   updateEmployeePagePermissionsForOffice(officeId: ID!, empUsername: String!, pagePermissions: AWSJSON!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-  deleteEmployeeForOffice(officeId: ID!, empUsername: String!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
-    @function(name: "resolver-${env}")
+  deleteEmployeeForOffice(officeId: ID!, empUsername: String!): ID @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
   updateContractorModelPermissionsForOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   updateContractorPagePermissionsForOffice(officeId: ID!, contractorUsername: String!, pagePermissions: AWSJSON!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
   deleteContractorForOffice(officeId: ID!, contractorUsername: String!): ID
-    @auth(rules: [{ allow: private }, { allow: private, provider: iam }])
+    @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 }

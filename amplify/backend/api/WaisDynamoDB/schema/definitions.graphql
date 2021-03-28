@@ -132,7 +132,7 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelOfficeConnection {
+type ModelOfficeConnection @aws_iam {
   items: [Office]
   nextToken: String
 }
@@ -314,7 +314,7 @@ input ModelOfficeConditionInput {
   not: ModelOfficeConditionInput
 }
 
-type ModelUserProfileConnection {
+type ModelUserProfileConnection @aws_iam {
   items: [UserProfile]
   nextToken: String
 }
@@ -412,7 +412,7 @@ input ModelUserProfileConditionInput {
   not: ModelUserProfileConditionInput
 }
 
-type ModelVehicleConnection {
+type ModelVehicleConnection @aws_iam {
   items: [Vehicle]
   nextToken: String
 }
@@ -528,7 +528,7 @@ input DriversLicenseCategoryInput {
   expiresAt: String
 }
 
-type ModelContractConnection {
+type ModelContractConnection @aws_iam {
   items: [Contract]
   nextToken: String
 }
@@ -652,7 +652,7 @@ input ModelContractConditionInput {
   not: ModelContractConditionInput
 }
 
-type ModelCustomerConnection {
+type ModelCustomerConnection @aws_iam {
   items: [Customer]
   nextToken: String
 }
@@ -738,7 +738,7 @@ input ModelCustomerConditionInput {
   not: ModelCustomerConditionInput
 }
 
-type ModelTradeUserConnectionConnection {
+type ModelTradeUserConnectionConnection @aws_iam {
   items: [TradeUserConnection]
   nextToken: String
 }
@@ -812,7 +812,7 @@ input ModelTradeUserConnectionConditionInput {
   not: ModelTradeUserConnectionConditionInput
 }
 
-type ModelTradeContractConnectionConnection {
+type ModelTradeContractConnectionConnection @aws_iam {
   items: [TradeContractConnection]
   nextToken: String
 }
@@ -858,7 +858,7 @@ input ModelTradeContractConnectionConditionInput {
   not: ModelTradeContractConnectionConditionInput
 }
 
-type ModelCompanyAccessConnectionConnection {
+type ModelCompanyAccessConnectionConnection @aws_iam {
   items: [CompanyAccessConnection]
   nextToken: String
 }
@@ -912,7 +912,7 @@ input ModelCompanyAccessConnectionConditionInput {
   not: ModelCompanyAccessConnectionConditionInput
 }
 
-type ModelUserCalendarEventConnection {
+type ModelUserCalendarEventConnection @aws_iam {
   items: [UserCalendarEvent]
   nextToken: String
 }
@@ -954,7 +954,7 @@ input ModelUserCalendarEventConditionInput {
   not: ModelUserCalendarEventConditionInput
 }
 
-type ModelTransactionHistoryConnection {
+type ModelTransactionHistoryConnection @aws_iam {
   items: [TransactionHistory]
   nextToken: String
 }
@@ -1043,7 +1043,7 @@ input RequestInviteContractorPayloadInput {
   email: String!
 }
 
-type ModelRequestsConnection {
+type ModelRequestsConnection @aws_iam {
   items: [Requests]
   nextToken: String
 }
