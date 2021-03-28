@@ -15,7 +15,7 @@ const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
 const REGION = process.env.REGION
 const ENDPOINT = new urlParse(APPSYNC_URL).hostname.toString()
 
-const ddbAPI = require('./ddb_queries')
+const ddbAPI = require('./ddb_queries.js')
 
 /**
  * Wrapper for GQL API calls.
@@ -190,7 +190,7 @@ module.exports = {
                   user {
                     username
                     email
-                  }
+                  } 
                 }
                 nextToken
               }

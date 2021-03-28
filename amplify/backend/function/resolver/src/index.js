@@ -8,7 +8,7 @@
 Amplify Params - DO NOT EDIT */
 
 //API
-const api = require('./queries/api')
+const api = require('./api.js')
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
@@ -255,15 +255,6 @@ const resolvers = {
         condition: event.arguments.condition,
       })
     },
-    addEmployeeToOffice: async event => {
-      return await api.addEmployeeToOffice({
-        username: event.identity.claims['cognito:username'],
-        officeId: event.arguments.officeId,
-        empUsername: event.arguments.empUsername,
-        modelPermissions: event.arguments.modelPermissions,
-        pagePermissions: event.arguments.pagePermissions,
-      })
-    },
     updateEmployeeModelPermissionsForOffice: async event => {
       return await api.updateEmployeeModelPermissionsForOffice({
         username: event.identity.claims['cognito:username'],
@@ -285,16 +276,6 @@ const resolvers = {
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         empUsername: event.arguments.empUsername,
-      })
-    },
-
-    addContractorToOffice: async event => {
-      return await api.addContractorToOffice({
-        username: event.identity.claims['cognito:username'],
-        officeId: event.arguments.officeId,
-        contractorUsername: event.arguments.contractorUsername,
-        modelPermissions: event.arguments.modelPermissions,
-        pagePermissions: event.arguments.pagePermissions,
       })
     },
     updateContractorModelPermissionsForOffice: async event => {

@@ -18,23 +18,20 @@ export const updateOfficeDetails = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
+      tin
+      professionStartDate
+      chamberRecordNumber
+      insuranceLicenseExpirationDate
+      civilLiabilityExpirationDate
+      bankAccountInfo
+      files {
+        bucket
+        region
+        key
+        name
+      }
       createdAt
       updatedAt
-      privateData {
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-      }
-      members
       officeContracts {
         items {
           id
@@ -97,7 +94,6 @@ export const updateOfficeDetails = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -168,7 +164,6 @@ export const updateUserProfileDetails = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -188,11 +183,10 @@ export const updateUserProfileDetails = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -202,11 +196,10 @@ export const updateUserProfileDetails = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -228,6 +221,7 @@ export const createVehicleForOffice = /* GraphQL */ `
     ) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -268,6 +262,7 @@ export const updateVehicleForOffice = /* GraphQL */ `
     ) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -308,6 +303,7 @@ export const deleteVehicleForOffice = /* GraphQL */ `
     ) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -383,6 +379,7 @@ export const createContractForOffice = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -459,6 +456,7 @@ export const updateContractForOffice = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -535,6 +533,7 @@ export const deleteContractForOffice = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -706,11 +705,35 @@ export const createRequest = /* GraphQL */ `
     createRequest(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }
@@ -724,11 +747,35 @@ export const updateRequestsSentByMe = /* GraphQL */ `
     updateRequestsSentByMe(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }
@@ -742,14 +789,51 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
     deleteRequestsSentByMe(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }
+  }
+`;
+export const resolveRequest = /* GraphQL */ `
+  mutation ResolveRequest(
+    $requestId: ID!
+    $decission: RequestDecision!
+    $payload: ResolveRequestPayloadInput!
+  ) {
+    resolveRequest(
+      requestId: $requestId
+      decission: $decission
+      payload: $payload
+    )
   }
 `;
 export const createCompanyAccessConnectionForOffice = /* GraphQL */ `
@@ -784,17 +868,20 @@ export const createCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -820,17 +907,20 @@ export const createCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -879,17 +969,20 @@ export const updateCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -915,17 +1008,20 @@ export const updateCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -974,17 +1070,20 @@ export const deleteCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -1010,17 +1109,20 @@ export const deleteCompanyAccessConnectionForOffice = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -1079,29 +1181,29 @@ export const deleteMyUserCalendarEvents = /* GraphQL */ `
     }
   }
 `;
-export const addEmployeeToOffice = /* GraphQL */ `
-  mutation AddEmployeeToOffice(
+export const updateEmployeeModelPermissionsForOffice = /* GraphQL */ `
+  mutation UpdateEmployeeModelPermissionsForOffice(
     $officeId: ID!
     $empUsername: String!
-    $permissions: AWSJSON!
+    $modelPermissions: [ModelPermission]!
   ) {
-    addEmployeeToOffice(
+    updateEmployeeModelPermissionsForOffice(
       officeId: $officeId
       empUsername: $empUsername
-      permissions: $permissions
+      modelPermissions: $modelPermissions
     )
   }
 `;
-export const updateEmployeePermissionsForOffice = /* GraphQL */ `
-  mutation UpdateEmployeePermissionsForOffice(
+export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
+  mutation UpdateEmployeePagePermissionsForOffice(
     $officeId: ID!
     $empUsername: String!
-    $permissions: AWSJSON!
+    $pagePermissions: AWSJSON!
   ) {
-    updateEmployeePermissionsForOffice(
+    updateEmployeePagePermissionsForOffice(
       officeId: $officeId
       empUsername: $empUsername
-      permissions: $permissions
+      pagePermissions: $pagePermissions
     )
   }
 `;
@@ -1110,29 +1212,29 @@ export const deleteEmployeeForOffice = /* GraphQL */ `
     deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername)
   }
 `;
-export const addContractorToOffice = /* GraphQL */ `
-  mutation AddContractorToOffice(
+export const updateContractorModelPermissionsForOffice = /* GraphQL */ `
+  mutation UpdateContractorModelPermissionsForOffice(
     $officeId: ID!
     $contractorUsername: String!
-    $permissions: AWSJSON!
+    $modelPermissions: [ModelPermission]!
   ) {
-    addContractorToOffice(
+    updateContractorModelPermissionsForOffice(
       officeId: $officeId
       contractorUsername: $contractorUsername
-      permissions: $permissions
+      modelPermissions: $modelPermissions
     )
   }
 `;
-export const updateContractorPermissionsForOffice = /* GraphQL */ `
-  mutation UpdateContractorPermissionsForOffice(
+export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
+  mutation UpdateContractorPagePermissionsForOffice(
     $officeId: ID!
     $contractorUsername: String!
-    $permissions: AWSJSON!
+    $pagePermissions: AWSJSON!
   ) {
-    updateContractorPermissionsForOffice(
+    updateContractorPagePermissionsForOffice(
       officeId: $officeId
       contractorUsername: $contractorUsername
-      permissions: $permissions
+      pagePermissions: $pagePermissions
     )
   }
 `;
@@ -1164,23 +1266,20 @@ export const createOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
+      tin
+      professionStartDate
+      chamberRecordNumber
+      insuranceLicenseExpirationDate
+      civilLiabilityExpirationDate
+      bankAccountInfo
+      files {
+        bucket
+        region
+        key
+        name
+      }
       createdAt
       updatedAt
-      privateData {
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-      }
-      members
       officeContracts {
         items {
           id
@@ -1243,7 +1342,6 @@ export const createOffice = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1283,23 +1381,20 @@ export const updateOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
+      tin
+      professionStartDate
+      chamberRecordNumber
+      insuranceLicenseExpirationDate
+      civilLiabilityExpirationDate
+      bankAccountInfo
+      files {
+        bucket
+        region
+        key
+        name
+      }
       createdAt
       updatedAt
-      privateData {
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-      }
-      members
       officeContracts {
         items {
           id
@@ -1362,7 +1457,6 @@ export const updateOffice = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1402,23 +1496,20 @@ export const deleteOffice = /* GraphQL */ `
       partnersNumberLimit
       employeesNumberLimit
       verified
+      tin
+      professionStartDate
+      chamberRecordNumber
+      insuranceLicenseExpirationDate
+      civilLiabilityExpirationDate
+      bankAccountInfo
+      files {
+        bucket
+        region
+        key
+        name
+      }
       createdAt
       updatedAt
-      privateData {
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-      }
-      members
       officeContracts {
         items {
           id
@@ -1481,7 +1572,6 @@ export const deleteOffice = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1552,7 +1642,6 @@ export const createUserProfile = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1572,11 +1661,10 @@ export const createUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1586,11 +1674,10 @@ export const createUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1647,7 +1734,6 @@ export const updateUserProfile = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1667,11 +1753,10 @@ export const updateUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1681,11 +1766,10 @@ export const updateUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1742,7 +1826,6 @@ export const deleteUserProfile = /* GraphQL */ `
           modelPermissions
           employeeType
           preferences
-          members
           createdAt
           updatedAt
         }
@@ -1762,11 +1845,10 @@ export const deleteUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1776,11 +1858,10 @@ export const deleteUserProfile = /* GraphQL */ `
         items {
           id
           senderUsername
-          receiverUsername
           senderEmail
+          receiverUsername
           receiverEmail
           type
-          payload
           createdAt
           updatedAt
         }
@@ -1797,6 +1878,7 @@ export const createVehicle = /* GraphQL */ `
     createVehicle(input: $input, condition: $condition) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -1832,6 +1914,7 @@ export const updateVehicle = /* GraphQL */ `
     updateVehicle(input: $input, condition: $condition) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -1867,6 +1950,7 @@ export const deleteVehicle = /* GraphQL */ `
     deleteVehicle(input: $input, condition: $condition) {
       id
       numberPlate
+      officeId
       tradeName
       color
       manufacturer
@@ -1937,6 +2021,7 @@ export const createContract = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -2008,6 +2093,7 @@ export const updateContract = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -2079,6 +2165,7 @@ export const deleteContract = /* GraphQL */ `
       vehicle {
         id
         numberPlate
+        officeId
         tradeName
         color
         manufacturer
@@ -2242,7 +2329,6 @@ export const createTradeUserConnection = /* GraphQL */ `
       modelPermissions
       employeeType
       preferences
-      members
       createdAt
       updatedAt
       trade {
@@ -2257,17 +2343,20 @@ export const createTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2344,7 +2433,6 @@ export const updateTradeUserConnection = /* GraphQL */ `
       modelPermissions
       employeeType
       preferences
-      members
       createdAt
       updatedAt
       trade {
@@ -2359,17 +2447,20 @@ export const updateTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2446,7 +2537,6 @@ export const deleteTradeUserConnection = /* GraphQL */ `
       modelPermissions
       employeeType
       preferences
-      members
       createdAt
       updatedAt
       trade {
@@ -2461,17 +2551,20 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2558,17 +2651,20 @@ export const createTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2615,6 +2711,7 @@ export const createTradeContractConnection = /* GraphQL */ `
         vehicle {
           id
           numberPlate
+          officeId
           tradeName
           color
           manufacturer
@@ -2663,17 +2760,20 @@ export const updateTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2720,6 +2820,7 @@ export const updateTradeContractConnection = /* GraphQL */ `
         vehicle {
           id
           numberPlate
+          officeId
           tradeName
           color
           manufacturer
@@ -2768,17 +2869,20 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2825,6 +2929,7 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         vehicle {
           id
           numberPlate
+          officeId
           tradeName
           color
           manufacturer
@@ -2875,17 +2980,20 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2911,17 +3019,20 @@ export const createCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -2965,17 +3076,20 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -3001,17 +3115,20 @@ export const updateCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -3055,17 +3172,20 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -3091,17 +3211,20 @@ export const deleteCompanyAccessConnection = /* GraphQL */ `
         partnersNumberLimit
         employeesNumberLimit
         verified
+        tin
+        professionStartDate
+        chamberRecordNumber
+        insuranceLicenseExpirationDate
+        civilLiabilityExpirationDate
+        bankAccountInfo
+        files {
+          bucket
+          region
+          key
+          name
+        }
         createdAt
         updatedAt
-        privateData {
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-        }
-        members
         officeContracts {
           nextToken
         }
@@ -3492,11 +3615,35 @@ export const createRequests = /* GraphQL */ `
     createRequests(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }
@@ -3510,11 +3657,35 @@ export const updateRequests = /* GraphQL */ `
     updateRequests(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }
@@ -3528,11 +3699,35 @@ export const deleteRequests = /* GraphQL */ `
     deleteRequests(input: $input, condition: $condition) {
       id
       senderUsername
-      receiverUsername
       senderEmail
+      receiverUsername
       receiverEmail
       type
-      payload
+      payload {
+        createTradePayload {
+          tradeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          bankAccountInfo
+        }
+        createCompanyConnectionPayload {
+          office_email
+        }
+        inviteEmployeeToOfficePayload {
+          email
+        }
+        inviteContractorToOfficePayload {
+          email
+        }
+      }
       createdAt
       updatedAt
     }

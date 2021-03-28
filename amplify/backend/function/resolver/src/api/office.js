@@ -1,6 +1,6 @@
-const ddbAPI = require('../api/ddb_queries')
-const gqlAPI = require('../api/gql_queries')
-const utils = require('../api/utils')
+const ddbAPI = require('../ddb_queries')
+const gqlAPI = require('./gql_queries')
+const utils = require('./utils')
 
 module.exports = {
   /**

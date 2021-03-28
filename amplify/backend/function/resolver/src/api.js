@@ -1,4 +1,4 @@
-const gqlAPI = require('../api/new_gql_queries')
+const gqlAPI = require('./new_gql_queries.js')
 
 /**
  * High-level API.
@@ -102,9 +102,6 @@ module.exports = {
   deleteMyUserCalendarEvents: async args => {
     return gqlAPI.deleteMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
   },
-  addEmployeeToOffice: async args => {
-    return gqlAPI.addEmployeeToOffice(args.officeId, args.username, args.empUsername, args.modelPermissions, args.pagePermissions) // OK
-  },
   updateEmployeeModelPermissionsForOffice: async args => {
     return gqlAPI.updateEmployeeModelPermissionsForOffice(args.officeId, args.username, args.empUsername, args.modelPermissions)
   },
@@ -113,9 +110,6 @@ module.exports = {
   },
   deleteEmployeeForOffice: async args => {
     return gqlAPI.deleteEmployeeForOffice(args.officeId, args.username, args.empUsername)
-  },
-  addContractorToOffice: async args => {
-    return gqlAPI.addContractorToOffice(args.officeId, args.username, args.contractorUsername, args.modelPermissions, args.pagePermissions)
   },
   updateContractorModelPermissionsForOffice: async args => {
     return gqlAPI.updateContractorModelPermissionsForOffice(args.officeId, args.username, args.contractorUsername, args.modelPermissions)
