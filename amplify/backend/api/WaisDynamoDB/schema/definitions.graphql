@@ -1,125 +1,3 @@
-type S3Object {
-  bucket: String!
-  region: String!
-  key: String!
-  name: String!
-}
-
-enum EmployeeType {
-  STANDARD
-  CONTRACTOR
-  MANAGER
-}
-
-type DriversLicense {
-  LicenseID: Int
-  DriversLicenseType: String
-  Category: [DriversLicenseCategory]
-}
-
-type DriversLicenseCategory {
-  category: String
-  issueDate: String
-  expiresAt: String
-}
-
-type InsurancePackage {
-  name: String!
-  insuranceClass: String!
-  coverage: [String]
-  usages: String
-}
-
-enum RequestType {
-  CREATE_TRADE
-  CREATE_COMPANY_CONNECTION
-  INVITE_EMPLOYEE_TO_OFFICE
-  INVITE_CONTRACTOR_TO_OFFICE
-}
-
-enum ModelPermission {
-  OFFICE_INFO_QUERY
-  OFFICE_INFO_MUTATE
-  VEHICLES_QUERY
-  VEHICLES_MUTATE
-  CONTRACTS_QUERY
-  CONTRACTS_MUTATE
-  CUSTOMERS_QUERY
-  CUSTOMERS_MUTATE
-  EMPLOYEE_ADD
-  EMPLOYEE_REMOVE
-  CONTRACTOR_ADD
-  CONTRACTOR_REMOVE
-  COMPANY_CONN_CREATE
-  COMPANY_CONN_DELETE
-}
-
-enum RequestDecision {
-  ACCEPT
-  REJECT
-}
-
-type RequestCreateOfficePayload {
-  tradeName: String!
-  address: String
-  office_email: String!
-  zip_code: String
-  mobile: String
-  phone: String!
-  tin: String!
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
-  files: [S3Object]
-}
-
-type RequestCompanyAccessConnectionPayload {
-  office_email: String!
-}
-
-type RequestInviteEmployeePayload {
-  email: String!
-}
-
-type RequestInviteContractorPayload {
-  email: String!
-}
-
-type CreateRequestPayloadInput {
-  createTradePayload: RequestCreateOfficePayload
-  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
-  inviteContractorToOfficePayload: RequestInviteContractorPayload
-}
-
-input ResolveCreateOfficePayload {
-  managerModelPermissions: [ModelPermission!]!
-  managerPagePermissions: AWSJSON!
-  partnersNumberLimit: Int!
-  employeesNumberLimit: Int!
-}
-input ResolveCompanyAccessConnectionPayload {
-  expirationDate: AWSTimestamp!
-}
-input ResolveInviteEmployeePayload {
-  empModelPermissions: [ModelPermission!]!
-  empPagePermissions: AWSJSON!
-}
-input ResolveInviteContractorPayload {
-  ctrModelPermissions: [ModelPermission!]!
-  ctrPagePermissions: AWSJSON!
-}
-input ResolveRequestPayloadInput {
-  createTradePayload: ResolveCreateOfficePayload
-  createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
-  inviteContractorToOfficePayload: ResolveInviteContractorPayload
-}
-
-##################################################################################################################################
-
 input S3ObjectInput {
   bucket: String!
   region: String!
@@ -247,7 +125,6 @@ enum ModelAttributeTypes {
 }
 
 input CreateOfficeInput {
-  id: ID
   tradeName: String!
   ownerUsername: String!
   address: String
@@ -343,7 +220,6 @@ input ModelUserProfileFilterInput {
 }
 
 input CreateUserProfileInput {
-  id: ID
   username: String!
   email: String!
   telephone: String!
@@ -443,7 +319,6 @@ input ModelVehicleFilterInput {
 }
 
 input CreateVehicleInput {
-  id: ID
   numberPlate: String!
   officeId: ID!
   tradeName: String!
@@ -564,7 +439,6 @@ input ModelContractFilterInput {
 }
 
 input CreateContractInput {
-  id: ID
   contractId: ID!
   version: Int!
   vehicleNumberPlate: String!
@@ -678,7 +552,6 @@ input ModelCustomerFilterInput {
 }
 
 input CreateCustomerInput {
-  id: ID
   tin: String!
   tradeName: String!
   firstName: String
@@ -771,7 +644,6 @@ input ModelTradeUserConnectionFilterInput {
 }
 
 input CreateTradeUserConnectionInput {
-  id: ID
   tradeId: ID!
   tradeName: String!
   userId: ID!
@@ -783,7 +655,6 @@ input CreateTradeUserConnectionInput {
 }
 
 input UpdateTradeUserConnectionInput {
-  id: ID!
   tradeId: ID
   tradeName: String
   userId: ID
@@ -829,7 +700,6 @@ input ModelTradeContractConnectionFilterInput {
 }
 
 input CreateTradeContractConnectionInput {
-  id: ID
   tradeId: ID!
   tradeName: String!
   contractId: ID!
@@ -877,7 +747,6 @@ input ModelCompanyAccessConnectionFilterInput {
 }
 
 input CreateCompanyAccessConnectionInput {
-  id: ID
   fromId: ID!
   fromTradeName: String!
   toId: ID!
@@ -928,7 +797,6 @@ input ModelUserCalendarEventFilterInput {
 }
 
 input CreateUserCalendarEventInput {
-  id: ID
   username: String!
   createdAt: String
   payload: String
@@ -973,7 +841,6 @@ input ModelTransactionHistoryFilterInput {
 }
 
 input CreateTransactionHistoryInput {
-  id: ID
   senderUserProfileId: ID!
   receiverUserProfileId: ID!
   timestamp: AWSTimestamp!
@@ -1066,9 +933,6 @@ input ModelRequestsFilterInput {
 }
 
 input CreateRequestsInput {
-  id: ID
-  senderUsername: String!
-  senderEmail: String!
   receiverUsername: String!
   receiverEmail: String!
   type: RequestType!

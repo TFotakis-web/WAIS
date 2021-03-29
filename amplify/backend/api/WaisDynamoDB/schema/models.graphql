@@ -146,7 +146,7 @@ type Contract
   jointWorth: Float!
   netWorth: Float!
   driversLicense: DriversLicense
-  createdAt: String!
+  createdAt: AWSDateTime!
   vehicle: Vehicle @connection(fields: ["vehicleId"])
 }
 
@@ -232,9 +232,9 @@ type UserCalendarEvent
   @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
   @auth(rules: [{ allow: private, provider: iam }]) {
   id: ID
-  username: String! # Populated server-side
-  createdAt: String!
+  username: String # Populated server-side
   payload: String
+  createdAt: AWSDateTime!
 }
 
 type TransactionHistory

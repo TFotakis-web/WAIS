@@ -35,58 +35,6 @@ export const me = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      officeConnections {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          pagePermissions
-          modelPermissions
-          employeeType
-          preferences
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      callendarEvents {
-        items {
-          id
-          username
-          createdAt
-          payload
-          updatedAt
-        }
-        nextToken
-      }
-      requestsSentByMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverUsername
-          receiverEmail
-          type
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      requestsForMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverUsername
-          receiverEmail
-          type
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -128,18 +76,6 @@ export const getOfficesIWorkIn = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
       nextToken
     }
@@ -159,8 +95,8 @@ export const getMyUserCalendarEvents = /* GraphQL */ `
       items {
         id
         username
-        createdAt
         payload
+        createdAt
         updatedAt
       }
       nextToken
@@ -252,18 +188,6 @@ export const getEmployeeUserProfiles = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
       nextToken
     }
@@ -312,18 +236,6 @@ export const getContractorUserProfiles = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        officeConnections {
-          nextToken
-        }
-        callendarEvents {
-          nextToken
-        }
-        requestsSentByMe {
-          nextToken
-        }
-        requestsForMe {
-          nextToken
-        }
       }
       nextToken
     }
@@ -389,57 +301,31 @@ export const getContractsForOfficeId = /* GraphQL */ `
     ) {
       items {
         id
-        contractId
-        version
-        vehicleNumberPlate
-        vehicleId
-        voucherId
-        customerId
+        tin
         tradeName
-        second_tradeId
-        contractorId
-        co_name
-        co_TRN
-        contractState
-        insuranceClass
-        insuranceCoverage
-        insuranceUsage
-        duration
-        startDate
-        endDate
-        data
-        discount
-        jointWorth
-        netWorth
+        firstName
+        lastName
+        fathersName
+        birthDate
+        gender
+        email
+        mobile
+        postcode
+        doy
+        address
+        familyStatus
+        files {
+          bucket
+          region
+          key
+          name
+        }
         driversLicense {
           LicenseID
           DriversLicenseType
         }
         createdAt
         updatedAt
-        vehicle {
-          id
-          numberPlate
-          officeId
-          tradeName
-          color
-          manufacturer
-          model
-          vehicle_owner
-          trim
-          fuelType
-          usage
-          displacement
-          eurotax
-          firstRegistrationDate
-          passengers
-          purchaseDate
-          taxableHorsepower
-          vin
-          value
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }
@@ -468,48 +354,6 @@ export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
         message
         createdAt
         updatedAt
-        from {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-          createdAt
-          updatedAt
-        }
-        to {
-          id
-          tradeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
-          tin
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }
@@ -975,8 +819,8 @@ export const getUserProfile = /* GraphQL */ `
         items {
           id
           username
-          createdAt
           payload
+          createdAt
           updatedAt
         }
         nextToken
@@ -3220,8 +3064,8 @@ export const getUserCalendarEvent = /* GraphQL */ `
     getUserCalendarEvent(id: $id) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -3240,8 +3084,8 @@ export const listUserCalendarEvents = /* GraphQL */ `
       items {
         id
         username
-        createdAt
         payload
+        createdAt
         updatedAt
       }
       nextToken
@@ -3268,8 +3112,8 @@ export const listUserCalendarEventsByUsername = /* GraphQL */ `
       items {
         id
         username
-        createdAt
         payload
+        createdAt
         updatedAt
       }
       nextToken

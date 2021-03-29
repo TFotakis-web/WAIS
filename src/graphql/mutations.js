@@ -32,87 +32,6 @@ export const updateOfficeDetails = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      workforce {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          pagePermissions
-          modelPermissions
-          employeeType
-          preferences
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -153,58 +72,6 @@ export const updateUserProfileDetails = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      officeConnections {
-        items {
-          id
-          tradeId
-          tradeName
-          userId
-          username
-          pagePermissions
-          modelPermissions
-          employeeType
-          preferences
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      callendarEvents {
-        items {
-          id
-          username
-          createdAt
-          payload
-          updatedAt
-        }
-        nextToken
-      }
-      requestsSentByMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverUsername
-          receiverEmail
-          type
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      requestsForMe {
-        items {
-          id
-          senderUsername
-          senderEmail
-          receiverUsername
-          receiverEmail
-          type
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -376,35 +243,6 @@ export const createContractForOffice = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      vehicle {
-        id
-        numberPlate
-        officeId
-        tradeName
-        color
-        manufacturer
-        model
-        vehicle_owner
-        trim
-        fuelType
-        usage
-        displacement
-        eurotax
-        firstRegistrationDate
-        passengers
-        purchaseDate
-        taxableHorsepower
-        vin
-        value
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -453,35 +291,6 @@ export const updateContractForOffice = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      vehicle {
-        id
-        numberPlate
-        officeId
-        tradeName
-        color
-        manufacturer
-        model
-        vehicle_owner
-        trim
-        fuelType
-        usage
-        displacement
-        eurotax
-        firstRegistrationDate
-        passengers
-        purchaseDate
-        taxableHorsepower
-        vin
-        value
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -530,35 +339,6 @@ export const deleteContractForOffice = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      vehicle {
-        id
-        numberPlate
-        officeId
-        tradeName
-        color
-        manufacturer
-        model
-        vehicle_owner
-        trim
-        fuelType
-        usage
-        displacement
-        eurotax
-        firstRegistrationDate
-        passengers
-        purchaseDate
-        taxableHorsepower
-        vin
-        value
-        file {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -847,93 +627,18 @@ export const createCompanyAccessConnectionForOffice = /* GraphQL */ `
       input: $input
       condition: $condition
     ) {
-      id
-      fromId
-      fromTradeName
-      toId
-      toTradeName
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
+      items {
         id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
+        fromId
+        fromTradeName
+        toId
+        toTradeName
+        expirationDate
+        message
         createdAt
         updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
-      to {
-        id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
-      }
+      nextToken
     }
   }
 `;
@@ -948,93 +653,18 @@ export const updateCompanyAccessConnectionForOffice = /* GraphQL */ `
       input: $input
       condition: $condition
     ) {
-      id
-      fromId
-      fromTradeName
-      toId
-      toTradeName
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
+      items {
         id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
+        fromId
+        fromTradeName
+        toId
+        toTradeName
+        expirationDate
+        message
         createdAt
         updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
-      to {
-        id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
-      }
+      nextToken
     }
   }
 `;
@@ -1049,93 +679,18 @@ export const deleteCompanyAccessConnectionForOffice = /* GraphQL */ `
       input: $input
       condition: $condition
     ) {
-      id
-      fromId
-      fromTradeName
-      toId
-      toTradeName
-      expirationDate
-      message
-      createdAt
-      updatedAt
-      from {
+      items {
         id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
+        fromId
+        fromTradeName
+        toId
+        toTradeName
+        expirationDate
+        message
         createdAt
         updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
       }
-      to {
-        id
-        tradeName
-        ownerUsername
-        address
-        office_email
-        zip_code
-        mobile
-        phone
-        partnersNumberLimit
-        employeesNumberLimit
-        verified
-        tin
-        professionStartDate
-        chamberRecordNumber
-        insuranceLicenseExpirationDate
-        civilLiabilityExpirationDate
-        bankAccountInfo
-        files {
-          bucket
-          region
-          key
-          name
-        }
-        createdAt
-        updatedAt
-        officeContracts {
-          nextToken
-        }
-        officeCustomers {
-          nextToken
-        }
-        workforce {
-          nextToken
-        }
-        companyConnections {
-          nextToken
-        }
-      }
+      nextToken
     }
   }
 `;
@@ -1147,8 +702,8 @@ export const createMyUserCalendarEvent = /* GraphQL */ `
     createMyUserCalendarEvent(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -1161,8 +716,8 @@ export const updateMyUserCalendarEvents = /* GraphQL */ `
     updateMyUserCalendarEvents(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -1175,8 +730,8 @@ export const deleteMyUserCalendarEvents = /* GraphQL */ `
     deleteMyUserCalendarEvents(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -1651,8 +1206,8 @@ export const createUserProfile = /* GraphQL */ `
         items {
           id
           username
-          createdAt
           payload
+          createdAt
           updatedAt
         }
         nextToken
@@ -1743,8 +1298,8 @@ export const updateUserProfile = /* GraphQL */ `
         items {
           id
           username
-          createdAt
           payload
+          createdAt
           updatedAt
         }
         nextToken
@@ -1835,8 +1390,8 @@ export const deleteUserProfile = /* GraphQL */ `
         items {
           id
           username
-          createdAt
           payload
+          createdAt
           updatedAt
         }
         nextToken
@@ -3249,8 +2804,8 @@ export const createUserCalendarEvent = /* GraphQL */ `
     createUserCalendarEvent(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -3263,8 +2818,8 @@ export const updateUserCalendarEvent = /* GraphQL */ `
     updateUserCalendarEvent(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
@@ -3277,8 +2832,8 @@ export const deleteUserCalendarEvent = /* GraphQL */ `
     deleteUserCalendarEvent(input: $input, condition: $condition) {
       id
       username
-      createdAt
       payload
+      createdAt
       updatedAt
     }
   }
