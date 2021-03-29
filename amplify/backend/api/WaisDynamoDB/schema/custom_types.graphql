@@ -59,6 +59,13 @@ enum RequestDecision {
   REJECT
 }
 
+##
+type CreateRequestPayload {
+  createTradePayload: RequestCreateOfficePayload
+  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
+  inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
+  inviteContractorToOfficePayload: RequestInviteContractorPayload
+}
 type RequestCreateOfficePayload {
   tradeName: String!
   address: String
@@ -81,17 +88,22 @@ type RequestCompanyAccessConnectionPayload {
 
 type RequestInviteEmployeePayload {
   email: String!
+  empModelPermissions: [ModelPermission!]!
+  empPagePermissions: AWSJSON!
 }
 
 type RequestInviteContractorPayload {
+  ctrModelPermissions: [ModelPermission!]!
+  ctrPagePermissions: AWSJSON!
   email: String!
 }
 
-type CreateRequestPayloadInput {
-  createTradePayload: RequestCreateOfficePayload
-  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
-  inviteContractorToOfficePayload: RequestInviteContractorPayload
+##
+input ResolveRequestPayloadInput {
+  createTradePayload: ResolveCreateOfficePayload
+  createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
+  inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
+  inviteContractorToOfficePayload: ResolveInviteContractorPayload
 }
 
 input ResolveCreateOfficePayload {
@@ -104,16 +116,8 @@ input ResolveCompanyAccessConnectionPayload {
   expirationDate: AWSTimestamp!
 }
 input ResolveInviteEmployeePayload {
-  empModelPermissions: [ModelPermission!]!
-  empPagePermissions: AWSJSON!
+  body: String
 }
 input ResolveInviteContractorPayload {
-  ctrModelPermissions: [ModelPermission!]!
-  ctrPagePermissions: AWSJSON!
-}
-input ResolveRequestPayloadInput {
-  createTradePayload: ResolveCreateOfficePayload
-  createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
-  inviteContractorToOfficePayload: ResolveInviteContractorPayload
+  body: String
 }

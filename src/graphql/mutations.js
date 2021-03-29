@@ -509,8 +509,12 @@ export const createRequest = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }
@@ -551,8 +555,12 @@ export const updateRequestsSentByMe = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }
@@ -593,8 +601,12 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }
@@ -3194,8 +3206,12 @@ export const createRequests = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }
@@ -3236,8 +3252,12 @@ export const updateRequests = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }
@@ -3278,8 +3298,12 @@ export const deleteRequests = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }

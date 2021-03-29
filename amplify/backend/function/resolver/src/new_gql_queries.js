@@ -180,6 +180,7 @@ module.exports = {
           items {
             officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
               items {
+                id
                 username
                 userId
                 pagePermissions
@@ -338,9 +339,13 @@ module.exports = {
               }
               inviteEmployeeToOfficePayload {
                 email
+                empModelPermissions
+                empPagePermissions
               }
               inviteContractorToOfficePayload {
                 email
+                ctrModelPermissions
+                ctrPagePermissions
               }
             }
             createdAt
@@ -365,17 +370,20 @@ module.exports = {
       query listUserProfileByUsername($username: String!) {
         listUserProfileByUsername(username: $username) {
           items {
-            tradeCon {
-              nextToken
+            officeConnections {
+              items {
+                id
+              }
             }
           }
         }
       }
     `
     const response = await gqlHelper({ username: username }, query, 'listUserProfileByUsername')
-    const result = response.data.listUserProfileByUsername.items[0].tradeCon.nextToken == null
-    console.log('checkIfUserIsUnemployed output: ' + result)
-    return result
+    const result = response.data.listUserProfileByUsername.items || []
+    const retVal = result.length > 0
+    console.log('checkIfUserIsUnemployed output: ' + retVal)
+    return retVal
   },
 
   getOfficeByOwnerUsername: async username => {
@@ -388,26 +396,23 @@ module.exports = {
             address
             createdAt
             employeesNumberLimit
-            members
             mobile
             office_email
             ownerUsername
             partnersNumberLimit
             phone
             tradeName
-            privateData {
-              bankAccountInfo
-              chamberRecordNumber
-              civilLiabilityExpirationDate
-              insuranceLicenseExpirationDate
-              professionStartDate
-              tin
-              files {
-                bucket
-                key
-                name
-                region
-              }
+            bankAccountInfo
+            chamberRecordNumber
+            civilLiabilityExpirationDate
+            insuranceLicenseExpirationDate
+            professionStartDate
+            tin
+            files {
+              bucket
+              key
+              name
+              region
             }
             zip_code
             verified
@@ -529,9 +534,13 @@ module.exports = {
               }
               inviteEmployeeToOfficePayload {
                 email
+                empModelPermissions
+                empPagePermissions
               }
               inviteContractorToOfficePayload {
                 email
+                ctrModelPermissions
+                ctrPagePermissions
               }
             }
           }
@@ -573,8 +582,8 @@ module.exports = {
             throw new Error('Request has invalid payload.')
           }
           createOfficeInput.ownerUsername = senderUserProfile.username
-          createOfficeInput.partnersNumberLimit = callerPayload.partnersNumberLimit
-          createOfficeInput.employeesNumberLimit = callerPayload.employeesNumberLimit
+          createOfficeInput.partnersNumberLimit = callerPayload.createTradePayload.partnersNumberLimit
+          createOfficeInput.employeesNumberLimit = callerPayload.createTradePayload.employeesNumberLimit
           createOfficeInput.verified = true
           createOfficeInput.files = []
 
@@ -660,18 +669,22 @@ module.exports = {
             throw new Error("User is a member of another Office and therefore can't join a new one.")
           }
 
+          //Get the permissions (decided by manager)
+          const modelPermissions = requestObject.payload.inviteEmployeeToOfficePayload.empModelPermissions
+          const pagePermissions = requestObject.payload.inviteEmployeeToOfficePayload.empPagePermissions
+
           //Add the Employee to the new Office and create the connection between User and Office
-          let empAddRes
           try {
-            empAddRes = await ddbAPI.addEmployeeToOffice(
-              senderOffice.id,
+            const empAddRes = await ddbAPI.addEmployeeToOffice(
+              senderOffice,
               requestObject.receiverUsername,
               requestObject.id,
               receiverUserProfile.id,
-              callerPayload.inviteEmployeeToOfficePayload.managerPagePermissions,
-              callerPayload.inviteEmployeeToOfficePayload.empPagePermissions,
+              modelPermissions,
+              pagePermissions,
             )
-            result = empAddRes
+            console.log('Invite emp tx: ' + JSON.stringify(empAddRes))
+            result = receiverUserProfile.id
           } catch (err) {
             throw new Error('Failed to add employee to Office, ensure that the Office is allowed to invite employees.')
           }
@@ -694,6 +707,17 @@ module.exports = {
         throw new Error('Invalid request type.')
       }
     }
+
+    //Delete the resolved request
+    const mutation0 = /* GraphQL */ `
+      mutation deleteResolvedRequest($input: DeleteRequestsInput!) {
+        deleteRequests(input: $input) {
+          id
+        }
+      }
+    `
+    const delResponse = await gqlHelper({ input: { id: id } }, mutation0, 'deleteResolvedRequest')
+    console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
 
     console.log('resolveRequest output: ' + JSON.stringify(result))
     return result
@@ -1010,7 +1034,21 @@ module.exports = {
       throw new Error('Invalid username or unauthenticated user.')
     }
     //Sanitize input
-    const allowed = ['id', 'address', 'office_email', 'zip_code', 'mobile', 'privateData']
+    const allowed = [
+      'id',
+      'address',
+      'office_email',
+      'zip_code',
+      'mobile',
+      'files',
+      'tin',
+      'bankAccountInfo',
+      'chamberRecordNumber',
+      'civilLiabilityExpirationDate',
+      'insuranceLicenseExpirationDate',
+      'professionStartDate',
+    ]
+
     let sanitized_input = Object.keys(input)
       .filter(key => allowed.includes(key))
       .reduce((obj, key) => {
@@ -1206,7 +1244,33 @@ module.exports = {
       }
     `
 
-    const response = await gqlHelper({ input: input, condition: condition }, mutation, 'createRequest')
+    //AWSJSON fields need reparsing \_(**)_/
+    switch (input.type) {
+      case 'CREATE_TRADE': {
+        const payload = input.payload.createTradePayload
+        input.payload.createTradePayload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo)
+        break
+      }
+      case 'INVITE_EMPLOYEE_TO_OFFICE': {
+        const payload = input.payload.inviteEmployeeToOfficePayload
+        input.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.stringify(payload.empPagePermissions)
+        break
+      }
+      case 'INVITE_CONTRACTOR_TO_OFFICE': {
+        const payload = input.payload.inviteContractorToOfficePayload
+        input.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.stringify(payload.ctrPagePermissions)
+        break
+      }
+      case 'CREATE_COMPANY_CONNECTION': {
+        break
+      }
+      default:
+        throw new Error('Invalid request type: ' + input.type)
+    }
+
+    console.log('About to create request with input: ' + JSON.stringify(input))
+    const expanded_condition = condition || { senderUsername: { ne: '' } }
+    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'createRequest')
     const result = response.data.createRequests
     console.log('createRequest output: ' + JSON.stringify(result))
     return result
@@ -1334,55 +1398,113 @@ module.exports = {
     return result
   },
 
-  addEmployeeToOffice: async (office_id, caller_username, empUsername, modelPermissions, pagePermissions) => {
-    console.log('addEmployeeToOffice input: ' + [office_id, caller_username, empUsername, modelPermissions, pagePermissions])
-    if (!office_id) {
-      throw new Error('Invalid office ID')
-    }
+  // addEmployeeToOffice: async (office_id, caller_username, empUsername, modelPermissions, pagePermissions) => {
+  //   console.log('addEmployeeToOffice input: ' + [office_id, caller_username, empUsername, modelPermissions, pagePermissions])
+  //   if (!office_id) {
+  //     throw new Error('Invalid office ID')
+  //   }
 
+  //   if (!caller_username) {
+  //     throw new Error('Invalid office ID')
+  //   }
+
+  //   //Get caller information
+  //   const tuc_filter = { and: [{ tradeId: { eq: office_id } }, { username: { eq: caller_username } }] }
+  //   const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
+  //   const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items
+  //   const callerModelPermissions = tucItem.modelPermissions
+  //   const callerPagePermissions = tucItem.pagePermissions
+  //   if (!('EMPLOYEE_ADD' in callerModelPermissions)) {
+  //     throw new Error('User doesn`t have permission to create a add a new Employee.')
+  //   }
+
+  //   //Get candidate employee information
+  //   const empUserProfile = await module.exports.getUserProfileByUsername(empUsername)
+  //   if (empUserProfile == null) {
+  //     throw new Error('Candidate employee does not exist.')
+  //   }
+
+  //   const input = {
+  //     treadeId: tucItem.tradeId,
+  //     tradeName: tucItem.tradeName,
+  //     userId: empUserProfile.id,
+  //     username: empUserProfile.username,
+  //     pagePermissions: pagePermissions,
+  //     modelPermissions: modelPermissions,
+  //     employeeType: 'STANDARD',
+  //   }
+
+  //   const expanded_condition = { and: [{ ownerUsername: { eq: caller_username } }, { id: { eq: office_id } }] }
+  //   const mutation = /* GraphQL */ `
+  //     mutation addOfficeEmployee($input: CreateTradeUserConnectionInput!, $condition: ModelTradeUserConnectionConditionInput) {
+  //       createTradeUserConnection(input: $input, condition: $condition) {
+  //         id
+  //       }
+  //     }
+  //   `
+
+  //   const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'addEmployeeToOffice')
+  //   const result = response.data.createTradeUserConnection
+  //   console.log('addEmployeeToOffice output: ' + JSON.stringify(result))
+
+  //   return result
+  // },
+
+  updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {
+    console.log('updateEmployeeModelPermissionsForOffice input: ' + [officeId, caller_username, empUsername, modelPermissions])
     if (!caller_username) {
-      throw new Error('Invalid office ID')
+      throw new Error('Invalid username or unauthenticated user.')
     }
 
-    //Get caller information
-    const tuc_filter = { and: [{ tradeId: { eq: office_id } }, { username: { eq: caller_username } }] }
+    //Get the office
+    const tuc_filter = { and: [{ tradeId: { eq: officeId } }, { username: { eq: caller_username } }] }
     const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
-    const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items
-    const callerModelPermissions = tucItem.modelPermissions
-    const callerPagePermissions = tucItem.pagePermissions
-    if (!('EMPLOYEE_ADD' in callerModelPermissions)) {
-      throw new Error('User doesn`t have permission to create a add a new Employee.')
+    const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
+    if (!tucItem || tucItem.trade.ownerUsername !== caller_username) {
+      throw new Error('Invalid office ID or caller not an owner of that office.')
     }
 
-    //Get candidate employee information
-    const empUserProfile = await module.exports.getUserProfileByUsername(empUsername)
-    if (empUserProfile == null) {
-      throw new Error('Candidate employee does not exist.')
-    }
+    const input = { id: tucItem.id, modelPermissions: modelPermissions }
 
-    const input = {
-      treadeId: tucItem.tradeId,
-      tradeName: tucItem.tradeName,
-      userId: empUserProfile.id,
-      username: empUserProfile.username,
-      pagePermissions: pagePermissions,
-      modelPermissions: modelPermissions,
-      employeeType: 'STANDARD',
-    }
-
-    const expanded_condition = { and: [{ ownerUsername: { eq: caller_username } }, { id: { eq: office_id } }] }
-    const mutation = /* GraphQL */ `
-      mutation addOfficeEmployee($input: CreateTradeUserConnectionInput!, $condition: ModelTradeUserConnectionConditionInput) {
-        createTradeUserConnection(input: $input, condition: $condition) {
+    const mutation1 = /* GraphQL */ `
+      mutation updateTradeUserConnection(input: UpdateTradeUserConnectionInput!) {
+        updateTradeUserConnection(input: $input) {
           id
         }
       }
     `
+    const response = await gqlHelper({ input: input }, mutation1, 'updateTradeUserConnection')
+    const result = response.data.updateUserCalendarEvent
+    console.log('updateEmployeeModelPermissionsForOffice output: ' + JSON.stringify(result))
+    return result
+  },
 
-    const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'addEmployeeToOffice')
-    const result = response.data.createTradeUserConnection
-    console.log('addEmployeeToOffice output: ' + JSON.stringify(result))
+  updateEmployeePagePermissionsForOffice: async (officeId, caller_username, empUsername, pagePermissions) => {
+    console.log('updateEmployeePagePermissionsForOffice input: ' + [officeId, caller_username, empUsername, pagePermissions])
+    if (!caller_username) {
+      throw new Error('Invalid username or unauthenticated user.')
+    }
 
+    //Get the office
+    const tuc_filter = { and: [{ tradeId: { eq: officeId } }, { username: { eq: caller_username } }] }
+    const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
+    const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
+    if (!tucItem || tucItem.trade.ownerUsername !== caller_username) {
+      throw new Error('Invalid office ID or caller not an owner of that office.')
+    }
+
+    const input = { id: tucItem.id, pagePermissions: pagePermissions }
+
+    const mutation1 = /* GraphQL */ `
+      mutation updateTradeUserConnection(input: UpdateTradeUserConnectionInput!) {
+        updateTradeUserConnection(input: $input) {
+          id
+        }
+      }
+    `
+    const response = await gqlHelper({ input: input }, mutation1, 'updateTradeUserConnection')
+    const result = response.data.updateUserCalendarEvent
+    console.log('updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
     return result
   },
 }

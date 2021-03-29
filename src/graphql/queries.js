@@ -3470,8 +3470,12 @@ export const getRequests = /* GraphQL */ `
         }
         inviteEmployeeToOfficePayload {
           email
+          empModelPermissions
+          empPagePermissions
         }
         inviteContractorToOfficePayload {
+          ctrModelPermissions
+          ctrPagePermissions
           email
         }
       }

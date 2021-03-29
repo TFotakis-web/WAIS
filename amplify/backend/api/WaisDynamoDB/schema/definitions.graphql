@@ -657,7 +657,7 @@ input CreateTradeUserConnectionInput {
   pagePermissions: AWSJSON!
   modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType!
-  preferences: String
+  preferences: AWSJSON
 }
 
 input UpdateTradeUserConnectionInput {
@@ -669,7 +669,7 @@ input UpdateTradeUserConnectionInput {
   pagePermissions: AWSJSON
   modelPermissions: [ModelPermission!]
   employeeType: EmployeeType
-  preferences: String
+  preferences: AWSJSON
 }
 
 input DeleteTradeUserConnectionInput {
@@ -886,7 +886,7 @@ input ModelTransactionHistoryConditionInput {
   not: ModelTransactionHistoryConditionInput
 }
 
-input CreateRequestPayloadInputInput {
+input CreateRequestPayloadInput {
   createTradePayload: RequestCreateOfficePayloadInput
   createCompanyConnectionPayload: RequestCompanyAccessConnectionPayloadInput
   inviteEmployeeToOfficePayload: RequestInviteEmployeePayloadInput
@@ -915,9 +915,13 @@ input RequestCompanyAccessConnectionPayloadInput {
 
 input RequestInviteEmployeePayloadInput {
   email: String!
+  empModelPermissions: [ModelPermission!]!
+  empPagePermissions: AWSJSON!
 }
 
 input RequestInviteContractorPayloadInput {
+  ctrModelPermissions: [ModelPermission!]!
+  ctrPagePermissions: AWSJSON!
   email: String!
 }
 
@@ -950,7 +954,7 @@ input CreateRequestsInput {
   receiverUsername: String!
   receiverEmail: String!
   type: RequestType!
-  payload: CreateRequestPayloadInputInput!
+  payload: CreateRequestPayloadInput!
 }
 
 input UpdateRequestsInput {
@@ -960,7 +964,7 @@ input UpdateRequestsInput {
   receiverUsername: String
   receiverEmail: String
   type: RequestType
-  payload: CreateRequestPayloadInputInput
+  payload: CreateRequestPayloadInput
 }
 
 input DeleteRequestsInput {

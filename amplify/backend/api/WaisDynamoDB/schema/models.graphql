@@ -277,5 +277,5 @@ type Requests
   receiverUsername: String!
   receiverEmail: String!
   type: RequestType!
-  payload: CreateRequestPayloadInput!
+  payload: CreateRequestPayload!
 }

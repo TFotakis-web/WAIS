@@ -25,7 +25,10 @@ module.exports = {
    * @param {*} uuid
    */
   addEmployeeToOffice: async (office, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
-    console.log('Attempting to create new employee to office with arguments:' + [JSON.stringify(office), empUsername, connId, userId])
+    console.log(
+      'Attempting to create new employee to office with arguments:' +
+        [JSON.stringify(office), empUsername, connId, userId, JSON.stringify(empModelPermissions), JSON.stringify(empPagePermissions)],
+    )
     const now = new Date().toISOString()
     const resp = await ddb
       .transactWrite({
@@ -44,7 +47,6 @@ module.exports = {
                 '#employeesNumberLimit': 'employeesNumberLimit',
               },
               ExpressionAttributeValues: {
-                ':new_emp_username': [empUsername],
                 ':now': now,
                 ':dec': 1,
                 ':zero': 0,
@@ -66,7 +68,7 @@ module.exports = {
                 modelPermissions: empModelPermissions,
                 pagePermissions: empPagePermissions,
                 employeeType: 'STANDARD',
-                preferences: '',
+                preferences: null,
                 createdAt: now,
                 updatedAt: now,
               },
@@ -145,7 +147,6 @@ module.exports = {
               message: ' ',
               createdAt: now,
               updatedAt: now,
-              members: [senderOffice.ownerUsername, receiverOffice.ownerUsername],
             },
           },
         },
@@ -178,14 +179,12 @@ module.exports = {
               Update: {
                 TableName: 'Office' + ddbSuffix,
                 Key: { id: officeId },
-                UpdateExpression: 'REMOVE #members[:idx] SET #updatedAt = :now SET #employeesNumberLimit = #employeesNumberLimit + :inc',
+                UpdateExpression: 'SET #updatedAt = :now SET #employeesNumberLimit = #employeesNumberLimit + :inc',
                 ExpressionAttributeNames: {
-                  '#members': 'members',
                   '#updatedAt': 'updatedAt',
                   '#employeesNumberLimit': 'employeesNumberLimit',
                 },
                 ExpressionAttributeValues: {
-                  ':idx': memberIndex,
                   ':inc': 1,
                   ':now': new Date().toISOString(),
                 },

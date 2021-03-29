@@ -183,7 +183,7 @@ type RequestsOutput {
   receiverUsername: String!
   receiverEmail: String!
   type: RequestType!
-  payload: CreateRequestPayloadInput!
+  payload: CreateRequestPayload!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
