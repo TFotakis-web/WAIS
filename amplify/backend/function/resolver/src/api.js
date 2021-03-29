@@ -76,7 +76,7 @@ module.exports = {
     return gqlAPI.createCustomerForOffice(args.officeId, args.username, args.requestInput, args.condition)
   },
   createRequest: async args => {
-    return gqlAPI.createRequest(args.username, args.email, args.requestInput, args.condition) // OK
+    return gqlAPI.createRequest(args.username, args.email, args.groups, args.requestInput, args.condition) // OK
   },
   updateRequestsSentByMe: async args => {
     return gqlAPI.updateRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition) // OK

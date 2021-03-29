@@ -102,7 +102,7 @@ type Mutation {
     input: CreateCompanyAccessConnectionInput!
     condition: ModelCompanyAccessConnectionConditionInput
   ): ModelCompanyAccessConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
+ 
   updateCompanyAccessConnectionForOffice(
     officeId: ID!
     input: UpdateCompanyAccessConnectionInput!

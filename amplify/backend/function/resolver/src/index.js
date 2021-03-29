@@ -55,15 +55,6 @@ const resolvers = {
         nextToken: event.arguments.nextToken,
       })
     },
-    resolveRequest: async event => {
-      return await api.resolveRequest({
-        username: event.identity.claims['cognito:username'],
-        groups: event.identity.groups,
-        id: event.arguments.requestId,
-        decission: event.arguments.decission,
-        payload: event.arguments.payload,
-      })
-    },
     getEmployeeUserProfiles: async event => {
       return await api.getEmployeeUserProfilesForManagerUsername({
         username: event.identity.claims['cognito:username'],
@@ -184,6 +175,7 @@ const resolvers = {
       return await api.createRequest({
         username: event.identity.claims['cognito:username'],
         email: event.identity.claims['email'],
+        groups: event.identity.groups,
         requestInput: event.arguments.input,
         condition: event.arguments.condition,
       })
@@ -204,6 +196,15 @@ const resolvers = {
         groups: event.identity.groups,
         requestInput: event.arguments.input,
         condition: event.arguments.condition,
+      })
+    },
+    resolveRequest: async event => {
+      return await api.resolveRequest({
+        username: event.identity.claims['cognito:username'],
+        groups: event.identity.groups,
+        id: event.arguments.requestId,
+        decission: event.arguments.decission,
+        payload: event.arguments.payload,
       })
     },
     createCompanyAccessConnectionForOffice: async event => {

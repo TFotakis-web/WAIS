@@ -125,6 +125,7 @@ enum ModelAttributeTypes {
 }
 
 input CreateOfficeInput {
+  id: ID
   tradeName: String!
   ownerUsername: String!
   address: String
@@ -220,6 +221,7 @@ input ModelUserProfileFilterInput {
 }
 
 input CreateUserProfileInput {
+  id: ID
   username: String!
   email: String!
   telephone: String!
@@ -319,6 +321,7 @@ input ModelVehicleFilterInput {
 }
 
 input CreateVehicleInput {
+  id: ID
   numberPlate: String!
   officeId: ID!
   tradeName: String!
@@ -439,6 +442,7 @@ input ModelContractFilterInput {
 }
 
 input CreateContractInput {
+  id: ID
   contractId: ID!
   version: Int!
   vehicleNumberPlate: String!
@@ -462,7 +466,7 @@ input CreateContractInput {
   jointWorth: Float!
   netWorth: Float!
   driversLicense: DriversLicenseInput
-  createdAt: String
+  createdAt: AWSDateTime
 }
 
 input UpdateContractInput {
@@ -490,7 +494,7 @@ input UpdateContractInput {
   jointWorth: Float
   netWorth: Float
   driversLicense: DriversLicenseInput
-  createdAt: String
+  createdAt: AWSDateTime
 }
 
 input DeleteContractInput {
@@ -552,6 +556,7 @@ input ModelCustomerFilterInput {
 }
 
 input CreateCustomerInput {
+  id: ID
   tin: String!
   tradeName: String!
   firstName: String
@@ -644,6 +649,7 @@ input ModelTradeUserConnectionFilterInput {
 }
 
 input CreateTradeUserConnectionInput {
+  id: ID
   tradeId: ID!
   tradeName: String!
   userId: ID!
@@ -655,6 +661,7 @@ input CreateTradeUserConnectionInput {
 }
 
 input UpdateTradeUserConnectionInput {
+  id: ID!
   tradeId: ID
   tradeName: String
   userId: ID
@@ -700,6 +707,7 @@ input ModelTradeContractConnectionFilterInput {
 }
 
 input CreateTradeContractConnectionInput {
+  id: ID
   tradeId: ID!
   tradeName: String!
   contractId: ID!
@@ -747,6 +755,7 @@ input ModelCompanyAccessConnectionFilterInput {
 }
 
 input CreateCompanyAccessConnectionInput {
+  id: ID
   fromId: ID!
   fromTradeName: String!
   toId: ID!
@@ -789,24 +798,25 @@ type ModelUserCalendarEventConnection @aws_iam {
 input ModelUserCalendarEventFilterInput {
   id: ModelIDInput
   username: ModelStringInput
-  createdAt: ModelStringInput
   payload: ModelStringInput
+  createdAt: ModelStringInput
   and: [ModelUserCalendarEventFilterInput]
   or: [ModelUserCalendarEventFilterInput]
   not: ModelUserCalendarEventFilterInput
 }
 
 input CreateUserCalendarEventInput {
-  username: String!
-  createdAt: String
+  id: ID
+  username: String
   payload: String
+  createdAt: AWSDateTime
 }
 
 input UpdateUserCalendarEventInput {
   id: ID!
   username: String
-  createdAt: String
   payload: String
+  createdAt: AWSDateTime
 }
 
 input DeleteUserCalendarEventInput {
@@ -815,8 +825,8 @@ input DeleteUserCalendarEventInput {
 
 input ModelUserCalendarEventConditionInput {
   username: ModelStringInput
-  createdAt: ModelStringInput
   payload: ModelStringInput
+  createdAt: ModelStringInput
   and: [ModelUserCalendarEventConditionInput]
   or: [ModelUserCalendarEventConditionInput]
   not: ModelUserCalendarEventConditionInput
@@ -841,6 +851,7 @@ input ModelTransactionHistoryFilterInput {
 }
 
 input CreateTransactionHistoryInput {
+  id: ID
   senderUserProfileId: ID!
   receiverUserProfileId: ID!
   timestamp: AWSTimestamp!
@@ -933,6 +944,9 @@ input ModelRequestsFilterInput {
 }
 
 input CreateRequestsInput {
+  id: ID
+  senderUsername: String
+  senderEmail: String
   receiverUsername: String!
   receiverEmail: String!
   type: RequestType!

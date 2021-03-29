@@ -129,7 +129,7 @@ type TradeUserConnectionOutput {
   pagePermissions: AWSJSON!
   modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType!
-  preferences: String
+  preferences: AWSJSON
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }

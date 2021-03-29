@@ -190,7 +190,7 @@ type TradeUserConnection
   pagePermissions: AWSJSON!
   modelPermissions: [ModelPermission!]!
   employeeType: EmployeeType! # e.g Contractor
-  preferences: String
+  preferences: AWSJSON
 }
 
 type TradeContractConnection
@@ -268,10 +268,10 @@ type Requests
   @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
   @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
   @auth(rules: [{ allow: private, provider: iam }]) {
-  # Auto generated data (populated/overwritten server-side)
+  # Populated/overwritten server-side, don't send these
   id: ID
-  senderUsername: String!
-  senderEmail: String!
+  senderUsername: String
+  senderEmail: String
 
   # User data (required)
   receiverUsername: String!
