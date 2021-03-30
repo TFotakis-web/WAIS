@@ -172,7 +172,7 @@ module.exports = {
 		const query = /* GraphQL */ `
 			query getOfficeDetailsAndPermissionsByUsername(
 				$username: String!
-				$filter: ModelTradeUserConnectionConditionInput
+				$filter: ModelOfficeUserConnectionConditionInput
 				$limit: Int
 				$nextToken: String
 			) {
@@ -186,10 +186,10 @@ module.exports = {
 								pagePermissions
 								modelPermissions
 								preferences
-								tradeId
-								tradeName
+								officeId
+								officeName
 								employeeType
-								trade {
+								office {
 									ownerUsername
 								}
 								user {
@@ -219,7 +219,7 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const query = /* GraphQL */ `
-			query getUserModelPermissionsForOffice($username: String!, $filter: ModelTradeUserConnectionConditionInput, $limit: Int) {
+			query getUserModelPermissionsForOffice($username: String!, $filter: ModelOfficeUserConnectionConditionInput, $limit: Int) {
 				listUserProfileByUsername(username: $username) {
 					items {
 						officeConnections(filter: $filter, limit: $limit) {
@@ -232,7 +232,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlHelper(
-			{ username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+			{ username: username, filter: { and: [{ officeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
 			query,
 			'getUserModelPermissionsForOffice',
 		)
@@ -247,7 +247,7 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const query = /* GraphQL */ `
-			query getUserPagePermissionsForOffice($username: String!, $filter: ModelTradeUserConnectionConditionInput, $limit: Int) {
+			query getUserPagePermissionsForOffice($username: String!, $filter: ModelOfficeUserConnectionConditionInput, $limit: Int) {
 				listUserProfileByUsername(username: $username) {
 					items {
 						officeConnections(filter: $filter, limit: $limit) {
@@ -260,7 +260,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlHelper(
-			{ username: username, filter: { and: [{ tradeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+			{ username: username, filter: { and: [{ officeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
 			query,
 			'getUserPagePermissionsForOffice',
 		)
@@ -319,8 +319,8 @@ module.exports = {
 						senderEmail
 						receiverEmail
 						payload {
-							createTradePayload {
-								tradeName
+							createOfficePayload {
+								officeName
 								zip_code
 								tin
 								professionStartDate
@@ -339,7 +339,7 @@ module.exports = {
 									region
 								}
 							}
-							createCompanyConnectionPayload {
+							createOfficeConnectionPayload {
 								office_email
 							}
 							inviteEmployeeToOfficePayload {
@@ -394,8 +394,8 @@ module.exports = {
 	getOfficeByOwnerUsername: async username => {
 		console.log('getOfficeByOwnerUsername input: ' + username)
 		const query = /* GraphQL */ `
-			query listTradeByOwnerUsername($ownerUsername: String!) {
-				listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+			query listOfficeByOwnerUsername($ownerUsername: String!) {
+				listOfficeByOwnerUsername(ownerUsername: $ownerUsername) {
 					items {
 						id
 						address
@@ -406,7 +406,7 @@ module.exports = {
 						ownerUsername
 						partnersNumberLimit
 						phone
-						tradeName
+						officeName
 						bankAccountInfo
 						chamberRecordNumber
 						civilLiabilityExpirationDate
@@ -426,8 +426,8 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlHelper({ ownerUsername: username }, query, 'listTradeByOwnerUsername')
-		const result = response.data.listTradeByOwnerUsername.items[0] || null
+		const response = await gqlHelper({ ownerUsername: username }, query, 'listOfficeByOwnerUsername')
+		const result = response.data.listOfficeByOwnerUsername.items[0] || null
 		console.log('getOfficeByOwnerUsername output: ' + JSON.stringify(result))
 		return result
 	},
@@ -448,8 +448,8 @@ module.exports = {
 						receiverUsername
 						receiverEmail
 						payload {
-							createTradePayload {
-								tradeName
+							createOfficePayload {
+								officeName
 								zip_code
 								tin
 								professionStartDate
@@ -468,7 +468,7 @@ module.exports = {
 									region
 								}
 							}
-							createCompanyConnectionPayload {
+							createOfficeConnectionPayload {
 								expirationDate
 							}
 							inviteEmployeeToOfficePayload {
@@ -518,8 +518,8 @@ module.exports = {
 						createdAt
 						updatedAt
 						payload {
-							createTradePayload {
-								tradeName
+							createOfficePayload {
+								officeName
 								zip_code
 								tin
 								professionStartDate
@@ -538,7 +538,7 @@ module.exports = {
 									region
 								}
 							}
-							createCompanyConnectionPayload {
+							createOfficeConnectionPayload {
 								office_email
 							}
 							inviteEmployeeToOfficePayload {
@@ -578,7 +578,7 @@ module.exports = {
 		let result = ''
 		console.log(`Decision for ${requestObject.type}: ${decision}`)
 		switch (requestObject.type) {
-			case 'CREATE_TRADE': {
+			case 'CREATE_OFFICE': {
 				if (groups == null || groups.indexOf('admin') === -1) {
 					throw new Error('Admin privilleges are required to resolve this request.')
 				}
@@ -586,13 +586,13 @@ module.exports = {
 				//TODO make this a DDB Trasaction
 				if (decision === 'ACCEPT') {
 					//Create the new Office
-					const createOfficeInput = requestObject.payload.createTradePayload
+					const createOfficeInput = requestObject.payload.createOfficePayload
 					if (!createOfficeInput) {
 						throw new Error('Request has invalid payload.')
 					}
 					createOfficeInput.ownerUsername = senderUserProfile.username
-					createOfficeInput.partnersNumberLimit = callerPayload.createTradePayload.partnersNumberLimit
-					createOfficeInput.employeesNumberLimit = callerPayload.createTradePayload.employeesNumberLimit
+					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
+					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
 					createOfficeInput.verified = true
 					createOfficeInput.files = []
 
@@ -611,26 +611,26 @@ module.exports = {
 
 					//Create a connection between the new Office and the manager.
 					const createTUCInput = {
-						tradeId: createdOfficeId,
-						tradeName: createOfficeInput.tradeName,
+						officeId: createdOfficeId,
+						officeName: createOfficeInput.officeName,
 						userId: senderUserProfile.id,
 						username: senderUserProfile.username,
-						pagePermissions: JSON.stringify(callerPayload.createTradePayload.managerPagePermissions),
-						modelPermissions: callerPayload.createTradePayload.managerModelPermissions,
+						pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
+						modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
 						employeeType: 'MANAGER',
 					}
 
 					const mutation2 = /* GraphQL */ `
-						mutation createTradeUserConnection($input: CreateTradeUserConnectionInput!) {
-							createTradeUserConnection(input: $input) {
+						mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
+							createOfficeUserConnection(input: $input) {
 								id
 							}
 						}
 					`
-					const createTUCResponse = await gqlHelper({ input: createTUCInput }, mutation2, 'createTradeUserConnection')
-					const createdTUCId = createTUCResponse.data.createTradeUserConnection.id
+					const createTUCResponse = await gqlHelper({ input: createTUCInput }, mutation2, 'createOfficeUserConnection')
+					const createdTUCId = createTUCResponse.data.createOfficeUserConnection.id
 					if (!createdTUCId) {
-						throw new Error('Failed to create new Trade-User connection.')
+						throw new Error('Failed to create new Office-User connection.')
 					}
 					result = createdOfficeId
 					console.log(`Request with ID ${id} was accepted.`)
@@ -639,7 +639,7 @@ module.exports = {
 				}
 				break
 			}
-			case 'CREATE_COMPANY_CONNECTION': {
+			case 'CREATE_OFFICE_CONNECTION': {
 				if (decision === 'ACCEPT') {
 					//Get the sencer and receiver offices
 					const senderOffice = await module.exports.getOfficeByOwnerUsername(requestObject.senderUsername)
@@ -653,7 +653,7 @@ module.exports = {
 
 					//Transaction, add the new connection
 					try {
-						const connId = await ddbAPI.addCompanyConnection(senderOffice, receiverOffice)
+						const connId = await ddbAPI.addOfficeConnection(senderOffice, receiverOffice)
 						result = connId
 					} catch (err) {
 						throw new Error(
@@ -743,11 +743,11 @@ module.exports = {
 		const query = /* GraphQL */ `
 			query getEmployeeUserProfilesForManagerUsername(
 				$ownerUsername: String!
-				$filter: ModelTradeUserConnectionFilterInput
+				$filter: ModelOfficeUserConnectionFilterInput
 				$limit: Int
 				$nextToken: String
 			) {
-				listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+				listOfficeByOwnerUsername(ownerUsername: $ownerUsername) {
 					items {
 						workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
 							items {
@@ -784,7 +784,7 @@ module.exports = {
 			query,
 			'getEmployeeUserProfilesForManagerUsername',
 		)
-		let result = response.data.listTradeByOwnerUsername.items
+		let result = response.data.listOfficeByOwnerUsername.items
 		if (result) {
 			result = result[0].workforce
 		}
@@ -801,11 +801,11 @@ module.exports = {
 		const query = /* GraphQL */ `
 			query getContractorUserProfilesForManagerUsername(
 				$ownerUsername: String!
-				$filter: ModelTradeUserConnectionFilterInput
+				$filter: ModelOfficeUserConnectionFilterInput
 				$limit: Int
 				$nextToken: String
 			) {
-				listTradeByOwnerUsername(ownerUsername: $ownerUsername) {
+				listOfficeByOwnerUsername(ownerUsername: $ownerUsername) {
 					items {
 						workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
 							items {
@@ -842,7 +842,7 @@ module.exports = {
 			query,
 			'getContractorUserProfilesForManagerUsername',
 		)
-		let result = response.data.listTradeByOwnerUsername.items
+		let result = response.data.listOfficeByOwnerUsername.items
 		if (result) {
 			result = result[0].workforce
 		}
@@ -890,7 +890,7 @@ module.exports = {
 								mobile
 								postcode
 								tin
-								tradeName
+								officeName
 								updatedAt
 							}
 							nextToken
@@ -930,8 +930,8 @@ module.exports = {
 								vehicleId
 								voucherId
 								customerId
-								tradeName
-								second_tradeId
+								officeName
+								second_officeId
 								contractorId
 								co_name
 								co_TRN
@@ -971,7 +971,7 @@ module.exports = {
 									usage
 									updatedAt
 									trim
-									tradeName
+									officeName
 									taxableHorsepower
 									purchaseDate
 									passengers
@@ -1009,16 +1009,16 @@ module.exports = {
 		const query = /* GraphQL */ `
 			query getPartnerOfficeConnections(
 				$officeId: String!
-				$filter: ModelCompanyAccessConnectionFilterInput
+				$filter: ModelOfficeAccessConnectionFilterInput
 				$limit: Int
 				$nextToken: String
 			) {
-				listCompanyAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+				listOfficeAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
 					items {
 						id
 						to{
 							id
-							tradeName
+							officeName
 							ownerUsername
 							office_email
 							address
@@ -1040,7 +1040,7 @@ module.exports = {
 			query,
 			'getPartnerOfficeConnections',
 		)
-		const result = response.data.listCompanyAccessConnections
+		const result = response.data.listOfficeAccessConnections
 		console.log('getPartnerOfficeConnections output: ' + JSON.stringify(result))
 		return result
 	},
@@ -1220,8 +1220,8 @@ module.exports = {
 				return obj
 			}, {})
 
-		sanitized_input.tradeId = officeDetailsAndPermissions[0].tradeId
-		sanitized_input.tradeName = officeDetailsAndPermissions[0].tradeName
+		sanitized_input.officeId = officeDetailsAndPermissions[0].officeId
+		sanitized_input.officeName = officeDetailsAndPermissions[0].officeName
 		if (!('file' in sanitized_input)) {
 			sanitized_input.file = []
 		}
@@ -1263,9 +1263,9 @@ module.exports = {
 
 		//AWSJSON fields need reparsing \_(**)_/
 		switch (input.type) {
-			case 'CREATE_TRADE': {
-				const payload = input.payload.createTradePayload
-				input.payload.createTradePayload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo)
+			case 'CREATE_OFFICE': {
+				const payload = input.payload.createOfficePayload
+				input.payload.createOfficePayload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo)
 				input.receiverUsername = 'admin1'
 				input.receiverEmail = 'admin1@wais.com'
 				break
@@ -1280,7 +1280,7 @@ module.exports = {
 				input.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.stringify(payload.ctrPagePermissions)
 				break
 			}
-			case 'CREATE_COMPANY_CONNECTION': {
+			case 'CREATE_OFFICE_CONNECTION': {
 				break
 			}
 			default:
@@ -1428,7 +1428,7 @@ module.exports = {
 	//   }
 
 	//   //Get caller information
-	//   const tuc_filter = { and: [{ tradeId: { eq: office_id } }, { username: { eq: caller_username } }] }
+	//   const tuc_filter = { and: [{ officeId: { eq: office_id } }, { username: { eq: caller_username } }] }
 	//   const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 	//   const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items
 	//   const callerModelPermissions = tucItem.modelPermissions
@@ -1444,8 +1444,8 @@ module.exports = {
 	//   }
 
 	//   const input = {
-	//     treadeId: tucItem.tradeId,
-	//     tradeName: tucItem.tradeName,
+	//     treadeId: tucItem.officeId,
+	//     officeName: tucItem.officeName,
 	//     userId: empUserProfile.id,
 	//     username: empUserProfile.username,
 	//     pagePermissions: pagePermissions,
@@ -1455,15 +1455,15 @@ module.exports = {
 
 	//   const expanded_condition = { and: [{ ownerUsername: { eq: caller_username } }, { id: { eq: office_id } }] }
 	//   const mutation = /* GraphQL */ `
-	//     mutation addOfficeEmployee($input: CreateTradeUserConnectionInput!, $condition: ModelTradeUserConnectionConditionInput) {
-	//       createTradeUserConnection(input: $input, condition: $condition) {
+	//     mutation addOfficeEmployee($input: CreateOfficeUserConnectionInput!, $condition: ModelOfficeUserConnectionConditionInput) {
+	//       createOfficeUserConnection(input: $input, condition: $condition) {
 	//         id
 	//       }
 	//     }
 	//   `
 
 	//   const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'addEmployeeToOffice')
-	//   const result = response.data.createTradeUserConnection
+	//   const result = response.data.createOfficeUserConnection
 	//   console.log('addEmployeeToOffice output: ' + JSON.stringify(result))
 
 	//   return result
@@ -1476,23 +1476,23 @@ module.exports = {
 		}
 
 		//Get the office
-		const tuc_filter = { and: [{ tradeId: { eq: officeId } }, { username: { eq: caller_username } }] }
+		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
-		if (!tucItem || tucItem.trade.ownerUsername !== caller_username) {
+		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')
 		}
 
 		const input = { id: tucItem.id, modelPermissions: modelPermissions }
 
 		const mutation1 = /* GraphQL */ `
-      mutation updateTradeUserConnection(input: UpdateTradeUserConnectionInput!) {
-        updateTradeUserConnection(input: $input) {
+      mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
+        updateOfficeUserConnection(input: $input) {
           id
         }
       }
     `
-		const response = await gqlHelper({ input: input }, mutation1, 'updateTradeUserConnection')
+		const response = await gqlHelper({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('updateEmployeeModelPermissionsForOffice output: ' + JSON.stringify(result))
 		return result
@@ -1505,23 +1505,23 @@ module.exports = {
 		}
 
 		//Get the office
-		const tuc_filter = { and: [{ tradeId: { eq: officeId } }, { username: { eq: caller_username } }] }
+		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
-		if (!tucItem || tucItem.trade.ownerUsername !== caller_username) {
+		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')
 		}
 
 		const input = { id: tucItem.id, pagePermissions: pagePermissions }
 
 		const mutation1 = /* GraphQL */ `
-			mutation updateTradeUserConnection(input: UpdateTradeUserConnectionInput!) {
-				updateTradeUserConnection(input: $input) {
+			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
+				updateOfficeUserConnection(input: $input) {
 				id
 				}
 			}
 			`
-		const response = await gqlHelper({ input: input }, mutation1, 'updateTradeUserConnection')
+		const response = await gqlHelper({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
 		return result

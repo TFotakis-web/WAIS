@@ -207,24 +207,24 @@ const resolvers = {
         payload: event.arguments.payload,
       })
     },
-    createCompanyAccessConnectionForOffice: async event => {
-      return await api.createCompanyAccessConnectionForOffice({
+    createOfficeAccessConnectionForOffice: async event => {
+      return await api.createOfficeAccessConnectionForOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         requestInput: event.arguments.input,
         condition: event.arguments.condition,
       })
     },
-    updateCompanyAccessConnectionForOffice: async event => {
-      return await api.updateCompanyAccessConnectionForOffice({
+    updateOfficeAccessConnectionForOffice: async event => {
+      return await api.updateOfficeAccessConnectionForOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         requestInput: event.arguments.input,
         condition: event.arguments.condition,
       })
     },
-    deleteCompanyAccessConnectionForOffice: async event => {
-      return await api.deleteCompanyAccessConnectionForOffice({
+    deleteOfficeAccessConnectionForOffice: async event => {
+      return await api.deleteOfficeAccessConnectionForOffice({
         username: event.identity.claims['cognito:username'],
         officeId: event.arguments.officeId,
         requestInput: event.arguments.input,

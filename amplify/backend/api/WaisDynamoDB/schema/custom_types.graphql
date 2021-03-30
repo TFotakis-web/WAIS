@@ -35,8 +35,8 @@ type InsurancePackage {
 }
 
 enum RequestType {
-    CREATE_TRADE
-    CREATE_COMPANY_CONNECTION
+    CREATE_OFFICE
+    CREATE_OFFICE_CONNECTION
     INVITE_EMPLOYEE_TO_OFFICE
     INVITE_CONTRACTOR_TO_OFFICE
 }
@@ -54,8 +54,8 @@ enum ModelPermission {
     EMPLOYEE_REMOVE
     CONTRACTOR_ADD
     CONTRACTOR_REMOVE
-    COMPANY_CONN_CREATE
-    COMPANY_CONN_DELETE
+    OFFICE_CONN_CREATE
+    OFFICE_CONN_DELETE
 }
 
 enum RequestDecision {
@@ -65,13 +65,13 @@ enum RequestDecision {
 
 ##
 type CreateRequestPayload {
-    createTradePayload: RequestCreateOfficePayload
-    createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
+    createOfficePayload: RequestCreateOfficePayload
+    createOfficeConnectionPayload: RequestOfficeAccessConnectionPayload
     inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
     inviteContractorToOfficePayload: RequestInviteContractorPayload
 }
 type RequestCreateOfficePayload {
-    tradeName: String!
+    officeName: String!
     address: String
     office_email: String!
     zip_code: String
@@ -86,7 +86,7 @@ type RequestCreateOfficePayload {
     files: [S3Object]
 }
 
-type RequestCompanyAccessConnectionPayload {
+type RequestOfficeAccessConnectionPayload {
     office_email: String!
 }
 
@@ -104,8 +104,8 @@ type RequestInviteContractorPayload {
 
 ##
 input ResolveRequestPayloadInput {
-    createTradePayload: ResolveCreateOfficePayload
-    createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
+    createOfficePayload: ResolveCreateOfficePayload
+    createOfficeConnectionPayload: ResolveOfficeAccessConnectionPayload
     inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
     inviteContractorToOfficePayload: ResolveInviteContractorPayload
 }
@@ -116,7 +116,7 @@ input ResolveCreateOfficePayload {
     partnersNumberLimit: Int!
     employeesNumberLimit: Int!
 }
-input ResolveCompanyAccessConnectionPayload {
+input ResolveOfficeAccessConnectionPayload {
     expirationDate: AWSTimestamp!
 }
 input ResolveInviteEmployeePayload {

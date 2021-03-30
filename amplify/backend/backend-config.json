@@ -72,21 +72,6 @@
       "providerPlugin": "awscloudformation",
       "build": true
     },
-    "dynamodbtrigger": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
     "asyncactions": {
       "build": true,
       "providerPlugin": "awscloudformation",

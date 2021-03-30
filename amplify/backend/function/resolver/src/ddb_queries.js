@@ -16,7 +16,7 @@ module.exports = {
 	/**
 	 * ==DDB TRANSACTION==
 	 * Update members and put user into members iff remaining > 0 AND memebers dont contain empUsername
-	 * Put new tradecon
+	 * Put new officecon
 	 * Atomically decrement the members counter by one
 	 *
 	 * @param {*} office
@@ -64,12 +64,12 @@ module.exports = {
 					{
 						//Add the user's connection with the Office
 						Put: {
-							TableName: 'TradeUserConnection' + ddbSuffix,
+							TableName: 'OfficeUserConnection' + ddbSuffix,
 							Item: {
-								__typename: 'TradeUserConnection',
+								__typename: 'OfficeUserConnection',
 								id: connId,
-								tradeId: office.id,
-								tradeName: office.tradeName,
+								officeId: office.id,
+								officeName: office.officeName,
 								userId: userId,
 								username: empUsername,
 								modelPermissions: empModelPermissions,
@@ -90,10 +90,10 @@ module.exports = {
 
 	/**
 	 * Transaction.
-	 * Connects 2 Companies via a CompanyAccessConnection.
+	 * Connects 2 Offices via a OfficeAccessConnection.
 	 */
-	addCompanyConnection: async (senderOffice, receiverOffice) => {
-		console.log('addCompanyConnection input: ' + [JSON.stringify(senderOffice), JSON.stringify(receiverOffice)])
+	addOfficeConnection: async (senderOffice, receiverOffice) => {
+		console.log('addOfficeConnection input: ' + [JSON.stringify(senderOffice), JSON.stringify(receiverOffice)])
 		const now = new Date().toISOString()
 		const connId = senderOffice.id + '_' + receiverOffice.id
 		await ddb.transactWrite({
@@ -140,16 +140,16 @@ module.exports = {
 					},
 				},
 				{
-					//Create the CompanyAccessConnection item
+					//Create the OfficeAccessConnection item
 					Put: {
-						TableName: 'TradeUserConnection' + ddbSuffix,
+						TableName: 'OfficeUserConnection' + ddbSuffix,
 						Item: {
-							__typename: 'TradeUserConnection',
+							__typename: 'OfficeUserConnection',
 							id: senderOffice.id + '_' + receiverOffice.id,
 							fromId: senderOffice.id,
 							toId: receiverOffice.id,
-							fromTradeName: senderOffice.tradeName,
-							toTradeName: receiverOffice.tradeName,
+							fromOfficeName: senderOffice.officeName,
+							toOfficeName: receiverOffice.officeName,
 							expirationDate: new Date(new Date().getTime() + 1000 * 60 * 24 * 7).getTime(),
 							message: ' ',
 							createdAt: now,
@@ -159,27 +159,27 @@ module.exports = {
 				},
 			],
 		})
-		console.log('addCompanyConnection output: ' + connId)
+		console.log('addOfficeConnection output: ' + connId)
 		return connId
 	},
 	/**
 	 * Remove a user from the given office.
 	 * The index of the user's username in the office members index is necessary.
 	 *
-	 * @param {String} tradeUserConId
+	 * @param {String} officeUserConId
 	 * @param {String} officeId
 	 * @param {Number} memberIndex
 	 */
-	removeEmployeeFromOffice: async (tradeUserConId, officeId, memberIndex) => {
-		console.log('Attempting to remove a user from an office: ' + [tradeUserConId, officeId, memberIndex])
+	removeEmployeeFromOffice: async (officeUserConId, officeId, memberIndex) => {
+		console.log('Attempting to remove a user from an office: ' + [officeUserConId, officeId, memberIndex])
 		try {
 			const resp = await ddb
 				.transactWriteItems({
 					TransactItems: [
 						{
 							Delete: {
-								TableName: 'TradeUserConnection' + ddbSuffix,
-								Key: { id: tradeUserConId },
+								TableName: 'OfficeUserConnection' + ddbSuffix,
+								Key: { id: officeUserConId },
 							},
 						},
 						{

@@ -2,14 +2,14 @@
 type Office
     @model(subscriptions: null)
     @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
-    @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listTradeByOfficeEmail")
-    @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
+    @key(name: "byOfficeName", fields: ["officeName", "ownerUsername"], queryField: "listOfficeByName")
+    @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listOfficeByOfficeEmail")
+    @key(name: "byOwnerUsername", fields: ["ownerUsername", "officeName"], queryField: "listOfficeByOwnerUsername") {
     # UID of this office
     id: ID
 
     # Protected info
-    tradeName: String!
+    officeName: String!
     ownerUsername: String!
     address: String
     office_email: String!
@@ -36,16 +36,16 @@ type Office
     insuranceCompanies: [InsuranceCompany!]!
 
     # Access to connected offices, private access
-    companyConnections: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"])
+    officeConnections: [OfficeAccessConnection] @connection(keyName: "byFromOfficeName", fields: ["officeName"])
 
     # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
-    officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    officeCustomers: [Customer] @connection(keyName: "byOfficeName", fields: ["officeName"])
 
     # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
-    officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    officeContracts: [Contract] @connection(keyName: "byOfficeName", fields: ["officeName"])
 
     # Employees and contractors of this Office
-    workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    workforce: [OfficeUserConnection] @connection(keyName: "byOfficeName", fields: ["officeName"])
 }
 
 type UserProfile
@@ -89,18 +89,18 @@ type UserProfile
     calendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
 
     # Access to Office (or Offices iff a Contractor)
-    officeConnections: [TradeUserConnection] @connection(keyName: "byTradeUsername", fields: ["username"])
+    officeConnections: [OfficeUserConnection] @connection(keyName: "byOfficeUsername", fields: ["username"])
 }
 
 type Vehicle
     @model(subscriptions: null)
     @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
-    @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
+    @key(name: "byOfficeName", fields: ["officeName", "numberPlate"], queryField: "listVehiclesByOfficeName")
+    @key(name: "byVehicleOwner", fields: ["vehicle_owner", "officeName"], queryField: "listVehiclesByOwner") {
     id: ID
     numberPlate: String!
     officeId: ID!
-    tradeName: String!
+    officeName: String!
     color: String!
     manufacturer: String!
     model: String!
@@ -122,9 +122,9 @@ type Vehicle
 type Contract
     @model(subscriptions: null)
     @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
-    @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
-    @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
+    @key(name: "byOfficeName", fields: ["officeName", "createdAt"], queryField: "listContractsByOfficeName")
+    @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "officeName"], queryField: "listContractsByVehicleNumberPlates")
+    @key(name: "byCustomerId", fields: ["customerId", "officeName"], queryField: "listContractsByCustomerId") {
     id: ID
     contractId: ID! # Not unique, remember that we keep a history of each contract
     version: Int! # For history
@@ -132,8 +132,8 @@ type Contract
     vehicleId: ID!
     voucherId: String!
     customerId: String!
-    tradeName: String!
-    second_tradeId: String #Optional
+    officeName: String!
+    second_officeId: String #Optional
     contractorId: String #Optional
     co_name: String # CoSign participant name (OPTIONAL)
     co_TRN: String # CoSign participant "AFM" (OPTIONAL)
@@ -156,10 +156,10 @@ type Contract
 type Customer
     @model(subscriptions: null)
     @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
+    @key(name: "byOfficeName", fields: ["officeName", "firstName", "lastName"], queryField: "listCustomersByOfficeName") {
     id: ID
     tin: String!
-    tradeName: String!
+    officeName: String!
     firstName: String
     lastName: String
     fathersName: String
@@ -175,20 +175,20 @@ type Customer
     driversLicense: DriversLicense
 }
 
-type TradeUserConnection
+type OfficeUserConnection
     @model(subscriptions: null)
-    @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
-    @key(name: "byEmployeeType", fields: ["employeeType", "username", "tradeName"], queryField: "listTradeUserConnectionsByEmployeeType")
-    @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
-    @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
-    @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
+    @key(name: "byOfficeName", fields: ["officeName", "userId"], queryField: "listOfficeUserConnectionsByOfficeName")
+    @key(name: "byEmployeeType", fields: ["employeeType", "username", "officeName"], queryField: "listOfficeUserConnectionsByEmployeeType")
+    @key(name: "byUserId", fields: ["userId", "officeName"], queryField: "listOfficeUserConnectionsByUserId")
+    @key(name: "byOfficeAndUser", fields: ["officeName", "username"], queryField: "listOfficeUserConnectionsByOfficeAndUser")
+    @key(name: "byOfficeUsername", fields: ["username", "officeName"], queryField: "listOfficeUserConnectionsByUsername")
     @auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
-    tradeId: ID!
-    tradeName: String!
+    officeId: ID!
+    officeName: String!
     userId: ID!
     username: String!
-    trade: Office! @connection(fields: ["tradeId"])
+    office: Office! @connection(fields: ["officeId"])
     user: UserProfile! @connection(fields: ["userId"])
     pagePermissions: AWSJSON!
     modelPermissions: [ModelPermission!]!
@@ -196,50 +196,38 @@ type TradeUserConnection
     preferences: AWSJSON
 }
 
-type TradeContractConnection
+type OfficeContractConnection
     @model(subscriptions: null)
-    @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
-    @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
-    @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
+    @key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
+    @key(name: "byOfficeName", fields: ["officeName", "officeId"], queryField: "listOfficeContractConnectionByOfficeName")
+    @key(name: "byContractId", fields: ["contractId", "officeId"], queryField: "listOfficeContractConnectionByContractId")
     @auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
-    tradeId: ID!
-    tradeName: String!
+    officeId: ID!
+    officeName: String!
     contractId: ID!
-    trade: Office! @connection(fields: ["tradeId"])
+    office: Office! @connection(fields: ["officeId"])
     contract: Contract! @connection(fields: ["contractId"])
     ownsContract: Boolean! #If true then the Office can edit the Contract
 }
 
-type CompanyAccessConnection
+type OfficeAccessConnection
     @model(subscriptions: null)
-    @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listCompanyAccessConnectionByFromId")
-    @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
-    @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
-    @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
+    @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeAccessConnectionByFromId")
+    @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listOfficeAccessConnectionByToId")
+    @key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeAccessConnectionByFromOfficeName")
+    @key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeAccessConnectionByToOfficeName")
     @auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     fromId: ID!
-    fromTradeName: String!
+    fromOfficeName: String!
     toId: ID!
-    toTradeName: String!
-    from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-    to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+    toOfficeName: String!
+    from: Office! @connection(fields: ["fromId"]) #This office initiates the collaboration
+    to: Office! @connection(fields: ["toId"]) #This office needs to accept the collaboration
     expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
     message: String
 }
-
-#For calendar use
-type UserCalendarEvent
-    @model(subscriptions: null)
-    @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
-    @auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    username: String # Populated server-side
-    payload: String
-    createdAt: AWSDateTime!
-}
-
 type TransactionHistory
     @model(subscriptions: null)
     @key(
@@ -281,4 +269,15 @@ type Requests
     receiverEmail: String!
     type: RequestType!
     payload: CreateRequestPayload!
+}
+
+#For calendar use
+type UserCalendarEvent
+    @model(subscriptions: null)
+    @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    username: String # Populated server-side
+    payload: String
+    createdAt: AWSDateTime!
 }
