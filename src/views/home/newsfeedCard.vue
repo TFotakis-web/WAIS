@@ -20,48 +20,48 @@
 	</mdb-card>
 </template>
 <script>
-export default {
-	name: "newsfeedCard",
-	props: {
-		maxContentHeight: {
-			type: Number,
-			default: 300
+	export default {
+		name: 'newsfeedCard',
+		props: {
+			maxContentHeight: {
+				type: Number,
+				default: 300,
+			},
 		},
-	},
-	data() {
-		return {
-			news: []
-		}
-	},
-	mounted() {
-		this.getNews();
-	},
-	methods: {
-		getNews() {
-			this.news = [
-				{
-					id: 0,
-					heading: 'List group item heading',
-					releaseDate: '3 days ago',
-					middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
-					lowerText: 'Donec id elit non mi porta.',
-				},
-				{
-					id: 1,
-					heading: 'List group item heading',
-					releaseDate: '3 days ago',
-					middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
-					lowerText: 'Donec id elit non mi porta.',
-				},
-				{
-					id: 2,
-					heading: 'List group item heading',
-					releaseDate: '3 days ago',
-					middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
-					lowerText: 'Donec id elit non mi porta.',
-				},
-			];
-		}
-	},
-}
+		data() {
+			return {
+				news: [],
+			};
+		},
+		mounted() {
+			this.getNews();
+		},
+		methods: {
+			getNews() {
+				this.news = [
+					{
+						id: 0,
+						heading: 'List group item heading',
+						releaseDate: '3 days ago',
+						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
+						lowerText: 'Donec id elit non mi porta.',
+					},
+					{
+						id: 1,
+						heading: 'List group item heading',
+						releaseDate: '3 days ago',
+						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
+						lowerText: 'Donec id elit non mi porta.',
+					},
+					{
+						id: 2,
+						heading: 'List group item heading',
+						releaseDate: '3 days ago',
+						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
+						lowerText: 'Donec id elit non mi porta.',
+					},
+				];
+			},
+		},
+	};
 </script>

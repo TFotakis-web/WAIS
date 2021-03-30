@@ -4,7 +4,7 @@
       "navbar-item": {
         "database": "Βάση Δεδομένων",
         "contract-approval": "Έγκριση συμβολαίου",
-        "payment": "ΠΛηρωμή",
+        "payment": "Πληρωμή",
         "bank": "Iris",
         "collaboration": " Συνεργασία",
         "notifications": "Ειδοποιήσεις",
@@ -89,7 +89,8 @@
       "signingUp": "Εγγραφή...",
       "resetYourPassword": "Επαναφορά κωδικού",
       "forgotYourPassword": "Ξεχάσατε τον κωδικό σας;",
-      "changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας."
+      "changeYourPassword": "Παρακαλούμε αλλάξτε τον κωδικό σας.",
+      "confirmSignUp": "Επιβεβαίωση"
     },
     "error404": {
       "header": "Σφάλμα 404! Η σελίδα δεν βρέθηκε.",
@@ -205,7 +206,8 @@
     "companyAccess": "Πρόσβαση εταιριών",
     "employeesNumberLimit": "Όριο υπαλλήλων",
     "billing": "Τιμολόγηση",
-    "issuing": "Έκδοση"
+    "issuing": "Έκδοση",
+    "chooseFile": "Επιλέξτε αρχείο"
   },
   "actions": {
     "submit": "Υποβολή",
@@ -226,7 +228,9 @@
     "accept": "Αποδοχή",
     "accepting": "Αποδέχεται",
     "reject": "Απόρριψη",
-    "rejecting": "Απορρίπτεται"
+    "rejecting": "Απορρίπτεται",
+    "ok": "OK",
+    "cancel": "Άκυρο"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",

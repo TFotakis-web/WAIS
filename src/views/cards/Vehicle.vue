@@ -1,35 +1,38 @@
 <template>
-	<div class="text-center pt-5">
-		<h1>{{ $t('components.navigation.sidenav.cards.vehicleCards') }}</h1>
-		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
-		<mdb-container>
-			<mdb-row>
-				<mdb-col>
-					<mdb-input v-model="numberPlate" label="Vehicle Name" />
-					<mdb-btn @click.native="createVehicle">Save</mdb-btn>
-				</mdb-col>
-			</mdb-row>
-			<mdb-row>
-				<mdb-col>
-					<mdb-list-group>
-						<mdb-list-group-item
-							v-for="(vehicle, index) in vehicles"
-							:key="index"
-							@click.native="openVehicleDetail(vehicle)"
-							:justify-content-between="false"
-							action
-						>
-							<span>{{ vehicle.numberPlate }}</span>
-						</mdb-list-group-item>
-					</mdb-list-group>
-				</mdb-col>
-			</mdb-row>
-		</mdb-container>
-	</div>
+	<ion-grid fixed>
+		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
+		<!--	<div class="text-center pt-5">
+				<h1>{{ $t('components.navigation.sidenav.cards.vehicleCards') }}</h1>
+				<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
+				<mdb-container>
+					<mdb-row>
+						<mdb-col>
+							<mdb-input v-model="numberPlate" label="Vehicle Name"/>
+							<mdb-btn @click="createVehicle">Save</mdb-btn>
+						</mdb-col>
+					</mdb-row>
+					<mdb-row>
+						<mdb-col>
+							<mdb-list-group>
+								<mdb-list-group-item
+									v-for="(vehicle, index) in vehicles"
+									:key="index"
+									@click="openVehicleDetail(vehicle)"
+									:justify-content-between="false"
+									action
+								>
+									<span>{{ vehicle.numberPlate }}</span>
+								</mdb-list-group-item>
+							</mdb-list-group>
+						</mdb-col>
+					</mdb-row>
+				</mdb-container>
+			</div>-->
+	</ion-grid>
 </template>
-
 <script>
 	import { mapGetters } from 'vuex';
+
 	export default {
 		name: 'VehicleCards',
 		data() {
@@ -38,14 +41,16 @@
 				error: '',
 			};
 		},
-		mounted: async function() {
-			this.$store.dispatch('vehicle/getVehiclesData');
+		mounted: function () {
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('components.navigation.sidenav.cards.vehicleCards'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+			// this.$store.dispatch('vehicle/getVehiclesData');
 		},
 		methods: {
 			openVehicleDetail(vehicle) {
 				this.$router.push({ name: 'VehicleCardsDetails', params: { id: vehicle.id } });
 			},
-			createVehicle: async function() {
+			createVehicle: async function () {
 				this.error = '';
 				if (!this.numberPlate) {
 					this.error = 'Pleas enter a vehicle name';

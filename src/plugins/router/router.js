@@ -1,0 +1,114 @@
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+
+import { store } from '@/plugins/store/store';
+
+const routes = [
+	{ path: '/auth/confirmSignUp', name: 'ConfirmSignUp', component: () => import('@/views/auth/ConfirmSignUp'), meta: { guest: true } },
+	{ path: '/auth/forceChangePassword', name: 'ForceChangePassword', component: () => import('@/views/auth/ForceChangePassword'), meta: { guest: true } },
+	{ path: '/auth/forgotPassword', name: 'ForgotPassword', component: () => import('@/views/auth/ForgotPassword'), meta: { guest: true } },
+	{ path: '/auth/signIn', name: 'SignIn', component: () => import('@/views/auth/SignIn'), meta: { guest: true } },
+	{ path: '/auth/signUp', name: 'SignUp', component: () => import('@/views/auth/SignUp'), meta: { guest: true } },
+	{ path: '/auth/tradeCreationForm', name: 'TradeCreationForm', component: () => import('@/views/auth/TradeCreationForm'), meta: { requiresAuth: true } },
+
+	{
+		path: '', name: 'BaseLayout', component: () => import('@/components/base/BaseLayout'), meta: { requiresAuth: true },
+		children: [
+			{ path: '', name: 'Home', component: () => import('@/views/home/Home'), meta: { requiresAuth: true } },
+			{ path: '/pricing/vehicle', name: 'VehiclePricing', component: () => import('@/views/pricing/Vehicle'), meta: { requiresAuth: true } },
+			{ path: '/pricing/industrialLiability', name: 'IndustrialLiabilityPricing', component: () => import('@/views/pricing/IndustrialLiability'), meta: { requiresAuth: true } },
+			{ path: '/pricing/fire', name: 'FirePricing', component: () => import('@/views/pricing/Fire'), meta: { requiresAuth: true } },
+			{ path: '/pricing/life', name: 'LifePricing', component: () => import('@/views/pricing/Life'), meta: { requiresAuth: true } },
+			{ path: '/contract/file', name: 'ContractsFile', component: () => import('@/views/contracts/File'), meta: { requiresAuth: true } },
+			{ path: '/contract/uncollected', name: 'UncollectedContracts', component: () => import('@/views/contracts/Uncollected'), meta: { requiresAuth: true } },
+			{ path: '/contract/collected', name: 'CollectedContracts', component: () => import('@/views/contracts/Collected'), meta: { requiresAuth: true } },
+			{ path: '/contract/additionalActs', name: 'ContractAdditionalActs', component: () => import('@/views/contracts/AdditionalActs'), meta: { requiresAuth: true } },
+			{ path: '/contract/greenCard', name: 'GreenCardContracts', component: () => import('@/views/contracts/GreenCard'), meta: { requiresAuth: true } },
+			{ path: '/contract/unclaimed', name: 'UnclaimedContracts', component: () => import('@/views/contracts/Unclaimed'), meta: { requiresAuth: true } },
+			{ path: '/contract/invalid', name: 'InvalidContracts', component: () => import('@/views/contracts/Invalid'), meta: { requiresAuth: true } },
+			{ path: '/contract/new', name: 'NewContract', component: () => import('@/views/contracts/New'), meta: { requiresAuth: true } },
+			{ path: '/processing/dueDateRegister', name: 'ProcessingDueDateRegister', component: () => import('@/views/processing/DueDateRegister'), meta: { requiresAuth: true } },
+			{ path: '/processing/duePayment', name: 'ProcessingDuePayment', component: () => import('@/views/processing/DuePayment'), meta: { requiresAuth: true } },
+			{ path: '/processing/paid', name: 'ProcessingPaid', component: () => import('@/views/processing/Paid'), meta: { requiresAuth: true } },
+			{ path: '/processing/losses', name: 'ProcessingLosses', component: () => import('@/views/processing/Losses'), meta: { requiresAuth: true } },
+			{ path: '/accounting/receipts', name: 'AccountingReceipts', component: () => import('@/views/accounting/Receipts'), meta: { requiresAuth: true } },
+			{ path: '/accounting/registers', name: 'AccountingRegisters', component: () => import('@/views/accounting/Registers'), meta: { requiresAuth: true } },
+			{ path: '/accounting/todaysIncome', name: 'AccountingTodaysIncome', component: () => import('@/views/accounting/TodaysIncome'), meta: { requiresAuth: true } },
+			{ path: '/accounting/commissionsUncollected', name: 'AccountingCommissionsUncollected', component: () => import('@/views/accounting/CommissionsUncollected'), meta: { requiresAuth: true } },
+			{ path: '/accounting/commissionsCollected', name: 'AccountingCommissionsCollected', component: () => import('@/views/accounting/CommissionsCollected'), meta: { requiresAuth: true } },
+			{ path: '/accounting/mutualAccount', name: 'AccountingMutualAccount', component: () => import('@/views/accounting/MutualAccount'), meta: { requiresAuth: true } },
+			{ path: '/contractors/suppliers', name: 'SupplierContractors', component: () => import('@/views/contractors/Supplier'), meta: { requiresAuth: true } },
+			{ path: '/contractors/externalContractors', name: 'ContractorsExternalContractors', component: () => import('@/views/contractors/ExternalContractors'), meta: { requiresAuth: true } },
+			{ path: '/cards/vehicle', name: 'VehicleCards', component: () => import('@/views/cards/Vehicle'), meta: { requiresAuth: true } },
+			{ path: '/cards/vehicle/:id', name: 'VehicleCardsDetails', component: () => import('@/views/cards/VehicleDetails'), meta: { requiresAuth: true } },
+			{ path: '/cards/customers', name: 'CustomerCards', component: () => import('@/views/cards/Customer'), meta: { requiresAuth: true } },
+			{ path: '/library', name: 'Library', component: () => import('@/views/library/Library'), meta: { requiresAuth: true } },
+			{ path: '/trade', name: 'Trade', component: () => import('@/views/trade/Trade'), meta: { requiresAuth: true } },
+			{ path: '/profile', name: 'UserProfile', component: () => import('@/views/userProfile/UserProfile'), meta: { requiresAuth: true } },
+			{ path: '/platformData', name: 'PlatformData', component: () => import('@/views/platformData/PlatformData'), meta: { requiresAuth: true, isAdmin: true } },
+			{ path: '/devTools', name: 'DevTools', component: () => import('@/views/devTools/DevTools'), meta: { requiresAuth: true, isAdmin: true } },
+			{ path: '/contractApproval', name: 'ContractApproval', component: () => import('@/views/contractApproval/ContractApproval'), meta: { requiresAuth: true } },
+			{ path: '/payment', name: 'Payment', component: () => import('@/views/payment/Payment'), meta: { requiresAuth: true } },
+			{ path: '/bank', name: 'Bank', component: () => import('@/views/bank/Bank'), meta: { requiresAuth: true } },
+			{ path: '/collaboration', name: 'Collaboration', component: () => import('@/views/collaboration/Collaboration'), meta: { requiresAuth: true } },
+			{ path: '/notifications', name: 'Notifications', component: () => import('@/views/notifications/Notifications'), meta: { requiresAuth: true } },
+			{ path: '/notifications/:id', name: 'NotificationDetails', component: () => import('@/views/notifications/NotificationDetails'), meta: { requiresAuth: true } },
+			{ path: '/wallet', name: 'Wallet', component: () => import('@/views/wallet/Wallet'), meta: { requiresAuth: true } },
+		],
+	},
+	{ path: '/:catchAll(.*)', name: 'NotFound', component: () => import('@/views/errorPages/NotFound') },
+];
+
+const router = createRouter({
+	history: createWebHistory(process.env.BASE_URL),
+	routes,
+});
+
+function hasPermissions(route) {
+	let flag = true;
+	const permissions = store.getters['auth/permissions'];
+
+	flag &= permissions[route.name]?.read;
+	flag &= permissions[route.name]?.write;
+
+	// for (const permission of route.meta.permissions) {
+	// 	flag &= permissions.includes(permission);
+	// }
+
+	return flag;
+}
+
+router.beforeEach((to, from, next) => {
+	let user = store.getters['auth/user'];
+	if (to.meta.requiresAuth) {
+		if (!user) {
+			return store.dispatch('auth/currentAuthenticatedUser')
+				.then(() => {
+					if (!hasPermissions(to)) {
+						next({ name: 'Home' });
+					} else {
+						next();
+					}
+				})
+				.catch(() => {
+					next({ name: 'SignIn' });
+				});
+		}
+		if (!hasPermissions(to)) {
+			return next({ name: 'Home' });
+		}
+	} else if (to.meta.guest) {
+		if (!user) {
+			return store.dispatch('auth/currentAuthenticatedUser')
+				.then(() => {
+					next({ name: 'Home' });
+				})
+				.catch(() => {
+					next();
+				});
+		}
+		return next({ name: 'Home' });
+	}
+	next();
+});
+
+export default router;

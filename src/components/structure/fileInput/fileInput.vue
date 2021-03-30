@@ -1,137 +1,124 @@
 <template>
-	<div>
-		<input
-			type="file"
-			class="d-none"
-			@change="onFilePicked"
-			ref="fileInput"
-			:accept="accept"
-			:multiple="multiple"
-		/>
-		<loading-btn
-			@click.native="$refs.fileInput.click()"
-			:color="btnColor"
-			:rounded="rounded"
-			:size="size"
-			:outline="outline"
-			:floating="floating"
-			:flat="flat"
-			:transparent="transparent"
-			:gradient="gradient"
-			:icon="icon"
-			:iconLeft="iconLeft"
-			:iconRight="iconRight"
-			:text="btnTitle"
-			:loading-text="$t('actions.uploading')"
-			:loading="loading"
-		/>
-		<span v-for="(file, fileIndex) in files" :key="file.url + fileIndex">
-			<a :href="downloadUrls[fileIndex]" target="_blank" class="mr-1">{{ file.filename }}</a>
-			<mdb-icon far icon="times-circle" @click.native="deleteFile(fileIndex)" class="clickable"/>
-			<span v-if="fileIndex !== files.length - 1">, </span>
-		</span>
-	</div>
+	<input
+		type="file"
+		class="ion-hide"
+		@change="onFilePicked"
+		ref="fileInput"
+		:accept="accept"
+		:multiple="multiple"
+	/>
+	<loading-btn
+		@click="$refs.fileInput.click()"
+		:color="color"
+		:disabled="disabled"
+		:expand="expand"
+		:fill="fill"
+		:shape="shape"
+		:size="size"
+		:strong="strong"
+		:text="text ? text : $t('fields.chooseFile')"
+		:loading-text="loadingText ? loadingText : $t('actions.uploading')"
+		:loading="loading"
+	/>
+	<ion-list>
+		<ion-item v-for="(file, fileIndex) in files" :key="file.filePath + '/' + file.filename">
+			<ion-button :href="downloadUrls[fileIndex]" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
+			<ion-button @click="deleteFile(fileIndex)" fill="clear" size="small">
+				<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+			</ion-button>
+		</ion-item>
+	</ion-list>
 </template>
 <script>
-	import { Storage } from "aws-amplify";
+	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
-		name: "fileInput",
+		name: 'fileInput',
 		components: {
-			loadingBtn
+			loadingBtn,
 		},
 		props: {
-			value: {
-				type: [Object, Array],
-				default: function () {
-					return this.multiple ? [] : {}
-				}
-			},
-			accept: {
+			color: {
 				type: String,
-				default: ''
+				default: 'primary',
 			},
-			btnColor: {
-				type: String,
-				default: 'primary'
-			},
-			btnTitle: {
-				type: String,
-				default: 'Choose file'
-			},
-			multiple: {
+			disabled: {
 				type: Boolean,
-				default: false
+				default: false,
 			},
-			textFieldTitle: {
+			expand: {
 				type: String,
-				default: 'Upload your file'
+				default: '',
 			},
-			rounded: {
-				type: Boolean,
-				default: false
+			fill: {
+				type: String,
+				default: 'solid',
+			},
+			shape: {
+				type: String,
+				default: '',
 			},
 			size: {
 				type: String,
-				default: ''
+				default: 'default',
 			},
-			outline: {
+			strong: {
+				type: Boolean,
+				default: false,
+			},
+			text: {
 				type: String,
-				default: ''
+				default: '',
 			},
-			floating: {
-				type: Boolean,
-				default: false
-			},
-			flat: {
-				type: Boolean,
-				default: false
-			},
-			transparent: {
-				type: Boolean,
-				default: false
-			},
-			gradient: {
+			loadingText: {
 				type: String,
-				default: ''
+				default: '',
 			},
-			icon: {
+			modelValue: {
+				type: [Object, Array],
+				default: function (props) {
+					return props.multiple ? [] : {};
+				},
+			},
+			accept: {
 				type: String,
-				default: 'cloud-upload-alt'
+				default: '',
 			},
-			iconLeft: {
+			multiple: {
 				type: Boolean,
-				default: false
-			},
-			iconRight: {
-				type: Boolean,
-				default: false
+				default: false,
 			},
 			sizeLimitInMBs: {
 				type: Number,
-				default: 1
+				default: 1,
 			},
 			renameTo: {
 				type: String,
-				default: ''
+				default: '',
 			},
 			filePath: {
 				type: String,
-				default: ''
+				default: '',
+			},
+			level: {
+				type: String,
+				default: 'private',
 			},
 		},
+		emits: ['update:modelValue', 'update:downloadUrls'],
 		data() {
 			return {
 				files: [],
 				downloadUrls: [],
-				loading: false
-			}
+				loading: false,
+			};
 		},
 		methods: {
 			async onFilePicked(event) {
 				this.loading = true;
 				this.files = [];
+				this.downloadUrls = [];
 
 				for (const file of event.target.files) {
 					if (file.size > this.sizeLimitInBytes) {
@@ -151,42 +138,59 @@
 
 					const contentType = file.type;
 
-					let url = '';
 					try {
-						const response = await Storage.put(this.filePath + filename, file, {
-							level: 'private',
+						await Storage.put(this.filePath + filename, file, {
+							level: this.level,
 							contentType: contentType,
 						});
-						url = `private/${this.$store.getters['auth/user'].id}/${response.key}`;
+
+						this.files.push({
+							filePath: this.filePath,
+							filename,
+							level: this.level,
+							contentType,
+							idToken: this.$store.getters['auth/user'].id,
+						});
+
+						const response = await Storage.get(this.filePath + filename, { level: this.level });
+						this.downloadUrls.push(response);
 					} catch (error) {
 						console.error(error);
 					}
-
-					this.files.push({ filename, url });
 				}
+				event.target.value = '';
 				this.loading = false;
+				if (this.multiple) {
+					this.$emit('update:modelValue', this.files);
+					this.$emit('update:downloadUrls', this.downloadUrls);
+				} else {
+					this.$emit('update:downloadUrls', this.downloadUrls[0]);
+				}
 			},
 			async deleteFile(fileIndex) {
 				const file = this.files[fileIndex];
-				await Storage.remove(this.filePath + file.filename, { level: 'private' });
+				await Storage.remove(file.filePath + file.filename, { level: file.level });
 				this.files.splice(fileIndex, 1);
-			}
+				this.downloadUrls.splice(fileIndex, 1);
+
+				if (this.multiple) {
+					this.$emit('update:modelValue', this.files);
+					this.$emit('update:downloadUrls', this.downloadUrls);
+				} else {
+					this.$emit('update:modelValue', this.files[0]);
+					this.$emit('update:downloadUrls', this.downloadUrls[0]);
+				}
+			},
 		},
 		computed: {
 			sizeLimitInBytes() {
 				return this.sizeLimitInMBs * 2 ** 20;
-			}
+			},
 		},
 		watch: {
-			files(newValue) {
-				if (this.multiple) {
-					this.$emit('input', newValue);
-				} else {
-					this.$emit('input', newValue[0]);
-				}
-			},
-			async value(newValue) {
+			async modelValue(newValue) {
 				this.files = [];
+				this.downloadUrls = [];
 
 				if (this.multiple) {
 					this.files = newValue;
@@ -194,11 +198,11 @@
 					this.files.push(newValue);
 				}
 
-				for (const fileIndex in this.files) {
-					const response = await Storage.get(this.filePath + this.files[fileIndex].filename, { level: 'private' });
+				for (const file of this.files) {
+					const response = await Storage.get(file.filePath + file.filename, { level: file.level });
 					this.downloadUrls.push(response);
 				}
-			}
+			},
 		},
 	};
 </script>

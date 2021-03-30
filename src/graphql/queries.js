@@ -732,20 +732,8 @@ export const listUserProfiles = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -885,20 +873,8 @@ export const listUserProfileByEmail = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -949,20 +925,8 @@ export const listUserProfileByUsername = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -1009,12 +973,6 @@ export const listVehicles = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1092,12 +1050,6 @@ export const listVehiclesByTradeName = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1142,12 +1094,6 @@ export const listVehiclesByOwner = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1186,10 +1132,6 @@ export const listContracts = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -1249,11 +1191,6 @@ export const getContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1277,12 +1214,6 @@ export const getContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1330,10 +1261,6 @@ export const listContractsByTradeName = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -1405,10 +1332,6 @@ export const listContractsByVehicleNumberPlates = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -1480,10 +1403,6 @@ export const listContractsByCustomerId = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -1540,11 +1459,6 @@ export const getCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1573,16 +1487,6 @@ export const listCustomers = /* GraphQL */ `
         doy
         address
         familyStatus
-        files {
-          bucket
-          region
-          key
-          name
-        }
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
       }
@@ -1622,16 +1526,6 @@ export const listCustomersByTradeName = /* GraphQL */ `
         doy
         address
         familyStatus
-        files {
-          bucket
-          region
-          key
-          name
-        }
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
       }
@@ -1708,20 +1602,8 @@ export const getTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2263,10 +2145,6 @@ export const getTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -3148,20 +3026,8 @@ export const getTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -3193,20 +3059,8 @@ export const getTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -3246,48 +3100,6 @@ export const listTransactionHistorys = /* GraphQL */ `
         transactionAmount
         createdAt
         updatedAt
-        sender {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
-        receiver {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }
@@ -3320,48 +3132,6 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
         transactionAmount
         createdAt
         updatedAt
-        sender {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
-        receiver {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }
@@ -3394,48 +3164,6 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
         transactionAmount
         createdAt
         updatedAt
-        sender {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
-        receiver {
-          id
-          username
-          email
-          telephone
-          surname
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          preferences
-          locale
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }

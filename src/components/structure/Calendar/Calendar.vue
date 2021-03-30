@@ -14,7 +14,6 @@
 			@changeView="changeView"
 			:firstDayOfWeek="firstDayOfWeek"
 		/>
-
 		<mdb-week-view
 			v-if="view === 'week'"
 			:defaultDate="date"
@@ -30,7 +29,6 @@
 			@changeView="changeView"
 			:firstDayOfWeek="firstDayOfWeek"
 		/>
-
 		<mdb-list-view
 			v-if="view === 'list'"
 			:defaultDate="date"
@@ -44,15 +42,14 @@
 			@dateChange="dateChange"
 			:firstDayOfWeek="firstDayOfWeek"
 		/>
-
-		<mdb-modal :show="editEventModal" @close="editEventModal = false" @keydown.esc.native="editEventModal = false">
+		<mdb-modal :show="editEventModal" @close="editEventModal = false" @keydown.esc="editEventModal = false">
 			<mdb-modal-header>
 				<mdb-modal-title tag="h4">
 					<strong>Edit event</strong>
 				</mdb-modal-title>
 			</mdb-modal-header>
 			<mdb-modal-body v-if="editEventModal">
-				<mdb-input label="Title" :value="activeEvent.title" @input="updateEvent($event, 'title')" />
+				<mdb-input label="Title" :value="activeEvent.title" @input="updateEvent($event, 'title')"/>
 				<mdb-input
 					label="Start"
 					:value="
@@ -89,38 +86,37 @@
 				/>
 				<p class="mb-0">Color</p>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="info" class="custom-control-input" name="color-radio" id="info-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="info" class="custom-control-input" name="color-radio" id="info-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-info" for="info-radio">Info</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-success" for="success-radio">Success</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-warning" for="warning-radio">Warning</label>
 				</div>
-				<br />
+				<br/>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-danger" for="danger-radio">Danger</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-primary" for="primary-radio">Primary</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-					<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="activeEvent.color" @change="updateEvents()" />
+					<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="activeEvent.color" @change="updateEvents()"/>
 					<label class="custom-control-label text-secondary" for="secondary-radio">Secondary</label>
 				</div>
 			</mdb-modal-body>
 			<mdb-modal-footer>
-				<mdb-btn color="danger" @click.native="deleteEvent">Delete</mdb-btn>
-				<mdb-btn color="info" @click.native="editEventModal = false">Close</mdb-btn>
+				<mdb-btn color="danger" @click="deleteEvent">Delete</mdb-btn>
+				<mdb-btn color="info" @click="editEventModal = false">Close</mdb-btn>
 			</mdb-modal-footer>
 		</mdb-modal>
-
-		<mdb-modal :show="addEventModal" @close="addEventModal = false" @keydown.esc.native="addEventModal = false">
+		<mdb-modal :show="addEventModal" @close="addEventModal = false" @keydown.esc="addEventModal = false">
 			<form @submit.prevent>
 				<mdb-modal-header>
 					<mdb-modal-title tag="h4">
@@ -128,7 +124,7 @@
 					</mdb-modal-title>
 				</mdb-modal-header>
 				<mdb-modal-body v-if="addEventModal">
-					<mdb-input label="Title" :value="newEvent.title" @input="updateNewEvent($event, 'title')" required />
+					<mdb-input label="Title" :value="newEvent.title" @input="updateNewEvent($event, 'title')" required/>
 					<mdb-input
 						label="Start"
 						:value="
@@ -165,40 +161,39 @@
 					/>
 					<p class="mb-0">Color</p>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="info" class="custom-control-input" name="color-radio" id="info-radio" v-model="newEvent.color" />
+						<input type="radio" value="info" class="custom-control-input" name="color-radio" id="info-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-info" for="info-radio">Info</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="newEvent.color" />
+						<input type="radio" value="success" class="custom-control-input" name="color-radio" id="success-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-success" for="success-radio">Success</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="newEvent.color" />
+						<input type="radio" value="warning" class="custom-control-input" name="color-radio" id="warning-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-warning" for="warning-radio">Warning</label>
 					</div>
-					<br />
+					<br/>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="newEvent.color" />
+						<input type="radio" value="danger" class="custom-control-input" name="color-radio" id="danger-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-danger" for="danger-radio">Danger</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="newEvent.color" />
+						<input type="radio" value="primary" class="custom-control-input" name="color-radio" id="primary-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-primary" for="primary-radio">Primary</label>
 					</div>
 					<div class="custom-control custom-radio custom-control-inline font-weight-bold">
-						<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="newEvent.color" />
+						<input type="radio" value="secondary" class="custom-control-input" name="color-radio" id="secondary-radio" v-model="newEvent.color"/>
 						<label class="custom-control-label text-secondary" for="secondary-radio">Secondary</label>
 					</div>
 				</mdb-modal-body>
 				<mdb-modal-footer>
-					<mdb-btn color="info" @click.native="addEventModal = false">Close</mdb-btn>
-					<mdb-btn type="submit" color="success" @click.native="pushEvent">Add</mdb-btn>
+					<mdb-btn color="info" @click="addEventModal = false">Close</mdb-btn>
+					<mdb-btn type="submit" color="success" @click="pushEvent">Add</mdb-btn>
 				</mdb-modal-footer>
 			</form>
 		</mdb-modal>
 	</div>
 </template>
-
 <script>
 	import { mdbMonthView } from './MonthView';
 	import { mdbWeekView } from './WeekView';
@@ -438,7 +433,7 @@
 			},
 			events() {
 				this.newEvents = this.$lodash.orderBy(this.events, ['start', 'end'], ['asc', 'desc']);
-			}
+			},
 		},
 	};
 

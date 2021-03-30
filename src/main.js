@@ -1,28 +1,40 @@
-import Vue from 'vue';
-import axios from "@/axios";
+import { createApp } from 'vue';
 import App from '@/App.vue';
-import '@/registerServiceWorker';
-import router from '@/router';
-import store from '@/store';
+import router from '@/plugins/router/router';
+import i18n from '@/plugins/i18n';
+import axios from '@/plugins/axios';
+import VueAxios from 'vue-axios';
+import Cookies from 'js-cookie';
+import { store } from '@/plugins/store/store';
+
 import Amplify from 'aws-amplify';
 import { Auth } from '@aws-amplify/auth';
 import { API } from '@aws-amplify/api';
 import aws_exports from '@/aws-exports';
-import '@aws-amplify/ui-vue';
-import i18n from '@/i18n';
-import VueCookies from 'vue-cookies';
-import VueHead from 'vue-head';
+// import '@aws-amplify/ui-vue';
+
 import { toGreeklish } from 'greek-utils';
-import * as mdbvue from 'mdbvue';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbvue/lib/css/mdb.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import VueAnalytics from 'vue-analytics';
-import Vue2TouchEvents from 'vue2-touch-events';
-import LoadScript from 'vue-plugin-load-script';
-import { Notify } from 'mdbvue';
-import MomentJS from 'vue-moment';
-import lodash from 'lodash';
+
+import { IonicVue } from '@ionic/vue';
+
+/* Core CSS required for Ionic components to work properly */
+import '@ionic/vue/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+import '@ionic/vue/css/normalize.css';
+import '@ionic/vue/css/structure.css';
+import '@ionic/vue/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+import '@ionic/vue/css/padding.css';
+import '@ionic/vue/css/float-elements.css';
+import '@ionic/vue/css/text-alignment.css';
+import '@ionic/vue/css/text-transformation.css';
+import '@ionic/vue/css/flex-utils.css';
+import '@ionic/vue/css/display.css';
+
+/* Theme variables */
+import '@/theme/variables.css';
 
 Amplify.configure(aws_exports);
 Auth.configure(aws_exports);
@@ -40,179 +52,102 @@ Amplify.configure({
 	},
 });
 
-Vue.use(VueCookies);
-Vue.use(VueHead);
-Vue.use(Vue2TouchEvents);
-Vue.use(LoadScript);
-Vue.use(Notify);
-Vue.use(MomentJS);
+const app = createApp(App);
+app.use(IonicVue);
+app.use(router);
+app.use(store);
+app.use(i18n);
+app.use(VueAxios, axios);
 
-for (const component in mdbvue) {
-	Vue.component(component, mdbvue[component]);
-}
+import * as IonComponents from '@ionic/vue';
 
-Vue.use(VueAnalytics, {
-	id: 'UA-154936697-1',
-	router
+Object.keys(IonComponents).forEach(key => {
+	if (/^Ion[A-Z]\w+$/.test(key)) {
+		app.component(key, IonComponents[key]);
+	}
 });
 
-Vue.config.productionTip = false;
+import * as Ionicons from 'ionicons/icons';
 
-const v = {
-	router,
-	store,
-	i18n,
-	render: h => h(App),
-	mounted: function () {
-		this.initLocale();
-		// Todo: Enable loadEnumData
-		// this.loadEnumData();
-	},
-	methods: {
-		toGreeklish,
-		parseJwt: function (token) {
-			const base64Url = token.split('.')[1];
-			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-			const jsonPayload = decodeURIComponent(
-				atob(base64)
-					.split('')
-					.map(function (c) {
-						return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-					})
-					.join('')
-			);
-
-			return JSON.parse(jsonPayload);
-		},
-		clearCookies: function () {
-			for (const cookie of this.$cookies.keys()) {
-				this.$cookies.remove(cookie);
-			}
-		},
-		loadEnumData: function () {
-			this.$store.dispatch('platformData/getPlatformData');
-		},
-		initLocale: function () {
-			const userLang = this.$cookies.get('locale') || navigator.language || navigator.userLanguage;
-			this.$i18n.$loadLanguageAsync(userLang);
-		},
+const ioniconsOutline = {};
+Object.keys(Ionicons).forEach(key => {
+	if (/[a-zA-Z]+Outline/.test(key)) {
+		ioniconsOutline[key] = Ionicons[key];
 	}
-};
+});
 
 // -------------- Prototype expansion ----------------------------------
-Vue.prototype.$http = axios;
-Vue.prototype.$lodash = lodash;
-Vue.prototype.$platformData = {};
-Vue.prototype.$notifyAction = {
-	error: err => {
-		// eslint-disable-next-line no-console
-		console.error(err);
-		vm.$notify.error({
-			message: vm.$t('defaultNotification.somethingWentWrong'),
-			progressBar: true,
-			timeOut: 10000
-		});
-	},
-	errorPermanent: err => {
-		// eslint-disable-next-line no-console
-		console.error(err);
-		vm.$notify.error({
-			message: vm.$t('defaultNotification.somethingWentWrong'),
-			progressBar: true,
-			timeOut: 10000
-		});
-	},
-	saveSuccess: () => {
-		vm.$notify.success({
-			message: vm.$t('defaultNotification.saveSuccess'),
-			progressBar: true,
-			timeOut: 10000
-		});
-	},
-	deleteSuccess: () => {
-		vm.$notify.success({
-			message: vm.$t('defaultNotification.deleteSuccess'),
-			progressBar: true,
-			timeOut: 10000
-		});
-	}
-};
-Vue.prototype.$datepickerOptions = function () {
-	return {
-		week: [
-			vm.$t('dates.days.Mo'),
-			vm.$t('dates.days.Tu'),
-			vm.$t('dates.days.We'),
-			vm.$t('dates.days.Th'),
-			vm.$t('dates.days.Fr'),
-			vm.$t('dates.days.Sa'),
-			vm.$t('dates.days.Su'),
-		],
-		month: [
-			vm.$t('dates.months.January'),
-			vm.$t('dates.months.February'),
-			vm.$t('dates.months.March'),
-			vm.$t('dates.months.April'),
-			vm.$t('dates.months.May'),
-			vm.$t('dates.months.June'),
-			vm.$t('dates.months.July'),
-			vm.$t('dates.months.August'),
-			vm.$t('dates.months.September'),
-			vm.$t('dates.months.October'),
-			vm.$t('dates.months.November'),
-			vm.$t('dates.months.December'),
-		],
-		format: 'YYYY-MM-DD',
-	};
-};
-Vue.prototype.$headData = {
-	defaultMetaDict: {
-		GeneralDescription: { name: 'description', content: '', id: 'metaDescription' },
-		GeneralKeywords: { name: 'keywords', content: '', id: 'metaKeywords' },
-		GooglePlusName: { itemprop: 'name', content: 'Wais', id: 'metaGooglePlusName' },
-		GooglePlusDescription: { itemprop: 'description', content: '', id: 'metaGooglePlusDescription' },
-		GooglePlusImage: { itemprop: 'image', content: 'https://wais.com/static/app/img/WaisLogoSocial.png', id: 'metaGooglePlusImage' },
-		TwitterCard: { name: 'twitter:card', content: 'summary', id: 'metaTwitterCard' },
-		TwitterSite: { name: 'twitter:site', content: '@Wais', id: 'metaTwitterSite' },
-		TwitterTitle: { name: 'twitter:title', content: 'Wais', id: 'metaTwitterTitle' },
-		TwitterDescription: { name: 'twitter:description', content: '', id: 'metaTwitterDescription' },
-		TwitterCreator: { name: 'twitter:creator', content: '@Wais', id: 'metaTwitterCreator' },
-		TwitterImage: { name: 'twitter:image:src', content: 'https://wais.com/static/app/img/WaisLogoSocial.png', id: 'metaTwitterImage' },
-		OpenGraphTitle: { property: 'og:title', content: 'Wais', id: 'metaOpenGraphTitle' },
-		OpenGraphType: { property: 'og:type', content: 'article', id: 'metaOpenGraphType' },
-		OpenGraphUrl: { property: 'og:url', content: 'https://wais.com', id: 'metaOpenGraphUrl' },
-		OpenGraphImage: { property: 'og:image', content: 'https://wais.com/static/app/img/WaisLogoSocial.png', id: 'metaOpenGraphImage' },
-		OpenGraphDescription: { property: 'og:description', content: '', id: 'metaOpenGraphDescription' },
-		OpenGraphSiteName: { property: 'og:site_name', content: 'Wais', id: 'metaOpenGraphSiteName' },
-		OpenGraphPublishedTime: { property: 'article:published_time', content: '', id: 'metaOpenGraphPublishedTime' },
-		OpenGraphModifiedTime: { property: 'article:modified_time', content: '', id: 'metaOpenGraphModifiedTime' },
-		OpenGraphSection: { property: 'article:section', content: '', id: 'metaOpenGraphSection' },
-		OpenGraphTag: { property: 'article:tag', content: '', id: 'metaOpenGraphTag' },
-		OpenGraphAdmins: { property: 'fb:admins', content: '', id: 'metaOpenGraphAdmins' }
-	},
-	defaultMeta: () => Object.values(vm.$headData.defaultMetaDict),
-	defaultHead: {
-		title: '',
-		meta: () => vm.$headData.defaultMeta(),
-	},
-	updateMeta: function (dict) {
-		const res = Object.assign({}, vm.$headData.defaultMetaDict);
-		for (const key in dict) {
-			res[key].content = dict[key];
-		}
-		return Object.values(res);
-	}
-};
-Vue.prototype.$toBase64 = file => new Promise((resolve, reject) => {
+app.config.globalProperties.$ionicons = ioniconsOutline;
+app.config.globalProperties.$http = axios;
+app.config.globalProperties.$cookies = Cookies;
+app.config.globalProperties.$toBase64 = file => new Promise((resolve, reject) => {
 	const reader = new FileReader();
 	reader.readAsDataURL(file);
 	reader.onload = () => resolve(reader.result);
 	reader.onerror = error => reject(error);
 });
 
-// -------------- Assignments ------------------------------------------
-const vm = new Vue(v);
-window.WaisVue = vm;
+app.config.globalProperties.$toGreeklish = toGreeklish;
+app.config.globalProperties.$parseJwt = function (token) {
+	const base64Url = token.split('.')[1];
+	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	const jsonPayload = decodeURIComponent(
+		atob(base64)
+			.split('')
+			.map(function (c) {
+				return (
+					'%' +
+					('00' + c.charCodeAt(0).toString(16)).slice(-2)
+				);
+			})
+			.join(''),
+	);
+
+	return JSON.parse(jsonPayload);
+};
+app.config.globalProperties.$clearCookies = function () {
+	for (const cookie of this.$cookies.keys()) {
+		this.$cookies.remove(cookie);
+	}
+};
+app.config.globalProperties.$toast = {
+	error: async err => {
+		// eslint-disable-next-line no-console
+		console.error(err);
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.somethingWentWrong'),
+				duration: 10000,
+				color: 'danger',
+				position: 'top',
+			});
+		return toast.present();
+	},
+	saveSuccess: async () => {
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.saveSuccess'),
+				duration: 10000,
+				color: 'success',
+				position: 'top',
+			});
+		return toast.present();
+	},
+	deleteSuccess: async () => {
+		const toast = await IonComponents.toastController
+			.create({
+				message: window.WaisVue.$t('defaultNotification.deleteSuccess'),
+				duration: 10000,
+				color: 'success',
+				position: 'top',
+			});
+		return toast.present();
+	},
+};
 
 // -------------- Mount --------------
-vm.$mount('#app');
+store.commit('pageStructure/increaseGlobalPendingPromises');
+router.isReady().then(() => {
+	store.commit('pageStructure/decreaseGlobalPendingPromises');
+});
+app.mount('#app');

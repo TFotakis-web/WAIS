@@ -1,23 +1,25 @@
 <template>
-	<mdb-card cascade narrow>
-		<mdb-view cascade class="gradient-card-header blue">
-			<h5 class="mb-0">Testing</h5>
-		</mdb-view>
-		<mdb-card-body>
-			<div>
-				<mdb-btn @click.native="testAll" :disabled="testAllDisabled" outline="primary">Test All</mdb-btn>
-				<span>{{ testAllMessage }}</span>
-			</div>
-			<div v-for="(test, testName) in tests" :key="testName">
-				<mdb-btn @click.native="test.testFunc" :disabled="test.disabled" color="primary">{{ testName }}</mdb-btn>
-				<span>{{ test.message }}</span>
-			</div>
-		</mdb-card-body>
-	</mdb-card>
+	<ion-card cascade narrow>
+		<ion-card-header>
+			<ion-card-title>Testing</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list>
+				<ion-item>
+					<ion-button @click="testAll" :disabled="testAllDisabled" class="ion-margin-end">Test All</ion-button>
+					<span>{{ testAllMessage }}</span>
+				</ion-item>
+				<ion-item v-for="(test, testName) in tests" :key="testName">
+					<ion-button @click="test.testFunc" :disabled="test.disabled" class="ion-margin-end">{{ testName }}</ion-button>
+					<span>{{ test.message }}</span>
+				</ion-item>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
 	export default {
-		name: "testingCard",
+		name: 'testingCard',
 		data() {
 			return {
 				testAllMessage: '',
@@ -30,12 +32,12 @@
 							this.tests['Template Test'].disabled = true;
 							this.tests['Template Test'].message = 'Running...';
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Template Test'].message = 'OK';
 							this.tests['Template Test'].disabled = false;
 							return 0;
-						}
+						},
 					},
 					'Echo': {
 						message: '',
@@ -46,12 +48,12 @@
 
 							this.$store.dispatch('echo');
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Echo'].message = 'OK';
 							this.tests['Echo'].disabled = false;
 							return 0;
-						}
+						},
 					},
 					'Me': {
 						message: '',
@@ -62,15 +64,15 @@
 
 							this.$store.dispatch('me');
 
-							console.log("Test Passed!");
+							console.log('Test Passed!');
 
 							this.tests['Me'].message = 'OK';
 							this.tests['Me'].disabled = false;
 							return 0;
-						}
+						},
 					},
-				}
-			}
+				},
+			};
 		},
 		methods: {
 			testAll() {
@@ -86,9 +88,9 @@
 					this.testAllMessage = 'OK';
 				}
 				this.testAllDisabled = false;
-			}
+			},
 		},
-	}
+	};
 </script>
 <style scoped>
 </style>

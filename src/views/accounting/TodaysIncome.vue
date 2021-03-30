@@ -1,12 +1,12 @@
 <template>
-	<div class="text-center pt-5">
-		<h1>{{ $t('components.navigation.sidenav.accounting.todaysIncome') }}</h1>
-		<h5 class="text-info">{{ $t('various.underConstruction') }}</h5>
-	</div>
+	<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 </template>
-
 <script>
-export default {
-	name: 'AccountingTodaysIncome',
-};
+	export default {
+		name: 'AccountingCommissionsCollected',
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('components.navigation.sidenav.accounting.todaysIncome'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
+	};
 </script>

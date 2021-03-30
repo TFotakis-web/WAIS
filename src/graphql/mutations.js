@@ -848,54 +848,9 @@ export const createOffice = /* GraphQL */ `
       createdAt
       updatedAt
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       workforce {
@@ -915,17 +870,6 @@ export const createOffice = /* GraphQL */ `
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -963,54 +907,9 @@ export const updateOffice = /* GraphQL */ `
       createdAt
       updatedAt
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       workforce {
@@ -1030,17 +929,6 @@ export const updateOffice = /* GraphQL */ `
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -1078,54 +966,9 @@ export const deleteOffice = /* GraphQL */ `
       createdAt
       updatedAt
       officeContracts {
-        items {
-          id
-          contractId
-          version
-          vehicleNumberPlate
-          vehicleId
-          voucherId
-          customerId
-          tradeName
-          second_tradeId
-          contractorId
-          co_name
-          co_TRN
-          contractState
-          insuranceClass
-          insuranceCoverage
-          insuranceUsage
-          duration
-          startDate
-          endDate
-          data
-          discount
-          jointWorth
-          netWorth
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       officeCustomers {
-        items {
-          id
-          tin
-          tradeName
-          firstName
-          lastName
-          fathersName
-          birthDate
-          gender
-          email
-          mobile
-          postcode
-          doy
-          address
-          familyStatus
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       workforce {
@@ -1145,17 +988,6 @@ export const deleteOffice = /* GraphQL */ `
         nextToken
       }
       companyConnections {
-        items {
-          id
-          fromId
-          fromTradeName
-          toId
-          toTradeName
-          expirationDate
-          message
-          createdAt
-          updatedAt
-        }
         nextToken
       }
     }
@@ -1577,11 +1409,6 @@ export const createContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1605,12 +1432,6 @@ export const createContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1649,11 +1470,6 @@ export const updateContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1677,12 +1493,6 @@ export const updateContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1721,11 +1531,6 @@ export const deleteContract = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1749,12 +1554,6 @@ export const deleteContract = /* GraphQL */ `
         taxableHorsepower
         vin
         value
-        file {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
       }
@@ -1790,11 +1589,6 @@ export const createCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1830,11 +1624,6 @@ export const updateCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1870,11 +1659,6 @@ export const deleteCustomer = /* GraphQL */ `
       driversLicense {
         LicenseID
         DriversLicenseType
-        Category {
-          category
-          issueDate
-          expiresAt
-        }
       }
       createdAt
       updatedAt
@@ -1953,20 +1737,8 @@ export const createTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2057,20 +1829,8 @@ export const updateTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2161,20 +1921,8 @@ export const deleteTradeUserConnection = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2269,10 +2017,6 @@ export const createTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -2378,10 +2122,6 @@ export const updateTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -2487,10 +2227,6 @@ export const deleteTradeContractConnection = /* GraphQL */ `
         discount
         jointWorth
         netWorth
-        driversLicense {
-          LicenseID
-          DriversLicenseType
-        }
         createdAt
         updatedAt
         vehicle {
@@ -2881,20 +2617,8 @@ export const createTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2926,20 +2650,8 @@ export const createTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -2989,20 +2701,8 @@ export const updateTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -3034,20 +2734,8 @@ export const updateTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -3097,20 +2785,8 @@ export const deleteTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {
@@ -3142,20 +2818,8 @@ export const deleteTransactionHistory = /* GraphQL */ `
         gender
         birthdate
         city
-        profilePicture {
-          bucket
-          region
-          key
-          name
-        }
         preferences
         locale
-        files {
-          bucket
-          region
-          key
-          name
-        }
         createdAt
         updatedAt
         officeConnections {

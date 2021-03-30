@@ -1,87 +1,49 @@
 <template>
-	<mdb-btn
+	<ion-button
+		:buttonType="buttonType"
 		:color="color"
-		:type="type"
-		:rounded="rounded"
-		:disabled="loading"
+		:disabled="disabled"
+		:download="download"
+		:expand="expand"
+		:fill="fill"
+		:href="href"
+		:mode="mode"
+		:rel="rel"
+		:routerAnimation="routerAnimation"
+		:routerDirection="routerDirection"
+		:shape="shape"
 		:size="size"
-		:outline="outline"
-		:floating="floating"
-		:flat="flat"
-		:transparent="transparent"
-		:gradient="gradient"
-		:icon="icon"
-		:iconLeft="iconLeft"
-		:iconRight="iconRight"
+		:strong="strong"
+		:target="target"
+		:type="type"
 	>
 		<span>{{ loading ? loadingText : text }}</span>
-		<span v-if="loading" class="spinner-border spinner-border-sm ml-2"/>
-	</mdb-btn>
+		<ion-spinner v-if="loading" class="ion-margin-start"/>
+	</ion-button>
 </template>
 <script>
 	export default {
 		name: 'LoadingBtn',
-		props: {
-			color: {
-				type: String,
-				default: 'default',
-			},
-			type: {
-				type: String,
-				default: 'button',
-			},
-			rounded: {
-				type: Boolean,
-				default: false,
-			},
-			loading: {
-				type: Boolean,
-				default: false,
-			},
-			text: {
-				type: String,
-				default: 'Button',
-			},
-			loadingText: {
-				type: String,
-				default: 'Loading Button',
-			},
-			size: {
-				type: String,
-				default: ''
-			},
-			outline: {
-				type: String,
-				default: ''
-			},
-			floating: {
-				type: Boolean,
-				default: false
-			},
-			flat: {
-				type: Boolean,
-				default: false
-			},
-			transparent: {
-				type: Boolean,
-				default: false
-			},
-			gradient: {
-				type: String,
-				default: ''
-			},
-			icon: {
-				type: String,
-				default: ''
-			},
-			iconLeft: {
-				type: Boolean,
-				default: false
-			},
-			iconRight: {
-				type: Boolean,
-				default: false
-			},
-		},
+		props: [
+			'loading',
+			'text',
+			'loadingText',
+			'buttonType',
+			'color',
+			'disabled',
+			'download',
+			'expand',
+			'fill',
+			'href',
+			'mode',
+			'rel',
+			'routerAnimation',
+			'routerDirection',
+			'shape',
+			'size',
+			'strong',
+			'target',
+			'type',
+		],
 	};
 </script>

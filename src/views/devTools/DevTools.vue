@@ -1,30 +1,31 @@
 <template>
-	<div class="text-center pt-5">
-		<h1>{{ $t('views.devTools.pageTitle') }}</h1>
-		<h5 class="text-info mb-5">{{ $t('various.underConstruction') }}</h5>
-		<mdb-container class="text-left">
-			<mdb-row>
-				<mdb-col>
-					<testing-card/>
-				</mdb-col>
-				<mdb-col>
-					<dev-options-card/>
-				</mdb-col>
-			</mdb-row>
-		</mdb-container>
-	</div>
+	<ion-grid fixed>
+		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
+		<ion-row>
+			<ion-col>
+				<testing-card/>
+			</ion-col>
+			<ion-col>
+				<dev-options-card/>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </template>
 <script>
-import TestingCard from "@/views/devTools/testingCard";
-import DevOptionsCard from "@/views/devTools/devOptionsCard";
+	import TestingCard from '@/views/devTools/testingCard';
+	import DevOptionsCard from '@/views/devTools/devOptionsCard';
 
-export default {
-	name: "DevTools",
-	components: {
-		TestingCard,
-		DevOptionsCard
-	},
-}
+	export default {
+		name: 'DevTools',
+		components: {
+			TestingCard,
+			DevOptionsCard,
+		},
+		mounted() {
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.devTools.pageTitle'));
+			this.$store.commit('pageStructure/setPageBackButton', false);
+		},
+	};
 </script>
 <style scoped>
 </style>
