@@ -37,7 +37,7 @@ type Query {
   getContractsForOfficeId(officeId: ID!, filter: ModelContractFilterInput, limit: Int, nextToken: String): ModelCustomerConnectionOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
-
+ 
   getPartnerOfficeConnectionsForOfficeId(
     officeId: ID!
     filter: ModelCompanyAccessConnectionFilterInput

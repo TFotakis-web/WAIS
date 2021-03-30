@@ -34,7 +34,7 @@ const gqlHelper = async (item, gql, operation) => {
     query: gql,
     operationName: operation,
     variables: item,
-  })
+  }) 
 
   const signer = new AWS.Signers.V4(req, 'appsync', true)
   signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
