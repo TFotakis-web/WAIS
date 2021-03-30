@@ -66,7 +66,7 @@ module.exports = {
                 userId: userId,
                 username: empUsername,
                 modelPermissions: empModelPermissions,
-                pagePermissions: empPagePermissions,
+                pagePermissions: JSON.parse(empPagePermissions),
                 employeeType: 'STANDARD',
                 preferences: null,
                 createdAt: now,
