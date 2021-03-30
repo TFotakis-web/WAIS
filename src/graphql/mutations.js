@@ -447,6 +447,23 @@ export const deleteCustomerForOffice = /* GraphQL */ `
     }
   }
 `;
+export const createRequest = /* GraphQL */ `
+  mutation CreateRequest(
+    $input: CreateRequestsInput!
+    $condition: ModelRequestsConditionInput
+  ) {
+    createRequest(input: $input, condition: $condition) {
+      id
+      senderUsername
+      senderEmail
+      receiverUsername
+      receiverEmail
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createOfficeConnectionRequest = /* GraphQL */ `
   mutation CreateOfficeConnectionRequest(
     $input: CreateRequestsInput!

@@ -62,7 +62,7 @@ type UserProfile
     telephone: String!
 
     # Fill this AFTER login
-    surname: String
+    surname: String # TODO REMOVE
     name: String
     fathers_name: String
     address: String
