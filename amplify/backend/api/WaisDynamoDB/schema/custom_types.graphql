@@ -1,123 +1,127 @@
+type InsuranceCompany {
+    name: String!
+    code: String!
+}
 type S3Object {
-  bucket: String!
-  region: String!
-  key: String!
-  name: String!
+    bucket: String!
+    region: String!
+    key: String!
+    name: String!
 }
 
 enum EmployeeType {
-  STANDARD
-  CONTRACTOR
-  MANAGER
+    STANDARD
+    CONTRACTOR
+    MANAGER
 }
 
 type DriversLicense {
-  LicenseID: Int
-  DriversLicenseType: String
-  Category: [DriversLicenseCategory]
+    LicenseID: Int
+    DriversLicenseType: String
+    Category: [DriversLicenseCategory]
 }
 
 type DriversLicenseCategory {
-  category: String
-  issueDate: String
-  expiresAt: String
+    category: String
+    issueDate: String
+    expiresAt: String
 }
 
 type InsurancePackage {
-  name: String!
-  insuranceClass: String!
-  coverage: [String]
-  usages: String
+    name: String!
+    insuranceClass: String!
+    coverage: [String]
+    usages: String
 }
 
 enum RequestType {
-  CREATE_TRADE
-  CREATE_COMPANY_CONNECTION
-  INVITE_EMPLOYEE_TO_OFFICE
-  INVITE_CONTRACTOR_TO_OFFICE
+    CREATE_TRADE
+    CREATE_COMPANY_CONNECTION
+    INVITE_EMPLOYEE_TO_OFFICE
+    INVITE_CONTRACTOR_TO_OFFICE
 }
 
 enum ModelPermission {
-  OFFICE_INFO_QUERY
-  OFFICE_INFO_MUTATE
-  VEHICLES_QUERY
-  VEHICLES_MUTATE
-  CONTRACTS_QUERY
-  CONTRACTS_MUTATE
-  CUSTOMERS_QUERY
-  CUSTOMERS_MUTATE
-  EMPLOYEE_ADD
-  EMPLOYEE_REMOVE
-  CONTRACTOR_ADD
-  CONTRACTOR_REMOVE
-  COMPANY_CONN_CREATE
-  COMPANY_CONN_DELETE
+    OFFICE_INFO_QUERY
+    OFFICE_INFO_MUTATE
+    VEHICLES_QUERY
+    VEHICLES_MUTATE
+    CONTRACTS_QUERY
+    CONTRACTS_MUTATE
+    CUSTOMERS_QUERY
+    CUSTOMERS_MUTATE
+    EMPLOYEE_ADD
+    EMPLOYEE_REMOVE
+    CONTRACTOR_ADD
+    CONTRACTOR_REMOVE
+    COMPANY_CONN_CREATE
+    COMPANY_CONN_DELETE
 }
 
 enum RequestDecision {
-  ACCEPT
-  REJECT
+    ACCEPT
+    REJECT
 }
 
 ##
 type CreateRequestPayload {
-  createTradePayload: RequestCreateOfficePayload
-  createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
-  inviteContractorToOfficePayload: RequestInviteContractorPayload
+    createTradePayload: RequestCreateOfficePayload
+    createCompanyConnectionPayload: RequestCompanyAccessConnectionPayload
+    inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
+    inviteContractorToOfficePayload: RequestInviteContractorPayload
 }
 type RequestCreateOfficePayload {
-  tradeName: String!
-  address: String
-  office_email: String!
-  zip_code: String
-  mobile: String
-  phone: String!
-  tin: String!
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
-  files: [S3Object]
+    tradeName: String!
+    address: String
+    office_email: String!
+    zip_code: String
+    mobile: String
+    phone: String!
+    tin: String!
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
+    files: [S3Object]
 }
 
 type RequestCompanyAccessConnectionPayload {
-  office_email: String!
+    office_email: String!
 }
 
 type RequestInviteEmployeePayload {
-  email: String!
-  empModelPermissions: [ModelPermission!]!
-  empPagePermissions: AWSJSON!
+    email: String!
+    empModelPermissions: [ModelPermission!]!
+    empPagePermissions: AWSJSON!
 }
 
 type RequestInviteContractorPayload {
-  ctrModelPermissions: [ModelPermission!]!
-  ctrPagePermissions: AWSJSON!
-  email: String!
+    ctrModelPermissions: [ModelPermission!]!
+    ctrPagePermissions: AWSJSON!
+    email: String!
 }
 
 ##
 input ResolveRequestPayloadInput {
-  createTradePayload: ResolveCreateOfficePayload
-  createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
-  inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
-  inviteContractorToOfficePayload: ResolveInviteContractorPayload
+    createTradePayload: ResolveCreateOfficePayload
+    createCompanyConnectionPayload: ResolveCompanyAccessConnectionPayload
+    inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
+    inviteContractorToOfficePayload: ResolveInviteContractorPayload
 }
 
 input ResolveCreateOfficePayload {
-  managerModelPermissions: [ModelPermission!]!
-  managerPagePermissions: AWSJSON!
-  partnersNumberLimit: Int!
-  employeesNumberLimit: Int!
+    managerModelPermissions: [ModelPermission!]!
+    managerPagePermissions: AWSJSON!
+    partnersNumberLimit: Int!
+    employeesNumberLimit: Int!
 }
 input ResolveCompanyAccessConnectionPayload {
-  expirationDate: AWSTimestamp!
+    expirationDate: AWSTimestamp!
 }
 input ResolveInviteEmployeePayload {
-  body: String
+    body: String
 }
 input ResolveInviteContractorPayload {
-  body: String
+    body: String
 }

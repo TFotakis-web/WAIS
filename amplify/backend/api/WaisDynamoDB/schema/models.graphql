@@ -1,281 +1,284 @@
 # Each office has one owner and each owner hast one office, always!
 type Office
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
-  @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listTradeByOfficeEmail")
-  @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
-  # UID of this office
-  id: ID
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }])
+    @key(name: "byTradeName", fields: ["tradeName", "ownerUsername"], queryField: "listTradeByName")
+    @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listTradeByOfficeEmail")
+    @key(name: "byOwnerUsername", fields: ["ownerUsername", "tradeName"], queryField: "listTradeByOwnerUsername") {
+    # UID of this office
+    id: ID
 
-  # Protected info
-  tradeName: String!
-  ownerUsername: String!
-  address: String
-  office_email: String!
-  zip_code: String
-  mobile: String
-  phone: String!
-  partnersNumberLimit: Int
-  employeesNumberLimit: Int
-  verified: Boolean
+    # Protected info
+    tradeName: String!
+    ownerUsername: String!
+    address: String
+    office_email: String!
+    zip_code: String
+    mobile: String
+    phone: String!
+    partnersNumberLimit: Int
+    employeesNumberLimit: Int
+    verified: Boolean
 
-  # Private data
-  # Consider making this a connection if there is a need to search for an office based on such data.
-  tin: String!
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
+    # Private data
+    # Consider making this a connection if there is a need to search for an office based on such data.
+    tin: String!
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
 
-  # Store S3 files in this field
-  files: [S3Object]
+    # Store S3 files in this field
+    files: [S3Object]
 
-  # Access to connected offices, private access
-  companyConnections: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"])
+    # Insurance companies
+    insuranceCompanies: [InsuranceCompany!]!
 
-  # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
-  officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    # Access to connected offices, private access
+    companyConnections: [CompanyAccessConnection] @connection(keyName: "byFromTradeName", fields: ["tradeName"])
 
-  # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
-  officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
+    officeCustomers: [Customer] @connection(keyName: "byTradeName", fields: ["tradeName"])
 
-  # Employees and contractors of this Office
-  workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
+    # Contracts of this Office, does not include office connection contracts, use the customers protected resolver for this
+    officeContracts: [Contract] @connection(keyName: "byTradeName", fields: ["tradeName"])
+
+    # Employees and contractors of this Office
+    workforce: [TradeUserConnection] @connection(keyName: "byTradeName", fields: ["tradeName"])
 }
 
 type UserProfile
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: private, provider: iam }])
-  @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
-  @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
-  #Currently the user's username, guaranteed to always be unique
-  id: ID
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }])
+    @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
+    @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
+    #Currently the user's username, guaranteed to always be unique
+    id: ID
 
-  # Get these on singup via trigger
-  username: String!
-  email: String!
-  telephone: String!
+    # Get these on singup via trigger
+    username: String!
+    email: String!
+    telephone: String!
 
-  # Fill this AFTER login
-  surname: String
-  name: String
-  fathers_name: String
-  address: String
-  zip_code: String
-  mobile: String
-  tin: String
+    # Fill this AFTER login
+    surname: String
+    name: String
+    fathers_name: String
+    address: String
+    zip_code: String
+    mobile: String
+    tin: String
 
-  family_name: String
-  gender: String
-  birthdate: AWSDate
-  city: String
-  profilePicture: S3Object
-  preferences: AWSJSON
-  locale: String
+    family_name: String
+    gender: String
+    birthdate: AWSDate
+    city: String
+    profilePicture: S3Object
+    preferences: AWSJSON
+    locale: String
 
-  # Store S3 files in this field
-  files: [S3Object]
+    # Store S3 files in this field
+    files: [S3Object]
 
-  # Access to requests
-  requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
-  requestsForMe: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
+    # Access to requests
+    requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
+    requestsForMe: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
 
-  # Get all clallendar events
-  callendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
+    # Get all calendar events
+    calendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
 
-  # Access to Office (or Offices iff a Contractor)
-  officeConnections: [TradeUserConnection] @connection(keyName: "byTradeUsername", fields: ["username"])
+    # Access to Office (or Offices iff a Contractor)
+    officeConnections: [TradeUserConnection] @connection(keyName: "byTradeUsername", fields: ["username"])
 }
 
 type Vehicle
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
-  @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
-  id: ID
-  numberPlate: String!
-  officeId: ID!
-  tradeName: String!
-  color: String!
-  manufacturer: String!
-  model: String!
-  vehicle_owner: String!
-  trim: String!
-  fuelType: String
-  usage: String!
-  displacement: Int!
-  eurotax: Int!
-  firstRegistrationDate: String!
-  passengers: Int!
-  purchaseDate: String!
-  taxableHorsepower: Int!
-  vin: String!
-  value: Float!
-  file: [S3Object]
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }])
+    @key(name: "byTradeName", fields: ["tradeName", "numberPlate"], queryField: "listVehiclesByTradeName")
+    @key(name: "byVehicleOwner", fields: ["vehicle_owner", "tradeName"], queryField: "listVehiclesByOwner") {
+    id: ID
+    numberPlate: String!
+    officeId: ID!
+    tradeName: String!
+    color: String!
+    manufacturer: String!
+    model: String!
+    vehicle_owner: String!
+    trim: String!
+    fuelType: String
+    usage: String!
+    displacement: Int!
+    eurotax: Int!
+    firstRegistrationDate: String!
+    passengers: Int!
+    purchaseDate: String!
+    taxableHorsepower: Int!
+    vin: String!
+    value: Float!
+    file: [S3Object]
 }
 
 type Contract
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
-  @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
-  @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
-  id: ID
-  contractId: ID! # Not unique, remember that we keep a history of each contract
-  version: Int! # For history
-  vehicleNumberPlate: String!
-  vehicleId: ID!
-  voucherId: String!
-  customerId: String!
-  tradeName: String!
-  second_tradeId: String #Optional
-  contractorId: String #Optional
-  co_name: String # CoSign participant name (OPTIONAL)
-  co_TRN: String # CoSign participant "AFM" (OPTIONAL)
-  contractState: String! # Send to S3 on completion
-  insuranceClass: String!
-  insuranceCoverage: [String]
-  insuranceUsage: String
-  duration: String!
-  startDate: String!
-  endDate: String!
-  data: String!
-  discount: Float! # e.g. 0.1
-  jointWorth: Float!
-  netWorth: Float!
-  driversLicense: DriversLicense
-  createdAt: AWSDateTime!
-  vehicle: Vehicle @connection(fields: ["vehicleId"])
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }])
+    @key(name: "byTradeName", fields: ["tradeName", "createdAt"], queryField: "listContractsByTradeName")
+    @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "tradeName"], queryField: "listContractsByVehicleNumberPlates")
+    @key(name: "byCustomerId", fields: ["customerId", "tradeName"], queryField: "listContractsByCustomerId") {
+    id: ID
+    contractId: ID! # Not unique, remember that we keep a history of each contract
+    version: Int! # For history
+    vehicleNumberPlate: String!
+    vehicleId: ID!
+    voucherId: String!
+    customerId: String!
+    tradeName: String!
+    second_tradeId: String #Optional
+    contractorId: String #Optional
+    co_name: String # CoSign participant name (OPTIONAL)
+    co_TRN: String # CoSign participant "AFM" (OPTIONAL)
+    contractState: String! # Send to S3 on completion
+    insuranceClass: String!
+    insuranceCoverage: [String]
+    insuranceUsage: String
+    duration: String!
+    startDate: String!
+    endDate: String!
+    data: String!
+    discount: Float! # e.g. 0.1
+    jointWorth: Float!
+    netWorth: Float!
+    driversLicense: DriversLicense
+    createdAt: AWSDateTime!
+    vehicle: Vehicle @connection(fields: ["vehicleId"])
 }
 
 type Customer
-  @model(subscriptions: null)
-  @auth(rules: [{ allow: private, provider: iam }])
-  @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
-  id: ID
-  tin: String!
-  tradeName: String!
-  firstName: String
-  lastName: String
-  fathersName: String
-  birthDate: String
-  gender: String
-  email: String!
-  mobile: String
-  postcode: String
-  doy: String
-  address: String
-  familyStatus: String
-  files: [S3Object]
-  driversLicense: DriversLicense
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }])
+    @key(name: "byTradeName", fields: ["tradeName", "firstName", "lastName"], queryField: "listCustomersByTradeName") {
+    id: ID
+    tin: String!
+    tradeName: String!
+    firstName: String
+    lastName: String
+    fathersName: String
+    birthDate: String
+    gender: String
+    email: String!
+    mobile: String
+    postcode: String
+    doy: String
+    address: String
+    familyStatus: String
+    files: [S3Object]
+    driversLicense: DriversLicense
 }
 
 type TradeUserConnection
-  @model(subscriptions: null)
-  @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
-  @key(name: "byEmployeeType", fields: ["employeeType", "username", "tradeName"], queryField: "listTradeUserConnectionsByEmployeeType")
-  @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
-  @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
-  @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  id: ID
-  tradeId: ID!
-  tradeName: String!
-  userId: ID!
-  username: String!
-  trade: Office! @connection(fields: ["tradeId"])
-  user: UserProfile! @connection(fields: ["userId"])
-  pagePermissions: AWSJSON!
-  modelPermissions: [ModelPermission!]!
-  employeeType: EmployeeType! # e.g Contractor
-  preferences: AWSJSON
+    @model(subscriptions: null)
+    @key(name: "byTradeName", fields: ["tradeName", "userId"], queryField: "listTradeUserConnectionsByTradeName")
+    @key(name: "byEmployeeType", fields: ["employeeType", "username", "tradeName"], queryField: "listTradeUserConnectionsByEmployeeType")
+    @key(name: "byUserId", fields: ["userId", "tradeName"], queryField: "listTradeUserConnectionsByUserId")
+    @key(name: "byTradeAndUser", fields: ["tradeName", "username"], queryField: "listTradeUserConnectionsByTradeAndUser")
+    @key(name: "byTradeUsername", fields: ["username", "tradeName"], queryField: "listTradeUserConnectionsByUsername")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    tradeId: ID!
+    tradeName: String!
+    userId: ID!
+    username: String!
+    trade: Office! @connection(fields: ["tradeId"])
+    user: UserProfile! @connection(fields: ["userId"])
+    pagePermissions: AWSJSON!
+    modelPermissions: [ModelPermission!]!
+    employeeType: EmployeeType! # e.g Contractor
+    preferences: AWSJSON
 }
 
 type TradeContractConnection
-  @model(subscriptions: null)
-  @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
-  @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
-  @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  id: ID
-  tradeId: ID!
-  tradeName: String!
-  contractId: ID!
-  trade: Office! @connection(fields: ["tradeId"])
-  contract: Contract! @connection(fields: ["contractId"])
-  ownsContract: Boolean! #If true then the Office can edit the Contract
+    @model(subscriptions: null)
+    @key(name: "byTradeId", fields: ["tradeId", "tradeName"], queryField: "listTradeContractConnectionByTradeId")
+    @key(name: "byTradeName", fields: ["tradeName", "tradeId"], queryField: "listTradeContractConnectionByTradeName")
+    @key(name: "byContractId", fields: ["contractId", "tradeId"], queryField: "listTradeContractConnectionByContractId")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    tradeId: ID!
+    tradeName: String!
+    contractId: ID!
+    trade: Office! @connection(fields: ["tradeId"])
+    contract: Contract! @connection(fields: ["contractId"])
+    ownsContract: Boolean! #If true then the Office can edit the Contract
 }
 
 type CompanyAccessConnection
-  @model(subscriptions: null)
-  @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listCompanyAccessConnectionByFromId")
-  @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
-  @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
-  @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  id: ID
-  fromId: ID!
-  fromTradeName: String!
-  toId: ID!
-  toTradeName: String!
-  from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
-  to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
-  expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
-  message: String
+    @model(subscriptions: null)
+    @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listCompanyAccessConnectionByFromId")
+    @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listCompanyAccessConnectionByToId")
+    @key(name: "byFromTradeName", fields: ["fromTradeName", "toTradeName"], queryField: "listCompanyAccessConnectionByFromTradeName")
+    @key(name: "byToTradeName", fields: ["toTradeName", "fromTradeName"], queryField: "listCompanyAccessConnectionByToTradeName")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    fromId: ID!
+    fromTradeName: String!
+    toId: ID!
+    toTradeName: String!
+    from: Office! @connection(fields: ["fromId"]) #This trade initiates the collaboration
+    to: Office! @connection(fields: ["toId"]) #This trade needs to accept the collaboration
+    expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
+    message: String
 }
 
-#For callendar use
+#For calendar use
 type UserCalendarEvent
-  @model(subscriptions: null)
-  @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  id: ID
-  username: String # Populated server-side
-  payload: String
-  createdAt: AWSDateTime!
+    @model(subscriptions: null)
+    @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    username: String # Populated server-side
+    payload: String
+    createdAt: AWSDateTime!
 }
 
 type TransactionHistory
-  @model(subscriptions: null)
-  @key(
-    name: "bySenderUsername"
-    fields: ["senderUsername", "timestamp", "receiverUsername"]
-    queryField: "listTransactionHistorybySenderUsername"
-  )
-  @key(
-    name: "byReceiverUsername"
-    fields: ["receiverUsername", "timestamp", "senderUsername"]
-    queryField: "listTransactionHistorybyReceiverUsername"
-  )
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  id: ID
-  senderUserProfileId: ID!
-  receiverUserProfileId: ID!
-  timestamp: AWSTimestamp!
-  senderUsername: String! # UserProfile ID
-  receiverUsername: String!
-  transactionAmount: Float!
-  sender: UserProfile! @connection(fields: ["senderUserProfileId"])
-  receiver: UserProfile! @connection(fields: ["receiverUserProfileId"])
+    @model(subscriptions: null)
+    @key(
+        name: "bySenderUsername"
+        fields: ["senderUsername", "timestamp", "receiverUsername"]
+        queryField: "listTransactionHistorybySenderUsername"
+    )
+    @key(
+        name: "byReceiverUsername"
+        fields: ["receiverUsername", "timestamp", "senderUsername"]
+        queryField: "listTransactionHistorybyReceiverUsername"
+    )
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    senderUserProfileId: ID!
+    receiverUserProfileId: ID!
+    timestamp: AWSTimestamp!
+    senderUsername: String! # UserProfile ID
+    receiverUsername: String!
+    transactionAmount: Float!
+    sender: UserProfile! @connection(fields: ["senderUserProfileId"])
+    receiver: UserProfile! @connection(fields: ["receiverUserProfileId"])
 }
 
 type Requests
-  @model(subscriptions: null)
-  @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
-  @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
-  @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
-  @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
-  @auth(rules: [{ allow: private, provider: iam }]) {
-  # Populated/overwritten server-side, don't send these
-  id: ID
-  senderUsername: String
-  senderEmail: String
+    @model(subscriptions: null)
+    @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
+    @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
+    @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
+    @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    # Populated/overwritten server-side, don't send these
+    id: ID
+    senderUsername: String
+    senderEmail: String
 
-  # User data (required)
-  receiverUsername: String!
-  receiverEmail: String!
-  type: RequestType!
-  payload: CreateRequestPayload!
+    # User data (required)
+    receiverUsername: String!
+    receiverEmail: String!
+    type: RequestType!
+    payload: CreateRequestPayload!
 }
