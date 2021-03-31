@@ -447,29 +447,9 @@ export const deleteCustomerForOffice = /* GraphQL */ `
     }
   }
 `;
-export const createRequest = /* GraphQL */ `
-  mutation CreateRequest(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    createRequest(input: $input, condition: $condition) {
-      id
-      senderUsername
-      senderEmail
-      receiverUsername
-      receiverEmail
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createOfficeConnectionRequest = /* GraphQL */ `
-  mutation CreateOfficeConnectionRequest(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    createOfficeConnectionRequest(input: $input, condition: $condition) {
+export const createOfficeRequest = /* GraphQL */ `
+  mutation CreateOfficeRequest($input: CreateOfficeRequestPayloadInput!) {
+    createOfficeRequest(input: $input) {
       id
       senderUsername
       senderEmail
@@ -483,10 +463,9 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
 `;
 export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
   mutation CreateInviteEmployeeToOfficeRequest(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
+    $input: InviteEmployeeRequestPayloadInput!
   ) {
-    createInviteEmployeeToOfficeRequest(input: $input, condition: $condition) {
+    createInviteEmployeeToOfficeRequest(input: $input) {
       id
       senderUsername
       senderEmail
@@ -500,13 +479,9 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 `;
 export const createInviteContractorToOfficeRequest = /* GraphQL */ `
   mutation CreateInviteContractorToOfficeRequest(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
+    $input: InviteContractorRequestPayloadInput!
   ) {
-    createInviteContractorToOfficeRequest(
-      input: $input
-      condition: $condition
-    ) {
+    createInviteContractorToOfficeRequest(input: $input) {
       id
       senderUsername
       senderEmail
@@ -518,29 +493,11 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
     }
   }
 `;
-export const createCreateOfficeRequest = /* GraphQL */ `
-  mutation CreateCreateOfficeRequest(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
+export const createOfficeConnectionRequest = /* GraphQL */ `
+  mutation CreateOfficeConnectionRequest(
+    $input: OfficeConnectionRequestPayloadInput!
   ) {
-    createCreateOfficeRequest(input: $input, condition: $condition) {
-      id
-      senderUsername
-      senderEmail
-      receiverUsername
-      receiverEmail
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateRequestsSentByMe = /* GraphQL */ `
-  mutation UpdateRequestsSentByMe(
-    $input: UpdateRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    updateRequestsSentByMe(input: $input, condition: $condition) {
+    createOfficeConnectionRequest(input: $input) {
       id
       senderUsername
       senderEmail
@@ -2219,7 +2176,6 @@ export const createRequests = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -2236,7 +2192,6 @@ export const updateRequests = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -2253,7 +2208,6 @@ export const deleteRequests = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt

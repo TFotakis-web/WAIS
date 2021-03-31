@@ -53,20 +53,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "AdminQueries79849b09": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "waisauth",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
     "S3Trigger79940529": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
@@ -132,27 +118,6 @@
     }
   },
   "api": {
-    "AdminQueries": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "waisauth",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueries79849b09",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ]
-    },
     "WaisDynamoDB": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",

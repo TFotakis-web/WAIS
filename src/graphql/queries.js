@@ -1974,7 +1974,6 @@ export const getRequests = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -1993,7 +1992,6 @@ export const listRequestss = /* GraphQL */ `
         id
         senderUsername
         senderEmail
-        receiverUsername
         receiverEmail
         type
         createdAt
@@ -2022,7 +2020,6 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
         id
         senderUsername
         senderEmail
-        receiverUsername
         receiverEmail
         type
         createdAt
@@ -2051,7 +2048,6 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
         id
         senderUsername
         senderEmail
-        receiverUsername
         receiverEmail
         type
         createdAt
@@ -2080,36 +2076,6 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
         id
         senderUsername
         senderEmail
-        receiverUsername
-        receiverEmail
-        type
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listRequestsByReceiverUsername = /* GraphQL */ `
-  query ListRequestsByReceiverUsername(
-    $receiverUsername: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelRequestsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRequestsByReceiverUsername(
-      receiverUsername: $receiverUsername
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        senderUsername
-        senderEmail
-        receiverUsername
         receiverEmail
         type
         createdAt
