@@ -90,22 +90,17 @@ type Mutation {
     deleteCustomerForOffice(officeId: ID!, input: DeleteCustomerInput!, condition: ModelCustomerConditionInput): CustomerOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
-    createRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
+
+    createOfficeRequest(input: CreateOfficeRequestPayloadInput!): RequestsOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
-    createOfficeConnectionRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
+    createInviteEmployeeToOfficeRequest(input: InviteEmployeeRequestPayloadInput!): RequestsOutput
         @auth(rules: [{ allow: private }])
-        @function(name: "resolver-${env}") #TODO
-    createInviteEmployeeToOfficeRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
+        @function(name: "resolver-${env}")
+    createInviteContractorToOfficeRequest(input: InviteContractorRequestPayloadInput!): RequestsOutput
         @auth(rules: [{ allow: private }])
-        @function(name: "resolver-${env}") #TODO
-    createInviteContractorToOfficeRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
-        @auth(rules: [{ allow: private }])
-        @function(name: "resolver-${env}") #TODO
-    createCreateOfficeRequest(input: CreateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
-        @auth(rules: [{ allow: private }])
-        @function(name: "resolver-${env}") #TODO
-    updateRequestsSentByMe(input: UpdateRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
+        @function(name: "resolver-${env}")
+    createOfficeConnectionRequest(input: OfficeConnectionRequestPayloadInput!): RequestsOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
     deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput

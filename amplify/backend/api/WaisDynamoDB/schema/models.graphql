@@ -62,7 +62,7 @@ type UserProfile
     telephone: String!
 
     # Fill this AFTER login
-    surname: String # TODO REMOVE
+    surname: String # DEPRECATED!!
     name: String
     fathers_name: String
     address: String
@@ -257,15 +257,10 @@ type Requests
     @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
     @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
     @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
-    @key(name: "byReceiverUsername", fields: ["receiverUsername"], queryField: "listRequestsByReceiverUsername")
     @auth(rules: [{ allow: private, provider: iam }]) {
-    # Populated/overwritten server-side, don't send these
     id: ID
-    senderUsername: String
-    senderEmail: String
-
-    # User data (required)
-    receiverUsername: String!
+    senderUsername: String!
+    senderEmail: String!
     receiverEmail: String!
     type: RequestType!
     payload: CreateRequestPayload!

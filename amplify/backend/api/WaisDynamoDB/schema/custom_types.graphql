@@ -63,14 +63,15 @@ enum RequestDecision {
     REJECT
 }
 
-##
+## Create Request
+
 type CreateRequestPayload {
-    createOfficePayload: RequestCreateOfficePayload
-    createOfficeConnectionPayload: RequestOfficeAccessConnectionPayload
-    inviteEmployeeToOfficePayload: RequestInviteEmployeePayload
-    inviteContractorToOfficePayload: RequestInviteContractorPayload
+    createOfficePayload: CreateOfficeRequestPayload
+    createOfficeConnectionPayload: OfficeConnectionRequestPayload
+    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
+    inviteContractorToOfficePayload: InviteContractorRequestPayload
 }
-type RequestCreateOfficePayload {
+type CreateOfficeRequestPayload {
     officeName: String!
     address: String
     office_email: String!
@@ -86,23 +87,23 @@ type RequestCreateOfficePayload {
     files: [S3Object]
 }
 
-type RequestOfficeAccessConnectionPayload {
-    office_email: String!
+type OfficeConnectionRequestPayload {
+    manager_email: String!
 }
 
-type RequestInviteEmployeePayload {
+type InviteEmployeeRequestPayload {
     email: String!
     empModelPermissions: [ModelPermission!]!
     empPagePermissions: AWSJSON!
 }
 
-type RequestInviteContractorPayload {
+type InviteContractorRequestPayload {
     ctrModelPermissions: [ModelPermission!]!
     ctrPagePermissions: AWSJSON!
     email: String!
 }
 
-##
+## Resolve request
 input ResolveRequestPayloadInput {
     createOfficePayload: ResolveCreateOfficePayload
     createOfficeConnectionPayload: ResolveOfficeAccessConnectionPayload
@@ -120,8 +121,8 @@ input ResolveOfficeAccessConnectionPayload {
     expirationDate: AWSTimestamp!
 }
 input ResolveInviteEmployeePayload {
-    body: String
+    body: String #Ignored
 }
 input ResolveInviteContractorPayload {
-    body: String
+    body: String #Ignored
 }

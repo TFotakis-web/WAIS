@@ -1,14 +1,8 @@
 const AWS = require('aws-sdk')
 const https = require('https')
-// const agent = new https.Agent({
-//   keepAlive: true,
-//   maxSockets: Infinity,
-// })
+
 AWS.config.update({
 	region: process.env.REGION,
-	// httpOptions: {
-	//   agent,
-	// },
 })
 const urlParse = require('url').URL
 const APPSYNC_URL = process.env.API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT
@@ -40,8 +34,8 @@ const gqlHelper = async (item, gql, operation) => {
 	signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
 
 	const data = await new Promise((resolve, reject) => {
-		const httpRequest = https.request({ ...req, host: ENDPOINT }, result => {
-			result.on('data', data => {
+		const httpRequest = https.request({ ...req, host: ENDPOINT }, (result) => {
+			result.on('data', (data) => {
 				const result = JSON.parse(data.toString())
 				console.log('GQL result: ' + JSON.stringify(result))
 				resolve(result)
@@ -57,7 +51,7 @@ const gqlHelper = async (item, gql, operation) => {
 
 //Methods visible to other functions.
 module.exports = {
-	getUserProfileByUsername: async username => {
+	getUserProfileByUsername: async (username) => {
 		console.log('getUserProfileByUsername input: ' + username)
 		const query = /* GraphQL */ `
 			query getUserProfileByUsername($username: String!) {
@@ -114,7 +108,7 @@ module.exports = {
 	 *
 	 * @param {String} email
 	 */
-	getUserProfileByEmail: async email => {
+	getUserProfileByEmail: async (email) => {
 		console.log('getUserProfileByEmail input: ' + email)
 		const query = /* GraphQL */ `
 			query getUserProfileByEmail($email: String!) {
@@ -340,7 +334,7 @@ module.exports = {
 								}
 							}
 							createOfficeConnectionPayload {
-								office_email
+								manager_email
 							}
 							inviteEmployeeToOfficePayload {
 								email
@@ -369,7 +363,7 @@ module.exports = {
 		return result
 	},
 
-	checkIfUserIsUnemployed: async username => {
+	checkIfUserIsUnemployed: async (username) => {
 		console.log('checkIfUserIsUnemployed input: ' + username)
 		const query = /* GraphQL */ `
 			query listUserProfileByUsername($username: String!) {
@@ -391,7 +385,7 @@ module.exports = {
 		return retVal
 	},
 
-	getOfficeByOwnerUsername: async username => {
+	getOfficeByOwnerUsername: async (username) => {
 		console.log('getOfficeByOwnerUsername input: ' + username)
 		const query = /* GraphQL */ `
 			query listOfficeByOwnerUsername($ownerUsername: String!) {
@@ -539,7 +533,7 @@ module.exports = {
 								}
 							}
 							createOfficeConnectionPayload {
-								office_email
+								manager_email
 							}
 							inviteEmployeeToOfficePayload {
 								email
@@ -1016,7 +1010,7 @@ module.exports = {
 				listOfficeAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
 					items {
 						id
-						to{
+						to {
 							id
 							officeName
 							ownerUsername
@@ -1067,7 +1061,7 @@ module.exports = {
 		]
 
 		let sanitized_input = Object.keys(input)
-			.filter(key => allowed.includes(key))
+			.filter((key) => allowed.includes(key))
 			.reduce((obj, key) => {
 				obj[key] = input[key]
 				return obj
@@ -1076,7 +1070,7 @@ module.exports = {
 		const allowed_private = ['bankAccountInfo']
 		if ('private_data' in sanitized_input) {
 			sanitized_input.private_data = Object.keys(sanitized_input.private_data)
-				.filter(key => allowed_private.includes(key))
+				.filter((key) => allowed_private.includes(key))
 				.reduce((obj, key) => {
 					obj[key] = sanitized_input.private_data[key]
 					return obj
@@ -1123,7 +1117,7 @@ module.exports = {
 			'profilePicture',
 		]
 		const sanitized_input = Object.keys(input)
-			.filter(key => allowed.includes(key))
+			.filter((key) => allowed.includes(key))
 			.reduce((obj, key) => {
 				obj[key] = input[key]
 				return obj
@@ -1214,7 +1208,7 @@ module.exports = {
 		]
 
 		let sanitized_input = Object.keys(input)
-			.filter(key => allowed.includes(key))
+			.filter((key) => allowed.includes(key))
 			.reduce((obj, key) => {
 				obj[key] = input[key]
 				return obj
@@ -1241,86 +1235,103 @@ module.exports = {
 		console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
 		return result
 	},
-
-	createRequest: async (username, email, groups, input, condition) => {
-		console.log('createRequest input: ' + [username, email, groups, input, condition])
+	createInviteEmployeeToOfficeRequest: async (username, email, groups, input) => {
+		console.log('createInviteEmployeeToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-
-		// Populate/Overwrite user identity claims
-		input.senderUsername = username
-		input.senderEmail = email
-
-		// Expand the condition to require that the caller is also the owner of the profile
+		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
+		const requestInput = {
+			senderUsername: username,
+			senderEmail: email,
+			type: 'INVITE_EMPLOYEE_TO_OFFICE',
+			receiverEmail: input.email,
+			payload: { inviteEmployeeToOfficePayload: input },
+		}
 		const mutation = /* GraphQL */ `
-			mutation createRequest($input: CreateRequestsInput!, $condition: ModelRequestsConditionInput) {
-				createRequests(input: $input, condition: $condition) {
+			mutation createRequest($input: CreateRequestsInput!) {
+				createRequests(input: $input) {
 					id
 				}
 			}
 		`
-
-		//AWSJSON fields need reparsing \_(**)_/
-		switch (input.type) {
-			case 'CREATE_OFFICE': {
-				const payload = input.payload.createOfficePayload
-				input.payload.createOfficePayload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo)
-				input.receiverUsername = 'admin1'
-				input.receiverEmail = 'admin1@wais.com'
-				break
-			}
-			case 'INVITE_EMPLOYEE_TO_OFFICE': {
-				const payload = input.payload.inviteEmployeeToOfficePayload
-				input.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.stringify(payload.empPagePermissions)
-				break
-			}
-			case 'INVITE_CONTRACTOR_TO_OFFICE': {
-				const payload = input.payload.inviteContractorToOfficePayload
-				input.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.stringify(payload.ctrPagePermissions)
-				break
-			}
-			case 'CREATE_OFFICE_CONNECTION': {
-				break
-			}
-			default:
-				throw new Error('Invalid request type: ' + input.type)
-		}
-
-		console.log('About to create request with input: ' + JSON.stringify(input))
-		const expanded_condition = condition || { senderUsername: { ne: '' } }
-		const response = await gqlHelper({ input: input, condition: expanded_condition }, mutation, 'createRequest')
+		const response = await gqlHelper({ input: requestInput }, mutation, 'createRequest')
 		const result = response.data.createRequests
-		console.log('createRequest output: ' + JSON.stringify(result))
+		console.log('createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
-
-	updateRequestsSentByMe: async (username, email, groups, input, condition) => {
-		console.log('updateRequestsSentByMe input: ' + [username, email, groups, input, condition])
+	createInviteContractorToOfficeRequest: async (username, email, groups, input) => {
+		console.log('createInviteContractorToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-
-		const allowed = ['id', 'receiverUsername', 'receiverEmail', 'type', 'payload']
-		const sanitized_input = Object.keys(input)
-			.filter(key => allowed.includes(key))
-			.reduce((obj, key) => {
-				obj[key] = input[key]
-				return obj
-			}, {})
-		const expanded_condition = {
-			and: [condition || { senderUsername: { ne: '' } }, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }],
+		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
+		const requestInput = {
+			senderUsername: username,
+			senderEmail: email,
+			type: 'INVITE_CONTRACTOR_TO_OFFICE',
+			receiverEmail: input.email,
+			payload: { inviteContractorToOfficePayload: input },
 		}
 		const mutation = /* GraphQL */ `
-			mutation updateRequestsSentByMe($input: UpdateRequestsInput!, $condition: ModelRequestsConditionInput) {
-				updateRequests(input: $input, condition: $condition) {
+			mutation createRequest($input: CreateRequestsInput!) {
+				createRequests(input: $input) {
 					id
 				}
 			}
 		`
-		const response = await gqlHelper({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateRequestsSentByMe')
-		const result = response.data.updateRequests
-		console.log('updateRequestsSentByMe output: ' + JSON.stringify(result))
+		const response = await gqlHelper({ input: requestInput }, mutation, 'createRequest')
+		const result = response.data.createRequests
+		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
+		return result
+	},
+	createOfficeRequest: async (username, email, groups, input) => {
+		console.log('createOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		if (!username) {
+			throw new Error('Invalid username or unauthenticated user.')
+		}
+		input.bankAccountInfo = JSON.stringify(input.bankAccountInfo)
+		const requestInput = {
+			senderUsername: username,
+			senderEmail: email,
+			type: 'CREATE_OFFICE',
+			receiverEmail: 'admin1@wais.com',
+			payload: { createOfficePayload: input },
+		}
+		const mutation = /* GraphQL */ `
+			mutation createRequest($input: CreateRequestsInput!) {
+				createRequests(input: $input) {
+					id
+				}
+			}
+		`
+		const response = await gqlHelper({ input: requestInput }, mutation, 'createRequest')
+		const result = response.data.createRequests
+		console.log('createOfficeRequest output: ' + JSON.stringify(result))
+		return result
+	},
+	createOfficeConnectionRequest: async (username, email, groups, input) => {
+		console.log('createOfficeConnectionRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		if (!username) {
+			throw new Error('Invalid username or unauthenticated user.')
+		}
+		const requestInput = {
+			senderUsername: username,
+			senderEmail: email,
+			type: 'CREATE_OFFICE_CONNECTION',
+			receiverEmail: input.manager_email,
+			payload: { createOfficeConnectionPayload: input },
+		}
+		const mutation = /* GraphQL */ `
+			mutation createRequest($input: CreateRequestsInput!) {
+				createRequests(input: $input) {
+					id
+				}
+			}
+		`
+		const response = await gqlHelper({ input: requestInput }, mutation, 'createRequest')
+		const result = response.data.createRequests
+		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
 
@@ -1366,7 +1377,7 @@ module.exports = {
 
 		const response = await gqlHelper({ input: input, condition: condition }, mutation, 'createMyUserCalendarEvent')
 		const result = response.data.createUserCalendarEvent
-		console.log('createRequest output: ' + JSON.stringify(result))
+		console.log('createMyUserCalendarEvent output: ' + JSON.stringify(result))
 		return result
 	},
 
@@ -1378,7 +1389,7 @@ module.exports = {
 
 		const allowed = ['id', 'username', 'payload']
 		const sanitized_input = Object.keys(input)
-			.filter(key => allowed.includes(key))
+			.filter((key) => allowed.includes(key))
 			.reduce((obj, key) => {
 				obj[key] = input[key]
 				return obj

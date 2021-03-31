@@ -1068,3 +1068,35 @@ input ModelTransactionHistoryByReceiverUsernameCompositeKeyInput {
     timestamp: AWSTimestamp
     senderUsername: String
 }
+
+input CreateOfficeRequestPayloadInput {
+    officeName: String!
+    address: String
+    office_email: String!
+    zip_code: String
+    mobile: String
+    phone: String!
+    tin: String!
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
+    files: [S3ObjectInput]
+}
+
+input OfficeConnectionRequestPayloadInput {
+    manager_email: String!
+}
+
+input InviteEmployeeRequestPayloadInput {
+    email: String!
+    empModelPermissions: [ModelPermission!]!
+    empPagePermissions: AWSJSON!
+}
+
+input InviteContractorRequestPayloadInput {
+    ctrModelPermissions: [ModelPermission!]!
+    ctrPagePermissions: AWSJSON!
+    email: String!
+}
