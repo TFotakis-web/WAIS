@@ -1160,6 +1160,8 @@ export const createContract = /* GraphQL */ `
       co_name
       co_TRN
       contractState
+      insuranceCompanyName
+      insuranceCompanyCode
       insuranceClass
       insuranceCoverage
       insuranceUsage
@@ -1221,6 +1223,8 @@ export const updateContract = /* GraphQL */ `
       co_name
       co_TRN
       contractState
+      insuranceCompanyName
+      insuranceCompanyCode
       insuranceClass
       insuranceCoverage
       insuranceUsage
@@ -1282,6 +1286,8 @@ export const deleteContract = /* GraphQL */ `
       co_name
       co_TRN
       contractState
+      insuranceCompanyName
+      insuranceCompanyCode
       insuranceClass
       insuranceCoverage
       insuranceUsage
@@ -1663,6 +1669,8 @@ export const createOfficeContractConnection = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1727,6 +1735,8 @@ export const updateOfficeContractConnection = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1791,6 +1801,8 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1814,6 +1826,8 @@ export const createOfficeAccessConnection = /* GraphQL */ `
   ) {
     createOfficeAccessConnection(input: $input, condition: $condition) {
       id
+      insuranceCompanyName
+      insuranceCompanyCode
       fromId
       fromOfficeName
       toId
@@ -1874,6 +1888,8 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
   ) {
     updateOfficeAccessConnection(input: $input, condition: $condition) {
       id
+      insuranceCompanyName
+      insuranceCompanyCode
       fromId
       fromOfficeName
       toId
@@ -1934,6 +1950,8 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
   ) {
     deleteOfficeAccessConnection(input: $input, condition: $condition) {
       id
+      insuranceCompanyName
+      insuranceCompanyCode
       fromId
       fromOfficeName
       toId

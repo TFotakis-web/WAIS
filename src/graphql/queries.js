@@ -859,6 +859,8 @@ export const listContracts = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -892,6 +894,8 @@ export const getContract = /* GraphQL */ `
       co_name
       co_TRN
       contractState
+      insuranceCompanyName
+      insuranceCompanyCode
       insuranceClass
       insuranceCoverage
       insuranceUsage
@@ -965,6 +969,8 @@ export const listContractsByOfficeName = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1013,6 +1019,8 @@ export const listContractsByVehicleNumberPlates = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1061,6 +1069,8 @@ export const listContractsByCustomerId = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1480,6 +1490,8 @@ export const getOfficeContractConnection = /* GraphQL */ `
         co_name
         co_TRN
         contractState
+        insuranceCompanyName
+        insuranceCompanyCode
         insuranceClass
         insuranceCoverage
         insuranceUsage
@@ -1614,6 +1626,8 @@ export const getOfficeAccessConnection = /* GraphQL */ `
   query GetOfficeAccessConnection($id: ID!) {
     getOfficeAccessConnection(id: $id) {
       id
+      insuranceCompanyName
+      insuranceCompanyCode
       fromId
       fromOfficeName
       toId
@@ -1680,6 +1694,8 @@ export const listOfficeAccessConnections = /* GraphQL */ `
     ) {
       items {
         id
+        insuranceCompanyName
+        insuranceCompanyCode
         fromId
         fromOfficeName
         toId
@@ -1712,6 +1728,8 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
     ) {
       items {
         id
+        insuranceCompanyName
+        insuranceCompanyCode
         fromId
         fromOfficeName
         toId
@@ -1744,6 +1762,8 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
     ) {
       items {
         id
+        insuranceCompanyName
+        insuranceCompanyCode
         fromId
         fromOfficeName
         toId
@@ -1776,6 +1796,8 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
     ) {
       items {
         id
+        insuranceCompanyName
+        insuranceCompanyCode
         fromId
         fromOfficeName
         toId
@@ -1808,6 +1830,8 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
     ) {
       items {
         id
+        insuranceCompanyName
+        insuranceCompanyCode
         fromId
         fromOfficeName
         toId

@@ -54,6 +54,9 @@ type Query {
         @function(name: "resolver-${env}")
 
     getUserPagePermissionsForOffice(officeId: ID!): AWSJSON! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+
+    # TODO implement
+    #getAvailableInsuranceCompanies(filter: ModelInsuranceCompanyFilterInput, limit: Int, nextToken: String): ModelInsuranceCompanyOutput
 }
 
 type Mutation {
@@ -103,6 +106,8 @@ type Mutation {
     createOfficeConnectionRequest(input: OfficeConnectionRequestPayloadInput!): RequestsOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
+
+    # Delete a single request with the provided ID
     deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
