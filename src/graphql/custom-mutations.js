@@ -3,62 +3,17 @@
 // DO NOT EDIT.
 // Please use custom-mutations-description.js for editing.
 
-export const createCompanyAccessConnection = `
-	mutation CreateCompanyAccessConnection(
-		$input: CreateCompanyAccessConnectionInput!
-		$condition: ModelCompanyAccessConnectionConditionInput
-	) {
-		createCompanyAccessConnection(input: $input, condition: $condition) {
-			id
-			fromId
-			fromTradeName
-			toId
-			toTradeName
-			expirationDate
-			message
-			createdAt
-			updatedAt
-			from {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			to {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-		}
-	}
-`;
-export const createContract = `
-	mutation CreateContract(
+export const createContractForOffice = /* GraphQL */ `
+	mutation CreateContractForOffice(
+		$officeId: ID!
 		$input: CreateContractInput!
 		$condition: ModelContractConditionInput
 	) {
-		createContract(input: $input, condition: $condition) {
+		createContractForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			contractId
 			version
@@ -66,8 +21,8 @@ export const createContract = `
 			vehicleId
 			voucherId
 			customerId
-			tradeName
-			second_tradeId
+			officeName
+			second_officeId
 			contractorId
 			co_name
 			co_TRN
@@ -88,40 +43,23 @@ export const createContract = `
 			}
 			createdAt
 			updatedAt
-			vehicle {
-				id
-				numberPlate
-				tradeName
-				color
-				manufacturer
-				model
-				vehicle_owner
-				trim
-				fuelType
-				usage
-				displacement
-				eurotax
-				firstRegistrationDate
-				passengers
-				purchaseDate
-				taxableHorsepower
-				vin
-				value
-				createdAt
-				updatedAt
-			}
 		}
 	}
 `;
-export const createCustomer = `
-	mutation CreateCustomer(
+export const createCustomerForOffice = /* GraphQL */ `
+	mutation CreateCustomerForOffice(
+		$officeId: ID!
 		$input: CreateCustomerInput!
 		$condition: ModelCustomerConditionInput
 	) {
-		createCustomer(input: $input, condition: $condition) {
+		createCustomerForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			tin
-			tradeName
+			officeName
 			firstName
 			lastName
 			fathersName
@@ -148,336 +86,123 @@ export const createCustomer = `
 		}
 	}
 `;
-export const createOffice = `
-	mutation CreateOffice(
-		$input: CreateOfficeInput!
-		$condition: ModelOfficeConditionInput
+export const createInviteContractorToOfficeRequest = /* GraphQL */ `
+	mutation CreateInviteContractorToOfficeRequest(
+		$input: InviteContractorRequestPayloadInput!
 	) {
-		createOffice(input: $input, condition: $condition) {
-			id
-			tradeName
-			ownerUsername
-			address
-			office_email
-			zip_code
-			mobile
-			phone
-			partnersNumberLimit
-			employeesNumberLimit
-			verified
-			customers {
-				nextToken
-			}
-			contracts {
-				nextToken
-			}
-			employees {
-				nextToken
-			}
-			contractors {
-				nextToken
-			}
-			partnerOffices {
-				nextToken
-			}
-			createdAt
-			updatedAt
-			privateData {
-				tin
-				professionStartDate
-				chamberRecordNumber
-				insuranceLicenseExpirationDate
-				civilLiabilityExpirationDate
-				bankAccountInfo
-			}
-			members
-			officeContracts {
-				nextToken
-			}
-			officeCustomers {
-				nextToken
-			}
-			companyConnections {
-				nextToken
-			}
-		}
-	}
-`;
-export const createRequests = `
-	mutation CreateRequests(
-		$input: CreateRequestsInput!
-		$condition: ModelRequestsConditionInput
-	) {
-		createRequests(input: $input, condition: $condition) {
+		createInviteContractorToOfficeRequest(input: $input) {
 			id
 			senderUsername
 			senderEmail
+			receiverUsername
 			receiverEmail
 			type
-			payload
 			createdAt
 			updatedAt
 		}
 	}
 `;
-export const createTradeContractConnection = `
-	mutation CreateTradeContractConnection(
-		$input: CreateTradeContractConnectionInput!
-		$condition: ModelTradeContractConnectionConditionInput
+export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
+	mutation CreateInviteEmployeeToOfficeRequest(
+		$input: InviteEmployeeRequestPayloadInput!
 	) {
-		createTradeContractConnection(input: $input, condition: $condition) {
+		createInviteEmployeeToOfficeRequest(input: $input) {
 			id
-			tradeId
-			tradeName
-			contractId
-			ownsContract
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			contract {
-				id
-				contractId
-				version
-				vehicleNumberPlate
-				vehicleId
-				voucherId
-				customerId
-				tradeName
-				second_tradeId
-				contractorId
-				co_name
-				co_TRN
-				contractState
-				insuranceClass
-				insuranceCoverage
-				insuranceUsage
-				duration
-				startDate
-				endDate
-				data
-				discount
-				jointWorth
-				netWorth
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const createTradeUserConnection = `
-	mutation CreateTradeUserConnection(
-		$input: CreateTradeUserConnectionInput!
-		$condition: ModelTradeUserConnectionConditionInput
-	) {
-		createTradeUserConnection(input: $input, condition: $condition) {
-			id
-			tradeId
-			tradeName
-			userId
-			username
-			permissions {
-				department
-				read
-				write
-			}
-			employeeType
-			preferences
-			members
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			user {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const createTransactionHistory = `
-	mutation CreateTransactionHistory(
-		$input: CreateTransactionHistoryInput!
-		$condition: ModelTransactionHistoryConditionInput
-	) {
-		createTransactionHistory(input: $input, condition: $condition) {
-			id
-			senderUserProfileId
-			receiverUserProfileId
-			timestamp
 			senderUsername
+			senderEmail
 			receiverUsername
-			transactionAmount
+			receiverEmail
+			type
 			createdAt
 			updatedAt
-			sender {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-			receiver {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
 		}
 	}
 `;
-export const createUserCalendarEvent = `
-	mutation CreateUserCalendarEvent(
+export const createMyUserCalendarEvent = /* GraphQL */ `
+	mutation CreateMyUserCalendarEvent(
 		$input: CreateUserCalendarEventInput!
 		$condition: ModelUserCalendarEventConditionInput
 	) {
-		createUserCalendarEvent(input: $input, condition: $condition) {
+		createMyUserCalendarEvent(input: $input, condition: $condition) {
 			id
 			username
-			createdAt
 			payload
-			updatedAt
-		}
-	}
-`;
-export const createUserProfile = `
-	mutation CreateUserProfile(
-		$input: CreateUserProfileInput!
-		$condition: ModelUserProfileConditionInput
-	) {
-		createUserProfile(input: $input, condition: $condition) {
-			id
-			username
-			email
-			telephone
-			surname
-			name
-			fathers_name
-			address
-			zip_code
-			mobile
-			tin
-			family_name
-			gender
-			birthdate
-			city
-			profilePicture {
-				bucket
-				region
-				key
-				name
-			}
-			preferences
-			locale
-			files {
-				bucket
-				region
-				key
-				name
-			}
 			createdAt
 			updatedAt
-			tradeCon {
-				nextToken
-			}
-			officeConnections {
-				nextToken
-			}
-			callendarEvents {
-				nextToken
-			}
-			requestsSentByMe {
-				nextToken
-			}
-			requestsForMe {
-				nextToken
-			}
 		}
 	}
 `;
-export const createVehicle = `
-	mutation CreateVehicle(
+export const createOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation CreateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: CreateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		createOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
+export const createOfficeConnectionRequest = /* GraphQL */ `
+	mutation CreateOfficeConnectionRequest(
+		$input: OfficeConnectionRequestPayloadInput!
+	) {
+		createOfficeConnectionRequest(input: $input) {
+			id
+			senderUsername
+			senderEmail
+			receiverUsername
+			receiverEmail
+			type
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const createOfficeRequest = /* GraphQL */ `
+	mutation CreateOfficeRequest($input: CreateOfficeRequestPayloadInput!) {
+		createOfficeRequest(input: $input) {
+			id
+			senderUsername
+			senderEmail
+			receiverUsername
+			receiverEmail
+			type
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const createVehicleForOffice = /* GraphQL */ `
+	mutation CreateVehicleForOffice(
+		$officeId: ID!
 		$input: CreateVehicleInput!
 		$condition: ModelVehicleConditionInput
 	) {
-		createVehicle(input: $input, condition: $condition) {
+		createVehicleForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			numberPlate
-			tradeName
+			officeId
+			officeName
 			color
 			manufacturer
 			model
@@ -504,62 +229,17 @@ export const createVehicle = `
 		}
 	}
 `;
-export const deleteCompanyAccessConnection = `
-	mutation DeleteCompanyAccessConnection(
-		$input: DeleteCompanyAccessConnectionInput!
-		$condition: ModelCompanyAccessConnectionConditionInput
-	) {
-		deleteCompanyAccessConnection(input: $input, condition: $condition) {
-			id
-			fromId
-			fromTradeName
-			toId
-			toTradeName
-			expirationDate
-			message
-			createdAt
-			updatedAt
-			from {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			to {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-		}
-	}
-`;
-export const deleteContract = `
-	mutation DeleteContract(
+export const deleteContractForOffice = /* GraphQL */ `
+	mutation DeleteContractForOffice(
+		$officeId: ID!
 		$input: DeleteContractInput!
 		$condition: ModelContractConditionInput
 	) {
-		deleteContract(input: $input, condition: $condition) {
+		deleteContractForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			contractId
 			version
@@ -567,8 +247,8 @@ export const deleteContract = `
 			vehicleId
 			voucherId
 			customerId
-			tradeName
-			second_tradeId
+			officeName
+			second_officeId
 			contractorId
 			co_name
 			co_TRN
@@ -589,40 +269,34 @@ export const deleteContract = `
 			}
 			createdAt
 			updatedAt
-			vehicle {
-				id
-				numberPlate
-				tradeName
-				color
-				manufacturer
-				model
-				vehicle_owner
-				trim
-				fuelType
-				usage
-				displacement
-				eurotax
-				firstRegistrationDate
-				passengers
-				purchaseDate
-				taxableHorsepower
-				vin
-				value
-				createdAt
-				updatedAt
-			}
 		}
 	}
 `;
-export const deleteCustomer = `
-	mutation DeleteCustomer(
+export const deleteContractorForOffice = /* GraphQL */ `
+	mutation DeleteContractorForOffice(
+		$officeId: ID!
+		$contractorUsername: String!
+	) {
+		deleteContractorForOffice(
+			officeId: $officeId
+			contractorUsername: $contractorUsername
+		)
+	}
+`;
+export const deleteCustomerForOffice = /* GraphQL */ `
+	mutation DeleteCustomerForOffice(
+		$officeId: ID!
 		$input: DeleteCustomerInput!
 		$condition: ModelCustomerConditionInput
 	) {
-		deleteCustomer(input: $input, condition: $condition) {
+		deleteCustomerForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			tin
-			tradeName
+			officeName
 			firstName
 			lastName
 			fathersName
@@ -649,336 +323,83 @@ export const deleteCustomer = `
 		}
 	}
 `;
-export const deleteOffice = `
-	mutation DeleteOffice(
-		$input: DeleteOfficeInput!
-		$condition: ModelOfficeConditionInput
-	) {
-		deleteOffice(input: $input, condition: $condition) {
-			id
-			tradeName
-			ownerUsername
-			address
-			office_email
-			zip_code
-			mobile
-			phone
-			partnersNumberLimit
-			employeesNumberLimit
-			verified
-			customers {
-				nextToken
-			}
-			contracts {
-				nextToken
-			}
-			employees {
-				nextToken
-			}
-			contractors {
-				nextToken
-			}
-			partnerOffices {
-				nextToken
-			}
-			createdAt
-			updatedAt
-			privateData {
-				tin
-				professionStartDate
-				chamberRecordNumber
-				insuranceLicenseExpirationDate
-				civilLiabilityExpirationDate
-				bankAccountInfo
-			}
-			members
-			officeContracts {
-				nextToken
-			}
-			officeCustomers {
-				nextToken
-			}
-			companyConnections {
-				nextToken
-			}
-		}
+export const deleteEmployeeForOffice = /* GraphQL */ `
+	mutation DeleteEmployeeForOffice($officeId: ID!, $empUsername: String!) {
+		deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername)
 	}
 `;
-export const deleteRequests = `
-	mutation DeleteRequests(
-		$input: DeleteRequestsInput!
-		$condition: ModelRequestsConditionInput
-	) {
-		deleteRequests(input: $input, condition: $condition) {
-			id
-			senderUsername
-			senderEmail
-			receiverEmail
-			type
-			payload
-			createdAt
-			updatedAt
-		}
-	}
-`;
-export const deleteTradeContractConnection = `
-	mutation DeleteTradeContractConnection(
-		$input: DeleteTradeContractConnectionInput!
-		$condition: ModelTradeContractConnectionConditionInput
-	) {
-		deleteTradeContractConnection(input: $input, condition: $condition) {
-			id
-			tradeId
-			tradeName
-			contractId
-			ownsContract
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			contract {
-				id
-				contractId
-				version
-				vehicleNumberPlate
-				vehicleId
-				voucherId
-				customerId
-				tradeName
-				second_tradeId
-				contractorId
-				co_name
-				co_TRN
-				contractState
-				insuranceClass
-				insuranceCoverage
-				insuranceUsage
-				duration
-				startDate
-				endDate
-				data
-				discount
-				jointWorth
-				netWorth
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const deleteTradeUserConnection = `
-	mutation DeleteTradeUserConnection(
-		$input: DeleteTradeUserConnectionInput!
-		$condition: ModelTradeUserConnectionConditionInput
-	) {
-		deleteTradeUserConnection(input: $input, condition: $condition) {
-			id
-			tradeId
-			tradeName
-			userId
-			username
-			permissions {
-				department
-				read
-				write
-			}
-			employeeType
-			preferences
-			members
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			user {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const deleteTransactionHistory = `
-	mutation DeleteTransactionHistory(
-		$input: DeleteTransactionHistoryInput!
-		$condition: ModelTransactionHistoryConditionInput
-	) {
-		deleteTransactionHistory(input: $input, condition: $condition) {
-			id
-			senderUserProfileId
-			receiverUserProfileId
-			timestamp
-			senderUsername
-			receiverUsername
-			transactionAmount
-			createdAt
-			updatedAt
-			sender {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-			receiver {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const deleteUserCalendarEvent = `
-	mutation DeleteUserCalendarEvent(
+export const deleteMyUserCalendarEvents = /* GraphQL */ `
+	mutation DeleteMyUserCalendarEvents(
 		$input: DeleteUserCalendarEventInput!
 		$condition: ModelUserCalendarEventConditionInput
 	) {
-		deleteUserCalendarEvent(input: $input, condition: $condition) {
+		deleteMyUserCalendarEvents(input: $input, condition: $condition) {
 			id
 			username
-			createdAt
 			payload
-			updatedAt
-		}
-	}
-`;
-export const deleteUserProfile = `
-	mutation DeleteUserProfile(
-		$input: DeleteUserProfileInput!
-		$condition: ModelUserProfileConditionInput
-	) {
-		deleteUserProfile(input: $input, condition: $condition) {
-			id
-			username
-			email
-			telephone
-			surname
-			name
-			fathers_name
-			address
-			zip_code
-			mobile
-			tin
-			family_name
-			gender
-			birthdate
-			city
-			profilePicture {
-				bucket
-				region
-				key
-				name
-			}
-			preferences
-			locale
-			files {
-				bucket
-				region
-				key
-				name
-			}
 			createdAt
 			updatedAt
-			tradeCon {
-				nextToken
-			}
-			officeConnections {
-				nextToken
-			}
-			callendarEvents {
-				nextToken
-			}
-			requestsSentByMe {
-				nextToken
-			}
-			requestsForMe {
-				nextToken
-			}
 		}
 	}
 `;
-export const deleteVehicle = `
-	mutation DeleteVehicle(
+export const deleteOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation DeleteOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: DeleteOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		deleteOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
+export const deleteRequestsSentByMe = /* GraphQL */ `
+	mutation DeleteRequestsSentByMe(
+		$input: DeleteRequestsInput!
+		$condition: ModelRequestsConditionInput
+	) {
+		deleteRequestsSentByMe(input: $input, condition: $condition) {
+			id
+			senderUsername
+			senderEmail
+			receiverUsername
+			receiverEmail
+			type
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const deleteVehicleForOffice = /* GraphQL */ `
+	mutation DeleteVehicleForOffice(
+		$officeId: ID!
 		$input: DeleteVehicleInput!
 		$condition: ModelVehicleConditionInput
 	) {
-		deleteVehicle(input: $input, condition: $condition) {
+		deleteVehicleForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			numberPlate
-			tradeName
+			officeId
+			officeName
 			color
 			manufacturer
 			model
@@ -1005,120 +426,30 @@ export const deleteVehicle = `
 		}
 	}
 `;
-export const manageContractors = `
-	mutation ManageContractors(
-		$action: ContractorResourceAction!
-		$tradeName: String!
-		$payload: String!
+export const resolveRequest = /* GraphQL */ `
+	mutation ResolveRequest(
+		$requestId: ID!
+		$decission: RequestDecision!
+		$payload: ResolveRequestPayloadInput!
 	) {
-		manageContractors(
-			action: $action
-			tradeName: $tradeName
+		resolveRequest(
+			requestId: $requestId
+			decission: $decission
 			payload: $payload
-		) {
-			id
-		}
+		)
 	}
 `;
-export const manageContracts = `
-	mutation ManageContracts(
-		$action: ContractResourceAction!
-		$tradeName: String!
-		$payload: String!
-	) {
-		manageContracts(action: $action, tradeName: $tradeName, payload: $payload) {
-			id
-		}
-	}
-`;
-export const manageCustomers = `
-	mutation ManageCustomers(
-		$action: CustomerResourceAction!
-		$tradeName: String!
-		$payload: String!
-	) {
-		manageCustomers(action: $action, tradeName: $tradeName, payload: $payload) {
-			id
-		}
-	}
-`;
-export const manageEmployees = `
-	mutation ManageEmployees(
-		$action: EmployeeResourceAction!
-		$tradeName: String!
-		$payload: String!
-	) {
-		manageEmployees(action: $action, tradeName: $tradeName, payload: $payload) {
-			id
-		}
-	}
-`;
-export const resolveRequest = `
-	mutation ResolveRequest($id: ID!, $payload: String!) {
-		resolveRequest(id: $id, payload: $payload)
-	}
-`;
-export const sendRequest = `
-	mutation SendRequest($requestType: RequestType!, $payload: String!) {
-		sendRequest(requestType: $requestType, payload: $payload)
-	}
-`;
-export const updateCompanyAccessConnection = `
-	mutation UpdateCompanyAccessConnection(
-		$input: UpdateCompanyAccessConnectionInput!
-		$condition: ModelCompanyAccessConnectionConditionInput
-	) {
-		updateCompanyAccessConnection(input: $input, condition: $condition) {
-			id
-			fromId
-			fromTradeName
-			toId
-			toTradeName
-			expirationDate
-			message
-			createdAt
-			updatedAt
-			from {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			to {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-		}
-	}
-`;
-export const updateContract = `
-	mutation UpdateContract(
+export const updateContractForOffice = /* GraphQL */ `
+	mutation UpdateContractForOffice(
+		$officeId: ID!
 		$input: UpdateContractInput!
 		$condition: ModelContractConditionInput
 	) {
-		updateContract(input: $input, condition: $condition) {
+		updateContractForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			contractId
 			version
@@ -1126,8 +457,8 @@ export const updateContract = `
 			vehicleId
 			voucherId
 			customerId
-			tradeName
-			second_tradeId
+			officeName
+			second_officeId
 			contractorId
 			co_name
 			co_TRN
@@ -1148,40 +479,49 @@ export const updateContract = `
 			}
 			createdAt
 			updatedAt
-			vehicle {
-				id
-				numberPlate
-				tradeName
-				color
-				manufacturer
-				model
-				vehicle_owner
-				trim
-				fuelType
-				usage
-				displacement
-				eurotax
-				firstRegistrationDate
-				passengers
-				purchaseDate
-				taxableHorsepower
-				vin
-				value
-				createdAt
-				updatedAt
-			}
 		}
 	}
 `;
-export const updateCustomer = `
-	mutation UpdateCustomer(
+export const updateContractorModelPermissionsForOffice = /* GraphQL */ `
+	mutation UpdateContractorModelPermissionsForOffice(
+		$officeId: ID!
+		$contractorUsername: String!
+		$modelPermissions: [ModelPermission]!
+	) {
+		updateContractorModelPermissionsForOffice(
+			officeId: $officeId
+			contractorUsername: $contractorUsername
+			modelPermissions: $modelPermissions
+		)
+	}
+`;
+export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
+	mutation UpdateContractorPagePermissionsForOffice(
+		$officeId: ID!
+		$contractorUsername: String!
+		$pagePermissions: AWSJSON!
+	) {
+		updateContractorPagePermissionsForOffice(
+			officeId: $officeId
+			contractorUsername: $contractorUsername
+			pagePermissions: $pagePermissions
+		)
+	}
+`;
+export const updateCustomerForOffice = /* GraphQL */ `
+	mutation UpdateCustomerForOffice(
+		$officeId: ID!
 		$input: UpdateCustomerInput!
 		$condition: ModelCustomerConditionInput
 	) {
-		updateCustomer(input: $input, condition: $condition) {
+		updateCustomerForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			tin
-			tradeName
+			officeName
 			firstName
 			lastName
 			fathersName
@@ -1208,21 +548,80 @@ export const updateCustomer = `
 		}
 	}
 `;
-export const updateFields = `
-	mutation UpdateFields($typename: String!, $id: ID!, $fields: String) {
-		updateFields(typename: $typename, id: $id, fields: $fields) {
+export const updateEmployeeModelPermissionsForOffice = /* GraphQL */ `
+	mutation UpdateEmployeeModelPermissionsForOffice(
+		$officeId: ID!
+		$empUsername: String!
+		$modelPermissions: [ModelPermission]!
+	) {
+		updateEmployeeModelPermissionsForOffice(
+			officeId: $officeId
+			empUsername: $empUsername
+			modelPermissions: $modelPermissions
+		)
+	}
+`;
+export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
+	mutation UpdateEmployeePagePermissionsForOffice(
+		$officeId: ID!
+		$empUsername: String!
+		$pagePermissions: AWSJSON!
+	) {
+		updateEmployeePagePermissionsForOffice(
+			officeId: $officeId
+			empUsername: $empUsername
+			pagePermissions: $pagePermissions
+		)
+	}
+`;
+export const updateMyUserCalendarEvents = /* GraphQL */ `
+	mutation UpdateMyUserCalendarEvents(
+		$input: UpdateUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		updateMyUserCalendarEvents(input: $input, condition: $condition) {
 			id
+			username
+			payload
+			createdAt
+			updatedAt
 		}
 	}
 `;
-export const updateOffice = `
-	mutation UpdateOffice(
+export const updateOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation UpdateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: UpdateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		updateOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
+export const updateOfficeDetails = /* GraphQL */ `
+	mutation UpdateOfficeDetails(
 		$input: UpdateOfficeInput!
 		$condition: ModelOfficeConditionInput
 	) {
-		updateOffice(input: $input, condition: $condition) {
+		updateOfficeDetails(input: $input, condition: $condition) {
 			id
-			tradeName
+			officeName
 			ownerUsername
 			address
 			office_email
@@ -1232,261 +631,29 @@ export const updateOffice = `
 			partnersNumberLimit
 			employeesNumberLimit
 			verified
-			customers {
-				nextToken
-			}
-			contracts {
-				nextToken
-			}
-			employees {
-				nextToken
-			}
-			contractors {
-				nextToken
-			}
-			partnerOffices {
-				nextToken
-			}
-			createdAt
-			updatedAt
-			privateData {
-				tin
-				professionStartDate
-				chamberRecordNumber
-				insuranceLicenseExpirationDate
-				civilLiabilityExpirationDate
-				bankAccountInfo
-			}
-			members
-			officeContracts {
-				nextToken
-			}
-			officeCustomers {
-				nextToken
-			}
-			companyConnections {
-				nextToken
-			}
-		}
-	}
-`;
-export const updateRequests = `
-	mutation UpdateRequests(
-		$input: UpdateRequestsInput!
-		$condition: ModelRequestsConditionInput
-	) {
-		updateRequests(input: $input, condition: $condition) {
-			id
-			senderUsername
-			senderEmail
-			receiverEmail
-			type
-			payload
-			createdAt
-			updatedAt
-		}
-	}
-`;
-export const updateTradeContractConnection = `
-	mutation UpdateTradeContractConnection(
-		$input: UpdateTradeContractConnectionInput!
-		$condition: ModelTradeContractConnectionConditionInput
-	) {
-		updateTradeContractConnection(input: $input, condition: $condition) {
-			id
-			tradeId
-			tradeName
-			contractId
-			ownsContract
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			contract {
-				id
-				contractId
-				version
-				vehicleNumberPlate
-				vehicleId
-				voucherId
-				customerId
-				tradeName
-				second_tradeId
-				contractorId
-				co_name
-				co_TRN
-				contractState
-				insuranceClass
-				insuranceCoverage
-				insuranceUsage
-				duration
-				startDate
-				endDate
-				data
-				discount
-				jointWorth
-				netWorth
-				createdAt
-				updatedAt
-			}
-		}
-	}
-`;
-export const updateTradeUserConnection = `
-	mutation UpdateTradeUserConnection(
-		$input: UpdateTradeUserConnectionInput!
-		$condition: ModelTradeUserConnectionConditionInput
-	) {
-		updateTradeUserConnection(input: $input, condition: $condition) {
-			id
-			tradeId
-			tradeName
-			userId
-			username
-			permissions {
-				department
-				read
-				write
-			}
-			employeeType
-			preferences
-			members
-			createdAt
-			updatedAt
-			trade {
-				id
-				tradeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				createdAt
-				updatedAt
-				members
-			}
-			user {
-				id
-				username
-				email
-				telephone
-				surname
+			tin
+			professionStartDate
+			chamberRecordNumber
+			insuranceLicenseExpirationDate
+			civilLiabilityExpirationDate
+			bankAccountInfo
+			files {
+				bucket
+				region
+				key
 				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
 			}
-		}
-	}
-`;
-export const updateTransactionHistory = `
-	mutation UpdateTransactionHistory(
-		$input: UpdateTransactionHistoryInput!
-		$condition: ModelTransactionHistoryConditionInput
-	) {
-		updateTransactionHistory(input: $input, condition: $condition) {
-			id
-			senderUserProfileId
-			receiverUserProfileId
-			timestamp
-			senderUsername
-			receiverUsername
-			transactionAmount
 			createdAt
 			updatedAt
-			sender {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-			receiver {
-				id
-				username
-				email
-				telephone
-				surname
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
 		}
 	}
 `;
-export const updateUserCalendarEvent = `
-	mutation UpdateUserCalendarEvent(
-		$input: UpdateUserCalendarEventInput!
-		$condition: ModelUserCalendarEventConditionInput
-	) {
-		updateUserCalendarEvent(input: $input, condition: $condition) {
-			id
-			username
-			createdAt
-			payload
-			updatedAt
-		}
-	}
-`;
-export const updateUserProfile = `
-	mutation UpdateUserProfile(
+export const updateUserProfileDetails = /* GraphQL */ `
+	mutation UpdateUserProfileDetails(
 		$input: UpdateUserProfileInput!
 		$condition: ModelUserProfileConditionInput
 	) {
-		updateUserProfile(input: $input, condition: $condition) {
+		updateUserProfileDetails(input: $input, condition: $condition) {
 			id
 			username
 			email
@@ -1518,33 +685,24 @@ export const updateUserProfile = `
 			}
 			createdAt
 			updatedAt
-			tradeCon {
-				nextToken
-			}
-			officeConnections {
-				nextToken
-			}
-			callendarEvents {
-				nextToken
-			}
-			requestsSentByMe {
-				nextToken
-			}
-			requestsForMe {
-				nextToken
-			}
 		}
 	}
 `;
-export const updateVehicle = `
-	mutation UpdateVehicle(
+export const updateVehicleForOffice = /* GraphQL */ `
+	mutation UpdateVehicleForOffice(
+		$officeId: ID!
 		$input: UpdateVehicleInput!
 		$condition: ModelVehicleConditionInput
 	) {
-		updateVehicle(input: $input, condition: $condition) {
+		updateVehicleForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
 			id
 			numberPlate
-			tradeName
+			officeId
+			officeName
 			color
 			manufacturer
 			model
