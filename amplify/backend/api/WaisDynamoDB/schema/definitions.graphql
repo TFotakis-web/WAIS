@@ -204,11 +204,17 @@ type ModelUserProfileConnection @aws_iam {
     nextToken: String
 }
 
+input ModelUserRoleInput {
+    eq: UserRole
+    ne: UserRole
+}
+
 input ModelUserProfileFilterInput {
     id: ModelIDInput
     username: ModelStringInput
     email: ModelStringInput
     telephone: ModelStringInput
+    role: ModelUserRoleInput
     surname: ModelStringInput
     name: ModelStringInput
     fathers_name: ModelStringInput
@@ -232,6 +238,7 @@ input CreateUserProfileInput {
     username: String!
     email: String!
     telephone: String!
+    role: UserRole!
     surname: String
     name: String
     fathers_name: String
@@ -254,6 +261,7 @@ input UpdateUserProfileInput {
     username: String
     email: String
     telephone: String
+    role: UserRole
     surname: String
     name: String
     fathers_name: String
@@ -279,6 +287,7 @@ input ModelUserProfileConditionInput {
     username: ModelStringInput
     email: ModelStringInput
     telephone: ModelStringInput
+    role: ModelUserRoleInput
     surname: ModelStringInput
     name: ModelStringInput
     fathers_name: ModelStringInput
@@ -432,6 +441,8 @@ input ModelContractFilterInput {
     co_name: ModelStringInput
     co_TRN: ModelStringInput
     contractState: ModelStringInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
     insuranceClass: ModelStringInput
     insuranceCoverage: ModelStringInput
     insuranceUsage: ModelStringInput
@@ -462,6 +473,8 @@ input CreateContractInput {
     co_name: String
     co_TRN: String
     contractState: String!
+    insuranceCompanyName: String!
+    insuranceCompanyCode: String!
     insuranceClass: String!
     insuranceCoverage: [String]
     insuranceUsage: String
@@ -490,6 +503,8 @@ input UpdateContractInput {
     co_name: String
     co_TRN: String
     contractState: String
+    insuranceCompanyName: String
+    insuranceCompanyCode: String
     insuranceClass: String
     insuranceCoverage: [String]
     insuranceUsage: String
@@ -521,6 +536,8 @@ input ModelContractConditionInput {
     co_name: ModelStringInput
     co_TRN: ModelStringInput
     contractState: ModelStringInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
     insuranceClass: ModelStringInput
     insuranceCoverage: ModelStringInput
     insuranceUsage: ModelStringInput
@@ -750,6 +767,8 @@ type ModelOfficeAccessConnectionConnection @aws_iam {
 
 input ModelOfficeAccessConnectionFilterInput {
     id: ModelIDInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
     fromId: ModelIDInput
     fromOfficeName: ModelStringInput
     toId: ModelIDInput
@@ -763,6 +782,8 @@ input ModelOfficeAccessConnectionFilterInput {
 
 input CreateOfficeAccessConnectionInput {
     id: ID
+    insuranceCompanyName: String!
+    insuranceCompanyCode: String!
     fromId: ID!
     fromOfficeName: String!
     toId: ID!
@@ -773,6 +794,8 @@ input CreateOfficeAccessConnectionInput {
 
 input UpdateOfficeAccessConnectionInput {
     id: ID!
+    insuranceCompanyName: String
+    insuranceCompanyCode: String
     fromId: ID
     fromOfficeName: String
     toId: ID
@@ -786,6 +809,8 @@ input DeleteOfficeAccessConnectionInput {
 }
 
 input ModelOfficeAccessConnectionConditionInput {
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
     fromId: ModelIDInput
     fromOfficeName: ModelStringInput
     toId: ModelIDInput
@@ -795,48 +820,6 @@ input ModelOfficeAccessConnectionConditionInput {
     and: [ModelOfficeAccessConnectionConditionInput]
     or: [ModelOfficeAccessConnectionConditionInput]
     not: ModelOfficeAccessConnectionConditionInput
-}
-
-type ModelUserCalendarEventConnection @aws_iam {
-    items: [UserCalendarEvent]
-    nextToken: String
-}
-
-input ModelUserCalendarEventFilterInput {
-    id: ModelIDInput
-    username: ModelStringInput
-    payload: ModelStringInput
-    createdAt: ModelStringInput
-    and: [ModelUserCalendarEventFilterInput]
-    or: [ModelUserCalendarEventFilterInput]
-    not: ModelUserCalendarEventFilterInput
-}
-
-input CreateUserCalendarEventInput {
-    id: ID
-    username: String
-    payload: String
-    createdAt: AWSDateTime
-}
-
-input UpdateUserCalendarEventInput {
-    id: ID!
-    username: String
-    payload: String
-    createdAt: AWSDateTime
-}
-
-input DeleteUserCalendarEventInput {
-    id: ID
-}
-
-input ModelUserCalendarEventConditionInput {
-    username: ModelStringInput
-    payload: ModelStringInput
-    createdAt: ModelStringInput
-    and: [ModelUserCalendarEventConditionInput]
-    or: [ModelUserCalendarEventConditionInput]
-    not: ModelUserCalendarEventConditionInput
 }
 
 type ModelTransactionHistoryConnection @aws_iam {
@@ -894,13 +877,13 @@ input ModelTransactionHistoryConditionInput {
 }
 
 input CreateRequestPayloadInput {
-    createOfficePayload: RequestCreateOfficePayloadInput
-    createOfficeConnectionPayload: RequestOfficeAccessConnectionPayloadInput
-    inviteEmployeeToOfficePayload: RequestInviteEmployeePayloadInput
-    inviteContractorToOfficePayload: RequestInviteContractorPayloadInput
+    createOfficePayload: CreateOfficeRequestPayloadInput
+    createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
+    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
+    inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
 }
 
-input RequestCreateOfficePayloadInput {
+input CreateOfficeRequestPayloadInput {
     officeName: String!
     address: String
     office_email: String!
@@ -916,17 +899,17 @@ input RequestCreateOfficePayloadInput {
     files: [S3ObjectInput]
 }
 
-input RequestOfficeAccessConnectionPayloadInput {
-    office_email: String!
+input OfficeConnectionRequestPayloadInput {
+    manager_email: String!
 }
 
-input RequestInviteEmployeePayloadInput {
+input InviteEmployeeRequestPayloadInput {
     email: String!
     empModelPermissions: [ModelPermission!]!
     empPagePermissions: AWSJSON!
 }
 
-input RequestInviteContractorPayloadInput {
+input InviteContractorRequestPayloadInput {
     ctrModelPermissions: [ModelPermission!]!
     ctrPagePermissions: AWSJSON!
     email: String!
@@ -946,7 +929,6 @@ input ModelRequestsFilterInput {
     id: ModelIDInput
     senderUsername: ModelStringInput
     senderEmail: ModelStringInput
-    receiverUsername: ModelStringInput
     receiverEmail: ModelStringInput
     type: ModelRequestTypeInput
     and: [ModelRequestsFilterInput]
@@ -956,9 +938,8 @@ input ModelRequestsFilterInput {
 
 input CreateRequestsInput {
     id: ID
-    senderUsername: String
-    senderEmail: String
-    receiverUsername: String!
+    senderUsername: String!
+    senderEmail: String!
     receiverEmail: String!
     type: RequestType!
     payload: CreateRequestPayloadInput!
@@ -968,7 +949,6 @@ input UpdateRequestsInput {
     id: ID!
     senderUsername: String
     senderEmail: String
-    receiverUsername: String
     receiverEmail: String
     type: RequestType
     payload: CreateRequestPayloadInput
@@ -981,12 +961,53 @@ input DeleteRequestsInput {
 input ModelRequestsConditionInput {
     senderUsername: ModelStringInput
     senderEmail: ModelStringInput
-    receiverUsername: ModelStringInput
     receiverEmail: ModelStringInput
     type: ModelRequestTypeInput
     and: [ModelRequestsConditionInput]
     or: [ModelRequestsConditionInput]
     not: ModelRequestsConditionInput
+}
+
+type ModelUserCalendarEventConnection @aws_iam {
+    items: [UserCalendarEvent]
+    nextToken: String
+}
+
+input ModelUserCalendarEventFilterInput {
+    id: ModelIDInput
+    username: ModelStringInput
+    payload: ModelStringInput
+    createdAt: ModelStringInput
+    and: [ModelUserCalendarEventFilterInput]
+    or: [ModelUserCalendarEventFilterInput]
+    not: ModelUserCalendarEventFilterInput
+}
+
+input CreateUserCalendarEventInput {
+    id: ID
+    username: String
+    payload: String
+    createdAt: AWSDateTime
+}
+
+input UpdateUserCalendarEventInput {
+    id: ID!
+    username: String
+    payload: String
+    createdAt: AWSDateTime
+}
+
+input DeleteUserCalendarEventInput {
+    id: ID
+}
+
+input ModelUserCalendarEventConditionInput {
+    username: ModelStringInput
+    payload: ModelStringInput
+    createdAt: ModelStringInput
+    and: [ModelUserCalendarEventConditionInput]
+    or: [ModelUserCalendarEventConditionInput]
+    not: ModelUserCalendarEventConditionInput
 }
 
 input ModelStringKeyConditionInput {
@@ -1067,36 +1088,4 @@ input ModelTransactionHistoryByReceiverUsernameCompositeKeyConditionInput {
 input ModelTransactionHistoryByReceiverUsernameCompositeKeyInput {
     timestamp: AWSTimestamp
     senderUsername: String
-}
-
-input CreateOfficeRequestPayloadInput {
-    officeName: String!
-    address: String
-    office_email: String!
-    zip_code: String
-    mobile: String
-    phone: String!
-    tin: String!
-    professionStartDate: AWSDate
-    chamberRecordNumber: String
-    insuranceLicenseExpirationDate: AWSDate
-    civilLiabilityExpirationDate: AWSDate
-    bankAccountInfo: AWSJSON
-    files: [S3ObjectInput]
-}
-
-input OfficeConnectionRequestPayloadInput {
-    manager_email: String!
-}
-
-input InviteEmployeeRequestPayloadInput {
-    email: String!
-    empModelPermissions: [ModelPermission!]!
-    empPagePermissions: AWSJSON!
-}
-
-input InviteContractorRequestPayloadInput {
-    ctrModelPermissions: [ModelPermission!]!
-    ctrPagePermissions: AWSJSON!
-    email: String!
 }

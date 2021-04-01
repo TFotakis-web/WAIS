@@ -326,6 +326,16 @@ const resolvers = {
 				officeId: event.arguments.officeId,
 			})
 		},
+		getUserRole: async (event) => {
+			return await api.getUserRoleByUsername({
+				username: event.identity.claims['cognito:username'],
+			})
+		},
+		getAvailableInsuranceCompanies: async (event) => {
+			return await api.getAllInsuranceCompanies({
+				username: event.identity.claims['cognito:username'],
+			})
+		},
 	},
 }
 

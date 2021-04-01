@@ -131,4 +131,10 @@ module.exports = {
 	deleteContractorForOffice: async (args) => {
 		return gqlAPI.deleteContractorForOffice(args.officeId, args.username, args.contractorUsername)
 	},
+	getUserRoleByUsername: async (args) => {
+		return gqlAPI.getUserRoleByUsername(args.username)
+	},
+	getAllInsuranceCompanies: async (args) => {
+		return gqlAPI.getAllInsuranceCompanies(args.username)
+	},
 }

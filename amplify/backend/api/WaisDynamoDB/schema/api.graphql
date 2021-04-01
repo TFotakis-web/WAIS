@@ -55,8 +55,10 @@ type Query {
 
     getUserPagePermissionsForOffice(officeId: ID!): AWSJSON! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    # TODO implement
-    #getAvailableInsuranceCompanies(filter: ModelInsuranceCompanyFilterInput, limit: Int, nextToken: String): ModelInsuranceCompanyOutput
+    getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+
+    #TODO add filter and pagination
+    getAvailableInsuranceCompanies: ModelInsuranceCompanyOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {

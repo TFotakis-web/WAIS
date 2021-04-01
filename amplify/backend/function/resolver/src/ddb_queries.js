@@ -24,7 +24,7 @@ module.exports = {
 	 * @param {*} userId
 	 * @param {*} uuid
 	 */
-	addEmployeeToOffice: async (office, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
+	addEmployeeToOffice: async (office, userProfId, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
 		console.log(
 			'Attempting to create new employee to office with arguments:' +
 				[
@@ -78,6 +78,24 @@ module.exports = {
 								preferences: null,
 								createdAt: now,
 								updatedAt: now,
+							},
+						},
+					},
+					{
+						//Add the user's role in the UserProfile
+						Update: {
+							TableName: 'UserProfile' + ddbSuffix,
+							Key: {
+								id: userProfId,
+							},
+							UpdateExpression: 'SET #updatedAt = :now, #role = :role',
+							ExpressionAttributeNames: {
+								'#updatedAt': 'updatedAt',
+								'#role': 'role',
+							},
+							ExpressionAttributeValues: {
+								':now': now,
+								':role': 'EMPLOYEE',
 							},
 						},
 					},
@@ -207,7 +225,7 @@ module.exports = {
 			return err
 		}
 	},
-	getRequestById: async id => {
+	getRequestById: async (id) => {
 		console.log('getRequestById id: ' + id)
 		try {
 			const resp = await ddb
@@ -226,7 +244,7 @@ module.exports = {
 		}
 	},
 
-	getUserProfileByEmail: async email => {
+	getUserProfileByEmail: async (email) => {
 		console.log('getUserProfileByEmail email: ' + email)
 		try {
 			const resp = await ddb
@@ -248,7 +266,7 @@ module.exports = {
 		}
 	},
 
-	getUserProfileByUsername: async username => {
+	getUserProfileByUsername: async (username) => {
 		console.log('getUserProfileByUsername username: ' + username)
 		try {
 			const resp = await ddb
@@ -270,7 +288,7 @@ module.exports = {
 		}
 	},
 
-	getUserProfileByEmailConsistently: async email => {
+	getUserProfileByEmailConsistently: async (email) => {
 		console.log('getUserProfileByEmailConsistently email: ' + email)
 		try {
 			const resp = await ddb
@@ -293,7 +311,7 @@ module.exports = {
 		}
 	},
 
-	getOfficeByOwnerUsername: async username => {
+	getOfficeByOwnerUsername: async (username) => {
 		console.log('getOfficeByOwnerUsername username: ' + username)
 		try {
 			const resp = await ddb
@@ -314,7 +332,7 @@ module.exports = {
 			return err
 		}
 	},
-	createOfficeIfNotExists: async item => {
+	createOfficeIfNotExists: async (item) => {
 		console.log('Attempting to add a new Office: ' + JSON.stringify(item))
 		try {
 			const resp = await ddb
@@ -330,7 +348,7 @@ module.exports = {
 		}
 	},
 
-	deleteRequestById: async id => {
+	deleteRequestById: async (id) => {
 		console.log('Deleting request with ID: ' + id)
 		try {
 			const resp = await ddb

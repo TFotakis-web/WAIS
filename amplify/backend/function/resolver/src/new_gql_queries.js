@@ -72,6 +72,7 @@ module.exports = {
 						gender
 						birthdate
 						city
+						role
 						profilePicture {
 							bucket
 							region
@@ -103,6 +104,25 @@ module.exports = {
 		return result
 	},
 
+	getUserRoleByUsername: async (username) => {
+		console.log('getUserRoleByUsername input: ' + username)
+		const query = /* GraphQL */ `
+			query getUserRoleByUsername($username: String!) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						id
+						username
+						role
+					}
+				}
+			}
+		`
+		const response = await gqlHelper({ username: username }, query, 'getUserRoleByUsername')
+		const result = response.data.listUserProfileByUsername.items[0]
+		console.log('getUserRoleByUsername output: ' + JSON.stringify(result))
+		return result
+	},
+
 	/**
 	 * Retrieve a UserProfie via the GSI 'byEmail'.
 	 *
@@ -118,6 +138,7 @@ module.exports = {
 						username
 						email
 						telephone
+						role
 						surname
 						name
 						fathers_name
@@ -189,6 +210,7 @@ module.exports = {
 								user {
 									username
 									email
+									role
 								}
 							}
 							nextToken
@@ -407,6 +429,7 @@ module.exports = {
 						insuranceLicenseExpirationDate
 						professionStartDate
 						tin
+						insuranceCompanies
 						files {
 							bucket
 							key
@@ -626,6 +649,25 @@ module.exports = {
 					if (!createdTUCId) {
 						throw new Error('Failed to create new Office-User connection.')
 					}
+
+					//Update role in the UserProfile
+					const mutation = /* GraphQL */ `
+						mutation updateUserProfileDetails($input: UpdateOfficeInput!) {
+							updateUserProfile(input: $input) {
+								id
+							}
+						}
+					`
+					const upInput = {
+						id: senderUserProfile.id,
+						role: 'MANAGER',
+					}
+					const response = await gqlHelper({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const resultUP = response.data.updateUserProfile.id
+					if (!resultUP) {
+						throw new Error('Failed to update Manager`s UserProfile role.')
+					}
+
 					result = createdOfficeId
 					console.log(`Request with ID ${id} was accepted.`)
 				} else {
@@ -682,6 +724,7 @@ module.exports = {
 					try {
 						const empAddRes = await ddbAPI.addEmployeeToOffice(
 							senderOffice,
+							senderUserProfile.id,
 							requestObject.receiverUsername,
 							requestObject.id,
 							receiverUserProfile.id,
@@ -703,6 +746,24 @@ module.exports = {
 				//Create an unverified office
 				if (decision === 'ACCEPT') {
 					//let newContractorResult = await ddbAPI.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
+
+					//Update role in the UserProfile
+					const mutation = /* GraphQL */ `
+						mutation updateUserProfileDetails($input: UpdateOfficeInput!) {
+							updateUserProfile(input: $input) {
+								id
+							}
+						}
+					`
+					const upInput = {
+						id: senderUserProfile.id,
+						role: 'CONTRACTOR',
+					}
+					const response = await gqlHelper({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const resultUP = response.data.updateUserProfile.id
+					if (!resultUP) {
+						throw new Error('Failed to update Contractor`s UserProfile role.')
+					}
 				} else {
 					console.log(`Request with ID ${id} was rejected.`)
 				}
@@ -754,6 +815,7 @@ module.exports = {
 									fathers_name
 									address
 									zip_code
+									role
 									city
 									createdAt
 									family_name
@@ -807,6 +869,7 @@ module.exports = {
 									username
 									email
 									telephone
+									role
 									surname
 									name
 									fathers_name
@@ -1535,6 +1598,59 @@ module.exports = {
 		const response = await gqlHelper({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
+		return result
+	},
+
+	getAllInsuranceCompanies: async (username) => {
+		console.log('getAllInsuranceCompanies input: ' + [username])
+		if (!caller_username) {
+			throw new Error('Invalid username or unauthenticated user.')
+		}
+
+		//Get user's office and its companies
+		const query = /* GraphQL */ `
+			query getOfficeDetailsAndPermissionsByUsername($username: String!) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						officeConnections {
+							items {
+								office {
+									id
+									officeName
+									insuranceCompanies
+								}
+							}
+						}
+					}
+				}
+			}
+		`
+		const officeResponse = await gqlHelper({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
+
+		const companies = []
+		const result = officeResponse.data.listUserProfileByUsername.items.forEach((oc) => {
+			oc.items.forEach((officeDetails) => companies.push(officeDetails))
+		})
+
+		//Get partner insurance companies
+		const query = /* GraphQL */ `
+			query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
+				listOfficeAccessConnections(limit: $limit) {
+					items {
+						to {
+							id
+							officeName
+							insuranceCompanies
+						}
+					}
+				}
+			}
+		`
+		const response = await gqlHelper({ officeId: officeId, limit: 1000 }, query, 'getPartnerOfficeConnections')
+		response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
+
+		const result = { items: companies }
+		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
 		return result
 	},
 }

@@ -15,6 +15,13 @@ enum EmployeeType {
     MANAGER
 }
 
+enum UserRole {
+    EMPLOYEE
+    CONTRACTOR
+    MANAGER
+    UNKNOWN
+}
+
 type DriversLicense {
     LicenseID: Int
     DriversLicenseType: String

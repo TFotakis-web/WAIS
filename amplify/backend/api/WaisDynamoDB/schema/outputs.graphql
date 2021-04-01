@@ -2,6 +2,7 @@ type UserProfileOutput {
     id: ID
     username: String!
     email: String!
+    role: UserRole!
     telephone: String!
     surname: String
     name: String
@@ -41,6 +42,7 @@ type OfficeOutput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3Object]
+    insuranceCompanies: [InsuranceCompany!]!
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
 }
@@ -215,5 +217,10 @@ type ModelCustomerConnectionOutput {
 
 type ModelOfficeAccessConnectionOutput {
     items: [OfficeAccessConnectionOutput]
+    nextToken: String
+}
+
+type ModelInsuranceCompanyOutput {
+    items: [InsuranceCompany]
     nextToken: String
 }
