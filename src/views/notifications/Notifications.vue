@@ -23,9 +23,9 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		computed: {
-			...mapGetters('auth', ['requestsForMe']),
+			...mapGetters('request', ['requestsForMe']),
 			createTradeList() {
-				return this.requestsForMe.filter(el => el.type === 'CREATE_TRADE');
+				return this.requestsForMe.filter(el => el.type === 'CREATE_OFFICE');
 			},
 		},
 	};
