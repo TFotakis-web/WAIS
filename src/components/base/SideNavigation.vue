@@ -69,9 +69,7 @@
 				document.body.setAttribute('color-theme', this.colorTheme);
 				this.$cookies.set('color-theme', this.colorTheme);
 			},
-			...mapActions({
-				signOut: 'auth/signOut',
-			}),
+			...mapActions('auth', ['signOut']),
 		},
 		computed: {
 			sidenav: function () {
