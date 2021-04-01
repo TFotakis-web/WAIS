@@ -116,7 +116,7 @@ app.config.globalProperties.$toast = {
 		console.error(err);
 		const toast = await IonComponents.toastController
 			.create({
-				message: window.WaisVue.$t('defaultNotification.somethingWentWrong'),
+				message: window.vm.$t('defaultNotification.somethingWentWrong'),
 				duration: 10000,
 				color: 'danger',
 				position: 'top',
@@ -126,7 +126,7 @@ app.config.globalProperties.$toast = {
 	saveSuccess: async () => {
 		const toast = await IonComponents.toastController
 			.create({
-				message: window.WaisVue.$t('defaultNotification.saveSuccess'),
+				message: window.vm.$t('defaultNotification.saveSuccess'),
 				duration: 10000,
 				color: 'success',
 				position: 'top',
@@ -136,7 +136,7 @@ app.config.globalProperties.$toast = {
 	deleteSuccess: async () => {
 		const toast = await IonComponents.toastController
 			.create({
-				message: window.WaisVue.$t('defaultNotification.deleteSuccess'),
+				message: window.vm.$t('defaultNotification.deleteSuccess'),
 				duration: 10000,
 				color: 'success',
 				position: 'top',
