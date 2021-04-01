@@ -429,7 +429,7 @@ module.exports = {
 						insuranceLicenseExpirationDate
 						professionStartDate
 						tin
-						insuranceCompanies{
+						insuranceCompanies {
 							name
 							code
 						}
@@ -1620,7 +1620,7 @@ module.exports = {
 								office {
 									id
 									officeName
-									insuranceCompanies{
+									insuranceCompanies {
 										name
 										code
 									}
@@ -1634,29 +1634,35 @@ module.exports = {
 		const officeResponse = await gqlHelper({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
 
 		const companies = []
+		const officeIds = []
 		const result = officeResponse.data.listUserProfileByUsername.items.forEach((oc) => {
-			oc.items.forEach((officeDetails) => companies.push(officeDetails))
+			oc.items.forEach((officeDetails) => {
+				officeIds.push(officeDetails.id)
+				companies.push(officeDetails)
+			})
 		})
 
 		//Get partner insurance companies
-		const query = /* GraphQL */ `
-			query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
-				listOfficeAccessConnections(limit: $limit) {
-					items {
-						to {
-							id
-							officeName
-							insuranceCompanies{
-								name
-								code
+		officeIds.forEach((officeId) => {
+			const query = /* GraphQL */ `
+				query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
+					listOfficeAccessConnections(limit: $limit) {
+						items {
+							to {
+								id
+								officeName
+								insuranceCompanies {
+									name
+									code
+								}
 							}
 						}
 					}
-				}
-			}
-		`
-		const response = await gqlHelper({ officeId: officeId, limit: 1000 }, query, 'getPartnerOfficeConnections')
-		response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
+				} 
+			`
+			const response = await gqlHelper({ officeId: officeId, limit: 1000 }, query, 'getPartnerOfficeConnections')
+			response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
+		})
 
 		const result = { items: companies }
 		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
