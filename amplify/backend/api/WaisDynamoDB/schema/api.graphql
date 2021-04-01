@@ -58,7 +58,7 @@ type Query {
     getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
  
     #TODO add filter and pagination
-    getAvailableInsuranceCompanies: ModelInsuranceCompanyOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+    getAvailableInsuranceCompanies: InsuranceCompanyDetailsOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {

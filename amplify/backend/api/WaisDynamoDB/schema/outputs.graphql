@@ -220,7 +220,8 @@ type ModelOfficeAccessConnectionOutput {
     nextToken: String
 }
 
-type ModelInsuranceCompanyOutput {
-    items: [InsuranceCompany]
-    nextToken: String
+type InsuranceCompanyDetailsOutput {
+    id: ID
+    officeName: String
+    insuranceCompanies: [InsuranceCompany]
 }

@@ -429,7 +429,10 @@ module.exports = {
 						insuranceLicenseExpirationDate
 						professionStartDate
 						tin
-						insuranceCompanies
+						insuranceCompanies{
+							name
+							code
+						}
 						files {
 							bucket
 							key
@@ -1617,7 +1620,10 @@ module.exports = {
 								office {
 									id
 									officeName
-									insuranceCompanies
+									insuranceCompanies{
+										name
+										code
+									}
 								}
 							}
 						}
@@ -1640,7 +1646,10 @@ module.exports = {
 						to {
 							id
 							officeName
-							insuranceCompanies
+							insuranceCompanies{
+								name
+								code
+							}
 						}
 					}
 				}
