@@ -8,117 +8,117 @@ const gqlAPI = require('./new_gql_queries.js')
 module.exports = {
 	/* Queries */
 	user: async (username) => {
-		return gqlAPI.getUserProfileByUsername(username)
+		return await gqlAPI.getUserProfileByUsername(username)
 	},
 	getOfficesOfUser: async (args) => {
-		return gqlAPI.getOfficeDetailsAndPermissionsByUsername(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getOfficeDetailsAndPermissionsByUsername(args.username, args.filter, args.limit, args.nextToken)
 	},
 	getCallendarEventsOfUser: async (args) => {
-		return gqlAPI.getCallendarEventsForUser(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getCallendarEventsForUser(args.username, args.filter, args.limit, args.nextToken)
 	},
 	getRequestsFromUser: async (args) => {
-		return gqlAPI.getRequestsFromUser(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getRequestsFromUser(args.username, args.filter, args.limit, args.nextToken)
 	},
 	getRequestsForUser: async (args) => {
-		return gqlAPI.getRequestsForUser(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getRequestsForUser(args.username, args.filter, args.limit, args.nextToken)
 	},
 	resolveRequest: async (args) => {
-		return gqlAPI.resolveRequest(args.username, args.groups, args.id, args.decission, args.payload)
+		return await gqlAPI.resolveRequest(args.username, args.groups, args.id, args.decission, args.payload)
 	},
 	getEmployeeUserProfilesForManagerUsername: async (args) => {
-		return gqlAPI.getEmployeeUserProfilesForManagerUsername(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getEmployeeUserProfilesForManagerUsername(args.username, args.filter, args.limit, args.nextToken)
 	},
 	getContractorUserProfilesForManagerUsername: async (args) => {
-		return gqlAPI.getContractorUserProfilesForManagerUsername(args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getContractorUserProfilesForManagerUsername(args.username, args.filter, args.limit, args.nextToken)
 	},
 	getCustomersForOfficeId: async (args) => {
-		return gqlAPI.getCustomersForOfficeId(args.officeId, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getCustomersForOfficeId(args.officeId, args.filter, args.limit, args.nextToken)
 	},
 	getContractsForOfficeId: async (args) => {
-		return gqlAPI.getContractsForOfficeId(args.officeId, args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getContractsForOfficeId(args.officeId, args.username, args.filter, args.limit, args.nextToken)
 	},
 	getPartnerOfficeConnections: async (args) => {
-		return gqlAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
+		return await gqlAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
 	},
 	getUserModelPermissionsForOffice: async (args) => {
-		return gqlAPI.getUserModelPermissionsForOffice(args.officeId, args.username)
+		return await gqlAPI.getUserModelPermissionsForOffice(args.officeId, args.username)
 	},
 	getUserPagePermissionsForOffice: async (args) => {
-		return gqlAPI.getUserPagePermissionsForOffice(args.officeId, args.username)
+		return await gqlAPI.getUserPagePermissionsForOffice(args.officeId, args.username)
 	},
 
 	/* Mutations */
 	updateOfficeDetails: async (args) => {
-		return gqlAPI.updateOfficeDetails(args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.updateOfficeDetails(args.username, args.requestInput, args.condition) // OK
 	},
 	updateUserProfileDetails: async (args) => {
-		return gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition) // OK
 	},
 	createVehicleForOffice: async (args) => {
-		return gqlAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
 	},
 	updateVehicleForOffice: async (args) => {
-		return gqlAPI.updateVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.updateVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition) // OK
 	},
 	deleteVehicleForOffice: async (args) => {
-		return gqlAPI.deleteVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.deleteVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	createContractForOffice: async (args) => {
-		return gqlAPI.createContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.createContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	updateContractForOffice: async (args) => {
-		return gqlAPI.updateContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.updateContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	deleteContractForOffice: async (args) => {
-		return gqlAPI.deleteContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.deleteContractForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	createCustomerForOffice: async (args) => {
-		return gqlAPI.createCustomerForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.createCustomerForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	createOfficeRequest: async (args) => {
-		return gqlAPI.createOfficeRequest(args.username, args.email, args.groups, args.requestInput)
+		return await gqlAPI.createOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 	},
 	createInviteEmployeeToOfficeRequest: async (args) => {
-		return gqlAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
+		return await gqlAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 	},
 	createInviteContractorToOfficeRequest: async (args) => {
-		return gqlAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
+		return await gqlAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 	},
 	createOfficeConnectionRequest: async (args) => {
-		return gqlAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.requestInput)
+		return await gqlAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.requestInput)
 	},
 	deleteRequestsSentByMe: async (args) => {
-		return gqlAPI.deleteRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition) // OK
+		return await gqlAPI.deleteRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition) // OK
 	},
 	createOfficeAccessConnectionForOffice: async (args) => {
-		return gqlAPI.createOfficeAccessConnectionForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.createOfficeAccessConnectionForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	updateOfficeAccessConnectionForOffice: async (args) => {
-		return gqlAPI.updateOfficeAccessConnectionForOffice(args.officeId, args.username, args.requestInput, args.condition)
+		return await gqlAPI.updateOfficeAccessConnectionForOffice(args.officeId, args.username, args.requestInput, args.condition)
 	},
 	deleteOfficeAccessConnectionForOffice: async (args) => {
-		return gqlAPI.deleteOfficeAccessConnectionForOffice(args.username, args.requestInput, args.condition)
+		return await gqlAPI.deleteOfficeAccessConnectionForOffice(args.username, args.requestInput, args.condition)
 	},
 	createMyUserCalendarEvent: async (args) => {
-		return gqlAPI.createMyUserCalendarEvent(args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.createMyUserCalendarEvent(args.username, args.requestInput, args.condition) // OK
 	},
 	updateMyUserCalendarEvents: async (args) => {
-		return gqlAPI.updateMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.updateMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
 	},
 	deleteMyUserCalendarEvents: async (args) => {
-		return gqlAPI.deleteMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
+		return await gqlAPI.deleteMyUserCalendarEvents(args.username, args.requestInput, args.condition) // OK
 	},
 	updateEmployeeModelPermissionsForOffice: async (args) => {
-		return gqlAPI.updateEmployeeModelPermissionsForOffice(args.officeId, args.username, args.empUsername, args.modelPermissions)
+		return await gqlAPI.updateEmployeeModelPermissionsForOffice(args.officeId, args.username, args.empUsername, args.modelPermissions)
 	},
 	updateEmployeePagePermissionsForOffice: async (args) => {
-		return gqlAPI.updateEmployeePagePermissionsForOffice(args.officeId, args.username, args.empUsername, args.pagePermissions)
+		return await gqlAPI.updateEmployeePagePermissionsForOffice(args.officeId, args.username, args.empUsername, args.pagePermissions)
 	},
 	deleteEmployeeForOffice: async (args) => {
-		return gqlAPI.deleteEmployeeForOffice(args.officeId, args.username, args.empUsername)
+		return await gqlAPI.deleteEmployeeForOffice(args.officeId, args.username, args.empUsername)
 	},
 	updateContractorModelPermissionsForOffice: async (args) => {
-		return gqlAPI.updateContractorModelPermissionsForOffice(
+		return await gqlAPI.updateContractorModelPermissionsForOffice(
 			args.officeId,
 			args.username,
 			args.contractorUsername,
@@ -126,15 +126,20 @@ module.exports = {
 		)
 	},
 	updateContractorPagePermissionsForOffice: async (args) => {
-		return gqlAPI.updateContractorPagePermissionsForOffice(args.officeId, args.username, args.contractorUsername, args.pagePermissions)
+		return await gqlAPI.updateContractorPagePermissionsForOffice(
+			args.officeId,
+			args.username,
+			args.contractorUsername,
+			args.pagePermissions,
+		)
 	},
 	deleteContractorForOffice: async (args) => {
-		return gqlAPI.deleteContractorForOffice(args.officeId, args.username, args.contractorUsername)
+		return await gqlAPI.deleteContractorForOffice(args.officeId, args.username, args.contractorUsername)
 	},
 	getUserRoleByUsername: async (args) => {
-		return gqlAPI.getUserRoleByUsername(args.username)
+		return await gqlAPI.getUserRoleByUsername(args.username)
 	},
 	getAllInsuranceCompanies: async (args) => {
-		return gqlAPI.getAllInsuranceCompanies(args.username)
+		return await gqlAPI.getAllInsuranceCompanies(args.username)
 	},
 }

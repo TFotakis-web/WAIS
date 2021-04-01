@@ -46,6 +46,10 @@ type Office
 
     # Employees and contractors of this Office
     workforce: [OfficeUserConnection] @connection(keyName: "byOfficeName", fields: ["officeName"])
+
+    # Insurance companies from this Office and other partner offices
+    # Filter currently not used
+    availableInsuranceCompanies(filter: String): [InsuranceCompanyDetails] @function(name: "resolver-${env}")
 }
 
 type UserProfile

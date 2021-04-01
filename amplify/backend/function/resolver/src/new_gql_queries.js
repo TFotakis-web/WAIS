@@ -1594,10 +1594,10 @@ module.exports = {
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
 				updateOfficeUserConnection(input: $input) {
-				id
+					id
 				}
 			}
-			`
+		`
 		const response = await gqlHelper({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
@@ -1618,11 +1618,15 @@ module.exports = {
 						officeConnections {
 							items {
 								office {
-									id
-									officeName
-									insuranceCompanies {
-										name
-										code
+									availableInsuranceCompanies {
+										items {
+											id
+											officeName
+											insuranceCompanies {
+												name
+												code
+											}
+										}
 									}
 								}
 							}
@@ -1631,41 +1635,53 @@ module.exports = {
 				}
 			}
 		`
-		const officeResponse = await gqlHelper({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
-
+		const response = await gqlHelper({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
 		const companies = []
-		const officeIds = []
-		const result = officeResponse.data.listUserProfileByUsername.items.forEach((oc) => {
-			oc.items.forEach((officeDetails) => {
-				officeIds.push(officeDetails.id)
-				companies.push(officeDetails)
+		const result = response.data.listUserProfileByUsername.items.forEach((oc) => {
+			oc.items.forEach((office) => {
+				office.availableInsuranceCompanies.items.forEach((ic) => {
+					companies.push(ic)
+				})
 			})
 		})
 
-		//Get partner insurance companies
-		officeIds.forEach((officeId) => {
-			const query = /* GraphQL */ `
-				query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
-					listOfficeAccessConnections(limit: $limit) {
-						items {
-							to {
-								id
-								officeName
-								insuranceCompanies {
-									name
-									code
-								}
+		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
+		return result
+	},
+
+	getAvailableInsuranceCompaniesForOffice: async (office) => {
+		console.log('getAvailableInsuranceCompaniesForOffice input: ' + [username])
+		if (!caller_username) {
+			throw new Error('Invalid username or unauthenticated user.')
+		}
+
+		//Get user's office and its companies
+		const companies = []
+		companies.push({
+			id: office.id,
+			officeName: office.officeName,
+			insuranceCompanies: office.insuranceCompanies,
+		})
+		const query = /* GraphQL */ `
+			query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
+				listOfficeAccessConnections(limit: $limit) {
+					items {
+						to {
+							id
+							officeName
+							insuranceCompanies {
+								name
+								code
 							}
 						}
 					}
-				} 
-			`
-			const response = await gqlHelper({ officeId: officeId, limit: 1000 }, query, 'getPartnerOfficeConnections')
-			response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
-		})
-
+				}
+			}
+		`
+		const response = await gqlHelper({ officeId: office.id, limit: 1000 }, query, 'getPartnerOfficeConnections')
+		response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
 		const result = { items: companies }
-		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
+		console.log('getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
 		return result
 	},
 }

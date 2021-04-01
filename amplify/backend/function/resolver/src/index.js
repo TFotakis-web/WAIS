@@ -16,6 +16,11 @@ const api = require('./api.js')
  * Exceptions will be thrown on error.
  */
 const resolvers = {
+	Office: {
+		availableInsuranceCompanies: async (event) => {
+			return await api.getAvailableInsuranceCompaniesForOffice({ office: event.source })
+		},
+	},
 	Query: {
 		echo: async (event) => {
 			return event.arguments.msg

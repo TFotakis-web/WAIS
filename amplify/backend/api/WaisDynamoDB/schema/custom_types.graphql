@@ -2,6 +2,11 @@ type InsuranceCompany {
     name: String!
     code: String!
 }
+type InsuranceCompanyDetails {
+    id: ID
+    officeName: String
+    insuranceCompanies: [InsuranceCompany]
+}
 type S3Object {
     bucket: String!
     region: String!

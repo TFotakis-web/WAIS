@@ -10,6 +10,12 @@ input InsuranceCompanyInput {
     code: String!
 }
 
+input InsuranceCompanyDetailsInput {
+    id: ID
+    officeName: String
+    insuranceCompanies: [InsuranceCompanyInput]
+}
+
 enum ModelSortDirection {
     ASC
     DESC
@@ -149,6 +155,7 @@ input CreateOfficeInput {
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
     insuranceCompanies: [InsuranceCompanyInput!]!
+    availableInsuranceCompanies: [InsuranceCompanyDetailsInput]
 }
 
 input UpdateOfficeInput {
@@ -171,6 +178,7 @@ input UpdateOfficeInput {
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
     insuranceCompanies: [InsuranceCompanyInput!]
+    availableInsuranceCompanies: [InsuranceCompanyDetailsInput]
 }
 
 input DeleteOfficeInput {
