@@ -123,7 +123,7 @@
 	</ion-page>
 </template>
 <script>
-	import { mapActions, mapMutations } from 'vuex';
+	import { mapActions } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import fileInput from '@/components/structure/fileInput/fileInput';
@@ -175,7 +175,7 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 
 			const requestsSentByMe = this.$store.getters['auth/userProfile'].requestsSentByMe.items || [];
-			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === 'CREATE_TRADE');
+			const requestsForNewTrade = requestsSentByMe.filter(el => el.type === 'CREATE_OFFICE');
 			if (requestsForNewTrade.length) {
 				this.request = requestsForNewTrade[0];
 				const payload = JSON.parse(this.request.payload);
@@ -196,8 +196,7 @@
 		},
 		methods: {
 			...mapActions('auth', ['signOut']),
-			...mapActions('request', ['sendRequest', 'updateRequest', 'getRequest']),
-			...mapMutations('auth', ['pushRequestsSentByMe']),
+			...mapActions('request', ['createOfficeRequest', 'updateRequest']),
 			async save() {
 				this.loading = true;
 
@@ -211,20 +210,13 @@
 				this.form.files = files;
 
 				if (Object.keys(this.request).length === 0) {
-					this.sendRequest({ requestType: 'CREATE_TRADE', payload: this.form })
-						.then((res) => {
-							this.$toast.saveSuccess();
-							this.getRequest(res.id)
-								.then((res) => {
-									this.pushRequestsSentByMe(res);
-									this.request = res;
-								});
-						})
+					this.createOfficeRequest(this.form)
+						.then(() => this.$toast.saveSuccess())
 						.catch((error) => console.error(error))
 						.finally(() => this.loading = false);
 				} else {
 					this.request.payload = JSON.stringify(this.form);
-					this.updateRequest({ request: this.request })
+					this.updateRequest(this.request)
 						.then(() => this.$toast.saveSuccess())
 						.catch((error) => console.error(error))
 						.finally(() => this.loading = false);
