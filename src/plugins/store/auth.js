@@ -1,8 +1,7 @@
-import { API, Auth, graphqlOperation } from 'aws-amplify';
-// import { listUserProfileByUsername } from '@/graphql/custom-queries';
-import { me } from '@/graphql/custom-queries';
-import { updateUserProfile } from '@/graphql/custom-mutations';
 import router from '@/plugins/router/router';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { me } from '@/graphql/custom-queries';
+import { updateUserProfileDetails } from '@/graphql/custom-mutations';
 
 const initState = () => ({
 	cognitoUser: null,
@@ -26,40 +25,10 @@ export const auth = {
 		setUserProfile(state, payload) {
 			state.userProfile = payload;
 		},
-		pushRequestsSentByMe(state, payload) {
-			if (state.userProfile.requestsSentByMe.items === undefined) {
-				state.userProfile.requestsSentByMe.items = [];
-			}
-			state.userProfile.requestsSentByMe.items.push(payload);
-		},
-		pushRequestsForMe(state, payload) {
-			if (state.userProfile.requestsForMe.items === undefined) {
-				state.userProfile.requestsForMe.items = [];
-			}
-			state.userProfile.requestsForMe.items.push(payload);
-		},
-		concatRequestsSentByMe(state, payload) {
-			if (state.userProfile.requestsSentByMe.items === undefined) {
-				state.userProfile.requestsSentByMe.items = [];
-			}
-			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.concat(payload);
-		},
-		concatRequestsForMe(state, payload) {
-			if (state.userProfile.requestsForMe.items === undefined) {
-				state.userProfile.requestsForMe.items = [];
-			}
-			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.concat(payload);
-		},
-		removeRequestSentByMe(state, request) {
-			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.filter(r => r.id !== request.id);
-		},
-		removeRequestForMe(state, request) {
-			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.filter(r => r.id !== request.id);
-		},
 	},
 	actions: {
-		signUp(_, { username, password, email, phone_number }) {
-			return new Promise((resolve, reject) => {
+		async signUp(_, { username, password, email, phone_number }) {
+			try {
 				const params = {
 					username,
 					password,
@@ -68,49 +37,37 @@ export const auth = {
 						phone_number,
 					},
 				};
-				Auth.signUp(params)
-					.then(() => {
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+				const response = await Auth.signUp(params);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
-		confirmSignUp(_, { username, code }) {
-			return new Promise((resolve, reject) => {
-				Auth.confirmSignUp(username, code)
-					.then(() => {
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async confirmSignUp(_, { username, code }) {
+			try {
+				const response = await Auth.confirmSignUp(username, code);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
-		resendSignUp(_, username) {
-			return new Promise((resolve, reject) => {
-				Auth.resendSignUp(username)
-					.then(() => {
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async resendSignUp(_, username) {
+			try {
+				const response = await Auth.resendSignUp(username);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
 		async completeNewPassword({ dispatch }, { username, old_password, new_password }) {
 			try {
-				const response = await Auth.signIn({ username: username, password: old_password });
-				await Auth.completeNewPassword(response, new_password);
-				await dispatch('signIn', {
-					username: username,
-					password: new_password,
-				});
-				return Promise.resolve();
+				let response = await Auth.signIn({ username: username, password: old_password });
+				response = await Auth.completeNewPassword(response, new_password);
+				await dispatch('signIn', { username, password: new_password, });
+				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
@@ -147,70 +104,42 @@ export const auth = {
 				return Promise.reject(error);
 			}
 		},
-		forgotPassword(_, username) {
-			return new Promise((resolve, reject) => {
-				Auth.forgotPassword(username)
-					.then(() => {
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async forgotPassword(_, username) {
+			try {
+				const response = await Auth.forgotPassword(username);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
-		forgotPasswordSubmit(_, { username, code, password }) {
-			return new Promise((resolve, reject) => {
-				Auth.forgotPasswordSubmit(username, code, password)
-					.then(() => {
-						resolve();
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					});
-			});
+		async forgotPasswordSubmit(_, { username, code, password }) {
+			try {
+				const response = await Auth.forgotPasswordSubmit(username, code, password);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
 		},
 		async currentAuthenticatedUser({ commit, dispatch }) {
 			try {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
-				const response = await Auth.currentAuthenticatedUser({
-					bypassCache: true,  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-				});
+
+				// bypassCache: Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+				let response = await Auth.currentAuthenticatedUser({ bypassCache: true, });
 				commit('setCognitoUser', response);
-				await dispatch('currentUserInfo');
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				await Auth.signOut();
-				// router.go(0); // Reload page
-				return Promise.reject(error);
-			} finally {
-				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
-			}
-		},
-		async currentUserInfo({ commit, dispatch }) {
-			try {
-				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
-				const userInfo = await Auth.currentUserInfo();
-				if (userInfo) {
-					commit('setUser', userInfo);
-					await dispatch('loadUserProfile');
-				}
-				return Promise.resolve();
-			} catch (error) {
-				console.error(error);
-				return Promise.reject(error);
-			} finally {
-				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
-			}
-		},
-		async loadUserProfile({ commit, dispatch, getters }) {
-			try {
-				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
-				let response = await API.graphql(graphqlOperation(me));
+
+				response = await Auth.currentUserInfo();
+				commit('setUser', response);
+
+				// User is now authenticated
+				// Dispatch all async-able actions
+				dispatch('request/listRequests', null, { root: true });
+
+				// This has to be synchronous for routing permissions
+				response = await API.graphql(graphqlOperation(me));
 				const userProfile = response.data.me;
-				// let userProfile = response.data.listUserProfileByUsername.items[0];
 				// Todo: Remove when backend is correct
 				userProfile.permissions = {
 					'Home': {
@@ -380,45 +309,34 @@ export const auth = {
 				};
 				commit('setUserProfile', userProfile);
 
-				if (getters.isAdmin) {
-					response = await dispatch('request/listRequestsByReceiverEmail', 'wais@admin.com', { root: true });
-					for (const request of response) {
-						request.payload = JSON.parse(request.payload);
-					}
-					commit('concatRequestsForMe', response);
-				}
-				// router.$loadRoutesAsync();
-				return Promise.resolve();
+				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
+				await Auth.signOut();
 				return Promise.reject(error);
 			} finally {
 				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 			}
 		},
-		updateUserProfile({ commit }, userProfile) {
-			return new Promise((resolve, reject) => {
+		async updateUserProfile({ commit }, userProfile) {
+			try {
 				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
-				API.graphql(graphqlOperation(updateUserProfile, { input: userProfile }))
-					.then((response) => {
-						userProfile = response.data.updateUserProfile;
-						// commit("setUserProfile", userProfile);
-						resolve(userProfile);
-					})
-					.catch((error) => {
-						console.error(error);
-						reject(error);
-					})
-					.finally(() => {
-						commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
-					});
-			});
+				const response = await API.graphql(graphqlOperation(updateUserProfileDetails, { input: userProfile }));
+				userProfile = response.data.updateUserProfileDetails;
+				return Promise.resolve(userProfile);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
+			}
 		},
 	},
 	getters: {
 		cognitoUser: (state) => state.cognitoUser,
 		userGroups: (state) => state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'] || [],
 		isAdmin: (state, getters) => getters.userGroups.includes('admin'),
+		role: (state) => state.userProfile.role,
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
@@ -428,7 +346,5 @@ export const auth = {
 		userProfile: (state) => state.userProfile,
 		permissions: (state) => state.userProfile.permissions,
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
-		requestsSentByMe: (state) => state.userProfile.requestsSentByMe.items || [],
-		requestsForMe: (state) => state.userProfile.requestsForMe.items || [],
 	},
 };
