@@ -8,6 +8,18 @@ export const echo = /* GraphQL */ `
 		echo(msg: $msg)
 	}
 `;
+export const getAvailableInsuranceCompanies = /* GraphQL */ `
+	query GetAvailableInsuranceCompanies {
+		getAvailableInsuranceCompanies {
+			id
+			officeName
+			insuranceCompanies {
+				name
+				code
+			}
+		}
+	}
+`;
 export const getContractorUserProfiles = /* GraphQL */ `
 	query GetContractorUserProfiles(
 		$filter: ModelOfficeUserConnectionFilterInput
@@ -23,6 +35,7 @@ export const getContractorUserProfiles = /* GraphQL */ `
 				id
 				username
 				email
+				role
 				telephone
 				surname
 				name
@@ -129,6 +142,7 @@ export const getEmployeeUserProfiles = /* GraphQL */ `
 				id
 				username
 				email
+				role
 				telephone
 				surname
 				name
@@ -284,12 +298,18 @@ export const getUserPagePermissionsForOffice = /* GraphQL */ `
 		getUserPagePermissionsForOffice(officeId: $officeId)
 	}
 `;
+export const getUserRole = /* GraphQL */ `
+	query GetUserRole {
+		getUserRole
+	}
+`;
 export const me = /* GraphQL */ `
 	query Me {
 		me {
 			id
 			username
 			email
+			role
 			telephone
 			surname
 			name
