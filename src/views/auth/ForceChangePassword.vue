@@ -37,7 +37,6 @@
 	</ion-page>
 </template>
 <script>
-	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
@@ -67,14 +66,11 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {
-			...mapActions({
-				completeNewPasswordStore: 'auth/completeNewPassword',
-			}),
 			completeNewPassword: async function () {
 				this.loading = true;
 				this.error = {};
 				try {
-					await this.completeNewPasswordStore({
+					await this.$store.dispatch('auth/completeNewPassword', {
 						username: this.credentials.username,
 						old_password: this.credentials.password,
 						new_password: this.newPassword,
