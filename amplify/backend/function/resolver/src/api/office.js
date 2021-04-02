@@ -143,10 +143,10 @@ module.exports = {
 								familyStatus
 								fathersName
 								files {
-									bucket
-									name
-									key
-									region
+									level
+									idToken
+									filePath
+									filename
 								}
 								firstName
 								gender

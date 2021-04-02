@@ -37,10 +37,10 @@ module.exports = {
 						createdAt
 						updatedAt
 						files {
-							bucket
-							key
-							name
-							region
+							level
+							idToken
+							filePath
+							filename
 						}
 					}
 				}
@@ -89,10 +89,10 @@ module.exports = {
 						createdAt
 						updatedAt
 						files {
-							bucket
-							key
-							name
-							region
+							level
+							idToken
+							filePath
+							filename
 						}
 					}
 				}
@@ -295,7 +295,7 @@ module.exports = {
 
 		//Get the office
 		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
-		const officeDetailsAndPermissions = await module. exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
+		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')

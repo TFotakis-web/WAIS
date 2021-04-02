@@ -29,10 +29,10 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
-									bucket
-									key
-									name
-									region
+									level
+									idToken
+									filePath
+									filename
 								}
 							}
 							createOfficeConnectionPayload {
@@ -90,10 +90,10 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
-									bucket
-									key
-									name
-									region
+									level
+									idToken
+									filePath
+									filename
 								}
 							}
 							createOfficeConnectionPayload {
@@ -158,10 +158,10 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
-									bucket
-									key
-									name
-									region
+									level
+									idToken
+									filePath
+									filename
 								}
 							}
 							createOfficeConnectionPayload {

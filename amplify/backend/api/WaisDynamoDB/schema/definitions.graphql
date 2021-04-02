@@ -1,8 +1,8 @@
 input S3ObjectInput {
-    bucket: String!
-    region: String!
-    key: String!
-    name: String!
+    level: String!
+    idToken: String!
+    filePath: String!
+    filename: String!
 }
 
 input InsuranceCompanyInput {

@@ -8,10 +8,10 @@ type InsuranceCompanyDetails {
     insuranceCompanies: [InsuranceCompany]
 }
 type S3Object {
-    bucket: String!
-    region: String!
-    key: String!
-    name: String!
+    level: String!
+    idToken: String!
+    filePath: String!
+    filename: String!
 }
 
 enum EmployeeType {
