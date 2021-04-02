@@ -37,7 +37,6 @@ export const getContractorUserProfiles = /* GraphQL */ `
 				email
 				role
 				telephone
-				surname
 				name
 				fathers_name
 				address
@@ -144,7 +143,6 @@ export const getEmployeeUserProfiles = /* GraphQL */ `
 				email
 				role
 				telephone
-				surname
 				name
 				fathers_name
 				address
@@ -175,7 +173,6 @@ export const getMySentRequests = /* GraphQL */ `
 				id
 				senderUsername
 				senderEmail
-				receiverUsername
 				receiverEmail
 				type
 				createdAt
@@ -216,22 +213,12 @@ export const getOfficesIWorkIn = /* GraphQL */ `
 		getOfficesIWorkIn(filter: $filter, limit: $limit, nextToken: $nextToken) {
 			items {
 				id
-				officeName
-				ownerUsername
-				address
-				office_email
-				zip_code
-				mobile
-				phone
-				partnersNumberLimit
-				employeesNumberLimit
-				verified
-				tin
-				professionStartDate
-				chamberRecordNumber
-				insuranceLicenseExpirationDate
-				civilLiabilityExpirationDate
-				bankAccountInfo
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
 				createdAt
 				updatedAt
 			}
@@ -278,7 +265,6 @@ export const getRequestsForMe = /* GraphQL */ `
 				id
 				senderUsername
 				senderEmail
-				receiverUsername
 				receiverEmail
 				type
 				createdAt
@@ -311,7 +297,6 @@ export const me = /* GraphQL */ `
 			email
 			role
 			telephone
-			surname
 			name
 			fathers_name
 			address
@@ -323,18 +308,18 @@ export const me = /* GraphQL */ `
 			birthdate
 			city
 			profilePicture {
-				bucket
-				region
-				key
-				name
+				level
+				idToken
+				filePath
+				filename
 			}
 			preferences
 			locale
 			files {
-				bucket
-				region
-				key
-				name
+				level
+				idToken
+				filePath
+				filename
 			}
 			createdAt
 			updatedAt

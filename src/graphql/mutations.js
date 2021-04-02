@@ -25,10 +25,10 @@ export const updateOfficeDetails = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -57,18 +57,18 @@ export const updateUserProfileDetails = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -106,10 +106,10 @@ export const createVehicleForOffice = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -147,10 +147,10 @@ export const updateVehicleForOffice = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -188,10 +188,10 @@ export const deleteVehicleForOffice = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -353,10 +353,10 @@ export const createCustomerForOffice = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
@@ -393,10 +393,10 @@ export const updateCustomerForOffice = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
@@ -433,10 +433,10 @@ export const deleteCustomerForOffice = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
@@ -746,10 +746,10 @@ export const createOffice = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       insuranceCompanies {
         name
@@ -800,10 +800,10 @@ export const updateOffice = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       insuranceCompanies {
         name
@@ -854,10 +854,10 @@ export const deleteOffice = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       insuranceCompanies {
         name
@@ -906,18 +906,18 @@ export const createUserProfile = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -958,18 +958,18 @@ export const updateUserProfile = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1010,18 +1010,18 @@ export const deleteUserProfile = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1066,10 +1066,10 @@ export const createVehicle = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1102,10 +1102,10 @@ export const updateVehicle = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1138,10 +1138,10 @@ export const deleteVehicle = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1358,10 +1358,10 @@ export const createCustomer = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
@@ -1393,10 +1393,10 @@ export const updateCustomer = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
@@ -1428,10 +1428,10 @@ export const deleteCustomer = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID

@@ -20,18 +20,18 @@ export const me = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -382,10 +382,10 @@ export const getOffice = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       insuranceCompanies {
         name
@@ -587,18 +587,18 @@ export const getUserProfile = /* GraphQL */ `
       birthdate
       city
       profilePicture {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       preferences
       locale
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -754,10 +754,10 @@ export const getVehicle = /* GraphQL */ `
       vin
       value
       file {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       createdAt
       updatedAt
@@ -1120,10 +1120,10 @@ export const getCustomer = /* GraphQL */ `
       address
       familyStatus
       files {
-        bucket
-        region
-        key
-        name
+        level
+        idToken
+        filePath
+        filename
       }
       driversLicense {
         LicenseID
