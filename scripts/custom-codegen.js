@@ -57,7 +57,7 @@ async function customize(moduleName) {
 		outString += 'export const ' + func + ' = /* GraphQL */ `' + query + '`;\n';
 	}
 
-	outString += '\n// --------- Custom ---------\n\n';
+	outString += moduleCustomization.length ? '\n// --------- Custom ---------\n\n' : '';
 
 	for (let desc of moduleCustomization) {
 		if (!customAPIs.includes(desc.name)) {
