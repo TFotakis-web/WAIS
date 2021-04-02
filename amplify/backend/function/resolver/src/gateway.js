@@ -4,6 +4,7 @@ const ddbUtil = require('./api/utils/ddb_utils')
 const officeAPI = require('./api/office')
 const userAPI = require('./api/user')
 const requestAPI = require('./api/request')
+const admin = require('./api/admin')
 
 /**
  * High-level API.
@@ -12,11 +13,11 @@ const requestAPI = require('./api/request')
  */
 module.exports = {
 	/* Queries */
-	user: async (username) => {
-		console.log('getUserProfileByUsername input: ' + username)
-		const userProfile = userAPI.getUserProfileByUsername(username)
+	user: async (args) => {
+		console.log('getUserProfileByUsername input: ' + args.username)
+		const result = userAPI.getUserProfileByUsername(args.username)
 		console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
-		return userProfile
+		return result
 	},
 	getOfficesOfUser: async (args) => {
 		console.log('getOfficeDetailsAndPermissionsByUsername input: ' + JSON.stringify(args))
@@ -187,7 +188,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await gqlAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
+		const result = await gqlUtil.updateUserProfileDetails(args.username, args.requestInput, args.condition)
 		console.log('updateOfficeDetails output: ' + JSON.stringify(result))
 		return result
 	},
@@ -357,7 +358,7 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlAPI.execute({ input: input, condition: condition }, mutation, 'createMyUserCalendarEvent')
+		const response = await gqlUtil.execute({ input: input, condition: condition }, mutation, 'createMyUserCalendarEvent')
 		const result = response.data.createUserCalendarEvent
 		console.log('createMyUserCalendarEvent output: ' + JSON.stringify(result))
 		return result
@@ -386,7 +387,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ input: sanitized_input, condition: expanded_condition },
 			mutation,
 			'updateMyUserCalendarEvents',
@@ -412,7 +413,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: input, condition: expanded_condition }, mutation, 'deleteMyUserCalendarEvents')
+		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'deleteMyUserCalendarEvents')
 		const result = response.data.deleteUserCalendarEvent
 		console.log('deleteMyUserCalendarEvents output: ' + JSON.stringify(result))
 		return result
@@ -514,6 +515,18 @@ module.exports = {
 		}
 		const result = await officeAPI.getAvailableInsuranceCompaniesForOffice(args.office, args.username)
 		console.log('getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
+		return result
+	},
+	getS3Object: async (args) => {
+		console.log('getS3Object input: ' + JSON.stringify(args))
+		if (!args.groups || args.groups.indexOf('admin') < 0) {
+			throw new Error('Insufficient privilleges.')
+		}
+		if (!args.username) {
+			throw new Error('Invalid username or unauthenticated user.')
+		}
+		const result = await admin.getS3Object(args.username, args.email, args.s3obj, args.groups)
+		console.log('getS3Object preview output: ' + JSON.stringify(result.substring(0, 10)))
 		return result
 	},
 }

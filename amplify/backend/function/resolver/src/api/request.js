@@ -1,4 +1,6 @@
-const gqlUtil = require('./utils/gql_api')
+const gqlUtil = require('./utils/gql_utils')
+const ddbAPI = require('./utils/ddb_utils')
+const userQueries = require('./user')
 
 module.exports = {
 	getRequestsFromUser: async (username, filter, limit, nextToken) => {
@@ -24,7 +26,6 @@ module.exports = {
 								mobile
 								insuranceLicenseExpirationDate
 								address
-								bankAccountInfo
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
@@ -74,7 +75,6 @@ module.exports = {
 						type
 						senderUsername
 						senderEmail
-						receiverUsername
 						receiverEmail
 						payload {
 							createOfficePayload {
@@ -87,7 +87,6 @@ module.exports = {
 								mobile
 								insuranceLicenseExpirationDate
 								address
-								bankAccountInfo
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
@@ -98,7 +97,7 @@ module.exports = {
 								}
 							}
 							createOfficeConnectionPayload {
-								expirationDate
+								manager_email
 							}
 							inviteEmployeeToOfficePayload {
 								email
@@ -117,7 +116,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ email: email, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
 			query,
 			'getRequestsForUser',
@@ -140,7 +139,6 @@ module.exports = {
 					items {
 						id
 						senderUsername
-						receiverUsername
 						senderEmail
 						receiverEmail
 						type
@@ -157,7 +155,6 @@ module.exports = {
 								mobile
 								insuranceLicenseExpirationDate
 								address
-								bankAccountInfo
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								files {
@@ -185,7 +182,7 @@ module.exports = {
 				}
 			}
 		`
-		const retrieveRequestResponse = await gqlAPI.execute({ filter: { id: { eq: id } } }, query1, 'getRequestById')
+		const retrieveRequestResponse = await gqlUtil.execute({ filter: { id: { eq: id } } }, query1, 'getRequestById')
 		const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
 		if (requestObject == null) {
 			throw new Error('Request with provided ID was not found.')
@@ -193,14 +190,14 @@ module.exports = {
 		console.log('Request object: ' + JSON.stringify(requestObject))
 
 		//Retrieve the sender's UserProfile
-		const senderUserProfile = await module.exports.getUserProfileByUsername(requestObject.senderUsername)
+		const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
 		if (senderUserProfile == null) {
-			throw new Error(`User profile for ${requestObject.receiverUsername} was not found.`)
+			throw new Error(`User profile for sender was not found.`)
 		}
 
-		const receiverUserProfile = await module.exports.getUserProfileByUsername(requestObject.receiverUsername)
+		const receiverUserProfile = await userQueries.getUserProfileByEmail(requestObject.email)
 		if (receiverUserProfile == null) {
-			throw new Error(`User profile for ${requestObject.receiverUsername} was not found.`)
+			throw new Error(`User profile for sender was not found.`)
 		}
 
 		//Resolve the request
@@ -232,7 +229,7 @@ module.exports = {
 							}
 						}
 					`
-					const createOfficeResponse = await gqlAPI.execute({ input: createOfficeInput }, mutation1, 'createOffice')
+					const createOfficeResponse = await gqlUtil.execute({ input: createOfficeInput }, mutation1, 'createOffice')
 					const createdOfficeId = createOfficeResponse.data.createOffice.id
 					if (!createdOfficeId) {
 						throw new Error('Failed to create new office.')
@@ -256,7 +253,7 @@ module.exports = {
 							}
 						}
 					`
-					const createTUCResponse = await gqlAPI.execute({ input: createTUCInput }, mutation2, 'createOfficeUserConnection')
+					const createTUCResponse = await gqlUtil.execute({ input: createTUCInput }, mutation2, 'createOfficeUserConnection')
 					const createdTUCId = createTUCResponse.data.createOfficeUserConnection.id
 					if (!createdTUCId) {
 						throw new Error('Failed to create new Office-User connection.')
@@ -274,7 +271,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'MANAGER',
 					}
-					const response = await gqlAPI.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const response = await gqlUtil.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
 					const resultUP = response.data.updateUserProfile.id
 					if (!resultUP) {
 						throw new Error('Failed to update Manager`s UserProfile role.')
@@ -371,7 +368,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'CONTRACTOR',
 					}
-					const response = await gqlAPI.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const response = await gqlUtil.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
 					const resultUP = response.data.updateUserProfile.id
 					if (!resultUP) {
 						throw new Error('Failed to update Contractor`s UserProfile role.')
@@ -394,7 +391,7 @@ module.exports = {
 				}
 			}
 		`
-		const delResponse = await gqlAPI.execute({ input: { id: id } }, mutation0, 'deleteResolvedRequest')
+		const delResponse = await gqlUtil.execute({ input: { id: id } }, mutation0, 'deleteResolvedRequest')
 		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
 
 		console.log('RequestAPI.resolveRequest output: ' + JSON.stringify(result))
@@ -424,7 +421,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
 		const result = response.data.createRequests
 		console.log('createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
@@ -450,7 +447,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
 		const result = response.data.createRequests
 		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
@@ -461,7 +458,6 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		input.bankAccountInfo = JSON.stringify(input.bankAccountInfo)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
@@ -476,7 +472,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
 		const result = response.data.createRequests
 		console.log('createOfficeRequest output: ' + JSON.stringify(result))
 		return result
@@ -500,7 +496,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
 		const result = response.data.createRequests
 		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
@@ -522,7 +518,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: input, condition: expanded_condition }, mutation, 'deleteRequestsSentByMe')
+		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'deleteRequestsSentByMe')
 		const result = response.data.deleteRequests
 		console.log('deleteRequestsSentByMe output: ' + JSON.stringify(result))
 		return result

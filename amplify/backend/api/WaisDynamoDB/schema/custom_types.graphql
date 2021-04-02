@@ -95,7 +95,7 @@ type CreateOfficeRequestPayload {
     chamberRecordNumber: String
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
-    bankAccountInfo: AWSJSON
+    comments: String
     files: [S3Object]
 }
 

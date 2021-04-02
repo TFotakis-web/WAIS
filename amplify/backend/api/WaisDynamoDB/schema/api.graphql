@@ -57,8 +57,10 @@ type Query {
 
     getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    #TODO add filter and pagination
     getAvailableInsuranceCompanies: InsuranceCompanyDetailsOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+
+    ### ADMIN API ###
+    getS3Object(obj: S3ObjectInput): String @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {

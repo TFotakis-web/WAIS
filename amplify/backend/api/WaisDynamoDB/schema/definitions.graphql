@@ -899,7 +899,7 @@ input CreateOfficeRequestPayloadInput {
     chamberRecordNumber: String
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
-    bankAccountInfo: AWSJSON
+    comments: String
     files: [S3ObjectInput]
 }
 

@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql_api')
+const gqlUtil = require('./utils/gql_utils')
 
 module.exports = {
 	/*
@@ -54,6 +54,7 @@ module.exports = {
 			result = null
 		}
 		console.log('userAPI.getUserProfileByUsername output: ' + JSON.stringify(result))
+		return result
 	},
 
 	getUserProfileByEmail: async (email) => {
@@ -276,7 +277,7 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ input: sanitized_input, condition: expanded_condition },
 			mutation,
 			'updateUserProfileDetails',
@@ -294,7 +295,7 @@ module.exports = {
 
 		//Get the office
 		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
-		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
+		const officeDetailsAndPermissions = await module. exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')
@@ -309,7 +310,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
+		const response = await gqlUtil.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('userAPI.updateEmployeeModelPermissionsForOffice output: ' + JSON.stringify(result))
 		return result
@@ -338,9 +339,9 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
+		const response = await gqlUtil.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('userAPI.updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
 		return result
-	}
+	},
 }

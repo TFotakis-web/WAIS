@@ -29,7 +29,7 @@ const resolvers = {
 			return event.arguments.msg
 		},
 		me: async (event) => {
-			return await api.user(event.identity.claims['cognito:username'])
+			return await api.user({ username: event.identity.claims['cognito:username'] })
 		},
 		getOfficesIWorkIn: async (event) => {
 			return await api.getOfficesOfUser({
@@ -105,6 +105,14 @@ const resolvers = {
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
 				nextToken: event.arguments.nextToken,
+			})
+		},
+		getS3Object: async (event) => {
+			return await api.getS3Object({
+				username: event.identity.claims['cognito:username'],
+				email: event.identity.claims['email'],
+				s3obj: event.arguments.obj,
+				groups: event.identity.groups,
 			})
 		},
 	},
@@ -369,7 +377,7 @@ exports.handler = async (event) => {
 					throw new Error('Invalid credentials.')
 				}
 				const res = await resolver(event)
-				console.log('Resolver result is ' + JSON.stringify(res))
+				console.log('Resolver result is ' + JSON.stringify(res.substring(0, 100)))
 				return res
 			} catch (err) {
 				console.log('Resolver error is ' + JSON.stringify(err))

@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql_api')
+const gqlUtil = require('./utils/gql_utils')
 
 module.exports = {
 	/*
@@ -63,7 +63,7 @@ module.exports = {
 	getEmployeeTypeUserProfilesForManagerUsername: async (managerUsername, empType, filter, limit, nextToken) => {
 		console.log(
 			'officeAPI.getEmployeeTypeUserProfilesForManagerUsername input: ' +
-				[args.username, empType, JSON.stringify(args.filter), args.limit, args.nextToken],
+				[managerUsername, empType, JSON.stringify(filter), limit, nextToken],
 		)
 		let emp_filter = { and: [filter || { id: { ne: '' } }, { employeeType: { eq: empType } }] }
 		const query = /* GraphQL */ `
@@ -105,7 +105,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken },
 			query,
 			'getEmployeeTypeUserProfilesForManagerUsername',
@@ -164,7 +164,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
 			query,
 			'getCustomersForOfficeId',
@@ -249,7 +249,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
 			query,
 			'getContractsForOfficeId',
@@ -300,7 +300,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute(
+		const response = await gqlUtil.execute(
 			{ officeId: officeId, filter: user_filter, limit: limit || 50, nextToken: nextToken },
 			query,
 			'getPartnerOfficeConnections',
@@ -312,7 +312,7 @@ module.exports = {
 
 	getAllInsuranceCompanies: async (username) => {
 		console.log('officeAPI.getAllInsuranceCompanies input: ' + [username])
-		if (!caller_username) {
+		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 
@@ -341,7 +341,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
+		const response = await gqlUtil.execute({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
 		const companies = []
 		const result = response.data.listUserProfileByUsername.items.forEach((oc) => {
 			oc.items.forEach((office) => {
@@ -384,7 +384,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlAPI.execute({ officeId: office.id, limit: 1000 }, query, 'getPartnerOfficeConnections')
+		const response = await gqlUtil.execute({ officeId: office.id, limit: 1000 }, query, 'getPartnerOfficeConnections')
 		response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
 		const result = { items: companies }
 		console.log('officeAPI.getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
@@ -444,7 +444,7 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlAPI.execute({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateOfficeDetails')
+		const response = await gqlUtil.execute({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateOfficeDetails')
 		const result = response.data.updateOffice
 		console.log('officeAPI.updateOfficeDetails output: ' + JSON.stringify(result))
 		return result
@@ -475,7 +475,7 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlAPI.execute({ input: input, condition: expanded_condition }, mutation, 'createVehicleForOffice')
+		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'createVehicleForOffice')
 		const result = response.data.createVehicle
 		console.log('createVehicleForOffice output: ' + JSON.stringify(result))
 		return result
@@ -541,7 +541,11 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlAPI.execute({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateVehicleForOffice')
+		const response = await gqlUtil.execute(
+			{ input: sanitized_input, condition: expanded_condition },
+			mutation,
+			'updateVehicleForOffice',
+		)
 		const result = response.data.updateVehicle
 		console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
 		return result
