@@ -21,34 +21,34 @@ export const request = {
 			state.requestsSentByMe = payload;
 		},
 		pushRequestsSentByMe(state, payload) {
-			if (state.userProfile.requestsSentByMe.items === undefined) {
-				state.userProfile.requestsSentByMe.items = [];
+			if (state.requestsSentByMe.items === undefined) {
+				state.requestsSentByMe.items = [];
 			}
-			state.userProfile.requestsSentByMe.items.push(payload);
+			state.requestsSentByMe.items.push(payload);
 		},
 		pushRequestsForMe(state, payload) {
-			if (state.userProfile.requestsForMe.items === undefined) {
-				state.userProfile.requestsForMe.items = [];
+			if (state.requestsForMe.items === undefined) {
+				state.requestsForMe.items = [];
 			}
-			state.userProfile.requestsForMe.items.push(payload);
+			state.requestsForMe.items.push(payload);
 		},
 		concatRequestsSentByMe(state, payload) {
-			if (state.userProfile.requestsSentByMe.items === undefined) {
-				state.userProfile.requestsSentByMe.items = [];
+			if (state.requestsSentByMe.items === undefined) {
+				state.requestsSentByMe.items = [];
 			}
-			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.concat(payload);
+			state.requestsSentByMe.items = state.requestsSentByMe.items.concat(payload);
 		},
 		concatRequestsForMe(state, payload) {
-			if (state.userProfile.requestsForMe.items === undefined) {
-				state.userProfile.requestsForMe.items = [];
+			if (state.requestsForMe.items === undefined) {
+				state.requestsForMe.items = [];
 			}
-			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.concat(payload);
+			state.requestsForMe.items = state.requestsForMe.items.concat(payload);
 		},
 		removeRequestSentByMe(state, id) {
-			state.userProfile.requestsSentByMe.items = state.userProfile.requestsSentByMe.items.filter(r => r.id !== id);
+			state.requestsSentByMe.items = state.requestsSentByMe.items.filter(r => r.id !== id);
 		},
 		removeRequestForMe(state, id) {
-			state.userProfile.requestsForMe.items = state.userProfile.requestsForMe.items.filter(r => r.id !== id);
+			state.requestsForMe.items = state.requestsForMe.items.filter(r => r.id !== id);
 		},
 	},
 	actions: {
