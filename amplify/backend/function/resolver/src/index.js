@@ -376,9 +376,7 @@ exports.handler = async (event) => {
 				if (!event.identity.claims) {
 					throw new Error('Invalid credentials.')
 				}
-				const res = await resolver(event)
-				console.log('Resolver result is ' + JSON.stringify(res.substring(0, 100)))
-				return res
+				return await resolver(event)
 			} catch (err) {
 				console.log('Resolver error is ' + JSON.stringify(err))
 				throw err //This will format the resolver's result in a specific way

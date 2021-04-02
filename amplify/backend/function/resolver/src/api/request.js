@@ -402,7 +402,7 @@ module.exports = {
 	 * Mutations
 	 */
 	createInviteEmployeeToOfficeRequest: async (username, email, groups, input) => {
-		console.log('createInviteEmployeeToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		console.log('requestAPI.createInviteEmployeeToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -422,13 +422,15 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const result = response.data.createRequests
-		console.log('createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
+		const reqID = response.data.createRequests.id
+		const result = requestInput
+		result.id = reqID
+		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
 
 	createInviteContractorToOfficeRequest: async (username, email, groups, input) => {
-		console.log('createInviteContractorToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		console.log('requestAPI.createInviteContractorToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -448,13 +450,15 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const result = response.data.createRequests
-		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
+		const reqID = response.data.createRequests.id
+		const result = requestInput
+		result.id = reqID
+		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
 
 	createOfficeRequest: async (username, email, groups, input) => {
-		console.log('createOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		console.log('requestAPI.createOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -465,6 +469,11 @@ module.exports = {
 			receiverEmail: 'admin1@wais.com',
 			payload: { createOfficePayload: input },
 		}
+
+		if (requestInput.payload.createOfficePayload == null || requestInput.payload.createOfficePayload == '{}') {
+			throw new Error('Invalid payload.')
+		}
+
 		const mutation = /* GraphQL */ `
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
@@ -473,12 +482,14 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const result = response.data.createRequests
-		console.log('createOfficeRequest output: ' + JSON.stringify(result))
+		const reqID = response.data.createRequests.id
+		const result = requestInput
+		result.id = reqID
+		console.log('requestAPI.createOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
 	createOfficeConnectionRequest: async (username, email, groups, input) => {
-		console.log('createOfficeConnectionRequest input: ' + [username, email, groups, JSON.stringify(input)])
+		console.log('requestAPI.createOfficeConnectionRequest input: ' + [username, email, groups, JSON.stringify(input)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -497,13 +508,15 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const result = response.data.createRequests
-		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
+		const reqID = response.data.createRequests.id
+		const result = requestInput
+		result.id = reqID
+		console.log('requestAPI.createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
 
 	deleteRequestsSentByMe: async (username, email, groups, input, condition) => {
-		console.log('deleteRequestsSentByMe input: ' + [username, email, groups, input, condition])
+		console.log('requestAPI.deleteRequestsSentByMe input: ' + [username, email, groups, input, condition])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -520,7 +533,7 @@ module.exports = {
 		`
 		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'deleteRequestsSentByMe')
 		const result = response.data.deleteRequests
-		console.log('deleteRequestsSentByMe output: ' + JSON.stringify(result))
+		console.log('requestAPI.deleteRequestsSentByMe output: ' + JSON.stringify(result))
 		return result
 	},
 }

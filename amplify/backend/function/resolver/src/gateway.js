@@ -188,7 +188,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await gqlUtil.updateUserProfileDetails(args.username, args.requestInput, args.condition)
+		const result = await userAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
 		console.log('updateOfficeDetails output: ' + JSON.stringify(result))
 		return result
 	},
@@ -260,7 +260,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.createOfficeRequest(args.username, args.email, args.groups, args.input)
+		const result = await requestAPI.createOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -269,7 +269,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.input)
+		const result = await requestAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -278,7 +278,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.input)
+		const result = await requestAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -287,7 +287,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.input)
+		const result = await requestAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
