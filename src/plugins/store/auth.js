@@ -66,7 +66,7 @@ export const auth = {
 			try {
 				let response = await Auth.signIn({ username: username, password: old_password });
 				response = await Auth.completeNewPassword(response, new_password);
-				await dispatch('signIn', { username, password: new_password, });
+				await dispatch('signIn', { username, password: new_password });
 				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
@@ -83,7 +83,7 @@ export const auth = {
 						code: 'NEW_PASSWORD_REQUIRED',
 					});
 				} else {
-					await dispatch('currentUserInfo');
+					await dispatch('currentAuthenticatedUser');
 					return Promise.resolve();
 				}
 			} catch (error) {
@@ -127,7 +127,7 @@ export const auth = {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 
 				// bypassCache: Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-				let response = await Auth.currentAuthenticatedUser({ bypassCache: true, });
+				let response = await Auth.currentAuthenticatedUser({ bypassCache: true });
 				commit('setCognitoUser', response);
 
 				response = await Auth.currentUserInfo();
@@ -318,7 +318,38 @@ export const auth = {
 				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
 			}
 		},
-		async updateUserProfile({ commit }, userProfile) {
+		async updateUserProfile({ commit, getters }, userProfile) {
+			if (!userProfile) {
+				userProfile = {};
+				const fields = [
+					'id',
+					'username',
+					'email',
+					'telephone',
+					'role',
+					'name',
+					'fathers_name',
+					'address',
+					'zip_code',
+					'mobile',
+					'tin',
+					'family_name',
+					'gender',
+					'birthdate',
+					'city',
+					'profilePicture',
+					'preferences',
+					'locale',
+					'files'
+				];
+				for(const key of fields) {
+					const value = getters['userProfile'][key];
+					if (value) {
+						userProfile[key] = value;
+					}
+				}
+			}
+
 			try {
 				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
 				const response = await API.graphql(graphqlOperation(updateUserProfileDetails, { input: userProfile }));
