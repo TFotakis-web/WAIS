@@ -180,7 +180,6 @@ type RequestsOutput {
     id: ID
     senderUsername: String!
     senderEmail: String!
-    receiverUsername: String!
     receiverEmail: String!
     type: RequestType!
     payload: CreateRequestPayload!

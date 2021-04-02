@@ -418,13 +418,17 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					createdAt
+					updatedAt
 				}
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const reqID = response.data.createRequests.id
+		const responsedData = response.data.createRequests
 		const result = requestInput
-		result.id = reqID
+		result.id = responsedData.id
+		result.createdAt = responsedData.createdAt
+		result.updatedAt = responsedData.updatedAt
 		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -446,13 +450,17 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					createdAt
+					updatedAt
 				}
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const reqID = response.data.createRequests.id
+		const responsedData = response.data.createRequests
 		const result = requestInput
-		result.id = reqID
+		result.id = responsedData.id
+		result.createdAt = responsedData.createdAt
+		result.updatedAt = responsedData.updatedAt
 		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -478,13 +486,17 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					createdAt
+					updatedAt
 				}
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const reqID = response.data.createRequests.id
+		const responsedData = response.data.createRequests
 		const result = requestInput
-		result.id = reqID
+		result.id = responsedData.id
+		result.createdAt = responsedData.createdAt
+		result.updatedAt = responsedData.updatedAt
 		console.log('requestAPI.createOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -504,13 +516,17 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					createdAt
+					updatedAt
 				}
 			}
 		`
 		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
-		const reqID = response.data.createRequests.id
+		const responsedData = response.data.createRequests
 		const result = requestInput
-		result.id = reqID
+		result.id = responsedData.id
+		result.createdAt = responsedData.createdAt
+		result.updatedAt = responsedData.updatedAt
 		console.log('requestAPI.createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
