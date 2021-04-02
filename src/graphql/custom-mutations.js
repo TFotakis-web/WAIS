@@ -643,6 +643,10 @@ export const updateOfficeDetails = /* GraphQL */ `
 				key
 				name
 			}
+			insuranceCompanies {
+				name
+				code
+			}
 			createdAt
 			updatedAt
 		}
@@ -657,6 +661,7 @@ export const updateUserProfileDetails = /* GraphQL */ `
 			id
 			username
 			email
+			role
 			telephone
 			surname
 			name

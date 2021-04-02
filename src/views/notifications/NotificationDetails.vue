@@ -142,7 +142,6 @@
 				this.acceptLoading = true;
 				this.resolveRequest({ id: this.request.id, payload: this.form })
 					.then(() => {
-						this.$store.commit('auth/removeRequestForMe', this.request);
 						this.$toast.saveSuccess();
 						this.$router.push({ name: 'Notifications' });
 					})
@@ -154,7 +153,6 @@
 				const payload = { decision: 'REJECT' };
 				this.resolveRequest({ id: this.request.id, payload })
 					.then(() => {
-						this.$store.commit('auth/removeRequestForMe', this.request);
 						this.$toast.saveSuccess();
 						this.$router.push({ name: 'Notifications' });
 					})
@@ -163,7 +161,7 @@
 			},
 		},
 		computed: {
-			...mapGetters('auth', ['requestsForMe']),
+			...mapGetters('request', ['requestsForMe']),
 			request() {
 				const requestId = this.$route.params.id;
 				const request = this.requestsForMe.find(el => el.id === requestId) || {};

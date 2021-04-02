@@ -65,7 +65,6 @@
 	</ion-page>
 </template>
 <script>
-	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
@@ -303,18 +302,12 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {
-			...mapActions({
-				signUpStore: 'auth/signUp',
-				confirmSignUpStore: 'auth/confirmSignUp',
-				resendSignUpStore: 'auth/resendSignUp',
-				signInStore: 'auth/signIn',
-			}),
 			signUp: async function () {
 				this.loading = true;
 				this.error = {};
 				this.credentials.phone_number = this.selectedTelephoneCode + this.phone_number.toString();
 				try {
-					await this.signUpStore(this.credentials);
+					await this.$store.dispatch('auth/signUp', this.credentials);
 					await this.$router.push({ name: 'ConfirmSignUp' });
 					// this.$emit('auth-credentials', {
 					// 	username: this.credentials.username,

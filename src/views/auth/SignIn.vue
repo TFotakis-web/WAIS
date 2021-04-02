@@ -44,7 +44,6 @@
 	</ion-page>
 </template>
 <script>
-	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
@@ -70,9 +69,6 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {
-			...mapActions({
-				signInStore: 'auth/signIn',
-			}),
 			signIn: async function () {
 				this.loading = true;
 				this.error = {};
@@ -81,17 +77,9 @@
 					await this.$router.push({ name: 'Home' });
 				} catch (error) {
 					if (error.name === 'UserNotConfirmedException') {
-						this.$emit('auth-page-changed', 'confirmSignUp');
-						this.$emit('auth-credentials', {
-							username: this.credentials.username,
-							password: this.credentials.password,
-						});
+						await this.$router.push({ name: 'ConfirmSignUp' });
 					} else if (error.name === 'NEW_PASSWORD_REQUIRED') {
-						this.$emit('auth-page-changed', 'forceChangePassword');
-						this.$emit('auth-credentials', {
-							username: this.credentials.username,
-							password: this.credentials.password,
-						});
+						await this.$router.push({ name: 'ForceChangePassword' });
 					}
 					this.error = error;
 				} finally {

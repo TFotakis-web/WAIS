@@ -41,7 +41,6 @@
 	</ion-page>
 </template>
 <script>
-	import { mapActions } from 'vuex';
 	import localeDropdown from '@/components/structure/localeDropdown';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
@@ -73,20 +72,14 @@
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 		methods: {
-			...mapActions({
-				confirmSignUpStore: 'auth/confirmSignUp',
-				resendSignUpStore: 'auth/resendSignUp',
-				signInStore: 'auth/signIn',
-			}),
 			confirmSignUp: async function () {
 				this.loading = true;
 				this.error = {};
 				try {
-					await this.confirmSignUpStore({
+					await this.$store.dispatch('auth/confirmSignUp', {
 						username: this.credentials.username,
 						code: this.verificationCode,
 					});
-					// await this.signInStore(this.credentials);
 					await this.$router.push({ name: 'SignIn' });
 					this.loading = false;
 				} catch (error) {
@@ -97,7 +90,7 @@
 			resendSignUp: async function () {
 				this.resendLoading = true;
 				try {
-					await this.resendSignUpStore(this.credentials.username);
+					await this.$store.dispatch('auth/resendSignUp', this.credentials.username);
 					setTimeout(() => {
 						this.resendLoading = false;
 					}, 10000);
