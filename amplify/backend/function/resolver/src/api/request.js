@@ -291,7 +291,7 @@ module.exports = {
 					if (!senderOffice) {
 						throw new Error("Sender's Office not found.")
 					}
-					const receiverOffice = await module.exports.getOfficeByOwnerUsername(requestObject.receiverUsername)
+					const receiverOffice = await module.exports.getOfficeByOwnerUsername(receiverUserProfile.username)
 					if (!receiverOffice) {
 						throw new Error("Receiver's Office not found.")
 					}
@@ -320,7 +320,7 @@ module.exports = {
 					}
 
 					//Ensure that the User has no other connections
-					const isUnemployed = await userQueries.checkIfUserIsUnemployed(requestObject.receiverUsername)
+					const isUnemployed = await userQueries.checkIfUserIsUnemployed(receiverUserProfile.username)
 					if (!isUnemployed) {
 						throw new Error("User is a member of another Office and therefore can't join a new one.")
 					}
@@ -334,7 +334,7 @@ module.exports = {
 						const empAddRes = await ddbAPI.addEmployeeToOffice(
 							senderOffice,
 							senderUserProfile.id,
-							requestObject.receiverUsername,
+							receiverUserProfile.username,
 							requestObject.id,
 							receiverUserProfile.id,
 							modelPermissions,

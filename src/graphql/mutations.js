@@ -30,10 +30,6 @@ export const updateOfficeDetails = /* GraphQL */ `
         key
         name
       }
-      insuranceCompanies {
-        name
-        code
-      }
       createdAt
       updatedAt
     }
@@ -50,7 +46,6 @@ export const updateUserProfileDetails = /* GraphQL */ `
       email
       role
       telephone
-      surname
       name
       fathers_name
       address
@@ -458,7 +453,6 @@ export const createOfficeRequest = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -474,7 +468,6 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -490,7 +483,6 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -506,7 +498,6 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -523,7 +514,6 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
       id
       senderUsername
       senderEmail
-      receiverUsername
       receiverEmail
       type
       createdAt
@@ -905,7 +895,6 @@ export const createUserProfile = /* GraphQL */ `
       email
       telephone
       role
-      surname
       name
       fathers_name
       address
@@ -958,7 +947,6 @@ export const updateUserProfile = /* GraphQL */ `
       email
       telephone
       role
-      surname
       name
       fathers_name
       address
@@ -1011,7 +999,6 @@ export const deleteUserProfile = /* GraphQL */ `
       email
       telephone
       role
-      surname
       name
       fathers_name
       address
@@ -1499,7 +1486,6 @@ export const createOfficeUserConnection = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -1562,7 +1548,6 @@ export const updateOfficeUserConnection = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -1625,7 +1610,6 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2049,7 +2033,6 @@ export const createTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2071,7 +2054,6 @@ export const createTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2111,7 +2093,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2133,7 +2114,6 @@ export const updateTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2173,7 +2153,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
@@ -2195,7 +2174,6 @@ export const deleteTransactionHistory = /* GraphQL */ `
         email
         telephone
         role
-        surname
         name
         fathers_name
         address
