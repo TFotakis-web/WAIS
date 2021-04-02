@@ -207,7 +207,8 @@
     "employeesNumberLimit": "Όριο υπαλλήλων",
     "billing": "Τιμολόγηση",
     "issuing": "Έκδοση",
-    "chooseFile": "Επιλέξτε αρχείο"
+    "chooseFile": "Επιλέξτε αρχείο",
+    "civilLiabilityExpirationDate": "Ημ. ληξης αστικής ευθύνης"
   },
   "actions": {
     "submit": "Υποβολή",

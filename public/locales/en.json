@@ -207,7 +207,8 @@
     "employeesNumberLimit": "Employees number limit",
     "billing": "Billing",
     "issuing": "Issuing",
-    "chooseFile": "Choose file"
+    "chooseFile": "Choose file",
+    "civilLiabilityExpirationDate": "Civil liability exp. date"
   },
   "actions": {
     "submit": "Submit",
