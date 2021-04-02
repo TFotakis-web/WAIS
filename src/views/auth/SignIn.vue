@@ -73,7 +73,7 @@
 				this.loading = true;
 				this.error = {};
 				try {
-					await this.signInStore(this.credentials);
+					await this.$store.dispatch('auth/signIn', this.credentials);
 					await this.$router.push({ name: 'Home' });
 				} catch (error) {
 					if (error.name === 'UserNotConfirmedException') {
