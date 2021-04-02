@@ -12,7 +12,6 @@ module.exports = {
 			email: event.email,
 			telephone: event.phone_number,
 			role: 'UNKNOWN',
-			surname: null,
 			name: null,
 			fathers_name: null,
 			address: null,

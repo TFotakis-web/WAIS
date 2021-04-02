@@ -7,6 +7,7 @@ export const me = /* GraphQL */ `
       id
       username
       email
+      role
       telephone
       surname
       name
@@ -154,6 +155,7 @@ export const getEmployeeUserProfiles = /* GraphQL */ `
         id
         username
         email
+        role
         telephone
         surname
         name
@@ -190,6 +192,7 @@ export const getContractorUserProfiles = /* GraphQL */ `
         id
         username
         email
+        role
         telephone
         surname
         name
@@ -319,6 +322,23 @@ export const getUserPagePermissionsForOffice = /* GraphQL */ `
     getUserPagePermissionsForOffice(officeId: $officeId)
   }
 `;
+export const getUserRole = /* GraphQL */ `
+  query GetUserRole {
+    getUserRole
+  }
+`;
+export const getAvailableInsuranceCompanies = /* GraphQL */ `
+  query GetAvailableInsuranceCompanies {
+    getAvailableInsuranceCompanies {
+      id
+      officeName
+      insuranceCompanies {
+        name
+        code
+      }
+    }
+  }
+`;
 export const listOffices = /* GraphQL */ `
   query ListOffices(
     $filter: ModelOfficeFilterInput
@@ -380,6 +400,10 @@ export const getOffice = /* GraphQL */ `
       insuranceCompanies {
         name
         code
+      }
+      availableInsuranceCompanies {
+        id
+        officeName
       }
       createdAt
       updatedAt
@@ -534,6 +558,7 @@ export const listUserProfiles = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -561,6 +586,7 @@ export const getUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      role
       surname
       name
       fathers_name
@@ -623,6 +649,7 @@ export const listUserProfileByEmail = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -663,6 +690,7 @@ export const listUserProfileByUsername = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -1228,6 +1256,7 @@ export const getOfficeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -1862,6 +1891,7 @@ export const getTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -1883,6 +1913,7 @@ export const getTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name

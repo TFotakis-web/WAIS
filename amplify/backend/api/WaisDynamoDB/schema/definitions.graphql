@@ -223,7 +223,6 @@ input ModelUserProfileFilterInput {
     email: ModelStringInput
     telephone: ModelStringInput
     role: ModelUserRoleInput
-    surname: ModelStringInput
     name: ModelStringInput
     fathers_name: ModelStringInput
     address: ModelStringInput
@@ -247,7 +246,6 @@ input CreateUserProfileInput {
     email: String!
     telephone: String!
     role: UserRole!
-    surname: String
     name: String
     fathers_name: String
     address: String
@@ -270,7 +268,6 @@ input UpdateUserProfileInput {
     email: String
     telephone: String
     role: UserRole
-    surname: String
     name: String
     fathers_name: String
     address: String
@@ -296,7 +293,6 @@ input ModelUserProfileConditionInput {
     email: ModelStringInput
     telephone: ModelStringInput
     role: ModelUserRoleInput
-    surname: ModelStringInput
     name: ModelStringInput
     fathers_name: ModelStringInput
     address: ModelStringInput

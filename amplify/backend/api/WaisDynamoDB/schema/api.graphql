@@ -4,7 +4,7 @@ type Query {
 
     echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-    getOfficesIWorkIn(filter: ModelOfficeFilterInput, limit: Int, nextToken: String): ModelOfficeConnectionOutput
+    getOfficesIWorkIn(filter: ModelOfficeFilterInput, limit: Int, nextToken: String): ModelOfficeAccessConnectionOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 

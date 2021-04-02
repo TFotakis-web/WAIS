@@ -204,7 +204,7 @@ module.exports = {
 							Update: {
 								TableName: 'Office' + ddbSuffix,
 								Key: { id: officeId },
-								UpdateExpression: 'SET #updatedAt = :now SET #employeesNumberLimit = #employeesNumberLimit + :inc',
+								UpdateExpression: 'SET #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit + :inc',
 								ExpressionAttributeNames: {
 									'#updatedAt': 'updatedAt',
 									'#employeesNumberLimit': 'employeesNumberLimit',

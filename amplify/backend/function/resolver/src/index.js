@@ -8,7 +8,7 @@
 Amplify Params - DO NOT EDIT */
 
 //API
-const api = require('./api.js')
+const api = require('./gateway')
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
@@ -18,7 +18,10 @@ const api = require('./api.js')
 const resolvers = {
 	Office: {
 		availableInsuranceCompanies: async (event) => {
-			return await api.getAvailableInsuranceCompaniesForOffice({ office: event.source })
+			return await api.getAvailableInsuranceCompaniesForOffice({
+				office: event.source,
+				username: event.identity.claims['cognito:username'],
+			})
 		},
 	},
 	Query: {
@@ -55,6 +58,7 @@ const resolvers = {
 		getRequestsForMe: async (event) => {
 			return await api.getRequestsForUser({
 				username: event.identity.claims['cognito:username'],
+				email: event.identity.claims['email'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
 				nextToken: event.arguments.nextToken,

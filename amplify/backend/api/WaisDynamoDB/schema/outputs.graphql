@@ -4,7 +4,6 @@ type UserProfileOutput {
     email: String!
     role: UserRole!
     telephone: String!
-    surname: String
     name: String
     fathers_name: String
     address: String
@@ -42,7 +41,6 @@ type OfficeOutput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3Object]
-    insuranceCompanies: [InsuranceCompany!]!
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
 }

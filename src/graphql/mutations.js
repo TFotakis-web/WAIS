@@ -30,6 +30,10 @@ export const updateOfficeDetails = /* GraphQL */ `
         key
         name
       }
+      insuranceCompanies {
+        name
+        code
+      }
       createdAt
       updatedAt
     }
@@ -44,6 +48,7 @@ export const updateUserProfileDetails = /* GraphQL */ `
       id
       username
       email
+      role
       telephone
       surname
       name
@@ -760,6 +765,10 @@ export const createOffice = /* GraphQL */ `
         name
         code
       }
+      availableInsuranceCompanies {
+        id
+        officeName
+      }
       createdAt
       updatedAt
       officeContracts {
@@ -809,6 +818,10 @@ export const updateOffice = /* GraphQL */ `
       insuranceCompanies {
         name
         code
+      }
+      availableInsuranceCompanies {
+        id
+        officeName
       }
       createdAt
       updatedAt
@@ -860,6 +873,10 @@ export const deleteOffice = /* GraphQL */ `
         name
         code
       }
+      availableInsuranceCompanies {
+        id
+        officeName
+      }
       createdAt
       updatedAt
       officeContracts {
@@ -887,6 +904,7 @@ export const createUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      role
       surname
       name
       fathers_name
@@ -939,6 +957,7 @@ export const updateUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      role
       surname
       name
       fathers_name
@@ -991,6 +1010,7 @@ export const deleteUserProfile = /* GraphQL */ `
       username
       email
       telephone
+      role
       surname
       name
       fathers_name
@@ -1478,6 +1498,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -1540,6 +1561,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -1602,6 +1624,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2025,6 +2048,7 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2046,6 +2070,7 @@ export const createTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2085,6 +2110,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2106,6 +2132,7 @@ export const updateTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2145,6 +2172,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
@@ -2166,6 +2194,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
         username
         email
         telephone
+        role
         surname
         name
         fathers_name
