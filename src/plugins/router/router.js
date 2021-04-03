@@ -13,7 +13,7 @@ import processing from '@/plugins/router/processing';
 import various from '@/plugins/router/various';
 
 const routes = [
-	auth,
+	...auth,
 	{
 		path: '',
 		name: 'BaseLayout',
