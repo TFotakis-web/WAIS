@@ -1,5 +1,5 @@
 <template>
-	<ion-item v-if="routeCategory.thumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" class="topLevelRoute">
+	<ion-item v-if="routeCategory.thumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
 		<ion-thumbnail slot="start">
 			<ion-img :src="routeCategory.thumbnail"/>
 		</ion-thumbnail>
@@ -10,12 +10,12 @@
 		</ion-label>
 	</ion-item>
 	<template v-else>
-		<ion-item v-if="routeCategory.children" button @click="shown = !shown" detail="false" class="topLevelRoute">
+		<ion-item v-if="routeCategory.children" button @click="shown = !shown" detail="false" lines="none" class="topLevelRoute">
 			<ion-icon :icon="routeCategory.icon" slot="start"/>
 			<ion-label>{{ routeCategory.name }}</ion-label>
 			<ion-icon :icon="shown ? $ionicons.chevronDownOutline : $ionicons.chevronForwardOutline" slot="end"/>
 		</ion-item>
-		<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" class="topLevelRoute">
+		<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
 			<ion-icon :icon="routeCategory.icon" slot="start"/>
 			<ion-label>{{ routeCategory.name }}</ion-label>
 		</ion-item>
