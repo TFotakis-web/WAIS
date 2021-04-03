@@ -1,26 +1,6 @@
 <template>
 	<ion-menu content-id="main-content" type="push">
 		<ion-content>
-			<ion-list>
-				<ion-item :router-link="{name: 'Trade'}" button>
-					<ion-thumbnail slot="start">
-						<ion-img src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg"/>
-					</ion-thumbnail>
-					<ion-label>
-						<!-- Todo: Replace with real trade name -->
-						<h1>Trade Name</h1>
-					</ion-label>
-				</ion-item>
-				<ion-item :router-link="{name: 'UserProfile'}" button>
-					<ion-thumbnail slot="start">
-						<ion-img src="https://www.w3schools.com/howto/img_avatar.png"/>
-					</ion-thumbnail>
-					<ion-label>
-						<h2>{{ $store.getters['auth/fullName'] }}</h2>
-						<p>{{ $store.getters['auth/username'] }}</p>
-					</ion-label>
-				</ion-item>
-			</ion-list>
 			<ion-list id="categories-list">
 				<side-navigation-category v-for="routeCategory in sidenav" :key="routeCategory.name" :routeCategory="routeCategory"/>
 			</ion-list>
@@ -72,8 +52,32 @@
 			...mapActions('auth', ['signOut']),
 		},
 		computed: {
-			sidenav: function () {
+			sidenav: function() {
 				const allRoutes = [
+					{
+						name: this.$t('views.homePage.pageTitle'),
+						icon: this.$ionicons.homeOutline,
+						to: { name: 'AdminHome' },
+					},
+					{
+						name: this.$t('components.navigation.navbar-item.notifications'),
+						to: { name: 'AdminNotifications' },
+						icon: this.$ionicons.notificationsOutline,
+					},
+
+					{
+						to: { name: 'Office' },
+						thumbnail: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+						h1: 'Office Name',
+					},
+
+					{
+						to: { name: 'UserProfile' },
+						thumbnail: 'https://www.w3schools.com/howto/img_avatar.png',
+						h2: this.$store.getters['auth/fullName'],
+						p: this.$store.getters['auth/username'],
+					},
+
 					{
 						name: this.$t('views.homePage.pageTitle'),
 						icon: this.$ionicons.homeOutline,
@@ -267,17 +271,12 @@
 				];
 
 				const routes = [];
-				const permissions = this.$store.getters['auth/permissions'];
 				for (const category of allRoutes) {
 					if (category.children) {
 						const children = [];
 						for (const child of category.children) {
 							const routeName = child.to.name;
-							if (
-								routeName in permissions &&
-								permissions[routeName].read &&
-								permissions[routeName].write
-							) {
+							if (this.$router.hasPermissionsByName(routeName)) {
 								children.push(child);
 							}
 						}
@@ -287,14 +286,10 @@
 						}
 					} else {
 						const routeName = category.to.name;
-						let hasPermissions = routeName in permissions;
-						hasPermissions &= permissions[routeName]?.read;
-						hasPermissions &= permissions[routeName]?.write;
-						if (hasPermissions) {
+						if (this.$router.hasPermissionsByName(routeName)) {
 							routes.push(category);
 						}
 					}
-
 				}
 
 				return routes;
