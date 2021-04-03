@@ -12,6 +12,7 @@ type S3Object {
     idToken: String!
     filePath: String!
     filename: String!
+    contentType: String!
 }
 
 enum EmployeeType {

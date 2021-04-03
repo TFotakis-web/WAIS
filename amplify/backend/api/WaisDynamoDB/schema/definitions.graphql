@@ -3,6 +3,7 @@ input S3ObjectInput {
     idToken: String!
     filePath: String!
     filename: String!
+    contentType: String!
 }
 
 input InsuranceCompanyInput {

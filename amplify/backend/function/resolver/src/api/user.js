@@ -31,6 +31,7 @@ module.exports = {
 							idToken
 							filePath
 							filename
+							contentType
 						}
 						preferences
 						locale
@@ -41,6 +42,7 @@ module.exports = {
 							idToken
 							filePath
 							filename
+							contentType
 						}
 					}
 				}
@@ -83,6 +85,7 @@ module.exports = {
 							idToken
 							filePath
 							filename
+							contentType
 						}
 						preferences
 						locale
@@ -93,6 +96,7 @@ module.exports = {
 							idToken
 							filePath
 							filename
+							contentType
 						}
 					}
 				}

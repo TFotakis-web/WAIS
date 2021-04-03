@@ -147,6 +147,7 @@ module.exports = {
 									idToken
 									filePath
 									filename
+									contentType
 								}
 								firstName
 								gender
@@ -224,6 +225,7 @@ module.exports = {
 										idToken
 										filePath
 										filename
+										contentType
 									}
 									firstRegistrationDate
 									fuelType

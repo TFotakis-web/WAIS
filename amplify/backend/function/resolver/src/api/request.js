@@ -33,6 +33,7 @@ module.exports = {
 									idToken
 									filePath
 									filename
+									contentType
 								}
 							}
 							createOfficeConnectionPayload {
@@ -94,6 +95,7 @@ module.exports = {
 									idToken
 									filePath
 									filename
+									contentType
 								}
 							}
 							createOfficeConnectionPayload {
@@ -162,6 +164,7 @@ module.exports = {
 									idToken
 									filePath
 									filename
+									contentType
 								}
 							}
 							createOfficeConnectionPayload {

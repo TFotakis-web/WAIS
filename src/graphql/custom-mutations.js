@@ -76,6 +76,7 @@ export const createCustomerForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			driversLicense {
 				LicenseID
@@ -219,6 +220,7 @@ export const createVehicleForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt
