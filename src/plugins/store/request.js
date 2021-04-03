@@ -57,7 +57,7 @@ export const request = {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				const response = await API.graphql(graphqlOperation(getMySentRequests));
 				commit('setRequestsSentByMe', response.data.getMySentRequests);
-				return Promise.resolve(response.data.getMySentRequests.items);
+				return Promise.resolve(response.data.getMySentRequests);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
@@ -70,7 +70,7 @@ export const request = {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				const response = await API.graphql(graphqlOperation(getRequestsForMe));
 				commit('setRequestsForMe', response.data.getRequestsForMe);
-				return Promise.resolve(response.data.getRequestsForMe.items);
+				return Promise.resolve(response.data.getRequestsForMe);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
