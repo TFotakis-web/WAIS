@@ -27,10 +27,10 @@ module.exports = {
 						city
 						role
 						profilePicture {
-							bucket
-							region
-							key
-							name
+							level
+							idToken
+							filePath
+							filename
 						}
 						preferences
 						locale
@@ -79,10 +79,10 @@ module.exports = {
 						birthdate
 						city
 						profilePicture {
-							bucket
-							region
-							key
-							name
+							level
+							idToken
+							filePath
+							filename
 						}
 						preferences
 						locale

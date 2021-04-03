@@ -220,10 +220,10 @@ module.exports = {
 									displacement
 									eurotax
 									file {
-										bucket
-										key
-										name
-										region
+										level
+										idToken
+										filePath
+										filename
 									}
 									firstRegistrationDate
 									fuelType
