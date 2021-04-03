@@ -107,7 +107,7 @@
     "homePage": {
       "pageTitle": "Αρχική σελίδα"
     },
-    "Trade": {
+    "Office": {
       "pageTitle": "Επωνυμία",
       "companyInfo": "Εταιρικά Στοιχεία",
       "companyAccounts": "Εταιρικοί Λογαριασμοί",
@@ -133,8 +133,8 @@
     "devTools": {
       "pageTitle": "Εργαλεία Προγραμματιστή"
     },
-    "tradeCreationForm": {
-      "createYourTrade": "Αίτηση δημιουργίας επωνυμίας",
+    "officeCreationForm": {
+      "createYourOffice": "Αίτηση δημιουργίας επωνυμίας",
       "personalInfo": "Προσωπικά στοιχεία",
       "professionalInfo": "Επαγγελματικά στοιχεία",
       "termsAndConditions": "Όροι και προϋποθέσεις",
@@ -179,7 +179,7 @@
     "grossIncome": "Μικτά έσοδα",
     "netIncome": "Καθαρά έσοδα",
     "collaborator": "Συνεργάτης",
-    "trade": "Επωνυμία",
+    "office": "Επωνυμία",
     "registrationNumber": "Αρ. Μητρώου",
     "professionStartDate": "Ημ. Εναρξης Επαγγέλματος",
     "licenseExpirationDate": "Ημ. Λήξης Άδειας",

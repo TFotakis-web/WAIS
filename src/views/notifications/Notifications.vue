@@ -4,8 +4,8 @@
 		<ion-card>
 			<ion-card-content>
 				<ion-list>
-					<ion-item v-for="request in createTradeList" :key="request.id" @click="$router.push({name: 'NotificationDetails', params: {id: request.id}})" button>
-						<strong>{{ request.payload.tradeName }}: </strong>
+					<ion-item v-for="request in createOfficeList" :key="request.id" @click="$router.push({name: 'NotificationDetails', params: {id: request.id}})" button>
+						<strong>{{ request.payload.officeName }}: </strong>
 						<span>{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
 					</ion-item>
 				</ion-list>
@@ -24,7 +24,7 @@
 		},
 		computed: {
 			...mapGetters('request', ['requestsForMe']),
-			createTradeList() {
+			createOfficeList() {
 				return this.requestsForMe.filter(el => el.type === 'CREATE_OFFICE');
 			},
 		},

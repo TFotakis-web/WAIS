@@ -3,20 +3,20 @@
 		<ion-card-content>
 			<ion-item>
 				<ion-thumbnail class="ion-margin-end">
-					<ion-img :src="form.tradeLogo"/>
+					<ion-img :src="form.officeLogo"/>
 				</ion-thumbnail>
 				<!--						Todo: Enable when backend is ready -->
-				<!--						<file-input @update:downloadUrls="fields.tradeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="tradeLogo" file-path="trade/" level="protected" v-model="form.tradeLogo" :sizeLimitInMBs="10" size="small"/>-->
+				<!--						<file-input @update:downloadUrls="fields.officeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office/" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>-->
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Trade.companyInfo') }}</h1>
+						<h1>{{ $t('views.Office.companyInfo') }}</h1>
 					</ion-list-header>
 					<ion-item>
 						<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.trade') }}</ion-label>
-						<ion-input v-model="form.trade" type="text" name="tradeName" required/>
+						<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
+						<ion-input v-model="form.office" type="text" name="officeName" required/>
 					</ion-item>
 					<ion-item>
 						<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
@@ -71,7 +71,7 @@
 				</ion-list>
 				<ion-list class="ion-margin-top">
 					<ion-list-header>
-						<h1>{{ $t('views.Trade.companyAccounts') }}</h1>
+						<h1>{{ $t('views.Office.companyAccounts') }}</h1>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
@@ -100,7 +100,7 @@
 				</ion-list>
 				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Trade.companyCodes') }}</h1>
+						<h1>{{ $t('views.Office.companyCodes') }}</h1>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
@@ -132,7 +132,7 @@
 				</ion-list>
 				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Trade.companyFiles') }}</h1>
+						<h1>{{ $t('views.Office.companyFiles') }}</h1>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
@@ -186,8 +186,8 @@
 					{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη', selected: false },
 				],
 				form: {
-					trade: '',
-					tradeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
+					office: '',
+					officeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
 					chamberRecordNumber: '',
 					tin: '',
 					professionStartDate: '',

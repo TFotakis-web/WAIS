@@ -1,8 +1,8 @@
 <template>
 	<ion-grid fixed>
 		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
-		<strong>{{ $t('fields.trade') }}: </strong>
-		<span>{{ request.payload.tradeName }}</span>
+		<strong>{{ $t('fields.office') }}: </strong>
+		<span>{{ request.payload.officeName }}</span>
 		<br>
 		<strong>{{ $t('fields.username') }}: </strong>
 		<span>{{ request.payload.username }}</span>
@@ -127,7 +127,7 @@
 			};
 		},
 		mounted() {
-			const pageDesc = ` - ${this.request.payload.tradeName}: ${this.request.payload.surname} ${this.request.payload.name} ${this.request.payload.fathersName}`;
+			const pageDesc = ` - ${this.request.payload.officeName}: ${this.request.payload.surname} ${this.request.payload.name} ${this.request.payload.fathersName}`;
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle') + pageDesc);
 			this.$store.commit('pageStructure/setPageBackButton', true);
 			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Notifications' }).fullPath);

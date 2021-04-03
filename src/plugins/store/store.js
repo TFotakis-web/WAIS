@@ -3,7 +3,7 @@ import { pageStructure } from '@/plugins/store/pageStructure';
 import { auth } from '@/plugins/store/auth';
 import { request } from '@/plugins/store/request';
 // import { vehicle } from '@/store/vehicle';
-// import { trade } from '@/store/trade';
+// import { office } from '@/store/office';
 // import { platformData } from '@/store/platformData';
 
 import { API, graphqlOperation } from 'aws-amplify';
@@ -17,7 +17,7 @@ export const store = createStore({
 		auth,
 		request,
 		// vehicle,
-		// trade,
+		// office,
 		// platformData
 	},
 	state: initState(),

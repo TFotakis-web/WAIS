@@ -107,8 +107,8 @@
     "homePage": {
       "pageTitle": "Home page"
     },
-    "Trade": {
-      "pageTitle": "Trade",
+    "Office": {
+      "pageTitle": "Office",
       "companyInfo": "Company Information",
       "companyAccounts": "Company accounts",
       "companyCodes": "Company codes",
@@ -133,8 +133,8 @@
     "devTools": {
       "pageTitle": "Developer Tools"
     },
-    "tradeCreationForm": {
-      "createYourTrade": "Trade creation application",
+    "officeCreationForm": {
+      "createYourOffice": "Office creation application",
       "personalInfo": "Personal Information",
       "professionalInfo": "Professional Information",
       "termsAndConditions": "Terms and Conditions",
@@ -179,7 +179,7 @@
     "grossIncome": "Gross income",
     "netIncome": "Net income",
     "collaborator": "Collaborator",
-    "trade": "Trade",
+    "office": "Office",
     "registrationNumber": "Registration number",
     "professionStartDate": "Profession start date",
     "licenseExpirationDate": "License expiration date",

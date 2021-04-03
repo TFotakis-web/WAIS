@@ -1,7 +1,7 @@
 <template>
 	<ion-card>
 		<ion-card-header>
-			<ion-card-title>{{ $t('views.Trade.userPermissionsTableCard.cardTitle') }}</ion-card-title>
+			<ion-card-title>{{ $t('views.Office.userPermissionsTableCard.cardTitle') }}</ion-card-title>
 		</ion-card-header>
 		<ion-card-content>
 			<ion-item v-for="user in users" :key="user.username">
@@ -13,7 +13,7 @@
 <!--			<mdb-tbl sm striped bordered scrollY maxHeight="40em" class="fixed-header-column">
 				<mdb-tbl-head>
 					<tr>
-						<th>{{ $t('views.Trade.userPermissionsTableCard.tablePermissionHeader') }}</th>
+						<th>{{ $t('views.Office.userPermissionsTableCard.tablePermissionHeader') }}</th>
 						<th v-for="(userObject, username) in usersPermissions" :key="username">
 							<strong>{{ username }}</strong>
 						</th>
@@ -78,7 +78,7 @@
 				// 	'VehicleCardsDetails',
 				// 	'CustomerCards',
 				// 	'Library',
-				// 	'Trade',
+				// 	'Office',
 				// 	'UserProfile',
 				// 	'PlatformData',
 				// ],
@@ -124,7 +124,7 @@
 					'VehicleCardsDetails',
 					'CustomerCards',
 					'Library',
-					'Trade',
+					'Office',
 					'UserProfile',
 					'PlatformData',
 					'DevTools',
@@ -135,7 +135,7 @@
 					'Notifications',
 					'NotificationDetails',
 					'Wallet',
-					'TradeCreationForm',
+					'OfficeCreationForm',
 				],
 			};
 		},
@@ -174,7 +174,7 @@
 			// 		'VehicleCardsDetails': false,
 			// 		'CustomerCards': false,
 			// 		'Library': false,
-			// 		'Trade': false,
+			// 		'Office': false,
 			// 		'UserProfile': false,
 			// 		'PlatformData': false,
 			// 	};

@@ -14,18 +14,19 @@
 	</ion-grid>
 </template>
 <script>
-	import companyInfoCard from '@/views/trade/companyInfoCard';
-	import UserPermissionsTableCard from '@/views/trade/userPermissionsTableCard';
+	import companyInfoCard from '@/views/office/companyInfoCard';
+	import UserPermissionsTableCard from '@/views/office/userPermissionsTableCard';
 
 	export default {
-		name: 'Trade',
+		name: 'Office',
 		components: {
 			UserPermissionsTableCard,
 			companyInfoCard,
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Trade.pageTitle'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Office.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 		},
 	};
 </script>
+

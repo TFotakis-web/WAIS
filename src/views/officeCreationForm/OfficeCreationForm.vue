@@ -6,13 +6,13 @@
 					<ion-col size-sm="10" size-md="8" size-lg="6" size-xl="6">
 						<ion-card>
 							<ion-card-header>
-								<ion-card-title>{{ $t('views.tradeCreationForm.createYourTrade') }}</ion-card-title>
+								<ion-card-title>{{ $t('views.officeCreationForm.createYourOffice') }}</ion-card-title>
 							</ion-card-header>
 							<ion-card-content>
 								<form @submit.prevent="save">
 									<ion-title>{{ $store.getters['auth/username'] }}</ion-title>
 									<ion-list>
-										<ion-list-header>{{ $t('views.tradeCreationForm.personalInfo') }}</ion-list-header>
+										<ion-list-header>{{ $t('views.officeCreationForm.personalInfo') }}</ion-list-header>
 										<ion-item>
 											<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 											<ion-label position="floating">{{ $t('fields.surname') }}</ion-label>
@@ -30,10 +30,10 @@
 										</ion-item>
 									</ion-list>
 									<ion-list>
-										<ion-list-header>{{ $t('views.tradeCreationForm.professionalInfo') }}</ion-list-header>
+										<ion-list-header>{{ $t('views.officeCreationForm.professionalInfo') }}</ion-list-header>
 										<ion-item>
 											<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
-											<ion-label position="floating">{{ $t('fields.trade') }}</ion-label>
+											<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
 											<ion-input v-model="CreateOfficeRequestPayloadInput.officeName" type="text" name="officeName" required/>
 										</ion-item>
 										<ion-item>
@@ -82,16 +82,16 @@
 											<ion-datetime v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="civilLiabilityExpirationDate"/>
 										</ion-item>
 										<ion-item>
-											<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createTradeRequest/" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
+											<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createOfficeRequest/" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
 										</ion-item>
 										<ion-item>
-											<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createTradeRequest/" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
+											<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createOfficeRequest/" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
 										</ion-item>
 										<ion-item>
-											<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createTradeRequest/" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
+											<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createOfficeRequest/" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
 										</ion-item>
 										<ion-item>
-											<file-input color="primary" text="Other files" file-path="createTradeRequest/" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
+											<file-input color="primary" text="Other files" file-path="createOfficeRequest/" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
 										</ion-item>
 										<ion-item>
 											<ion-icon :icon="$ionicons.chatbubbleOutline" slot="start" class="ion-align-self-center"/>
@@ -100,10 +100,10 @@
 										</ion-item>
 									</ion-list>
 									<ion-list>
-										<ion-list-header>{{ $t('views.tradeCreationForm.termsAndConditions') }}</ion-list-header>
+										<ion-list-header>{{ $t('views.officeCreationForm.termsAndConditions') }}</ion-list-header>
 										<ion-item>
 											<ion-checkbox v-model="condition" slot="start" required/>
-											<ion-label>{{ $t('views.tradeCreationForm.iAgreeToTheTermsAndConditions') }}</ion-label>
+											<ion-label>{{ $t('views.officeCreationForm.iAgreeToTheTermsAndConditions') }}</ion-label>
 										</ion-item>
 									</ion-list>
 									<div class="ion-margin-top">
@@ -170,7 +170,7 @@
 			};
 		},
 		mounted() {
-			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.tradeCreationForm.createYourTrade'));
+			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.officeCreationForm.createYourOffice'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 
 			const requestsSentByMe = this.$store.getters['request/requestsSentByMe']?.items || [];
