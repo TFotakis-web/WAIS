@@ -7,6 +7,173 @@ const initState = () => ({
 	cognitoUser: null,
 	user: null,
 	userProfile: null,
+	userModelPermissions: [],
+	userPagePermissions: {
+		// 	'Home': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'VehiclePricing': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'IndustrialLiabilityPricing': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'FirePricing': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'LifePricing': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ContractsFile': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'UncollectedContracts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'CollectedContracts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ContractAdditionalActs': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'GreenCardContracts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'UnclaimedContracts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'InvalidContracts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'NewContract': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ProcessingDueDateRegister': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ProcessingDuePayment': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ProcessingPaid': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ProcessingLosses': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingReceipts': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingRegisters': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingTodaysIncome': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingCommissionsUncollected': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingCommissionsCollected': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'AccountingMutualAccount': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'SupplierContractors': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ContractorsExternalContractors': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'VehicleCards': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'VehicleCardsDetails': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'CustomerCards': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Library': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Office': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'UserProfile': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'PlatformData': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'DevTools': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'ContractApproval': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Payment': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Bank': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Collaboration': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Notifications': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'NotificationDetails': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'Wallet': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+		// 	'OfficeCreationForm': {
+		// 		read: true,
+		// 		write: true,
+		// 	},
+	},
 });
 
 export const auth = {
@@ -140,173 +307,7 @@ export const auth = {
 				// This has to be synchronous for routing permissions
 				response = await API.graphql(graphqlOperation(me));
 				const userProfile = response.data.me;
-				// Todo: Remove when backend is correct
-				userProfile.permissions = {
-					'Home': {
-						read: true,
-						write: true,
-					},
-					'VehiclePricing': {
-						read: true,
-						write: true,
-					},
-					'IndustrialLiabilityPricing': {
-						read: true,
-						write: true,
-					},
-					'FirePricing': {
-						read: true,
-						write: true,
-					},
-					'LifePricing': {
-						read: true,
-						write: true,
-					},
-					'ContractsFile': {
-						read: true,
-						write: true,
-					},
-					'UncollectedContracts': {
-						read: true,
-						write: true,
-					},
-					'CollectedContracts': {
-						read: true,
-						write: true,
-					},
-					'ContractAdditionalActs': {
-						read: true,
-						write: true,
-					},
-					'GreenCardContracts': {
-						read: true,
-						write: true,
-					},
-					'UnclaimedContracts': {
-						read: true,
-						write: true,
-					},
-					'InvalidContracts': {
-						read: true,
-						write: true,
-					},
-					'NewContract': {
-						read: true,
-						write: true,
-					},
-					'ProcessingDueDateRegister': {
-						read: true,
-						write: true,
-					},
-					'ProcessingDuePayment': {
-						read: true,
-						write: true,
-					},
-					'ProcessingPaid': {
-						read: true,
-						write: true,
-					},
-					'ProcessingLosses': {
-						read: true,
-						write: true,
-					},
-					'AccountingReceipts': {
-						read: true,
-						write: true,
-					},
-					'AccountingRegisters': {
-						read: true,
-						write: true,
-					},
-					'AccountingTodaysIncome': {
-						read: true,
-						write: true,
-					},
-					'AccountingCommissionsUncollected': {
-						read: true,
-						write: true,
-					},
-					'AccountingCommissionsCollected': {
-						read: true,
-						write: true,
-					},
-					'AccountingMutualAccount': {
-						read: true,
-						write: true,
-					},
-					'SupplierContractors': {
-						read: true,
-						write: true,
-					},
-					'ContractorsExternalContractors': {
-						read: true,
-						write: true,
-					},
-					'VehicleCards': {
-						read: true,
-						write: true,
-					},
-					'VehicleCardsDetails': {
-						read: true,
-						write: true,
-					},
-					'CustomerCards': {
-						read: true,
-						write: true,
-					},
-					'Library': {
-						read: true,
-						write: true,
-					},
-					'Trade': {
-						read: true,
-						write: true,
-					},
-					'UserProfile': {
-						read: true,
-						write: true,
-					},
-					'PlatformData': {
-						read: true,
-						write: true,
-					},
-					'DevTools': {
-						read: true,
-						write: true,
-					},
-					'ContractApproval': {
-						read: true,
-						write: true,
-					},
-					'Payment': {
-						read: true,
-						write: true,
-					},
-					'Bank': {
-						read: true,
-						write: true,
-					},
-					'Collaboration': {
-						read: true,
-						write: true,
-					},
-					'Notifications': {
-						read: true,
-						write: true,
-					},
-					'NotificationDetails': {
-						read: true,
-						write: true,
-					},
-					'Wallet': {
-						read: true,
-						write: true,
-					},
-					'TradeCreationForm': {
-						read: true,
-						write: true,
-					},
-				};
+
 				commit('setUserProfile', userProfile);
 
 				return Promise.resolve(response);
@@ -340,9 +341,9 @@ export const auth = {
 					'profilePicture',
 					'preferences',
 					'locale',
-					'files'
+					'files',
 				];
-				for(const key of fields) {
+				for (const key of fields) {
 					const value = getters['userProfile'][key];
 					if (value) {
 						userProfile[key] = value;
@@ -365,17 +366,18 @@ export const auth = {
 	},
 	getters: {
 		cognitoUser: (state) => state.cognitoUser,
-		userGroups: (state) => state.cognitoUser.signInUserSession.idToken.payload['cognito:groups'] || [],
+		userGroups: (state) => state.cognitoUser?.signInUserSession.idToken.payload['cognito:groups'] || [],
 		isAdmin: (state, getters) => getters.userGroups.includes('admin'),
 		role: (state) => state.userProfile.role,
 		user: (state) => state.user,
 		userId: (state) => state.user.id,
 		username: (state) => state.user.username,
-		fullName: (state) => state.userProfile.name + ' ' + state.userProfile.family_name,
+		fullName: (state) => (state.userProfile.name || '') + ' ' + (state.userProfile.family_name || ''),
 		email: (state) => state.user.attributes.email,
 		userAttributes: (state) => state.user.attributes,
 		userProfile: (state) => state.userProfile,
-		permissions: (state) => state.userProfile.permissions,
+		userModelPermissions: (state) => state.userModelPermissions,
+		userPagePermissions: (state) => state.userPagePermissions,
 		userPreferences: (state) => JSON.parse(state.userProfile.preferences),
 	},
 };
