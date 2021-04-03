@@ -24,6 +24,7 @@ export const me = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       preferences
       locale
@@ -32,6 +33,7 @@ export const me = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       createdAt
       updatedAt
@@ -386,6 +388,7 @@ export const getOffice = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       insuranceCompanies {
         name
@@ -591,6 +594,7 @@ export const getUserProfile = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       preferences
       locale
@@ -599,6 +603,7 @@ export const getUserProfile = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       createdAt
       updatedAt
@@ -758,6 +763,7 @@ export const getVehicle = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       createdAt
       updatedAt
@@ -1124,6 +1130,7 @@ export const getCustomer = /* GraphQL */ `
         idToken
         filePath
         filename
+        contentType
       }
       driversLicense {
         LicenseID

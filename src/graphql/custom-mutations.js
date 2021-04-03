@@ -311,6 +311,7 @@ export const deleteCustomerForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			driversLicense {
 				LicenseID
@@ -417,6 +418,7 @@ export const deleteVehicleForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt
@@ -535,6 +537,7 @@ export const updateCustomerForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			driversLicense {
 				LicenseID
@@ -639,6 +642,7 @@ export const updateOfficeDetails = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt
@@ -671,6 +675,7 @@ export const updateUserProfileDetails = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			preferences
 			locale
@@ -679,6 +684,7 @@ export const updateUserProfileDetails = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt
@@ -720,6 +726,7 @@ export const updateVehicleForOffice = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt

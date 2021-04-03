@@ -312,6 +312,7 @@ export const me = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			preferences
 			locale
@@ -320,6 +321,7 @@ export const me = /* GraphQL */ `
 				idToken
 				filePath
 				filename
+				contentType
 			}
 			createdAt
 			updatedAt
