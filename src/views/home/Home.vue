@@ -2,6 +2,7 @@
 	<ion-grid fixed>
 		<create-office-card v-if="$store.getters['auth/role'] === 'UNKNOWN'" class="ion-text-center ion-margin-top"/>
 		<template v-else>
+			<newsfeed-card/>
 			<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 			<!--	<base-layout :page-title="$t('views.homePage.pageTitle')">
 					<div style="text-align: center; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);">
@@ -98,7 +99,7 @@
 	import createOfficeCard from '@/views/home/createOfficeCard';
 	// import calendarCard from '@/views/home/calendarCard';
 	// import performanceCard from '@/views/home/performanceCard';
-	// import newsfeedCard from '@/views/home/newsfeedCard';
+	import newsfeedCard from '@/views/home/newsfeedCard';
 
 	export default {
 		name: 'Home',
@@ -106,7 +107,7 @@
 			createOfficeCard,
 			// calendarCard,
 			// performanceCard,
-			// newsfeedCard,
+			newsfeedCard,
 		},
 		mounted() {
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.homePage.pageTitle'));
