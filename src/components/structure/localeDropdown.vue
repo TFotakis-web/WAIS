@@ -1,5 +1,5 @@
 <template>
-	<ion-item>
+	<ion-item lines="none">
 		<ion-icon :icon="$ionicons.languageOutline" slot="start" class="ion-align-self-center"/>
 		<ion-label>{{ $t('components.localeDropdown.language') }}</ion-label>
 		<ion-select :ok-text="$t('actions.ok')" :cancel-text="$t('actions.cancel')" interface="popover" :ionChange="$i18n.$loadLanguageAsync(selectedLocale)" v-model="selectedLocale">
