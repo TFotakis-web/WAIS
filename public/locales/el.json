@@ -105,7 +105,13 @@
       "thisKeyIsAlreadyInUse": "Αυτό το κλειδί χρησιμοποιείται ήδη."
     },
     "homePage": {
-      "pageTitle": "Αρχική σελίδα"
+      "pageTitle": "Αρχική σελίδα",
+      "createOfficeCard": {
+        "youHaveNoConnectedOffices": "Δεν έχετε κάποιο γραφείο συνδεμένο με τον λογαριασμό σας.",
+        "createOne": "Δημιουργήστε ένα",
+        "orCheckYour": "ή ελέγξτε τις",
+        "forInvitations": "για προσκλήσεις."
+      }
     },
     "Office": {
       "pageTitle": "Επωνυμία",

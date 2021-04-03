@@ -105,7 +105,13 @@
       "thisKeyIsAlreadyInUse": "This key is already in use."
     },
     "homePage": {
-      "pageTitle": "Home page"
+      "pageTitle": "Home page",
+      "createOfficeCard": {
+        "youHaveNoConnectedOffices": "You have no connected offices.",
+        "createOne": "Create one",
+        "orCheckYour": "or check your",
+        "forInvitations": "for invitations."
+      }
     },
     "Office": {
       "pageTitle": "Office",
