@@ -1,23 +1,21 @@
 <template>
-	<mdb-card cascade narrow>
-		<mdb-view cascade class="gradient-card-header blue">
-			<h5 class="mb-0">News Feed</h5>
-		</mdb-view>
-		<mdb-card-body>
-			<mdb-list-group :style="{'min-height': maxContentHeight + 'px', 'max-height': maxContentHeight + 'px'}" style="overflow-y: scroll">
-				<mdb-list-group-item v-for="item in news" :key="'newsItems' + item.id.toString()">
-					<div>
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-2 h5">{{ item.heading }}</h5>
-							<small>{{ item.releaseDate }}</small>
-						</div>
-						<p class="mb-2">{{ item.middleText }}</p>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>News Feed</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list :style="{'min-height': maxContentHeight + 'px', 'max-height': maxContentHeight + 'px'}" style="overflow-y: scroll">
+				<ion-item v-for="item in news" :key="'newsItems' + item.id.toString()">
+					<ion-label class="ion-text-wrap ion-margin-vertical">
+						<h3>{{ item.heading }}</h3>
+						<small>{{ item.releaseDate }}</small>
+						<p>{{ item.middleText }}</p>
 						<small>{{ item.lowerText }}</small>
-					</div>
-				</mdb-list-group-item>
-			</mdb-list-group>
-		</mdb-card-body>
-	</mdb-card>
+					</ion-label>
+				</ion-item>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
 </template>
 <script>
 	export default {
@@ -55,6 +53,20 @@
 					},
 					{
 						id: 2,
+						heading: 'List group item heading',
+						releaseDate: '3 days ago',
+						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
+						lowerText: 'Donec id elit non mi porta.',
+					},
+					{
+						id: 3,
+						heading: 'List group item heading',
+						releaseDate: '3 days ago',
+						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
+						lowerText: 'Donec id elit non mi porta.',
+					},
+					{
+						id: 4,
 						heading: 'List group item heading',
 						releaseDate: '3 days ago',
 						middleText: 'Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.',
