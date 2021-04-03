@@ -69,4 +69,13 @@
 	.no-arrows input[type=number] {
 		-moz-appearance:textfield; /* Firefox */
 	}
+
+	ion-menu ion-content ion-list {
+		--border-width: 1px;
+		border-bottom: var(--border-width) solid var(--ion-color-step-150, #d7d8da) !important;
+	}
+	.list-lines-none,
+	.list-md-lines-none {
+		--border-width: 0;
+	}
 </style>
