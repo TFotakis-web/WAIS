@@ -427,7 +427,7 @@ Outputs:
   AppClientIDWeb:
     Value:
       Ref: UserPoolClientWeb
-    Description: The user pool app client id for web
+    Description: The user pool app client id for web.
   AppClientID:
     Value:
       Ref: UserPoolClient
