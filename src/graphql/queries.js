@@ -2130,6 +2130,34 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
     }
   }
 `;
+export const listRequestsByType = /* GraphQL */ `
+  query ListRequestsByType(
+    $type: RequestType
+    $sortDirection: ModelSortDirection
+    $filter: ModelRequestsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRequestsByType(
+      type: $type
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        senderUsername
+        senderEmail
+        receiverEmail
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUserCalendarEvent = /* GraphQL */ `
   query GetUserCalendarEvent($id: ID!) {
     getUserCalendarEvent(id: $id) {

@@ -57,7 +57,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ username: username, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
+			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getRequestsFromUser',
 		)
@@ -119,7 +119,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ email: email, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
+			{email: email, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getRequestsForUser',
 		)
@@ -185,7 +185,7 @@ module.exports = {
 				}
 			}
 		`
-		const retrieveRequestResponse = await gqlUtil.execute({ filter: { id: { eq: id } } }, query1, 'getRequestById')
+		const retrieveRequestResponse = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
 		const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
 		if (requestObject == null) {
 			throw new Error('Request with provided ID was not found.')
@@ -232,7 +232,7 @@ module.exports = {
 							}
 						}
 					`
-					const createOfficeResponse = await gqlUtil.execute({ input: createOfficeInput }, mutation1, 'createOffice')
+					const createOfficeResponse = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
 					const createdOfficeId = createOfficeResponse.data.createOffice.id
 					if (!createdOfficeId) {
 						throw new Error('Failed to create new office.')
@@ -256,7 +256,7 @@ module.exports = {
 							}
 						}
 					`
-					const createTUCResponse = await gqlUtil.execute({ input: createTUCInput }, mutation2, 'createOfficeUserConnection')
+					const createTUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
 					const createdTUCId = createTUCResponse.data.createOfficeUserConnection.id
 					if (!createdTUCId) {
 						throw new Error('Failed to create new Office-User connection.')
@@ -274,7 +274,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'MANAGER',
 					}
-					const response = await gqlUtil.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const response = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
 					const resultUP = response.data.updateUserProfile.id
 					if (!resultUP) {
 						throw new Error('Failed to update Manager`s UserProfile role.')
@@ -371,7 +371,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'CONTRACTOR',
 					}
-					const response = await gqlUtil.execute({ input: upInput }, mutation, 'updateUserProfileDetails')
+					const response = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
 					const resultUP = response.data.updateUserProfile.id
 					if (!resultUP) {
 						throw new Error('Failed to update Contractor`s UserProfile role.')
@@ -394,7 +394,7 @@ module.exports = {
 				}
 			}
 		`
-		const delResponse = await gqlUtil.execute({ input: { id: id } }, mutation0, 'deleteResolvedRequest')
+		const delResponse = await gqlUtil.execute({input: {id: id}}, mutation0, 'deleteResolvedRequest')
 		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
 
 		console.log('RequestAPI.resolveRequest output: ' + JSON.stringify(result))
@@ -415,7 +415,7 @@ module.exports = {
 			senderEmail: email,
 			type: 'INVITE_EMPLOYEE_TO_OFFICE',
 			receiverEmail: input.email,
-			payload: { inviteEmployeeToOfficePayload: input },
+			payload: {inviteEmployeeToOfficePayload: input},
 		}
 		const mutation = /* GraphQL */ `
 			mutation createRequest($input: CreateRequestsInput!) {
@@ -426,7 +426,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
 		const responsedData = response.data.createRequests
 		const result = requestInput
 		result.id = responsedData.id
@@ -447,7 +447,7 @@ module.exports = {
 			senderEmail: email,
 			type: 'INVITE_CONTRACTOR_TO_OFFICE',
 			receiverEmail: input.email,
-			payload: { inviteContractorToOfficePayload: input },
+			payload: {inviteContractorToOfficePayload: input},
 		}
 		const mutation = /* GraphQL */ `
 			mutation createRequest($input: CreateRequestsInput!) {
@@ -458,7 +458,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
 		const responsedData = response.data.createRequests
 		const result = requestInput
 		result.id = responsedData.id
@@ -477,11 +477,11 @@ module.exports = {
 			senderUsername: username,
 			senderEmail: email,
 			type: 'CREATE_OFFICE',
-			receiverEmail: 'admin1@wais.com',
-			payload: { createOfficePayload: input },
+			receiverEmail: 'admin@wais.com',
+			payload: {createOfficePayload: input},
 		}
 
-		if (requestInput.payload.createOfficePayload == null || requestInput.payload.createOfficePayload == '{}') {
+		if (requestInput.payload.createOfficePayload == null || requestInput.payload.createOfficePayload === '{}') {
 			throw new Error('Invalid payload.')
 		}
 
@@ -494,7 +494,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
 		const responsedData = response.data.createRequests
 		const result = requestInput
 		result.id = responsedData.id
@@ -513,7 +513,7 @@ module.exports = {
 			senderEmail: email,
 			type: 'CREATE_OFFICE_CONNECTION',
 			receiverEmail: input.manager_email,
-			payload: { createOfficeConnectionPayload: input },
+			payload: {createOfficeConnectionPayload: input},
 		}
 		const mutation = /* GraphQL */ `
 			mutation createRequest($input: CreateRequestsInput!) {
@@ -524,7 +524,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: requestInput }, mutation, 'createRequest')
+		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
 		const responsedData = response.data.createRequests
 		const result = requestInput
 		result.id = responsedData.id
@@ -541,7 +541,7 @@ module.exports = {
 		}
 
 		const expanded_condition = {
-			and: [condition || { senderUsername: { ne: '' } }, { senderUsername: { eq: username } }, { senderEmail: { eq: email } }],
+			and: [condition || {senderUsername: {ne: ''}}, {senderUsername: {eq: username}}, {senderEmail: {eq: email}}],
 		}
 		const mutation = /* GraphQL */ `
 			mutation deleteRequestsSentByMe($input: DeleteRequestsInput!, $condition: ModelRequestsConditionInput) {
@@ -550,7 +550,10 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'deleteRequestsSentByMe')
+		const response = await gqlUtil.execute({
+			input: input,
+			condition: expanded_condition
+		}, mutation, 'deleteRequestsSentByMe')
 		const result = response.data.deleteRequests
 		console.log('requestAPI.deleteRequestsSentByMe output: ' + JSON.stringify(result))
 		return result

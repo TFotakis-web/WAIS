@@ -266,6 +266,7 @@ type Requests
     @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
     @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
     @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
+    @key(name: "byType", fields: ["type"], queryField: "listRequestsByType")
     @auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     senderUsername: String!

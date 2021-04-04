@@ -51,7 +51,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ username: username, filter: filter || { id: { ne: '' } }, limit: limit || 100, nextToken: nextToken },
+			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query,
 			'getOfficeDetailsAndPermissionsByUsername',
 		)
@@ -63,9 +63,9 @@ module.exports = {
 	getEmployeeTypeUserProfilesForManagerUsername: async (managerUsername, empType, filter, limit, nextToken) => {
 		console.log(
 			'officeAPI.getEmployeeTypeUserProfilesForManagerUsername input: ' +
-				[managerUsername, empType, JSON.stringify(filter), limit, nextToken],
+			[managerUsername, empType, JSON.stringify(filter), limit, nextToken],
 		)
-		let emp_filter = { and: [filter || { id: { ne: '' } }, { employeeType: { eq: empType } }] }
+		let emp_filter = {and: [filter || {id: {ne: ''}}, {employeeType: {eq: empType}}]}
 		const query = /* GraphQL */ `
 			query getEmployeeTypeUserProfilesForManagerUsername(
 				$ownerUsername: String!
@@ -106,7 +106,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken },
+			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getEmployeeTypeUserProfilesForManagerUsername',
 		)
@@ -166,7 +166,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
+			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getCustomersForOfficeId',
 		)
@@ -252,7 +252,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ officeId: officeId, filter: filter || { id: { ne: '' } }, limit: limit || 50, nextToken: nextToken },
+			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getContractsForOfficeId',
 		)
@@ -272,7 +272,7 @@ module.exports = {
 		if (!officeId) {
 			throw new Error('Invalid office ID')
 		}
-		const user_filter = { and: [filter || { id: { ne: '' } }, { fromId: { eq: officeId } }] }
+		const user_filter = {and: [filter || {id: {ne: ''}}, {fromId: {eq: officeId}}]}
 		const query = /* GraphQL */ `
 			query getPartnerOfficeConnections(
 				$officeId: String!
@@ -303,7 +303,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ officeId: officeId, filter: user_filter, limit: limit || 50, nextToken: nextToken },
+			{officeId: officeId, filter: user_filter, limit: limit || 50, nextToken: nextToken},
 			query,
 			'getPartnerOfficeConnections',
 		)
@@ -343,7 +343,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ username: username }, query, 'getOfficeDetailsAndPermissionsByUsername')
+		const response = await gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 		const companies = []
 		const result = response.data.listUserProfileByUsername.items.forEach((oc) => {
 			oc.items.forEach((office) => {
@@ -386,9 +386,9 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ officeId: office.id, limit: 1000 }, query, 'getPartnerOfficeConnections')
+		const response = await gqlUtil.execute({officeId: office.id, limit: 1000}, query, 'getPartnerOfficeConnections')
 		response.data.listOfficeAccessConnections.items.forEach((partnerOffice) => companies.push(partnerOffice))
-		const result = { items: companies }
+		const result = {items: companies}
 		console.log('officeAPI.getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
 		return result
 	},
@@ -437,7 +437,7 @@ module.exports = {
 		}
 
 		//Expand the condition to require that the caller is also the manager of that office
-		const expanded_condition = { and: [condition || { ownerUsername: { ne: '' } }, { ownerUsername: { eq: username } }] }
+		const expanded_condition = {and: [condition || {ownerUsername: {ne: ''}}, {ownerUsername: {eq: username}}]}
 		const mutation = /* GraphQL */ `
 			mutation updateOfficeDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
 				updateOffice(input: $input, condition: $condition) {
@@ -446,7 +446,10 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute({ input: sanitized_input, condition: expanded_condition }, mutation, 'updateOfficeDetails')
+		const response = await gqlUtil.execute({
+			input: sanitized_input,
+			condition: expanded_condition
+		}, mutation, 'updateOfficeDetails')
 		const result = response.data.updateOffice
 		console.log('officeAPI.updateOfficeDetails output: ' + JSON.stringify(result))
 		return result
@@ -468,7 +471,7 @@ module.exports = {
 		}
 
 		//Expand the condition to require that the caller is also the owner of the profile
-		const expanded_condition = { and: [condition || { officeId: { ne: '' } }, { officeId: { eq: office_id } }] }
+		const expanded_condition = {and: [condition || {officeId: {ne: ''}}, {officeId: {eq: office_id}}]}
 		const mutation = /* GraphQL */ `
 			mutation createVehicleForOffice($input: CreateVehicleInput!, $condition: ModelVehicleConditionInput) {
 				createVehicle(input: $input, condition: $condition) {
@@ -477,7 +480,10 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'createVehicleForOffice')
+		const response = await gqlUtil.execute({
+			input: input,
+			condition: expanded_condition
+		}, mutation, 'createVehicleForOffice')
 		const result = response.data.createVehicle
 		console.log('createVehicleForOffice output: ' + JSON.stringify(result))
 		return result
@@ -534,7 +540,7 @@ module.exports = {
 		}
 
 		//Expand the condition to require that the caller is also the owner of the profile
-		const expanded_condition = { and: [condition || { officeId: { ne: '' } }, { officeId: { eq: office_id } }] }
+		const expanded_condition = {and: [condition || {officeId: {ne: ''}}, {officeId: {eq: office_id}}]}
 		const mutation = /* GraphQL */ `
 			mutation updateVehicleForOffice($input: UpdateVehicleInput!, $condition: ModelVehicleConditionInput) {
 				updateVehicle(input: $input, condition: $condition) {
@@ -544,7 +550,7 @@ module.exports = {
 		`
 
 		const response = await gqlUtil.execute(
-			{ input: sanitized_input, condition: expanded_condition },
+			{input: sanitized_input, condition: expanded_condition},
 			mutation,
 			'updateVehicleForOffice',
 		)

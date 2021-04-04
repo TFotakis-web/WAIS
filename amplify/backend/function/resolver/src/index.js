@@ -29,7 +29,7 @@ const resolvers = {
 			return event.arguments.msg
 		},
 		me: async (event) => {
-			return await api.user({ username: event.identity.claims['cognito:username'] })
+			return await api.user({username: event.identity.claims['cognito:username']})
 		},
 		getOfficesIWorkIn: async (event) => {
 			return await api.getOfficesOfUser({
@@ -40,7 +40,7 @@ const resolvers = {
 			})
 		},
 		getMyUserCalendarEvents: async (event) => {
-			return await api.getCallendarEventsOfUser({
+			return await api.getCalendarEventsOfUser({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -59,6 +59,7 @@ const resolvers = {
 			return await api.getRequestsForUser({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
+				groups: event.identity.groups,
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
 				nextToken: event.arguments.nextToken,
@@ -234,7 +235,7 @@ const resolvers = {
 				username: event.identity.claims['cognito:username'],
 				groups: event.identity.groups,
 				id: event.arguments.requestId,
-				decission: event.arguments.decission,
+				decision: event.arguments.decision,
 				payload: event.arguments.payload,
 			})
 		},
@@ -372,10 +373,10 @@ exports.handler = async (event) => {
 	if (typeHandler) {
 		const resolver = typeHandler[event.fieldName]
 		if (resolver) {
+			if (!event.identity.claims) {
+				throw new Error('Invalid credentials.')
+			}
 			try {
-				if (!event.identity.claims) {
-					throw new Error('Invalid credentials.')
-				}
 				return await resolver(event)
 			} catch (err) {
 				console.log('Resolver error is ' + JSON.stringify(err))

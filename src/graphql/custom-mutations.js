@@ -428,12 +428,12 @@ export const deleteVehicleForOffice = /* GraphQL */ `
 export const resolveRequest = /* GraphQL */ `
 	mutation ResolveRequest(
 		$requestId: ID!
-		$decission: RequestDecision!
+		$decision: RequestDecision!
 		$payload: ResolveRequestPayloadInput!
 	) {
 		resolveRequest(
 			requestId: $requestId
-			decission: $decission
+			decision: $decision
 			payload: $payload
 		)
 	}

@@ -27,14 +27,14 @@ module.exports = {
 	addEmployeeToOffice: async (office, userProfId, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
 		console.log(
 			'Attempting to create new employee to office with arguments:' +
-				[
-					JSON.stringify(office),
-					empUsername,
-					connId,
-					userId,
-					JSON.stringify(empModelPermissions),
-					JSON.stringify(empPagePermissions),
-				],
+			[
+				JSON.stringify(office),
+				empUsername,
+				connId,
+				userId,
+				JSON.stringify(empModelPermissions),
+				JSON.stringify(empPagePermissions),
+			],
 		)
 		const now = new Date().toISOString() //TODO configure TimeZone
 		const resp = await ddb
@@ -197,13 +197,13 @@ module.exports = {
 						{
 							Delete: {
 								TableName: 'OfficeUserConnection' + ddbSuffix,
-								Key: { id: officeUserConId },
+								Key: {id: officeUserConId},
 							},
 						},
 						{
 							Update: {
 								TableName: 'Office' + ddbSuffix,
-								Key: { id: officeId },
+								Key: {id: officeId},
 								UpdateExpression: 'SET #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit + :inc',
 								ExpressionAttributeNames: {
 									'#updatedAt': 'updatedAt',
@@ -231,7 +231,7 @@ module.exports = {
 			const resp = await ddb
 				.get({
 					TableName: 'Requests' + ddbSuffix,
-					Key: { id: id },
+					Key: {id: id},
 				})
 				.promise()
 			console.log('getRequestById result: ' + JSON.stringify(resp))
@@ -251,8 +251,8 @@ module.exports = {
 				.query({
 					TableName: 'UserProfile' + ddbSuffix,
 					IndexName: 'byEmail',
-					ExpressionAttributeNames: { '#emailField': 'email' },
-					ExpressionAttributeValues: { ':emailValue': email },
+					ExpressionAttributeNames: {'#emailField': 'email'},
+					ExpressionAttributeValues: {':emailValue': email},
 					KeyConditionExpression: '#emailField = :emailValue',
 				})
 				.promise()
@@ -273,8 +273,8 @@ module.exports = {
 				.query({
 					TableName: 'UserProfile' + ddbSuffix,
 					IndexName: 'byUsername',
-					ExpressionAttributeNames: { '#usernameField': 'username' },
-					ExpressionAttributeValues: { ':usernameValue': username },
+					ExpressionAttributeNames: {'#usernameField': 'username'},
+					ExpressionAttributeValues: {':usernameValue': username},
 					KeyConditionExpression: '#usernameField = :usernameValue',
 				})
 				.promise()
@@ -296,8 +296,8 @@ module.exports = {
 					TableName: 'UserProfile' + ddbSuffix,
 					IndexName: 'byEmail',
 					ConsistentRead: true,
-					ExpressionAttributeNames: { '#emailField': 'email' },
-					ExpressionAttributeValues: { ':emailValue': email },
+					ExpressionAttributeNames: {'#emailField': 'email'},
+					ExpressionAttributeValues: {':emailValue': email},
 					KeyConditionExpression: '#emailField = :emailValue',
 				})
 				.promise()
@@ -318,9 +318,9 @@ module.exports = {
 				.query({
 					TableName: 'Office' + ddbSuffix,
 					IndexName: 'byOwnerUsername',
-					ExpressionAttributeNames: { '#ownerUsernameFieldName': 'ownerUsername' },
+					ExpressionAttributeNames: {'#ownerUsernameFieldName': 'ownerUsername'},
 					KeyConditionExpression: '#ownerUsernameFieldName = :inputUsername',
-					ExpressionAttributeValues: { ':inputUsername': username },
+					ExpressionAttributeValues: {':inputUsername': username},
 				})
 				.promise()
 			console.log('getOfficeByOwnerUsername result: ' + JSON.stringify(resp))
@@ -354,7 +354,7 @@ module.exports = {
 			const resp = await ddb
 				.Delete({
 					TableName: 'Office' + ddbSuffix,
-					Key: { id: id },
+					Key: {id: id},
 				})
 				.promise()
 			console.log("Result of 'deleteRequestById': " + JSON.stringify(resp))

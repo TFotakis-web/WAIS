@@ -115,7 +115,7 @@ type Mutation {
     deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
-    resolveRequest(requestId: ID!, decission: RequestDecision!, payload: ResolveRequestPayloadInput!): ID
+    resolveRequest(requestId: ID!, decision: RequestDecision!, payload: ResolveRequestPayloadInput!): ID
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 

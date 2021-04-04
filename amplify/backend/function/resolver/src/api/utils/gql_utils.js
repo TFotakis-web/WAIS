@@ -32,7 +32,7 @@ module.exports = {
 		signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
 
 		return await new Promise((resolve, reject) => {
-			const httpRequest = https.request({ ...req, host: ENDPOINT }, (result) => {
+			const httpRequest = https.request({...req, host: ENDPOINT}, (result) => {
 				result.on('data', (data) => {
 					const result = JSON.parse(data.toString())
 					console.log('GQL result: ' + JSON.stringify(result))

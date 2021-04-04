@@ -48,7 +48,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ username: username }, query, 'getUserProfileByUsername')
+		const response = await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
 		let result = response.data.listUserProfileByUsername
 		if (result.items.length > 0) {
 			result = result.items[0]
@@ -102,7 +102,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ email: email }, query, 'getUserProfileByEmail')
+		const response = await gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
 		let result = response.data.listUserProfileByEmail
 		if (result.items.length > 0) {
 			result = result.items[0]
@@ -126,7 +126,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ username: username }, query, 'getUserRoleByUsername')
+		const response = await gqlUtil.execute({username: username}, query, 'getUserRoleByUsername')
 		let result = response.data.listUserProfileByUsername.items
 		if (result.items.length > 0) {
 			result = result.items[0]
@@ -153,7 +153,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ username: username, filter: { and: [{ officeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+			{username: username, filter: {and: [{officeId: {eq: officeId}}, {username: {eq: username}}]}, limit: 100},
 			query,
 			'getUserModelPermissionsForOffice',
 		)
@@ -183,7 +183,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ username: username, filter: { and: [{ officeId: { eq: officeId } }, { username: { eq: username } }] }, limit: 100 },
+			{username: username, filter: {and: [{officeId: {eq: officeId}}, {username: {eq: username}}]}, limit: 100},
 			query,
 			'getUserPagePermissionsForOffice',
 		)
@@ -212,7 +212,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ username: username }, query, 'listUserProfileByUsername')
+		const response = await gqlUtil.execute({username: username}, query, 'listUserProfileByUsername')
 		const result = response.data.listUserProfileByUsername.items || []
 		const retVal = result.length == 0
 		console.log('userAPI.checkIfUserIsUnemployed output: ' + retVal)
@@ -254,7 +254,7 @@ module.exports = {
 			}, {})
 
 		//Expand the condition to require that the caller is also the owner of the profile
-		const expanded_condition = { and: [condition || { username: { ne: '' } }, { username: { eq: username } }] }
+		const expanded_condition = {and: [condition || {username: {ne: ''}}, {username: {eq: username}}]}
 		const mutation = /* GraphQL */ `
 			mutation updateUserProfileDetails($input: UpdateUserProfileInput!, $condition: ModelUserProfileConditionInput) {
 				updateUserProfile(input: $input, condition: $condition) {
@@ -282,7 +282,7 @@ module.exports = {
 		`
 
 		const response = await gqlUtil.execute(
-			{ input: sanitized_input, condition: expanded_condition },
+			{input: sanitized_input, condition: expanded_condition},
 			mutation,
 			'updateUserProfileDetails',
 		)
@@ -298,14 +298,14 @@ module.exports = {
 		}
 
 		//Get the office
-		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
+		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')
 		}
 
-		const input = { id: tucItem.id, modelPermissions: modelPermissions }
+		const input = {id: tucItem.id, modelPermissions: modelPermissions}
 
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
@@ -314,7 +314,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
+		const response = await gqlUtil.execute({input: input}, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('userAPI.updateEmployeeModelPermissionsForOffice output: ' + JSON.stringify(result))
 		return result
@@ -327,14 +327,14 @@ module.exports = {
 		}
 
 		//Get the office
-		const tuc_filter = { and: [{ officeId: { eq: officeId } }, { username: { eq: caller_username } }] }
+		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			throw new Error('Invalid office ID or caller not an owner of that office.')
 		}
 
-		const input = { id: tucItem.id, pagePermissions: pagePermissions }
+		const input = {id: tucItem.id, pagePermissions: pagePermissions}
 
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
@@ -343,7 +343,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: input }, mutation1, 'updateOfficeUserConnection')
+		const response = await gqlUtil.execute({input: input}, mutation1, 'updateOfficeUserConnection')
 		const result = response.data.updateUserCalendarEvent
 		console.log('userAPI.updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
 		return result

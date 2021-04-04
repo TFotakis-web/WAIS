@@ -28,13 +28,13 @@ module.exports = {
 		console.log('getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 		return result
 	},
-	getCallendarEventsOfUser: async (args) => {
-		console.log('getCallendarEventsForUser input: ' + JSON.stringify(args))
+	getCalendarEventsOfUser: async (args) => {
+		console.log('getCalendarEventsForUser input: ' + JSON.stringify(args))
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const query = /* GraphQL */ `
-			query getCallendarEventsForUser(
+			query getCalendarEventsForUser(
 				$username: String!
 				$filter: ModelUserCalendarEventFilterInput
 				$limit: Int
@@ -53,12 +53,17 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ username: args.username, filter: args.filter || { id: { ne: '' } }, limit: args.limit || 50, nextToken: args.nextToken },
+			{
+				username: args.username,
+				filter: args.filter || {id: {ne: ''}},
+				limit: args.limit || 50,
+				nextToken: args.nextToken
+			},
 			query,
-			'getCallendarEventsForUser',
+			'getCalendarEventsForUser',
 		)
 		const result = response.data.listUserCalendarEventsByUsername
-		console.log('getCallendarEventsForUser output: ' + JSON.stringify(result))
+		console.log('getCalendarEventsForUser output: ' + JSON.stringify(result))
 		return result
 	},
 	getRequestsFromUser: async (args) => {
@@ -75,7 +80,13 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.getRequestsForUser(args.username, args.email, args.filter, args.limit, args.nextToken)
+		//Admin users just need the Create Office requests
+		let result
+		if (args.groups != null && args.groups.indexOf('admin') > -1) {
+			result = await admin.getCreateOfficeRequests(args.filter, args.limit, args.nextToken)
+		} else {
+			result = await requestAPI.getRequestsForUser(args.username, args.email, args.filter, args.limit, args.nextToken)
+		}
 		console.log('getRequestsForUser output: ' + JSON.stringify(result))
 		return result
 	},
@@ -84,7 +95,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.resolveRequest(args.username, args.groups, args.id, args.decission, args.payload)
+		const result = await requestAPI.resolveRequest(args.username, args.groups, args.id, args.decision, args.payload)
 		console.log('resolveRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -358,7 +369,10 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute({ input: input, condition: condition }, mutation, 'createMyUserCalendarEvent')
+		const response = await gqlUtil.execute({
+			input: input,
+			condition: condition
+		}, mutation, 'createMyUserCalendarEvent')
 		const result = response.data.createUserCalendarEvent
 		console.log('createMyUserCalendarEvent output: ' + JSON.stringify(result))
 		return result
@@ -379,7 +393,7 @@ module.exports = {
 				obj[key] = input[key]
 				return obj
 			}, {})
-		const expanded_condition = { and: [condition || { username: { ne: '' } }, { username: { eq: username } }] }
+		const expanded_condition = {and: [condition || {username: {ne: ''}}, {username: {eq: username}}]}
 		const mutation = /* GraphQL */ `
 			mutation updateMyUserCalendarEvents($input: UpdateUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
 				updateUserCalendarEvent(input: $input, condition: $condition) {
@@ -388,7 +402,7 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ input: sanitized_input, condition: expanded_condition },
+			{input: sanitized_input, condition: expanded_condition},
 			mutation,
 			'updateMyUserCalendarEvents',
 		)
@@ -405,7 +419,7 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 
-		const expanded_condition = { and: [condition || { senderUsername: { ne: '' } }, { username: { eq: username } }] }
+		const expanded_condition = {and: [condition || {senderUsername: {ne: ''}}, {username: {eq: username}}]}
 		const mutation = /* GraphQL */ `
 			mutation deleteMyUserCalendarEvents($input: DeleteUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
 				deleteUserCalendarEvent(input: $input, condition: $condition) {
@@ -413,7 +427,10 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({ input: input, condition: expanded_condition }, mutation, 'deleteMyUserCalendarEvents')
+		const response = await gqlUtil.execute({
+			input: input,
+			condition: expanded_condition
+		}, mutation, 'deleteMyUserCalendarEvents')
 		const result = response.data.deleteUserCalendarEvent
 		console.log('deleteMyUserCalendarEvents output: ' + JSON.stringify(result))
 		return result
