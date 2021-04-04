@@ -16,3 +16,12 @@ Resources:
       Handler: index.handler
       CodeUri: C:\Users\gstamatakis\IdeaProjects\wais\amplify\backend\function\asyncactions\src
       Runtime: nodejs12.x
+
+  test1:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 900
+      MemorySize: 1024
+      Handler: index.handler
+      CodeUri: C:\Users\gstamatakis\IdeaProjects\wais\amplify\backend\function\test1\src
+      Runtime: nodejs12.x

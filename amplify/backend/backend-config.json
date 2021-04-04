@@ -115,6 +115,20 @@
           ]
         }
       ]
+    },
+    "test1": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "waisauth",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   },
   "api": {
