@@ -233,6 +233,7 @@ const resolvers = {
 		resolveRequest: async (event) => {
 			return await api.resolveRequest({
 				username: event.identity.claims['cognito:username'],
+				email: event.identity.claims['email'],
 				groups: event.identity.groups,
 				id: event.arguments.requestId,
 				decision: event.arguments.decision,

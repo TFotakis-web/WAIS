@@ -1,3 +1,5 @@
+import {office} from "@/plugins/store/office";
+
 const gqlUtil = require('./utils/gql_utils')
 const ddbAPI = require('./utils/ddb_utils')
 const userQueries = require('./user')
@@ -128,8 +130,8 @@ module.exports = {
 		return result
 	},
 
-	resolveRequest: async (username, groups, id, decision, callerPayload) => {
-		console.log('requestAPI.resolveRequest input: ' + [username, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
+	resolveRequest: async (username, caller_email, groups, id, decision, callerPayload) => {
+		console.log('requestAPI.resolveRequest input: ' + [username, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -198,7 +200,7 @@ module.exports = {
 			throw new Error(`User profile for sender was not found.`)
 		}
 
-		const receiverUserProfile = await userQueries.getUserProfileByEmail(requestObject.email)
+		const receiverUserProfile = await userQueries.getUserProfileByEmail(caller_email)
 		if (receiverUserProfile == null) {
 			throw new Error(`User profile for sender was not found.`)
 		}
@@ -209,10 +211,10 @@ module.exports = {
 		switch (requestObject.type) {
 			case 'CREATE_OFFICE': {
 				if (groups == null || groups.indexOf('admin') === -1) {
-					throw new Error('Admin privilleges are required to resolve this request.')
+					throw new Error('Admin privileges are required to resolve this request.')
 				}
 
-				//TODO make this a DDB Trasaction
+				//TODO make this a DDB Transaction
 				if (decision === 'ACCEPT') {
 					//Create the new Office
 					const createOfficeInput = requestObject.payload.createOfficePayload
@@ -288,21 +290,25 @@ module.exports = {
 				break
 			}
 			case 'CREATE_OFFICE_CONNECTION': {
+				//Ensure that the caller-employee is the receiver of this request
+				if (caller_email !== requestObject.receiverEmail) {
+					throw  new Error('Caller is not the receiver of this request (e-mail mismatch).')
+				}
+
 				if (decision === 'ACCEPT') {
-					//Get the sencer and receiver offices
-					const senderOffice = await module.exports.getOfficeByOwnerUsername(requestObject.senderUsername)
+					//Get the sender and receiver offices
+					const senderOffice = await office.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						throw new Error("Sender's Office not found.")
 					}
-					const receiverOffice = await module.exports.getOfficeByOwnerUsername(receiverUserProfile.username)
+					const receiverOffice = await office.getOfficeByOwnerUsername(receiverUserProfile.username)
 					if (!receiverOffice) {
 						throw new Error("Receiver's Office not found.")
 					}
 
 					//Transaction, add the new connection
 					try {
-						const connId = await ddbAPI.addOfficeConnection(senderOffice, receiverOffice)
-						result = connId
+						result = await ddbAPI.addOfficeConnection(senderOffice, receiverOffice)
 					} catch (err) {
 						throw new Error(
 							'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',
@@ -315,13 +321,17 @@ module.exports = {
 				break
 			}
 			case 'INVITE_EMPLOYEE_TO_OFFICE': {
+				//Ensure that the caller-employee is the receiver of this request
+				if (caller_email !== requestObject.receiverEmail) {
+					throw  new Error('Caller is not the receiver of this request (e-mail mismatch).')
+				}
+
 				if (decision === 'ACCEPT') {
-					//Get the sencer`s office
-					const senderOffice = await module.exports.getOfficeByOwnerUsername(requestObject.senderUsername)
+					//Get the sender`s office
+					const senderOffice = await office.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						throw new Error("Sender's Office not found.")
 					}
-
 					//Ensure that the User has no other connections
 					const isUnemployed = await userQueries.checkIfUserIsUnemployed(receiverUserProfile.username)
 					if (!isUnemployed) {
