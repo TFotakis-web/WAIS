@@ -1,5 +1,3 @@
-import {office} from "@/plugins/store/office";
-
 const gqlUtil = require('./utils/gql_utils')
 const ddbAPI = require('./utils/ddb_utils')
 const userQueries = require('./user')
