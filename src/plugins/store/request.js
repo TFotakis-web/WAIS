@@ -86,7 +86,7 @@ export const request = {
 			try {
 				let response = await API.graphql(graphqlOperation(createInviteContractorToOfficeRequest, { input: payload }));
 				response = response.data.createInviteContractorToOfficeRequest;
-				commit('pushRequestsSentByMe', response)
+				commit('pushRequestsSentByMe', response);
 				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
@@ -97,7 +97,7 @@ export const request = {
 			try {
 				let response = await API.graphql(graphqlOperation(createInviteEmployeeToOfficeRequest, { input: payload }));
 				response = response.data.createInviteEmployeeToOfficeRequest;
-				commit('pushRequestsSentByMe', response)
+				commit('pushRequestsSentByMe', response);
 				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
@@ -108,7 +108,7 @@ export const request = {
 			try {
 				let response = await API.graphql(graphqlOperation(createOfficeConnectionRequest, { input: payload }));
 				response = response.data.createOfficeConnectionRequest;
-				commit('pushRequestsSentByMe', response)
+				commit('pushRequestsSentByMe', response);
 				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
@@ -176,5 +176,13 @@ export const request = {
 	getters: {
 		requestsSentByMe: (state) => state.requestsSentByMe?.items || [],
 		requestsForMe: (state) => state.requestsForMe?.items || [],
+		requestsForNewOfficeSent: (state, getters) => getters.requestsSentByMe.filter((el) => el.type === 'CREATE_OFFICE'),
+		requestsForNewOfficeConnectionSent: (state, getters) => getters.requestsSentByMe.filter((el) => el.type === 'CREATE_OFFICE_CONNECTION'),
+		requestsForInviteEmployeeToOfficeSent: (state, getters) => getters.requestsSentByMe.filter((el) => el.type === 'INVITE_EMPLOYEE_TO_OFFICE'),
+		requestsForInviteContractorToOfficeSent: (state, getters) => getters.requestsSentByMe.filter((el) => el.type === 'INVITE_CONTRACTOR_TO_OFFICE'),
+		requestsForNewOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'CREATE_OFFICE'),
+		requestsForNewOfficeConnectionReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'CREATE_OFFICE_CONNECTION'),
+		requestsForInviteEmployeeToOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'INVITE_EMPLOYEE_TO_OFFICE'),
+		requestsForInviteContractorToOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'INVITE_CONTRACTOR_TO_OFFICE'),
 	},
 };
