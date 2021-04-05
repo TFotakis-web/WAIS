@@ -156,8 +156,7 @@
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.officeCreationForm.createYourOffice'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
 
-			const requestsSentByMe = this.$store.getters['request/requestsSentByMe'];
-			const requestsForNewOffice = requestsSentByMe.filter((el) => el.type === 'CREATE_OFFICE');
+			const requestsForNewOffice = this.$store.getters['request/requestsForNewOfficeSent'];
 			if (requestsForNewOffice.length) {
 				this.request = requestsForNewOffice[0];
 				const payload = this.request.payload.createOfficePayload;
