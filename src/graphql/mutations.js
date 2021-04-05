@@ -843,7 +843,9 @@ export const updateEmployeeModelPermissionsForOffice = /* GraphQL */ `
       officeId: $officeId
       empUsername: $empUsername
       modelPermissions: $modelPermissions
-    )
+    ) {
+      id
+    }
   }
 `;
 export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
@@ -856,12 +858,16 @@ export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
       officeId: $officeId
       empUsername: $empUsername
       pagePermissions: $pagePermissions
-    )
+    ) {
+      id
+    }
   }
 `;
 export const deleteEmployeeForOffice = /* GraphQL */ `
   mutation DeleteEmployeeForOffice($officeId: ID!, $empUsername: String!) {
-    deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername)
+    deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername) {
+      id
+    }
   }
 `;
 export const updateContractorModelPermissionsForOffice = /* GraphQL */ `
@@ -874,7 +880,9 @@ export const updateContractorModelPermissionsForOffice = /* GraphQL */ `
       officeId: $officeId
       contractorUsername: $contractorUsername
       modelPermissions: $modelPermissions
-    )
+    ) {
+      id
+    }
   }
 `;
 export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
@@ -887,7 +895,9 @@ export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
       officeId: $officeId
       contractorUsername: $contractorUsername
       pagePermissions: $pagePermissions
-    )
+    ) {
+      id
+    }
   }
 `;
 export const deleteContractorForOffice = /* GraphQL */ `
@@ -898,7 +908,9 @@ export const deleteContractorForOffice = /* GraphQL */ `
     deleteContractorForOffice(
       officeId: $officeId
       contractorUsername: $contractorUsername
-    )
+    ) {
+      id
+    }
   }
 `;
 export const createOffice = /* GraphQL */ `

@@ -152,28 +152,25 @@ type Mutation {
         condition: ModelUserCalendarEventConditionInput
     ): UserCalendarEventOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): ID
+    updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): IDOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 
-    updateEmployeePagePermissionsForOffice(officeId: ID!, empUsername: String!, pagePermissions: AWSJSON!): ID
+    updateEmployeePagePermissionsForOffice(officeId: ID!, empUsername: String!, pagePermissions: AWSJSON!): IDOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 
-    deleteEmployeeForOffice(officeId: ID!, empUsername: String!): ID @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+    deleteEmployeeForOffice(officeId: ID!, empUsername: String!): IDOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    updateContractorModelPermissionsForOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!): ID
+    updateContractorModelPermissionsForOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!): IDOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 
-    updateContractorPagePermissionsForOffice(officeId: ID!, contractorUsername: String!, pagePermissions: AWSJSON!): ID
+    updateContractorPagePermissionsForOffice(officeId: ID!, contractorUsername: String!, pagePermissions: AWSJSON!): IDOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 
-    deleteContractorForOffice(officeId: ID!, contractorUsername: String!): ID
+    deleteContractorForOffice(officeId: ID!, contractorUsername: String!): IDOutput
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
 }
-
-# TODO Mutations
-# updateUPByUsername
