@@ -9,7 +9,7 @@
 								<ion-list-header>{{ $t('views.officeCreationForm.personalInfo') }}</ion-list-header>
 								<ion-item>
 									<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.surname') }}</ion-label>
+									<ion-label position="floating">{{ $t('fields.family_name') }}</ion-label>
 									<ion-input v-model="this.$store.getters['auth/userProfile'].family_name" type="text" name="fname" autocomplete="family-name" required/>
 								</ion-item>
 								<ion-item>

@@ -160,7 +160,7 @@
     "verificationCode": "Κωδικός Επαλήθευσης",
     "tin": "ΑΦΜ",
     "name": "Όνομα",
-    "surname": "Επώνυμο",
+    "family_name": "Επώνυμο",
     "address": "Διεύθυνση",
     "city": "Πόλη",
     "district": "Νομός",
