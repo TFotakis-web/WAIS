@@ -199,6 +199,13 @@ export const getMySentRequests = /* GraphQL */ `
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
+						files {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
 					}
 					createOfficeConnectionPayload {
 						manager_email
@@ -270,6 +277,13 @@ export const getRequestsForMe = /* GraphQL */ `
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
+						files {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
 					}
 					createOfficeConnectionPayload {
 						manager_email

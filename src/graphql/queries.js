@@ -116,6 +116,13 @@ export const getMySentRequests = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -165,6 +172,13 @@ export const getRequestsForMe = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -522,8 +536,35 @@ export const listOffices = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -543,6 +584,17 @@ export const listOffices = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -561,6 +613,48 @@ export const listOffices = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -577,6 +671,48 @@ export const listOffices = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -656,6 +792,11 @@ export const getOffice = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -679,6 +820,13 @@ export const getOffice = /* GraphQL */ `
             taxableHorsepower
             vin
             value
+            file {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
           }
@@ -711,6 +859,11 @@ export const getOffice = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -748,8 +901,35 @@ export const getOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            insuranceCompanies {
+              name
+              code
+            }
+            availableInsuranceCompanies {
+              id
+              officeName
+            }
             createdAt
             updatedAt
+            officeContracts {
+              nextToken
+            }
+            officeCustomers {
+              nextToken
+            }
+            workforce {
+              nextToken
+            }
+            officeConnections {
+              nextToken
+            }
           }
           user {
             id
@@ -767,10 +947,36 @@ export const getOffice = /* GraphQL */ `
             gender
             birthdate
             city
+            profilePicture {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             preferences
             locale
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
+            officeConnections {
+              nextToken
+            }
+            requestsSentByMe {
+              nextToken
+            }
+            requestsForMe {
+              nextToken
+            }
+            calendarEvents {
+              nextToken
+            }
           }
         }
         nextToken
@@ -806,8 +1012,35 @@ export const getOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            insuranceCompanies {
+              name
+              code
+            }
+            availableInsuranceCompanies {
+              id
+              officeName
+            }
             createdAt
             updatedAt
+            officeContracts {
+              nextToken
+            }
+            officeCustomers {
+              nextToken
+            }
+            workforce {
+              nextToken
+            }
+            officeConnections {
+              nextToken
+            }
           }
           to {
             id
@@ -827,8 +1060,35 @@ export const getOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            insuranceCompanies {
+              name
+              code
+            }
+            availableInsuranceCompanies {
+              id
+              officeName
+            }
             createdAt
             updatedAt
+            officeContracts {
+              nextToken
+            }
+            officeCustomers {
+              nextToken
+            }
+            workforce {
+              nextToken
+            }
+            officeConnections {
+              nextToken
+            }
           }
         }
         nextToken
@@ -919,8 +1179,35 @@ export const listOfficeByName = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -940,6 +1227,17 @@ export const listOfficeByName = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -958,6 +1256,48 @@ export const listOfficeByName = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -974,6 +1314,48 @@ export const listOfficeByName = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1063,8 +1445,35 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1084,6 +1493,17 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -1102,6 +1522,48 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1118,6 +1580,48 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1209,8 +1713,35 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1230,6 +1761,17 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -1248,6 +1790,48 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1264,6 +1848,48 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1326,6 +1952,48 @@ export const listUserProfiles = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1435,8 +2103,35 @@ export const getUserProfile = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            insuranceCompanies {
+              name
+              code
+            }
+            availableInsuranceCompanies {
+              id
+              officeName
+            }
             createdAt
             updatedAt
+            officeContracts {
+              nextToken
+            }
+            officeCustomers {
+              nextToken
+            }
+            workforce {
+              nextToken
+            }
+            officeConnections {
+              nextToken
+            }
           }
           user {
             id
@@ -1454,10 +2149,36 @@ export const getUserProfile = /* GraphQL */ `
             gender
             birthdate
             city
+            profilePicture {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             preferences
             locale
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
+            officeConnections {
+              nextToken
+            }
+            requestsSentByMe {
+              nextToken
+            }
+            requestsForMe {
+              nextToken
+            }
+            calendarEvents {
+              nextToken
+            }
           }
         }
         nextToken
@@ -1469,6 +2190,35 @@ export const getUserProfile = /* GraphQL */ `
           senderEmail
           receiverEmail
           type
+          payload {
+            createOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+            }
+            createOfficeConnectionPayload {
+              manager_email
+            }
+            inviteEmployeeToOfficePayload {
+              email
+              empModelPermissions
+              empPagePermissions
+            }
+            inviteContractorToOfficePayload {
+              ctrModelPermissions
+              ctrPagePermissions
+              email
+            }
+          }
           createdAt
           updatedAt
         }
@@ -1481,6 +2231,35 @@ export const getUserProfile = /* GraphQL */ `
           senderEmail
           receiverEmail
           type
+          payload {
+            createOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+            }
+            createOfficeConnectionPayload {
+              manager_email
+            }
+            inviteEmployeeToOfficePayload {
+              email
+              empModelPermissions
+              empPagePermissions
+            }
+            inviteContractorToOfficePayload {
+              ctrModelPermissions
+              ctrPagePermissions
+              email
+            }
+          }
           createdAt
           updatedAt
         }
@@ -1561,6 +2340,48 @@ export const listUserProfileByEmail = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -1665,6 +2486,48 @@ export const listUserProfileByUsername = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -2520,8 +3383,35 @@ export const getOfficeUserConnection = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -2541,6 +3431,17 @@ export const getOfficeUserConnection = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -2559,6 +3460,48 @@ export const getOfficeUserConnection = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -2575,6 +3518,48 @@ export const getOfficeUserConnection = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -2626,6 +3611,48 @@ export const getOfficeUserConnection = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -2722,19 +3749,96 @@ export const listOfficeUserConnections = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -2773,15 +3877,53 @@ export const listOfficeUserConnections = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -2851,19 +3993,96 @@ export const listOfficeUserConnectionsByOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -2902,15 +4121,53 @@ export const listOfficeUserConnectionsByOfficeName = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -2980,19 +4237,96 @@ export const listOfficeUserConnectionsByEmployeeType = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3031,15 +4365,53 @@ export const listOfficeUserConnectionsByEmployeeType = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3109,19 +4481,96 @@ export const listOfficeUserConnectionsByUserId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3160,15 +4609,53 @@ export const listOfficeUserConnectionsByUserId = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3238,19 +4725,96 @@ export const listOfficeUserConnectionsByOfficeAndUser = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3289,15 +4853,53 @@ export const listOfficeUserConnectionsByOfficeAndUser = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3367,19 +4969,96 @@ export const listOfficeUserConnectionsByUsername = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3418,15 +5097,53 @@ export const listOfficeUserConnectionsByUsername = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3511,8 +5228,35 @@ export const getOfficeContractConnection = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -3532,6 +5276,17 @@ export const getOfficeContractConnection = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -3550,6 +5305,48 @@ export const getOfficeContractConnection = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -3566,6 +5363,48 @@ export const getOfficeContractConnection = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -3692,19 +5531,96 @@ export const listOfficeContractConnections = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3737,6 +5653,11 @@ export const listOfficeContractConnections = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -3760,6 +5681,13 @@ export const listOfficeContractConnections = /* GraphQL */ `
             taxableHorsepower
             vin
             value
+            file {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
           }
@@ -3826,19 +5754,96 @@ export const listOfficeContractConnectionByOfficeId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -3871,6 +5876,11 @@ export const listOfficeContractConnectionByOfficeId = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -3894,6 +5904,13 @@ export const listOfficeContractConnectionByOfficeId = /* GraphQL */ `
             taxableHorsepower
             vin
             value
+            file {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
           }
@@ -3960,19 +5977,96 @@ export const listOfficeContractConnectionByOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4005,6 +6099,11 @@ export const listOfficeContractConnectionByOfficeName = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -4028,6 +6127,13 @@ export const listOfficeContractConnectionByOfficeName = /* GraphQL */ `
             taxableHorsepower
             vin
             value
+            file {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
           }
@@ -4094,19 +6200,96 @@ export const listOfficeContractConnectionByContractId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4139,6 +6322,11 @@ export const listOfficeContractConnectionByContractId = /* GraphQL */ `
           driversLicense {
             LicenseID
             DriversLicenseType
+            Category {
+              category
+              issueDate
+              expiresAt
+            }
           }
           createdAt
           updatedAt
@@ -4162,6 +6350,13 @@ export const listOfficeContractConnectionByContractId = /* GraphQL */ `
             taxableHorsepower
             vin
             value
+            file {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             createdAt
             updatedAt
           }
@@ -4251,8 +6446,35 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4272,6 +6494,17 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -4290,6 +6523,48 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4306,6 +6581,48 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4376,8 +6693,35 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             discount
             jointWorth
             netWorth
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
+            vehicle {
+              id
+              numberPlate
+              officeId
+              officeName
+              color
+              manufacturer
+              model
+              vehicle_owner
+              trim
+              fuelType
+              usage
+              displacement
+              eurotax
+              firstRegistrationDate
+              passengers
+              purchaseDate
+              taxableHorsepower
+              vin
+              value
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4397,6 +6741,17 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             doy
             address
             familyStatus
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
+            driversLicense {
+              LicenseID
+              DriversLicenseType
+            }
             createdAt
             updatedAt
           }
@@ -4415,6 +6770,48 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4431,6 +6828,48 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             message
             createdAt
             updatedAt
+            from {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            to {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -4493,19 +6932,96 @@ export const listOfficeAccessConnections = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4541,19 +7057,96 @@ export const listOfficeAccessConnections = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4623,19 +7216,96 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4671,19 +7341,96 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4753,19 +7500,96 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4801,19 +7625,96 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4883,19 +7784,96 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -4931,19 +7909,96 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5013,19 +8068,96 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5061,19 +8193,96 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
           availableInsuranceCompanies {
             id
             officeName
+            insuranceCompanies {
+              name
+              code
+            }
           }
           createdAt
           updatedAt
           officeContracts {
+            items {
+              id
+              contractId
+              version
+              vehicleNumberPlate
+              vehicleId
+              voucherId
+              customerId
+              officeName
+              second_officeId
+              contractorId
+              co_name
+              co_TRN
+              contractState
+              insuranceCompanyName
+              insuranceCompanyCode
+              insuranceClass
+              insuranceCoverage
+              insuranceUsage
+              duration
+              startDate
+              endDate
+              data
+              discount
+              jointWorth
+              netWorth
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeCustomers {
+            items {
+              id
+              tin
+              officeName
+              firstName
+              lastName
+              fathersName
+              birthDate
+              gender
+              email
+              mobile
+              postcode
+              doy
+              address
+              familyStatus
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           officeConnections {
+            items {
+              id
+              insuranceCompanyName
+              insuranceCompanyCode
+              fromId
+              fromOfficeName
+              toId
+              toOfficeName
+              expirationDate
+              message
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5141,6 +8350,48 @@ export const getTransactionHistory = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -5226,6 +8477,48 @@ export const getTransactionHistory = /* GraphQL */ `
             preferences
             createdAt
             updatedAt
+            office {
+              id
+              officeName
+              ownerUsername
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              partnersNumberLimit
+              employeesNumberLimit
+              verified
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              bankAccountInfo
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              telephone
+              role
+              name
+              fathers_name
+              address
+              zip_code
+              mobile
+              tin
+              family_name
+              gender
+              birthdate
+              city
+              preferences
+              locale
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -5323,15 +8616,53 @@ export const listTransactionHistorys = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5370,15 +8701,53 @@ export const listTransactionHistorys = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5449,15 +8818,53 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5496,15 +8903,53 @@ export const listTransactionHistorybySenderUsername = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5575,15 +9020,53 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5622,15 +9105,53 @@ export const listTransactionHistorybyReceiverUsername = /* GraphQL */ `
           createdAt
           updatedAt
           officeConnections {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsSentByMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           requestsForMe {
+            items {
+              id
+              senderUsername
+              senderEmail
+              receiverEmail
+              type
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           calendarEvents {
+            items {
+              id
+              username
+              payload
+              createdAt
+              updatedAt
+            }
             nextToken
           }
         }
@@ -5715,6 +9236,13 @@ export const listRequestss = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -5772,6 +9300,13 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -5829,6 +9364,13 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -5886,6 +9428,13 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
@@ -5943,6 +9492,13 @@ export const listRequestsByType = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            files {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
           }
           createOfficeConnectionPayload {
             manager_email
