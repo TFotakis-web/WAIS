@@ -164,6 +164,7 @@
 					this.$emit('update:modelValue', this.files);
 					this.$emit('update:downloadUrls', this.downloadUrls);
 				} else {
+					this.$emit('update:modelValue', this.files[0]);
 					this.$emit('update:downloadUrls', this.downloadUrls[0]);
 				}
 			},
