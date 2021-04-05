@@ -397,7 +397,9 @@ export const deleteContractorForOffice = /* GraphQL */ `
 		deleteContractorForOffice(
 			officeId: $officeId
 			contractorUsername: $contractorUsername
-		)
+		) {
+			id
+		}
 	}
 `;
 export const deleteCustomerForOffice = /* GraphQL */ `
@@ -448,7 +450,9 @@ export const deleteCustomerForOffice = /* GraphQL */ `
 `;
 export const deleteEmployeeForOffice = /* GraphQL */ `
 	mutation DeleteEmployeeForOffice($officeId: ID!, $empUsername: String!) {
-		deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername)
+		deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername) {
+			id
+		}
 	}
 `;
 export const deleteRequestsSentByMe = /* GraphQL */ `
@@ -456,7 +460,9 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
 		$input: DeleteRequestsInput!
 		$condition: ModelRequestsConditionInput
 	) {
-		deleteRequestsSentByMe(input: $input, condition: $condition)
+		deleteRequestsSentByMe(input: $input, condition: $condition) {
+			id
+		}
 	}
 `;
 export const deleteVehicleForOffice = /* GraphQL */ `
@@ -511,7 +517,9 @@ export const resolveRequest = /* GraphQL */ `
 			requestId: $requestId
 			decision: $decision
 			payload: $payload
-		)
+		) {
+			id
+		}
 	}
 `;
 export const updateContractForOffice = /* GraphQL */ `
@@ -572,7 +580,9 @@ export const updateContractorModelPermissionsForOffice = /* GraphQL */ `
 			officeId: $officeId
 			contractorUsername: $contractorUsername
 			modelPermissions: $modelPermissions
-		)
+		) {
+			id
+		}
 	}
 `;
 export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
@@ -585,7 +595,9 @@ export const updateContractorPagePermissionsForOffice = /* GraphQL */ `
 			officeId: $officeId
 			contractorUsername: $contractorUsername
 			pagePermissions: $pagePermissions
-		)
+		) {
+			id
+		}
 	}
 `;
 export const updateCustomerForOffice = /* GraphQL */ `
@@ -644,7 +656,9 @@ export const updateEmployeeModelPermissionsForOffice = /* GraphQL */ `
 			officeId: $officeId
 			empUsername: $empUsername
 			modelPermissions: $modelPermissions
-		)
+		) {
+			id
+		}
 	}
 `;
 export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
@@ -657,7 +671,9 @@ export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
 			officeId: $officeId
 			empUsername: $empUsername
 			pagePermissions: $pagePermissions
-		)
+		) {
+			id
+		}
 	}
 `;
 export const updateOfficeDetails = /* GraphQL */ `
