@@ -543,7 +543,7 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const result = await admin.getS3Object(args.username, args.email, args.s3obj, args.groups)
-		console.log('getS3Object preview output: ' + JSON.stringify(result.substring(0, 10)))
+		console.log('getS3Object preview output: ' + JSON.stringify(result.contentType))
 		return result
 	},
 }

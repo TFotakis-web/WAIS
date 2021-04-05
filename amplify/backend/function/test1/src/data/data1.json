@@ -1,0 +1,4204 @@
+{
+  "UserProfile": [
+    {
+      "id": "id_0",
+      "username": "username_0",
+      "email": "email_0@email.com",
+      "telephone": "+300000",
+      "role": "EMPLOYEE",
+      "name": "name_0",
+      "fathers_name": "fathers_name_0",
+      "address": "address_0",
+      "zip_code": "71414",
+      "mobile": "+30000",
+      "tin": "0",
+      "family_name": "family_name_0",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_0",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_1",
+      "username": "username_1",
+      "email": "email_1@email.com",
+      "telephone": "+300001",
+      "role": "EMPLOYEE",
+      "name": "name_1",
+      "fathers_name": "fathers_name_1",
+      "address": "address_1",
+      "zip_code": "71414",
+      "mobile": "+30001",
+      "tin": "1",
+      "family_name": "family_name_1",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_1",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_2",
+      "username": "username_2",
+      "email": "email_2@email.com",
+      "telephone": "+300002",
+      "role": "EMPLOYEE",
+      "name": "name_2",
+      "fathers_name": "fathers_name_2",
+      "address": "address_2",
+      "zip_code": "71414",
+      "mobile": "+30002",
+      "tin": "2",
+      "family_name": "family_name_2",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_2",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_3",
+      "username": "username_3",
+      "email": "email_3@email.com",
+      "telephone": "+300003",
+      "role": "EMPLOYEE",
+      "name": "name_3",
+      "fathers_name": "fathers_name_3",
+      "address": "address_3",
+      "zip_code": "71414",
+      "mobile": "+30003",
+      "tin": "3",
+      "family_name": "family_name_3",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_3",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_4",
+      "username": "username_4",
+      "email": "email_4@email.com",
+      "telephone": "+300004",
+      "role": "EMPLOYEE",
+      "name": "name_4",
+      "fathers_name": "fathers_name_4",
+      "address": "address_4",
+      "zip_code": "71414",
+      "mobile": "+30004",
+      "tin": "4",
+      "family_name": "family_name_4",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_4",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_5",
+      "username": "username_5",
+      "email": "email_5@email.com",
+      "telephone": "+300005",
+      "role": "EMPLOYEE",
+      "name": "name_5",
+      "fathers_name": "fathers_name_5",
+      "address": "address_5",
+      "zip_code": "71414",
+      "mobile": "+30005",
+      "tin": "5",
+      "family_name": "family_name_5",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_5",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_6",
+      "username": "username_6",
+      "email": "email_6@email.com",
+      "telephone": "+300006",
+      "role": "EMPLOYEE",
+      "name": "name_6",
+      "fathers_name": "fathers_name_6",
+      "address": "address_6",
+      "zip_code": "71414",
+      "mobile": "+30006",
+      "tin": "6",
+      "family_name": "family_name_6",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_6",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_7",
+      "username": "username_7",
+      "email": "email_7@email.com",
+      "telephone": "+300007",
+      "role": "EMPLOYEE",
+      "name": "name_7",
+      "fathers_name": "fathers_name_7",
+      "address": "address_7",
+      "zip_code": "71414",
+      "mobile": "+30007",
+      "tin": "7",
+      "family_name": "family_name_7",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_7",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_8",
+      "username": "username_8",
+      "email": "email_8@email.com",
+      "telephone": "+300008",
+      "role": "EMPLOYEE",
+      "name": "name_8",
+      "fathers_name": "fathers_name_8",
+      "address": "address_8",
+      "zip_code": "71414",
+      "mobile": "+30008",
+      "tin": "8",
+      "family_name": "family_name_8",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_8",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_9",
+      "username": "username_9",
+      "email": "email_9@email.com",
+      "telephone": "+300009",
+      "role": "EMPLOYEE",
+      "name": "name_9",
+      "fathers_name": "fathers_name_9",
+      "address": "address_9",
+      "zip_code": "71414",
+      "mobile": "+30009",
+      "tin": "9",
+      "family_name": "family_name_9",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_9",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_10",
+      "username": "username_10",
+      "email": "email_10@email.com",
+      "telephone": "+3000010",
+      "role": "EMPLOYEE",
+      "name": "name_10",
+      "fathers_name": "fathers_name_10",
+      "address": "address_10",
+      "zip_code": "71414",
+      "mobile": "+300010",
+      "tin": "10",
+      "family_name": "family_name_10",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_10",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_11",
+      "username": "username_11",
+      "email": "email_11@email.com",
+      "telephone": "+3000011",
+      "role": "EMPLOYEE",
+      "name": "name_11",
+      "fathers_name": "fathers_name_11",
+      "address": "address_11",
+      "zip_code": "71414",
+      "mobile": "+300011",
+      "tin": "11",
+      "family_name": "family_name_11",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_11",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_12",
+      "username": "username_12",
+      "email": "email_12@email.com",
+      "telephone": "+3000012",
+      "role": "EMPLOYEE",
+      "name": "name_12",
+      "fathers_name": "fathers_name_12",
+      "address": "address_12",
+      "zip_code": "71414",
+      "mobile": "+300012",
+      "tin": "12",
+      "family_name": "family_name_12",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_12",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_13",
+      "username": "username_13",
+      "email": "email_13@email.com",
+      "telephone": "+3000013",
+      "role": "EMPLOYEE",
+      "name": "name_13",
+      "fathers_name": "fathers_name_13",
+      "address": "address_13",
+      "zip_code": "71414",
+      "mobile": "+300013",
+      "tin": "13",
+      "family_name": "family_name_13",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_13",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_14",
+      "username": "username_14",
+      "email": "email_14@email.com",
+      "telephone": "+3000014",
+      "role": "EMPLOYEE",
+      "name": "name_14",
+      "fathers_name": "fathers_name_14",
+      "address": "address_14",
+      "zip_code": "71414",
+      "mobile": "+300014",
+      "tin": "14",
+      "family_name": "family_name_14",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_14",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_15",
+      "username": "username_15",
+      "email": "email_15@email.com",
+      "telephone": "+3000015",
+      "role": "EMPLOYEE",
+      "name": "name_15",
+      "fathers_name": "fathers_name_15",
+      "address": "address_15",
+      "zip_code": "71414",
+      "mobile": "+300015",
+      "tin": "15",
+      "family_name": "family_name_15",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_15",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_16",
+      "username": "username_16",
+      "email": "email_16@email.com",
+      "telephone": "+3000016",
+      "role": "EMPLOYEE",
+      "name": "name_16",
+      "fathers_name": "fathers_name_16",
+      "address": "address_16",
+      "zip_code": "71414",
+      "mobile": "+300016",
+      "tin": "16",
+      "family_name": "family_name_16",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_16",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_17",
+      "username": "username_17",
+      "email": "email_17@email.com",
+      "telephone": "+3000017",
+      "role": "EMPLOYEE",
+      "name": "name_17",
+      "fathers_name": "fathers_name_17",
+      "address": "address_17",
+      "zip_code": "71414",
+      "mobile": "+300017",
+      "tin": "17",
+      "family_name": "family_name_17",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_17",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_18",
+      "username": "username_18",
+      "email": "email_18@email.com",
+      "telephone": "+3000018",
+      "role": "EMPLOYEE",
+      "name": "name_18",
+      "fathers_name": "fathers_name_18",
+      "address": "address_18",
+      "zip_code": "71414",
+      "mobile": "+300018",
+      "tin": "18",
+      "family_name": "family_name_18",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_18",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_19",
+      "username": "username_19",
+      "email": "email_19@email.com",
+      "telephone": "+3000019",
+      "role": "EMPLOYEE",
+      "name": "name_19",
+      "fathers_name": "fathers_name_19",
+      "address": "address_19",
+      "zip_code": "71414",
+      "mobile": "+300019",
+      "tin": "19",
+      "family_name": "family_name_19",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_19",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_20",
+      "username": "username_20",
+      "email": "email_20@email.com",
+      "telephone": "+3000020",
+      "role": "EMPLOYEE",
+      "name": "name_20",
+      "fathers_name": "fathers_name_20",
+      "address": "address_20",
+      "zip_code": "71414",
+      "mobile": "+300020",
+      "tin": "20",
+      "family_name": "family_name_20",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_20",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_21",
+      "username": "username_21",
+      "email": "email_21@email.com",
+      "telephone": "+3000021",
+      "role": "EMPLOYEE",
+      "name": "name_21",
+      "fathers_name": "fathers_name_21",
+      "address": "address_21",
+      "zip_code": "71414",
+      "mobile": "+300021",
+      "tin": "21",
+      "family_name": "family_name_21",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_21",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_22",
+      "username": "username_22",
+      "email": "email_22@email.com",
+      "telephone": "+3000022",
+      "role": "EMPLOYEE",
+      "name": "name_22",
+      "fathers_name": "fathers_name_22",
+      "address": "address_22",
+      "zip_code": "71414",
+      "mobile": "+300022",
+      "tin": "22",
+      "family_name": "family_name_22",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_22",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_23",
+      "username": "username_23",
+      "email": "email_23@email.com",
+      "telephone": "+3000023",
+      "role": "EMPLOYEE",
+      "name": "name_23",
+      "fathers_name": "fathers_name_23",
+      "address": "address_23",
+      "zip_code": "71414",
+      "mobile": "+300023",
+      "tin": "23",
+      "family_name": "family_name_23",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_23",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_24",
+      "username": "username_24",
+      "email": "email_24@email.com",
+      "telephone": "+3000024",
+      "role": "EMPLOYEE",
+      "name": "name_24",
+      "fathers_name": "fathers_name_24",
+      "address": "address_24",
+      "zip_code": "71414",
+      "mobile": "+300024",
+      "tin": "24",
+      "family_name": "family_name_24",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_24",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_25",
+      "username": "username_25",
+      "email": "email_25@email.com",
+      "telephone": "+3000025",
+      "role": "EMPLOYEE",
+      "name": "name_25",
+      "fathers_name": "fathers_name_25",
+      "address": "address_25",
+      "zip_code": "71414",
+      "mobile": "+300025",
+      "tin": "25",
+      "family_name": "family_name_25",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_25",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_26",
+      "username": "username_26",
+      "email": "email_26@email.com",
+      "telephone": "+3000026",
+      "role": "EMPLOYEE",
+      "name": "name_26",
+      "fathers_name": "fathers_name_26",
+      "address": "address_26",
+      "zip_code": "71414",
+      "mobile": "+300026",
+      "tin": "26",
+      "family_name": "family_name_26",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_26",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_27",
+      "username": "username_27",
+      "email": "email_27@email.com",
+      "telephone": "+3000027",
+      "role": "EMPLOYEE",
+      "name": "name_27",
+      "fathers_name": "fathers_name_27",
+      "address": "address_27",
+      "zip_code": "71414",
+      "mobile": "+300027",
+      "tin": "27",
+      "family_name": "family_name_27",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_27",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_28",
+      "username": "username_28",
+      "email": "email_28@email.com",
+      "telephone": "+3000028",
+      "role": "EMPLOYEE",
+      "name": "name_28",
+      "fathers_name": "fathers_name_28",
+      "address": "address_28",
+      "zip_code": "71414",
+      "mobile": "+300028",
+      "tin": "28",
+      "family_name": "family_name_28",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_28",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_29",
+      "username": "username_29",
+      "email": "email_29@email.com",
+      "telephone": "+3000029",
+      "role": "EMPLOYEE",
+      "name": "name_29",
+      "fathers_name": "fathers_name_29",
+      "address": "address_29",
+      "zip_code": "71414",
+      "mobile": "+300029",
+      "tin": "29",
+      "family_name": "family_name_29",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_29",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_30",
+      "username": "username_30",
+      "email": "email_30@email.com",
+      "telephone": "+3000030",
+      "role": "EMPLOYEE",
+      "name": "name_30",
+      "fathers_name": "fathers_name_30",
+      "address": "address_30",
+      "zip_code": "71414",
+      "mobile": "+300030",
+      "tin": "30",
+      "family_name": "family_name_30",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_30",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_31",
+      "username": "username_31",
+      "email": "email_31@email.com",
+      "telephone": "+3000031",
+      "role": "EMPLOYEE",
+      "name": "name_31",
+      "fathers_name": "fathers_name_31",
+      "address": "address_31",
+      "zip_code": "71414",
+      "mobile": "+300031",
+      "tin": "31",
+      "family_name": "family_name_31",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_31",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_32",
+      "username": "username_32",
+      "email": "email_32@email.com",
+      "telephone": "+3000032",
+      "role": "EMPLOYEE",
+      "name": "name_32",
+      "fathers_name": "fathers_name_32",
+      "address": "address_32",
+      "zip_code": "71414",
+      "mobile": "+300032",
+      "tin": "32",
+      "family_name": "family_name_32",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_32",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_33",
+      "username": "username_33",
+      "email": "email_33@email.com",
+      "telephone": "+3000033",
+      "role": "EMPLOYEE",
+      "name": "name_33",
+      "fathers_name": "fathers_name_33",
+      "address": "address_33",
+      "zip_code": "71414",
+      "mobile": "+300033",
+      "tin": "33",
+      "family_name": "family_name_33",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_33",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_34",
+      "username": "username_34",
+      "email": "email_34@email.com",
+      "telephone": "+3000034",
+      "role": "EMPLOYEE",
+      "name": "name_34",
+      "fathers_name": "fathers_name_34",
+      "address": "address_34",
+      "zip_code": "71414",
+      "mobile": "+300034",
+      "tin": "34",
+      "family_name": "family_name_34",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_34",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_35",
+      "username": "username_35",
+      "email": "email_35@email.com",
+      "telephone": "+3000035",
+      "role": "EMPLOYEE",
+      "name": "name_35",
+      "fathers_name": "fathers_name_35",
+      "address": "address_35",
+      "zip_code": "71414",
+      "mobile": "+300035",
+      "tin": "35",
+      "family_name": "family_name_35",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_35",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_36",
+      "username": "username_36",
+      "email": "email_36@email.com",
+      "telephone": "+3000036",
+      "role": "EMPLOYEE",
+      "name": "name_36",
+      "fathers_name": "fathers_name_36",
+      "address": "address_36",
+      "zip_code": "71414",
+      "mobile": "+300036",
+      "tin": "36",
+      "family_name": "family_name_36",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_36",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_37",
+      "username": "username_37",
+      "email": "email_37@email.com",
+      "telephone": "+3000037",
+      "role": "EMPLOYEE",
+      "name": "name_37",
+      "fathers_name": "fathers_name_37",
+      "address": "address_37",
+      "zip_code": "71414",
+      "mobile": "+300037",
+      "tin": "37",
+      "family_name": "family_name_37",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_37",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_38",
+      "username": "username_38",
+      "email": "email_38@email.com",
+      "telephone": "+3000038",
+      "role": "EMPLOYEE",
+      "name": "name_38",
+      "fathers_name": "fathers_name_38",
+      "address": "address_38",
+      "zip_code": "71414",
+      "mobile": "+300038",
+      "tin": "38",
+      "family_name": "family_name_38",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_38",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_39",
+      "username": "username_39",
+      "email": "email_39@email.com",
+      "telephone": "+3000039",
+      "role": "EMPLOYEE",
+      "name": "name_39",
+      "fathers_name": "fathers_name_39",
+      "address": "address_39",
+      "zip_code": "71414",
+      "mobile": "+300039",
+      "tin": "39",
+      "family_name": "family_name_39",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_39",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_40",
+      "username": "username_40",
+      "email": "email_40@email.com",
+      "telephone": "+3000040",
+      "role": "EMPLOYEE",
+      "name": "name_40",
+      "fathers_name": "fathers_name_40",
+      "address": "address_40",
+      "zip_code": "71414",
+      "mobile": "+300040",
+      "tin": "40",
+      "family_name": "family_name_40",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_40",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_41",
+      "username": "username_41",
+      "email": "email_41@email.com",
+      "telephone": "+3000041",
+      "role": "EMPLOYEE",
+      "name": "name_41",
+      "fathers_name": "fathers_name_41",
+      "address": "address_41",
+      "zip_code": "71414",
+      "mobile": "+300041",
+      "tin": "41",
+      "family_name": "family_name_41",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_41",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_42",
+      "username": "username_42",
+      "email": "email_42@email.com",
+      "telephone": "+3000042",
+      "role": "EMPLOYEE",
+      "name": "name_42",
+      "fathers_name": "fathers_name_42",
+      "address": "address_42",
+      "zip_code": "71414",
+      "mobile": "+300042",
+      "tin": "42",
+      "family_name": "family_name_42",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_42",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_43",
+      "username": "username_43",
+      "email": "email_43@email.com",
+      "telephone": "+3000043",
+      "role": "EMPLOYEE",
+      "name": "name_43",
+      "fathers_name": "fathers_name_43",
+      "address": "address_43",
+      "zip_code": "71414",
+      "mobile": "+300043",
+      "tin": "43",
+      "family_name": "family_name_43",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_43",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_44",
+      "username": "username_44",
+      "email": "email_44@email.com",
+      "telephone": "+3000044",
+      "role": "EMPLOYEE",
+      "name": "name_44",
+      "fathers_name": "fathers_name_44",
+      "address": "address_44",
+      "zip_code": "71414",
+      "mobile": "+300044",
+      "tin": "44",
+      "family_name": "family_name_44",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_44",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_45",
+      "username": "username_45",
+      "email": "email_45@email.com",
+      "telephone": "+3000045",
+      "role": "EMPLOYEE",
+      "name": "name_45",
+      "fathers_name": "fathers_name_45",
+      "address": "address_45",
+      "zip_code": "71414",
+      "mobile": "+300045",
+      "tin": "45",
+      "family_name": "family_name_45",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_45",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_46",
+      "username": "username_46",
+      "email": "email_46@email.com",
+      "telephone": "+3000046",
+      "role": "EMPLOYEE",
+      "name": "name_46",
+      "fathers_name": "fathers_name_46",
+      "address": "address_46",
+      "zip_code": "71414",
+      "mobile": "+300046",
+      "tin": "46",
+      "family_name": "family_name_46",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_46",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_47",
+      "username": "username_47",
+      "email": "email_47@email.com",
+      "telephone": "+3000047",
+      "role": "EMPLOYEE",
+      "name": "name_47",
+      "fathers_name": "fathers_name_47",
+      "address": "address_47",
+      "zip_code": "71414",
+      "mobile": "+300047",
+      "tin": "47",
+      "family_name": "family_name_47",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_47",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_48",
+      "username": "username_48",
+      "email": "email_48@email.com",
+      "telephone": "+3000048",
+      "role": "EMPLOYEE",
+      "name": "name_48",
+      "fathers_name": "fathers_name_48",
+      "address": "address_48",
+      "zip_code": "71414",
+      "mobile": "+300048",
+      "tin": "48",
+      "family_name": "family_name_48",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_48",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_49",
+      "username": "username_49",
+      "email": "email_49@email.com",
+      "telephone": "+3000049",
+      "role": "EMPLOYEE",
+      "name": "name_49",
+      "fathers_name": "fathers_name_49",
+      "address": "address_49",
+      "zip_code": "71414",
+      "mobile": "+300049",
+      "tin": "49",
+      "family_name": "family_name_49",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_49",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_50",
+      "username": "username_50",
+      "email": "email_50@email.com",
+      "telephone": "+3000050",
+      "role": "EMPLOYEE",
+      "name": "name_50",
+      "fathers_name": "fathers_name_50",
+      "address": "address_50",
+      "zip_code": "71414",
+      "mobile": "+300050",
+      "tin": "50",
+      "family_name": "family_name_50",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_50",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_51",
+      "username": "username_51",
+      "email": "email_51@email.com",
+      "telephone": "+3000051",
+      "role": "EMPLOYEE",
+      "name": "name_51",
+      "fathers_name": "fathers_name_51",
+      "address": "address_51",
+      "zip_code": "71414",
+      "mobile": "+300051",
+      "tin": "51",
+      "family_name": "family_name_51",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_51",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_52",
+      "username": "username_52",
+      "email": "email_52@email.com",
+      "telephone": "+3000052",
+      "role": "EMPLOYEE",
+      "name": "name_52",
+      "fathers_name": "fathers_name_52",
+      "address": "address_52",
+      "zip_code": "71414",
+      "mobile": "+300052",
+      "tin": "52",
+      "family_name": "family_name_52",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_52",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_53",
+      "username": "username_53",
+      "email": "email_53@email.com",
+      "telephone": "+3000053",
+      "role": "EMPLOYEE",
+      "name": "name_53",
+      "fathers_name": "fathers_name_53",
+      "address": "address_53",
+      "zip_code": "71414",
+      "mobile": "+300053",
+      "tin": "53",
+      "family_name": "family_name_53",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_53",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_54",
+      "username": "username_54",
+      "email": "email_54@email.com",
+      "telephone": "+3000054",
+      "role": "EMPLOYEE",
+      "name": "name_54",
+      "fathers_name": "fathers_name_54",
+      "address": "address_54",
+      "zip_code": "71414",
+      "mobile": "+300054",
+      "tin": "54",
+      "family_name": "family_name_54",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_54",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_55",
+      "username": "username_55",
+      "email": "email_55@email.com",
+      "telephone": "+3000055",
+      "role": "EMPLOYEE",
+      "name": "name_55",
+      "fathers_name": "fathers_name_55",
+      "address": "address_55",
+      "zip_code": "71414",
+      "mobile": "+300055",
+      "tin": "55",
+      "family_name": "family_name_55",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_55",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_56",
+      "username": "username_56",
+      "email": "email_56@email.com",
+      "telephone": "+3000056",
+      "role": "EMPLOYEE",
+      "name": "name_56",
+      "fathers_name": "fathers_name_56",
+      "address": "address_56",
+      "zip_code": "71414",
+      "mobile": "+300056",
+      "tin": "56",
+      "family_name": "family_name_56",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_56",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_57",
+      "username": "username_57",
+      "email": "email_57@email.com",
+      "telephone": "+3000057",
+      "role": "EMPLOYEE",
+      "name": "name_57",
+      "fathers_name": "fathers_name_57",
+      "address": "address_57",
+      "zip_code": "71414",
+      "mobile": "+300057",
+      "tin": "57",
+      "family_name": "family_name_57",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_57",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_58",
+      "username": "username_58",
+      "email": "email_58@email.com",
+      "telephone": "+3000058",
+      "role": "EMPLOYEE",
+      "name": "name_58",
+      "fathers_name": "fathers_name_58",
+      "address": "address_58",
+      "zip_code": "71414",
+      "mobile": "+300058",
+      "tin": "58",
+      "family_name": "family_name_58",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_58",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_59",
+      "username": "username_59",
+      "email": "email_59@email.com",
+      "telephone": "+3000059",
+      "role": "EMPLOYEE",
+      "name": "name_59",
+      "fathers_name": "fathers_name_59",
+      "address": "address_59",
+      "zip_code": "71414",
+      "mobile": "+300059",
+      "tin": "59",
+      "family_name": "family_name_59",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_59",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_60",
+      "username": "username_60",
+      "email": "email_60@email.com",
+      "telephone": "+3000060",
+      "role": "EMPLOYEE",
+      "name": "name_60",
+      "fathers_name": "fathers_name_60",
+      "address": "address_60",
+      "zip_code": "71414",
+      "mobile": "+300060",
+      "tin": "60",
+      "family_name": "family_name_60",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_60",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_61",
+      "username": "username_61",
+      "email": "email_61@email.com",
+      "telephone": "+3000061",
+      "role": "EMPLOYEE",
+      "name": "name_61",
+      "fathers_name": "fathers_name_61",
+      "address": "address_61",
+      "zip_code": "71414",
+      "mobile": "+300061",
+      "tin": "61",
+      "family_name": "family_name_61",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_61",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_62",
+      "username": "username_62",
+      "email": "email_62@email.com",
+      "telephone": "+3000062",
+      "role": "EMPLOYEE",
+      "name": "name_62",
+      "fathers_name": "fathers_name_62",
+      "address": "address_62",
+      "zip_code": "71414",
+      "mobile": "+300062",
+      "tin": "62",
+      "family_name": "family_name_62",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_62",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_63",
+      "username": "username_63",
+      "email": "email_63@email.com",
+      "telephone": "+3000063",
+      "role": "EMPLOYEE",
+      "name": "name_63",
+      "fathers_name": "fathers_name_63",
+      "address": "address_63",
+      "zip_code": "71414",
+      "mobile": "+300063",
+      "tin": "63",
+      "family_name": "family_name_63",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_63",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_64",
+      "username": "username_64",
+      "email": "email_64@email.com",
+      "telephone": "+3000064",
+      "role": "EMPLOYEE",
+      "name": "name_64",
+      "fathers_name": "fathers_name_64",
+      "address": "address_64",
+      "zip_code": "71414",
+      "mobile": "+300064",
+      "tin": "64",
+      "family_name": "family_name_64",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_64",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_65",
+      "username": "username_65",
+      "email": "email_65@email.com",
+      "telephone": "+3000065",
+      "role": "EMPLOYEE",
+      "name": "name_65",
+      "fathers_name": "fathers_name_65",
+      "address": "address_65",
+      "zip_code": "71414",
+      "mobile": "+300065",
+      "tin": "65",
+      "family_name": "family_name_65",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_65",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_66",
+      "username": "username_66",
+      "email": "email_66@email.com",
+      "telephone": "+3000066",
+      "role": "EMPLOYEE",
+      "name": "name_66",
+      "fathers_name": "fathers_name_66",
+      "address": "address_66",
+      "zip_code": "71414",
+      "mobile": "+300066",
+      "tin": "66",
+      "family_name": "family_name_66",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_66",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_67",
+      "username": "username_67",
+      "email": "email_67@email.com",
+      "telephone": "+3000067",
+      "role": "EMPLOYEE",
+      "name": "name_67",
+      "fathers_name": "fathers_name_67",
+      "address": "address_67",
+      "zip_code": "71414",
+      "mobile": "+300067",
+      "tin": "67",
+      "family_name": "family_name_67",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_67",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_68",
+      "username": "username_68",
+      "email": "email_68@email.com",
+      "telephone": "+3000068",
+      "role": "EMPLOYEE",
+      "name": "name_68",
+      "fathers_name": "fathers_name_68",
+      "address": "address_68",
+      "zip_code": "71414",
+      "mobile": "+300068",
+      "tin": "68",
+      "family_name": "family_name_68",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_68",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_69",
+      "username": "username_69",
+      "email": "email_69@email.com",
+      "telephone": "+3000069",
+      "role": "EMPLOYEE",
+      "name": "name_69",
+      "fathers_name": "fathers_name_69",
+      "address": "address_69",
+      "zip_code": "71414",
+      "mobile": "+300069",
+      "tin": "69",
+      "family_name": "family_name_69",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_69",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_70",
+      "username": "username_70",
+      "email": "email_70@email.com",
+      "telephone": "+3000070",
+      "role": "EMPLOYEE",
+      "name": "name_70",
+      "fathers_name": "fathers_name_70",
+      "address": "address_70",
+      "zip_code": "71414",
+      "mobile": "+300070",
+      "tin": "70",
+      "family_name": "family_name_70",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_70",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_71",
+      "username": "username_71",
+      "email": "email_71@email.com",
+      "telephone": "+3000071",
+      "role": "EMPLOYEE",
+      "name": "name_71",
+      "fathers_name": "fathers_name_71",
+      "address": "address_71",
+      "zip_code": "71414",
+      "mobile": "+300071",
+      "tin": "71",
+      "family_name": "family_name_71",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_71",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_72",
+      "username": "username_72",
+      "email": "email_72@email.com",
+      "telephone": "+3000072",
+      "role": "EMPLOYEE",
+      "name": "name_72",
+      "fathers_name": "fathers_name_72",
+      "address": "address_72",
+      "zip_code": "71414",
+      "mobile": "+300072",
+      "tin": "72",
+      "family_name": "family_name_72",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_72",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_73",
+      "username": "username_73",
+      "email": "email_73@email.com",
+      "telephone": "+3000073",
+      "role": "EMPLOYEE",
+      "name": "name_73",
+      "fathers_name": "fathers_name_73",
+      "address": "address_73",
+      "zip_code": "71414",
+      "mobile": "+300073",
+      "tin": "73",
+      "family_name": "family_name_73",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_73",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_74",
+      "username": "username_74",
+      "email": "email_74@email.com",
+      "telephone": "+3000074",
+      "role": "EMPLOYEE",
+      "name": "name_74",
+      "fathers_name": "fathers_name_74",
+      "address": "address_74",
+      "zip_code": "71414",
+      "mobile": "+300074",
+      "tin": "74",
+      "family_name": "family_name_74",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_74",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_75",
+      "username": "username_75",
+      "email": "email_75@email.com",
+      "telephone": "+3000075",
+      "role": "EMPLOYEE",
+      "name": "name_75",
+      "fathers_name": "fathers_name_75",
+      "address": "address_75",
+      "zip_code": "71414",
+      "mobile": "+300075",
+      "tin": "75",
+      "family_name": "family_name_75",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_75",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_76",
+      "username": "username_76",
+      "email": "email_76@email.com",
+      "telephone": "+3000076",
+      "role": "EMPLOYEE",
+      "name": "name_76",
+      "fathers_name": "fathers_name_76",
+      "address": "address_76",
+      "zip_code": "71414",
+      "mobile": "+300076",
+      "tin": "76",
+      "family_name": "family_name_76",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_76",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_77",
+      "username": "username_77",
+      "email": "email_77@email.com",
+      "telephone": "+3000077",
+      "role": "EMPLOYEE",
+      "name": "name_77",
+      "fathers_name": "fathers_name_77",
+      "address": "address_77",
+      "zip_code": "71414",
+      "mobile": "+300077",
+      "tin": "77",
+      "family_name": "family_name_77",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_77",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_78",
+      "username": "username_78",
+      "email": "email_78@email.com",
+      "telephone": "+3000078",
+      "role": "EMPLOYEE",
+      "name": "name_78",
+      "fathers_name": "fathers_name_78",
+      "address": "address_78",
+      "zip_code": "71414",
+      "mobile": "+300078",
+      "tin": "78",
+      "family_name": "family_name_78",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_78",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_79",
+      "username": "username_79",
+      "email": "email_79@email.com",
+      "telephone": "+3000079",
+      "role": "EMPLOYEE",
+      "name": "name_79",
+      "fathers_name": "fathers_name_79",
+      "address": "address_79",
+      "zip_code": "71414",
+      "mobile": "+300079",
+      "tin": "79",
+      "family_name": "family_name_79",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_79",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_80",
+      "username": "username_80",
+      "email": "email_80@email.com",
+      "telephone": "+3000080",
+      "role": "EMPLOYEE",
+      "name": "name_80",
+      "fathers_name": "fathers_name_80",
+      "address": "address_80",
+      "zip_code": "71414",
+      "mobile": "+300080",
+      "tin": "80",
+      "family_name": "family_name_80",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_80",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_81",
+      "username": "username_81",
+      "email": "email_81@email.com",
+      "telephone": "+3000081",
+      "role": "EMPLOYEE",
+      "name": "name_81",
+      "fathers_name": "fathers_name_81",
+      "address": "address_81",
+      "zip_code": "71414",
+      "mobile": "+300081",
+      "tin": "81",
+      "family_name": "family_name_81",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_81",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_82",
+      "username": "username_82",
+      "email": "email_82@email.com",
+      "telephone": "+3000082",
+      "role": "EMPLOYEE",
+      "name": "name_82",
+      "fathers_name": "fathers_name_82",
+      "address": "address_82",
+      "zip_code": "71414",
+      "mobile": "+300082",
+      "tin": "82",
+      "family_name": "family_name_82",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_82",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_83",
+      "username": "username_83",
+      "email": "email_83@email.com",
+      "telephone": "+3000083",
+      "role": "EMPLOYEE",
+      "name": "name_83",
+      "fathers_name": "fathers_name_83",
+      "address": "address_83",
+      "zip_code": "71414",
+      "mobile": "+300083",
+      "tin": "83",
+      "family_name": "family_name_83",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_83",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_84",
+      "username": "username_84",
+      "email": "email_84@email.com",
+      "telephone": "+3000084",
+      "role": "EMPLOYEE",
+      "name": "name_84",
+      "fathers_name": "fathers_name_84",
+      "address": "address_84",
+      "zip_code": "71414",
+      "mobile": "+300084",
+      "tin": "84",
+      "family_name": "family_name_84",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_84",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_85",
+      "username": "username_85",
+      "email": "email_85@email.com",
+      "telephone": "+3000085",
+      "role": "EMPLOYEE",
+      "name": "name_85",
+      "fathers_name": "fathers_name_85",
+      "address": "address_85",
+      "zip_code": "71414",
+      "mobile": "+300085",
+      "tin": "85",
+      "family_name": "family_name_85",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_85",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_86",
+      "username": "username_86",
+      "email": "email_86@email.com",
+      "telephone": "+3000086",
+      "role": "EMPLOYEE",
+      "name": "name_86",
+      "fathers_name": "fathers_name_86",
+      "address": "address_86",
+      "zip_code": "71414",
+      "mobile": "+300086",
+      "tin": "86",
+      "family_name": "family_name_86",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_86",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_87",
+      "username": "username_87",
+      "email": "email_87@email.com",
+      "telephone": "+3000087",
+      "role": "EMPLOYEE",
+      "name": "name_87",
+      "fathers_name": "fathers_name_87",
+      "address": "address_87",
+      "zip_code": "71414",
+      "mobile": "+300087",
+      "tin": "87",
+      "family_name": "family_name_87",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_87",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_88",
+      "username": "username_88",
+      "email": "email_88@email.com",
+      "telephone": "+3000088",
+      "role": "EMPLOYEE",
+      "name": "name_88",
+      "fathers_name": "fathers_name_88",
+      "address": "address_88",
+      "zip_code": "71414",
+      "mobile": "+300088",
+      "tin": "88",
+      "family_name": "family_name_88",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_88",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_89",
+      "username": "username_89",
+      "email": "email_89@email.com",
+      "telephone": "+3000089",
+      "role": "EMPLOYEE",
+      "name": "name_89",
+      "fathers_name": "fathers_name_89",
+      "address": "address_89",
+      "zip_code": "71414",
+      "mobile": "+300089",
+      "tin": "89",
+      "family_name": "family_name_89",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_89",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_90",
+      "username": "username_90",
+      "email": "email_90@email.com",
+      "telephone": "+3000090",
+      "role": "EMPLOYEE",
+      "name": "name_90",
+      "fathers_name": "fathers_name_90",
+      "address": "address_90",
+      "zip_code": "71414",
+      "mobile": "+300090",
+      "tin": "90",
+      "family_name": "family_name_90",
+      "gender": "gender_0",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_90",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_91",
+      "username": "username_91",
+      "email": "email_91@email.com",
+      "telephone": "+3000091",
+      "role": "EMPLOYEE",
+      "name": "name_91",
+      "fathers_name": "fathers_name_91",
+      "address": "address_91",
+      "zip_code": "71414",
+      "mobile": "+300091",
+      "tin": "91",
+      "family_name": "family_name_91",
+      "gender": "gender_1",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_91",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_92",
+      "username": "username_92",
+      "email": "email_92@email.com",
+      "telephone": "+3000092",
+      "role": "EMPLOYEE",
+      "name": "name_92",
+      "fathers_name": "fathers_name_92",
+      "address": "address_92",
+      "zip_code": "71414",
+      "mobile": "+300092",
+      "tin": "92",
+      "family_name": "family_name_92",
+      "gender": "gender_2",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_92",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_93",
+      "username": "username_93",
+      "email": "email_93@email.com",
+      "telephone": "+3000093",
+      "role": "EMPLOYEE",
+      "name": "name_93",
+      "fathers_name": "fathers_name_93",
+      "address": "address_93",
+      "zip_code": "71414",
+      "mobile": "+300093",
+      "tin": "93",
+      "family_name": "family_name_93",
+      "gender": "gender_3",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_93",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_94",
+      "username": "username_94",
+      "email": "email_94@email.com",
+      "telephone": "+3000094",
+      "role": "EMPLOYEE",
+      "name": "name_94",
+      "fathers_name": "fathers_name_94",
+      "address": "address_94",
+      "zip_code": "71414",
+      "mobile": "+300094",
+      "tin": "94",
+      "family_name": "family_name_94",
+      "gender": "gender_4",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_94",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_95",
+      "username": "username_95",
+      "email": "email_95@email.com",
+      "telephone": "+3000095",
+      "role": "EMPLOYEE",
+      "name": "name_95",
+      "fathers_name": "fathers_name_95",
+      "address": "address_95",
+      "zip_code": "71414",
+      "mobile": "+300095",
+      "tin": "95",
+      "family_name": "family_name_95",
+      "gender": "gender_5",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_95",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_96",
+      "username": "username_96",
+      "email": "email_96@email.com",
+      "telephone": "+3000096",
+      "role": "EMPLOYEE",
+      "name": "name_96",
+      "fathers_name": "fathers_name_96",
+      "address": "address_96",
+      "zip_code": "71414",
+      "mobile": "+300096",
+      "tin": "96",
+      "family_name": "family_name_96",
+      "gender": "gender_6",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_96",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_97",
+      "username": "username_97",
+      "email": "email_97@email.com",
+      "telephone": "+3000097",
+      "role": "EMPLOYEE",
+      "name": "name_97",
+      "fathers_name": "fathers_name_97",
+      "address": "address_97",
+      "zip_code": "71414",
+      "mobile": "+300097",
+      "tin": "97",
+      "family_name": "family_name_97",
+      "gender": "gender_7",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_97",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_98",
+      "username": "username_98",
+      "email": "email_98@email.com",
+      "telephone": "+3000098",
+      "role": "EMPLOYEE",
+      "name": "name_98",
+      "fathers_name": "fathers_name_98",
+      "address": "address_98",
+      "zip_code": "71414",
+      "mobile": "+300098",
+      "tin": "98",
+      "family_name": "family_name_98",
+      "gender": "gender_8",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_98",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    },
+    {
+      "id": "id_99",
+      "username": "username_99",
+      "email": "email_99@email.com",
+      "telephone": "+3000099",
+      "role": "EMPLOYEE",
+      "name": "name_99",
+      "fathers_name": "fathers_name_99",
+      "address": "address_99",
+      "zip_code": "71414",
+      "mobile": "+300099",
+      "tin": "99",
+      "family_name": "family_name_99",
+      "gender": "gender_9",
+      "birthdate": "2021-04-05T17:22:57.895023",
+      "city": "city_99",
+      "profilePicture": {
+        "level": "",
+        "idToken": "",
+        "filePath": "",
+        "filename": "",
+        "contentType": ""
+      },
+      "preferences": {},
+      "locale": "el-GR",
+      "files": [
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        },
+        {
+          "level": "",
+          "idToken": "",
+          "filePath": "",
+          "filename": "",
+          "contentType": ""
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@ module.exports = {
 	/**
 	 * Wrapper for GQL API calls.
 	 *
-	 * @param {*} input
+	 * @param item
 	 * @param {*} gql
 	 * @param {String} operation
 	 */

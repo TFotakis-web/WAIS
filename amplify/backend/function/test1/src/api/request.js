@@ -28,6 +28,7 @@ module.exports = {
 								address
 								chamberRecordNumber
 								civilLiabilityExpirationDate
+								comments
 								files {
 									level
 									idToken
@@ -90,6 +91,7 @@ module.exports = {
 								address
 								chamberRecordNumber
 								civilLiabilityExpirationDate
+								comments
 								files {
 									level
 									idToken
@@ -130,8 +132,14 @@ module.exports = {
 
 	resolveRequest: async (username, caller_email, groups, id, decision, callerPayload) => {
 		console.log('requestAPI.resolveRequest input: ' + [username, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
-		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+		if (!decision) {
+			throw new Error("No 'decision' field provided.")
+		}
+		if (!callerPayload) {
+			throw new Error("No 'payload' field provided.")
+		}
+		if (!id) {
+			throw new Error("No 'id' field provided.")
 		}
 
 		// Fetch the request with the provided ID
@@ -159,6 +167,7 @@ module.exports = {
 								address
 								chamberRecordNumber
 								civilLiabilityExpirationDate
+								comments
 								files {
 									level
 									idToken
@@ -404,6 +413,9 @@ module.exports = {
 		`
 		const delResponse = await gqlUtil.execute({input: {id: id}}, mutation0, 'deleteResolvedRequest')
 		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
+
+		//Transform the result to the IDOutput
+		result = JSON.stringify({id: result})
 
 		console.log('RequestAPI.resolveRequest output: ' + JSON.stringify(result))
 		return result

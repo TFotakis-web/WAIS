@@ -460,7 +460,12 @@ export const getAvailableInsuranceCompanies = /* GraphQL */ `
 `;
 export const getS3Object = /* GraphQL */ `
   query GetS3Object($obj: S3ObjectInput) {
-    getS3Object(obj: $obj)
+    getS3Object(obj: $obj) {
+      content
+      path
+      size
+      contentType
+    }
   }
 `;
 export const listOffices = /* GraphQL */ `

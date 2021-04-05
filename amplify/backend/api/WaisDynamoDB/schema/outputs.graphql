@@ -226,3 +226,10 @@ type InsuranceCompanyDetailsOutput {
 type IDOutput {
     id: ID
 }
+
+type S3ObjectOutput {
+    content: String
+    path: String
+    size: Int
+    contentType: String
+}

@@ -373,6 +373,10 @@ exports.handler = async (event) => {
 	console.log('Resolving event: ' + JSON.stringify(event))
 	if(event.debug){
 		await debugAPI.run(event)
+		if(!event.fieldName){
+			console.log('Debug run completed.')
+			return
+		}
 	}
 	const typeHandler = resolvers[event.typeName]
 	if (typeHandler) {

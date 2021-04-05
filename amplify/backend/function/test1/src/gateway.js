@@ -95,7 +95,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.resolveRequest(args.username,args.email, args.groups, args.id, args.decision, args.payload)
+		const result = await requestAPI.resolveRequest(args.username, args.email, args.groups, args.id, args.decision, args.payload)
 		console.log('resolveRequest output: ' + JSON.stringify(result))
 		return result
 	},

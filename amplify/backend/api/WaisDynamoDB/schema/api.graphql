@@ -60,7 +60,7 @@ type Query {
     getAvailableInsuranceCompanies: InsuranceCompanyDetailsOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     ### ADMIN API ###
-    getS3Object(obj: S3ObjectInput): String @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
+    getS3Object(obj: S3ObjectInput): S3ObjectOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {

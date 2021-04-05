@@ -13,8 +13,19 @@ module.exports = {
 		console.log('adminAPI.getS3Object input: ' + [username, email, JSON.stringify(s3obj), JSON.stringify(groups)])
 		const path = `${s3obj.level}/${s3obj.idToken}/${s3obj.filePath}/${s3obj.filename}`
 		const data = await s3.getObject({Bucket: bucket, Key: path}).promise()
-		const result = data.Body.toString('base64')
-		console.log('adminAPI.getS3Object preview output: ' + JSON.stringify(result.substring(0, 10)))
+		const parsed_data = data.Body.toString('base64')
+		const result = {
+			content: parsed_data,
+			size: parsed_data.length,
+			path: path,
+			contentType: s3obj.contentType || null
+		}
+		console.log('adminAPI.getS3Object preview output: ' + JSON.stringify({
+			content: parsed_data.substring(0, 10),
+			size: parsed_data.length,
+			path: path,
+			contentType: s3obj.contentType || null
+		}))
 		return result
 	},
 	getCreateOfficeRequests: async (filter, limit, nextToken) => {

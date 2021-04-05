@@ -310,7 +310,7 @@ module.exports = {
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
 				updateOfficeUserConnection(input: $input) {
-				id
+					id
 				}
 			}
 		`
