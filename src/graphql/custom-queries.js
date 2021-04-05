@@ -20,42 +20,6 @@ export const getAvailableInsuranceCompanies = /* GraphQL */ `
 		}
 	}
 `;
-export const getContractorUserProfiles = /* GraphQL */ `
-	query GetContractorUserProfiles(
-		$filter: ModelOfficeUserConnectionFilterInput
-		$limit: Int
-		$nextToken: String
-	) {
-		getContractorUserProfiles(
-			filter: $filter
-			limit: $limit
-			nextToken: $nextToken
-		) {
-			items {
-				id
-				username
-				email
-				role
-				telephone
-				name
-				fathers_name
-				address
-				zip_code
-				mobile
-				tin
-				family_name
-				gender
-				birthdate
-				city
-				preferences
-				locale
-				createdAt
-				updatedAt
-			}
-			nextToken
-		}
-	}
-`;
 export const getContractsForOfficeId = /* GraphQL */ `
 	query GetContractsForOfficeId(
 		$officeId: ID!
@@ -84,6 +48,22 @@ export const getContractsForOfficeId = /* GraphQL */ `
 				doy
 				address
 				familyStatus
+				files {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
+				driversLicense {
+					LicenseID
+					DriversLicenseType
+					Category {
+						category
+						issueDate
+						expiresAt
+					}
+				}
 				createdAt
 				updatedAt
 			}
@@ -119,6 +99,22 @@ export const getCustomersForOfficeId = /* GraphQL */ `
 				doy
 				address
 				familyStatus
+				files {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
+				driversLicense {
+					LicenseID
+					DriversLicenseType
+					Category {
+						category
+						issueDate
+						expiresAt
+					}
+				}
 				createdAt
 				updatedAt
 			}
@@ -153,8 +149,22 @@ export const getEmployeeUserProfiles = /* GraphQL */ `
 				gender
 				birthdate
 				city
+				profilePicture {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
 				preferences
 				locale
+				files {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
 				createdAt
 				updatedAt
 			}
@@ -175,28 +185,35 @@ export const getMySentRequests = /* GraphQL */ `
 				senderEmail
 				receiverEmail
 				type
-				createdAt
-				updatedAt
-			}
-			nextToken
-		}
-	}
-`;
-export const getMyUserCalendarEvents = /* GraphQL */ `
-	query GetMyUserCalendarEvents(
-		$filter: ModelUserCalendarEventFilterInput
-		$limit: Int
-		$nextToken: String
-	) {
-		getMyUserCalendarEvents(
-			filter: $filter
-			limit: $limit
-			nextToken: $nextToken
-		) {
-			items {
-				id
-				username
-				payload
+				payload {
+					createOfficePayload {
+						officeName
+						address
+						office_email
+						zip_code
+						mobile
+						phone
+						tin
+						professionStartDate
+						chamberRecordNumber
+						insuranceLicenseExpirationDate
+						civilLiabilityExpirationDate
+						comments
+					}
+					createOfficeConnectionPayload {
+						manager_email
+					}
+					inviteEmployeeToOfficePayload {
+						email
+						empModelPermissions
+						empPagePermissions
+					}
+					inviteContractorToOfficePayload {
+						ctrModelPermissions
+						ctrPagePermissions
+						email
+					}
+				}
 				createdAt
 				updatedAt
 			}
@@ -226,34 +243,6 @@ export const getOfficesIWorkIn = /* GraphQL */ `
 		}
 	}
 `;
-export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
-	query GetPartnerOfficeConnectionsForOfficeId(
-		$officeId: ID!
-		$filter: ModelOfficeAccessConnectionFilterInput
-		$limit: Int
-		$nextToken: String
-	) {
-		getPartnerOfficeConnectionsForOfficeId(
-			officeId: $officeId
-			filter: $filter
-			limit: $limit
-			nextToken: $nextToken
-		) {
-			items {
-				id
-				fromId
-				fromOfficeName
-				toId
-				toOfficeName
-				expirationDate
-				message
-				createdAt
-				updatedAt
-			}
-			nextToken
-		}
-	}
-`;
 export const getRequestsForMe = /* GraphQL */ `
 	query GetRequestsForMe(
 		$filter: ModelRequestsFilterInput
@@ -267,6 +256,35 @@ export const getRequestsForMe = /* GraphQL */ `
 				senderEmail
 				receiverEmail
 				type
+				payload {
+					createOfficePayload {
+						officeName
+						address
+						office_email
+						zip_code
+						mobile
+						phone
+						tin
+						professionStartDate
+						chamberRecordNumber
+						insuranceLicenseExpirationDate
+						civilLiabilityExpirationDate
+						comments
+					}
+					createOfficeConnectionPayload {
+						manager_email
+					}
+					inviteEmployeeToOfficePayload {
+						email
+						empModelPermissions
+						empPagePermissions
+					}
+					inviteContractorToOfficePayload {
+						ctrModelPermissions
+						ctrPagePermissions
+						email
+					}
+				}
 				createdAt
 				updatedAt
 			}
