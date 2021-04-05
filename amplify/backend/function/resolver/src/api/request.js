@@ -132,8 +132,14 @@ module.exports = {
 
 	resolveRequest: async (username, caller_email, groups, id, decision, callerPayload) => {
 		console.log('requestAPI.resolveRequest input: ' + [username, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
-		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+		if (!decision) {
+			throw new Error("No 'decision' field provided.")
+		}
+		if (!callerPayload) {
+			throw new Error("No 'payload' field provided.")
+		}
+		if (!id) {
+			throw new Error("No 'id' field provided.")
 		}
 
 		// Fetch the request with the provided ID
