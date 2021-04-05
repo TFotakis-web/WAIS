@@ -2,6 +2,9 @@
 	<ion-grid fixed>
 		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<ion-card>
+			<ion-card-header>
+				<ion-card-title>Create Office requests</ion-card-title>
+			</ion-card-header>
 			<ion-card-content>
 				<ion-list>
 					<ion-item v-for="request in $store.getters['request/requestsForNewOfficeReceived']" :key="request.id" @click="$router.push({name: 'AdminNotificationDetails', params: {id: request.id}})" button>
