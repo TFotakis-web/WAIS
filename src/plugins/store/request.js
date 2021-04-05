@@ -126,10 +126,10 @@ export const request = {
 				return Promise.reject(error);
 			}
 		},
-		async updateRequest({ dispatch }, request) {
+		async updateRequest({ commit, dispatch }, request) {
 			try {
-				let response = await API.graphql(graphqlOperation(deleteRequestsSentByMe, { input: { id: request.id } }));
-
+				await dispatch('deleteRequestsSentByMe', request.id);
+				let response;
 				switch (request.type) {
 					case 'CREATE_OFFICE':
 						response = await dispatch('createOfficeRequest', request.payload.createOfficePayload);
@@ -146,6 +146,16 @@ export const request = {
 				}
 
 				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async deleteRequestsSentByMe({ commit }, id) {
+			try {
+				let response = await API.graphql(graphqlOperation(deleteRequestsSentByMe, { input: { id } }));
+				commit('removeRequestSentByMe', id);
+				return Promise.resolve(response.data.deleteRequestsSentByMe);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
