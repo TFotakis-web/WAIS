@@ -174,6 +174,7 @@
 					flag |= Boolean(el.filename.match('File type 3'));
 					return !flag;
 				});
+				this.condition = true;
 			}
 		},
 		methods: {
