@@ -222,3 +222,7 @@ type InsuranceCompanyDetailsOutput {
     officeName: String
     insuranceCompanies: [InsuranceCompany]
 }
+
+type IDOutput {
+    id: ID
+}

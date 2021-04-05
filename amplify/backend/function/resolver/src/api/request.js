@@ -408,6 +408,9 @@ module.exports = {
 		const delResponse = await gqlUtil.execute({input: {id: id}}, mutation0, 'deleteResolvedRequest')
 		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
 
+		//Transform the result to the IDOutput
+		result = JSON.stringify({id: result})
+
 		console.log('RequestAPI.resolveRequest output: ' + JSON.stringify(result))
 		return result
 	},

@@ -693,7 +693,9 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
     $input: DeleteRequestsInput!
     $condition: ModelRequestsConditionInput
   ) {
-    deleteRequestsSentByMe(input: $input, condition: $condition)
+    deleteRequestsSentByMe(input: $input, condition: $condition) {
+      id
+    }
   }
 `;
 export const resolveRequest = /* GraphQL */ `
@@ -706,7 +708,9 @@ export const resolveRequest = /* GraphQL */ `
       requestId: $requestId
       decision: $decision
       payload: $payload
-    )
+    ) {
+      id
+    }
   }
 `;
 export const createOfficeAccessConnectionForOffice = /* GraphQL */ `
