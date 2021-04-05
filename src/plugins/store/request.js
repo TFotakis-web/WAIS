@@ -132,16 +132,16 @@ export const request = {
 
 				switch (request.type) {
 					case 'CREATE_OFFICE':
-						response = await dispatch('createOfficeRequest', request.payload);
+						response = await dispatch('createOfficeRequest', request.payload.createOfficePayload);
 						break;
 					case 'CREATE_OFFICE_CONNECTION':
-						response = await dispatch('createOfficeConnectionRequest', request.payload);
+						response = await dispatch('createOfficeConnectionRequest', request.payload.createOfficeConnectionPayload);
 						break;
 					case 'INVITE_EMPLOYEE_TO_OFFICE':
-						response = await dispatch('createInviteEmployeeToOfficeRequest', request.payload);
+						response = await dispatch('createInviteEmployeeToOfficeRequest', request.payload.inviteEmployeeToOfficePayload);
 						break;
 					case 'INVITE_CONTRACTOR_TO_OFFICE':
-						response = await dispatch('createInviteContractorToOfficeRequest', request.payload);
+						response = await dispatch('createInviteContractorToOfficeRequest', request.payload.inviteContractorToOfficePayload);
 						break;
 				}
 

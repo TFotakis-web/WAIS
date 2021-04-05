@@ -35,11 +35,11 @@
         },
         "resolver": {
           "deploymentBucketName": "amplify-wais-staging-173533-deployment",
-          "s3Key": "amplify-builds/resolver-62712f6f597073784a63-build.zip"
+          "s3Key": "amplify-builds/resolver-61697873476b79654342-build.zip"
         },
         "test1": {
           "deploymentBucketName": "amplify-wais-staging-173533-deployment",
-          "s3Key": "amplify-builds/test1-7265544e496d62387430-build.zip"
+          "s3Key": "amplify-builds/test1-656f694f312f35632f6a-build.zip"
         }
       }
     }

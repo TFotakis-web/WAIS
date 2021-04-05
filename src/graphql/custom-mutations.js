@@ -456,51 +456,7 @@ export const deleteRequestsSentByMe = /* GraphQL */ `
 		$input: DeleteRequestsInput!
 		$condition: ModelRequestsConditionInput
 	) {
-		deleteRequestsSentByMe(input: $input, condition: $condition) {
-			id
-			senderUsername
-			senderEmail
-			receiverEmail
-			type
-			payload {
-				createOfficePayload {
-					officeName
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					tin
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					comments
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-				}
-				createOfficeConnectionPayload {
-					manager_email
-				}
-				inviteEmployeeToOfficePayload {
-					email
-					empModelPermissions
-					empPagePermissions
-				}
-				inviteContractorToOfficePayload {
-					ctrModelPermissions
-					ctrPagePermissions
-					email
-				}
-			}
-			createdAt
-			updatedAt
-		}
+		deleteRequestsSentByMe(input: $input, condition: $condition)
 	}
 `;
 export const deleteVehicleForOffice = /* GraphQL */ `

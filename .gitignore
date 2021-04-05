@@ -57,5 +57,4 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 .history/*
-C:/Users/gstamatakis/IdeaProjects/wais/amplify/mock-data
 team-provider-info.json

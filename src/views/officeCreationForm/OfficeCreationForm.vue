@@ -160,7 +160,7 @@
 			const requestsForNewOffice = requestsSentByMe.filter((el) => el.type === 'CREATE_OFFICE');
 			if (requestsForNewOffice.length) {
 				this.request = requestsForNewOffice[0];
-				const payload = JSON.parse(this.request.payload);
+				const payload = this.request.payload.createOfficePayload;
 				Object.assign(this.CreateOfficeRequestPayloadInput, payload);
 
 				this.fileType1 = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match('File type 1')) || {};
@@ -208,7 +208,7 @@
 						.catch(this.$toast.error)
 						.finally(() => (this.loading = false));
 				} else {
-					this.request.payload = JSON.stringify(payload);
+					this.request.payload.createOfficePayload = payload;
 					this.updateRequest(this.request)
 						.then((response) => {
 							this.request = response;
