@@ -4,6 +4,14 @@
       "waisauth": [
         "read"
       ]
+    },
+    "api": {
+      "WaisDynamoDB": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
     }
   },
   "lambdaLayers": []

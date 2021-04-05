@@ -43,6 +43,7 @@ module.exports = {
 								address
 								chamberRecordNumber
 								civilLiabilityExpirationDate
+								comments
 								files {
 									level
 									idToken

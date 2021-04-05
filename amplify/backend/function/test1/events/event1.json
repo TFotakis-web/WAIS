@@ -1,0 +1,33 @@
+{
+  "typeName": "Query",
+  "fieldName": "getRequestsForMe",
+  "arguments": {},
+  "identity": {
+    "claims": {
+      "sub": "6fd26814-eb14-42d6-8ee7-3382ab3fb7f8",
+      "aud": "6g05q6gdl28vs4sqa7d1csk6lb",
+      "event_id": "dd1204e1-2365-4ab4-8674-977d48107fde",
+      "token_use": "id",
+      "auth_time": 1617484823,
+      "iss": "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_4hpScGXTx",
+      "cognito:username": "g1",
+      "exp": 1617488425,
+      "iat": 1617484825,
+      "email": "gstamatakis95@gmail.com"
+    },
+    "defaultAuthStrategy": "ALLOW",
+    "groups": [
+      "admin"
+    ],
+    "issuer": "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_4hpScGXTx",
+    "sourceIp": [
+      "62.74.12.201"
+    ],
+    "sub": "6fd26814-eb14-42d6-8ee7-3382ab3fb7f8",
+    "username": "g1"
+  },
+  "source": null,
+  "prev": {
+    "result": {}
+  }
+}

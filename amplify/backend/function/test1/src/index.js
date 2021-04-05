@@ -8,7 +8,8 @@
 Amplify Params - DO NOT EDIT */
 
 //API
-const api = require('./gateway') //TODO determine path
+const gateway = require('./gateway')
+const debugAPI = require('./unittests')
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
@@ -18,7 +19,7 @@ const api = require('./gateway') //TODO determine path
 const resolvers = {
 	Office: {
 		availableInsuranceCompanies: async (event) => {
-			return await api.getAvailableInsuranceCompaniesForOffice({
+			return await gateway.getAvailableInsuranceCompaniesForOffice({
 				office: event.source,
 				username: event.identity.claims['cognito:username'],
 			})
@@ -29,10 +30,10 @@ const resolvers = {
 			return event.arguments.msg
 		},
 		me: async (event) => {
-			return await api.user({username: event.identity.claims['cognito:username']})
+			return await gateway.user({username: event.identity.claims['cognito:username']})
 		},
 		getOfficesIWorkIn: async (event) => {
-			return await api.getOfficesOfUser({
+			return await gateway.getOfficesOfUser({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -40,7 +41,7 @@ const resolvers = {
 			})
 		},
 		getMyUserCalendarEvents: async (event) => {
-			return await api.getCalendarEventsOfUser({
+			return await gateway.getCalendarEventsOfUser({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -48,7 +49,7 @@ const resolvers = {
 			})
 		},
 		getMySentRequests: async (event) => {
-			return await api.getRequestsFromUser({
+			return await gateway.getRequestsFromUser({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -56,7 +57,7 @@ const resolvers = {
 			})
 		},
 		getRequestsForMe: async (event) => {
-			return await api.getRequestsForUser({
+			return await gateway.getRequestsForUser({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -66,7 +67,7 @@ const resolvers = {
 			})
 		},
 		getEmployeeUserProfiles: async (event) => {
-			return await api.getEmployeeUserProfilesForManagerUsername({
+			return await gateway.getEmployeeUserProfilesForManagerUsername({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -74,7 +75,7 @@ const resolvers = {
 			})
 		},
 		getContractorUserProfiles: async (event) => {
-			return await api.getContractorUserProfilesForManagerUsername({
+			return await gateway.getContractorUserProfilesForManagerUsername({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
@@ -82,7 +83,7 @@ const resolvers = {
 			})
 		},
 		getCustomersForOfficeId: async (event) => {
-			return await api.getCustomersForOfficeId({
+			return await gateway.getCustomersForOfficeId({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				filter: event.arguments.filter,
@@ -91,7 +92,7 @@ const resolvers = {
 			})
 		},
 		getContractsForOfficeId: async (event) => {
-			return await api.getContractsForOfficeId({
+			return await gateway.getContractsForOfficeId({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				filter: event.arguments.filter,
@@ -100,7 +101,7 @@ const resolvers = {
 			})
 		},
 		getPartnerOfficeConnections: async (event) => {
-			return await api.getPartnerOfficeConnections({
+			return await gateway.getPartnerOfficeConnections({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				filter: event.arguments.filter,
@@ -109,7 +110,7 @@ const resolvers = {
 			})
 		},
 		getS3Object: async (event) => {
-			return await api.getS3Object({
+			return await gateway.getS3Object({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				s3obj: event.arguments.obj,
@@ -120,21 +121,21 @@ const resolvers = {
 
 	Mutation: {
 		updateOfficeDetails: async (event) => {
-			return await api.updateOfficeDetails({
+			return await gateway.updateOfficeDetails({
 				username: event.identity.claims['cognito:username'],
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
 		updateUserProfileDetails: async (event) => {
-			return await api.updateUserProfileDetails({
+			return await gateway.updateUserProfileDetails({
 				username: event.identity.claims['cognito:username'],
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
 		createVehicleForOffice: async (event) => {
-			return await api.createVehicleForOffice({
+			return await gateway.createVehicleForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -142,7 +143,7 @@ const resolvers = {
 			})
 		},
 		updateVehicleForOffice: async (event) => {
-			return await api.updateVehicleForOffice({
+			return await gateway.updateVehicleForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -150,7 +151,7 @@ const resolvers = {
 			})
 		},
 		deleteVehicleForOffice: async (event) => {
-			return await api.deleteVehicleForOffice({
+			return await gateway.deleteVehicleForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -158,7 +159,7 @@ const resolvers = {
 			})
 		},
 		createContractForOffice: async (event) => {
-			return await api.createContractForOffice({
+			return await gateway.createContractForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -166,7 +167,7 @@ const resolvers = {
 			})
 		},
 		updateContractForOffice: async (event) => {
-			return await api.updateContractForOffice({
+			return await gateway.updateContractForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -174,7 +175,7 @@ const resolvers = {
 			})
 		},
 		deleteContractForOffice: async (event) => {
-			return await api.deleteContractForOffice({
+			return await gateway.deleteContractForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -182,7 +183,7 @@ const resolvers = {
 			})
 		},
 		createCustomerForOffice: async (event) => {
-			return await api.createCustomerForOffice({
+			return await gateway.createCustomerForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -190,7 +191,7 @@ const resolvers = {
 			})
 		},
 		createOfficeRequest: async (event) => {
-			return await api.createOfficeRequest({
+			return await gateway.createOfficeRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -198,7 +199,7 @@ const resolvers = {
 			})
 		},
 		createInviteEmployeeToOfficeRequest: async (event) => {
-			return await api.createInviteEmployeeToOfficeRequest({
+			return await gateway.createInviteEmployeeToOfficeRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -206,7 +207,7 @@ const resolvers = {
 			})
 		},
 		createInviteContractorToOfficeRequest: async (event) => {
-			return await api.createInviteContractorToOfficeRequest({
+			return await gateway.createInviteContractorToOfficeRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -214,7 +215,7 @@ const resolvers = {
 			})
 		},
 		createOfficeConnectionRequest: async (event) => {
-			return await api.createOfficeConnectionRequest({
+			return await gateway.createOfficeConnectionRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -222,7 +223,7 @@ const resolvers = {
 			})
 		},
 		deleteRequestsSentByMe: async (event) => {
-			return await api.deleteRequestsSentByMe({
+			return await gateway.deleteRequestsSentByMe({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -231,7 +232,7 @@ const resolvers = {
 			})
 		},
 		resolveRequest: async (event) => {
-			return await api.resolveRequest({
+			return await gateway.resolveRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -241,7 +242,7 @@ const resolvers = {
 			})
 		},
 		createOfficeAccessConnectionForOffice: async (event) => {
-			return await api.createOfficeAccessConnectionForOffice({
+			return await gateway.createOfficeAccessConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -249,7 +250,7 @@ const resolvers = {
 			})
 		},
 		updateOfficeAccessConnectionForOffice: async (event) => {
-			return await api.updateOfficeAccessConnectionForOffice({
+			return await gateway.updateOfficeAccessConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -257,7 +258,7 @@ const resolvers = {
 			})
 		},
 		deleteOfficeAccessConnectionForOffice: async (event) => {
-			return await api.deleteOfficeAccessConnectionForOffice({
+			return await gateway.deleteOfficeAccessConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
@@ -266,28 +267,28 @@ const resolvers = {
 		},
 
 		createMyUserCalendarEvent: async (event) => {
-			return await api.createMyUserCalendarEvent({
+			return await gateway.createMyUserCalendarEvent({
 				username: event.identity.claims['cognito:username'],
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
 		updateMyUserCalendarEvents: async (event) => {
-			return await api.updateMyUserCalendarEvents({
+			return await gateway.updateMyUserCalendarEvents({
 				username: event.identity.claims['cognito:username'],
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
 		deleteMyUserCalendarEvents: async (event) => {
-			return await api.deleteMyUserCalendarEvents({
+			return await gateway.deleteMyUserCalendarEvents({
 				username: event.identity.claims['cognito:username'],
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
 		updateEmployeeModelPermissionsForOffice: async (event) => {
-			return await api.updateEmployeeModelPermissionsForOffice({
+			return await gateway.updateEmployeeModelPermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
@@ -295,7 +296,7 @@ const resolvers = {
 			})
 		},
 		updateEmployeePagePermissionsForOffice: async (event) => {
-			return await api.updateEmployeePagePermissionsForOffice({
+			return await gateway.updateEmployeePagePermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
@@ -303,14 +304,14 @@ const resolvers = {
 			})
 		},
 		deleteEmployeeForOffice: async (event) => {
-			return await api.deleteEmployeeForOffice({
+			return await gateway.deleteEmployeeForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
 			})
 		},
 		updateContractorModelPermissionsForOffice: async (event) => {
-			return await api.updateContractorModelPermissionsForOffice({
+			return await gateway.updateContractorModelPermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				contractorUsername: event.arguments.contractorUsername,
@@ -318,7 +319,7 @@ const resolvers = {
 			})
 		},
 		updateContractorPagePermissionsForOffice: async (event) => {
-			return await api.updateContractorPagePermissionsForOffice({
+			return await gateway.updateContractorPagePermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				contractorUsername: event.arguments.contractorUsername,
@@ -326,7 +327,7 @@ const resolvers = {
 			})
 		},
 		deleteContractorForOffice: async (event) => {
-			return await api.deleteContractorForOffice({
+			return await gateway.deleteContractorForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				contractorUsername: event.arguments.contractorUsername,
@@ -334,24 +335,24 @@ const resolvers = {
 			})
 		},
 		getUserModelPermissionsForOffice: async (event) => {
-			return await api.getUserModelPermissionsForOffice({
+			return await gateway.getUserModelPermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 			})
 		},
 		getUserPagePermissionsForOffice: async (event) => {
-			return await api.getUserPagePermissionsForOffice({
+			return await gateway.getUserPagePermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 			})
 		},
 		getUserRole: async (event) => {
-			return await api.getUserRoleByUsername({
+			return await gateway.getUserRoleByUsername({
 				username: event.identity.claims['cognito:username'],
 			})
 		},
 		getAvailableInsuranceCompanies: async (event) => {
-			return await api.getAllInsuranceCompanies({
+			return await gateway.getAllInsuranceCompanies({
 				username: event.identity.claims['cognito:username'],
 			})
 		},
@@ -370,6 +371,9 @@ const resolvers = {
 // }
 exports.handler = async (event) => {
 	console.log('Resolving event: ' + JSON.stringify(event))
+	if(event.debug){
+		await debugAPI.run(event)
+	}
 	const typeHandler = resolvers[event.typeName]
 	if (typeHandler) {
 		const resolver = typeHandler[event.fieldName]

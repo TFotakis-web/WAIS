@@ -112,7 +112,7 @@ type Mutation {
         @function(name: "resolver-${env}")
 
     # Delete a single request with the provided ID
-    deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): RequestsOutput
+    deleteRequestsSentByMe(input: DeleteRequestsInput!, condition: ModelRequestsConditionInput): ID!
         @auth(rules: [{ allow: private }])
         @function(name: "resolver-${env}")
     resolveRequest(requestId: ID!, decision: RequestDecision!, payload: ResolveRequestPayloadInput!): ID

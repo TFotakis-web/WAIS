@@ -1,0 +1,8 @@
+{
+  "typeName": "Query",
+  "debug": {
+    "load_data": true,
+    "truncate_data": false,
+    "data_location": "../data/data1.json"
+  }
+}
