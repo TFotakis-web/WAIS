@@ -2,40 +2,40 @@
 	<ion-grid fixed>
 		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<strong>{{ $t('fields.office') }}: </strong>
-		<span>{{ request.payload.officeName }}</span>
+		<span>{{ request.payload.createOfficePayload.officeName }}</span>
 		<br>
 		<strong>{{ $t('fields.username') }}: </strong>
-		<span>{{ request.payload.username }}</span>
+		<span>{{ request.payload.createOfficePayload.username }}</span>
 		<br>
 		<strong>{{ $t('fields.full_name') }}: </strong>
-		<span>{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
+		<span>{{ request.payload.createOfficePayload.family_name + ' ' + request.payload.createOfficePayload.name + ' ' + request.payload.createOfficePayload.fathersName }}</span>
 		<br>
 		<strong>{{ $t('fields.mobile') }}: </strong>
-		<span>{{ request.payload.mobile }}</span>
+		<span>{{ request.payload.createOfficePayload.mobile }}</span>
 		<br>
 		<strong>{{ $t('fields.phone') }}: </strong>
-		<span>{{ request.payload.phone }}</span>
+		<span>{{ request.payload.createOfficePayload.phone }}</span>
 		<br>
 		<strong>{{ $t('fields.address') }}: </strong>
-		<span>{{ request.payload.address + ', ' + request.payload.postcode }}</span>
+		<span>{{ request.payload.createOfficePayload.address + ', ' + request.payload.createOfficePayload.zip_code }}</span>
 		<br>
 		<strong>{{ $t('fields.tin') }}: </strong>
-		<span>{{ request.payload.tin }}</span>
+		<span>{{ request.payload.createOfficePayload.tin }}</span>
 		<br>
 		<strong>{{ $t('fields.chamberRecordNumber') }}: </strong>
-		<span>{{ request.payload.chamberRecordNumber }}</span>
+		<span>{{ request.payload.createOfficePayload.chamberRecordNumber }}</span>
 		<br>
 		<strong>{{ $t('fields.professionStartDate') }}: </strong>
-		<span>{{ request.payload.professionStartDate }}</span>
+		<span>{{ request.payload.createOfficePayload.professionStartDate }}</span>
 		<br>
 		<strong>{{ $t('fields.licenseExpirationDate') }}: </strong>
-		<span>{{ request.payload.licenseExpirationDate }}</span>
+		<span>{{ request.payload.createOfficePayload.licenseExpirationDate }}</span>
 		<br>
 		<strong>{{ $t('fields.comments') }}: </strong>
-		<span>{{ request.payload.comments }}</span>
+		<span>{{ request.payload.createOfficePayload.comments }}</span>
 		<br>
 		<strong>{{ $t('fields.files') }}: </strong>
-		<a v-for="file in request.payload.files" :key="file.url" :href="file.url" target="_blank" class="ion-margin-end">{{ file.filename }}</a>
+		<a v-for="file in request.payload.createOfficePayload.files" :key="file.url" :href="file.url" target="_blank" class="ion-margin-end">{{ file.filename }}</a>
 		<form @submit.prevent="acceptRequest">
 			<ion-list>
 				<ion-item>
@@ -76,8 +76,10 @@
 	</ion-grid>
 </template>
 <script>
-	import { mapActions, mapGetters } from 'vuex';
-	import { Storage } from 'aws-amplify';
+	import { mapActions } from 'vuex';
+	// import { Storage } from 'aws-amplify';
+	import { API, graphqlOperation } from 'aws-amplify';
+	import { getS3Object } from '@/graphql/custom-queries';
 	import loadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
@@ -96,44 +98,46 @@
 					companyAccess: [],
 				},
 				featureAccessOptions: [
-					{ text: this.$t('fields.billing'), value: 'Billing', selected: false },
-					{ text: this.$t('fields.issuing'), value: 'Issuing', selected: false },
+					{ text: this.$t('fields.billing'), value: 'Billing' },
+					{ text: this.$t('fields.issuing'), value: 'Issuing' },
 				],
 				companyOptions: [
-					{ text: 'Am Trust', value: 'Am Trust', selected: false },
-					{ text: 'Brokers Union / Ergo', value: 'Brokers Union / Ergo', selected: false },
-					{ text: 'Brokers Union / Prime', value: 'Brokers Union / Prime', selected: false },
-					{ text: 'Cromar/Lloyds', value: 'Cromar/Lloyds', selected: false },
-					{ text: 'Euroins', value: 'Euroins', selected: false },
-					{ text: 'Europrotection / Am Trust', value: 'Europrotection / Am Trust', selected: false },
-					{ text: 'Europrotection / Eurolife', value: 'Europrotection / Eurolife', selected: false },
-					{ text: 'Express Ηρακλειου', value: 'Express Ηρακλειου', selected: false },
-					{ text: 'Express Χανίων', value: 'Express Χανίων', selected: false },
-					{ text: 'Generali', value: 'Generali', selected: false },
-					{ text: 'Interamerican', value: 'Interamerican', selected: false },
-					{ text: 'Interlife', value: 'Interlife', selected: false },
-					{ text: 'Intersalonica', value: 'Intersalonica', selected: false },
-					{ text: 'Oracle', value: 'Oracle', selected: false },
-					{ text: 'Personal Brokers / Generali', value: 'Personal Brokers / Generali', selected: false },
-					{ text: 'Personal Brokers / Interamerican', value: 'Personal Brokers / Interamerican', selected: false },
-					{ text: 'Personal Brokers / Intersalonica', value: 'Personal Brokers / Intersalonica', selected: false },
-					{ text: 'Personal Brokers / Ατλαντική Ένωση', value: 'Personal Brokers / Ατλαντική Ένωση', selected: false },
-					{ text: 'Personal Insurance', value: 'Personal Insurance', selected: false },
-					{ text: 'Εθνική', value: 'Εθνική', selected: false },
-					{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη', selected: false },
+					{ text: 'Am Trust', value: 'Am Trust' },
+					{ text: 'Brokers Union / Ergo', value: 'Brokers Union / Ergo' },
+					{ text: 'Brokers Union / Prime', value: 'Brokers Union / Prime' },
+					{ text: 'Cromar/Lloyds', value: 'Cromar/Lloyds' },
+					{ text: 'Euroins', value: 'Euroins' },
+					{ text: 'Europrotection / Am Trust', value: 'Europrotection / Am Trust' },
+					{ text: 'Europrotection / Eurolife', value: 'Europrotection / Eurolife' },
+					{ text: 'Express Ηρακλειου', value: 'Express Ηρακλειου' },
+					{ text: 'Express Χανίων', value: 'Express Χανίων' },
+					{ text: 'Generali', value: 'Generali' },
+					{ text: 'Interamerican', value: 'Interamerican' },
+					{ text: 'Interlife', value: 'Interlife' },
+					{ text: 'Intersalonica', value: 'Intersalonica' },
+					{ text: 'Oracle', value: 'Oracle' },
+					{ text: 'Personal Brokers / Generali', value: 'Personal Brokers / Generali' },
+					{ text: 'Personal Brokers / Interamerican', value: 'Personal Brokers / Interamerican' },
+					{ text: 'Personal Brokers / Intersalonica', value: 'Personal Brokers / Intersalonica' },
+					{ text: 'Personal Brokers / Ατλαντική Ένωση', value: 'Personal Brokers / Ατλαντική Ένωση' },
+					{ text: 'Personal Insurance', value: 'Personal Insurance' },
+					{ text: 'Εθνική', value: 'Εθνική' },
+					{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη' },
 				],
 				acceptLoading: false,
 				rejectLoading: false,
 			};
 		},
 		mounted() {
-			const pageDesc = ` - ${this.request.payload.officeName}: ${this.request.payload.surname} ${this.request.payload.name} ${this.request.payload.fathersName}`;
+			const pageDesc = ` - ${this.request.payload.createOfficePayload.officeName}: ${this.request.payload.createOfficePayload.family_name} ${this.request.payload.createOfficePayload.name} ${this.request.payload.createOfficePayload.fathersName}`;
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle') + pageDesc);
 			this.$store.commit('pageStructure/setPageBackButton', true);
 			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Notifications' }).fullPath);
-			for (const file of this.request.payload.files) {
-				Storage.get(file.filePath + file.filename, { level: file.level, identityId: file.idToken })
-					.then(response => file.url = response);
+			for (const file of this.request.payload.createOfficePayload.files) {
+				// Storage.get(file.filePath + file.filename, { level: file.level, identityId: file.idToken })
+				// 	.then(response => file.url = response);
+				API.graphql(graphqlOperation(getS3Object, { obj: file }))
+					.then(response => file.url = response.data.getS3Object);
 			}
 		},
 		methods: {
@@ -161,11 +165,9 @@
 			},
 		},
 		computed: {
-			...mapGetters('request', ['requestsForMe']),
 			request() {
 				const requestId = this.$route.params.id;
-				const request = this.requestsForMe.find(el => el.id === requestId) || {};
-				return request;
+				return this.$store.getters['request/requestForMeById'](requestId);
 			},
 		},
 	};

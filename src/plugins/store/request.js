@@ -126,7 +126,7 @@ export const request = {
 				return Promise.reject(error);
 			}
 		},
-		async updateRequest({ commit, dispatch }, request) {
+		async updateRequest({ dispatch }, request) {
 			try {
 				await dispatch('deleteRequestsSentByMe', request.id);
 				let response;
@@ -184,5 +184,7 @@ export const request = {
 		requestsForNewOfficeConnectionReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'CREATE_OFFICE_CONNECTION'),
 		requestsForInviteEmployeeToOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'INVITE_EMPLOYEE_TO_OFFICE'),
 		requestsForInviteContractorToOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'INVITE_CONTRACTOR_TO_OFFICE'),
+		requestSentByMeById: (state, getters) => (id) => getters.requestsSentByMe.find(el => el.id === id) || {},
+		requestForMeById: (state, getters) => (id) => getters.requestsForMe.find(el => el.id === id) || {},
 	},
 };

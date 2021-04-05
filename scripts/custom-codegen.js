@@ -3,8 +3,8 @@ const codegenPath = 'src/graphql/';
 import { execSync } from 'child_process';
 import fs from 'fs';
 
-const getDefinitionsRegex = /^[ \t]+[a-zA-Z_]+(:| *\([a-zA-Z_,\[\] \t!:\n]+\))/gm;
-const getNamesRegex = /:| *\([a-zA-Z_,\[\] \t!:\n]+\)/;
+const getDefinitionsRegex = /^[ \t]+[a-zA-Z_0-9]+(:| *\([a-zA-Z_0-9,\[\] \t!:\n]+\))/gm;
+const getNamesRegex = /:| *\([a-zA-Z_0-9,\[\] \t!:\n]+\)/;
 const apiGraphqlPath = 'amplify/backend/api/WaisDynamoDB/schema/api.graphql';
 
 function loadAPIFunctionNames() {

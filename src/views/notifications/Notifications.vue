@@ -2,11 +2,15 @@
 	<ion-grid fixed>
 		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<ion-card>
+			<ion-card-header>
+				<ion-card-title>Create Office requests</ion-card-title>
+			</ion-card-header>
 			<ion-card-content>
 				<ion-list>
-					<ion-item v-for="request in createOfficeList" :key="request.id" @click="$router.push({name: 'NotificationDetails', params: {id: request.id}})" button>
-						<strong>{{ request.payload.officeName }}: </strong>
-						<span>{{ request.payload.surname + ' ' + request.payload.name + ' ' + request.payload.fathersName }}</span>
+					<ion-item v-for="request in $store.getters['request/requestsForNewOfficeReceived']" :key="request.id" @click="$router.push({name: 'AdminNotificationDetails', params: {id: request.id}})" button>
+						<strong>{{ request.payload.createOfficePayload.officeName }}</strong>
+<!--						<strong>{{ request.payload.createOfficePayload.officeName }}: </strong>-->
+<!--						<span>{{ request.payload.createOfficePayload.family_name + ' ' + request.payload.createOfficePayload.name + ' ' + request.payload.createOfficePayload.fathersName }}</span>-->
 					</ion-item>
 				</ion-list>
 			</ion-card-content>
@@ -14,19 +18,11 @@
 	</ion-grid>
 </template>
 <script>
-	import { mapGetters } from 'vuex';
-
 	export default {
 		name: 'Notifications',
 		mounted() {
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);
-		},
-		computed: {
-			...mapGetters('request', ['requestsForMe']),
-			createOfficeList() {
-				return this.requestsForMe.filter(el => el.type === 'CREATE_OFFICE');
-			},
 		},
 	};
 </script>

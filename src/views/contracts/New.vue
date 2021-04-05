@@ -33,7 +33,7 @@
 								<mdb-input v-model="fields.name" :label="$t('fields.name')" :small="validation.name" type="text" name="name" autocomplete="given-name" outline required class="my-2"/>
 							</mdb-col>
 							<mdb-col sm="6" md="4">
-								<mdb-input v-model="fields.surname" :label="$t('fields.surname')" :small="validation.surname" type="text" name="fname" autocomplete="family-name" outline required class="my-2"/>
+								<mdb-input v-model="fields.family_name" :label="$t('fields.family_name')" :small="validation.family_name" type="text" name="fname" autocomplete="family-name" outline required class="my-2"/>
 							</mdb-col>
 							<mdb-col sm="6" md="4">
 								<mdb-input v-model="fields.address" :label="$t('fields.address')" :small="validation.address" type="text" name="address" autocomplete="street-address" outline required class="my-2"/>
@@ -241,7 +241,7 @@
 				fields: {
 					tin: '',
 					name: '',
-					surname: '',
+					family_name: '',
 					address: '',
 					city: '',
 					district: '',
@@ -271,7 +271,7 @@
 				validation: {
 					tin: '',
 					name: '',
-					surname: '',
+					family_name: '',
 					address: '',
 					city: '',
 					district: '',

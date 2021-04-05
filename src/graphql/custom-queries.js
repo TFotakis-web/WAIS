@@ -306,6 +306,11 @@ export const getRequestsForMe = /* GraphQL */ `
 		}
 	}
 `;
+export const getS3Object = /* GraphQL */ `
+	query GetS3Object($obj: S3ObjectInput) {
+		getS3Object(obj: $obj)
+	}
+`;
 export const getUserModelPermissionsForOffice = /* GraphQL */ `
 	query GetUserModelPermissionsForOffice($officeId: ID!) {
 		getUserModelPermissionsForOffice(officeId: $officeId)

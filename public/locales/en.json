@@ -160,7 +160,7 @@
     "verificationCode": "Verification Code",
     "tin": "TIN",
     "name": "Name",
-    "surname": "Surname",
+    "family_name": "Surname",
     "address": "Address",
     "city": "City",
     "district": "District",
