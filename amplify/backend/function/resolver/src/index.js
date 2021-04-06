@@ -120,6 +120,7 @@ const resolvers = {
 			return await api.getUserProfileByUsername({
 				caller_username: event.identity.claims['cognito:username'],
 				username: event.arguments.username,
+				groups: event.identity.groups
 			})
 		}
 	},
