@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql_utils')
+const gqlUtil = require('../utils/gql')
 
 const AWS = require('aws-sdk')
 AWS.config.update({
@@ -26,6 +26,59 @@ module.exports = {
 			path: path,
 			contentType: s3obj.contentType || null
 		}))
+		return result
+	},
+	getUserProfileByUsername: async (username) => {
+		console.log('adminAPI.getUserProfileByUsername input: ' + [username])
+		const query = /* GraphQL */ `
+			query getUserProfileByUsername($username: String!) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						id
+						username
+						email
+						telephone
+						name
+						fathers_name
+						address
+						zip_code
+						mobile
+						tin
+						family_name
+						gender
+						birthdate
+						city
+						role
+						profilePicture {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
+						preferences
+						locale
+						createdAt
+						updatedAt
+						files {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
+					}
+				}
+			}
+		`
+		const response = await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
+		let result = response.data.listUserProfileByUsername
+		if (result.items.length > 0) {
+			result = result.items[0]
+		} else {
+			throw new Error('UserProfile not found.')
+		}
+		console.log('adminAPI.getUserProfileByUsername output: ' + [username])
 		return result
 	},
 	getCreateOfficeRequests: async (filter, limit, nextToken) => {

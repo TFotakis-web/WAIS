@@ -1,11 +1,11 @@
 Resources:
-  test1:
+  resolver:
     Type: AWS::Serverless::Function
     Properties:
-      Timeout: 900
+      Timeout: 600000
       MemorySize: 512
       Handler: index.handler
-      CodeUri: C:\Users\gstamatakis\IdeaProjects\wais\amplify\backend\function\test1\src
+      CodeUri: C:\Users\gstamatakis\IdeaProjects\wais\amplify\backend\function\resolver\src
       Runtime: nodejs12.x
       Environment:
         Variables:

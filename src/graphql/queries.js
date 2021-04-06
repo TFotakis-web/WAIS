@@ -325,7 +325,7 @@ export const getCustomersForOfficeId = /* GraphQL */ `
         gender
         email
         mobile
-        postcode
+        zip_code
         doy
         address
         familyStatus
@@ -376,7 +376,7 @@ export const getContractsForOfficeId = /* GraphQL */ `
         gender
         email
         mobile
-        postcode
+        zip_code
         doy
         address
         familyStatus
@@ -465,6 +465,45 @@ export const getS3Object = /* GraphQL */ `
       path
       size
       contentType
+    }
+  }
+`;
+export const getUserProfileByUsername = /* GraphQL */ `
+  query GetUserProfileByUsername($username: String) {
+    getUserProfileByUsername(username: $username) {
+      id
+      username
+      email
+      role
+      telephone
+      name
+      fathers_name
+      address
+      zip_code
+      mobile
+      tin
+      family_name
+      gender
+      birthdate
+      city
+      profilePicture {
+        level
+        idToken
+        filePath
+        filename
+        contentType
+      }
+      preferences
+      locale
+      files {
+        level
+        idToken
+        filePath
+        filename
+        contentType
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -585,7 +624,7 @@ export const listOffices = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -850,7 +889,7 @@ export const getOffice = /* GraphQL */ `
           gender
           email
           mobile
-          postcode
+          zip_code
           doy
           address
           familyStatus
@@ -1228,7 +1267,7 @@ export const listOfficeByName = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -1494,7 +1533,7 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -1762,7 +1801,7 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -3183,7 +3222,7 @@ export const getCustomer = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -3226,7 +3265,7 @@ export const listCustomers = /* GraphQL */ `
         gender
         email
         mobile
-        postcode
+        zip_code
         doy
         address
         familyStatus
@@ -3281,7 +3320,7 @@ export const listCustomersByOfficeName = /* GraphQL */ `
         gender
         email
         mobile
-        postcode
+        zip_code
         doy
         address
         familyStatus
@@ -3432,7 +3471,7 @@ export const getOfficeUserConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -3805,7 +3844,7 @@ export const listOfficeUserConnections = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -4049,7 +4088,7 @@ export const listOfficeUserConnectionsByOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -4293,7 +4332,7 @@ export const listOfficeUserConnectionsByEmployeeType = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -4537,7 +4576,7 @@ export const listOfficeUserConnectionsByUserId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -4781,7 +4820,7 @@ export const listOfficeUserConnectionsByOfficeAndUser = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -5025,7 +5064,7 @@ export const listOfficeUserConnectionsByUsername = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -5277,7 +5316,7 @@ export const getOfficeContractConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -5587,7 +5626,7 @@ export const listOfficeContractConnections = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -5810,7 +5849,7 @@ export const listOfficeContractConnectionByOfficeId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -6033,7 +6072,7 @@ export const listOfficeContractConnectionByOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -6256,7 +6295,7 @@ export const listOfficeContractConnectionByContractId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -6495,7 +6534,7 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6742,7 +6781,7 @@ export const getOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6988,7 +7027,7 @@ export const listOfficeAccessConnections = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7113,7 +7152,7 @@ export const listOfficeAccessConnections = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7272,7 +7311,7 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7397,7 +7436,7 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7556,7 +7595,7 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7681,7 +7720,7 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7840,7 +7879,7 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -7965,7 +8004,7 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -8124,7 +8163,7 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus
@@ -8249,7 +8288,7 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
               gender
               email
               mobile
-              postcode
+              zip_code
               doy
               address
               familyStatus

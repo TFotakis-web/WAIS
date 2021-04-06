@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql_utils')
+const gqlUtil = require('../utils/gql')
 
 module.exports = {
 	/*
@@ -154,7 +154,7 @@ module.exports = {
 								id
 								lastName
 								mobile
-								postcode
+								zip_code
 								tin
 								officeName
 								updatedAt

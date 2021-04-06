@@ -363,4 +363,40 @@ module.exports = {
 			return err
 		}
 	},
+
+	/**
+	 * Deletes all requested IDs in their respective tables.
+	 * @param tableItems A dictionary of table names and a list of IDs in each table that need to be deleted.
+	 */
+	deleteItemsFromTables: async (tableItems) => {
+		console.log(`Deleting items`)
+
+		for (let tableName of Object.keys(tableItems)) {
+			const ids = tableItems[tableName]
+			const idGroups = [];
+
+			for (let i = 0; i < ids.length; i += 25) {
+				idGroups.push(ids.slice(i, i + 25));
+			}
+
+			for (let gs of idGroups) {
+				let delReqs = [];
+				for (let id of gs) {
+					delReqs.push({DeleteRequest: {Key: {id}}});
+				}
+				let RequestItems = {};
+				RequestItems[tableName] = delReqs;
+				let error
+				await ddb
+					.batchWrite({RequestItems})
+					.promise()
+					.catch((e) => error = e);
+				if (error) {
+					throw error
+				}
+			}
+			console.log(`Deleted ${ids.length} items from table ${tableName}.`)
+		}
+		console.log('Deleted all requested items.')
+	}
 }

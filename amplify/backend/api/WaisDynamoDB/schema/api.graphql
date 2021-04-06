@@ -61,6 +61,8 @@ type Query {
 
     ### ADMIN API ###
     getS3Object(obj: S3ObjectInput): S3ObjectOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
+
+    getUserProfileByUsername(username: String): UserProfileOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {

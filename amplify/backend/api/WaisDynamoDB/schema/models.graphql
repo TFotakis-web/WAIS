@@ -173,7 +173,7 @@ type Customer
     gender: String
     email: String!
     mobile: String
-    postcode: String
+    zip_code: String
     doy: String
     address: String
     familyStatus: String

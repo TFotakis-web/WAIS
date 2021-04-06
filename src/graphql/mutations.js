@@ -369,7 +369,7 @@ export const createCustomerForOffice = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -415,7 +415,7 @@ export const updateCustomerForOffice = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -461,7 +461,7 @@ export const deleteCustomerForOffice = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -1040,7 +1040,7 @@ export const createOffice = /* GraphQL */ `
           gender
           email
           mobile
-          postcode
+          zip_code
           doy
           address
           familyStatus
@@ -1418,7 +1418,7 @@ export const updateOffice = /* GraphQL */ `
           gender
           email
           mobile
-          postcode
+          zip_code
           doy
           address
           familyStatus
@@ -1796,7 +1796,7 @@ export const deleteOffice = /* GraphQL */ `
           gender
           email
           mobile
-          postcode
+          zip_code
           doy
           address
           familyStatus
@@ -3134,7 +3134,7 @@ export const createCustomer = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -3175,7 +3175,7 @@ export const updateCustomer = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -3216,7 +3216,7 @@ export const deleteCustomer = /* GraphQL */ `
       gender
       email
       mobile
-      postcode
+      zip_code
       doy
       address
       familyStatus
@@ -3368,7 +3368,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -3762,7 +3762,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -4156,7 +4156,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -4546,7 +4546,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -4877,7 +4877,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -5208,7 +5208,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -5543,7 +5543,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -5790,7 +5790,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6057,7 +6057,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6304,7 +6304,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6571,7 +6571,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus
@@ -6818,7 +6818,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
             gender
             email
             mobile
-            postcode
+            zip_code
             doy
             address
             familyStatus

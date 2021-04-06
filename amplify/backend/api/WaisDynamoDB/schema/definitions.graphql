@@ -575,7 +575,7 @@ input ModelCustomerFilterInput {
     gender: ModelStringInput
     email: ModelStringInput
     mobile: ModelStringInput
-    postcode: ModelStringInput
+    zip_code: ModelStringInput
     doy: ModelStringInput
     address: ModelStringInput
     familyStatus: ModelStringInput
@@ -595,7 +595,7 @@ input CreateCustomerInput {
     gender: String
     email: String!
     mobile: String
-    postcode: String
+    zip_code: String
     doy: String
     address: String
     familyStatus: String
@@ -614,7 +614,7 @@ input UpdateCustomerInput {
     gender: String
     email: String
     mobile: String
-    postcode: String
+    zip_code: String
     doy: String
     address: String
     familyStatus: String
@@ -636,7 +636,7 @@ input ModelCustomerConditionInput {
     gender: ModelStringInput
     email: ModelStringInput
     mobile: ModelStringInput
-    postcode: ModelStringInput
+    zip_code: ModelStringInput
     doy: ModelStringInput
     address: ModelStringInput
     familyStatus: ModelStringInput

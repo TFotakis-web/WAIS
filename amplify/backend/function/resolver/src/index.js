@@ -116,8 +116,13 @@ const resolvers = {
 				groups: event.identity.groups,
 			})
 		},
+		getUserProfileByUsername: async (event) => {
+			return await api.getUserProfileByUsername({
+				caller_username: event.identity.claims['cognito:username'],
+				username: event.arguments.username,
+			})
+		}
 	},
-
 	Mutation: {
 		updateOfficeDetails: async (event) => {
 			return await api.updateOfficeDetails({
@@ -355,6 +360,12 @@ const resolvers = {
 				username: event.identity.claims['cognito:username'],
 			})
 		},
+		test: async (event) => {
+			return await api.test({
+				username: event.identity.claims['cognito:username'],
+				arguments: event.arguments
+			})
+		}
 	},
 }
 
@@ -370,13 +381,13 @@ const resolvers = {
 // }
 exports.handler = async (event) => {
 	console.log('Resolving event: ' + JSON.stringify(event))
+	if (!event.identity.claims) {
+		throw new Error('Invalid credentials.')
+	}
 	const typeHandler = resolvers[event.typeName]
 	if (typeHandler) {
 		const resolver = typeHandler[event.fieldName]
 		if (resolver) {
-			if (!event.identity.claims) {
-				throw new Error('Invalid credentials.')
-			}
 			try {
 				return await resolver(event)
 			} catch (err) {

@@ -1,10 +1,12 @@
-const gqlUtil = require('./api/utils/gql_utils')
-const ddbUtil = require('./api/utils/ddb_utils')
+const gqlUtil = require('./utils/gql')
+const ddbUtil = require('./utils/ddb')
 
 const officeAPI = require('./api/office')
 const userAPI = require('./api/user')
 const requestAPI = require('./api/request')
-const admin = require('./api/admin')
+const adminAPI = require('./api/admin')
+
+const testAPI = require('./unittests/index')
 
 /**
  * High-level API.
@@ -83,7 +85,7 @@ module.exports = {
 		//Admin users just need the Create Office requests
 		let result
 		if (args.groups != null && args.groups.indexOf('admin') > -1) {
-			result = await admin.getCreateOfficeRequests(args.filter, args.limit, args.nextToken)
+			result = await adminAPI.getCreateOfficeRequests(args.filter, args.limit, args.nextToken)
 		} else {
 			result = await requestAPI.getRequestsForUser(args.username, args.email, args.filter, args.limit, args.nextToken)
 		}
@@ -95,7 +97,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await requestAPI.resolveRequest(args.username,args.email, args.groups, args.id, args.decision, args.payload)
+		const result = await requestAPI.resolveRequest(args.username, args.email, args.groups, args.id, args.decision, args.payload)
 		console.log('resolveRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -537,13 +539,33 @@ module.exports = {
 	getS3Object: async (args) => {
 		console.log('getS3Object input: ' + JSON.stringify(args))
 		if (!args.groups || args.groups.indexOf('admin') < 0) {
-			throw new Error('Insufficient privilleges.')
+			throw new Error('Insufficient privileges.')
 		}
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = await admin.getS3Object(args.username, args.email, args.s3obj, args.groups)
+		const result = await adminAPI.getS3Object(args.username, args.email, args.s3obj, args.groups)
 		console.log('getS3Object preview output: ' + JSON.stringify(result.contentType))
 		return result
 	},
+	getUserProfileByUsername: async (args) => {
+		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
+		if (!args.groups || args.groups.indexOf('admin') < 0) {
+			throw new Error('Insufficient privileges.')
+		}
+		if (!args.caller_username) {
+			throw new Error('Invalid caller username or unauthenticated user.')
+		}
+		if (!args.username) {
+			throw new Error('Invalid username.')
+		}
+		const result = await adminAPI.getUserProfileByUsername(args.username)
+		console.log('getUserProfileByUsername preview output: ' + JSON.stringify(result))
+		return result
+	},
+	test: async (args) => {
+		console.log('test input: ' + JSON.stringify(args))
+		const res = await testAPI.run(args)
+		console.log('test output: ' + JSON.stringify(res))
+	}
 }

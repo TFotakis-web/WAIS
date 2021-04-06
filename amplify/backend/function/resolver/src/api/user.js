@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql_utils')
+const gqlUtil = require('../utils/gql')
 
 module.exports = {
 	/*
@@ -214,7 +214,7 @@ module.exports = {
 		`
 		const response = await gqlUtil.execute({username: username}, query, 'listUserProfileByUsername')
 		const result = response.data.listUserProfileByUsername.items || []
-		const retVal = result.length == 0
+		const retVal = result.length === 0
 		console.log('userAPI.checkIfUserIsUnemployed output: ' + retVal)
 		return retVal
 	},
@@ -261,7 +261,6 @@ module.exports = {
 					id
 					username
 					email
-					role
 					telephone
 					name
 					fathers_name
@@ -273,10 +272,25 @@ module.exports = {
 					gender
 					birthdate
 					city
+					role
+					profilePicture {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					preferences
 					locale
 					createdAt
 					updatedAt
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 				}
 			}
 		`

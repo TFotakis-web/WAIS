@@ -12,7 +12,7 @@ module.exports = {
 	/**
 	 * Wrapper for GQL API calls.
 	 *
-	 * @param {*} input
+	 * @param item
 	 * @param {*} gql
 	 * @param {String} operation
 	 */
@@ -43,5 +43,5 @@ module.exports = {
 			httpRequest.write(req.body)
 			httpRequest.end()
 		})
-	},
+	}
 }
