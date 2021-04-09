@@ -108,6 +108,12 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								insuranceCompanies {
+									items {
+										name
+										code
+									}
+								}
 								files {
 									level
 									idToken

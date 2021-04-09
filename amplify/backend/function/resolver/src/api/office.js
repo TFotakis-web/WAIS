@@ -50,14 +50,24 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute(
-			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
+
+		const result = await gqlUtil.execute({
+				username: username,
+				filter: filter || {id: {ne: ''}},
+				limit: limit || 100,
+				nextToken: nextToken
+			},
 			query,
-			'getOfficeDetailsAndPermissionsByUsername',
-		)
-		const result = response.data.listUserProfileByUsername
-		console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
-		return result
+			'getOfficeDetailsAndPermissionsByUsername')
+			.then(response => response.data.listUserProfileByUsername)
+			.catch(err => console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`))
+
+		if (result) {
+			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
+			return result
+		} else {
+			throw new Error(`Unable to retrieve the details and permissions for user ${username}.`)
+		}
 	},
 
 	getEmployeeTypeUserProfilesForManagerUsername: async (managerUsername, empType, filter, limit, nextToken) => {

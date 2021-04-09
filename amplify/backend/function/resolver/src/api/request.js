@@ -1,6 +1,7 @@
 const gqlUtil = require('../utils/gql')
 const ddbAPI = require('../utils/ddb')
 const userQueries = require('./user')
+const officeQueries = require('./office')
 
 module.exports = {
 	getRequestsFromUser: async (username, filter, limit, nextToken) => {
@@ -29,6 +30,12 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								insuranceCompanies {
+									items {
+										name
+										code
+									}
+								}
 								files {
 									level
 									idToken
@@ -92,6 +99,12 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								insuranceCompanies {
+									items {
+										name
+										code
+									}
+								}
 								files {
 									level
 									idToken
@@ -130,8 +143,8 @@ module.exports = {
 		return result
 	},
 
-	resolveRequest: async (username, caller_email, groups, id, decision, callerPayload) => {
-		console.log('requestAPI.resolveRequest input: ' + [username, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
+	resolveRequest: async (callerUsername, caller_email, groups, id, decision, callerPayload) => {
+		console.log('requestAPI.resolveRequest input: ' + [callerUsername, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
 		if (!decision) {
 			throw new Error("No 'decision' field provided.")
 		}
@@ -168,6 +181,10 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								insuranceCompanies {
+									name
+									code
+								}
 								files {
 									level
 									idToken
@@ -196,17 +213,18 @@ module.exports = {
 		`
 		const retrieveRequestResponse = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
 		const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
-		if (requestObject == null) {
+		if (requestObject === null) {
 			throw new Error('Request with provided ID was not found.')
 		}
 		console.log('Request object: ' + JSON.stringify(requestObject))
 
-		//Retrieve the sender's UserProfile
+		//Retrieve the sender's UserProfile - User who send the request
 		const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
 		if (senderUserProfile == null) {
 			throw new Error(`User profile for sender was not found.`)
 		}
 
+		//Retrieve the profile of the user resolving this request
 		const receiverUserProfile = await userQueries.getUserProfileByEmail(caller_email)
 		if (receiverUserProfile == null) {
 			throw new Error(`User profile for sender was not found.`)
@@ -228,11 +246,16 @@ module.exports = {
 					if (!createOfficeInput) {
 						throw new Error('Request has invalid payload.')
 					}
+
+					//Add extra fields to the Office
 					createOfficeInput.ownerUsername = senderUserProfile.username
 					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
 					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
 					createOfficeInput.verified = true
 					createOfficeInput.files = []
+
+					//Delete some fields that should only be present in the request and not in the office
+					delete createOfficeInput.comments
 
 					const mutation1 = /* GraphQL */ `
 						mutation createOffice($input: CreateOfficeInput!) {
@@ -304,11 +327,11 @@ module.exports = {
 
 				if (decision === 'ACCEPT') {
 					//Get the sender and receiver offices
-					const senderOffice = await office.getOfficeByOwnerUsername(requestObject.senderUsername)
+					const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						throw new Error("Sender's Office not found.")
 					}
-					const receiverOffice = await office.getOfficeByOwnerUsername(receiverUserProfile.username)
+					const receiverOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
 					if (!receiverOffice) {
 						throw new Error("Receiver's Office not found.")
 					}
@@ -335,7 +358,7 @@ module.exports = {
 
 				if (decision === 'ACCEPT') {
 					//Get the sender`s office
-					const senderOffice = await office.getOfficeByOwnerUsername(requestObject.senderUsername)
+					const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						throw new Error("Sender's Office not found.")
 					}
@@ -515,6 +538,9 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+		if (response.errors) {
+			throw  new Error(`Failed to create request with error: ${response.errors}`)
+		}
 		const responsedData = response.data.createRequests
 		const result = requestInput
 		result.id = responsedData.id

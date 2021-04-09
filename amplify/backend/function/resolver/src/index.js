@@ -380,7 +380,7 @@ const resolvers = {
 //   "request": { /* AppSync request object. Contains things like headers. */ },
 //   "prev": { /* If using the built-in pipeline resolver support, this contains the object returned by the previous function. */ },
 // }
-exports.handler = async (event) => {
+exports.handler = async (event, context) => {
 	console.log('Resolving event: ' + JSON.stringify(event))
 	if (!event.identity.claims) {
 		throw new Error('Invalid credentials.')
@@ -392,8 +392,8 @@ exports.handler = async (event) => {
 			try {
 				return await resolver(event)
 			} catch (err) {
-				console.log('Resolver error is ' + JSON.stringify(err))
-				throw err //This will format the resolver's result in a specific way
+				console.log(`Resolver error is: ${err}, and the stack trace is ${err.stack}`)
+				throw new Error(err.message)	//Avoid exposing the entire	 stacktrace
 			}
 		}
 	}

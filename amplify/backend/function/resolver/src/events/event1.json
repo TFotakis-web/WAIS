@@ -1,6 +1,6 @@
 {
   "typeName": "Query",
-  "fieldName": "getRequestsForMe",
+  "fieldName": "me",
   "arguments": {},
   "identity": {
     "claims": {
@@ -10,7 +10,7 @@
       "token_use": "id",
       "auth_time": 1617484823,
       "iss": "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_4hpScGXTx",
-      "cognito:username": "g1",
+      "cognito:username": "123312",
       "exp": 1617488425,
       "iat": 1617484825,
       "email": "gstamatakis95@gmail.com"
@@ -24,7 +24,7 @@
       "62.74.12.201"
     ],
     "sub": "6fd26814-eb14-42d6-8ee7-3382ab3fb7f8",
-    "username": "g1"
+    "username": "123"
   },
   "source": null,
   "prev": {

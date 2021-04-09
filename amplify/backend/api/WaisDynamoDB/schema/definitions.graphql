@@ -14,7 +14,7 @@ input InsuranceCompanyInput {
 input InsuranceCompanyDetailsInput {
     id: ID
     officeName: String
-    insuranceCompanies: [InsuranceCompanyInput]
+    insuranceCompanies: [InsuranceCompanyInput!]!
 }
 
 enum ModelSortDirection {
@@ -156,7 +156,6 @@ input CreateOfficeInput {
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
     insuranceCompanies: [InsuranceCompanyInput!]!
-    availableInsuranceCompanies: [InsuranceCompanyDetailsInput]
 }
 
 input UpdateOfficeInput {
@@ -178,8 +177,7 @@ input UpdateOfficeInput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
-    insuranceCompanies: [InsuranceCompanyInput!]
-    availableInsuranceCompanies: [InsuranceCompanyDetailsInput]
+    insuranceCompanies: [InsuranceCompanyInput!]!
 }
 
 input DeleteOfficeInput {
@@ -661,7 +659,7 @@ input ModelEmployeeTypeInput {
     eq: EmployeeType
     ne: EmployeeType
 }
-
+#
 input ModelOfficeUserConnectionFilterInput {
     id: ModelIDInput
     officeId: ModelIDInput
@@ -901,6 +899,7 @@ input CreateOfficeRequestPayloadInput {
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     comments: String
+    insuranceCompanies: [InsuranceCompanyInput!]!
     files: [S3ObjectInput]
 }
 

@@ -6,8 +6,6 @@ const userAPI = require('./api/user')
 const requestAPI = require('./api/request')
 const adminAPI = require('./api/admin')
 
-const testAPI = require('./unittests/index')
-
 /**
  * High-level API.
  * Should be the single point of entry for ALL user queries.
@@ -17,7 +15,7 @@ module.exports = {
 	/* Queries */
 	user: async (args) => {
 		console.log('getUserProfileByUsername input: ' + args.username)
-		const result = userAPI.getUserProfileByUsername(args.username)
+		const result = await userAPI.getUserProfileByUsername(args.username)
 		console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
 		return result
 	},
@@ -26,7 +24,7 @@ module.exports = {
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		const result = officeAPI.getOfficeDetailsAndPermissionsByUsername(args.username, args.filter, args.limit, args.nextToken)
+		const result = await officeAPI.getOfficeDetailsAndPermissionsByUsername(args.username, args.filter, args.limit, args.nextToken)
 		console.log('getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 		return result
 	},
@@ -121,7 +119,7 @@ module.exports = {
 		if (!args.managerUsername) {
 			throw new Error('Invalid manager username')
 		}
-		const result = officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
+		const result = await officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
 			args.username,
 			'CONTRACTOR',
 			args.filter,
@@ -514,7 +512,7 @@ module.exports = {
 	},
 	getUserRoleByUsername: async (args) => {
 		console.log('getUserRoleByUsername input: ' + args.username)
-		const result = userAPI.getUserRoleByUsername(args.username)
+		const result = await userAPI.getUserRoleByUsername(args.username)
 		console.log('getUserRoleByUsername output: ' + JSON.stringify(result))
 		return result
 	},
@@ -565,7 +563,9 @@ module.exports = {
 	},
 	test: async (args) => {
 		console.log('test input: ' + JSON.stringify(args))
+		const testAPI = require('./unittests/index')
 		const res = await testAPI.run(args)
 		console.log('test output: ' + JSON.stringify(res))
+		return res
 	}
 }

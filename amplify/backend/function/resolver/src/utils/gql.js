@@ -35,8 +35,13 @@ module.exports = {
 			const httpRequest = https.request({...req, host: ENDPOINT}, (result) => {
 				result.on('data', (data) => {
 					const result = JSON.parse(data.toString())
-					console.log('GQL result: ' + JSON.stringify(result))
+					console.log('GQL data: ' + JSON.stringify(result))
 					resolve(result)
+				})
+				result.on('errors', (err) => {
+					const result = JSON.parse(err.toString())
+					console.log('GQL error: ' + JSON.stringify(result))
+					reject(result)
 				})
 			})
 

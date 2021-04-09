@@ -5,7 +5,7 @@ type InsuranceCompany {
 type InsuranceCompanyDetails {
     id: ID
     officeName: String
-    insuranceCompanies: [InsuranceCompany]
+    insuranceCompanies: [InsuranceCompany!]!
 }
 type S3Object {
     level: String!
@@ -76,7 +76,7 @@ enum RequestDecision {
     REJECT
 }
 
-## Create Request
+### Create Request
 
 type CreateRequestPayload {
     createOfficePayload: CreateOfficeRequestPayload
@@ -97,6 +97,7 @@ type CreateOfficeRequestPayload {
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     comments: String
+    insuranceCompanies: [InsuranceCompany!]!
     files: [S3Object]
 }
 

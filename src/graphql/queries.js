@@ -116,6 +116,10 @@ export const getMySentRequests = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -172,6 +176,10 @@ export const getRequestsForMe = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -9226,6 +9234,10 @@ export const getRequests = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
+          insuranceCompanies {
+            name
+            code
+          }
           files {
             level
             idToken
@@ -9280,6 +9292,10 @@ export const listRequestss = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -9344,6 +9360,10 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -9408,6 +9428,10 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -9472,6 +9496,10 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken
@@ -9536,6 +9564,10 @@ export const listRequestsByType = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
+            insuranceCompanies {
+              name
+              code
+            }
             files {
               level
               idToken

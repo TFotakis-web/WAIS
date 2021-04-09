@@ -48,15 +48,16 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
-		let result = response.data.listUserProfileByUsername
-		if (result.items.length > 0) {
-			result = result.items[0]
+		const userProfile = await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
+			.then(response => response.data.listUserProfileByUsername.items[0])
+			.catch(err => console.log(`userAPI.getUserProfileByUsername unhandled error: ${err}`))
+
+		if (userProfile) {
+			console.log('userAPI.getUserProfileByUsername output: ' + JSON.stringify(userProfile))
+			return userProfile
 		} else {
-			result = null
+			throw new Error(`UserProfile not found for user ${username}.`)
 		}
-		console.log('userAPI.getUserProfileByUsername output: ' + JSON.stringify(result))
-		return result
 	},
 
 	getUserProfileByEmail: async (email) => {

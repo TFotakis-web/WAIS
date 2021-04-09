@@ -4,7 +4,7 @@ const util = require('util');
 const usersAPI = require('../../api/user')
 
 module.exports = {
-	UserProfile: async (ddb, gql) => {
+	UserProfile: async (ddb,gql,gateway) => {
 		console.log('CRUD UserProfile')
 
 		//The chosen ID for this test object

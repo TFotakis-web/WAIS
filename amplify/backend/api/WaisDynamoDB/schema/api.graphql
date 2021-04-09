@@ -64,7 +64,7 @@ type Query {
 
     getUserProfileByUsername(username: String): UserProfileOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 }
-
+#
 type Mutation {
     updateOfficeDetails(input: UpdateOfficeInput!, condition: ModelOfficeConditionInput): OfficeOutput
         @auth(rules: [{ allow: private }])
