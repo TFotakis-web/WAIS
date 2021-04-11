@@ -1,7 +1,7 @@
 <template>
 	<ion-card>
 		<ion-card-header>
-			<ion-card-title>{{ $t('views.userProfile.personalInfo') }}</ion-card-title>
+			<ion-card-title>{{ $t('fields.personalInfo') }}</ion-card-title>
 		</ion-card-header>
 		<ion-card-content>
 			<form @submit.prevent="save">
