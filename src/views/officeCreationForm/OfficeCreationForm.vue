@@ -47,7 +47,7 @@
 								</ion-item>
 								<ion-item>
 									<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+									<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
 									<ion-input v-model="CreateOfficeRequestPayloadInput.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
 								</ion-item>
 								<ion-item>
