@@ -109,10 +109,8 @@ module.exports = {
 								civilLiabilityExpirationDate
 								comments
 								insuranceCompanies {
-									items {
-										name
-										code
-									}
+									name
+									code
 								}
 								files {
 									level
