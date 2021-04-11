@@ -199,6 +199,46 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 		}
 	}
 `;
+export const createMyUserCalendarEvent = /* GraphQL */ `
+	mutation CreateMyUserCalendarEvent(
+		$input: CreateUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		createMyUserCalendarEvent(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const createOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation CreateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: CreateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		createOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const createOfficeConnectionRequest = /* GraphQL */ `
 	mutation CreateOfficeConnectionRequest(
 		$input: OfficeConnectionRequestPayloadInput!
@@ -455,6 +495,46 @@ export const deleteEmployeeForOffice = /* GraphQL */ `
 		}
 	}
 `;
+export const deleteMyUserCalendarEvents = /* GraphQL */ `
+	mutation DeleteMyUserCalendarEvents(
+		$input: DeleteUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		deleteMyUserCalendarEvents(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const deleteOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation DeleteOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: DeleteOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		deleteOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const deleteRequestsSentByMe = /* GraphQL */ `
 	mutation DeleteRequestsSentByMe(
 		$input: DeleteRequestsInput!
@@ -673,6 +753,46 @@ export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
 			pagePermissions: $pagePermissions
 		) {
 			id
+		}
+	}
+`;
+export const updateMyUserCalendarEvents = /* GraphQL */ `
+	mutation UpdateMyUserCalendarEvents(
+		$input: UpdateUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		updateMyUserCalendarEvents(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const updateOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation UpdateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: UpdateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		updateOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
 		}
 	}
 `;
