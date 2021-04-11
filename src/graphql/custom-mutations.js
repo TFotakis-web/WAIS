@@ -72,7 +72,7 @@ export const createCustomerForOffice = /* GraphQL */ `
 			gender
 			email
 			mobile
-			postcode
+			zip_code
 			doy
 			address
 			familyStatus
@@ -121,6 +121,10 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
+					insuranceCompanies {
+						name
+						code
+					}
 					files {
 						level
 						idToken
@@ -172,6 +176,10 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
+					insuranceCompanies {
+						name
+						code
+					}
 					files {
 						level
 						idToken
@@ -199,6 +207,46 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 		}
 	}
 `;
+export const createMyUserCalendarEvent = /* GraphQL */ `
+	mutation CreateMyUserCalendarEvent(
+		$input: CreateUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		createMyUserCalendarEvent(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const createOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation CreateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: CreateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		createOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const createOfficeConnectionRequest = /* GraphQL */ `
 	mutation CreateOfficeConnectionRequest(
 		$input: OfficeConnectionRequestPayloadInput!
@@ -223,6 +271,10 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
+					insuranceCompanies {
+						name
+						code
+					}
 					files {
 						level
 						idToken
@@ -272,6 +324,10 @@ export const createOfficeRequest = /* GraphQL */ `
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
+					insuranceCompanies {
+						name
+						code
+					}
 					files {
 						level
 						idToken
@@ -423,7 +479,7 @@ export const deleteCustomerForOffice = /* GraphQL */ `
 			gender
 			email
 			mobile
-			postcode
+			zip_code
 			doy
 			address
 			familyStatus
@@ -452,6 +508,46 @@ export const deleteEmployeeForOffice = /* GraphQL */ `
 	mutation DeleteEmployeeForOffice($officeId: ID!, $empUsername: String!) {
 		deleteEmployeeForOffice(officeId: $officeId, empUsername: $empUsername) {
 			id
+		}
+	}
+`;
+export const deleteMyUserCalendarEvents = /* GraphQL */ `
+	mutation DeleteMyUserCalendarEvents(
+		$input: DeleteUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		deleteMyUserCalendarEvents(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const deleteOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation DeleteOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: DeleteOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		deleteOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
 		}
 	}
 `;
@@ -621,7 +717,7 @@ export const updateCustomerForOffice = /* GraphQL */ `
 			gender
 			email
 			mobile
-			postcode
+			zip_code
 			doy
 			address
 			familyStatus
@@ -676,6 +772,46 @@ export const updateEmployeePagePermissionsForOffice = /* GraphQL */ `
 		}
 	}
 `;
+export const updateMyUserCalendarEvents = /* GraphQL */ `
+	mutation UpdateMyUserCalendarEvents(
+		$input: UpdateUserCalendarEventInput!
+		$condition: ModelUserCalendarEventConditionInput
+	) {
+		updateMyUserCalendarEvents(input: $input, condition: $condition) {
+			id
+			username
+			payload
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const updateOfficeAccessConnectionForOffice = /* GraphQL */ `
+	mutation UpdateOfficeAccessConnectionForOffice(
+		$officeId: ID!
+		$input: UpdateOfficeAccessConnectionInput!
+		$condition: ModelOfficeAccessConnectionConditionInput
+	) {
+		updateOfficeAccessConnectionForOffice(
+			officeId: $officeId
+			input: $input
+			condition: $condition
+		) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const updateOfficeDetails = /* GraphQL */ `
 	mutation UpdateOfficeDetails(
 		$input: UpdateOfficeInput!
@@ -705,6 +841,10 @@ export const updateOfficeDetails = /* GraphQL */ `
 				filePath
 				filename
 				contentType
+			}
+			insuranceCompanies {
+				name
+				code
 			}
 			createdAt
 			updatedAt
