@@ -31,10 +31,8 @@ module.exports = {
 								civilLiabilityExpirationDate
 								comments
 								insuranceCompanies {
-									items {
-										name
-										code
-									}
+									name
+									code
 								}
 								files {
 									level
@@ -100,10 +98,8 @@ module.exports = {
 								civilLiabilityExpirationDate
 								comments
 								insuranceCompanies {
-									items {
-										name
-										code
-									}
+									name
+									code
 								}
 								files {
 									level
@@ -516,6 +512,10 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
+
+		//Patch input
+		input.insuranceCompanies = input.insuranceCompanies || []
+
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,

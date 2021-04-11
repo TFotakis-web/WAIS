@@ -25,6 +25,7 @@ module.exports = {
 			profilePicture: null,
 			preferences: null,
 			locale: null,
+			insuranceCompanies: [],
 			files: [],
 		}
 		return await gqlQueries.createUserProfile(userProfileItem)
