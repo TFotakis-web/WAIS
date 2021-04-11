@@ -97,7 +97,6 @@ type CreateOfficeRequestPayload {
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     comments: String
-    insuranceCompanies: [InsuranceCompany!]!
     files: [S3Object]
 }
 
@@ -130,6 +129,7 @@ input ResolveCreateOfficePayload {
     managerPagePermissions: AWSJSON!
     partnersNumberLimit: Int!
     employeesNumberLimit: Int!
+    insuranceCompanies: [InsuranceCompanyInput!]!
 }
 input ResolveOfficeAccessConnectionPayload {
     expirationDate: AWSTimestamp!

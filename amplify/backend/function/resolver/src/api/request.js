@@ -30,10 +30,6 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
-								insuranceCompanies {
-									name
-									code
-								}
 								files {
 									level
 									idToken
@@ -97,10 +93,6 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
-								insuranceCompanies {
-									name
-									code
-								}
 								files {
 									level
 									idToken
@@ -177,10 +169,6 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
-								insuranceCompanies {
-									name
-									code
-								}
 								files {
 									level
 									idToken
@@ -247,6 +235,7 @@ module.exports = {
 					createOfficeInput.ownerUsername = senderUserProfile.username
 					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
 					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
+					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
 					createOfficeInput.verified = true
 					createOfficeInput.files = []
 
@@ -514,8 +503,6 @@ module.exports = {
 		}
 
 		//Patch input
-		input.insuranceCompanies = input.insuranceCompanies || []
-
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,

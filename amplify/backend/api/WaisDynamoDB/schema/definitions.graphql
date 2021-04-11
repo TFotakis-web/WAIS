@@ -155,7 +155,6 @@ input CreateOfficeInput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
-    insuranceCompanies: [InsuranceCompanyInput!]!
 }
 
 input UpdateOfficeInput {
