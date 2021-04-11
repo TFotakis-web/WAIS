@@ -19,7 +19,7 @@
 			<ion-icon :icon="routeCategory.icon" slot="start"/>
 			<ion-label>{{ routeCategory.name }}</ion-label>
 		</ion-item>
-		<ion-list v-if="shown && routeCategory.children">
+		<ion-list v-if="shown && routeCategory.children" lines="none">
 			<ion-item v-for="(route, i) in routeCategory.children" :key="i" button router-direction="root" :router-link="route.to" lines="none" detail="false" class="hydrated" :class="{ selected: isSelected(route) }">
 				<ion-icon slot="start"/>
 				<ion-label>{{ route.name }}</ion-label>
