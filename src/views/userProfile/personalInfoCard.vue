@@ -1,7 +1,7 @@
 <template>
 	<ion-card>
 		<ion-card-header>
-			<ion-card-title>{{ $t('views.userProfile.personalInfo') }}</ion-card-title>
+			<ion-card-title>{{ $t('fields.personalInfo') }}</ion-card-title>
 		</ion-card-header>
 		<ion-card-content>
 			<form @submit.prevent="save">
@@ -60,7 +60,7 @@
 					</ion-item>
 					<ion-item>
 						<ion-icon slot="start"/>
-						<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+						<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
 						<ion-input v-model="userProfile.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
 					</ion-item>
 				</ion-list>

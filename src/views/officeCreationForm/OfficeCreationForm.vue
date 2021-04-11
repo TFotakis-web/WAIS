@@ -6,7 +6,7 @@
 					<ion-card-content>
 						<form @submit.prevent="save">
 							<ion-list>
-								<ion-list-header>{{ $t('views.officeCreationForm.personalInfo') }}</ion-list-header>
+								<ion-list-header>{{ $t('fields.personalInfo') }}</ion-list-header>
 								<ion-item>
 									<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.family_name') }}</ion-label>
@@ -24,7 +24,7 @@
 								</ion-item>
 							</ion-list>
 							<ion-list>
-								<ion-list-header>{{ $t('views.officeCreationForm.professionalInfo') }}</ion-list-header>
+								<ion-list-header>{{ $t('fields.professionalInfo') }}</ion-list-header>
 								<ion-item>
 									<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
@@ -47,7 +47,7 @@
 								</ion-item>
 								<ion-item>
 									<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
+									<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
 									<ion-input v-model="CreateOfficeRequestPayloadInput.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
 								</ion-item>
 								<ion-item>

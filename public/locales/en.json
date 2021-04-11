@@ -125,24 +125,18 @@
       }
     },
     "userProfile": {
-      "pageTitle": "User Profile",
-      "personalInfo": "Personal Information"
+      "pageTitle": "User Profile"
     },
     "Vehicle Cards Details": {
       "pageTitle": "Vehicle Cards Details"
     },
     "newContract": {
-      "personalInfo": "Personal information",
-      "vehicleInfo": "Vehicle information",
-      "contractInfo": "Contract information"
     },
     "devTools": {
       "pageTitle": "Developer Tools"
     },
     "officeCreationForm": {
       "createYourOffice": "Office creation application",
-      "personalInfo": "Personal Information",
-      "professionalInfo": "Professional Information",
       "termsAndConditions": "Terms and Conditions",
       "iAgreeToTheTermsAndConditions": "I agree to the terms and conditions."
     },
@@ -198,11 +192,11 @@
     "locale": "Locale",
     "chamberRecordNumber": "Chamber Record Number",
     "insuranceLicenseExpirationDate": "Insurance License Exp. Date",
-    "postcode": "Postcode",
+    "zip_code": "Zip code",
     "dragAndDropOrClick": "Drag and Drop files here or click",
     "clickToUpload": "Click here to upload files",
     "fathersName": "Father's name",
-    "chooseYourPostcode": "Choose your postcode",
+    "chooseYourZipCode": "Choose your zip code",
     "comments": "Comments",
     "full_name": "Full Name",
     "files": "Files",
@@ -214,7 +208,11 @@
     "billing": "Billing",
     "issuing": "Issuing",
     "chooseFile": "Choose file",
-    "civilLiabilityExpirationDate": "Civil liability exp. date"
+    "civilLiabilityExpirationDate": "Civil liability exp. date",
+    "personalInfo": "Personal Information",
+    "professionalInfo": "Professional Information",
+    "vehicleInfo": "Vehicle information",
+    "contractInfo": "Contract information"
   },
   "actions": {
     "submit": "Submit",

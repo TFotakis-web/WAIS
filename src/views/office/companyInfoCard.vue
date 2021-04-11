@@ -50,8 +50,8 @@
 					</ion-item>
 					<ion-item>
 						<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.postcode') }}</ion-label>
-						<ion-input v-model="form.postcode" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+						<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
+						<ion-input v-model="form.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
 					</ion-item>
 					<ion-item>
 						<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
@@ -194,6 +194,7 @@
 					insuranceLicenseExpirationDate: '',
 					address: '',
 					city: '',
+					zip_code: '',
 					phone: '',
 					mobile: '',
 					email: '',

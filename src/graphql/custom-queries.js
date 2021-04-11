@@ -20,6 +20,56 @@ export const getAvailableInsuranceCompanies = /* GraphQL */ `
 		}
 	}
 `;
+export const getContractorUserProfiles = /* GraphQL */ `
+	query GetContractorUserProfiles(
+		$filter: ModelOfficeUserConnectionFilterInput
+		$limit: Int
+		$nextToken: String
+	) {
+		getContractorUserProfiles(
+			filter: $filter
+			limit: $limit
+			nextToken: $nextToken
+		) {
+			items {
+				id
+				username
+				email
+				role
+				telephone
+				name
+				fathers_name
+				address
+				zip_code
+				mobile
+				tin
+				family_name
+				gender
+				birthdate
+				city
+				profilePicture {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
+				preferences
+				locale
+				files {
+					level
+					idToken
+					filePath
+					filename
+					contentType
+				}
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const getContractsForOfficeId = /* GraphQL */ `
 	query GetContractsForOfficeId(
 		$officeId: ID!
@@ -44,7 +94,7 @@ export const getContractsForOfficeId = /* GraphQL */ `
 				gender
 				email
 				mobile
-				postcode
+				zip_code
 				doy
 				address
 				familyStatus
@@ -95,7 +145,7 @@ export const getCustomersForOfficeId = /* GraphQL */ `
 				gender
 				email
 				mobile
-				postcode
+				zip_code
 				doy
 				address
 				familyStatus
@@ -199,6 +249,10 @@ export const getMySentRequests = /* GraphQL */ `
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
+						insuranceCompanies {
+							name
+							code
+						}
 						files {
 							level
 							idToken
@@ -228,6 +282,28 @@ export const getMySentRequests = /* GraphQL */ `
 		}
 	}
 `;
+export const getMyUserCalendarEvents = /* GraphQL */ `
+	query GetMyUserCalendarEvents(
+		$filter: ModelUserCalendarEventFilterInput
+		$limit: Int
+		$nextToken: String
+	) {
+		getMyUserCalendarEvents(
+			filter: $filter
+			limit: $limit
+			nextToken: $nextToken
+		) {
+			items {
+				id
+				username
+				payload
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
 export const getOfficesIWorkIn = /* GraphQL */ `
 	query GetOfficesIWorkIn(
 		$filter: ModelOfficeFilterInput
@@ -235,6 +311,34 @@ export const getOfficesIWorkIn = /* GraphQL */ `
 		$nextToken: String
 	) {
 		getOfficesIWorkIn(filter: $filter, limit: $limit, nextToken: $nextToken) {
+			items {
+				id
+				fromId
+				fromOfficeName
+				toId
+				toOfficeName
+				expirationDate
+				message
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
+export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
+	query GetPartnerOfficeConnectionsForOfficeId(
+		$officeId: ID!
+		$filter: ModelOfficeAccessConnectionFilterInput
+		$limit: Int
+		$nextToken: String
+	) {
+		getPartnerOfficeConnectionsForOfficeId(
+			officeId: $officeId
+			filter: $filter
+			limit: $limit
+			nextToken: $nextToken
+		) {
 			items {
 				id
 				fromId
@@ -277,6 +381,10 @@ export const getRequestsForMe = /* GraphQL */ `
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
+						insuranceCompanies {
+							name
+							code
+						}
 						files {
 							level
 							idToken
@@ -308,7 +416,12 @@ export const getRequestsForMe = /* GraphQL */ `
 `;
 export const getS3Object = /* GraphQL */ `
 	query GetS3Object($obj: S3ObjectInput) {
-		getS3Object(obj: $obj)
+		getS3Object(obj: $obj) {
+			content
+			path
+			size
+			contentType
+		}
 	}
 `;
 export const getUserModelPermissionsForOffice = /* GraphQL */ `
@@ -319,6 +432,45 @@ export const getUserModelPermissionsForOffice = /* GraphQL */ `
 export const getUserPagePermissionsForOffice = /* GraphQL */ `
 	query GetUserPagePermissionsForOffice($officeId: ID!) {
 		getUserPagePermissionsForOffice(officeId: $officeId)
+	}
+`;
+export const getUserProfileByUsername = /* GraphQL */ `
+	query GetUserProfileByUsername($username: String) {
+		getUserProfileByUsername(username: $username) {
+			id
+			username
+			email
+			role
+			telephone
+			name
+			fathers_name
+			address
+			zip_code
+			mobile
+			tin
+			family_name
+			gender
+			birthdate
+			city
+			profilePicture {
+				level
+				idToken
+				filePath
+				filename
+				contentType
+			}
+			preferences
+			locale
+			files {
+				level
+				idToken
+				filePath
+				filename
+				contentType
+			}
+			createdAt
+			updatedAt
+		}
 	}
 `;
 export const getUserRole = /* GraphQL */ `
