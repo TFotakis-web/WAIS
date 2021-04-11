@@ -512,10 +512,6 @@ export const createOfficeRequest = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -567,10 +563,6 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -622,10 +614,6 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -677,10 +665,6 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -7819,10 +7803,6 @@ export const createRequests = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -7875,10 +7855,6 @@ export const updateRequests = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
@@ -7931,10 +7907,6 @@ export const deleteRequests = /* GraphQL */ `
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
-          insuranceCompanies {
-            name
-            code
-          }
           files {
             level
             idToken
