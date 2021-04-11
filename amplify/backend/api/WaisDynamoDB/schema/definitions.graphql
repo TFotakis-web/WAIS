@@ -898,7 +898,6 @@ input CreateOfficeRequestPayloadInput {
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     comments: String
-    insuranceCompanies: [InsuranceCompanyInput!]!
     files: [S3ObjectInput]
 }
 
