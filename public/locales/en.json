@@ -125,24 +125,18 @@
       }
     },
     "userProfile": {
-      "pageTitle": "User Profile",
-      "personalInfo": "Personal Information"
+      "pageTitle": "User Profile"
     },
     "Vehicle Cards Details": {
       "pageTitle": "Vehicle Cards Details"
     },
     "newContract": {
-      "personalInfo": "Personal information",
-      "vehicleInfo": "Vehicle information",
-      "contractInfo": "Contract information"
     },
     "devTools": {
       "pageTitle": "Developer Tools"
     },
     "officeCreationForm": {
       "createYourOffice": "Office creation application",
-      "personalInfo": "Personal Information",
-      "professionalInfo": "Professional Information",
       "termsAndConditions": "Terms and Conditions",
       "iAgreeToTheTermsAndConditions": "I agree to the terms and conditions."
     },
@@ -214,7 +208,11 @@
     "billing": "Billing",
     "issuing": "Issuing",
     "chooseFile": "Choose file",
-    "civilLiabilityExpirationDate": "Civil liability exp. date"
+    "civilLiabilityExpirationDate": "Civil liability exp. date",
+    "personalInfo": "Personal Information",
+    "professionalInfo": "Professional Information",
+    "vehicleInfo": "Vehicle information",
+    "contractInfo": "Contract information"
   },
   "actions": {
     "submit": "Submit",

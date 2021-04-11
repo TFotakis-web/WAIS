@@ -125,24 +125,18 @@
       }
     },
     "userProfile": {
-      "pageTitle": "Προφίλ Χρήστη",
-      "personalInfo": "Προσωπικές Στοιχεία"
+      "pageTitle": "Προφίλ Χρήστη"
     },
     "Vehicle Cards Details": {
       "pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
     },
     "newContract": {
-      "personalInfo": "Προσωπικά Στοιχεία",
-      "vehicleInfo": "Στοιχεία Οχήματος",
-      "contractInfo": "Στοιχεία Συμβολαίου"
     },
     "devTools": {
       "pageTitle": "Εργαλεία Προγραμματιστή"
     },
     "officeCreationForm": {
       "createYourOffice": "Αίτηση δημιουργίας επωνυμίας",
-      "personalInfo": "Προσωπικά στοιχεία",
-      "professionalInfo": "Επαγγελματικά στοιχεία",
       "termsAndConditions": "Όροι και προϋποθέσεις",
       "iAgreeToTheTermsAndConditions": "Συμφωνώ με τους όρους και τις προϋποθέσεις."
     },
@@ -214,7 +208,11 @@
     "billing": "Τιμολόγηση",
     "issuing": "Έκδοση",
     "chooseFile": "Επιλέξτε αρχείο",
-    "civilLiabilityExpirationDate": "Ημ. ληξης αστικής ευθύνης"
+    "civilLiabilityExpirationDate": "Ημ. ληξης αστικής ευθύνης",
+    "personalInfo": "Προσωπικές Στοιχεία",
+    "professionalInfo": "Επαγγελματικά στοιχεία",
+    "vehicleInfo": "Στοιχεία Οχήματος",
+    "contractInfo": "Στοιχεία Συμβολαίου"
   },
   "actions": {
     "submit": "Υποβολή",
