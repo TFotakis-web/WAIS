@@ -8,7 +8,8 @@
 					<ion-refresher-content>
 					</ion-refresher-content>
 				</ion-refresher>
-				<router-view v-slot="{ Component }">
+				<ion-loading :is-open="$store.getters['pageStructure/routerViewPendingPromises']"/>
+				<router-view v-slot="{ Component }" v-show="$store.getters['pageStructure/routerViewPendingPromises'] === 0">
 					<transition name="route" mode="out-in">
 						<component :is="Component"/>
 					</transition>
