@@ -5,10 +5,10 @@
 		<span>{{ request.payload.createOfficePayload.officeName }}</span>
 		<br>
 		<strong>{{ $t('fields.username') }}: </strong>
-		<span>{{ request.payload.createOfficePayload.username }}</span>
+		<span>{{ user.username }}</span>
 		<br>
 		<strong>{{ $t('fields.full_name') }}: </strong>
-		<span>{{ request.payload.createOfficePayload.family_name + ' ' + request.payload.createOfficePayload.name + ' ' + request.payload.createOfficePayload.fathersName }}</span>
+		<span>{{ user.family_name + ' ' + user.name + ' ' + user.fathers_name }}</span>
 		<br>
 		<strong>{{ $t('fields.mobile') }}: </strong>
 		<span>{{ request.payload.createOfficePayload.mobile }}</span>
@@ -35,7 +35,7 @@
 		<span>{{ request.payload.createOfficePayload.comments }}</span>
 		<br>
 		<strong>{{ $t('fields.files') }}: </strong>
-		<a v-for="file in request.payload.createOfficePayload.files" :key="file.url" :href="file.url" target="_blank" class="ion-margin-end">{{ file.filename }}</a>
+		<ion-button v-for="file in request.payload.createOfficePayload.files" :key="file.level + '/' + file.idToken + '/' + file.filePath + '/' + file.filename" @click="openFile(file)" fill="clear">{{ file.filename }}</ion-button>
 		<form @submit.prevent="acceptRequest">
 			<ion-list>
 				<ion-item>
@@ -89,6 +89,7 @@
 		},
 		data() {
 			return {
+				user: {},
 				form: {
 					decision: 'ACCEPT',
 					subscriptionExpirationDate: '',
@@ -128,20 +129,31 @@
 				rejectLoading: false,
 			};
 		},
-		mounted() {
-			const pageDesc = ` - ${this.request.payload.createOfficePayload.officeName}: ${this.request.payload.createOfficePayload.family_name} ${this.request.payload.createOfficePayload.name} ${this.request.payload.createOfficePayload.fathersName}`;
+		async mounted() {
+			this.user = await this.$store.dispatch('auth/getUserProfileByUsername', this.request.senderUsername);
+
+			const pageDesc = ` - ${this.request.payload.createOfficePayload.officeName}: ${this.user.family_name} ${this.user.name} ${this.user.fathers_name}`;
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle') + pageDesc);
 			this.$store.commit('pageStructure/setPageBackButton', true);
 			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Notifications' }).fullPath);
-			for (const file of this.request.payload.createOfficePayload.files) {
-				// Storage.get(file.filePath + file.filename, { level: file.level, identityId: file.idToken })
-				// 	.then(response => file.url = response);
-				API.graphql(graphqlOperation(getS3Object, { obj: file }))
-					.then(response => file.url = response.data.getS3Object);
-			}
 		},
 		methods: {
 			...mapActions('request', ['resolveRequest']),
+			async openFile(file) {
+				const response = await API.graphql(graphqlOperation(getS3Object, { obj: file }));
+				const fileData = response.data.getS3Object;
+				this.downloadBase64File(fileData.content, file.filename, file.contentType);
+			},
+			downloadBase64File(contentBase64, fileName, contentType) {
+				const linkSource = `data:${contentType};base64,${contentBase64}`;
+				const downloadLink = document.createElement('a');
+				document.body.appendChild(downloadLink);
+
+				downloadLink.href = linkSource;
+				downloadLink.target = '_self';
+				downloadLink.download = fileName;
+				downloadLink.click();
+			},
 			acceptRequest() {
 				this.acceptLoading = true;
 				this.resolveRequest({ id: this.request.id, payload: this.form })
