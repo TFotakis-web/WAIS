@@ -122,6 +122,12 @@
       "userPermissionsTableCard": {
         "cardTitle": "Δικαιώματα Χρηστών",
         "tablePermissionHeader": "Δικαίωμα"
+      },
+      "userManagementTableCard": {
+        "cardTitle": "Διαχείρηση χρηστών"
+      },
+      "manageUser": {
+        "pageTitle": "Διαχείρηση χρήστη"
       }
     },
     "userProfile": {
@@ -130,8 +136,7 @@
     "Vehicle Cards Details": {
       "pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
     },
-    "newContract": {
-    },
+    "newContract": {},
     "devTools": {
       "pageTitle": "Εργαλεία Προγραμματιστή"
     },
