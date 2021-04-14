@@ -8,20 +8,23 @@
 		</ion-row>
 		<ion-row>
 			<ion-col>
-				<user-permissions-table-card/>
+<!--				<user-permissions-table-card/>-->
+				<user-management-table-card/>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 </template>
 <script>
 	import companyInfoCard from '@/views/office/companyInfoCard';
-	import UserPermissionsTableCard from '@/views/office/userPermissionsTableCard';
+	// import UserPermissionsTableCard from '@/views/office/userPermissionsTableCard';
+	import UserManagementTableCard from '@/views/office/userManagementTableCard';
 
 	export default {
 		name: 'Office',
 		components: {
-			UserPermissionsTableCard,
 			companyInfoCard,
+			// UserPermissionsTableCard,
+			UserManagementTableCard
 		},
 		mounted() {
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Office.pageTitle'));
