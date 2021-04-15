@@ -102,6 +102,7 @@ module.exports = {
 								professionStartDate
 								phone
 								office_email
+								subscriptionExpirationDate
 								mobile
 								insuranceLicenseExpirationDate
 								address

@@ -103,15 +103,15 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
-		let result = response.data.listUserProfileByEmail
-		if (result.items.length > 0) {
-			result = result.items[0]
-		} else {
-			result = null
+		const userProfile = await gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
+			.then(response => response.data.listUserProfileByEmail.items[0])
+			.catch(err => 'Unhandled error in getUserProfileByEmail: ' + JSON.stringify(err))
+
+		if (!userProfile) {
+			throw new Error(`Failed to find UserProfile for user with email: ${email}`)
 		}
-		console.log('userAPI.getUserProfileByEmail output: ' + JSON.stringify(result))
-		return result
+		console.log('userAPI.getUserProfileByEmail output: ' + JSON.stringify(userProfile))
+		return userProfile
 	},
 
 	getUserRoleByUsername: async (username) => {
@@ -224,7 +224,7 @@ module.exports = {
 	 * Mutations
 	 */
 	updateUserProfileDetails: async (username, input, condition) => {
-		console.log('userAPI.updateUserProfileDetails input: ' + [username, input, condition])
+		console.log('userAPI.updateUserProfileDetails input: ' + [username, JSON.stringify(input), JSON.stringify(condition)])
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
@@ -296,14 +296,19 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute(
-			{input: sanitized_input, condition: expanded_condition},
-			mutation,
-			'updateUserProfileDetails',
-		)
-		const result = response.data.updateUserProfile
-		console.log('userAPI.updateUserProfileDetails output: ' + JSON.stringify(result))
-		return result
+		const result = await gqlUtil.execute({
+			input: sanitized_input,
+			condition: expanded_condition
+		}, mutation, 'updateUserProfileDetails')
+			.then(response => response.data.updateUserProfile)
+			.catch(err => console.log(`userAPI.updateUserProfileDetails unhandled error: ${JSON.stringify(err)}`))
+
+		if (result) {
+			console.log('officeAPI.updateUserProfileDetails output: ' + JSON.stringify(result))
+			return result
+		} else {
+			throw new Error(`Unable to update UserProfile for user ${username} and input ${sanitized_input}.`)
+		}
 	},
 
 	updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {

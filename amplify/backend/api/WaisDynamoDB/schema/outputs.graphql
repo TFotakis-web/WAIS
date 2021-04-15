@@ -41,7 +41,7 @@ type OfficeOutput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3Object]
-    insuranceCompanies: [InsuranceCompany!]!
+    insuranceCompanies: [InsuranceCompany!]
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
 }
@@ -221,7 +221,7 @@ type ModelOfficeAccessConnectionOutput {
 type InsuranceCompanyDetailsOutput {
     id: ID
     officeName: String
-    insuranceCompanies: [InsuranceCompany!]!
+    insuranceCompanies: [InsuranceCompany!]
 }
 
 type IDOutput {
