@@ -1,8 +1,8 @@
 <template>
 	<ion-item v-if="routeCategory.thumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
-		<ion-thumbnail slot="start">
+		<ion-avatar slot="start">
 			<ion-img :src="routeCategory.thumbnail"/>
-		</ion-thumbnail>
+		</ion-avatar>
 		<ion-label>
 			<h1 v-if="routeCategory.h1">{{ routeCategory.h1 }}</h1>
 			<h2 v-if="routeCategory.h2">{{ routeCategory.h2 }}</h2>

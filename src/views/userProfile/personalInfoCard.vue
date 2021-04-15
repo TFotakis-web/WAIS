@@ -7,11 +7,11 @@
 			<form @submit.prevent="save">
 				<ion-list>
 					<ion-item>
-						<ion-thumbnail class="ion-margin-end">
+						<ion-avatar class="ion-margin-end">
 							<ion-img :src="profilePicture"/>
-						</ion-thumbnail>
+						</ion-avatar>
 <!--						Todo: Enable when backend is ready -->
-<!--						<file-input @update:downloadUrls="profilePicture = $event" color="primary" :text="$t('actions.edit')" rename-to="profile" file-path="profile/" level="protected" v-model="userProfile.profilePicture" :sizeLimitInMBs="10" size="small"/>-->
+<!--						<file-input @update:downloadUrls="profilePicture = $event" color="primary" :text="$t('actions.edit')" rename-to="profile" file-path="profile" level="protected" v-model="userProfile.profilePicture" :sizeLimitInMBs="10" size="small"/>-->
 					</ion-item>
 					<ion-item>
 						<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>

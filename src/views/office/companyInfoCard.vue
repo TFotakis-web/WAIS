@@ -2,11 +2,11 @@
 	<ion-card>
 		<ion-card-content>
 			<ion-item>
-				<ion-thumbnail class="ion-margin-end">
+				<ion-avatar class="ion-margin-end">
 					<ion-img :src="form.officeLogo"/>
-				</ion-thumbnail>
+				</ion-avatar>
 				<!--						Todo: Enable when backend is ready -->
-				<!--						<file-input @update:downloadUrls="fields.officeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office/" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>-->
+				<!--						<file-input @update:downloadUrls="fields.officeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>-->
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>

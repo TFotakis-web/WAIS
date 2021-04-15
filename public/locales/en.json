@@ -122,6 +122,12 @@
       "userPermissionsTableCard": {
         "cardTitle": "User Permissions",
         "tablePermissionHeader": "Permission"
+      },
+      "userManagementTableCard": {
+        "cardTitle": "User management"
+      },
+      "manageUser": {
+        "pageTitle": "Manage user"
       }
     },
     "userProfile": {
@@ -130,8 +136,7 @@
     "Vehicle Cards Details": {
       "pageTitle": "Vehicle Cards Details"
     },
-    "newContract": {
-    },
+    "newContract": {},
     "devTools": {
       "pageTitle": "Developer Tools"
     },

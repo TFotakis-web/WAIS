@@ -161,10 +161,9 @@ export const request = {
 				return Promise.reject(error);
 			}
 		},
-		async resolveRequest({ commit }, { id, payload }) {
+		async resolveRequest({ commit }, { id, decision, payload }) {
 			try {
-				payload = JSON.stringify(payload);
-				const response = await API.graphql(graphqlOperation(resolveRequest, { id, payload }));
+				const response = await API.graphql(graphqlOperation(resolveRequest, { requestId: id, decision, payload }));
 				commit('removeRequestForMe', id);
 				return Promise.resolve(JSON.parse(response.data.resolveRequest));
 			} catch (error) {

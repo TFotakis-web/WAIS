@@ -76,16 +76,16 @@
 									<ion-datetime v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="civilLiabilityExpirationDate"/>
 								</ion-item>
 								<ion-item>
-									<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createOfficeRequest/" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
+									<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createOfficeRequest" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
 								</ion-item>
 								<ion-item>
-									<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createOfficeRequest/" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
+									<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createOfficeRequest" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
 								</ion-item>
 								<ion-item>
-									<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createOfficeRequest/" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
+									<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createOfficeRequest" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
 								</ion-item>
 								<ion-item>
-									<file-input color="primary" text="Other files" file-path="createOfficeRequest/" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
+									<file-input color="primary" text="Other files" file-path="createOfficeRequest" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
 								</ion-item>
 								<ion-item>
 									<ion-icon :icon="$ionicons.chatbubbleOutline" slot="start" class="ion-align-self-center"/>

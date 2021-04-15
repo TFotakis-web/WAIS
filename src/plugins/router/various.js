@@ -28,6 +28,15 @@ export default [
 		},
 	},
 	{
+		path: '/manageUser/:username',
+		name: 'ManageUser',
+		component: () => import('@/views/office/ManageUser'),
+		meta: {
+			requiresAuth: true,
+			requiresPagePermission: true,
+		},
+	},
+	{
 		path: '/profile',
 		name: 'UserProfile',
 		component: () => import('@/views/userProfile/UserProfile'),

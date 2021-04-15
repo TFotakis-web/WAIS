@@ -139,7 +139,7 @@
 					const contentType = file.type;
 
 					try {
-						await Storage.put(this.filePath + filename, file, {
+						await Storage.put(this.filePath + '/' + filename, file, {
 							level: this.level,
 							contentType: contentType,
 						});
@@ -152,7 +152,7 @@
 							idToken: this.$store.getters['auth/user'].id,
 						});
 
-						const response = await Storage.get(this.filePath + filename, { level: this.level });
+						const response = await Storage.get(this.filePath + '/' + filename, { level: this.level });
 						this.downloadUrls.push(response);
 					} catch (error) {
 						console.error(error);

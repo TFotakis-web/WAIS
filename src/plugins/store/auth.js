@@ -1,6 +1,6 @@
 import router from '@/plugins/router/router';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { me } from '@/graphql/custom-queries';
+import { me, getUserProfileByUsername } from '@/graphql/custom-queries';
 import { updateUserProfileDetails } from '@/graphql/custom-mutations';
 
 const initState = () => ({
@@ -356,6 +356,18 @@ export const auth = {
 				const response = await API.graphql(graphqlOperation(updateUserProfileDetails, { input: userProfile }));
 				userProfile = response.data.updateUserProfileDetails;
 				return Promise.resolve(userProfile);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
+			}
+		},
+		async getUserProfileByUsername({ commit }, username) {
+			commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
+			try {
+				const response = await API.graphql(graphqlOperation(getUserProfileByUsername, { username }));
+				return Promise.resolve(response.data.getUserProfileByUsername);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
