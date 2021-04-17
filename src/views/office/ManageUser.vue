@@ -34,7 +34,7 @@
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Office.manageUser.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', true);
 
-			const i = this.username.split('user')[0];
+			const i = this.username.replace('user', '');
 			this.user = {
 				profilePicture: 'https://www.w3schools.com/howto/img_avatar.png',
 				fullName: `Name${i} Surname${i}`,
