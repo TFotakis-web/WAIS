@@ -1,6 +1,5 @@
 <template>
 	<ion-card>
-		<!--		<ion-card-header>-->
 		<ion-item lines="full">
 			<ion-card-title>{{ $t('views.Office.userManagementTableCard.cardTitle') }}</ion-card-title>
 			<ion-button @click="addUser" fill="clear" slot="end">
@@ -8,7 +7,6 @@
 				<span>{{ $t('actions.add') }}</span>
 			</ion-button>
 		</ion-item>
-		<!--		</ion-card-header>-->
 		<ion-card-content>
 			<ion-item v-for="user in users" :key="user.username" :router-link="{name: 'ManageUser', params: {username: user.username}}" button>
 				<ion-avatar slot="start">
