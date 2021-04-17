@@ -217,7 +217,8 @@
     "personalInfo": "Προσωπικές Στοιχεία",
     "professionalInfo": "Επαγγελματικά στοιχεία",
     "vehicleInfo": "Στοιχεία Οχήματος",
-    "contractInfo": "Στοιχεία Συμβολαίου"
+    "contractInfo": "Στοιχεία Συμβολαίου",
+    "permissions": "Δικαιώματα"
   },
   "actions": {
     "submit": "Υποβολή",

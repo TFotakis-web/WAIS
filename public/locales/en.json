@@ -217,7 +217,8 @@
     "personalInfo": "Personal Information",
     "professionalInfo": "Professional Information",
     "vehicleInfo": "Vehicle information",
-    "contractInfo": "Contract information"
+    "contractInfo": "Contract information",
+    "permissions": "Permissions"
   },
   "actions": {
     "submit": "Submit",
