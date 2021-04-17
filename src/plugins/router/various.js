@@ -24,13 +24,22 @@ export default [
 		component: () => import('@/views/office/Office'),
 		meta: {
 			requiresAuth: true,
-			requiresPagePermission: true,
+			// requiresPagePermission: true,
 		},
 	},
 	{
 		path: '/office/manageUser/:username',
 		name: 'ManageUser',
 		component: () => import('@/views/office/ManageUser'),
+		meta: {
+			requiresAuth: true,
+			requiresPagePermission: true,
+		},
+	},
+	{
+		path: '/office/inviteUser',
+		name: 'InviteUser',
+		component: () => import('@/views/office/InviteUser'),
 		meta: {
 			requiresAuth: true,
 			requiresPagePermission: true,
