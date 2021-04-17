@@ -2,9 +2,9 @@
 	<ion-card>
 		<ion-item lines="full">
 			<ion-card-title>{{ $t('views.Office.userManagementTableCard.cardTitle') }}</ion-card-title>
-			<ion-button @click="addUser" fill="clear" slot="end">
+			<ion-button :router-link="{name: 'InviteUser'}" fill="clear" slot="end">
 				<ion-icon :icon="$ionicons.addOutline" slot="start"/>
-				<span>{{ $t('actions.add') }}</span>
+				<span>{{ $t('actions.invite') }}</span>
 			</ion-button>
 		</ion-item>
 		<ion-card-content>
