@@ -12,8 +12,12 @@ module.exports = {
 		const username = input.username
 
 		//tests
-		await crud_tests.UserProfile(ddb,gql,gateway)
-		await office_user_partnership_tests.officeConnectionsTest(ddb,gql,gateway)
+		try {
+			await crud_tests.UserProfile(ddb, gql, gateway)
+			await office_user_partnership_tests.officeConnectionsTest(ddb, gql, gateway)
+		} catch (err) {
+			console.error(err)
+		}
 
 		console.log("debugAPI.result: " + JSON.stringify(input))
 		return {}

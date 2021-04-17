@@ -25,6 +25,7 @@ module.exports = {
 								phone
 								office_email
 								mobile
+								subscriptionExpirationDate
 								insuranceLicenseExpirationDate
 								address
 								chamberRecordNumber
@@ -90,6 +91,7 @@ module.exports = {
 								mobile
 								insuranceLicenseExpirationDate
 								address
+								subscriptionExpirationDate
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
@@ -161,6 +163,7 @@ module.exports = {
 								zip_code
 								tin
 								professionStartDate
+								subscriptionExpirationDate
 								phone
 								office_email
 								mobile
@@ -195,12 +198,15 @@ module.exports = {
 				}
 			}
 		`
-		const retrieveRequestResponse = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
-		const requestObject = retrieveRequestResponse.data.listRequestss.items[0] || null
-		if (requestObject === null) {
+		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
+			.then(resp => resp.data.listRequestss.items[0])
+			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err)))
+
+		if (!requestObject) {
 			throw new Error('Request with provided ID was not found.')
+		} else {
+			console.log('Request object: ' + JSON.stringify(requestObject))
 		}
-		console.log('Request object: ' + JSON.stringify(requestObject))
 
 		//Retrieve the sender's UserProfile - User who send the request
 		const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
@@ -249,8 +255,10 @@ module.exports = {
 							}
 						}
 					`
-					const createOfficeResponse = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
-					const createdOfficeId = createOfficeResponse.data.createOffice.id
+					const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+						.then(response => response.data.createOffice.id)
+						.catch(err => console.error('Unhandled error in createOffice: ' + JSON.stringify(err)))
+
 					if (!createdOfficeId) {
 						throw new Error('Failed to create new office.')
 					}
@@ -273,8 +281,10 @@ module.exports = {
 							}
 						}
 					`
-					const createTUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
-					const createdTUCId = createTUCResponse.data.createOfficeUserConnection.id
+					const createdTUCId = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+						.then(response => response.data.createOfficeUserConnection.id)
+						.catch(err => console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err)))
+
 					if (!createdTUCId) {
 						throw new Error('Failed to create new Office-User connection.')
 					}
@@ -291,8 +301,10 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'MANAGER',
 					}
-					const response = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
-					const resultUP = response.data.updateUserProfile.id
+					const resultUP = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
+						.then(response => response.data.updateUserProfile.id)
+						.catch(err => console.error('Unhandled error in updateUserProfileDetails: ' + JSON.stringify(err)))
+
 					if (!resultUP) {
 						throw new Error('Failed to update Manager`s UserProfile role.')
 					}

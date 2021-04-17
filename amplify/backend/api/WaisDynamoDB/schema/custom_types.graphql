@@ -5,7 +5,7 @@ type InsuranceCompany {
 type InsuranceCompanyDetails {
     id: ID
     officeName: String
-    insuranceCompanies: [InsuranceCompany!]!
+    insuranceCompanies: [InsuranceCompany!]
 }
 type S3Object {
     level: String!
@@ -76,7 +76,7 @@ enum RequestDecision {
     REJECT
 }
 
-### Create Request
+##### Create Request
 
 type CreateRequestPayload {
     createOfficePayload: CreateOfficeRequestPayload
@@ -84,6 +84,13 @@ type CreateRequestPayload {
     inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
     inviteContractorToOfficePayload: InviteContractorRequestPayload
 }
+input CreateRequestPayloadInput {
+    createOfficePayload: CreateOfficeRequestPayloadInput
+    createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
+    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
+    inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
+}
+
 type CreateOfficeRequestPayload {
     officeName: String!
     address: String
@@ -92,6 +99,7 @@ type CreateOfficeRequestPayload {
     mobile: String
     phone: String!
     tin: String!
+    subscriptionExpirationDate: AWSDate
     professionStartDate: AWSDate
     chamberRecordNumber: String
     insuranceLicenseExpirationDate: AWSDate
@@ -99,12 +107,37 @@ type CreateOfficeRequestPayload {
     comments: String
     files: [S3Object]
 }
+input CreateOfficeRequestPayloadInput {
+    officeName: String!
+    address: String
+    office_email: String!
+    zip_code: String
+    mobile: String
+    phone: String!
+    tin: String!
+    subscriptionExpirationDate: AWSDate
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    comments: String
+    files: [S3ObjectInput]
+}
+
 
 type OfficeConnectionRequestPayload {
     manager_email: String!
 }
+input OfficeConnectionRequestPayloadInput {
+    manager_email: String!
+}
 
 type InviteEmployeeRequestPayload {
+    email: String!
+    empModelPermissions: [ModelPermission!]!
+    empPagePermissions: AWSJSON!
+}
+input InviteEmployeeRequestPayloadInput {
     email: String!
     empModelPermissions: [ModelPermission!]!
     empPagePermissions: AWSJSON!
@@ -115,8 +148,14 @@ type InviteContractorRequestPayload {
     ctrPagePermissions: AWSJSON!
     email: String!
 }
+input InviteContractorRequestPayloadInput {
+    ctrModelPermissions: [ModelPermission!]!
+    ctrPagePermissions: AWSJSON!
+    email: String!
+}
 
-## Resolve request
+
+##### Resolve request
 input ResolveRequestPayloadInput {
     createOfficePayload: ResolveCreateOfficePayload
     createOfficeConnectionPayload: ResolveOfficeAccessConnectionPayload
@@ -129,7 +168,7 @@ input ResolveCreateOfficePayload {
     managerPagePermissions: AWSJSON!
     partnersNumberLimit: Int!
     employeesNumberLimit: Int!
-    insuranceCompanies: [InsuranceCompanyInput!]!
+    insuranceCompanies: [InsuranceCompanyInput!]
 }
 input ResolveOfficeAccessConnectionPayload {
     expirationDate: AWSTimestamp!

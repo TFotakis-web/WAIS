@@ -98,18 +98,12 @@ module.exports = {
 			mobile: "6969696969",
 			phone: "+30123",
 			tin: "123",
+			subscriptionExpirationDate: new Date().toISOString().slice(0, 10),
 			professionStartDate: new Date().toISOString().slice(0, 10),
 			chamberRecordNumber: '123',
 			insuranceLicenseExpirationDate: new Date().toISOString().slice(0, 10),
 			civilLiabilityExpirationDate: new Date().toISOString().slice(0, 10),
 			comments: '',
-			insuranceCompanies: [{
-				name: "insurance_company_1",
-				code: "insurance_code_1",
-			}, {
-				name: "insurance_company_2",
-				code: "insurance_code_2",
-			}],
 			files: []
 		}
 
@@ -152,6 +146,13 @@ module.exports = {
 					managerPagePermissions: {},
 					partnersNumberLimit: 1,
 					employeesNumberLimit: 2,
+					insuranceCompanies: [{
+						name: "insurance_company_1",
+						code: "insurance_code_1",
+					}, {
+						name: "insurance_company_2",
+						code: "insurance_code_2",
+					}]
 				}
 			}
 		}

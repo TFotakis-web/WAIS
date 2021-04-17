@@ -28,12 +28,13 @@ type Office
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
+    subscriptionExpirationDate: AWSDate
 
     # Store S3 files in this field
     files: [S3Object]
 
     # Insurance companies
-    insuranceCompanies: [InsuranceCompany!]!
+    insuranceCompanies: [InsuranceCompany!]
 
     # Access to connected offices, private access
     officeConnections: [OfficeAccessConnection] @connection(keyName: "byFromOfficeName", fields: ["officeName"])

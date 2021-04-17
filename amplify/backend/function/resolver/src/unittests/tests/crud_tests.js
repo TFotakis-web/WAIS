@@ -4,7 +4,7 @@ const util = require('util');
 const usersAPI = require('../../api/user')
 
 module.exports = {
-	UserProfile: async (ddb,gql,gateway) => {
+	UserProfile: async (ddb, gql, gateway) => {
 		console.log('CRUD UserProfile')
 
 		//The chosen ID for this test object
@@ -19,6 +19,8 @@ module.exports = {
 			}
 		`
 		const cleanUpResult = await gql.execute({input: {id: id}}, deleteUPMutation0, 'deleteUserProfile')
+			.catch(err => 'Unhandled error while attempting to delete existing UserProfile: ' + JSON.stringify(err))
+
 		console.log(`Pre-CRUD queries result: ${JSON.stringify(cleanUpResult)}`)
 
 		//Create
@@ -101,11 +103,13 @@ module.exports = {
 				}
 			}
 		}`
-		const createResult = await gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
-		if (createResult.errors) {
-			throw new Error(`UserProfile creation failed: ${JSON.stringify(createResult.errors)}`)
+		const createdUserProfile = await gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
+			.then(resp => resp.data.createUserProfile)
+			.catch(err => console.log('Unhandled error in createUserProfile: ' + JSON.stringify(err)))
+
+		if (!createdUserProfile) {
+			throw new Error(`Failed to create UserProfile.`)
 		}
-		const createdUserProfile = createResult.data.createUserProfile
 		assert(createdUserProfile.username === ogUP.username)
 		console.log('UserProfile creation succeeded.')
 
@@ -151,11 +155,13 @@ module.exports = {
 				}
 			}
 		`
-		const readResult = await gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
-		if (readResult.errors) {
+		const readUP = await gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
+			.then(resp => resp.data.listUserProfileByUsername.items[0])
+			.catch(err => console.log('Unhandled error in getUserProfileByUsername: ' + JSON.stringify(err)))
+
+		if (!readUP) {
 			throw new Error('UserProfile read failed.')
 		}
-		const readUP = readResult.data.listUserProfileByUsername.items[0]
 		assert(util.isDeepStrictEqual(readUP, createdUserProfile))
 		console.log('UserProfile read succeeded.')
 
@@ -182,6 +188,8 @@ module.exports = {
 			}
 		`
 		const deleteResult = await gql.execute({input: {id: createdUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
+			.catch(err => 'Unhandled error in deleteUserProfile: ' + JSON.stringify(err))
+
 		if (!deleteResult || deleteResult.errors) {
 			throw new Error('Failed to delete UserProfile')
 		}
