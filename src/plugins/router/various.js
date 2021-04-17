@@ -28,7 +28,7 @@ export default [
 		},
 	},
 	{
-		path: '/manageUser/:username',
+		path: '/office/manageUser/:username',
 		name: 'ManageUser',
 		component: () => import('@/views/office/ManageUser'),
 		meta: {
