@@ -1,5 +1,8 @@
 <template>
 	<ion-card>
+		<ion-item lines="full">
+			<ion-card-title>{{ $t('views.Office.companyInfo') }}</ion-card-title>
+		</ion-item>
 		<ion-card-content>
 			<ion-item>
 				<ion-avatar class="ion-margin-end">
@@ -10,59 +13,82 @@
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>
-					<ion-list-header>
-						<h1>{{ $t('views.Office.companyInfo') }}</h1>
-					</ion-list-header>
 					<ion-item>
 						<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
 						<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
 						<ion-input v-model="form.office" type="text" name="officeName" required/>
 					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
-						<ion-input v-model="form.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-						<ion-input v-model="form.tin" type="text" name="tin"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-						<ion-datetime v-model="form.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon slot="start"/>
-						<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-						<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-						<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon slot="start"/>
-						<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
-						<ion-input v-model="form.city" type="text" name="city" autocomplete="address-level2"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-						<ion-input v-model="form.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-						<ion-input v-model="form.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-						<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
-					</ion-item>
+					<ion-row>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
+								<ion-input v-model="form.tin" type="text" name="tin"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
+								<ion-input v-model="form.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
+								<ion-datetime v-model="form.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon slot="start" class="ion-hide-md-up"/>
+								<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
+								<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12" size-md="4">
+							<ion-item>
+								<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
+								<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="4">
+							<ion-item>
+								<ion-icon slot="start" class="ion-hide-md-up"/>
+								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
+								<ion-input v-model="form.city" type="text" name="city" autocomplete="address-level2"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="4">
+							<ion-item>
+								<ion-icon slot="start" class="ion-hide-md-up"/>
+								<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
+								<ion-input v-model="form.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
+								<ion-input v-model="form.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="6">
+							<ion-item>
+								<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
+								<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
+								<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
+							</ion-item>
+						</ion-col>
+					</ion-row>
 					<ion-item>
 						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
 						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
@@ -105,7 +131,6 @@
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-
 					<ion-row v-for="(companyCode, i) in form.companyCodes" :key="'companyCodes' + i" class="ion-align-items-end">
 						<ion-col>
 							<ion-item>
