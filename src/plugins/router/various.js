@@ -1,3 +1,5 @@
+import { store } from '@/plugins/store/store';
+
 export default [
 	{
 		path: '',
@@ -9,41 +11,54 @@ export default [
 	},
 	{
 		path: '/office',
-		name: 'Office',
-		component: () => import('@/views/office/Office'),
-		meta: {
-			requiresAuth: true,
-			// requiresPagePermission: true,
-		},
-	},
-	{
-		path: '/office/create',
-		name: 'OfficeCreationForm',
-		component: () => import('@/views/officeCreationForm/OfficeCreationForm'),
-		meta: {
-			requiresAuth: true,
-			customCheck: () => {
-				return true;
+		component: () => import('@/components/structure/passThroughRouterView'),
+		children: [
+			{
+				path: '',
+				name: 'Office',
+				component: () => import('@/views/office/Office'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'MANAGER' || store.getters['auth/role'] === 'EMPLOYEE';
+					},
+					// requiresPagePermission: true,
+				},
 			},
-		},
-	},
-	{
-		path: '/office/manageUser/:username',
-		name: 'ManageUser',
-		component: () => import('@/views/office/ManageUser'),
-		meta: {
-			requiresAuth: true,
-			requiresPagePermission: true,
-		},
-	},
-	{
-		path: '/office/inviteUser',
-		name: 'InviteUser',
-		component: () => import('@/views/office/InviteUser'),
-		meta: {
-			requiresAuth: true,
-			requiresPagePermission: true,
-		},
+			{
+				path: 'create',
+				name: 'OfficeCreationForm',
+				component: () => import('@/views/officeCreationForm/OfficeCreationForm'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'UNKNOWN';
+					},
+				},
+			},
+			{
+				path: 'manageUser/:username',
+				name: 'ManageUser',
+				component: () => import('@/views/office/ManageUser'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'MANAGER' || store.getters['auth/role'] === 'EMPLOYEE';
+					},
+				},
+			},
+			{
+				path: 'inviteUser',
+				name: 'InviteUser',
+				component: () => import('@/views/office/InviteUser'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'MANAGER';
+					},
+				},
+			},
+		],
 	},
 	{
 		path: '/profile',
