@@ -8,7 +8,16 @@ export default [
 		},
 	},
 	{
-		path: '/officeCreationForm',
+		path: '/office',
+		name: 'Office',
+		component: () => import('@/views/office/Office'),
+		meta: {
+			requiresAuth: true,
+			// requiresPagePermission: true,
+		},
+	},
+	{
+		path: '/office/create',
 		name: 'OfficeCreationForm',
 		component: () => import('@/views/officeCreationForm/OfficeCreationForm'),
 		meta: {
@@ -16,15 +25,6 @@ export default [
 			customCheck: () => {
 				return true;
 			},
-		},
-	},
-	{
-		path: '/office',
-		name: 'Office',
-		component: () => import('@/views/office/Office'),
-		meta: {
-			requiresAuth: true,
-			// requiresPagePermission: true,
 		},
 	},
 	{
