@@ -170,7 +170,7 @@
 			},
 			async deleteFile(fileIndex) {
 				const file = this.files[fileIndex];
-				await Storage.remove(file.filePath + file.filename, { level: file.level });
+				await Storage.remove(file.filePath + '/' + file.filename, { level: file.level });
 				this.files.splice(fileIndex, 1);
 				this.downloadUrls.splice(fileIndex, 1);
 
@@ -200,7 +200,7 @@
 				}
 
 				for (const file of this.files) {
-					const response = await Storage.get(file.filePath + file.filename, { level: file.level });
+					const response = await Storage.get(file.filePath  + '/' + file.filename, { level: file.level });
 					this.downloadUrls.push(response);
 				}
 			},
