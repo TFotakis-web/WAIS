@@ -6,10 +6,9 @@
 		<ion-card-content>
 			<ion-item>
 				<ion-avatar class="ion-margin-end">
-					<ion-img :src="form.officeLogo"/>
+					<s3-ion-img :s3-object="form.officeLogo" default-url="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg"/>
 				</ion-avatar>
-				<!--						Todo: Enable when backend is ready -->
-				<!--						<file-input @update:downloadUrls="fields.officeLogo = $event" color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>-->
+				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>
@@ -178,10 +177,14 @@
 </template>
 <script>
 	import loadingBtn from '@/components/structure/loadingBtn';
+	import S3IonImg from '@/components/structure/S3IonImg';
+	import FileInput from '@/components/structure/fileInput/fileInput';
 
 	export default {
 		name: 'CompanyInfoCard',
 		components: {
+			FileInput,
+			S3IonImg,
 			loadingBtn,
 		},
 		data() {
@@ -212,7 +215,7 @@
 				],
 				form: {
 					office: '',
-					officeLogo: 'https://tppwebsolutions.com/wp-content/uploads/logo-demo3.png',
+					officeLogo: {},
 					chamberRecordNumber: '',
 					tin: '',
 					professionStartDate: '',
