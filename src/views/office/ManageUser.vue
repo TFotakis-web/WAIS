@@ -11,13 +11,13 @@
 					<p>{{ user.username }} • {{ user.role }}</p>
 				</ion-label>
 				<ion-badge v-if="user.state === 'pending'" color="warning">Pending</ion-badge>
-				<ion-button @click="deleteUser" fill="clear" slot="end" color="danger">
+				<ion-button v-if="$store.getters['auth/role'] === 'MANAGER'" @click="deleteUser" fill="clear" slot="end" color="danger">
 					<ion-icon :icon="$ionicons.trashOutline" slot="start"/>
 					<span>{{ $t('actions.delete') }}</span>
 				</ion-button>
 			</ion-item>
 			<ion-card-content>
-				<ion-item>
+				<ion-item v-if="$store.getters['auth/role'] === 'MANAGER'">
 					<ion-label position="floating">{{ $t('fields.permissions') }}</ion-label>
 					<ion-select v-model="user.permissions" multiple required>
 						<ion-select-option v-for="o in permissionOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
