@@ -158,7 +158,7 @@ module.exports = {
 		}
 		const acceptCreateOfficeRequestResponse = await gateway.resolveRequest(resolveCreateOfficeRequest)
 		if (acceptCreateOfficeRequestResponse.id === undefined) {
-			throw new Error("Failed to resolve the CreateOffice request.")
+			throw new Error(`Failed to resolve the CreateOffice request. Response was ${JSON.stringify(acceptCreateOfficeRequestResponse)}`)
 		}
 		//assert(util.isDeepStrictEqual(createOfficeRequestInput, createOfficeRequest.payload.createOfficePayload))
 		console.log('CreateOffice request was resolved successfully.')

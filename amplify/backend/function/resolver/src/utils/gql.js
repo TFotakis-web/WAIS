@@ -33,15 +33,20 @@ module.exports = {
 
 		return await new Promise((resolve, reject) => {
 			const httpRequest = https.request({...req, host: ENDPOINT}, (result) => {
-				result.on('data', (data) => {
-					const result = JSON.parse(data.toString())
-					console.log('GQL data: ' + JSON.stringify(result))
-					resolve(result)
-				})
-				result.on('errors', (err) => {
-					const result = JSON.parse(err.toString())
-					console.log('GQL error: ' + JSON.stringify(result))
-					reject(result)
+				result.on('data', (contents) => {
+					try {
+						const result = JSON.parse(contents.toString())
+						if ('errors' in result) {
+							console.log('GQL error: ' + JSON.stringify(result))
+							reject(result)
+						} else {
+							console.log('GQL data: ' + JSON.stringify(result))
+							resolve(result)
+						}
+					} catch (err) {
+						console.log('GQL parsing error: ' + JSON.stringify(err))
+						reject(err.toString())
+					}
 				})
 			})
 

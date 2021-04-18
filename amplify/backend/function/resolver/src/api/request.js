@@ -248,6 +248,11 @@ module.exports = {
 					//Delete some fields that should only be present in the request and not in the office
 					delete createOfficeInput.comments
 
+					//Empty and Null checks
+					if (!createOfficeInput.office_email) {
+						throw new Error('Office e-mail can not be empty.')
+					}
+
 					const mutation1 = /* GraphQL */ `
 						mutation createOffice($input: CreateOfficeInput!) {
 							createOffice(input: $input) {
