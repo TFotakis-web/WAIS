@@ -165,7 +165,7 @@ export const request = {
 			try {
 				const response = await API.graphql(graphqlOperation(resolveRequest, { requestId: id, decision, payload }));
 				commit('removeRequestForMe', id);
-				return Promise.resolve(JSON.parse(response.data.resolveRequest));
+				return Promise.resolve(response.data.resolveRequest);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
