@@ -67,13 +67,15 @@
 
 					{
 						to: { name: 'Office' },
-						thumbnail: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+						thumbnail: {},
+						defaultThumbnail: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
 						h1: 'Office Name',
 					},
 
 					{
 						to: { name: 'UserProfile' },
-						thumbnail: 'https://www.w3schools.com/howto/img_avatar.png',
+						thumbnail: this.$store.getters['auth/userProfile'].profilePicture,
+						defaultThumbnail: 'https://www.w3schools.com/howto/img_avatar.png',
 						h2: this.$store.getters['auth/fullName'],
 						p: this.$store.getters['auth/username'],
 					},
