@@ -327,7 +327,6 @@ export const auth = {
 					'username',
 					'email',
 					'telephone',
-					'role',
 					'name',
 					'fathers_name',
 					'address',
