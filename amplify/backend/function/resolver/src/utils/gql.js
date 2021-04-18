@@ -45,7 +45,7 @@ module.exports = {
 						}
 					} catch (err) {
 						console.log('GQL parsing error: ' + JSON.stringify(err))
-						reject(null)
+						reject(err.toString())
 					}
 				})
 			})
