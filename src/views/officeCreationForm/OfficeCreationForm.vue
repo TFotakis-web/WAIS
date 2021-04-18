@@ -41,6 +41,11 @@
 									<ion-input v-model="CreateOfficeRequestPayloadInput.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
 								</ion-item>
 								<ion-item>
+									<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
+									<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
+									<ion-input v-model="CreateOfficeRequestPayloadInput.office_email" type="email" name="email" autocomplete="email" required/>
+								</ion-item>
+								<ion-item>
 									<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
 									<ion-input v-model="CreateOfficeRequestPayloadInput.address" type="text" name="address" autocomplete="street-address"/>
