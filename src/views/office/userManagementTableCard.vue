@@ -2,7 +2,7 @@
 	<ion-card>
 		<ion-item lines="full">
 			<ion-card-title>{{ $t('views.Office.userManagementTableCard.cardTitle') }}</ion-card-title>
-			<ion-button :router-link="{name: 'InviteUser'}" fill="clear" slot="end">
+			<ion-button v-if="$store.getters['auth/role'] === 'MANAGER'" :router-link="{name: 'InviteUser'}" fill="clear" slot="end">
 				<ion-icon :icon="$ionicons.addOutline" slot="start"/>
 				<span>{{ $t('actions.invite') }}</span>
 			</ion-button>
