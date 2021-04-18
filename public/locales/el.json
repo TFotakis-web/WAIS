@@ -128,6 +128,9 @@
       },
       "manageUser": {
         "pageTitle": "Διαχείρηση χρήστη"
+      },
+      "inviteUser": {
+        "pageTitle": "Πρόσκληση χρήστη"
       }
     },
     "userProfile": {
@@ -217,7 +220,13 @@
     "personalInfo": "Προσωπικές Στοιχεία",
     "professionalInfo": "Επαγγελματικά στοιχεία",
     "vehicleInfo": "Στοιχεία Οχήματος",
-    "contractInfo": "Στοιχεία Συμβολαίου"
+    "contractInfo": "Στοιχεία Συμβολαίου",
+    "permissions": "Δικαιώματα",
+    "role": "",
+    "roles": {
+      "employee": "Υπάλληλος",
+      "contractor": "Εξωτερικός συνεργάτης"
+    }
   },
   "actions": {
     "submit": "Υποβολή",
@@ -240,7 +249,9 @@
     "reject": "Απόρριψη",
     "rejecting": "Απορρίπτεται",
     "ok": "OK",
-    "cancel": "Άκυρο"
+    "cancel": "Άκυρο",
+    "invite": "Πρόσκληση",
+    "inviting": "Προσκαλείται"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",

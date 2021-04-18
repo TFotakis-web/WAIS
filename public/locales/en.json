@@ -128,6 +128,9 @@
       },
       "manageUser": {
         "pageTitle": "Manage user"
+      },
+      "inviteUser": {
+        "pageTitle": "Invite user"
       }
     },
     "userProfile": {
@@ -217,7 +220,13 @@
     "personalInfo": "Personal Information",
     "professionalInfo": "Professional Information",
     "vehicleInfo": "Vehicle information",
-    "contractInfo": "Contract information"
+    "contractInfo": "Contract information",
+    "permissions": "Permissions",
+    "role": "Role",
+    "roles": {
+      "employee": "Employee",
+      "contractor": "Contractor"
+    }
   },
   "actions": {
     "submit": "Submit",
@@ -240,7 +249,9 @@
     "reject": "Reject",
     "rejecting": "Rejecting",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "invite": "Invite",
+    "inviting": "Inviting"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",
