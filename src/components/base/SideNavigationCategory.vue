@@ -1,7 +1,7 @@
 <template>
 	<ion-item v-if="routeCategory.thumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
 		<ion-avatar slot="start">
-			<ion-img :src="routeCategory.thumbnail"/>
+			<s3-ion-img :s3-object="routeCategory.thumbnail" :default-url="routeCategory.defaultThumbnail"/>
 		</ion-avatar>
 		<ion-label>
 			<h1 v-if="routeCategory.h1">{{ routeCategory.h1 }}</h1>
@@ -28,8 +28,10 @@
 	</template>
 </template>
 <script>
+	import S3IonImg from '@/components/structure/S3IonImg';
 	export default {
 		name: 'SideNavigationCategory',
+		components: { S3IonImg },
 		props: ['routeCategory'],
 		data() {
 			return {
