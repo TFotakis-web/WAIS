@@ -82,7 +82,7 @@ module.exports = {
 			.then(response => response.data.listUserProfileByUsername)
 			.catch(err => console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`))
 
-		if (result) {
+		if (!result) {
 			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 			return result
 		} else {
