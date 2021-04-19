@@ -263,7 +263,6 @@ module.exports = {
 					const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
 						.then(response => response.data.createOffice.id)
 						.catch(err => console.error('Unhandled error in createOffice: ' + JSON.stringify(err)))
-
 					if (!createdOfficeId) {
 						throw new Error('Failed to create new office.')
 					}
@@ -274,7 +273,7 @@ module.exports = {
 						officeName: createOfficeInput.officeName,
 						userId: senderUserProfile.id,
 						username: senderUserProfile.username,
-						pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
+						pagePermissions: callerPayload.createOfficePayload.managerPagePermissions,
 						modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
 						employeeType: 'MANAGER',
 					}
@@ -454,7 +453,7 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
+		//input.empPagePermissions = JSON.stringify(input.empPagePermissions)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
@@ -486,7 +485,7 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
+		//input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
