@@ -88,6 +88,7 @@
 		},
 		data() {
 			return {
+				request: {},
 				user: {},
 				featureAccess: [],
 				companyAccess: [],
@@ -152,7 +153,9 @@
 				rejectLoading: false,
 			};
 		},
-		async mounted() {
+		async created() {
+			const requestId = this.$route.params.id;
+			this.request = Object.assign({}, this.$store.getters['request/requestForMeById'](requestId));
 			this.user = await this.$store.dispatch('auth/getUserProfileByUsername', this.request.senderUsername);
 
 			const pageDesc = ` - ${this.request.payload.createOfficePayload.officeName}: ${this.user.family_name} ${this.user.name} ${this.user.fathers_name}`;
@@ -189,8 +192,6 @@
 
 				const payload = Object.assign({}, this.form);
 				payload.subscriptionExpirationDate = payload.subscriptionExpirationDate.split('T')[0];
-				// Todo: Remove when backend is ready
-				delete payload.subscriptionExpirationDate;
 
 				this.resolveRequest({ id: this.request.id, decision: 'ACCEPT', payload: { createOfficePayload: payload } })
 					.then(() => {
@@ -205,7 +206,7 @@
 				this.resolveRequest({ id: this.request.id, decision: 'REJECT' })
 					.then(() => {
 						this.$toast.saveSuccess();
-						this.$router.push({ name: 'Notifications' });
+						this.$router.push({ name: this.$store.getters['auth/isAdmin'] ? 'AdminNotifications' : 'Notifications' });
 					})
 					.catch((err) => this.$toast.error(err))
 					.finally(() => this.rejectLoading = false);
@@ -216,10 +217,6 @@
 				'featureAccessOptions',
 				'companyOptions',
 			]),
-			request() {
-				const requestId = this.$route.params.id;
-				return this.$store.getters['request/requestForMeById'](requestId);
-			},
 		},
 	};
 </script>
