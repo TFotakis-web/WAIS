@@ -304,7 +304,7 @@ module.exports = {
 			.then(response => response.data.updateUserProfile)
 			.catch(err => console.log(`userAPI.updateUserProfileDetails unhandled error: ${JSON.stringify(err)}`))
 
-		if (!result) {
+		if (result) {
 			console.log('officeAPI.updateUserProfileDetails output: ' + JSON.stringify(result))
 			return result
 		} else {
