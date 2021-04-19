@@ -2,8 +2,8 @@ Resources:
   resolver:
     Type: AWS::Serverless::Function
     Properties:
-      Timeout: 600000
-      MemorySize: 512
+      Timeout: 60000
+      MemorySize: 128
       Handler: index.handler
       CodeUri: C:\Users\gstamatakis\IdeaProjects\wais\amplify\backend\function\resolver\src
       Runtime: nodejs12.x

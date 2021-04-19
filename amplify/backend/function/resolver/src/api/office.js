@@ -72,6 +72,7 @@ module.exports = {
 			}
 		`
 
+
 		try {
 			const response = await gqlUtil.execute({
 				username: username,
@@ -79,7 +80,7 @@ module.exports = {
 				limit: limit || 100,
 				nextToken: nextToken
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			const result = response.data.listUserProfileByUsername.items[0]
+			const result = response.data.listUserProfileByUsername.items[0].officeConnections
 			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 			return result
 		} catch (err) {
