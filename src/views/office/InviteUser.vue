@@ -73,8 +73,7 @@
 				// 	'OFFICE_CONN_CREATE',
 				// 	'OFFICE_CONN_DELETE',
 				// ];
-				// const modelPermissions = [];
-				const modelPermissions = this.form.permissions;
+				const modelPermissions = [];
 				// const pagePermissions = JSON.stringify([
 				// 	'VehiclePricing',
 				// 	'IndustrialLiabilityPricing',
@@ -109,7 +108,8 @@
 				// 	'Bank',
 				// 	'Collaboration',
 				// ]);
-				const pagePermissions = JSON.stringify([]);
+				// const pagePermissions = JSON.stringify([]);
+				const pagePermissions = JSON.stringify(this.form.permissions);
 				let payload;
 				let action;
 				if (this.form.role === 'EMPLOYEE') {
