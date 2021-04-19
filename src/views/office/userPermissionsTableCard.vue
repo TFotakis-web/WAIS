@@ -10,24 +10,24 @@
 					<ion-select-option v-for="o in permissionOptions" :key="user.username + o" :value="o">{{ o }}</ion-select-option>
 				</ion-select>
 			</ion-item>
-<!--			<mdb-tbl sm striped bordered scrollY maxHeight="40em" class="fixed-header-column">
-				<mdb-tbl-head>
-					<tr>
-						<th>{{ $t('views.Office.userPermissionsTableCard.tablePermissionHeader') }}</th>
-						<th v-for="(userObject, username) in usersPermissions" :key="username">
-							<strong>{{ username }}</strong>
-						</th>
-					</tr>
-				</mdb-tbl-head>
-				<mdb-tbl-body>
-					<tr v-for="permission in permissionsTable" :key="permission + 'row'" scope="row">
-						<th><strong>{{ permission }}</strong></th>
-						<td v-for="(userObject, username) in usersPermissions" :key="permission + username" class="p-0 align-middle">
-							<mdb-input type="checkbox" :id="permission + username" v-model="userObject[permission]" class="mx-auto p-0" style="height: 18px; width: 18px; margin-top: -4px;"/>
-						</td>
-					</tr>
-				</mdb-tbl-body>
-			</mdb-tbl>-->
+			<!--			<mdb-tbl sm striped bordered scrollY maxHeight="40em" class="fixed-header-column">
+							<mdb-tbl-head>
+								<tr>
+									<th>{{ $t('views.Office.userPermissionsTableCard.tablePermissionHeader') }}</th>
+									<th v-for="(userObject, username) in usersPermissions" :key="username">
+										<strong>{{ username }}</strong>
+									</th>
+								</tr>
+							</mdb-tbl-head>
+							<mdb-tbl-body>
+								<tr v-for="permission in permissionsTable" :key="permission + 'row'" scope="row">
+									<th><strong>{{ permission }}</strong></th>
+									<td v-for="(userObject, username) in usersPermissions" :key="permission + username" class="p-0 align-middle">
+										<mdb-input type="checkbox" :id="permission + username" v-model="userObject[permission]" class="mx-auto p-0" style="height: 18px; width: 18px; margin-top: -4px;"/>
+									</td>
+								</tr>
+							</mdb-tbl-body>
+						</mdb-tbl>-->
 			<div class="ion-margin-top">
 				<ion-button @click="addUser" fill="clear">
 					<ion-icon :icon="$ionicons.addOutline" slot="start"/>
@@ -40,6 +40,7 @@
 </template>
 <script>
 	import loadingBtn from '@/components/structure/loadingBtn';
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'userPermissionsTableCard',
@@ -86,7 +87,7 @@
 				loading: false,
 				users: (() => {
 					const arr = [];
-					for(let i = 0; i < 20; i++) {
+					for (let i = 0; i < 20; i++) {
 						arr.push({
 							username: `user${i}`,
 							permissions: [],
@@ -94,49 +95,6 @@
 					}
 					return arr;
 				})(),
-				permissionOptions: [
-					'Home',
-					'VehiclePricing',
-					'IndustrialLiabilityPricing',
-					'FirePricing',
-					'LifePricing',
-					'ContractsFile',
-					'UncollectedContracts',
-					'CollectedContracts',
-					'ContractAdditionalActs',
-					'GreenCardContracts',
-					'UnclaimedContracts',
-					'InvalidContracts',
-					'NewContract',
-					'ProcessingDueDateRegister',
-					'ProcessingDuePayment',
-					'ProcessingPaid',
-					'ProcessingLosses',
-					'AccountingReceipts',
-					'AccountingRegisters',
-					'AccountingTodaysIncome',
-					'AccountingCommissionsUncollected',
-					'AccountingCommissionsCollected',
-					'AccountingMutualAccount',
-					'SupplierContractors',
-					'ContractorsExternalContractors',
-					'VehicleCards',
-					'VehicleCardsDetails',
-					'CustomerCards',
-					'Library',
-					'Office',
-					'UserProfile',
-					'PlatformData',
-					'DevTools',
-					'ContractApproval',
-					'Payment',
-					'Bank',
-					'Collaboration',
-					'Notifications',
-					'NotificationDetails',
-					'Wallet',
-					'OfficeCreationForm',
-				],
 			};
 		},
 		mounted() {
@@ -192,6 +150,9 @@
 				this.loading = false;
 				this.$toast.saveSuccess();
 			},
+		},
+		computed: {
+			...mapGetters('platformData', ['permissionOptions']),
 		},
 	};
 </script>

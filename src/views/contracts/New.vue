@@ -245,6 +245,7 @@
 </template>
 <script>
 	import loadingBtn from '@/components/structure/loadingBtn';
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'NewContract',
@@ -289,103 +290,29 @@
 					netIncome: '',
 				},
 				loading: false,
-				collaboratorOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				branchOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				usageOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				manufacturerOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				modelOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				typeOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				colorOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				fuelTypeOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				ownerOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				companyOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				packageOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				durationOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
-				discountOptions: [
-					{ text: 'Option nr 1', value: 'Option 1' },
-					{ text: 'Option nr 2', value: 'Option 2' },
-					{ text: 'Option nr 3', value: 'Option 3' },
-					{ text: 'Option nr 4', value: 'Option 4' },
-					{ text: 'Option nr 5', value: 'Option 5' },
-				],
 			};
 		},
 		methods: {
 			create() {
 				console.log('Created.');
 			},
+		},
+		computed: {
+			...mapGetters('platformData', [
+				'collaboratorOptions',
+				'branchOptions',
+				'usageOptions',
+				'manufacturerOptions',
+				'modelOptions',
+				'typeOptions',
+				'colorOptions',
+				'fuelTypeOptions',
+				'ownerOptions',
+				'companyOptions',
+				'packageOptions',
+				'durationOptions',
+				'discountOptions',
+			]),
 		},
 	};
 </script>

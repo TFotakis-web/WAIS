@@ -27,6 +27,8 @@
 	</ion-grid>
 </template>
 <script>
+	import { mapGetters } from 'vuex';
+
 	export default {
 		name: 'ManageUser',
 		mounted() {
@@ -57,50 +59,7 @@
 			username() {
 				return this.$route.params.username;
 			},
-			permissionOptions() {
-				return [
-					// { text: this.$t('views.homePage.pageTitle'), value: 'AdminHome' },
-					// { text: this.$t('components.navigation.navbar-item.notifications'), value: 'AdminNotifications' },
-					// { text: this.$t('views.Office.pageTitle'), value: 'Office' },
-					// { text: this.$t('views.userProfile.pageTitle'), value: 'UserProfile' },
-					// { text: this.$t('views.homePage.pageTitle'), value: 'Home' },
-					// { text: this.$t('components.navigation.navbar-item.notifications'), value: 'Notifications' },
-					{ text: this.$t('components.navigation.sidenav.pricing.vehicle'), value: 'VehiclePricing' },
-					{ text: this.$t('components.navigation.sidenav.pricing.industrialLiability'), value: 'IndustrialLiabilityPricing' },
-					{ text: this.$t('components.navigation.sidenav.pricing.fire'), value: 'FirePricing' },
-					{ text: this.$t('components.navigation.sidenav.pricing.life'), value: 'LifePricing' },
-					{ text: this.$t('components.navigation.sidenav.contracts.file'), value: 'ContractsFile' },
-					{ text: this.$t('components.navigation.sidenav.contracts.uncollected'), value: 'UncollectedContracts' },
-					{ text: this.$t('components.navigation.sidenav.contracts.collected'), value: 'CollectedContracts' },
-					{ text: this.$t('components.navigation.sidenav.contracts.additionalActs'), value: 'ContractAdditionalActs' },
-					{ text: this.$t('components.navigation.sidenav.contracts.greenCard'), value: 'GreenCardContracts' },
-					{ text: this.$t('components.navigation.sidenav.contracts.unclaimed'), value: 'UnclaimedContracts' },
-					{ text: this.$t('components.navigation.sidenav.contracts.invalid'), value: 'InvalidContracts' },
-					{ text: this.$t('components.navigation.sidenav.contracts.new'), value: 'NewContract' },
-					{ text: this.$t('components.navigation.sidenav.processing.dueDateRegister'), value: 'ProcessingDueDateRegister' },
-					{ text: this.$t('components.navigation.sidenav.processing.duePayment'), value: 'ProcessingDuePayment' },
-					{ text: this.$t('components.navigation.sidenav.processing.paid'), value: 'ProcessingPaid' },
-					{ text: this.$t('components.navigation.sidenav.processing.losses'), value: 'ProcessingLosses' },
-					{ text: this.$t('components.navigation.sidenav.accounting.receipts'), value: 'AccountingReceipts' },
-					{ text: this.$t('components.navigation.sidenav.accounting.registers'), value: 'AccountingRegisters' },
-					{ text: this.$t('components.navigation.sidenav.accounting.todaysIncome'), value: 'AccountingTodaysIncome' },
-					{ text: this.$t('components.navigation.sidenav.accounting.commissionsUncollected'), value: 'AccountingCommissionsUncollected' },
-					{ text: this.$t('components.navigation.sidenav.accounting.commissionsCollected'), value: 'AccountingCommissionsCollected' },
-					{ text: this.$t('components.navigation.sidenav.accounting.mutualAccount'), value: 'AccountingMutualAccount' },
-					{ text: this.$t('components.navigation.sidenav.contractors.suppliers'), value: 'SupplierContractors' },
-					{ text: this.$t('components.navigation.sidenav.contractors.externalContractors'), value: 'ContractorsExternalContractors' },
-					{ text: this.$t('components.navigation.sidenav.cards.vehicleCards'), value: 'VehicleCards' },
-					{ text: this.$t('components.navigation.sidenav.cards.customerCards'), value: 'CustomerCards' },
-					{ text: this.$t('components.navigation.sidenav.library._groupName'), value: 'Library' },
-					{ text: this.$t('components.navigation.navbar-item.wallet'), value: 'Wallet' },
-					{ text: this.$t('components.navigation.navbar-item.contract-approval'), value: 'ContractApproval' },
-					{ text: this.$t('components.navigation.navbar-item.payment'), value: 'Payment' },
-					{ text: this.$t('components.navigation.navbar-item.bank'), value: 'Bank' },
-					{ text: this.$t('components.navigation.navbar-item.collaboration'), value: 'Collaboration' },
-					// { text: this.$t('components.navigation.navbar-item.devtools'), value: 'DevTools' },
-					// { text: this.$t('components.navigation.navbar-item.database'), value: 'PlatformData' },
-				];
-			},
+			...mapGetters('platformData', ['permissionOptions']),
 		},
 	};
 </script>
