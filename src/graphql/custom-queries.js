@@ -310,12 +310,81 @@ export const getOfficesIWorkIn = /* GraphQL */ `
 		getOfficesIWorkIn(filter: $filter, limit: $limit, nextToken: $nextToken) {
 			items {
 				id
-				fromId
-				fromOfficeName
-				toId
-				toOfficeName
-				expirationDate
-				message
+				officeId
+				officeName
+				userId
+				username
+				office {
+					id
+					officeName
+					ownerUsername
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					partnersNumberLimit
+					employeesNumberLimit
+					verified
+					tin
+					professionStartDate
+					chamberRecordNumber
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					bankAccountInfo
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceCompanies {
+						name
+						code
+					}
+					createdAt
+					updatedAt
+				}
+				user {
+					id
+					username
+					email
+					role
+					telephone
+					name
+					fathers_name
+					address
+					zip_code
+					mobile
+					tin
+					family_name
+					gender
+					birthdate
+					city
+					profilePicture {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					preferences
+					locale
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					createdAt
+					updatedAt
+				}
+				pagePermissions
+				modelPermissions
+				employeeType
+				preferences
 				createdAt
 				updatedAt
 			}
