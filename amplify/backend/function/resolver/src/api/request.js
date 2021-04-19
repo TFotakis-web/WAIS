@@ -136,9 +136,6 @@ module.exports = {
 		if (!decision) {
 			throw new Error("No 'decision' field provided.")
 		}
-		if (!callerPayload) {
-			throw new Error("No 'payload' field provided.")
-		}
 		if (!id) {
 			throw new Error("No 'id' field provided.")
 		}
@@ -228,6 +225,11 @@ module.exports = {
 
 				//TODO make this a DDB Transaction
 				if (decision === 'ACCEPT') {
+					//Required
+					if (!callerPayload) {
+						throw new Error("No 'payload' field provided.")
+					}
+
 					//Create the new Office
 					const createOfficeInput = requestObject.payload.createOfficePayload
 					if (!createOfficeInput) {
