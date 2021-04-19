@@ -310,5 +310,11 @@
   },
   "various": {
     "underConstruction": "Υπό κατασκευή"
+  },
+  "requests": {
+    "createOffice": "Δημιουργία γραφείου",
+    "createOfficeConnection": "Σύνδεση γραφείου",
+    "inviteEmployeeToOffice": "Πρόσκληση υπαλλήλου",
+    "inviteContractorToOffice": "Πρόσκληση συνεργάτη"
   }
 }

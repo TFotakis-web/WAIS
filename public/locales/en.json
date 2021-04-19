@@ -310,5 +310,11 @@
   },
   "various": {
     "underConstruction": "Under Construction"
+  },
+  "requests": {
+    "createOffice": "Office creation",
+    "createOfficeConnection": "Office connection",
+    "inviteEmployeeToOffice": "Employee invitation",
+    "inviteContractorToOffice": "Contractor invitation"
   }
 }
