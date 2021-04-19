@@ -60,12 +60,12 @@
 			},
 			permissionOptions() {
 				return [
-					{ text: this.$t('views.homePage.pageTitle'), value: 'AdminHome' },
-					{ text: this.$t('components.navigation.navbar-item.notifications'), value: 'AdminNotifications' },
-					{ text: this.$t('views.Office.pageTitle'), value: 'Office' },
-					{ text: this.$t('views.userProfile.pageTitle'), value: 'UserProfile' },
-					{ text: this.$t('views.homePage.pageTitle'), value: 'Home' },
-					{ text: this.$t('components.navigation.navbar-item.notifications'), value: 'Notifications' },
+					// { text: this.$t('views.homePage.pageTitle'), value: 'AdminHome' },
+					// { text: this.$t('components.navigation.navbar-item.notifications'), value: 'AdminNotifications' },
+					// { text: this.$t('views.Office.pageTitle'), value: 'Office' },
+					// { text: this.$t('views.userProfile.pageTitle'), value: 'UserProfile' },
+					// { text: this.$t('views.homePage.pageTitle'), value: 'Home' },
+					// { text: this.$t('components.navigation.navbar-item.notifications'), value: 'Notifications' },
 					{ text: this.$t('components.navigation.sidenav.pricing.vehicle'), value: 'VehiclePricing' },
 					{ text: this.$t('components.navigation.sidenav.pricing.industrialLiability'), value: 'IndustrialLiabilityPricing' },
 					{ text: this.$t('components.navigation.sidenav.pricing.fire'), value: 'FirePricing' },
