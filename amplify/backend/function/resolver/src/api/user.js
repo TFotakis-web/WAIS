@@ -49,7 +49,7 @@ module.exports = {
 			}
 		`
 
-		const userProfile =  gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
+		const userProfile =  await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
 			.then(response => response.data.listUserProfileByUsername.items[0])
 			.catch(err => console.log(`userAPI.getUserProfileByUsername unhandled error: ${err}`))
 
@@ -104,7 +104,7 @@ module.exports = {
 				}
 			}
 		`
-		const userProfile =  gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
+		const userProfile = await  gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
 			.then(response => response.data.listUserProfileByEmail.items[0])
 			.catch(err => 'Unhandled error in getUserProfileByEmail: ' + JSON.stringify(err))
 
@@ -297,7 +297,7 @@ module.exports = {
 			}
 		`
 
-		const result = gqlUtil.execute({
+		const result =await  gqlUtil.execute({
 			input: sanitized_input,
 			condition: expanded_condition
 		}, mutation, 'updateUserProfileDetails')

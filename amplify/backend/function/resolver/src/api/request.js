@@ -198,7 +198,7 @@ module.exports = {
 				}
 			}
 		`
-		const requestObject = gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
+		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
 			.then(resp => resp.data.listRequestss.items[0])
 			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err)))
 
@@ -260,7 +260,7 @@ module.exports = {
 							}
 						}
 					`
-					const createdOfficeId = gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+					const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
 						.then(response => response.data.createOffice.id)
 						.catch(err => console.error('Unhandled error in createOffice: ' + JSON.stringify(err)))
 
@@ -286,7 +286,7 @@ module.exports = {
 							}
 						}
 					`
-					const createdTUCId = gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+					const createdTUCId = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
 						.then(response => response.data.createOfficeUserConnection.id)
 						.catch(err => console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err)))
 
@@ -306,7 +306,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'MANAGER',
 					}
-					const resultUP = gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
+					const resultUP = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
 						.then(response => response.data.updateUserProfile.id)
 						.catch(err => console.error('Unhandled error in updateUserProfileDetails: ' + JSON.stringify(err)))
 
@@ -472,11 +472,11 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responsedData = response.data.createRequests
+		const responseData = response.data.createRequests
 		const result = requestInput
-		result.id = responsedData.id
-		result.createdAt = responsedData.createdAt
-		result.updatedAt = responsedData.updatedAt
+		result.id = responseData.id
+		result.createdAt = responseData.createdAt
+		result.updatedAt = responseData.updatedAt
 		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -503,23 +503,19 @@ module.exports = {
 				}
 			}
 		`
-		const result = gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-			.then(response => response.data.createRequests)
-			.then(responseData => {
-				const result = requestInput
-				result.id = responseData.id
-				result.createdAt = responseData.createdAt
-				result.updatedAt = responseData.updatedAt
-				return result
-			})
-			.catch(err => console.error('Unhandled error in createInviteContractorToOfficeRequest: ' + JSON.stringify(err)))
-
-		if (!result) {
+		try {
+			const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			const responseData = response.data.createRequests
+			let result = requestInput
+			result.id = responseData.id
+			result.createdAt = responseData.createdAt
+			result.updatedAt = responseData.updatedAt
+			console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
+			return result
+		} catch (err) {
+			console.error('Unhandled error in createInviteContractorToOfficeRequest: ' + JSON.stringify(err))
 			throw new Error('Failed to create request.')
 		}
-
-		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
-		return result
 	},
 
 	createOfficeRequest: async (username, email, groups, input) => {

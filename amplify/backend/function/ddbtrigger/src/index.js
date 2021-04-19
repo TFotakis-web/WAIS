@@ -58,7 +58,6 @@ exports.handler = async event => {
 	  ) {
 		createEvents(input: $input, condition: $condition) {
 		  id
-		  eventType
 		  payload
 		  createdAt
 		  updatedAt
@@ -66,12 +65,17 @@ exports.handler = async event => {
 	  }
 	`
 
-	for (const record in event.Records) {
-		console.log('DynamoDB Record: %j', JSON.stringify(record.toString()));
-		const input = {payload: JSON.stringify(record.toString())}
-		const result = await execute({input: input}, createEvent, 'CreateEvents')
-		console.log(`Result of adding new item is : ${JSON.stringify(result)}`)
-	}
+	let promises = []
+	event.Records.forEach(record => {
+		const payload = JSON.stringify(record)
+		console.log('Payload: %s', payload);
+		const input = {payload: payload}
+		const p = execute({input: input}, createEvent, 'CreateEvents')
+			.then(msg => console.log(`Added new item result is: ${msg}`))
+			.catch(err => console.error(`Failed to add new item, error is : ${err}`))
+		promises.push(p)
+	})
+	await Promise.all(promises)
 
 	return Promise.resolve('Successfully processed DynamoDB record(s)');
 };

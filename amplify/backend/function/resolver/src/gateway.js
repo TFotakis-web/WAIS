@@ -367,6 +367,9 @@ module.exports = {
 			mutation createMyUserCalendarEvent($input: CreateUserCalendarEventInput!, $condition: ModelUserCalendarEventConditionInput) {
 				createUserCalendarEvent(input: $input, condition: $condition) {
 					id
+					username
+					createdAt
+					updatedAt
 				}
 			}
 		`
@@ -376,7 +379,7 @@ module.exports = {
 			username: username
 		}
 
-		const result = gqlUtil.execute({
+		const result = await gqlUtil.execute({
 			input: input,
 			condition: condition
 		}, mutation, 'createMyUserCalendarEvent')
