@@ -706,7 +706,7 @@ export const resolveRequest = /* GraphQL */ `
   mutation ResolveRequest(
     $requestId: ID!
     $decision: RequestDecision!
-    $payload: ResolveRequestPayloadInput!
+    $payload: ResolveRequestPayloadInput
   ) {
     resolveRequest(
       requestId: $requestId
