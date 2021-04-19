@@ -134,8 +134,8 @@
 						<ion-col>
 							<ion-item>
 								<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-								<ion-select v-model="companyCode.company" required>
-									<ion-select-option v-for="o in companyOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
+								<ion-select v-model="companyCode.company" required interface="popover">
+									<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						</ion-col>
@@ -179,6 +179,7 @@
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import S3IonImg from '@/components/structure/S3IonImg';
 	import FileInput from '@/components/structure/fileInput/fileInput';
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'CompanyInfoCard',
@@ -225,6 +226,9 @@
 				this.loading = false;
 				this.$toast.saveSuccess();
 			},
+		},
+		computed: {
+			...mapGetters('platformData', ['companyOptions']),
 		},
 	};
 </script>
