@@ -274,7 +274,7 @@ const resolvers = {
 		createMyUserCalendarEvent: async (event) => {
 			return await api.createMyUserCalendarEvent({
 				username: event.identity.claims['cognito:username'],
-				requestInput: event.arguments.input,
+				payload: event.arguments.input.payload,
 				condition: event.arguments.condition,
 			})
 		},
@@ -393,6 +393,7 @@ exports.handler = async (event, context) => {
 				return await resolver(event)
 			} catch (err) {
 				console.log(`Resolver error is: ${err}, and the stack trace is ${err.stack}`)
+				//TODO return rejected promise
 				throw new Error(err.message)	//Avoid exposing the entire	 stacktrace
 			}
 		}

@@ -72,14 +72,13 @@ module.exports = {
 			}
 		`
 
-		const result = await gqlUtil.execute({
+		const result = gqlUtil.execute({
 				username: username,
 				filter: filter || {id: {ne: ''}},
 				limit: limit || 100,
 				nextToken: nextToken
 			},
-			query,
-			'getOfficeDetailsAndPermissionsByUsername')
+			query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => response.data.listUserProfileByUsername)
 			.catch(err => console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`))
 

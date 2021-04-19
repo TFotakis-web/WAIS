@@ -65,14 +65,13 @@ exports.handler = async event => {
 		}
 	  }
 	`
-	event.Records.forEach(record => {
-		console.log(record.eventID);
-		console.log(record.eventName);
-		console.log('DynamoDB Record: %j', record.dynamodb);
-		//TODO complete
-		const input = {payload: JSON.stringify(record)}
-		//await execute({input: input}, createEvent, 'CreateEvents')
-	});
 
-	return Promise.resolve('Successfully processed DynamoDB record');
+	for (const record in event.Records) {
+		console.log('DynamoDB Record: %j', JSON.stringify(record.toString()));
+		const input = {payload: JSON.stringify(record.toString())}
+		const result = await execute({input: input}, createEvent, 'CreateEvents')
+		console.log(`Result of adding new item is : ${JSON.stringify(result)}`)
+	}
+
+	return Promise.resolve('Successfully processed DynamoDB record(s)');
 };

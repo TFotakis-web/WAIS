@@ -350,15 +350,17 @@ module.exports = {
 	},
 	createMyUserCalendarEvent: async (args) => {
 		const username = args.username
-		const input = args.input
+		const payload = args.payload
 		const condition = args.condition
-		console.log('createMyUserCalendarEvent input: ' + [username, input, condition])
-		if (!args.username) {
+		console.log('createMyUserCalendarEvent input: ' + [username, JSON.stringify(payload), JSON.stringify(condition)])
+
+		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 
-		// Populate/Overwrite user identity claims
-		input.username = username
+		if (!payload) {
+			throw new Error('Payload can\'t be empty or null.')
+		}
 
 		// Expand the condition to require that the caller is also the owner of the profile
 		const mutation = /* GraphQL */ `
@@ -369,11 +371,22 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute({
+		const input = {
+			payload: payload,
+			username: username
+		}
+
+		const result = gqlUtil.execute({
 			input: input,
 			condition: condition
 		}, mutation, 'createMyUserCalendarEvent')
-		const result = response.data.createUserCalendarEvent
+			.then(response => response.data.createUserCalendarEvent)
+			.catch(err => console.error(`Unhandled error in createMyUserCalendarEvent: ${JSON.stringify(err)}`))
+
+		if (!result) {
+			throw new Error('Failed to create Calendar Event.')
+		}
+
 		console.log('createMyUserCalendarEvent output: ' + JSON.stringify(result))
 		return result
 	},
