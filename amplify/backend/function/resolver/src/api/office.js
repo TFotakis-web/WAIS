@@ -10,7 +10,7 @@ module.exports = {
 		const query = /* GraphQL */ `
 			query getOfficeDetailsAndPermissionsByUsername(
 				$username: String!
-				$filter: ModelOfficeUserConnectionConditionInput
+				$filter: ModelOfficeUserConnectionFilterInput
 				$limit: Int
 				$nextToken: String
 			) {
@@ -72,20 +72,18 @@ module.exports = {
 			}
 		`
 
-		const result =await  gqlUtil.execute({
+		try {
+			const response = await gqlUtil.execute({
 				username: username,
 				filter: filter || {id: {ne: ''}},
 				limit: limit || 100,
 				nextToken: nextToken
-			},
-			query, 'getOfficeDetailsAndPermissionsByUsername')
-			.then(response => response.data.listUserProfileByUsername)
-			.catch(err => console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`))
-
-		if (!result) {
+			}, query, 'getOfficeDetailsAndPermissionsByUsername')
+			const result = response.data.listUserProfileByUsername.items
 			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 			return result
-		} else {
+		} catch (err) {
+			console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`)
 			throw new Error(`Unable to retrieve the details and permissions for user ${username}.`)
 		}
 	},
