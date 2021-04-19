@@ -503,12 +503,21 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responsedData = response.data.createRequests
-		const result = requestInput
-		result.id = responsedData.id
-		result.createdAt = responsedData.createdAt
-		result.updatedAt = responsedData.updatedAt
+		const result = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => response.data.createRequests)
+			.then(responseData => {
+				const result = requestInput
+				result.id = responseData.id
+				result.createdAt = responseData.createdAt
+				result.updatedAt = responseData.updatedAt
+				return result
+			})
+			.catch(err => console.error('Unhandled error in createInviteContractorToOfficeRequest: ' + JSON.stringify(err)))
+
+		if (!result) {
+			throw new Error('Failed to create request.')
+		}
+
 		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},

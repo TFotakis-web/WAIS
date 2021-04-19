@@ -507,6 +507,7 @@ export const createOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -558,6 +559,7 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -609,6 +611,7 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -660,6 +663,7 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -940,6 +944,7 @@ export const createOffice = /* GraphQL */ `
       insuranceLicenseExpirationDate
       civilLiabilityExpirationDate
       bankAccountInfo
+      subscriptionExpirationDate
       files {
         level
         idToken
@@ -1100,6 +1105,7 @@ export const createOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1211,6 +1217,7 @@ export const createOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1259,6 +1266,7 @@ export const createOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1318,6 +1326,7 @@ export const updateOffice = /* GraphQL */ `
       insuranceLicenseExpirationDate
       civilLiabilityExpirationDate
       bankAccountInfo
+      subscriptionExpirationDate
       files {
         level
         idToken
@@ -1478,6 +1487,7 @@ export const updateOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1589,6 +1599,7 @@ export const updateOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1637,6 +1648,7 @@ export const updateOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1696,6 +1708,7 @@ export const deleteOffice = /* GraphQL */ `
       insuranceLicenseExpirationDate
       civilLiabilityExpirationDate
       bankAccountInfo
+      subscriptionExpirationDate
       files {
         level
         idToken
@@ -1856,6 +1869,7 @@ export const deleteOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -1967,6 +1981,7 @@ export const deleteOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -2015,6 +2030,7 @@ export const deleteOffice = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -2121,6 +2137,7 @@ export const createUserProfile = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -2217,6 +2234,7 @@ export const createUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2258,6 +2276,7 @@ export const createUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2366,6 +2385,7 @@ export const updateUserProfile = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -2462,6 +2482,7 @@ export const updateUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2503,6 +2524,7 @@ export const updateUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2611,6 +2633,7 @@ export const deleteUserProfile = /* GraphQL */ `
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             bankAccountInfo
+            subscriptionExpirationDate
             files {
               level
               idToken
@@ -2707,6 +2730,7 @@ export const deleteUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2748,6 +2772,7 @@ export const deleteUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
+              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -3280,6 +3305,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -3423,6 +3449,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3481,6 +3508,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3502,6 +3530,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3574,6 +3603,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3674,6 +3704,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -3817,6 +3848,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3875,6 +3907,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3896,6 +3929,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -3968,6 +4002,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4068,6 +4103,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -4211,6 +4247,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4269,6 +4306,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4290,6 +4328,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4362,6 +4401,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4458,6 +4498,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -4601,6 +4642,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4659,6 +4701,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4680,6 +4723,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4789,6 +4833,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -4932,6 +4977,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -4990,6 +5036,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5011,6 +5058,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5120,6 +5168,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -5263,6 +5312,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5321,6 +5371,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5342,6 +5393,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5455,6 +5507,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -5598,6 +5651,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5656,6 +5710,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5677,6 +5732,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5702,6 +5758,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -5845,6 +5902,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5903,6 +5961,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5924,6 +5983,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -5969,6 +6029,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -6112,6 +6173,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6170,6 +6232,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6191,6 +6254,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6216,6 +6280,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -6359,6 +6424,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6417,6 +6483,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6438,6 +6505,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6483,6 +6551,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -6626,6 +6695,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6684,6 +6754,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6705,6 +6776,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6730,6 +6802,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
         insuranceLicenseExpirationDate
         civilLiabilityExpirationDate
         bankAccountInfo
+        subscriptionExpirationDate
         files {
           level
           idToken
@@ -6873,6 +6946,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6931,6 +7005,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -6952,6 +7027,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7042,6 +7118,7 @@ export const createTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7169,6 +7246,7 @@ export const createTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7314,6 +7392,7 @@ export const updateTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7441,6 +7520,7 @@ export const updateTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7586,6 +7666,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7713,6 +7794,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               bankAccountInfo
+              subscriptionExpirationDate
               createdAt
               updatedAt
             }
@@ -7798,6 +7880,7 @@ export const createRequests = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -7850,6 +7933,7 @@ export const updateRequests = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -7902,6 +7986,7 @@ export const deleteRequests = /* GraphQL */ `
           mobile
           phone
           tin
+          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -7929,6 +8014,48 @@ export const deleteRequests = /* GraphQL */ `
           email
         }
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createEvents = /* GraphQL */ `
+  mutation CreateEvents(
+    $input: CreateEventsInput!
+    $condition: ModelEventsConditionInput
+  ) {
+    createEvents(input: $input, condition: $condition) {
+      id
+      eventType
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateEvents = /* GraphQL */ `
+  mutation UpdateEvents(
+    $input: UpdateEventsInput!
+    $condition: ModelEventsConditionInput
+  ) {
+    updateEvents(input: $input, condition: $condition) {
+      id
+      eventType
+      payload
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEvents = /* GraphQL */ `
+  mutation DeleteEvents(
+    $input: DeleteEventsInput!
+    $condition: ModelEventsConditionInput
+  ) {
+    deleteEvents(input: $input, condition: $condition) {
+      id
+      eventType
+      payload
       createdAt
       updatedAt
     }

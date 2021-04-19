@@ -28,15 +28,36 @@ module.exports = {
 								officeName
 								employeeType
 								office {
-									id
-									officeName
-									ownerUsername
-									address
-									office_email
-									zip_code
-									mobile
-									phone
-									verified
+								  id
+								  officeName
+								  ownerUsername
+								  address
+								  office_email
+								  zip_code
+								  mobile
+								  phone
+								  partnersNumberLimit
+								  employeesNumberLimit
+								  verified
+								  tin
+								  professionStartDate
+								  chamberRecordNumber
+								  insuranceLicenseExpirationDate
+								  civilLiabilityExpirationDate
+								  bankAccountInfo
+								  files {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								  }
+								  insuranceCompanies {
+									name
+									code
+								  }
+								  createdAt
+								  updatedAt
 								}
 								user {
 									username

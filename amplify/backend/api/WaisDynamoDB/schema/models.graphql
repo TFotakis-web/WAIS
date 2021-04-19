@@ -277,6 +277,14 @@ type Requests
     payload: CreateRequestPayload!
 }
 
+type Events
+    @model(subscriptions: null)
+    @auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    payload: String!
+}
+
+
 #For calendar use
 type UserCalendarEvent
     @model(subscriptions: null)
