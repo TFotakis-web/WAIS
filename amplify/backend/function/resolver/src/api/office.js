@@ -72,7 +72,7 @@ module.exports = {
 			}
 		`
 
-		const result = gqlUtil.execute({
+		const result =await  gqlUtil.execute({
 				username: username,
 				filter: filter || {id: {ne: ''}},
 				limit: limit || 100,
