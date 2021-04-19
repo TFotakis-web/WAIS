@@ -8026,7 +8026,6 @@ export const createEvents = /* GraphQL */ `
   ) {
     createEvents(input: $input, condition: $condition) {
       id
-      eventType
       payload
       createdAt
       updatedAt
@@ -8040,7 +8039,6 @@ export const updateEvents = /* GraphQL */ `
   ) {
     updateEvents(input: $input, condition: $condition) {
       id
-      eventType
       payload
       createdAt
       updatedAt
@@ -8054,7 +8052,6 @@ export const deleteEvents = /* GraphQL */ `
   ) {
     deleteEvents(input: $input, condition: $condition) {
       id
-      eventType
       payload
       createdAt
       updatedAt

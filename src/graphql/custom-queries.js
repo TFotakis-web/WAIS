@@ -244,6 +244,7 @@ export const getMySentRequests = /* GraphQL */ `
 						mobile
 						phone
 						tin
+						subscriptionExpirationDate
 						professionStartDate
 						chamberRecordNumber
 						insuranceLicenseExpirationDate
@@ -372,6 +373,7 @@ export const getRequestsForMe = /* GraphQL */ `
 						mobile
 						phone
 						tin
+						subscriptionExpirationDate
 						professionStartDate
 						chamberRecordNumber
 						insuranceLicenseExpirationDate
