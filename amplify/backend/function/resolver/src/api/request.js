@@ -25,7 +25,6 @@ module.exports = {
 								phone
 								office_email
 								mobile
-								subscriptionExpirationDate
 								insuranceLicenseExpirationDate
 								address
 								chamberRecordNumber
@@ -91,7 +90,6 @@ module.exports = {
 								mobile
 								insuranceLicenseExpirationDate
 								address
-								subscriptionExpirationDate
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
@@ -163,7 +161,6 @@ module.exports = {
 								zip_code
 								tin
 								professionStartDate
-								subscriptionExpirationDate
 								phone
 								office_email
 								mobile
@@ -242,6 +239,7 @@ module.exports = {
 					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
 					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
 					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
+					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 					createOfficeInput.verified = true
 					createOfficeInput.files = []
 
