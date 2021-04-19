@@ -63,7 +63,12 @@ module.exports = {
 									username
 									email
 									role
+									telephone
+									createdAt
+									updatedAt
 								}
+								createdAt
+								updatedAt
 							}
 							nextToken
 						}
