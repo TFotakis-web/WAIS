@@ -1,6 +1,5 @@
 <template>
 	<ion-grid fixed>
-		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<ion-row>
 			<ion-col>
 				<personal-info-card/>

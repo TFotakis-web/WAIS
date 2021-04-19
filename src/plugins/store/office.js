@@ -25,8 +25,6 @@ import {
 	getCustomersForOfficeId,
 	getOfficesIWorkIn,
 	getPartnerOfficeConnectionsForOfficeId,
-	getUserModelPermissionsForOffice,
-	getUserPagePermissionsForOffice,
 } from '@/graphql/custom-queries';
 
 export const office = {

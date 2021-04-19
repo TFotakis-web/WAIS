@@ -134,8 +134,8 @@
 						<ion-col>
 							<ion-item>
 								<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-								<ion-select v-model="companyCode.company" required>
-									<ion-select-option v-for="o in companyOptions" :key="o.text" :value="o.value">{{ o.text }}</ion-select-option>
+								<ion-select v-model="companyCode.company" required interface="popover">
+									<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						</ion-col>
@@ -179,6 +179,7 @@
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import S3IonImg from '@/components/structure/S3IonImg';
 	import FileInput from '@/components/structure/fileInput/fileInput';
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'CompanyInfoCard',
@@ -190,29 +191,6 @@
 		data() {
 			return {
 				loading: false,
-				companyOptions: [
-					{ text: 'Am Trust', value: 'Am Trust', selected: false },
-					{ text: 'Brokers Union / Ergo', value: 'Brokers Union / Ergo', selected: false },
-					{ text: 'Brokers Union / Prime', value: 'Brokers Union / Prime', selected: false },
-					{ text: 'Cromar/Lloyds', value: 'Cromar/Lloyds', selected: false },
-					{ text: 'Euroins', value: 'Euroins', selected: false },
-					{ text: 'Europrotection / Am Trust', value: 'Europrotection / Am Trust', selected: false },
-					{ text: 'Europrotection / Eurolife', value: 'Europrotection / Eurolife', selected: false },
-					{ text: 'Express Ηρακλειου', value: 'Express Ηρακλειου', selected: false },
-					{ text: 'Express Χανίων', value: 'Express Χανίων', selected: false },
-					{ text: 'Generali', value: 'Generali', selected: false },
-					{ text: 'Interamerican', value: 'Interamerican', selected: false },
-					{ text: 'Interlife', value: 'Interlife', selected: false },
-					{ text: 'Intersalonica', value: 'Intersalonica', selected: false },
-					{ text: 'Oracle', value: 'Oracle', selected: false },
-					{ text: 'Personal Brokers / Generali', value: 'Personal Brokers / Generali', selected: false },
-					{ text: 'Personal Brokers / Interamerican', value: 'Personal Brokers / Interamerican', selected: false },
-					{ text: 'Personal Brokers / Intersalonica', value: 'Personal Brokers / Intersalonica', selected: false },
-					{ text: 'Personal Brokers / Ατλαντική Ένωση', value: 'Personal Brokers / Ατλαντική Ένωση', selected: false },
-					{ text: 'Personal Insurance', value: 'Personal Insurance', selected: false },
-					{ text: 'Εθνική', value: 'Εθνική', selected: false },
-					{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη', selected: false },
-				],
 				form: {
 					office: '',
 					officeLogo: {},
@@ -248,6 +226,9 @@
 				this.loading = false;
 				this.$toast.saveSuccess();
 			},
+		},
+		computed: {
+			...mapGetters('platformData', ['companyOptions']),
 		},
 	};
 </script>
