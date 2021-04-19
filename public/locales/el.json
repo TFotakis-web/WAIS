@@ -222,7 +222,7 @@
     "vehicleInfo": "Στοιχεία Οχήματος",
     "contractInfo": "Στοιχεία Συμβολαίου",
     "permissions": "Δικαιώματα",
-    "role": "",
+    "role": "Ρόλος",
     "roles": {
       "employee": "Υπάλληλος",
       "contractor": "Εξωτερικός συνεργάτης"
