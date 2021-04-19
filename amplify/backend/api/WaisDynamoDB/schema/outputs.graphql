@@ -127,6 +127,8 @@ type OfficeUserConnectionOutput {
     officeName: String!
     userId: ID!
     username: String!
+    office: OfficeOutput
+    user: UserProfileOutput
     pagePermissions: AWSJSON!
     modelPermissions: [ModelPermission!]!
     employeeType: EmployeeType!
@@ -205,6 +207,11 @@ type ModelRequestsConnectionOutput {
 
 type ModelUserProfileConnectionOutput {
     items: [UserProfileOutput]
+    nextToken: String
+}
+
+type ModelOfficeUserConnectionOutput {
+    items: [OfficeUserConnectionOutput]
     nextToken: String
 }
 

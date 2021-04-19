@@ -486,7 +486,7 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
+		input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
