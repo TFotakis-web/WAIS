@@ -98,7 +98,6 @@ module.exports = {
 			mobile: "6969696969",
 			phone: "+30123",
 			tin: "123",
-			subscriptionExpirationDate: new Date().toISOString().slice(0, 10),
 			professionStartDate: new Date().toISOString().slice(0, 10),
 			chamberRecordNumber: '123',
 			insuranceLicenseExpirationDate: new Date().toISOString().slice(0, 10),

@@ -99,7 +99,6 @@ type CreateOfficeRequestPayload {
     mobile: String
     phone: String!
     tin: String!
-    subscriptionExpirationDate: AWSDate
     professionStartDate: AWSDate
     chamberRecordNumber: String
     insuranceLicenseExpirationDate: AWSDate
@@ -115,7 +114,6 @@ input CreateOfficeRequestPayloadInput {
     mobile: String
     phone: String!
     tin: String!
-    subscriptionExpirationDate: AWSDate
     professionStartDate: AWSDate
     chamberRecordNumber: String
     insuranceLicenseExpirationDate: AWSDate
@@ -168,6 +166,7 @@ input ResolveCreateOfficePayload {
     managerPagePermissions: AWSJSON!
     partnersNumberLimit: Int!
     employeesNumberLimit: Int!
+    subscriptionExpirationDate: AWSDate!
     insuranceCompanies: [InsuranceCompanyInput!]
 }
 input ResolveOfficeAccessConnectionPayload {
