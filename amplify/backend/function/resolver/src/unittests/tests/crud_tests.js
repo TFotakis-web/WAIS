@@ -103,7 +103,7 @@ module.exports = {
 				}
 			}
 		}`
-		const createdUserProfile = await gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
+		const createdUserProfile = gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
 			.then(resp => resp.data.createUserProfile)
 			.catch(err => console.log('Unhandled error in createUserProfile: ' + JSON.stringify(err)))
 
@@ -155,7 +155,7 @@ module.exports = {
 				}
 			}
 		`
-		const readUP = await gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
+		const readUP = gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
 			.then(resp => resp.data.listUserProfileByUsername.items[0])
 			.catch(err => console.log('Unhandled error in getUserProfileByUsername: ' + JSON.stringify(err)))
 

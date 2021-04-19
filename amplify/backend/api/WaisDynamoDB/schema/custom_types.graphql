@@ -179,11 +179,3 @@ input ResolveInviteEmployeePayload {
 input ResolveInviteContractorPayload {
     body: String #Ignored
 }
-
-
-##### Event type API #####
-enum EventType {
-    CREATE
-    UPDATE
-    DELETE
-}

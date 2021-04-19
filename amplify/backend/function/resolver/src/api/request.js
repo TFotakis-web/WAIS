@@ -198,7 +198,7 @@ module.exports = {
 				}
 			}
 		`
-		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
+		const requestObject = gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
 			.then(resp => resp.data.listRequestss.items[0])
 			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err)))
 
@@ -260,7 +260,7 @@ module.exports = {
 							}
 						}
 					`
-					const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+					const createdOfficeId = gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
 						.then(response => response.data.createOffice.id)
 						.catch(err => console.error('Unhandled error in createOffice: ' + JSON.stringify(err)))
 
@@ -286,7 +286,7 @@ module.exports = {
 							}
 						}
 					`
-					const createdTUCId = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+					const createdTUCId = gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
 						.then(response => response.data.createOfficeUserConnection.id)
 						.catch(err => console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err)))
 
@@ -306,7 +306,7 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'MANAGER',
 					}
-					const resultUP = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
+					const resultUP = gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
 						.then(response => response.data.updateUserProfile.id)
 						.catch(err => console.error('Unhandled error in updateUserProfileDetails: ' + JSON.stringify(err)))
 
@@ -503,7 +503,7 @@ module.exports = {
 				}
 			}
 		`
-		const result = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+		const result = gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
 			.then(response => response.data.createRequests)
 			.then(responseData => {
 				const result = requestInput

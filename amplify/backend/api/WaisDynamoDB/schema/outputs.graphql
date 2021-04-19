@@ -158,11 +158,11 @@ type OfficeAccessConnectionOutput {
 }
 
 type UserCalendarEventOutput {
-    id: ID
-    username: String!
+    id: ID!
+    username: String
     payload: String
-    createdAt: AWSDateTime!
-    updatedAt: AWSDateTime!
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
 }
 
 type TransactionHistoryOutput {
