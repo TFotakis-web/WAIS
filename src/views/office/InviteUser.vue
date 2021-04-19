@@ -1,6 +1,5 @@
 <template>
 	<ion-grid fixed>
-		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<ion-card>
 			<ion-item lines="full">
 				<ion-card-title>{{ $t('views.Office.inviteUser.pageTitle') }}</ion-card-title>

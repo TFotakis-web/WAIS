@@ -1,6 +1,5 @@
 <template>
 	<ion-grid fixed>
-		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<form @submit.prevent="create">
 			<ion-list class="ion-margin-bottom">
 				<ion-row>

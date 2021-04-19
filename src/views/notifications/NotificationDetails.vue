@@ -1,6 +1,5 @@
 <template>
 	<ion-grid fixed>
-		<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
 		<strong>{{ $t('fields.office') }}: </strong>
 		<span>{{ request.payload.createOfficePayload.officeName }}</span>
 		<br>
