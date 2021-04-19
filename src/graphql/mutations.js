@@ -507,7 +507,6 @@ export const createOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -559,7 +558,6 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -611,7 +609,6 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -663,7 +660,6 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -2234,7 +2230,6 @@ export const createUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2276,7 +2271,6 @@ export const createUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2482,7 +2476,6 @@ export const updateUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2524,7 +2517,6 @@ export const updateUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2730,7 +2722,6 @@ export const deleteUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2772,7 +2763,6 @@ export const deleteUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -7880,7 +7870,6 @@ export const createRequests = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -7933,7 +7922,6 @@ export const updateRequests = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -7986,7 +7974,6 @@ export const deleteRequests = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
