@@ -2,9 +2,9 @@ import { createStore } from 'vuex';
 import { pageStructure } from '@/plugins/store/pageStructure';
 import { auth } from '@/plugins/store/auth';
 import { request } from '@/plugins/store/request';
-// import { vehicle } from '@/store/vehicle';
-// import { office } from '@/store/office';
-// import { platformData } from '@/store/platformData';
+import { office } from '@/plugins/store/office';
+// import { vehicle } from '@/plugins/store/vehicle';
+// import { platformData } from '@/plugins/store/platformData';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { echo, me } from '@/graphql/custom-queries';
@@ -16,8 +16,8 @@ export const store = createStore({
 		pageStructure,
 		auth,
 		request,
+		office,
 		// vehicle,
-		// office,
 		// platformData
 	},
 	state: initState(),

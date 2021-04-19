@@ -9642,7 +9642,6 @@ export const getEvents = /* GraphQL */ `
   query GetEvents($id: ID!) {
     getEvents(id: $id) {
       id
-      eventType
       payload
       createdAt
       updatedAt
@@ -9658,7 +9657,6 @@ export const listEventss = /* GraphQL */ `
     listEventss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        eventType
         payload
         createdAt
         updatedAt

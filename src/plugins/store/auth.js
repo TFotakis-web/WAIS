@@ -1,6 +1,6 @@
 import router from '@/plugins/router/router';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { me, getUserProfileByUsername } from '@/graphql/custom-queries';
+import { me, getUserProfileByUsername, getUserModelPermissionsForOffice, getUserPagePermissionsForOffice } from '@/graphql/custom-queries';
 import { updateUserProfileDetails } from '@/graphql/custom-mutations';
 
 const initState = () => ({
@@ -8,172 +8,7 @@ const initState = () => ({
 	user: null,
 	userProfile: null,
 	userModelPermissions: [],
-	userPagePermissions: {
-		// 	'Home': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'VehiclePricing': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'IndustrialLiabilityPricing': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'FirePricing': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'LifePricing': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ContractsFile': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'UncollectedContracts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'CollectedContracts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ContractAdditionalActs': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'GreenCardContracts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'UnclaimedContracts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'InvalidContracts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'NewContract': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ProcessingDueDateRegister': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ProcessingDuePayment': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ProcessingPaid': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ProcessingLosses': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingReceipts': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingRegisters': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingTodaysIncome': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingCommissionsUncollected': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingCommissionsCollected': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'AccountingMutualAccount': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'SupplierContractors': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ContractorsExternalContractors': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'VehicleCards': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'VehicleCardsDetails': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'CustomerCards': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Library': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Office': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'UserProfile': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'PlatformData': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'DevTools': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'ContractApproval': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Payment': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Bank': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Collaboration': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Notifications': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'NotificationDetails': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'Wallet': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-		// 	'OfficeCreationForm': {
-		// 		read: true,
-		// 		write: true,
-		// 	},
-	},
+	userPagePermissions: [],
 });
 
 export const auth = {
@@ -191,6 +26,12 @@ export const auth = {
 		},
 		setUserProfile(state, payload) {
 			state.userProfile = payload;
+		},
+		setModelPermissions(state, payload) {
+			state.userModelPermissions = payload;
+		},
+		setPagePermissions(state, payload) {
+			state.userPagePermissions = payload;
 		},
 	},
 	actions: {
@@ -303,6 +144,7 @@ export const auth = {
 				// User is now authenticated
 				// Dispatch all async-able actions
 				dispatch('request/listRequests', null, { root: true });
+				dispatch('office/getOfficesIWorkIn', null, { root: true });
 
 				// This has to be synchronous for routing permissions
 				response = await API.graphql(graphqlOperation(me));
@@ -317,6 +159,28 @@ export const auth = {
 				return Promise.reject(error);
 			} finally {
 				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
+			}
+		},
+		async getUserModelPermissionsForOffice({ commit }, officeId) {
+			try {
+				let response = await API.graphql(graphqlOperation(getUserModelPermissionsForOffice, { officeId }));
+				response = response.data.getUserModelPermissionsForOffice;
+				commit('setModelPermissions', response);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			}
+		},
+		async getUserPagePermissionsForOffice({ commit }, officeId) {
+			try {
+				let response = await API.graphql(graphqlOperation(getUserPagePermissionsForOffice, { officeId }));
+				response = response.data.getUserPagePermissionsForOffice;
+				commit('setPagePermissions', response);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
 			}
 		},
 		async updateUserProfile({ commit, getters }, userProfile) {

@@ -55,8 +55,9 @@ function hasPermissions(route) {
 	}
 
 	if (route.meta.requiresPagePermission) {
-		flag &= userPagePermissions[route.name]?.read;
-		flag &= userPagePermissions[route.name]?.write;
+		flag &= userPagePermissions.includes(route.name);
+		// flag &= userPagePermissions[route.name]?.read;
+		// flag &= userPagePermissions[route.name]?.write;
 	}
 
 	if (route.meta.modelPermissions) {
