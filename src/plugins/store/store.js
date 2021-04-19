@@ -3,8 +3,8 @@ import { pageStructure } from '@/plugins/store/pageStructure';
 import { auth } from '@/plugins/store/auth';
 import { request } from '@/plugins/store/request';
 import { office } from '@/plugins/store/office';
+import { platformData } from '@/plugins/store/platformData';
 // import { vehicle } from '@/plugins/store/vehicle';
-// import { platformData } from '@/plugins/store/platformData';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { echo, me } from '@/graphql/custom-queries';
@@ -17,8 +17,8 @@ export const store = createStore({
 		auth,
 		request,
 		office,
+		platformData,
 		// vehicle,
-		// platformData
 	},
 	state: initState(),
 	mutations: {
