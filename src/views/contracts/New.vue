@@ -7,7 +7,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.collaborator') }}</ion-label>
 							<ion-select v-model="form.collaborator" required interface="popover">
-								<ion-select-option v-for="o in collaboratorOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in collaboratorOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -112,7 +112,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.branch') }}</ion-label>
 							<ion-select v-model="form.branch" required interface="popover">
-								<ion-select-option v-for="o in branchOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in branchOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -120,7 +120,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.usage') }}</ion-label>
 							<ion-select v-model="form.usage" required interface="popover">
-								<ion-select-option v-for="o in usageOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in usageOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -128,7 +128,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.manufacturer') }}</ion-label>
 							<ion-select v-model="form.manufacturer" required interface="popover">
-								<ion-select-option v-for="o in manufacturerOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in manufacturerOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -136,7 +136,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.model') }}</ion-label>
 							<ion-select v-model="form.model" required interface="popover">
-								<ion-select-option v-for="o in modelOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in modelOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -144,7 +144,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.type') }}</ion-label>
 							<ion-select v-model="form.type" required interface="popover">
-								<ion-select-option v-for="o in typeOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in typeOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -152,7 +152,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.color') }}</ion-label>
 							<ion-select v-model="form.color" required interface="popover">
-								<ion-select-option v-for="o in colorOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in colorOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -160,7 +160,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.fuelType') }}</ion-label>
 							<ion-select v-model="form.fuelType" required interface="popover">
-								<ion-select-option v-for="o in fuelTypeOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in fuelTypeOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -168,7 +168,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.owner') }}</ion-label>
 							<ion-select v-model="form.owner" required interface="popover">
-								<ion-select-option v-for="o in ownerOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in ownerOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -183,7 +183,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
 							<ion-select v-model="form.company" required interface="popover">
-								<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -191,7 +191,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.package') }}</ion-label>
 							<ion-select v-model="form.package" required interface="popover">
-								<ion-select-option v-for="o in packageOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in packageOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -211,7 +211,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.duration') }}</ion-label>
 							<ion-select v-model="form.duration" required interface="popover">
-								<ion-select-option v-for="o in durationOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in durationOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
@@ -219,7 +219,7 @@
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.discount') }}</ion-label>
 							<ion-select v-model="form.discount" required interface="popover">
-								<ion-select-option v-for="o in discountOptions" :key="o.value" :value="o">{{ o.text }}</ion-select-option>
+								<ion-select-option v-for="o in discountOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 							</ion-select>
 						</ion-item>
 					</ion-col>
