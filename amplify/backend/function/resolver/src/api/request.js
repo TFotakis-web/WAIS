@@ -503,19 +503,15 @@ module.exports = {
 				}
 			}
 		`
-		try {
-			const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-			const responseData = response.data.createRequests
-			let result = requestInput
-			result.id = responseData.id
-			result.createdAt = responseData.createdAt
-			result.updatedAt = responseData.updatedAt
-			console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
-			return result
-		} catch (err) {
-			console.error('Unhandled error in createInviteContractorToOfficeRequest: ' + JSON.stringify(err))
-			throw new Error('Failed to create request.')
-		}
+
+		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+		const responseData = response.data.createRequests
+		let result = requestInput
+		result.id = responseData.id
+		result.createdAt = responseData.createdAt
+		result.updatedAt = responseData.updatedAt
+		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
+		return result
 	},
 
 	createOfficeRequest: async (username, email, groups, input) => {
@@ -550,11 +546,11 @@ module.exports = {
 		if (response.errors) {
 			throw  new Error(`Failed to create request with error: ${response.errors}`)
 		}
-		const responsedData = response.data.createRequests
+		const responseData = response.data.createRequests
 		const result = requestInput
-		result.id = responsedData.id
-		result.createdAt = responsedData.createdAt
-		result.updatedAt = responsedData.updatedAt
+		result.id = responseData.id
+		result.createdAt = responseData.createdAt
+		result.updatedAt = responseData.updatedAt
 		console.log('requestAPI.createOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -580,11 +576,11 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responsedData = response.data.createRequests
+		const responseData = response.data.createRequests
 		const result = requestInput
-		result.id = responsedData.id
-		result.createdAt = responsedData.createdAt
-		result.updatedAt = responsedData.updatedAt
+		result.id = responseData.id
+		result.createdAt = responseData.createdAt
+		result.updatedAt = responseData.updatedAt
 		console.log('requestAPI.createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
