@@ -235,7 +235,9 @@
     "roles": {
       "employee": "Employee",
       "contractor": "Contractor"
-    }
+    },
+    "expirationDate": "Exp. date",
+    "managerEmail": "Manager email"
   },
   "actions": {
     "submit": "Submit",
