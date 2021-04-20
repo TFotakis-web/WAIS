@@ -131,6 +131,15 @@
       },
       "inviteUser": {
         "pageTitle": "Invite user"
+      },
+      "inviteOffice": {
+        "pageTitle": "Invite office"
+      },
+      "manageOffice": {
+        "pageTitle": "Manage office"
+      },
+      "officeManagementTableCard": {
+        "cardTitle": "Office management"
       }
     },
     "userProfile": {

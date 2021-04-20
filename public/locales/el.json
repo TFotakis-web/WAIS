@@ -131,6 +131,15 @@
       },
       "inviteUser": {
         "pageTitle": "Πρόσκληση χρήστη"
+      },
+      "inviteOffice": {
+        "pageTitle": "Πρόσκληση γραφείου"
+      },
+      "manageOffice": {
+        "pageTitle": "Διαχείρηση γραφείου"
+      },
+      "officeManagementTableCard": {
+        "cardTitle": "Διαχείρηση γραφείων"
       }
     },
     "userProfile": {
