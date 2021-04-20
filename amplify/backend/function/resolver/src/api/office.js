@@ -1,5 +1,3 @@
-import {office} from "@/plugins/store/office";
-
 const gqlUtil = require('../utils/gql')
 
 module.exports = {
