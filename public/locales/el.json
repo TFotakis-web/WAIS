@@ -237,7 +237,9 @@
       "contractor": "Εξωτερικός συνεργάτης"
     },
     "expirationDate": "Ημ. λήξης",
-    "managerEmail": "Email διαχειριστή"
+    "managerEmail": "Email διαχειριστή",
+    "employees": "Υπάλληλοι",
+    "contractors": "Συνεργάτες"
   },
   "actions": {
     "submit": "Υποβολή",
