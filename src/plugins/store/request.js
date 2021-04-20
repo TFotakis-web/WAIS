@@ -186,5 +186,6 @@ export const request = {
 		requestsForInviteContractorToOfficeReceived: (state, getters) => getters.requestsForMe.filter((el) => el.type === 'INVITE_CONTRACTOR_TO_OFFICE'),
 		requestSentByMeById: (state, getters) => (id) => getters.requestsSentByMe.find(el => el.id === id) || {},
 		requestForMeById: (state, getters) => (id) => getters.requestsForMe.find(el => el.id === id) || {},
+		requestById: (state, getters) => (id) => getters.requests.find(el => el.id === id) || {},
 	},
 };
