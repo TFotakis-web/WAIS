@@ -24,7 +24,7 @@
 						</ion-select>
 					</ion-item>
 					<div class="ion-margin-top">
-						<loadingBtn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
+						<loading-btn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
 					</div>
 				</form>
 			</ion-card-content>

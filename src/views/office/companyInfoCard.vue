@@ -169,7 +169,7 @@
 					</ion-item>
 				</ion-list>
 				<div class="ion-margin-top">
-					<loadingBtn type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+					<loading-btn type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
 				</div>
 			</form>
 		</ion-card-content>

@@ -12,7 +12,7 @@
 						<ion-input v-model="form.manager_email" type="email" name="email" autocomplete="email" required/>
 					</ion-item>
 					<div class="ion-margin-top">
-						<loadingBtn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
+						<loading-btn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
 					</div>
 				</form>
 			</ion-card-content>

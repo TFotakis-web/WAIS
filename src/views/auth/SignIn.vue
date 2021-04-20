@@ -25,7 +25,7 @@
 									</ion-item>
 									<router-link :to="{ name: 'ForgotPassword' }" class="ion-margin-vertical">{{ $t('views.auth.forgotYourPassword') }}</router-link>
 									<div class="ion-margin-top">
-										<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="ion-margin-bottom"/>
+										<loading-btn color="primary" expand="block" type="submit" :loading="loading" :text="$t('views.auth.signIn')" :loadingText="$t('views.auth.signingIn')" class="ion-margin-bottom"/>
 										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 										<hr class="ion-margin-vertical"/>
 										<p>
