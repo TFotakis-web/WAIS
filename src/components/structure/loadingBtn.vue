@@ -2,7 +2,7 @@
 	<ion-button
 		:buttonType="buttonType"
 		:color="color"
-		:disabled="disabled"
+		:disabled="disabled || loading"
 		:download="download"
 		:expand="expand"
 		:fill="fill"
@@ -17,6 +17,7 @@
 		:target="target"
 		:type="type"
 	>
+		<ion-icon v-if="icon" :icon="icon" slot="start"/>
 		<span>{{ loading ? loadingText : text }}</span>
 		<ion-spinner v-if="loading" class="ion-margin-start"/>
 	</ion-button>
@@ -44,6 +45,7 @@
 			'strong',
 			'target',
 			'type',
+			'icon'
 		],
 	};
 </script>
