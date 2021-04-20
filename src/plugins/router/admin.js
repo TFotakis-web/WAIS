@@ -14,22 +14,28 @@ export default [
 				},
 			},
 			{
-				path: 'notifications',
-				name: 'AdminNotifications',
-				component: () => import('@/views/notifications/Notifications'),
-				meta: {
-					requiresAuth: true,
-					isAdmin: true,
-				},
-			},
-			{
-				path: 'notifications/:id',
-				name: 'AdminNotificationDetails',
-				component: () => import('@/views/notifications/NotificationDetails'),
-				meta: {
-					requiresAuth: true,
-					isAdmin: true,
-				},
+				path: '/notifications',
+				component: () => import('@/components/structure/passThroughRouterView'),
+				children: [
+					{
+						path: '',
+						name: 'AdminNotifications',
+						component: () => import('@/views/notifications/Notifications'),
+						meta: {
+							requiresAuth: true,
+							isAdmin: true,
+						},
+					},
+					{
+						path: 'createOffice/:id',
+						name: 'AdminCreateOfficeNotificationDetails',
+						component: () => import('@/views/notifications/AdminCreateOfficeNotificationDetails'),
+						meta: {
+							requiresAuth: true,
+							isAdmin: true,
+						},
+					},
+				],
 			},
 			{
 				path: 'platformData',
