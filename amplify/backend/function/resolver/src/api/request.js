@@ -260,11 +260,16 @@ module.exports = {
 							}
 						}
 					`
-					const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
-						.then(response => response.data.createOffice.id)
-						.catch(err => console.error('Unhandled error in createOffice: ' + JSON.stringify(err)))
-					if (!createdOfficeId) {
-						throw new Error('Failed to create new office.')
+					let createdOfficeId = null
+					try {
+						const response = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+						createdOfficeId = response.data.createOffice.id
+						if (!createdOfficeId) {
+							return Promise.reject('Failed to create new office: ' + response.errors.message)
+						}
+					} catch (err) {
+						console.error('Failed to create new office: ' + JSON.stringify(err))
+						return Promise.reject('Failed to create new office: ' + JSON.stringify(err))
 					}
 
 					//Create a connection between the new Office and the manager.
@@ -273,8 +278,8 @@ module.exports = {
 						officeName: createOfficeInput.officeName,
 						userId: senderUserProfile.id,
 						username: senderUserProfile.username,
-						pagePermissions: callerPayload.createOfficePayload.managerPagePermissions,
-						modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
+						pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
+						modelPermissions: JSON.stringify(callerPayload.createOfficePayload.managerModelPermissions),
 						employeeType: 'MANAGER',
 					}
 
@@ -285,12 +290,17 @@ module.exports = {
 							}
 						}
 					`
-					const createdTUCId = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
-						.then(response => response.data.createOfficeUserConnection.id)
-						.catch(err => console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err)))
 
-					if (!createdTUCId) {
-						throw new Error('Failed to create new Office-User connection.')
+					try {
+						const createOUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+						const createOUCResult = createOUCResponse.data.createOfficeUserConnection
+						if (!createOUCResult) {
+							return Promise.reject('Failed to create new Office-User connection: ' + createOUCResponse.errors.message)
+						}
+						console.log(`Created OUC: ${JSON.stringify(createOUCResult)}`)
+					} catch (err) {
+						console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err))
+						return Promise.reject('Failed to create new Office-User connection: ' + JSON.stringify(err))
 					}
 
 					//Update role in the UserProfile
@@ -441,7 +451,7 @@ module.exports = {
 		//Transform the result to the IDOutput
 		result = JSON.stringify({id: result})
 
-		console.log('RequestAPI.resolveRequest output: ' + JSON.stringify(result))
+		console.log('RequestAPI.resolveRequest output: ' + result)
 		return result
 	},
 
