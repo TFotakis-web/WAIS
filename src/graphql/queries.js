@@ -180,7 +180,6 @@ export const getMySentRequests = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -237,7 +236,6 @@ export const getRequestsForMe = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -2336,7 +2334,6 @@ export const getUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -2378,7 +2375,6 @@ export const getUserProfile = /* GraphQL */ `
               mobile
               phone
               tin
-              subscriptionExpirationDate
               professionStartDate
               chamberRecordNumber
               insuranceLicenseExpirationDate
@@ -9357,7 +9353,6 @@ export const getRequests = /* GraphQL */ `
           mobile
           phone
           tin
-          subscriptionExpirationDate
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
@@ -9412,7 +9407,6 @@ export const listRequestss = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -9477,7 +9471,6 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -9542,7 +9535,6 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -9607,7 +9599,6 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate
@@ -9672,7 +9663,6 @@ export const listRequestsByType = /* GraphQL */ `
             mobile
             phone
             tin
-            subscriptionExpirationDate
             professionStartDate
             chamberRecordNumber
             insuranceLicenseExpirationDate

@@ -116,7 +116,6 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
 					mobile
 					phone
 					tin
-					subscriptionExpirationDate
 					professionStartDate
 					chamberRecordNumber
 					insuranceLicenseExpirationDate
@@ -168,7 +167,6 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 					mobile
 					phone
 					tin
-					subscriptionExpirationDate
 					professionStartDate
 					chamberRecordNumber
 					insuranceLicenseExpirationDate
@@ -260,7 +258,6 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
 					mobile
 					phone
 					tin
-					subscriptionExpirationDate
 					professionStartDate
 					chamberRecordNumber
 					insuranceLicenseExpirationDate
@@ -310,7 +307,6 @@ export const createOfficeRequest = /* GraphQL */ `
 					mobile
 					phone
 					tin
-					subscriptionExpirationDate
 					professionStartDate
 					chamberRecordNumber
 					insuranceLicenseExpirationDate
@@ -595,7 +591,7 @@ export const resolveRequest = /* GraphQL */ `
 	mutation ResolveRequest(
 		$requestId: ID!
 		$decision: RequestDecision!
-		$payload: ResolveRequestPayloadInput!
+		$payload: ResolveRequestPayloadInput
 	) {
 		resolveRequest(
 			requestId: $requestId

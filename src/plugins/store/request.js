@@ -173,6 +173,7 @@ export const request = {
 		},
 	},
 	getters: {
+		requests: (state, getters) => getters.requestsSentByMe.concat(getters.requestsForMe),
 		requestsSentByMe: (state) => state.requestsSentByMe?.items || [],
 		requestsForMe: (state) => state.requestsForMe?.items || [],
 		requestsForNewOfficeSent: (state, getters) => getters.requestsSentByMe.filter((el) => el.type === 'CREATE_OFFICE'),
