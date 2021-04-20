@@ -35,7 +35,7 @@
 							managerUsername: `Manager${i}`,
 							address: `Address${i}`,
 							state: i % 3 === 0 ? 'pending' : undefined,
-							office_logo: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+							office_logo: this.$store.getters['platformData/defaultOfficeLogo'],
 						});
 					}
 					return arr;

@@ -54,7 +54,7 @@
 				managerUsername: `Manager${this.id}`,
 				address: `Address${this.id}`,
 				state: this.id % 3 === 0 ? 'pending' : undefined,
-				office_logo: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+				office_logo: this.$store.getters['platformData/defaultOfficeLogo'],
 				companyAccess: [],
 			};
 		},

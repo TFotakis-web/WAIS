@@ -6,7 +6,7 @@
 		<ion-card-content>
 			<ion-item>
 				<ion-avatar class="ion-margin-end">
-					<s3-ion-img :s3-object="form.officeLogo" default-url="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg"/>
+					<s3-ion-img :s3-object="form.officeLogo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
 				</ion-avatar>
 				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>
 			</ion-item>

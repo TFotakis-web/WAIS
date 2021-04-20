@@ -8,7 +8,7 @@
 				<ion-list>
 					<ion-item>
 						<ion-avatar class="ion-margin-end">
-							<s3-ion-img :s3-object="userProfile.profilePicture" default-url="https://www.w3schools.com/howto/img_avatar.png"/>
+							<s3-ion-img :s3-object="userProfile.profilePicture" :default-url="$store.getters['platformData/defaultProfilePicture']"/>
 						</ion-avatar>
 						<file-input color="primary" :text="$t('actions.edit')" rename-to="profile" file-path="profile" level="protected" v-model="userProfile.profilePicture" :sizeLimitInMBs="10" size="small"/>
 					</ion-item>

@@ -34,7 +34,7 @@
 							username: `user${i}`,
 							role: i % 2 === 0 ? 'Employee' : 'Contractor',
 							state: i % 3 === 0 ? 'pending' : undefined,
-							profilePicture: 'https://www.w3schools.com/howto/img_avatar.png',
+							profilePicture: this.$store.getters['platformData/defaultProfilePicture'],
 							permissions: [],
 						});
 					}
