@@ -58,6 +58,28 @@ export default [
 					},
 				},
 			},
+			{
+				path: 'manageOffice/:id',
+				name: 'ManageOffice',
+				component: () => import('@/views/office/ManageOffice'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'MANAGER' || store.getters['auth/role'] === 'EMPLOYEE';
+					},
+				},
+			},
+			{
+				path: 'inviteOffice',
+				name: 'InviteOffice',
+				component: () => import('@/views/office/InviteOffice'),
+				meta: {
+					requiresAuth: true,
+					customCheck: () => {
+						return store.getters['auth/role'] === 'MANAGER';
+					},
+				},
+			},
 		],
 	},
 	{
