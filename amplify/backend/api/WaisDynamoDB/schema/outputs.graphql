@@ -241,3 +241,13 @@ type S3ObjectOutput {
     size: Int
     contentType: String
 }
+
+type PartnerDetailsOutput {
+    officeDetails: OfficeOutput
+    employees: UserProfileOutput
+    contractors: UserProfileOutput
+}
+
+type PartnerSummaryOutput {
+    partners: [PartnerDetailsOutput]
+}

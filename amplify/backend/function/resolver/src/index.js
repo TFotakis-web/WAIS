@@ -122,6 +122,11 @@ const resolvers = {
 				username: event.arguments.username,
 				groups: event.identity.groups
 			})
+		},
+		getPartnerSummary: async (event) => {
+			return await api.getPartnerSummary({
+				username: event.identity.claims['cognito:username']
+			})
 		}
 	},
 	Mutation: {

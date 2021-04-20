@@ -116,7 +116,7 @@ module.exports = {
 	},
 	getContractorUserProfilesForManagerUsername: async (args) => {
 		console.log('getContractorUserProfilesForManagerUsername input: ' + JSON.stringify(args))
-		if (!args.managerUsername) {
+		if (!args.username) {
 			throw new Error('Invalid manager username')
 		}
 		const result = await officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
@@ -575,6 +575,15 @@ module.exports = {
 		}
 		const result = await adminAPI.getUserProfileByUsername(args.username)
 		console.log('getUserProfileByUsername preview output: ' + JSON.stringify(result))
+		return result
+	},
+	getPartnerSummary: async (args) => {
+		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
+		if (!args.username) {
+			return Promise.reject('Invalid caller username or unauthenticated user.')
+		}
+		const result = await officeAPI.getPartnerSummary(args.username)
+		console.log('getPartnerSummary output: ' + JSON.stringify(result))
 		return result
 	},
 	test: async (args) => {
