@@ -1,3 +1,5 @@
+import {office} from "@/plugins/store/office";
+
 const gqlUtil = require('../utils/gql')
 
 module.exports = {
@@ -112,25 +114,37 @@ module.exports = {
 						workforce(filter: $filter, limit: $limit, nextToken: $nextToken) {
 							items {
 								user {
+									id
 									username
 									email
 									telephone
+									role
 									name
 									fathers_name
 									address
 									zip_code
-									role
-									city
-									createdAt
+									mobile
+									tin
 									family_name
 									gender
-									id
-									locale
-									mobile
-									preferences
-									updatedAt
-									tin
 									birthdate
+									city
+									profilePicture {
+										level
+										idToken
+										filePath
+										filename
+										contentType
+									}
+									preferences
+									locale
+									files {
+										level
+										idToken
+										filePath
+										filename
+										contentType
+									}
 								}
 							}
 							nextToken
@@ -141,12 +155,20 @@ module.exports = {
 		`
 		const response = await gqlUtil.execute(
 			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken},
-			query,
-			'getEmployeeTypeUserProfilesForManagerUsername',
-		)
-		let result = response.data.listOfficeByOwnerUsername.items
-		if (result) {
-			result = result[0].workforce
+			query, 'getEmployeeTypeUserProfilesForManagerUsername')
+		const office = response.data.listOfficeByOwnerUsername
+		if (office === undefined || office.items === undefined) {
+			return Promise.reject('An error occurred while retrieving contractors.')
+		}
+		let users = []
+		for (const userItem in office.items) {
+			for (const workforceItem in userItem.workforce.items) {
+				users.push(userItem.user)
+			}
+		}
+		const result = {
+			items: users,
+			nextToken: null
 		}
 		console.log('officeAPI.getEmployeeTypeUserProfilesForManagerUsername output: ' + JSON.stringify(result))
 		return result
@@ -592,4 +614,7 @@ module.exports = {
 		console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
 		return result
 	},
+	getPartnerSummary: async (username) => {
+
+	}
 }

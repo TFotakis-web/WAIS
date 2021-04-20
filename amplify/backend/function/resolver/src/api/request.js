@@ -279,7 +279,7 @@ module.exports = {
 						userId: senderUserProfile.id,
 						username: senderUserProfile.username,
 						pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
-						modelPermissions: JSON.stringify(callerPayload.createOfficePayload.managerModelPermissions),
+						modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
 						employeeType: 'MANAGER',
 					}
 
@@ -381,7 +381,7 @@ module.exports = {
 
 					//Get the permissions (decided by manager)
 					const modelPermissions = requestObject.payload.inviteEmployeeToOfficePayload.empModelPermissions
-					const pagePermissions = requestObject.payload.inviteEmployeeToOfficePayload.empPagePermissions
+					const pagePermissions = requestObject.payload.inviteEmployeeToOfficePayload.empPagePermissions //TODO stringify?
 
 					//Add the Employee to the new Office and create the connection between User and Office
 					try {
@@ -463,7 +463,7 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		//input.empPagePermissions = JSON.stringify(input.empPagePermissions)
+		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
@@ -495,7 +495,7 @@ module.exports = {
 		if (!username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
-		//input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
+		input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
 		const requestInput = {
 			senderUsername: username,
 			senderEmail: email,
