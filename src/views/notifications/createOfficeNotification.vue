@@ -1,5 +1,5 @@
 <template>
-	<ion-item @click="$router.push($store.getters['auth/isAdmin'] ? {name:  'AdminNotificationDetails', params: {id: request.id}}  : {name: 'OfficeCreationForm'})" button>
+	<ion-item @click="$router.push($store.getters['auth/isAdmin'] ? {name:  'AdminCreateOfficeNotificationDetails', params: {id: request.id}}  : {name: 'OfficeCreationForm'})" button>
 		<ion-label>
 			<h3>{{ $t('requests.createOffice') }}</h3>
 			<p>{{ request.payload.createOfficePayload.officeName }} • {{ request.senderUsername }}</p>
