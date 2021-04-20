@@ -92,19 +92,41 @@ export default [
 	},
 	{
 		path: '/notifications',
-		name: 'Notifications',
-		component: () => import('@/views/notifications/Notifications'),
-		meta: {
-			requiresAuth: true,
-		},
-	},
-	{
-		path: '/notifications/:id',
-		name: 'NotificationDetails',
-		component: () => import('@/views/notifications/NotificationDetails'),
-		meta: {
-			requiresAuth: true,
-		},
+		component: () => import('@/components/structure/passThroughRouterView'),
+		children: [
+			{
+				path: '',
+				name: 'Notifications',
+				component: () => import('@/views/notifications/Notifications'),
+				meta: {
+					requiresAuth: true,
+				},
+			},
+			{
+				path: 'createOfficeConnection/:id',
+				name: 'CreateOfficeConnectionNotificationDetails',
+				component: () => import('@/views/notifications/CreateOfficeConnectionNotificationDetails'),
+				meta: {
+					requiresAuth: true,
+				},
+			},
+			{
+				path: 'inviteEmployeeToOffice/:id',
+				name: 'InviteEmployeeToOfficeNotificationDetails',
+				component: () => import('@/views/notifications/InviteEmployeeToOfficeNotificationDetails'),
+				meta: {
+					requiresAuth: true,
+				},
+			},
+			{
+				path: 'inviteContractorToOffice/:id',
+				name: 'InviteContractorToOfficeNotificationDetails',
+				component: () => import('@/views/notifications/InviteContractorToOfficeNotificationDetails'),
+				meta: {
+					requiresAuth: true,
+				},
+			},
+		],
 	},
 	{
 		path: '/contractApproval',
