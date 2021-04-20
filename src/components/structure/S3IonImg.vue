@@ -16,7 +16,7 @@
 			s3Object: {
 				immediate: true,
 				handler: async function(newValue) {
-					if (!newValue.filePath || !newValue.filename || !newValue.level) {
+					if (!newValue || !newValue.filePath || !newValue.filename || !newValue.level) {
 						this.url = this.defaultUrl;
 						return;
 					}
