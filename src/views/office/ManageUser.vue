@@ -50,7 +50,7 @@
 
 			const i = this.username.replace('user', '');
 			this.user = {
-				profilePicture: 'https://www.w3schools.com/howto/img_avatar.png',
+				profilePicture: this.$store.getters['platformData/defaultProfilePicture'],
 				fullName: `Name${i} Surname${i}`,
 				username: this.username,
 				role: i % 2 === 0 ? 'Employee' : 'Contractor',

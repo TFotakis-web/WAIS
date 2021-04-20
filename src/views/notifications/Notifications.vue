@@ -1,30 +1,29 @@
 <template>
 	<ion-grid fixed>
 		<ion-list>
-			<ion-item v-for="request in $store.getters['request/requests']" :key="request.id" @click="$router.push({name: $store.getters['auth/isAdmin'] ? 'AdminNotificationDetails' : 'OfficeCreationForm', params: {id: request.id}})" button>
-				<ion-label v-if="request.type === 'CREATE_OFFICE'">
-					<h3>{{ $t('requests.createOffice') }}</h3>
-					<p>{{ request.payload.createOfficePayload.officeName }} • {{ request.senderUsername }}</p>
-				</ion-label>
-				<ion-label v-if="request.type === 'CREATE_OFFICE_CONNECTION'">
-					<h3>{{ $t('requests.createOfficeConnection') }}</h3>
-					<p>{{ request.senderUsername }} • {{ request.senderEmail }}</p>
-				</ion-label>
-				<ion-label v-if="request.type === 'INVITE_EMPLOYEE_TO_OFFICE'">
-					<h3>{{ $t('requests.inviteEmployeeToOffice') }}</h3>
-					<p>{{ request.senderUsername }} • {{ request.senderEmail }}</p>
-				</ion-label>
-				<ion-label v-if="request.type === 'INVITE_CONTRACTOR_TO_OFFICE'">
-					<h3>{{ $t('requests.inviteContractorToOffice') }}</h3>
-					<p>{{ request.senderUsername }} • {{ request.senderEmail }}</p>
-				</ion-label>
-			</ion-item>
+			<template v-for="request in $store.getters['request/requests']" :key="request.id">
+				<create-office-notification v-if="request.type === 'CREATE_OFFICE'" :request="request"/>
+				<create-office-connection-notification v-if="request.type === 'CREATE_OFFICE_CONNECTION'" :request="request"/>
+				<invite-employee-to-office-notification v-if="request.type === 'INVITE_EMPLOYEE_TO_OFFICE'" :request="request"/>
+				<invite-contractor-to-office-notification v-if="request.type === 'INVITE_CONTRACTOR_TO_OFFICE'" :request="request"/>
+			</template>
 		</ion-list>
 	</ion-grid>
 </template>
 <script>
+	import CreateOfficeNotification from '@/views/notifications/createOfficeNotification';
+	import CreateOfficeConnectionNotification from '@/views/notifications/createOfficeConnectionNotification';
+	import InviteEmployeeToOfficeNotification from '@/views/notifications/inviteEmployeeToOfficeNotification';
+	import InviteContractorToOfficeNotification from '@/views/notifications/inviteContractorToOfficeNotification';
+
 	export default {
 		name: 'Notifications',
+		components: {
+			InviteContractorToOfficeNotification,
+			InviteEmployeeToOfficeNotification,
+			CreateOfficeConnectionNotification,
+			CreateOfficeNotification,
+		},
 		mounted() {
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', false);

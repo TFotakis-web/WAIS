@@ -46,7 +46,7 @@
 										</ion-col>
 									</ion-row>
 									<div class="ion-margin-top">
-										<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="ion-margin-bottom"/>
+										<loading-btn color="primary" expand="block" type="submit" :loading="loading" :text="$t('views.auth.signUp')" :loadingText="$t('views.auth.signingUp')" class="ion-margin-bottom"/>
 										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 										<hr class="ion-margin-vertical"/>
 										<p>

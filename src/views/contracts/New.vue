@@ -238,7 +238,7 @@
 				</ion-row>
 			</ion-list>
 			<div class="ion-margin-top ion-text-center">
-				<loadingBtn color="primary" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+				<loading-btn color="primary" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
 			</div>
 		</form>
 	</ion-grid>

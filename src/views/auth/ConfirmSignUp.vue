@@ -22,7 +22,7 @@
 									</ion-item>
 									<ion-button :disabled="resendLoading" @click="resendSignUp" fill="outline" color="medium">{{ $t('actions.resendVerificationCode') }}</ion-button>
 									<div class="ion-margin-top">
-										<loadingBtn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="ion-margin-bottom"/>
+										<loading-btn color="primary" expand="block" type="submit" :loading="loading" :text="$t('actions.submit')" :loadingText="$t('actions.submitting')" class="ion-margin-bottom"/>
 										<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 										<hr class="ion-margin-vertical"/>
 										<p>

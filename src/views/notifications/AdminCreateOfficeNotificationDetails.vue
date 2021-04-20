@@ -68,8 +68,8 @@
 				</ion-item>
 			</ion-list>
 			<div class="ion-text-center">
-				<loadingBtn color="success" type="submit" :loading="acceptLoading" :text="$t('actions.accept')" :loadingText="$t('actions.accepting')"/>
-				<loadingBtn @click="rejectRequest" color="danger" :loading="rejectLoading" :text="$t('actions.reject')" :loadingText="$t('actions.rejecting')"/>
+				<loading-btn color="success" type="submit" :loading="acceptLoading" :text="$t('actions.accept')" :loadingText="$t('actions.accepting')"/>
+				<loading-btn @click="rejectRequest" color="danger" :loading="rejectLoading" :text="$t('actions.reject')" :loadingText="$t('actions.rejecting')"/>
 			</div>
 		</form>
 	</ion-grid>
@@ -161,7 +161,7 @@
 			const pageDesc = ` - ${this.request.payload.createOfficePayload.officeName}: ${this.user.family_name} ${this.user.name} ${this.user.fathers_name}`;
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.notifications.pageTitle') + pageDesc);
 			this.$store.commit('pageStructure/setPageBackButton', true);
-			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Notifications' }).fullPath);
+			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'AdminNotifications' }).fullPath);
 		},
 		methods: {
 			...mapActions('request', ['resolveRequest']),

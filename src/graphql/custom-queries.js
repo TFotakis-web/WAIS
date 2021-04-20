@@ -419,6 +419,116 @@ export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
 		}
 	}
 `;
+export const getPartnerSummary = /* GraphQL */ `
+	query GetPartnerSummary {
+		getPartnerSummary {
+			partners {
+				officeDetails {
+					id
+					officeName
+					ownerUsername
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					partnersNumberLimit
+					employeesNumberLimit
+					verified
+					tin
+					professionStartDate
+					chamberRecordNumber
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					bankAccountInfo
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceCompanies {
+						name
+						code
+					}
+					createdAt
+					updatedAt
+				}
+				employees {
+					id
+					username
+					email
+					role
+					telephone
+					name
+					fathers_name
+					address
+					zip_code
+					mobile
+					tin
+					family_name
+					gender
+					birthdate
+					city
+					profilePicture {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					preferences
+					locale
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					createdAt
+					updatedAt
+				}
+				contractors {
+					id
+					username
+					email
+					role
+					telephone
+					name
+					fathers_name
+					address
+					zip_code
+					mobile
+					tin
+					family_name
+					gender
+					birthdate
+					city
+					profilePicture {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					preferences
+					locale
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					createdAt
+					updatedAt
+				}
+			}
+		}
+	}
+`;
 export const getRequestsForMe = /* GraphQL */ `
 	query GetRequestsForMe(
 		$filter: ModelRequestsFilterInput

@@ -523,5 +523,11 @@ export const platformData = {
 			// { text: $i18n.global.t('components.navigation.navbar-item.devtools'), value: 'DevTools' },
 			// { text: $i18n.global.t('components.navigation.navbar-item.database'), value: 'PlatformData' },
 		],
+		roleOptions: () => [
+			{ text: $i18n.global.t('fields.roles.employee'), value: 'EMPLOYEE' },
+			{ text: $i18n.global.t('fields.roles.contractor'), value: 'CONTRACTOR' },
+		],
+		defaultOfficeLogo: () => 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+		defaultProfilePicture: () => 'https://www.w3schools.com/howto/img_avatar.png',
 	},
 };

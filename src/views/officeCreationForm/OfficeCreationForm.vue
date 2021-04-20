@@ -106,7 +106,7 @@
 								</ion-item>
 							</ion-list>
 							<div class="ion-margin-top">
-								<loadingBtn color="primary" :disabled="!condition" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
+								<loading-btn color="primary" :disabled="!condition" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
 								<p v-if="error !== {}" class="text-danger">{{ error.message }}</p>
 							</div>
 						</form>

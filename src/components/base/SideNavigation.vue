@@ -68,14 +68,14 @@
 					{
 						to: { name: 'Office' },
 						thumbnail: {},
-						defaultThumbnail: 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
+						defaultThumbnail: this.$store.getters['platformData/defaultOfficeLogo'],
 						h1: 'Office Name',
 					},
 
 					{
 						to: { name: 'UserProfile' },
 						thumbnail: this.$store.getters['auth/userProfile'].profilePicture,
-						defaultThumbnail: 'https://www.w3schools.com/howto/img_avatar.png',
+						defaultThumbnail: this.$store.getters['platformData/defaultProfilePicture'],
 						h2: this.$store.getters['auth/fullName'],
 						p: this.$store.getters['auth/username'],
 					},

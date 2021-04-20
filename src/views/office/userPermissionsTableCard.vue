@@ -33,7 +33,7 @@
 					<ion-icon :icon="$ionicons.addOutline" slot="start"/>
 					<span>{{ $t('actions.add') }}</span>
 				</ion-button>
-				<loadingBtn @click="save" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+				<loading-btn @click="save" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
 			</div>
 		</ion-card-content>
 	</ion-card>
