@@ -26,7 +26,6 @@
 		name: 'userManagementTableCard',
 		data() {
 			return {
-				loading: false,
 				users: (() => {
 					const arr = [];
 					for (let i = 0; i < 20; i++) {
@@ -42,17 +41,6 @@
 					return arr;
 				})(),
 			};
-		},
-		methods: {
-			addUser() {
-				console.log('Add User.');
-			},
-			save() {
-				this.loading = true;
-				console.log('Saved.');
-				this.loading = false;
-				this.$toast.saveSuccess();
-			},
 		},
 	};
 </script>

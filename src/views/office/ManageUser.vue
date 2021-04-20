@@ -16,21 +16,34 @@
 				</ion-button>
 			</ion-item>
 			<ion-card-content>
+				<form @submit.prevent="save">
 				<ion-item v-if="$store.getters['auth/role'] === 'MANAGER'">
 					<ion-label position="floating">{{ $t('fields.permissions') }}</ion-label>
 					<ion-select v-model="user.permissions" multiple required>
 						<ion-select-option v-for="o in permissionOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 					</ion-select>
 				</ion-item>
+					<div class="ion-margin-top">
+						<loading-btn type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
+					</div>
+				</form>
 			</ion-card-content>
 		</ion-card>
 	</ion-grid>
 </template>
 <script>
 	import { mapGetters } from 'vuex';
+	import LoadingBtn from '@/components/structure/loadingBtn';
 
 	export default {
 		name: 'ManageUser',
+		components: { LoadingBtn },
+		data() {
+			return {
+				loading: false,
+				user: {},
+			};
+		},
 		mounted() {
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Office.manageUser.pageTitle'));
 			this.$store.commit('pageStructure/setPageBackButton', true);
@@ -45,12 +58,12 @@
 				permissions: [],
 			};
 		},
-		data() {
-			return {
-				user: {},
-			};
-		},
 		methods: {
+			save() {
+				this.loading = true;
+				this.$toast.saveSuccess();
+				this.loading = false;
+			},
 			deleteUser() {
 				console.log('Delete user.');
 			},
