@@ -6,30 +6,30 @@
 		<ion-card-content>
 			<ion-item>
 				<ion-avatar class="ion-margin-end">
-					<s3-ion-img :s3-object="form.officeLogo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
+					<s3-ion-img :s3-object="myOffice.officeLogo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
 				</ion-avatar>
-				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="form.officeLogo" :sizeLimitInMBs="10" size="small"/>
+				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="myOffice.officeLogo" :sizeLimitInMBs="10" size="small"/>
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>
 					<ion-item>
 						<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
 						<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
-						<ion-input v-model="form.office" type="text" name="officeName" required/>
+						<ion-input v-model="myOffice.officeName" type="text" name="officeName" required/>
 					</ion-item>
 					<ion-row>
 						<ion-col size="12" size-md="6">
 							<ion-item>
 								<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-								<ion-input v-model="form.tin" type="text" name="tin"/>
+								<ion-input v-model="myOffice.tin" type="text" name="tin"/>
 							</ion-item>
 						</ion-col>
 						<ion-col size="12" size-md="6">
 							<ion-item>
 								<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
-								<ion-input v-model="form.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
+								<ion-input v-model="myOffice.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
 							</ion-item>
 						</ion-col>
 					</ion-row>
@@ -38,37 +38,37 @@
 							<ion-item>
 								<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-								<ion-datetime v-model="form.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+								<ion-datetime v-model="myOffice.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
 							</ion-item>
 						</ion-col>
 						<ion-col size="12" size-md="6">
 							<ion-item>
 								<ion-icon slot="start" class="ion-hide-md-up"/>
 								<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-								<ion-datetime v-model="form.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+								<ion-datetime v-model="myOffice.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
 							</ion-item>
 						</ion-col>
 					</ion-row>
 					<ion-row>
-						<ion-col size="12" size-md="4">
+						<ion-col size="12" size-md="8">
 							<ion-item>
 								<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-								<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
+								<ion-input v-model="myOffice.address" type="text" name="address" autocomplete="street-address"/>
 							</ion-item>
 						</ion-col>
-						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
-								<ion-input v-model="form.city" type="text" name="city" autocomplete="address-level2"/>
-							</ion-item>
-						</ion-col>
+<!--						<ion-col size="12" size-md="4">-->
+<!--							<ion-item>-->
+<!--								<ion-icon slot="start" class="ion-hide-md-up"/>-->
+<!--								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>-->
+<!--								<ion-input v-model="myOffice.city" type="text" name="city" autocomplete="address-level2"/>-->
+<!--							</ion-item>-->
+<!--						</ion-col>-->
 						<ion-col size="12" size-md="4">
 							<ion-item>
 								<ion-icon slot="start" class="ion-hide-md-up"/>
 								<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-								<ion-input v-model="form.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
+								<ion-input v-model="myOffice.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
 							</ion-item>
 						</ion-col>
 					</ion-row>
@@ -77,21 +77,21 @@
 							<ion-item>
 								<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-								<ion-input v-model="form.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
+								<ion-input v-model="myOffice.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
 							</ion-item>
 						</ion-col>
 						<ion-col size="12" size-md="6">
 							<ion-item>
 								<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-								<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
+								<ion-input v-model="myOffice.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
 							</ion-item>
 						</ion-col>
 					</ion-row>
 					<ion-item>
 						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
 						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-						<ion-input v-model="form.email" type="email" name="email" autocomplete="email" required/>
+						<ion-input v-model="myOffice.office_email" type="email" name="email" autocomplete="email" required/>
 					</ion-item>
 				</ion-list>
 				<ion-list class="ion-margin-top">
@@ -101,7 +101,8 @@
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-					<ion-row v-for="(account, i) in form.companyAccounts" :key="'companyAccounts' + i" class="ion-align-items-end">
+<!--					todo: Remove redundant || [] when backend is ready -->
+					<ion-row v-for="(account, i) in (myOffice.bankAccountInfo || [])" :key="'companyAccounts' + i" class="ion-align-items-end">
 						<ion-col>
 							<ion-item>
 								<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
@@ -130,11 +131,11 @@
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-					<ion-row v-for="(companyCode, i) in form.companyCodes" :key="'companyCodes' + i" class="ion-align-items-end">
+					<ion-row v-for="(companyCode, i) in myOffice.insuranceCompanies" :key="'companyCodes' + i" class="ion-align-items-end">
 						<ion-col>
 							<ion-item>
 								<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-								<ion-select v-model="companyCode.company" required interface="popover">
+								<ion-select v-model="companyCode.name" required interface="popover">
 									<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 								</ion-select>
 							</ion-item>
@@ -161,7 +162,7 @@
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-					<ion-item v-for="(file, i) in form.companyFiles" :key="'companyCodes' + i">
+					<ion-item v-for="(file, i) in myOffice.files" :key="'companyCodes' + i">
 						<ion-button :href="file.url" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
 						<ion-button fill="clear" size="small">
 							<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
@@ -229,6 +230,7 @@
 		},
 		computed: {
 			...mapGetters('platformData', ['companyOptions']),
+			...mapGetters('office', ['myOffice']),
 		},
 	};
 </script>
