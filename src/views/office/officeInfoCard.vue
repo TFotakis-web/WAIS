@@ -97,11 +97,10 @@
 				<ion-list>
 					<ion-list-header>
 						<h2><strong>{{ $t('views.Office.companyAccounts') }}</strong></h2>
-						<ion-button fill="clear">
+						<ion-button @click="addCompanyAccount" fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-
 					<ion-item v-if="(myOffice.bankAccountInfo || []).length === 0">
 						<ion-text>{{ $t('fields.noCompanyAccounts') }}</ion-text>
 					</ion-item>
@@ -124,7 +123,7 @@
 							</ion-row>
 						</ion-col>
 						<ion-col size="auto" class="ion-no-padding">
-							<ion-button fill="clear" size="small" color="danger">
+							<ion-button @click="deleteCompanyAccount(i)" fill="clear" size="small" color="danger">
 								<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
 							</ion-button>
 						</ion-col>
@@ -133,7 +132,7 @@
 				<ion-list>
 					<ion-list-header>
 						<h2><strong>{{ $t('views.Office.companyCodes') }}</strong></h2>
-						<ion-button fill="clear">
+						<ion-button @click="addInsuranceCompanies" fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
@@ -160,7 +159,7 @@
 							</ion-row>
 						</ion-col>
 						<ion-col size="auto" class="ion-no-padding">
-							<ion-button fill="clear" size="small" color="danger">
+							<ion-button  @click="deleteInsuranceCompanies(i)" fill="clear" size="small" color="danger">
 								<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
 							</ion-button>
 						</ion-col>
@@ -206,40 +205,33 @@
 		data() {
 			return {
 				loading: false,
-				form: {
-					office: '',
-					officeLogo: {},
-					chamberRecordNumber: '',
-					tin: '',
-					professionStartDate: '',
-					insuranceLicenseExpirationDate: '',
-					address: '',
-					city: '',
-					zip_code: '',
-					phone: '',
-					mobile: '',
-					email: '',
-					companyAccounts: [
-						{ name: 'Account 1', iban: 'GR111222333444555666777888999' },
-						{ name: 'Account 2', iban: 'GR000111222333444555666777888' },
-					],
-					companyCodes: [
-						{ company: 'Generali', code: '12345' },
-						{ company: 'Oracle', code: '67890' },
-					],
-					companyFiles: [
-						{ filename: 'File 1.pdf', url: '#file1' },
-						{ filename: 'File 2.pdf', url: '#file2' },
-					],
-				},
 			};
 		},
 		methods: {
 			save() {
 				this.loading = true;
-				console.log('Saved.');
-				this.loading = false;
-				this.$toast.saveSuccess();
+				this.$store.dispatch('office/updateOfficeDetails')
+					.then(this.$toast.saveSuccess)
+					.catch(this.$toast.error)
+					.finally(() => this.loading = false);
+			},
+			addCompanyAccount() {
+				this.myOffice.bankAccountInfo.push({
+					name: '',
+					iban: '',
+				});
+			},
+			deleteCompanyAccount(i) {
+				this.myOffice.bankAccountInfo = this.myOffice.bankAccountInfo.splice(i, 1);
+			},
+			addInsuranceCompanies() {
+				this.myOffice.insuranceCompanies.push({
+					name: '',
+					code: '',
+				});
+			},
+			deleteInsuranceCompanies(i) {
+				this.myOffice.insuranceCompanies = this.myOffice.bankAccountInfo.splice(i, 1);
 			},
 		},
 		computed: {
