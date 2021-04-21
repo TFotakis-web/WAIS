@@ -480,6 +480,8 @@ module.exports = {
 			'civilLiabilityExpirationDate',
 			'insuranceLicenseExpirationDate',
 			'office_logo',
+			'insuranceCompanies',
+			'phone',
 			'professionStartDate',
 		]
 
@@ -510,7 +512,6 @@ module.exports = {
 					office_email
 					zip_code
 					mobile
-					files
 					tin
 					bankAccountInfo
 					chamberRecordNumber
