@@ -84,7 +84,6 @@ module.exports = {
 			}
 		`
 
-
 		try {
 			const response = await gqlUtil.execute({
 				username: username,
@@ -92,12 +91,15 @@ module.exports = {
 				limit: limit || 100,
 				nextToken: nextToken
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			const result = response.data.listUserProfileByUsername.items[0].officeConnections
+			const result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
+			result?.items.forEach((item) => { //Quick page permissions fix
+				item.pagePermissions = JSON.parse(item.pagePermissions)
+			})
 			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 			return result
 		} catch (err) {
 			console.log(`officeAPI.getOfficeDetailsAndPermissionsByUsername unhandled error: ${err}`)
-			throw new Error(`Unable to retrieve the details and permissions for user ${username}.`)
+			return Promise.reject(`Unable to retrieve the details and permissions for user ${username}.`)
 		}
 	},
 
@@ -167,7 +169,7 @@ module.exports = {
 		}
 		let users = []
 		office.items.forEach((workforceItem) => {
-			workforceItem.workforce.items.forEach((userItem) => {
+			workforceItem.workforce?.items.forEach((userItem) => {
 				users.push(userItem.user)
 			})
 		})
@@ -242,7 +244,7 @@ module.exports = {
 	getContractsForOfficeId: async (officeId, filter, limit, nextToken) => {
 		console.log('officeAPI.getContractsForOfficeId input: ' + [officeId, filter, limit, nextToken])
 		if (!officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const query = /* GraphQL */ `
 			query getContractsForOfficeId($officeId: String!, $filter: ModelContractFilterInput, $limit: Int, $nextToken: String) {
@@ -328,10 +330,10 @@ module.exports = {
 	getPartnerOfficeConnections: async (officeId, username, filter, limit, nextToken) => {
 		console.log('officeAPI.getPartnerOfficeConnections input: ' + [officeId, username, filter, limit, nextToken])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const user_filter = {and: [filter || {id: {ne: ''}}, {fromId: {eq: officeId}}]}
 		const query = /* GraphQL */ `
@@ -376,7 +378,7 @@ module.exports = {
 	getAllInsuranceCompanies: async (username) => {
 		console.log('officeAPI.getAllInsuranceCompanies input: ' + [username])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Get user's office and its companies
@@ -421,7 +423,7 @@ module.exports = {
 	getAvailableInsuranceCompaniesForOffice: async (office, username) => {
 		console.log('officeAPI.getAvailableInsuranceCompaniesForOffice input: ' + [JSON.stringify(office), username])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Get user's office and its companies
@@ -461,7 +463,7 @@ module.exports = {
 	updateOfficeDetails: async (username, input, condition) => {
 		console.log('officeAPI.updateOfficeDetails input: ' + [username, input, JSON.stringify(condition)])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Sanitize input
@@ -520,16 +522,16 @@ module.exports = {
 	createVehicleForOffice: async (office_id, username, input, condition) => {
 		console.log('createVehicleForOffice input: ' + [office_id, username, input, condition])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!office_id) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 
 		//Get caller's office
 		const officeDetailsAndPermissions = await module.exports.getUserModelPermissionsForOffice(username, office_id)
 		if (!officeDetailsAndPermissions) {
-			throw new Error('Insufficient permissions')
+			return Promise.reject('Insufficient permissions')
 		}
 
 		//Expand the condition to require that the caller is also the owner of the profile
@@ -554,16 +556,16 @@ module.exports = {
 	updateVehicleForOffice: async (office_id, username, input, condition) => {
 		console.log('updateVehicleForOffice input: ' + [office_id, username, input, condition])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!office_id) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 
 		//Get caller's office
 		const officeDetailsAndPermissions = await module.exports.getUserModelPermissionsForOffice(username, office_id)
 		if (!officeDetailsAndPermissions) {
-			throw new Error('Insufficient permissions')
+			return Promise.reject('Insufficient permissions')
 		}
 
 		//Sanitize input
@@ -621,6 +623,115 @@ module.exports = {
 		return result
 	},
 	getPartnerSummary: async (username) => {
-
+		console.log('getPartnerSummary input: ' + [username])
+		if (!username) {
+			return Promise.reject('Invalid username or unauthenticated user.')
+		}
+		const query = /* GraphQL */ `
+			query getOfficeDetailsAndPermissionsByUsername(
+				$username: String!
+				$filter: ModelOfficeUserConnectionFilterInput
+				$limit: Int
+				$nextToken: String
+			) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+							items {
+								id
+								username
+								userId
+								pagePermissions
+								modelPermissions
+								preferences
+								officeId
+								officeName
+								employeeType
+								office {
+								  id
+								  officeName
+								  ownerUsername
+								  address
+								  office_email
+								  zip_code
+								  mobile
+								  phone
+								  tin
+								  office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								  }
+								  professionStartDate
+								  chamberRecordNumber
+								  insuranceLicenseExpirationDate
+								  civilLiabilityExpirationDate
+								  bankAccountInfo
+								  files {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								  }
+								  insuranceCompanies {
+									name
+									code
+								  }
+								  workforce {
+								  	items{
+										id
+										officeId
+										officeName
+										userId
+										username
+										pagePermissions
+										modelPermissions
+										employeeType
+										preferences
+								  	}
+								  }
+								}
+							}
+						}
+					}
+				}
+			}
+		`
+		try {
+			const response = await gqlUtil.execute({
+				username: username,
+				filter: {id: {ne: ''}},
+				limit: 100,
+				nextToken: null
+			}, query, 'getOfficeDetailsAndPermissionsByUsername')
+			let result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
+			result?.items.forEach((officeCon) => { //Quick page permissions fix
+				officeCon.pagePermissions = JSON.parse(officeCon.pagePermissions)
+				if (officeCon.office) {
+					if (!officeCon?.office?.files) {
+						officeCon.office.files = []
+					}
+					if (!officeCon?.office?.insuranceCompanies) {
+						officeCon.office.insuranceCompanies = []
+					}
+					if (!officeCon?.office?.workforce) {
+						officeCon.office.workforce = []
+					}
+				}
+				officeCon?.office?.workforce?.items.forEach((workforce) => {
+					if (workforce.pagePermissions) {
+						workforce.pagePermissions = JSON.parse(workforce.pagePermissions)
+					}
+				})
+			})
+			console.log('officeAPI.getPartnerSummary output: ' + JSON.stringify(result))
+			return result
+		} catch (err) {
+			console.error(`officeAPI.getPartnerSummary unhandled error: ${err}`)
+			return Promise.reject(`Unable to retrieve partner summary for user ${username}.`)
+		}
 	}
 }

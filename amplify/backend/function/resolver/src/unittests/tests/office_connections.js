@@ -3,7 +3,10 @@ const util = require('util');
 
 module.exports = {
 	test: async (ddb, gql, gateway) => {
-		const f = await gateway.getContractorUserProfilesForManagerUsername({username: 'tfotakis'})
-		console.log(JSON.stringify(f))
+		// await gateway.getOfficesOfUser({username: 'tfotakis'})
+		// await gateway.getContractorUserProfilesForManagerUsername({username: 'tfotakis'})
+		// await gateway.getEmployeeUserProfilesForManagerUsername({username: 'tfotakis'})
+
+		await gateway.getPartnerSummary({username: 'tfotakis'})
 	}
 }

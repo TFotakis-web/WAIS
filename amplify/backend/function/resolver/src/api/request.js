@@ -66,11 +66,19 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
+			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query,
 			'getRequestsFromUser',
 		)
 		const result = response.data.listRequestsBySenderUsername
+		result?.items.forEach((request) => {  //Quick page permissions fix
+			if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+				request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+			}
+			if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+				request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+			}
+		})
 		console.log('requestAPI.getRequestsFromUser output: ' + JSON.stringify(result))
 		return result
 	},
@@ -141,6 +149,14 @@ module.exports = {
 			'getRequestsForUser',
 		)
 		const result = response.data.listRequestsByReceiverEmail
+		result?.items.forEach((request) => {  //Quick page permissions fix
+			if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+				request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+			}
+			if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+				request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+			}
+		})
 		console.log('requestAPI.getRequestsForUser output: ' + JSON.stringify(result))
 		return result
 	},
@@ -264,7 +280,7 @@ module.exports = {
 					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
 					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 					createOfficeInput.verified = true
-					createOfficeInput.bankAccountInfo = []
+					createOfficeInput.bankAccountInfo = JSON.stringify([])
 					createOfficeInput.files = callerPayload.createOfficePayload.files || []
 
 					//Delete some fields that should only be present in the request and not in the office
