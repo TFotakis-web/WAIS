@@ -8,22 +8,33 @@
 			</ion-button>
 		</ion-item>
 		<ion-card-content>
-			<ion-item v-for="office in offices" :key="office.name" :router-link="{name: 'ManageOffice', params: {id: office.id}}" button>
-				<ion-avatar slot="start">
-					<ion-img :src="office.office_logo"/>
-				</ion-avatar>
-				<ion-label>
-					<h3>{{ office.name }}</h3>
-					<p>{{ office.managerUsername }} • {{ office.address }}</p>
-				</ion-label>
-				<ion-badge v-if="office.state === 'pending'" color="warning">Pending</ion-badge>
-			</ion-item>
+			<ion-list>
+				<ion-item v-if="partnerOffices.length === 0">
+					<ion-text>{{ $t('fields.noPartnerOffices') }}</ion-text>
+				</ion-item>
+				<ion-item v-for="office in partnerOffices" :key="office.name" :router-link="{name: 'ManageOffice', params: {id: office.id}}" button>
+					<!--			<ion-item v-for="office in offices" :key="office.name" :router-link="{name: 'ManageOffice', params: {id: office.id}}" button>-->
+					<ion-avatar slot="start">
+						<s3-ion-img :s3-object="office.office_logo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
+					</ion-avatar>
+					<ion-label>
+						<p>{{ office }}</p>
+						<!--					<h3>{{ office.name }}</h3>-->
+						<!--					<p>{{ office.managerUsername }} • {{ office.address }}</p>-->
+					</ion-label>
+					<!--				<ion-badge v-if="office.state === 'pending'" color="warning">Pending</ion-badge>-->
+				</ion-item>
+			</ion-list>
 		</ion-card-content>
 	</ion-card>
 </template>
 <script>
+	import { mapGetters } from 'vuex';
+	import S3IonImg from '@/components/structure/S3IonImg';
+
 	export default {
 		name: 'officeManagementTableCard',
+		components: { S3IonImg },
 		data() {
 			return {
 				offices: (() => {
@@ -35,12 +46,18 @@
 							managerUsername: `Manager${i}`,
 							address: `Address${i}`,
 							state: i % 3 === 0 ? 'pending' : undefined,
-							office_logo: this.$store.getters['platformData/defaultOfficeLogo'],
+							office_logo: {},
 						});
 					}
 					return arr;
 				})(),
 			};
+		},
+		mounted() {
+			this.$store.dispatch('office/getPartnerOfficeConnectionsForOfficeId', this.myOffice.id);
+		},
+		computed: {
+			...mapGetters('office', ['myOffice', 'partnerOffices']),
 		},
 	};
 </script>
