@@ -510,12 +510,14 @@ module.exports = {
 					id
 					address
 					office_email
+					officeName
 					zip_code
 					mobile
 					tin
 					bankAccountInfo
 					chamberRecordNumber
 					ownerUsername
+					phone
 					civilLiabilityExpirationDate
 					insuranceLicenseExpirationDate
 					partnersNumberLimit
