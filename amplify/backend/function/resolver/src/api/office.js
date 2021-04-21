@@ -707,9 +707,20 @@ module.exports = {
 				limit: 100,
 				nextToken: null
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			const result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
+			let result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
 			result?.items.forEach((officeCon) => { //Quick page permissions fix
 				officeCon.pagePermissions = JSON.parse(officeCon.pagePermissions)
+				if (officeCon.office) {
+					if (!officeCon?.office?.files) {
+						officeCon.office.files = []
+					}
+					if (!officeCon?.office?.insuranceCompanies) {
+						officeCon.office.insuranceCompanies = []
+					}
+					if (!officeCon?.office?.workforce) {
+						officeCon.office.workforce = []
+					}
+				}
 				officeCon?.office?.workforce?.items.forEach((workforce) => {
 					if (workforce.pagePermissions) {
 						workforce.pagePermissions = JSON.parse(workforce.pagePermissions)
@@ -719,7 +730,7 @@ module.exports = {
 			console.log('officeAPI.getPartnerSummary output: ' + JSON.stringify(result))
 			return result
 		} catch (err) {
-			console.log(`officeAPI.getPartnerSummary unhandled error: ${err}`)
+			console.error(`officeAPI.getPartnerSummary unhandled error: ${err}`)
 			return Promise.reject(`Unable to retrieve partner summary for user ${username}.`)
 		}
 	}
