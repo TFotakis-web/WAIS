@@ -628,7 +628,12 @@ module.exports = {
 			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const query = /* GraphQL */ `
-			query getOfficeDetailsAndPermissionsByUsername($username: String!) {
+			query getOfficeDetailsAndPermissionsByUsername(
+				$username: String!
+				$filter: ModelOfficeUserConnectionFilterInput
+				$limit: Int
+				$nextToken: String
+			) {
 				listUserProfileByUsername(username: $username) {
 					items {
 						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -676,16 +681,17 @@ module.exports = {
 									code
 								  }
 								  workforce {
-								  	officeId
-									officeName
-									userId
-									username
-									office
-									user
-									pagePermissions
-									modelPermissions
-									employeeType
-									preferences
+								  	items{
+										id
+										officeId
+										officeName
+										userId
+										username
+										pagePermissions
+										modelPermissions
+										employeeType
+										preferences
+								  	}
 								  }
 								}
 							}
@@ -695,13 +701,18 @@ module.exports = {
 			}
 		`
 		try {
-			const response = await gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
+			const response = await gqlUtil.execute({
+				username: username,
+				filter: {id: {ne: ''}},
+				limit: 100,
+				nextToken: null
+			}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			const result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
 			result?.items.forEach((officeCon) => { //Quick page permissions fix
 				officeCon.pagePermissions = JSON.parse(officeCon.pagePermissions)
-				officeCon?.office.forEach((office) => {
-					if (office?.workforce.pagePermissions) {
-						office.workforce.pagePermissions = JSON.parse(office?.workforce.pagePermissions)
+				officeCon?.office?.workforce?.items.forEach((workforce) => {
+					if (workforce.pagePermissions) {
+						workforce.pagePermissions = JSON.parse(workforce.pagePermissions)
 					}
 				})
 			})

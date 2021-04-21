@@ -266,10 +266,10 @@ type PartnerOfficeOutput{
     bankAccountInfo: AWSJSON
     files: [S3ObjectOutput]
     insuranceCompanies: [InsuranceCompanyOutput]
-    workforce: [OfficeUserConnectionOutput]
+    workforce: [ModelOfficeUserConnectionConnection]
 }
 
-type PartnerConnectionOutput{
+type PartnerConnectionOutput {
     id: ID
     username: String
     userId: ID
@@ -279,7 +279,7 @@ type PartnerConnectionOutput{
     officeId: ID
     officeName: String
     employeeType: EmployeeType
-    partnerOffice: PartnerOfficeOutput
+    partnerOffice: [PartnerOfficeOutput]
 }
 
 type PartnerSummaryOutput {
