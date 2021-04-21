@@ -480,6 +480,8 @@ module.exports = {
 			'civilLiabilityExpirationDate',
 			'insuranceLicenseExpirationDate',
 			'office_logo',
+			'insuranceCompanies',
+			'phone',
 			'professionStartDate',
 		]
 
@@ -506,6 +508,41 @@ module.exports = {
 			mutation updateOfficeDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
 				updateOffice(input: $input, condition: $condition) {
 					id
+					address
+					office_email
+					officeName
+					zip_code
+					mobile
+					tin
+					bankAccountInfo
+					chamberRecordNumber
+					ownerUsername
+					phone
+					civilLiabilityExpirationDate
+					insuranceLicenseExpirationDate
+					partnersNumberLimit
+					employeesNumberLimit
+					insuranceCompanies {
+						name
+						code
+					}
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					professionStartDate
+					createdAt
+					updatedAt
 				}
 			}
 		`

@@ -73,6 +73,13 @@ export const getOfficesIWorkIn = /* GraphQL */ `
           tin
           professionStartDate
           chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           bankAccountInfo
@@ -182,6 +189,13 @@ export const getMySentRequests = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -238,6 +252,13 @@ export const getRequestsForMe = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -530,8 +551,17 @@ export const getAvailableInsuranceCompanies = /* GraphQL */ `
 export const getPartnerSummary = /* GraphQL */ `
   query GetPartnerSummary {
     getPartnerSummary {
-      partners {
-        officeDetails {
+      items {
+        id
+        username
+        userId
+        pagePermissions
+        modelPermissions
+        preferences
+        officeId
+        officeName
+        employeeType
+        office {
           id
           officeName
           ownerUsername
@@ -540,98 +570,44 @@ export const getPartnerSummary = /* GraphQL */ `
           zip_code
           mobile
           phone
-          partnersNumberLimit
-          employeesNumberLimit
-          verified
           tin
+          office_logo {
+            content
+            path
+            size
+            contentType
+          }
           professionStartDate
           chamberRecordNumber
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           bankAccountInfo
           files {
-            level
-            idToken
-            filePath
-            filename
+            content
+            path
+            size
             contentType
           }
           insuranceCompanies {
             name
             code
           }
-          createdAt
-          updatedAt
-        }
-        employees {
-          id
-          username
-          email
-          role
-          telephone
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          profilePicture {
-            level
-            idToken
-            filePath
-            filename
-            contentType
+          workforce {
+            items {
+              id
+              officeId
+              officeName
+              userId
+              username
+              pagePermissions
+              modelPermissions
+              employeeType
+              preferences
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
-          preferences
-          locale
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          createdAt
-          updatedAt
-        }
-        contractors {
-          id
-          username
-          email
-          role
-          telephone
-          name
-          fathers_name
-          address
-          zip_code
-          mobile
-          tin
-          family_name
-          gender
-          birthdate
-          city
-          profilePicture {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          preferences
-          locale
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          createdAt
-          updatedAt
         }
       }
     }
@@ -712,6 +688,13 @@ export const listOffices = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -969,6 +952,13 @@ export const getOffice = /* GraphQL */ `
       civilLiabilityExpirationDate
       bankAccountInfo
       subscriptionExpirationDate
+      office_logo {
+        level
+        idToken
+        filePath
+        filename
+        contentType
+      }
       files {
         level
         idToken
@@ -1130,6 +1120,13 @@ export const getOffice = /* GraphQL */ `
             civilLiabilityExpirationDate
             bankAccountInfo
             subscriptionExpirationDate
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             files {
               level
               idToken
@@ -1242,6 +1239,13 @@ export const getOffice = /* GraphQL */ `
             civilLiabilityExpirationDate
             bankAccountInfo
             subscriptionExpirationDate
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             files {
               level
               idToken
@@ -1291,6 +1295,13 @@ export const getOffice = /* GraphQL */ `
             civilLiabilityExpirationDate
             bankAccountInfo
             subscriptionExpirationDate
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             files {
               level
               idToken
@@ -1363,6 +1374,13 @@ export const listOfficeByName = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -1633,6 +1651,13 @@ export const listOfficeByOfficeEmail = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -1905,6 +1930,13 @@ export const listOfficeByOwnerUsername = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -2348,6 +2380,13 @@ export const getUserProfile = /* GraphQL */ `
             civilLiabilityExpirationDate
             bankAccountInfo
             subscriptionExpirationDate
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             files {
               level
               idToken
@@ -3583,6 +3622,13 @@ export const getOfficeUserConnection = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -3988,6 +4034,13 @@ export const listOfficeUserConnections = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -4233,6 +4286,13 @@ export const listOfficeUserConnectionsByOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -4478,6 +4538,13 @@ export const listOfficeUserConnectionsByEmployeeType = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -4723,6 +4790,13 @@ export const listOfficeUserConnectionsByUserId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -4968,6 +5042,13 @@ export const listOfficeUserConnectionsByOfficeAndUser = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -5213,6 +5294,13 @@ export const listOfficeUserConnectionsByUsername = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -5439,6 +5527,13 @@ export const getOfficeContractConnection = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -5780,6 +5875,13 @@ export const listOfficeContractConnections = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -6004,6 +6106,13 @@ export const listOfficeContractConnectionByOfficeId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -6228,6 +6337,13 @@ export const listOfficeContractConnectionByOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -6452,6 +6568,13 @@ export const listOfficeContractConnectionByContractId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -6665,6 +6788,13 @@ export const getOfficeAccessConnection = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -6916,6 +7046,13 @@ export const getOfficeAccessConnection = /* GraphQL */ `
         civilLiabilityExpirationDate
         bankAccountInfo
         subscriptionExpirationDate
+        office_logo {
+          level
+          idToken
+          filePath
+          filename
+          contentType
+        }
         files {
           level
           idToken
@@ -7193,6 +7330,13 @@ export const listOfficeAccessConnections = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -7319,6 +7463,13 @@ export const listOfficeAccessConnections = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -7479,6 +7630,13 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -7605,6 +7763,13 @@ export const listOfficeAccessConnectionByFromId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -7765,6 +7930,13 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -7891,6 +8063,13 @@ export const listOfficeAccessConnectionByToId = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -8051,6 +8230,13 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -8177,6 +8363,13 @@ export const listOfficeAccessConnectionByFromOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -8337,6 +8530,13 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -8463,6 +8663,13 @@ export const listOfficeAccessConnectionByToOfficeName = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           subscriptionExpirationDate
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           files {
             level
             idToken
@@ -9465,6 +9672,13 @@ export const getRequests = /* GraphQL */ `
           tin
           professionStartDate
           chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
           insuranceLicenseExpirationDate
           civilLiabilityExpirationDate
           comments
@@ -9519,6 +9733,13 @@ export const listRequestss = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -9583,6 +9804,13 @@ export const listRequestsBySenderEmail = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -9647,6 +9875,13 @@ export const listRequestsByReceiverEmail = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -9711,6 +9946,13 @@ export const listRequestsBySenderUsername = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
@@ -9775,6 +10017,13 @@ export const listRequestsByType = /* GraphQL */ `
             tin
             professionStartDate
             chamberRecordNumber
+            office_logo {
+              level
+              idToken
+              filePath
+              filename
+              contentType
+            }
             insuranceLicenseExpirationDate
             civilLiabilityExpirationDate
             comments
