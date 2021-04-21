@@ -49,14 +49,42 @@ export default [
 			},
 			{
 				path: 'inviteUser',
-				name: 'InviteUser',
-				component: () => import('@/views/office/InviteUser'),
-				meta: {
-					requiresAuth: true,
-					customCheck: () => {
-						return store.getters['auth/role'] === 'MANAGER';
+				component: () => import('@/components/structure/passThroughRouterView'),
+				children: [
+					{
+						path: '',
+						name: 'InviteUser',
+						component: () => import('@/views/office/InviteUser'),
+						meta: {
+							requiresAuth: true,
+							customCheck: () => {
+								return store.getters['auth/role'] === 'MANAGER';
+							},
+						},
 					},
-				},
+					{
+						path: 'employee/:id',
+						name: 'InviteEmployeeToOfficeItemDetails',
+						component: () => import('@/views/office/InviteEmployeeToOfficeItemDetails'),
+						meta: {
+							requiresAuth: true,
+							customCheck: () => {
+								return store.getters['auth/role'] === 'MANAGER';
+							},
+						},
+					},
+					{
+						path: 'contractor/:id',
+						name: 'InviteContractorToOfficeItemDetails',
+						component: () => import('@/views/office/InviteContractorToOfficeItemDetails'),
+						meta: {
+							requiresAuth: true,
+							customCheck: () => {
+								return store.getters['auth/role'] === 'MANAGER';
+							},
+						},
+					},
+				],
 			},
 			{
 				path: 'manageOffice/:id',
