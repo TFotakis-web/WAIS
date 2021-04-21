@@ -9,13 +9,11 @@ const gql = require('../utils/gql')
 module.exports = {
 	run: async (input) => {
 		console.log("debugAPI.run: " + JSON.stringify(input))
-		const args = input.arguments
-		const username = input.username
 
 		//tests
 		try {
-			// await crud_tests.UserProfile(ddb, gql, gateway)
-			// await office_user_partnership_tests.officeConnectionsTest(ddb, gql, gateway)
+			await crud_tests.UserProfile(ddb, gql, gateway)
+			await office_user_partnership_tests.officeConnectionsTest(ddb, gql, gateway)
 			await office_connections_tests.test(ddb, gql, gateway)
 		} catch (err) {
 			console.error(err)

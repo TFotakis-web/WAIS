@@ -151,6 +151,7 @@ input CreateOfficeInput {
     tin: String!
     professionStartDate: AWSDate
     chamberRecordNumber: String
+    office_logo: S3ObjectInput
     insuranceCompanies: [InsuranceCompanyInput!]
     subscriptionExpirationDate: AWSDate
     insuranceLicenseExpirationDate: AWSDate
@@ -174,6 +175,7 @@ input UpdateOfficeInput {
     tin: String
     professionStartDate: AWSDate
     chamberRecordNumber: String
+    office_logo: S3ObjectInput
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
@@ -199,6 +201,7 @@ input ModelOfficeConditionInput {
     tin: ModelStringInput
     professionStartDate: ModelStringInput
     chamberRecordNumber: ModelStringInput
+    office_logo: S3ObjectInput
     insuranceLicenseExpirationDate: ModelStringInput
     civilLiabilityExpirationDate: ModelStringInput
     bankAccountInfo: ModelStringInput

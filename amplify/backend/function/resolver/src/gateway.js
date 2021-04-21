@@ -96,12 +96,12 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.resolveRequest(args.username, args.email, args.groups, args.id, args.decision, args.payload)
-		console.log('resolveRequest output: ' + JSON.stringify(result))
+		console.log('resolveRequest output: ' + result)
 		return result
 	},
 	getEmployeeUserProfilesForManagerUsername: async (args) => {
 		console.log('getEmployeeUserProfilesForManagerUsername input: ' + JSON.stringify(args))
-		if (!args.managerUsername) {
+		if (!args.username) {
 			throw new Error('Invalid manager username')
 		}
 		const result = officeAPI.getEmployeeTypeUserProfilesForManagerUsername(

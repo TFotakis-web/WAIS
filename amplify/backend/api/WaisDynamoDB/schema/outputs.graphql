@@ -236,6 +236,11 @@ type IDOutput {
     id: ID
 }
 
+type InsuranceCompanyOutput {
+    name: String!
+    code: String!
+}
+
 type S3ObjectOutput {
     content: String
     path: String
@@ -243,12 +248,40 @@ type S3ObjectOutput {
     contentType: String
 }
 
-type PartnerDetailsOutput {
-    officeDetails: OfficeOutput
-    employees: UserProfileOutput
-    contractors: UserProfileOutput
+type PartnerOfficeOutput{
+    id: ID
+    officeName: String
+    ownerUsername: String
+    address: String
+    office_email: String
+    zip_code: String
+    mobile: String
+    phone: String
+    tin: String
+    office_logo: S3ObjectOutput
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
+    files: [S3ObjectOutput]
+    insuranceCompanies: [InsuranceCompanyOutput]
+    workforce: [OfficeUserConnectionOutput]
+}
+
+type PartnerConnectionOutput{
+    id: ID
+    username: String
+    userId: ID
+    pagePermissions: AWSJSON
+    modelPermissions: [ModelPermission]
+    preferences: AWSJSON
+    officeId: ID
+    officeName: String
+    employeeType: EmployeeType
+    partnerOffice: PartnerOfficeOutput
 }
 
 type PartnerSummaryOutput {
-    partners: [PartnerDetailsOutput]
+    items: [PartnerConnectionOutput]
 }
