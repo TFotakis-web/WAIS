@@ -279,7 +279,7 @@ type PartnerConnectionOutput {
     officeId: ID
     officeName: String
     employeeType: EmployeeType
-    partnerOffice: [PartnerOfficeOutput]
+    office: [PartnerOfficeOutput]
 }
 
 type PartnerSummaryOutput {
