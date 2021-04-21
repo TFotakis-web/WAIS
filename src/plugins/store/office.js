@@ -21,8 +21,9 @@ import {
 	updateVehicleForOffice,
 } from '@/graphql/custom-mutations';
 import {
+	getContractorUserProfiles,
 	getContractsForOfficeId,
-	getCustomersForOfficeId,
+	getCustomersForOfficeId, getEmployeeUserProfiles,
 	getOfficesIWorkIn,
 	getPartnerOfficeConnectionsForOfficeId,
 } from '@/graphql/custom-queries';
@@ -30,13 +31,21 @@ import {
 export const office = {
 	namespaced: true,
 	state: {
-		offices: [],
-		contracts: [],
-		customers: [],
+		offices: {},
+		employees: {},
+		contractors: {},
+		contracts: {},
+		customers: {},
 	},
 	mutations: {
 		setOffices(state, payload) {
 			state.offices = payload;
+		},
+		setEmployees(state, payload) {
+			state.eployees = payload;
+		},
+		setContractors(state, payload) {
+			state.contractors = payload;
 		},
 		setContracts(state, payload) {
 			state.contracts = payload;
@@ -70,6 +79,7 @@ export const office = {
 		},
 		async getOfficesIWorkIn({ commit, dispatch }) {
 			try {
+				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				let response = await API.graphql(graphqlOperation(getOfficesIWorkIn));
 				response = response.data.getOfficesIWorkIn;
 				commit('setOffices', response);
@@ -82,6 +92,36 @@ export const office = {
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseGlobalPendingPromises', null, { root: true });
+			}
+		},
+		async getEmployeeUserProfiles({ commit }) {
+			try {
+				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
+				let response = await API.graphql(graphqlOperation(getEmployeeUserProfiles));
+				response = response.data.getEmployeeUserProfiles;
+				commit('setEmployees', response);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
+			}
+		},
+		async getContractorUserProfiles({ commit }) {
+			try {
+				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
+				let response = await API.graphql(graphqlOperation(getContractorUserProfiles));
+				response = response.data.getContractorUserProfiles;
+				commit('setContractors', response);
+				return Promise.resolve(response);
+			} catch (error) {
+				console.error(error);
+				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
 			}
 		},
 		async getPartnerOfficeConnectionsForOfficeId() {
@@ -286,6 +326,9 @@ export const office = {
 		},
 	},
 	getters: {
-		offices: (state) => state.offices,
+		offices: (state) => state.offices?.items || [],
+		employees: (state) => state.employees?.items || [],
+		contractors: (state) => state.contractors?.items || [],
+		myOffice: (state) => state.offices?.items[0]?.office || {},
 	},
 };

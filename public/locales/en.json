@@ -237,7 +237,9 @@
       "contractor": "Contractor"
     },
     "expirationDate": "Exp. date",
-    "managerEmail": "Manager email"
+    "managerEmail": "Manager email",
+    "employees": "Employees",
+    "contractors": "Contractorss"
   },
   "actions": {
     "submit": "Submit",
