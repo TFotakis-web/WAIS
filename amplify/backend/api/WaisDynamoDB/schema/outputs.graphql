@@ -37,6 +37,7 @@ type OfficeOutput {
     tin: String!
     professionStartDate: AWSDate
     chamberRecordNumber: String
+    office_logo: S3Object
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON

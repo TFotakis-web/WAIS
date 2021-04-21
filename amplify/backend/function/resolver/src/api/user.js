@@ -49,7 +49,7 @@ module.exports = {
 			}
 		`
 
-		const userProfile =  await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
+		const userProfile = await gqlUtil.execute({username: username}, query, 'getUserProfileByUsername')
 			.then(response => response.data.listUserProfileByUsername.items[0])
 			.catch(err => console.log(`userAPI.getUserProfileByUsername unhandled error: ${err}`))
 
@@ -104,7 +104,7 @@ module.exports = {
 				}
 			}
 		`
-		const userProfile = await  gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
+		const userProfile = await gqlUtil.execute({email: email}, query, 'getUserProfileByEmail')
 			.then(response => response.data.listUserProfileByEmail.items[0])
 			.catch(err => 'Unhandled error in getUserProfileByEmail: ' + JSON.stringify(err))
 
@@ -297,12 +297,12 @@ module.exports = {
 			}
 		`
 
-		const result =await  gqlUtil.execute({
+		const result = await gqlUtil.execute({
 			input: sanitized_input,
 			condition: expanded_condition
 		}, mutation, 'updateUserProfileDetails')
 			.then(response => response.data.updateUserProfile)
-			.catch(err => console.log(`userAPI.updateUserProfileDetails unhandled error: ${JSON.stringify(err)}`))
+			.catch(err => console.log(`userAPI.updateUserProfileDetails unhandled error: ${JSON.stringify(err.message)}`))
 
 		if (result) {
 			console.log('officeAPI.updateUserProfileDetails output: ' + JSON.stringify(result))

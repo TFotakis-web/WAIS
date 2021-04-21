@@ -40,6 +40,13 @@ module.exports = {
 								  employeesNumberLimit
 								  verified
 								  tin
+								  office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								  }
 								  professionStartDate
 								  chamberRecordNumber
 								  insuranceLicenseExpirationDate
@@ -152,18 +159,18 @@ module.exports = {
 			}
 		`
 		const response = await gqlUtil.execute(
-			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 50, nextToken: nextToken},
+			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 100, nextToken: nextToken},
 			query, 'getEmployeeTypeUserProfilesForManagerUsername')
 		const office = response.data.listOfficeByOwnerUsername
 		if (office === undefined || office.items === undefined) {
 			return Promise.reject('An error occurred while retrieving contractors.')
 		}
 		let users = []
-		for (const userItem in office.items) {
-			for (const workforceItem in userItem.workforce.items) {
+		office.items.forEach((workforceItem) => {
+			workforceItem.workforce.items.forEach((userItem) => {
 				users.push(userItem.user)
-			}
-		}
+			})
+		})
 		const result = {
 			items: users,
 			nextToken: null
@@ -470,6 +477,7 @@ module.exports = {
 			'chamberRecordNumber',
 			'civilLiabilityExpirationDate',
 			'insuranceLicenseExpirationDate',
+			'office_logo',
 			'professionStartDate',
 		]
 

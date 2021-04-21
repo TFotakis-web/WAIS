@@ -32,8 +32,15 @@ module.exports = {
 		signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
 
 		return await new Promise((resolve, reject) => {
-			const httpRequest = https.request({...req, host: ENDPOINT}, (result) => {
-				result.on('data', (contents) => {
+			const httpRequest = https.request({...req, host: ENDPOINT}, (response) => {
+				let chunks_of_data = [];
+
+				response.on('data', (fragments) => chunks_of_data.push(fragments))
+
+				response.on('error', (error) => reject(error));
+
+				response.on('end', () => {
+					const contents = Buffer.concat(chunks_of_data).toString();
 					try {
 						const result = JSON.parse(contents.toString())
 						if ('errors' in result) {
@@ -45,9 +52,9 @@ module.exports = {
 						}
 					} catch (err) {
 						console.log('GQL parsing error: ' + JSON.stringify(err))
-						reject(err.toString())
+						reject(err)
 					}
-				})
+				});
 			})
 
 			httpRequest.write(req.body)

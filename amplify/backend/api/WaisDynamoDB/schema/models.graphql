@@ -1,10 +1,10 @@
 # Each office has one owner and each owner hast one office, always!
 type Office
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byOfficeName", fields: ["officeName", "ownerUsername"], queryField: "listOfficeByName")
-    @key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listOfficeByOfficeEmail")
-    @key(name: "byOwnerUsername", fields: ["ownerUsername", "officeName"], queryField: "listOfficeByOwnerUsername") {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }])
+@key(name: "byOfficeName", fields: ["officeName", "ownerUsername"], queryField: "listOfficeByName")
+@key(name: "byOfficeEmail", fields: ["office_email"], queryField: "listOfficeByOfficeEmail")
+@key(name: "byOwnerUsername", fields: ["ownerUsername", "officeName"], queryField: "listOfficeByOwnerUsername") {
     # UID of this office
     id: ID
 
@@ -29,6 +29,7 @@ type Office
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     subscriptionExpirationDate: AWSDate
+    office_logo: S3Object
 
     # Store S3 files in this field
     files: [S3Object]
@@ -54,10 +55,10 @@ type Office
 }
 
 type UserProfile
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
-    @key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }])
+@key(name: "byEmail", fields: ["email"], queryField: "listUserProfileByEmail")
+@key(name: "byUsername", fields: ["username"], queryField: "listUserProfileByUsername") {
     #Currently the user's username, guaranteed to always be unique
     id: ID
 
@@ -98,10 +99,10 @@ type UserProfile
 }
 
 type Vehicle
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byOfficeName", fields: ["officeName", "numberPlate"], queryField: "listVehiclesByOfficeName")
-    @key(name: "byVehicleOwner", fields: ["vehicle_owner", "officeName"], queryField: "listVehiclesByOwner") {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }])
+@key(name: "byOfficeName", fields: ["officeName", "numberPlate"], queryField: "listVehiclesByOfficeName")
+@key(name: "byVehicleOwner", fields: ["vehicle_owner", "officeName"], queryField: "listVehiclesByOwner") {
     id: ID
     numberPlate: String!
     officeId: ID!
@@ -125,11 +126,11 @@ type Vehicle
 }
 
 type Contract
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byOfficeName", fields: ["officeName", "createdAt"], queryField: "listContractsByOfficeName")
-    @key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "officeName"], queryField: "listContractsByVehicleNumberPlates")
-    @key(name: "byCustomerId", fields: ["customerId", "officeName"], queryField: "listContractsByCustomerId") {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }])
+@key(name: "byOfficeName", fields: ["officeName", "createdAt"], queryField: "listContractsByOfficeName")
+@key(name: "byVehicleNumberPlate", fields: ["vehicleNumberPlate", "officeName"], queryField: "listContractsByVehicleNumberPlates")
+@key(name: "byCustomerId", fields: ["customerId", "officeName"], queryField: "listContractsByCustomerId") {
     id: ID
     contractId: ID! # Not unique, remember that we keep a history of each contract
     version: Int! # For history
@@ -161,9 +162,9 @@ type Contract
 }
 
 type Customer
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }])
-    @key(name: "byOfficeName", fields: ["officeName", "firstName", "lastName"], queryField: "listCustomersByOfficeName") {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }])
+@key(name: "byOfficeName", fields: ["officeName", "firstName", "lastName"], queryField: "listCustomersByOfficeName") {
     id: ID
     tin: String!
     officeName: String!
@@ -183,13 +184,13 @@ type Customer
 }
 
 type OfficeUserConnection
-    @model(subscriptions: null)
-    @key(name: "byOfficeName", fields: ["officeName", "userId"], queryField: "listOfficeUserConnectionsByOfficeName")
-    @key(name: "byEmployeeType", fields: ["employeeType", "username", "officeName"], queryField: "listOfficeUserConnectionsByEmployeeType")
-    @key(name: "byUserId", fields: ["userId", "officeName"], queryField: "listOfficeUserConnectionsByUserId")
-    @key(name: "byOfficeAndUser", fields: ["officeName", "username"], queryField: "listOfficeUserConnectionsByOfficeAndUser")
-    @key(name: "byOfficeUsername", fields: ["username", "officeName"], queryField: "listOfficeUserConnectionsByUsername")
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(name: "byOfficeName", fields: ["officeName", "userId"], queryField: "listOfficeUserConnectionsByOfficeName")
+@key(name: "byEmployeeType", fields: ["employeeType", "username", "officeName"], queryField: "listOfficeUserConnectionsByEmployeeType")
+@key(name: "byUserId", fields: ["userId", "officeName"], queryField: "listOfficeUserConnectionsByUserId")
+@key(name: "byOfficeAndUser", fields: ["officeName", "username"], queryField: "listOfficeUserConnectionsByOfficeAndUser")
+@key(name: "byOfficeUsername", fields: ["username", "officeName"], queryField: "listOfficeUserConnectionsByUsername")
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     officeId: ID!
     officeName: String!
@@ -204,11 +205,11 @@ type OfficeUserConnection
 }
 
 type OfficeContractConnection
-    @model(subscriptions: null)
-    @key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
-    @key(name: "byOfficeName", fields: ["officeName", "officeId"], queryField: "listOfficeContractConnectionByOfficeName")
-    @key(name: "byContractId", fields: ["contractId", "officeId"], queryField: "listOfficeContractConnectionByContractId")
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
+@key(name: "byOfficeName", fields: ["officeName", "officeId"], queryField: "listOfficeContractConnectionByOfficeName")
+@key(name: "byContractId", fields: ["contractId", "officeId"], queryField: "listOfficeContractConnectionByContractId")
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     officeId: ID!
     officeName: String!
@@ -219,12 +220,12 @@ type OfficeContractConnection
 }
 
 type OfficeAccessConnection
-    @model(subscriptions: null)
-    @key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeAccessConnectionByFromId")
-    @key(name: "byToId", fields: ["toId", "fromId"], queryField: "listOfficeAccessConnectionByToId")
-    @key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeAccessConnectionByFromOfficeName")
-    @key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeAccessConnectionByToOfficeName")
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeAccessConnectionByFromId")
+@key(name: "byToId", fields: ["toId", "fromId"], queryField: "listOfficeAccessConnectionByToId")
+@key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeAccessConnectionByFromOfficeName")
+@key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeAccessConnectionByToOfficeName")
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     insuranceCompanyName: String!
     insuranceCompanyCode: String!
@@ -239,18 +240,18 @@ type OfficeAccessConnection
 }
 
 type TransactionHistory
-    @model(subscriptions: null)
-    @key(
-        name: "bySenderUsername"
-        fields: ["senderUsername", "timestamp", "receiverUsername"]
-        queryField: "listTransactionHistorybySenderUsername"
-    )
-    @key(
-        name: "byReceiverUsername"
-        fields: ["receiverUsername", "timestamp", "senderUsername"]
-        queryField: "listTransactionHistorybyReceiverUsername"
-    )
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(
+    name: "bySenderUsername"
+    fields: ["senderUsername", "timestamp", "receiverUsername"]
+    queryField: "listTransactionHistorybySenderUsername"
+)
+@key(
+    name: "byReceiverUsername"
+    fields: ["receiverUsername", "timestamp", "senderUsername"]
+    queryField: "listTransactionHistorybyReceiverUsername"
+)
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     senderUserProfileId: ID!
     receiverUserProfileId: ID!
@@ -263,12 +264,12 @@ type TransactionHistory
 }
 
 type Requests
-    @model(subscriptions: null)
-    @key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
-    @key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
-    @key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
-    @key(name: "byType", fields: ["type"], queryField: "listRequestsByType")
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
+@key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
+@key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
+@key(name: "byType", fields: ["type"], queryField: "listRequestsByType")
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     senderUsername: String!
     senderEmail: String!
@@ -278,8 +279,8 @@ type Requests
 }
 
 type Events
-    @model(subscriptions: null)
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     payload: String!
 }
@@ -287,9 +288,9 @@ type Events
 
 #For calendar use
 type UserCalendarEvent
-    @model(subscriptions: null)
-    @key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
-    @auth(rules: [{ allow: private, provider: iam }]) {
+@model(subscriptions: null)
+@key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
+@auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
     username: String # Populated server-side
     payload: String

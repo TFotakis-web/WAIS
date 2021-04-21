@@ -108,6 +108,13 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								}
 								files {
 									level
 									idToken

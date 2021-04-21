@@ -30,6 +30,13 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								}
 								files {
 									level
 									idToken
@@ -93,6 +100,13 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								}
 								files {
 									level
 									idToken
@@ -166,6 +180,13 @@ module.exports = {
 								chamberRecordNumber
 								civilLiabilityExpirationDate
 								comments
+								office_logo {
+									level
+									idToken
+									filePath
+									filename
+									contentType
+								}
 								files {
 									level
 									idToken
@@ -194,7 +215,7 @@ module.exports = {
 		`
 		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
 			.then(resp => resp.data.listRequestss.items[0])
-			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err)))
+			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err.message)))
 
 		if (!requestObject) {
 			throw new Error('Request with provided ID was not found.')
@@ -243,7 +264,8 @@ module.exports = {
 					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
 					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 					createOfficeInput.verified = true
-					createOfficeInput.files = []
+					createOfficeInput.bankAccountInfo = []
+					createOfficeInput.files = callerPayload.createOfficePayload.files || []
 
 					//Delete some fields that should only be present in the request and not in the office
 					delete createOfficeInput.comments

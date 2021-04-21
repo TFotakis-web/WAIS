@@ -1,1056 +1,1056 @@
 input S3ObjectInput {
-  level: String!
-  idToken: String!
-  filePath: String!
-  filename: String!
-  contentType: String!
+    level: String!
+    idToken: String!
+    filePath: String!
+    filename: String!
+    contentType: String!
 }
 
 input InsuranceCompanyInput {
-  name: String!
-  code: String!
+    name: String!
+    code: String!
 }
 
 input InsuranceCompanyDetailsInput {
-  id: ID
-  officeName: String
-  insuranceCompanies: [InsuranceCompanyInput!]!
+    id: ID
+    officeName: String
+    insuranceCompanies: [InsuranceCompanyInput!]!
 }
 
 enum ModelSortDirection {
-  ASC
-  DESC
+    ASC
+    DESC
 }
 
 type ModelOfficeConnection @aws_iam {
-  items: [Office]
-  nextToken: String
+    items: [Office]
+    nextToken: String
 }
 
 input ModelStringInput {
-  ne: String
-  eq: String
-  le: String
-  lt: String
-  ge: String
-  gt: String
-  contains: String
-  notContains: String
-  between: [String]
-  beginsWith: String
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  size: ModelSizeInput
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+    beginsWith: String
+    attributeExists: Boolean
+    attributeType: ModelAttributeTypes
+    size: ModelSizeInput
 }
 
 input ModelIDInput {
-  ne: ID
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  contains: ID
-  notContains: ID
-  between: [ID]
-  beginsWith: ID
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  size: ModelSizeInput
+    ne: ID
+    eq: ID
+    le: ID
+    lt: ID
+    ge: ID
+    gt: ID
+    contains: ID
+    notContains: ID
+    between: [ID]
+    beginsWith: ID
+    attributeExists: Boolean
+    attributeType: ModelAttributeTypes
+    size: ModelSizeInput
 }
 
 input ModelIntInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    between: [Int]
+    attributeExists: Boolean
+    attributeType: ModelAttributeTypes
 }
 
 input ModelFloatInput {
-  ne: Float
-  eq: Float
-  le: Float
-  lt: Float
-  ge: Float
-  gt: Float
-  between: [Float]
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
+    ne: Float
+    eq: Float
+    le: Float
+    lt: Float
+    ge: Float
+    gt: Float
+    between: [Float]
+    attributeExists: Boolean
+    attributeType: ModelAttributeTypes
 }
 
 input ModelBooleanInput {
-  ne: Boolean
-  eq: Boolean
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
+    ne: Boolean
+    eq: Boolean
+    attributeExists: Boolean
+    attributeType: ModelAttributeTypes
 }
 
 input ModelSizeInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    between: [Int]
 }
 
 input ModelOfficeFilterInput {
-  id: ModelIDInput
-  officeName: ModelStringInput
-  ownerUsername: ModelStringInput
-  address: ModelStringInput
-  office_email: ModelStringInput
-  zip_code: ModelStringInput
-  mobile: ModelStringInput
-  phone: ModelStringInput
-  partnersNumberLimit: ModelIntInput
-  employeesNumberLimit: ModelIntInput
-  verified: ModelBooleanInput
-  tin: ModelStringInput
-  professionStartDate: ModelStringInput
-  chamberRecordNumber: ModelStringInput
-  insuranceLicenseExpirationDate: ModelStringInput
-  civilLiabilityExpirationDate: ModelStringInput
-  bankAccountInfo: ModelStringInput
-  and: [ModelOfficeFilterInput]
-  or: [ModelOfficeFilterInput]
-  not: ModelOfficeFilterInput
+    id: ModelIDInput
+    officeName: ModelStringInput
+    ownerUsername: ModelStringInput
+    address: ModelStringInput
+    office_email: ModelStringInput
+    zip_code: ModelStringInput
+    mobile: ModelStringInput
+    phone: ModelStringInput
+    partnersNumberLimit: ModelIntInput
+    employeesNumberLimit: ModelIntInput
+    verified: ModelBooleanInput
+    tin: ModelStringInput
+    professionStartDate: ModelStringInput
+    chamberRecordNumber: ModelStringInput
+    insuranceLicenseExpirationDate: ModelStringInput
+    civilLiabilityExpirationDate: ModelStringInput
+    bankAccountInfo: ModelStringInput
+    and: [ModelOfficeFilterInput]
+    or: [ModelOfficeFilterInput]
+    not: ModelOfficeFilterInput
 }
 
 enum ModelAttributeTypes {
-  binary
-  binarySet
-  bool
-  list
-  map
-  number
-  numberSet
-  string
-  stringSet
-  _null
+    binary
+    binarySet
+    bool
+    list
+    map
+    number
+    numberSet
+    string
+    stringSet
+    _null
 }
 
 input CreateOfficeInput {
-  id: ID
-  officeName: String!
-  ownerUsername: String!
-  address: String
-  office_email: String!
-  zip_code: String
-  mobile: String
-  phone: String!
-  partnersNumberLimit: Int
-  employeesNumberLimit: Int
-  verified: Boolean
-  tin: String!
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceCompanies: [InsuranceCompanyInput!]
-  subscriptionExpirationDate: AWSDate
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
-  files: [S3ObjectInput]
+    id: ID
+    officeName: String!
+    ownerUsername: String!
+    address: String
+    office_email: String!
+    zip_code: String
+    mobile: String
+    phone: String!
+    partnersNumberLimit: Int
+    employeesNumberLimit: Int
+    verified: Boolean
+    tin: String!
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceCompanies: [InsuranceCompanyInput!]
+    subscriptionExpirationDate: AWSDate
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
+    files: [S3ObjectInput]
 }
 
 input UpdateOfficeInput {
-  id: ID!
-  officeName: String
-  ownerUsername: String
-  address: String
-  office_email: String
-  zip_code: String
-  mobile: String
-  phone: String
-  partnersNumberLimit: Int
-  employeesNumberLimit: Int
-  verified: Boolean
-  tin: String
-  professionStartDate: AWSDate
-  chamberRecordNumber: String
-  insuranceLicenseExpirationDate: AWSDate
-  civilLiabilityExpirationDate: AWSDate
-  bankAccountInfo: AWSJSON
-  files: [S3ObjectInput]
-  insuranceCompanies: [InsuranceCompanyInput!]
+    id: ID!
+    officeName: String
+    ownerUsername: String
+    address: String
+    office_email: String
+    zip_code: String
+    mobile: String
+    phone: String
+    partnersNumberLimit: Int
+    employeesNumberLimit: Int
+    verified: Boolean
+    tin: String
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    bankAccountInfo: AWSJSON
+    files: [S3ObjectInput]
+    insuranceCompanies: [InsuranceCompanyInput!]
 }
 
 input DeleteOfficeInput {
-  id: ID
+    id: ID
 }
 
 input ModelOfficeConditionInput {
-  officeName: ModelStringInput
-  ownerUsername: ModelStringInput
-  address: ModelStringInput
-  office_email: ModelStringInput
-  zip_code: ModelStringInput
-  mobile: ModelStringInput
-  phone: ModelStringInput
-  partnersNumberLimit: ModelIntInput
-  employeesNumberLimit: ModelIntInput
-  verified: ModelBooleanInput
-  tin: ModelStringInput
-  professionStartDate: ModelStringInput
-  chamberRecordNumber: ModelStringInput
-  insuranceLicenseExpirationDate: ModelStringInput
-  civilLiabilityExpirationDate: ModelStringInput
-  bankAccountInfo: ModelStringInput
-  and: [ModelOfficeConditionInput]
-  or: [ModelOfficeConditionInput]
-  not: ModelOfficeConditionInput
+    officeName: ModelStringInput
+    ownerUsername: ModelStringInput
+    address: ModelStringInput
+    office_email: ModelStringInput
+    zip_code: ModelStringInput
+    mobile: ModelStringInput
+    phone: ModelStringInput
+    partnersNumberLimit: ModelIntInput
+    employeesNumberLimit: ModelIntInput
+    verified: ModelBooleanInput
+    tin: ModelStringInput
+    professionStartDate: ModelStringInput
+    chamberRecordNumber: ModelStringInput
+    insuranceLicenseExpirationDate: ModelStringInput
+    civilLiabilityExpirationDate: ModelStringInput
+    bankAccountInfo: ModelStringInput
+    and: [ModelOfficeConditionInput]
+    or: [ModelOfficeConditionInput]
+    not: ModelOfficeConditionInput
 }
 
 type ModelUserProfileConnection @aws_iam {
-  items: [UserProfile]
-  nextToken: String
+    items: [UserProfile]
+    nextToken: String
 }
 
 input ModelUserRoleInput {
-  eq: UserRole
-  ne: UserRole
+    eq: UserRole
+    ne: UserRole
 }
 
 input ModelUserProfileFilterInput {
-  id: ModelIDInput
-  username: ModelStringInput
-  email: ModelStringInput
-  telephone: ModelStringInput
-  role: ModelUserRoleInput
-  name: ModelStringInput
-  fathers_name: ModelStringInput
-  address: ModelStringInput
-  zip_code: ModelStringInput
-  mobile: ModelStringInput
-  tin: ModelStringInput
-  family_name: ModelStringInput
-  gender: ModelStringInput
-  birthdate: ModelStringInput
-  city: ModelStringInput
-  preferences: ModelStringInput
-  locale: ModelStringInput
-  and: [ModelUserProfileFilterInput]
-  or: [ModelUserProfileFilterInput]
-  not: ModelUserProfileFilterInput
+    id: ModelIDInput
+    username: ModelStringInput
+    email: ModelStringInput
+    telephone: ModelStringInput
+    role: ModelUserRoleInput
+    name: ModelStringInput
+    fathers_name: ModelStringInput
+    address: ModelStringInput
+    zip_code: ModelStringInput
+    mobile: ModelStringInput
+    tin: ModelStringInput
+    family_name: ModelStringInput
+    gender: ModelStringInput
+    birthdate: ModelStringInput
+    city: ModelStringInput
+    preferences: ModelStringInput
+    locale: ModelStringInput
+    and: [ModelUserProfileFilterInput]
+    or: [ModelUserProfileFilterInput]
+    not: ModelUserProfileFilterInput
 }
 
 input CreateUserProfileInput {
-  id: ID
-  username: String!
-  email: String!
-  telephone: String!
-  role: UserRole!
-  name: String
-  fathers_name: String
-  address: String
-  zip_code: String
-  mobile: String
-  tin: String
-  family_name: String
-  gender: String
-  birthdate: AWSDate
-  city: String
-  profilePicture: S3ObjectInput
-  preferences: AWSJSON
-  locale: String
-  files: [S3ObjectInput]
+    id: ID
+    username: String!
+    email: String!
+    telephone: String!
+    role: UserRole!
+    name: String
+    fathers_name: String
+    address: String
+    zip_code: String
+    mobile: String
+    tin: String
+    family_name: String
+    gender: String
+    birthdate: AWSDate
+    city: String
+    profilePicture: S3ObjectInput
+    preferences: AWSJSON
+    locale: String
+    files: [S3ObjectInput]
 }
 
 input UpdateUserProfileInput {
-  id: ID!
-  username: String
-  email: String
-  telephone: String
-  role: UserRole
-  name: String
-  fathers_name: String
-  address: String
-  zip_code: String
-  mobile: String
-  tin: String
-  family_name: String
-  gender: String
-  birthdate: AWSDate
-  city: String
-  profilePicture: S3ObjectInput
-  preferences: AWSJSON
-  locale: String
-  files: [S3ObjectInput]
+    id: ID!
+    username: String
+    email: String
+    telephone: String
+    role: UserRole
+    name: String
+    fathers_name: String
+    address: String
+    zip_code: String
+    mobile: String
+    tin: String
+    family_name: String
+    gender: String
+    birthdate: AWSDate
+    city: String
+    profilePicture: S3ObjectInput
+    preferences: AWSJSON
+    locale: String
+    files: [S3ObjectInput]
 }
 
 input DeleteUserProfileInput {
-  id: ID
+    id: ID
 }
 
 input ModelUserProfileConditionInput {
-  username: ModelStringInput
-  email: ModelStringInput
-  telephone: ModelStringInput
-  role: ModelUserRoleInput
-  name: ModelStringInput
-  fathers_name: ModelStringInput
-  address: ModelStringInput
-  zip_code: ModelStringInput
-  mobile: ModelStringInput
-  tin: ModelStringInput
-  family_name: ModelStringInput
-  gender: ModelStringInput
-  birthdate: ModelStringInput
-  city: ModelStringInput
-  preferences: ModelStringInput
-  locale: ModelStringInput
-  and: [ModelUserProfileConditionInput]
-  or: [ModelUserProfileConditionInput]
-  not: ModelUserProfileConditionInput
+    username: ModelStringInput
+    email: ModelStringInput
+    telephone: ModelStringInput
+    role: ModelUserRoleInput
+    name: ModelStringInput
+    fathers_name: ModelStringInput
+    address: ModelStringInput
+    zip_code: ModelStringInput
+    mobile: ModelStringInput
+    tin: ModelStringInput
+    family_name: ModelStringInput
+    gender: ModelStringInput
+    birthdate: ModelStringInput
+    city: ModelStringInput
+    preferences: ModelStringInput
+    locale: ModelStringInput
+    and: [ModelUserProfileConditionInput]
+    or: [ModelUserProfileConditionInput]
+    not: ModelUserProfileConditionInput
 }
 
 type ModelVehicleConnection @aws_iam {
-  items: [Vehicle]
-  nextToken: String
+    items: [Vehicle]
+    nextToken: String
 }
 
 input ModelVehicleFilterInput {
-  id: ModelIDInput
-  numberPlate: ModelStringInput
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  color: ModelStringInput
-  manufacturer: ModelStringInput
-  model: ModelStringInput
-  vehicle_owner: ModelStringInput
-  trim: ModelStringInput
-  fuelType: ModelStringInput
-  usage: ModelStringInput
-  displacement: ModelIntInput
-  eurotax: ModelIntInput
-  firstRegistrationDate: ModelStringInput
-  passengers: ModelIntInput
-  purchaseDate: ModelStringInput
-  taxableHorsepower: ModelIntInput
-  vin: ModelStringInput
-  value: ModelFloatInput
-  and: [ModelVehicleFilterInput]
-  or: [ModelVehicleFilterInput]
-  not: ModelVehicleFilterInput
+    id: ModelIDInput
+    numberPlate: ModelStringInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    color: ModelStringInput
+    manufacturer: ModelStringInput
+    model: ModelStringInput
+    vehicle_owner: ModelStringInput
+    trim: ModelStringInput
+    fuelType: ModelStringInput
+    usage: ModelStringInput
+    displacement: ModelIntInput
+    eurotax: ModelIntInput
+    firstRegistrationDate: ModelStringInput
+    passengers: ModelIntInput
+    purchaseDate: ModelStringInput
+    taxableHorsepower: ModelIntInput
+    vin: ModelStringInput
+    value: ModelFloatInput
+    and: [ModelVehicleFilterInput]
+    or: [ModelVehicleFilterInput]
+    not: ModelVehicleFilterInput
 }
 
 input CreateVehicleInput {
-  id: ID
-  numberPlate: String!
-  officeId: ID!
-  officeName: String!
-  color: String!
-  manufacturer: String!
-  model: String!
-  vehicle_owner: String!
-  trim: String!
-  fuelType: String
-  usage: String!
-  displacement: Int!
-  eurotax: Int!
-  firstRegistrationDate: String!
-  passengers: Int!
-  purchaseDate: String!
-  taxableHorsepower: Int!
-  vin: String!
-  value: Float!
-  file: [S3ObjectInput]
+    id: ID
+    numberPlate: String!
+    officeId: ID!
+    officeName: String!
+    color: String!
+    manufacturer: String!
+    model: String!
+    vehicle_owner: String!
+    trim: String!
+    fuelType: String
+    usage: String!
+    displacement: Int!
+    eurotax: Int!
+    firstRegistrationDate: String!
+    passengers: Int!
+    purchaseDate: String!
+    taxableHorsepower: Int!
+    vin: String!
+    value: Float!
+    file: [S3ObjectInput]
 }
 
 input UpdateVehicleInput {
-  id: ID!
-  numberPlate: String
-  officeId: ID
-  officeName: String
-  color: String
-  manufacturer: String
-  model: String
-  vehicle_owner: String
-  trim: String
-  fuelType: String
-  usage: String
-  displacement: Int
-  eurotax: Int
-  firstRegistrationDate: String
-  passengers: Int
-  purchaseDate: String
-  taxableHorsepower: Int
-  vin: String
-  value: Float
-  file: [S3ObjectInput]
+    id: ID!
+    numberPlate: String
+    officeId: ID
+    officeName: String
+    color: String
+    manufacturer: String
+    model: String
+    vehicle_owner: String
+    trim: String
+    fuelType: String
+    usage: String
+    displacement: Int
+    eurotax: Int
+    firstRegistrationDate: String
+    passengers: Int
+    purchaseDate: String
+    taxableHorsepower: Int
+    vin: String
+    value: Float
+    file: [S3ObjectInput]
 }
 
 input DeleteVehicleInput {
-  id: ID
+    id: ID
 }
 
 input ModelVehicleConditionInput {
-  numberPlate: ModelStringInput
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  color: ModelStringInput
-  manufacturer: ModelStringInput
-  model: ModelStringInput
-  vehicle_owner: ModelStringInput
-  trim: ModelStringInput
-  fuelType: ModelStringInput
-  usage: ModelStringInput
-  displacement: ModelIntInput
-  eurotax: ModelIntInput
-  firstRegistrationDate: ModelStringInput
-  passengers: ModelIntInput
-  purchaseDate: ModelStringInput
-  taxableHorsepower: ModelIntInput
-  vin: ModelStringInput
-  value: ModelFloatInput
-  and: [ModelVehicleConditionInput]
-  or: [ModelVehicleConditionInput]
-  not: ModelVehicleConditionInput
+    numberPlate: ModelStringInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    color: ModelStringInput
+    manufacturer: ModelStringInput
+    model: ModelStringInput
+    vehicle_owner: ModelStringInput
+    trim: ModelStringInput
+    fuelType: ModelStringInput
+    usage: ModelStringInput
+    displacement: ModelIntInput
+    eurotax: ModelIntInput
+    firstRegistrationDate: ModelStringInput
+    passengers: ModelIntInput
+    purchaseDate: ModelStringInput
+    taxableHorsepower: ModelIntInput
+    vin: ModelStringInput
+    value: ModelFloatInput
+    and: [ModelVehicleConditionInput]
+    or: [ModelVehicleConditionInput]
+    not: ModelVehicleConditionInput
 }
 
 input DriversLicenseInput {
-  LicenseID: Int
-  DriversLicenseType: String
-  Category: [DriversLicenseCategoryInput]
+    LicenseID: Int
+    DriversLicenseType: String
+    Category: [DriversLicenseCategoryInput]
 }
 
 input DriversLicenseCategoryInput {
-  category: String
-  issueDate: String
-  expiresAt: String
+    category: String
+    issueDate: String
+    expiresAt: String
 }
 
 type ModelContractConnection @aws_iam {
-  items: [Contract]
-  nextToken: String
+    items: [Contract]
+    nextToken: String
 }
 
 input ModelContractFilterInput {
-  id: ModelIDInput
-  contractId: ModelIDInput
-  version: ModelIntInput
-  vehicleNumberPlate: ModelStringInput
-  vehicleId: ModelIDInput
-  voucherId: ModelStringInput
-  customerId: ModelStringInput
-  officeName: ModelStringInput
-  second_officeId: ModelStringInput
-  contractorId: ModelStringInput
-  co_name: ModelStringInput
-  co_TRN: ModelStringInput
-  contractState: ModelStringInput
-  insuranceCompanyName: ModelStringInput
-  insuranceCompanyCode: ModelStringInput
-  insuranceClass: ModelStringInput
-  insuranceCoverage: ModelStringInput
-  insuranceUsage: ModelStringInput
-  duration: ModelStringInput
-  startDate: ModelStringInput
-  endDate: ModelStringInput
-  data: ModelStringInput
-  discount: ModelFloatInput
-  jointWorth: ModelFloatInput
-  netWorth: ModelFloatInput
-  createdAt: ModelStringInput
-  and: [ModelContractFilterInput]
-  or: [ModelContractFilterInput]
-  not: ModelContractFilterInput
+    id: ModelIDInput
+    contractId: ModelIDInput
+    version: ModelIntInput
+    vehicleNumberPlate: ModelStringInput
+    vehicleId: ModelIDInput
+    voucherId: ModelStringInput
+    customerId: ModelStringInput
+    officeName: ModelStringInput
+    second_officeId: ModelStringInput
+    contractorId: ModelStringInput
+    co_name: ModelStringInput
+    co_TRN: ModelStringInput
+    contractState: ModelStringInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
+    insuranceClass: ModelStringInput
+    insuranceCoverage: ModelStringInput
+    insuranceUsage: ModelStringInput
+    duration: ModelStringInput
+    startDate: ModelStringInput
+    endDate: ModelStringInput
+    data: ModelStringInput
+    discount: ModelFloatInput
+    jointWorth: ModelFloatInput
+    netWorth: ModelFloatInput
+    createdAt: ModelStringInput
+    and: [ModelContractFilterInput]
+    or: [ModelContractFilterInput]
+    not: ModelContractFilterInput
 }
 
 input CreateContractInput {
-  id: ID
-  contractId: ID!
-  version: Int!
-  vehicleNumberPlate: String!
-  vehicleId: ID!
-  voucherId: String!
-  customerId: String!
-  officeName: String!
-  second_officeId: String
-  contractorId: String
-  co_name: String
-  co_TRN: String
-  contractState: String!
-  insuranceCompanyName: String!
-  insuranceCompanyCode: String!
-  insuranceClass: String!
-  insuranceCoverage: [String]
-  insuranceUsage: String
-  duration: String!
-  startDate: String!
-  endDate: String!
-  data: String!
-  discount: Float!
-  jointWorth: Float!
-  netWorth: Float!
-  driversLicense: DriversLicenseInput
-  createdAt: AWSDateTime
+    id: ID
+    contractId: ID!
+    version: Int!
+    vehicleNumberPlate: String!
+    vehicleId: ID!
+    voucherId: String!
+    customerId: String!
+    officeName: String!
+    second_officeId: String
+    contractorId: String
+    co_name: String
+    co_TRN: String
+    contractState: String!
+    insuranceCompanyName: String!
+    insuranceCompanyCode: String!
+    insuranceClass: String!
+    insuranceCoverage: [String]
+    insuranceUsage: String
+    duration: String!
+    startDate: String!
+    endDate: String!
+    data: String!
+    discount: Float!
+    jointWorth: Float!
+    netWorth: Float!
+    driversLicense: DriversLicenseInput
+    createdAt: AWSDateTime
 }
 
 input UpdateContractInput {
-  id: ID!
-  contractId: ID
-  version: Int
-  vehicleNumberPlate: String
-  vehicleId: ID
-  voucherId: String
-  customerId: String
-  officeName: String
-  second_officeId: String
-  contractorId: String
-  co_name: String
-  co_TRN: String
-  contractState: String
-  insuranceCompanyName: String
-  insuranceCompanyCode: String
-  insuranceClass: String
-  insuranceCoverage: [String]
-  insuranceUsage: String
-  duration: String
-  startDate: String
-  endDate: String
-  data: String
-  discount: Float
-  jointWorth: Float
-  netWorth: Float
-  driversLicense: DriversLicenseInput
-  createdAt: AWSDateTime
+    id: ID!
+    contractId: ID
+    version: Int
+    vehicleNumberPlate: String
+    vehicleId: ID
+    voucherId: String
+    customerId: String
+    officeName: String
+    second_officeId: String
+    contractorId: String
+    co_name: String
+    co_TRN: String
+    contractState: String
+    insuranceCompanyName: String
+    insuranceCompanyCode: String
+    insuranceClass: String
+    insuranceCoverage: [String]
+    insuranceUsage: String
+    duration: String
+    startDate: String
+    endDate: String
+    data: String
+    discount: Float
+    jointWorth: Float
+    netWorth: Float
+    driversLicense: DriversLicenseInput
+    createdAt: AWSDateTime
 }
 
 input DeleteContractInput {
-  id: ID
+    id: ID
 }
 
 input ModelContractConditionInput {
-  contractId: ModelIDInput
-  version: ModelIntInput
-  vehicleNumberPlate: ModelStringInput
-  vehicleId: ModelIDInput
-  voucherId: ModelStringInput
-  customerId: ModelStringInput
-  officeName: ModelStringInput
-  second_officeId: ModelStringInput
-  contractorId: ModelStringInput
-  co_name: ModelStringInput
-  co_TRN: ModelStringInput
-  contractState: ModelStringInput
-  insuranceCompanyName: ModelStringInput
-  insuranceCompanyCode: ModelStringInput
-  insuranceClass: ModelStringInput
-  insuranceCoverage: ModelStringInput
-  insuranceUsage: ModelStringInput
-  duration: ModelStringInput
-  startDate: ModelStringInput
-  endDate: ModelStringInput
-  data: ModelStringInput
-  discount: ModelFloatInput
-  jointWorth: ModelFloatInput
-  netWorth: ModelFloatInput
-  createdAt: ModelStringInput
-  and: [ModelContractConditionInput]
-  or: [ModelContractConditionInput]
-  not: ModelContractConditionInput
+    contractId: ModelIDInput
+    version: ModelIntInput
+    vehicleNumberPlate: ModelStringInput
+    vehicleId: ModelIDInput
+    voucherId: ModelStringInput
+    customerId: ModelStringInput
+    officeName: ModelStringInput
+    second_officeId: ModelStringInput
+    contractorId: ModelStringInput
+    co_name: ModelStringInput
+    co_TRN: ModelStringInput
+    contractState: ModelStringInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
+    insuranceClass: ModelStringInput
+    insuranceCoverage: ModelStringInput
+    insuranceUsage: ModelStringInput
+    duration: ModelStringInput
+    startDate: ModelStringInput
+    endDate: ModelStringInput
+    data: ModelStringInput
+    discount: ModelFloatInput
+    jointWorth: ModelFloatInput
+    netWorth: ModelFloatInput
+    createdAt: ModelStringInput
+    and: [ModelContractConditionInput]
+    or: [ModelContractConditionInput]
+    not: ModelContractConditionInput
 }
 
 type ModelCustomerConnection @aws_iam {
-  items: [Customer]
-  nextToken: String
+    items: [Customer]
+    nextToken: String
 }
 
 input ModelCustomerFilterInput {
-  id: ModelIDInput
-  tin: ModelStringInput
-  officeName: ModelStringInput
-  firstName: ModelStringInput
-  lastName: ModelStringInput
-  fathersName: ModelStringInput
-  birthDate: ModelStringInput
-  gender: ModelStringInput
-  email: ModelStringInput
-  mobile: ModelStringInput
-  zip_code: ModelStringInput
-  doy: ModelStringInput
-  address: ModelStringInput
-  familyStatus: ModelStringInput
-  and: [ModelCustomerFilterInput]
-  or: [ModelCustomerFilterInput]
-  not: ModelCustomerFilterInput
+    id: ModelIDInput
+    tin: ModelStringInput
+    officeName: ModelStringInput
+    firstName: ModelStringInput
+    lastName: ModelStringInput
+    fathersName: ModelStringInput
+    birthDate: ModelStringInput
+    gender: ModelStringInput
+    email: ModelStringInput
+    mobile: ModelStringInput
+    zip_code: ModelStringInput
+    doy: ModelStringInput
+    address: ModelStringInput
+    familyStatus: ModelStringInput
+    and: [ModelCustomerFilterInput]
+    or: [ModelCustomerFilterInput]
+    not: ModelCustomerFilterInput
 }
 
 input CreateCustomerInput {
-  id: ID
-  tin: String!
-  officeName: String!
-  firstName: String
-  lastName: String
-  fathersName: String
-  birthDate: String
-  gender: String
-  email: String!
-  mobile: String
-  zip_code: String
-  doy: String
-  address: String
-  familyStatus: String
-  files: [S3ObjectInput]
-  driversLicense: DriversLicenseInput
+    id: ID
+    tin: String!
+    officeName: String!
+    firstName: String
+    lastName: String
+    fathersName: String
+    birthDate: String
+    gender: String
+    email: String!
+    mobile: String
+    zip_code: String
+    doy: String
+    address: String
+    familyStatus: String
+    files: [S3ObjectInput]
+    driversLicense: DriversLicenseInput
 }
 
 input UpdateCustomerInput {
-  id: ID!
-  tin: String
-  officeName: String
-  firstName: String
-  lastName: String
-  fathersName: String
-  birthDate: String
-  gender: String
-  email: String
-  mobile: String
-  zip_code: String
-  doy: String
-  address: String
-  familyStatus: String
-  files: [S3ObjectInput]
-  driversLicense: DriversLicenseInput
+    id: ID!
+    tin: String
+    officeName: String
+    firstName: String
+    lastName: String
+    fathersName: String
+    birthDate: String
+    gender: String
+    email: String
+    mobile: String
+    zip_code: String
+    doy: String
+    address: String
+    familyStatus: String
+    files: [S3ObjectInput]
+    driversLicense: DriversLicenseInput
 }
 
 input DeleteCustomerInput {
-  id: ID
+    id: ID
 }
 
 input ModelCustomerConditionInput {
-  tin: ModelStringInput
-  officeName: ModelStringInput
-  firstName: ModelStringInput
-  lastName: ModelStringInput
-  fathersName: ModelStringInput
-  birthDate: ModelStringInput
-  gender: ModelStringInput
-  email: ModelStringInput
-  mobile: ModelStringInput
-  zip_code: ModelStringInput
-  doy: ModelStringInput
-  address: ModelStringInput
-  familyStatus: ModelStringInput
-  and: [ModelCustomerConditionInput]
-  or: [ModelCustomerConditionInput]
-  not: ModelCustomerConditionInput
+    tin: ModelStringInput
+    officeName: ModelStringInput
+    firstName: ModelStringInput
+    lastName: ModelStringInput
+    fathersName: ModelStringInput
+    birthDate: ModelStringInput
+    gender: ModelStringInput
+    email: ModelStringInput
+    mobile: ModelStringInput
+    zip_code: ModelStringInput
+    doy: ModelStringInput
+    address: ModelStringInput
+    familyStatus: ModelStringInput
+    and: [ModelCustomerConditionInput]
+    or: [ModelCustomerConditionInput]
+    not: ModelCustomerConditionInput
 }
 
 type ModelOfficeUserConnectionConnection @aws_iam {
-  items: [OfficeUserConnection]
-  nextToken: String
+    items: [OfficeUserConnection]
+    nextToken: String
 }
 
 input ModelModelPermissionListInput {
-  eq: [ModelPermission]
-  ne: [ModelPermission]
-  contains: ModelPermission
-  notContains: ModelPermission
+    eq: [ModelPermission]
+    ne: [ModelPermission]
+    contains: ModelPermission
+    notContains: ModelPermission
 }
 
 input ModelEmployeeTypeInput {
-  eq: EmployeeType
-  ne: EmployeeType
+    eq: EmployeeType
+    ne: EmployeeType
 }
 
 input ModelOfficeUserConnectionFilterInput {
-  id: ModelIDInput
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  userId: ModelIDInput
-  username: ModelStringInput
-  pagePermissions: ModelStringInput
-  modelPermissions: ModelModelPermissionListInput
-  employeeType: ModelEmployeeTypeInput
-  preferences: ModelStringInput
-  and: [ModelOfficeUserConnectionFilterInput]
-  or: [ModelOfficeUserConnectionFilterInput]
-  not: ModelOfficeUserConnectionFilterInput
+    id: ModelIDInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    userId: ModelIDInput
+    username: ModelStringInput
+    pagePermissions: ModelStringInput
+    modelPermissions: ModelModelPermissionListInput
+    employeeType: ModelEmployeeTypeInput
+    preferences: ModelStringInput
+    and: [ModelOfficeUserConnectionFilterInput]
+    or: [ModelOfficeUserConnectionFilterInput]
+    not: ModelOfficeUserConnectionFilterInput
 }
 
 input CreateOfficeUserConnectionInput {
-  id: ID
-  officeId: ID!
-  officeName: String!
-  userId: ID!
-  username: String!
-  pagePermissions: AWSJSON!
-  modelPermissions: [ModelPermission!]!
-  employeeType: EmployeeType!
-  preferences: AWSJSON
+    id: ID
+    officeId: ID!
+    officeName: String!
+    userId: ID!
+    username: String!
+    pagePermissions: AWSJSON!
+    modelPermissions: [ModelPermission!]!
+    employeeType: EmployeeType!
+    preferences: AWSJSON
 }
 
 input UpdateOfficeUserConnectionInput {
-  id: ID!
-  officeId: ID
-  officeName: String
-  userId: ID
-  username: String
-  pagePermissions: AWSJSON
-  modelPermissions: [ModelPermission!]
-  employeeType: EmployeeType
-  preferences: AWSJSON
+    id: ID!
+    officeId: ID
+    officeName: String
+    userId: ID
+    username: String
+    pagePermissions: AWSJSON
+    modelPermissions: [ModelPermission!]
+    employeeType: EmployeeType
+    preferences: AWSJSON
 }
 
 input DeleteOfficeUserConnectionInput {
-  id: ID
+    id: ID
 }
 
 input ModelOfficeUserConnectionConditionInput {
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  userId: ModelIDInput
-  username: ModelStringInput
-  pagePermissions: ModelStringInput
-  modelPermissions: ModelModelPermissionListInput
-  employeeType: ModelEmployeeTypeInput
-  preferences: ModelStringInput
-  and: [ModelOfficeUserConnectionConditionInput]
-  or: [ModelOfficeUserConnectionConditionInput]
-  not: ModelOfficeUserConnectionConditionInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    userId: ModelIDInput
+    username: ModelStringInput
+    pagePermissions: ModelStringInput
+    modelPermissions: ModelModelPermissionListInput
+    employeeType: ModelEmployeeTypeInput
+    preferences: ModelStringInput
+    and: [ModelOfficeUserConnectionConditionInput]
+    or: [ModelOfficeUserConnectionConditionInput]
+    not: ModelOfficeUserConnectionConditionInput
 }
 
 type ModelOfficeContractConnectionConnection @aws_iam {
-  items: [OfficeContractConnection]
-  nextToken: String
+    items: [OfficeContractConnection]
+    nextToken: String
 }
 
 input ModelOfficeContractConnectionFilterInput {
-  id: ModelIDInput
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  contractId: ModelIDInput
-  ownsContract: ModelBooleanInput
-  and: [ModelOfficeContractConnectionFilterInput]
-  or: [ModelOfficeContractConnectionFilterInput]
-  not: ModelOfficeContractConnectionFilterInput
+    id: ModelIDInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    contractId: ModelIDInput
+    ownsContract: ModelBooleanInput
+    and: [ModelOfficeContractConnectionFilterInput]
+    or: [ModelOfficeContractConnectionFilterInput]
+    not: ModelOfficeContractConnectionFilterInput
 }
 
 input CreateOfficeContractConnectionInput {
-  id: ID
-  officeId: ID!
-  officeName: String!
-  contractId: ID!
-  ownsContract: Boolean!
+    id: ID
+    officeId: ID!
+    officeName: String!
+    contractId: ID!
+    ownsContract: Boolean!
 }
 
 input UpdateOfficeContractConnectionInput {
-  id: ID!
-  officeId: ID
-  officeName: String
-  contractId: ID
-  ownsContract: Boolean
+    id: ID!
+    officeId: ID
+    officeName: String
+    contractId: ID
+    ownsContract: Boolean
 }
 
 input DeleteOfficeContractConnectionInput {
-  id: ID
+    id: ID
 }
 
 input ModelOfficeContractConnectionConditionInput {
-  officeId: ModelIDInput
-  officeName: ModelStringInput
-  contractId: ModelIDInput
-  ownsContract: ModelBooleanInput
-  and: [ModelOfficeContractConnectionConditionInput]
-  or: [ModelOfficeContractConnectionConditionInput]
-  not: ModelOfficeContractConnectionConditionInput
+    officeId: ModelIDInput
+    officeName: ModelStringInput
+    contractId: ModelIDInput
+    ownsContract: ModelBooleanInput
+    and: [ModelOfficeContractConnectionConditionInput]
+    or: [ModelOfficeContractConnectionConditionInput]
+    not: ModelOfficeContractConnectionConditionInput
 }
 
 type ModelOfficeAccessConnectionConnection @aws_iam {
-  items: [OfficeAccessConnection]
-  nextToken: String
+    items: [OfficeAccessConnection]
+    nextToken: String
 }
 
 input ModelOfficeAccessConnectionFilterInput {
-  id: ModelIDInput
-  insuranceCompanyName: ModelStringInput
-  insuranceCompanyCode: ModelStringInput
-  fromId: ModelIDInput
-  fromOfficeName: ModelStringInput
-  toId: ModelIDInput
-  toOfficeName: ModelStringInput
-  expirationDate: ModelIntInput
-  message: ModelStringInput
-  and: [ModelOfficeAccessConnectionFilterInput]
-  or: [ModelOfficeAccessConnectionFilterInput]
-  not: ModelOfficeAccessConnectionFilterInput
+    id: ModelIDInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
+    fromId: ModelIDInput
+    fromOfficeName: ModelStringInput
+    toId: ModelIDInput
+    toOfficeName: ModelStringInput
+    expirationDate: ModelIntInput
+    message: ModelStringInput
+    and: [ModelOfficeAccessConnectionFilterInput]
+    or: [ModelOfficeAccessConnectionFilterInput]
+    not: ModelOfficeAccessConnectionFilterInput
 }
 
 input CreateOfficeAccessConnectionInput {
-  id: ID
-  insuranceCompanyName: String!
-  insuranceCompanyCode: String!
-  fromId: ID!
-  fromOfficeName: String!
-  toId: ID!
-  toOfficeName: String!
-  expirationDate: AWSTimestamp!
-  message: String
+    id: ID
+    insuranceCompanyName: String!
+    insuranceCompanyCode: String!
+    fromId: ID!
+    fromOfficeName: String!
+    toId: ID!
+    toOfficeName: String!
+    expirationDate: AWSTimestamp!
+    message: String
 }
 
 input UpdateOfficeAccessConnectionInput {
-  id: ID!
-  insuranceCompanyName: String
-  insuranceCompanyCode: String
-  fromId: ID
-  fromOfficeName: String
-  toId: ID
-  toOfficeName: String
-  expirationDate: AWSTimestamp
-  message: String
+    id: ID!
+    insuranceCompanyName: String
+    insuranceCompanyCode: String
+    fromId: ID
+    fromOfficeName: String
+    toId: ID
+    toOfficeName: String
+    expirationDate: AWSTimestamp
+    message: String
 }
 
 input DeleteOfficeAccessConnectionInput {
-  id: ID
+    id: ID
 }
 
 input ModelOfficeAccessConnectionConditionInput {
-  insuranceCompanyName: ModelStringInput
-  insuranceCompanyCode: ModelStringInput
-  fromId: ModelIDInput
-  fromOfficeName: ModelStringInput
-  toId: ModelIDInput
-  toOfficeName: ModelStringInput
-  expirationDate: ModelIntInput
-  message: ModelStringInput
-  and: [ModelOfficeAccessConnectionConditionInput]
-  or: [ModelOfficeAccessConnectionConditionInput]
-  not: ModelOfficeAccessConnectionConditionInput
+    insuranceCompanyName: ModelStringInput
+    insuranceCompanyCode: ModelStringInput
+    fromId: ModelIDInput
+    fromOfficeName: ModelStringInput
+    toId: ModelIDInput
+    toOfficeName: ModelStringInput
+    expirationDate: ModelIntInput
+    message: ModelStringInput
+    and: [ModelOfficeAccessConnectionConditionInput]
+    or: [ModelOfficeAccessConnectionConditionInput]
+    not: ModelOfficeAccessConnectionConditionInput
 }
 
 type ModelTransactionHistoryConnection @aws_iam {
-  items: [TransactionHistory]
-  nextToken: String
+    items: [TransactionHistory]
+    nextToken: String
 }
 
 input ModelTransactionHistoryFilterInput {
-  id: ModelIDInput
-  senderUserProfileId: ModelIDInput
-  receiverUserProfileId: ModelIDInput
-  timestamp: ModelIntInput
-  senderUsername: ModelStringInput
-  receiverUsername: ModelStringInput
-  transactionAmount: ModelFloatInput
-  and: [ModelTransactionHistoryFilterInput]
-  or: [ModelTransactionHistoryFilterInput]
-  not: ModelTransactionHistoryFilterInput
+    id: ModelIDInput
+    senderUserProfileId: ModelIDInput
+    receiverUserProfileId: ModelIDInput
+    timestamp: ModelIntInput
+    senderUsername: ModelStringInput
+    receiverUsername: ModelStringInput
+    transactionAmount: ModelFloatInput
+    and: [ModelTransactionHistoryFilterInput]
+    or: [ModelTransactionHistoryFilterInput]
+    not: ModelTransactionHistoryFilterInput
 }
 
 input CreateTransactionHistoryInput {
-  id: ID
-  senderUserProfileId: ID!
-  receiverUserProfileId: ID!
-  timestamp: AWSTimestamp!
-  senderUsername: String!
-  receiverUsername: String!
-  transactionAmount: Float!
+    id: ID
+    senderUserProfileId: ID!
+    receiverUserProfileId: ID!
+    timestamp: AWSTimestamp!
+    senderUsername: String!
+    receiverUsername: String!
+    transactionAmount: Float!
 }
 
 input UpdateTransactionHistoryInput {
-  id: ID!
-  senderUserProfileId: ID
-  receiverUserProfileId: ID
-  timestamp: AWSTimestamp
-  senderUsername: String
-  receiverUsername: String
-  transactionAmount: Float
+    id: ID!
+    senderUserProfileId: ID
+    receiverUserProfileId: ID
+    timestamp: AWSTimestamp
+    senderUsername: String
+    receiverUsername: String
+    transactionAmount: Float
 }
 
 input DeleteTransactionHistoryInput {
-  id: ID
+    id: ID
 }
 
 input ModelTransactionHistoryConditionInput {
-  senderUserProfileId: ModelIDInput
-  receiverUserProfileId: ModelIDInput
-  timestamp: ModelIntInput
-  senderUsername: ModelStringInput
-  receiverUsername: ModelStringInput
-  transactionAmount: ModelFloatInput
-  and: [ModelTransactionHistoryConditionInput]
-  or: [ModelTransactionHistoryConditionInput]
-  not: ModelTransactionHistoryConditionInput
+    senderUserProfileId: ModelIDInput
+    receiverUserProfileId: ModelIDInput
+    timestamp: ModelIntInput
+    senderUsername: ModelStringInput
+    receiverUsername: ModelStringInput
+    transactionAmount: ModelFloatInput
+    and: [ModelTransactionHistoryConditionInput]
+    or: [ModelTransactionHistoryConditionInput]
+    not: ModelTransactionHistoryConditionInput
 }
 
 type ModelRequestsConnection @aws_iam {
-  items: [Requests]
-  nextToken: String
+    items: [Requests]
+    nextToken: String
 }
 
 input ModelRequestTypeInput {
-  eq: RequestType
-  ne: RequestType
+    eq: RequestType
+    ne: RequestType
 }
 
 input ModelRequestsFilterInput {
-  id: ModelIDInput
-  senderUsername: ModelStringInput
-  senderEmail: ModelStringInput
-  receiverEmail: ModelStringInput
-  type: ModelRequestTypeInput
-  and: [ModelRequestsFilterInput]
-  or: [ModelRequestsFilterInput]
-  not: ModelRequestsFilterInput
+    id: ModelIDInput
+    senderUsername: ModelStringInput
+    senderEmail: ModelStringInput
+    receiverEmail: ModelStringInput
+    type: ModelRequestTypeInput
+    and: [ModelRequestsFilterInput]
+    or: [ModelRequestsFilterInput]
+    not: ModelRequestsFilterInput
 }
 
 input CreateRequestsInput {
-  id: ID
-  senderUsername: String!
-  senderEmail: String!
-  receiverEmail: String!
-  type: RequestType!
-  payload: CreateRequestPayloadInput!
+    id: ID
+    senderUsername: String!
+    senderEmail: String!
+    receiverEmail: String!
+    type: RequestType!
+    payload: CreateRequestPayloadInput!
 }
 
 input UpdateRequestsInput {
-  id: ID!
-  senderUsername: String
-  senderEmail: String
-  receiverEmail: String
-  type: RequestType
-  payload: CreateRequestPayloadInput
+    id: ID!
+    senderUsername: String
+    senderEmail: String
+    receiverEmail: String
+    type: RequestType
+    payload: CreateRequestPayloadInput
 }
 
 input DeleteRequestsInput {
-  id: ID
+    id: ID
 }
 
 input ModelRequestsConditionInput {
-  senderUsername: ModelStringInput
-  senderEmail: ModelStringInput
-  receiverEmail: ModelStringInput
-  type: ModelRequestTypeInput
-  and: [ModelRequestsConditionInput]
-  or: [ModelRequestsConditionInput]
-  not: ModelRequestsConditionInput
+    senderUsername: ModelStringInput
+    senderEmail: ModelStringInput
+    receiverEmail: ModelStringInput
+    type: ModelRequestTypeInput
+    and: [ModelRequestsConditionInput]
+    or: [ModelRequestsConditionInput]
+    not: ModelRequestsConditionInput
 }
 
 type ModelUserCalendarEventConnection @aws_iam {
-  items: [UserCalendarEvent]
-  nextToken: String
+    items: [UserCalendarEvent]
+    nextToken: String
 }
 
 input ModelUserCalendarEventFilterInput {
-  id: ModelIDInput
-  username: ModelStringInput
-  payload: ModelStringInput
-  createdAt: ModelStringInput
-  and: [ModelUserCalendarEventFilterInput]
-  or: [ModelUserCalendarEventFilterInput]
-  not: ModelUserCalendarEventFilterInput
+    id: ModelIDInput
+    username: ModelStringInput
+    payload: ModelStringInput
+    createdAt: ModelStringInput
+    and: [ModelUserCalendarEventFilterInput]
+    or: [ModelUserCalendarEventFilterInput]
+    not: ModelUserCalendarEventFilterInput
 }
 
 input CreateUserCalendarEventInput {
-  id: ID
-  username: String
-  payload: String
-  createdAt: AWSDateTime
+    id: ID
+    username: String
+    payload: String
+    createdAt: AWSDateTime
 }
 
 input UpdateUserCalendarEventInput {
-  id: ID!
-  username: String
-  payload: String
-  createdAt: AWSDateTime
+    id: ID!
+    username: String
+    payload: String
+    createdAt: AWSDateTime
 }
 
 input DeleteUserCalendarEventInput {
-  id: ID
+    id: ID
 }
 
 input ModelUserCalendarEventConditionInput {
-  username: ModelStringInput
-  payload: ModelStringInput
-  createdAt: ModelStringInput
-  and: [ModelUserCalendarEventConditionInput]
-  or: [ModelUserCalendarEventConditionInput]
-  not: ModelUserCalendarEventConditionInput
+    username: ModelStringInput
+    payload: ModelStringInput
+    createdAt: ModelStringInput
+    and: [ModelUserCalendarEventConditionInput]
+    or: [ModelUserCalendarEventConditionInput]
+    not: ModelUserCalendarEventConditionInput
 }
 
 input ModelStringKeyConditionInput {
-  eq: String
-  le: String
-  lt: String
-  ge: String
-  gt: String
-  between: [String]
-  beginsWith: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    between: [String]
+    beginsWith: String
 }
 
 input ModelCustomerByOfficeNameCompositeKeyConditionInput {
-  eq: ModelCustomerByOfficeNameCompositeKeyInput
-  le: ModelCustomerByOfficeNameCompositeKeyInput
-  lt: ModelCustomerByOfficeNameCompositeKeyInput
-  ge: ModelCustomerByOfficeNameCompositeKeyInput
-  gt: ModelCustomerByOfficeNameCompositeKeyInput
-  between: [ModelCustomerByOfficeNameCompositeKeyInput]
-  beginsWith: ModelCustomerByOfficeNameCompositeKeyInput
+    eq: ModelCustomerByOfficeNameCompositeKeyInput
+    le: ModelCustomerByOfficeNameCompositeKeyInput
+    lt: ModelCustomerByOfficeNameCompositeKeyInput
+    ge: ModelCustomerByOfficeNameCompositeKeyInput
+    gt: ModelCustomerByOfficeNameCompositeKeyInput
+    between: [ModelCustomerByOfficeNameCompositeKeyInput]
+    beginsWith: ModelCustomerByOfficeNameCompositeKeyInput
 }
 
 input ModelCustomerByOfficeNameCompositeKeyInput {
-  firstName: String
-  lastName: String
+    firstName: String
+    lastName: String
 }
 
 input ModelIDKeyConditionInput {
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  between: [ID]
-  beginsWith: ID
+    eq: ID
+    le: ID
+    lt: ID
+    ge: ID
+    gt: ID
+    between: [ID]
+    beginsWith: ID
 }
 
 input ModelOfficeUserConnectionByEmployeeTypeCompositeKeyConditionInput {
-  eq: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
-  le: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
-  lt: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
-  ge: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
-  gt: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
-  between: [ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput]
-  beginsWith: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    eq: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    le: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    lt: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    ge: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    gt: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
+    between: [ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput]
+    beginsWith: ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput
 }
 
 input ModelOfficeUserConnectionByEmployeeTypeCompositeKeyInput {
-  username: String
-  officeName: String
+    username: String
+    officeName: String
 }
 
 input ModelTransactionHistoryBySenderUsernameCompositeKeyConditionInput {
-  eq: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
-  le: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
-  lt: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
-  ge: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
-  gt: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
-  between: [ModelTransactionHistoryBySenderUsernameCompositeKeyInput]
-  beginsWith: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    eq: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    le: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    lt: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    ge: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    gt: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
+    between: [ModelTransactionHistoryBySenderUsernameCompositeKeyInput]
+    beginsWith: ModelTransactionHistoryBySenderUsernameCompositeKeyInput
 }
 
 input ModelTransactionHistoryBySenderUsernameCompositeKeyInput {
-  timestamp: AWSTimestamp
-  receiverUsername: String
+    timestamp: AWSTimestamp
+    receiverUsername: String
 }
 
 input ModelTransactionHistoryByReceiverUsernameCompositeKeyConditionInput {
-  eq: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
-  le: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
-  lt: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
-  ge: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
-  gt: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
-  between: [ModelTransactionHistoryByReceiverUsernameCompositeKeyInput]
-  beginsWith: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    eq: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    le: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    lt: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    ge: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    gt: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
+    between: [ModelTransactionHistoryByReceiverUsernameCompositeKeyInput]
+    beginsWith: ModelTransactionHistoryByReceiverUsernameCompositeKeyInput
 }
 
 input ModelTransactionHistoryByReceiverUsernameCompositeKeyInput {
-  timestamp: AWSTimestamp
-  senderUsername: String
+    timestamp: AWSTimestamp
+    senderUsername: String
 }
