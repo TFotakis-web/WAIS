@@ -242,10 +242,11 @@ type InsuranceCompanyOutput {
 }
 
 type S3ObjectOutput {
-    content: String
-    path: String
-    size: Int
-    contentType: String
+    level: String!
+    idToken: String!
+    filePath: String!
+    filename: String!
+    contentType: String!
 }
 
 type PartnerOfficeOutput{

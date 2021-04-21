@@ -195,12 +195,12 @@ module.exports = {
 		return result
 	},
 	updateUserProfileDetails: async (args) => {
-		console.log('updateOfficeDetails input: ' + JSON.stringify(args))
+		console.log('updateUserProfileDetails input: ' + JSON.stringify(args))
 		if (!args.username) {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
-		console.log('updateOfficeDetails output: ' + JSON.stringify(result))
+		console.log('updateUserProfileDetails output: ' + JSON.stringify(result))
 		return result
 	},
 	createVehicleForOffice: async (args) => {
