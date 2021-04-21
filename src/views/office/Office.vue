@@ -2,7 +2,7 @@
 	<ion-grid fixed>
 		<ion-row class="mb-5">
 			<ion-col>
-				<companyInfoCard/>
+				<office-info-card/>
 			</ion-col>
 		</ion-row>
 		<ion-row>
@@ -19,7 +19,7 @@
 	</ion-grid>
 </template>
 <script>
-	import companyInfoCard from '@/views/office/companyInfoCard';
+	import officeInfoCard from '@/views/office/officeInfoCard';
 	// import UserPermissionsTableCard from '@/views/office/userPermissionsTableCard';
 	import UserManagementTableCard from '@/views/office/userManagementTableCard';
 	import OfficeManagementTableCard from '@/views/office/officeManagementTableCard';
@@ -27,7 +27,7 @@
 	export default {
 		name: 'Office',
 		components: {
-			companyInfoCard,
+			officeInfoCard,
 			// UserPermissionsTableCard,
 			UserManagementTableCard,
 			OfficeManagementTableCard,

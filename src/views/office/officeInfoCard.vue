@@ -57,13 +57,13 @@
 								<ion-input v-model="myOffice.address" type="text" name="address" autocomplete="street-address"/>
 							</ion-item>
 						</ion-col>
-<!--						<ion-col size="12" size-md="4">-->
-<!--							<ion-item>-->
-<!--								<ion-icon slot="start" class="ion-hide-md-up"/>-->
-<!--								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>-->
-<!--								<ion-input v-model="myOffice.city" type="text" name="city" autocomplete="address-level2"/>-->
-<!--							</ion-item>-->
-<!--						</ion-col>-->
+						<!--						<ion-col size="12" size-md="4">-->
+						<!--							<ion-item>-->
+						<!--								<ion-icon slot="start" class="ion-hide-md-up"/>-->
+						<!--								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>-->
+						<!--								<ion-input v-model="myOffice.city" type="text" name="city" autocomplete="address-level2"/>-->
+						<!--							</ion-item>-->
+						<!--						</ion-col>-->
 						<ion-col size="12" size-md="4">
 							<ion-item>
 								<ion-icon slot="start" class="ion-hide-md-up"/>
@@ -94,74 +94,88 @@
 						<ion-input v-model="myOffice.office_email" type="email" name="email" autocomplete="email" required/>
 					</ion-item>
 				</ion-list>
-				<ion-list class="ion-margin-top">
+				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Office.companyAccounts') }}</h1>
+						<h2><strong>{{ $t('views.Office.companyAccounts') }}</strong></h2>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-<!--					todo: Remove redundant || [] when backend is ready -->
-					<ion-row v-for="(account, i) in (myOffice.bankAccountInfo || [])" :key="'companyAccounts' + i" class="ion-align-items-end">
+
+					<ion-item v-if="(myOffice.bankAccountInfo || []).length === 0">
+						<ion-text>{{ $t('fields.noCompanyAccounts') }}</ion-text>
+					</ion-item>
+					<!--					todo: Remove redundant || [] when backend is ready -->
+					<ion-row class="ion-no-padding ion-align-items-center" v-for="(account, i) in (myOffice.bankAccountInfo || [])" :key="'companyAccounts' + i">
 						<ion-col>
-							<ion-item>
-								<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
-								<ion-input v-model="account.name" type="text" required/>
-							</ion-item>
+							<ion-row>
+								<ion-col size="12" size-md="6">
+									<ion-item>
+										<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
+										<ion-input v-model="account.name" type="text" required/>
+									</ion-item>
+								</ion-col>
+								<ion-col size="12" size-md="6">
+									<ion-item>
+										<ion-label position="floating">{{ $t('fields.iban') }}</ion-label>
+										<ion-input v-model="account.iban" type="text" required/>
+									</ion-item>
+								</ion-col>
+							</ion-row>
 						</ion-col>
-						<ion-col>
-							<ion-item>
-								<ion-label position="floating">{{ $t('fields.iban') }}</ion-label>
-								<ion-input v-model="account.iban" type="text" required/>
-							</ion-item>
-						</ion-col>
-						<ion-col>
-							<ion-item>
-								<ion-button fill="clear" class="ion-align-self-center">
-									<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
-								</ion-button>
-							</ion-item>
+						<ion-col size="auto" class="ion-no-padding">
+							<ion-button fill="clear" size="small" color="danger">
+								<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+							</ion-button>
 						</ion-col>
 					</ion-row>
 				</ion-list>
 				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Office.companyCodes') }}</h1>
+						<h2><strong>{{ $t('views.Office.companyCodes') }}</strong></h2>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
-					<ion-row v-for="(companyCode, i) in myOffice.insuranceCompanies" :key="'companyCodes' + i" class="ion-align-items-end">
+					<ion-item v-if="myOffice.insuranceCompanies.length === 0">
+						<ion-text>{{ $t('fields.noInsuranceCompanies') }}</ion-text>
+					</ion-item>
+					<ion-row class="ion-no-padding ion-align-items-center" v-for="(companyCode, i) in myOffice.insuranceCompanies" :key="'companyCodes' + i">
 						<ion-col>
-							<ion-item>
-								<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-								<ion-select v-model="companyCode.name" required interface="popover">
-									<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-								</ion-select>
-							</ion-item>
+							<ion-row>
+								<ion-col size="12" size-md="6">
+									<ion-item>
+										<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
+										<ion-select v-model="companyCode.name" required interface="popover">
+											<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
+										</ion-select>
+									</ion-item>
+								</ion-col>
+								<ion-col size="12" size-md="6">
+									<ion-item>
+										<ion-label position="floating">{{ $t('fields.code') }}</ion-label>
+										<ion-input v-model="companyCode.code" type="text" required/>
+									</ion-item>
+								</ion-col>
+							</ion-row>
 						</ion-col>
-						<ion-col>
-							<ion-item>
-								<ion-label position="floating">{{ $t('fields.code') }}</ion-label>
-								<ion-input v-model="companyCode.code" type="text" required/>
-							</ion-item>
-						</ion-col>
-						<ion-col>
-							<ion-item>
-								<ion-button fill="clear" class="ion-align-self-center">
-									<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
-								</ion-button>
-							</ion-item>
+						<ion-col size="auto" class="ion-no-padding">
+							<ion-button fill="clear" size="small" color="danger">
+								<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
+							</ion-button>
 						</ion-col>
 					</ion-row>
 				</ion-list>
 				<ion-list>
 					<ion-list-header>
-						<h1>{{ $t('views.Office.companyFiles') }}</h1>
+						<h2><strong>{{ $t('views.Office.companyFiles') }}</strong></h2>
 						<ion-button fill="clear">
 							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
 						</ion-button>
 					</ion-list-header>
+					<ion-item v-if="myOffice.files.length === 0">
+						<ion-text>{{ $t('fields.noCompanyFiles') }}</ion-text>
+					</ion-item>
 					<ion-item v-for="(file, i) in myOffice.files" :key="'companyCodes' + i">
 						<ion-button :href="file.url" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
 						<ion-button fill="clear" size="small">
@@ -183,7 +197,7 @@
 	import { mapGetters } from 'vuex';
 
 	export default {
-		name: 'CompanyInfoCard',
+		name: 'OfficeInfoCard',
 		components: {
 			FileInput,
 			S3IonImg,
