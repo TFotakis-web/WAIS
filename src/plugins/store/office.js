@@ -312,9 +312,32 @@ export const office = {
 				return Promise.reject(error);
 			}
 		},
-		async updateOfficeDetails() {
+		async updateOfficeDetails({ getters }) {
+			const keys = [
+				'id',
+				'officeName',
+				'address',
+				'office_email',
+				'zip_code',
+				'mobile',
+				'phone',
+				'tin',
+				'professionStartDate',
+				'chamberRecordNumber',
+				'insuranceLicenseExpirationDate',
+				'civilLiabilityExpirationDate',
+				'bankAccountInfo',
+				'files',
+				'insuranceCompanies',
+			];
+
+			const payload = {};
+			for (const k of keys) {
+				payload[k] = getters.myOffice[k];
+			}
+
 			try {
-				let response = await API.graphql(graphqlOperation(updateOfficeDetails));
+				let response = await API.graphql(graphqlOperation(updateOfficeDetails, { input: payload }));
 				response = response.data.updateOfficeDetails;
 				return Promise.resolve(response);
 			} catch (error) {
