@@ -36,6 +36,7 @@ export const office = {
 		contractors: {},
 		contracts: {},
 		customers: {},
+		partnerOffices: {},
 	},
 	mutations: {
 		setOffices(state, payload) {
@@ -52,6 +53,9 @@ export const office = {
 		},
 		setCustomers(state, payload) {
 			state.customers = payload;
+		},
+		setPartnerOffices(state, payload) {
+			state.partnerOffices = payload;
 		},
 	},
 	actions: {
@@ -124,14 +128,18 @@ export const office = {
 				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
 			}
 		},
-		async getPartnerOfficeConnectionsForOfficeId() {
+		async getPartnerOfficeConnectionsForOfficeId({ commit }, officeId) {
 			try {
-				let response = await API.graphql(graphqlOperation(getPartnerOfficeConnectionsForOfficeId));
+				commit('pageStructure/increaseRouterViewPendingPromises', null, { root: true });
+				let response = await API.graphql(graphqlOperation(getPartnerOfficeConnectionsForOfficeId, { officeId }));
 				response = response.data.getPartnerOfficeConnectionsForOfficeId;
+				commit('setPartnerOffices', response);
 				return Promise.resolve(response);
 			} catch (error) {
 				console.error(error);
 				return Promise.reject(error);
+			} finally {
+				commit('pageStructure/decreaseRouterViewPendingPromises', null, { root: true });
 			}
 		},
 		async createContractForOffice() {
@@ -327,8 +335,9 @@ export const office = {
 	},
 	getters: {
 		offices: (state) => state.offices?.items || [],
+		myOffice: (state) => state.offices?.items[0]?.office || {},
 		employees: (state) => state.employees?.items || [],
 		contractors: (state) => state.contractors?.items || [],
-		myOffice: (state) => state.offices?.items[0]?.office || {},
+		partnerOffices: (state) => state.partnerOffices?.items || [],
 	},
 };

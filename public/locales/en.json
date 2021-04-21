@@ -239,7 +239,13 @@
     "expirationDate": "Exp. date",
     "managerEmail": "Manager email",
     "employees": "Employees",
-    "contractors": "Contractorss"
+    "contractors": "Contractors",
+    "noCompanyAccounts": "Νο company accounts",
+    "noInsuranceCompanies": "No insurance companies",
+    "noCompanyFiles": "No company files",
+    "noPartnerOffices": "No partner offices",
+    "noEmployees": "No employees",
+    "noContractors": "No contractors"
   },
   "actions": {
     "submit": "Submit",

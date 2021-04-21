@@ -239,7 +239,13 @@
     "expirationDate": "Ημ. λήξης",
     "managerEmail": "Email διαχειριστή",
     "employees": "Υπάλληλοι",
-    "contractors": "Συνεργάτες"
+    "contractors": "Συνεργάτες",
+    "noCompanyAccounts": "Δεν υπάρχουν εταιρικοί λογαριασμοί",
+    "noInsuranceCompanies": "Δεν υπάρχουν ασφαλιστικές εταιρίες",
+    "noCompanyFiles": "Δεν υπάρχουν εταιρικά αρχεία",
+    "noPartnerOffices": "Δεν υπάρχουν συνεργαζόμενα γραφεία",
+    "noEmployees": "Δεν υπάρχουν υπάλληλοι",
+    "noContractors": "Δεν υπάρχουν εξωτερικοί συνεργάτες"
   },
   "actions": {
     "submit": "Υποβολή",
