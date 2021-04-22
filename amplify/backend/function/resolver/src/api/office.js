@@ -91,9 +91,12 @@ module.exports = {
 				limit: limit || 100,
 				nextToken: nextToken
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			const result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
+			const result = response.data.listUserProfileByUsername?.items[0]?.officeConnections || []
 			result?.items.forEach((item) => { //Quick page permissions fix
 				item.pagePermissions = JSON.parse(item.pagePermissions)
+				if (item.office) {
+					item.office.bankAccountInfo = JSON.parse(item.office.bankAccountInfo)
+				}
 			})
 			console.log('officeAPI.getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
 			return result

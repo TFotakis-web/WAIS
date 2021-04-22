@@ -281,7 +281,6 @@ module.exports = {
 					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 					createOfficeInput.verified = true
 					createOfficeInput.bankAccountInfo = JSON.stringify([])
-					createOfficeInput.files = callerPayload.createOfficePayload.files || []
 
 					//Delete some fields that should only be present in the request and not in the office
 					delete createOfficeInput.comments
@@ -298,6 +297,7 @@ module.exports = {
 							}
 						}
 					`
+
 					let createdOfficeId = null
 					try {
 						const response = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
