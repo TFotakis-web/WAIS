@@ -1,7 +1,7 @@
 <template>
 	<ion-grid fixed>
 		<ion-list>
-			<template v-for="request in $store.getters['request/requests']" :key="request.id">
+			<template v-for="request in $store.getters['request/requestsForMe']" :key="request.id">
 				<create-office-notification v-if="request.type === 'CREATE_OFFICE'" :request="request"/>
 				<create-office-connection-notification v-if="request.type === 'CREATE_OFFICE_CONNECTION'" :request="request"/>
 				<invite-employee-to-office-notification v-if="request.type === 'INVITE_EMPLOYEE_TO_OFFICE'" :request="request"/>
