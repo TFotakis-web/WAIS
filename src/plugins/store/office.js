@@ -87,7 +87,7 @@ export const office = {
 				let response = await API.graphql(graphqlOperation(getOfficesIWorkIn));
 				response = response.data.getOfficesIWorkIn;
 				for (const office of response.items) {
-					office.bankAccountInfo = JSON.parse(office.bankAccountInfo);
+					office.office.bankAccountInfo = JSON.parse(office.office.bankAccountInfo);
 				}
 				commit('setOffices', response);
 				if (response.length) {
