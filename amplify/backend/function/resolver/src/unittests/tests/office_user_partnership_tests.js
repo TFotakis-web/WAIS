@@ -160,7 +160,7 @@ module.exports = {
         if (!acceptCreateOfficeRequestResponse) {
             throw new Error(`Failed to resolve the CreateOffice request. Response was ${JSON.stringify(acceptCreateOfficeRequestResponse)}`)
         }
-        //assert(util.isDeepStrictEqual(createOfficeRequestInput, createOfficeRequest.payload.createOfficePayload))
+        assert(util.isDeepStrictEqual(createOfficeRequestInput, createOfficeRequest.payload.createOfficePayload))
         console.log('CreateOffice request was resolved successfully.')
 
         //Clean up
