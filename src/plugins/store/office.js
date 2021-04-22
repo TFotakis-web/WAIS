@@ -86,6 +86,9 @@ export const office = {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
 				let response = await API.graphql(graphqlOperation(getOfficesIWorkIn));
 				response = response.data.getOfficesIWorkIn;
+				for (const office of response.items) {
+					office.bankAccountInfo = JSON.parse(office.bankAccountInfo);
+				}
 				commit('setOffices', response);
 				if (response.length) {
 					const selectedOfficeId = response[0].id;
@@ -335,6 +338,8 @@ export const office = {
 			for (const k of keys) {
 				payload[k] = getters.myOffice[k];
 			}
+			
+			payload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo);
 
 			try {
 				let response = await API.graphql(graphqlOperation(updateOfficeDetails, { input: payload }));
