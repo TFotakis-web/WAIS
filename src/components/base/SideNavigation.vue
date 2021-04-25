@@ -69,7 +69,8 @@
 						to: { name: 'Office' },
 						thumbnail: {},
 						defaultThumbnail: this.$store.getters['platformData/defaultOfficeLogo'],
-						h1: 'Office Name',
+						h1: this.$store.getters['office/myOffice'].officeName || this.$t('views.Office.pageTitle'),
+						// h1: 'Office Name',
 					},
 
 					{
