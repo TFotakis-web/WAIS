@@ -162,7 +162,7 @@ export const platformData = {
 	},
 	getters: {
 		// data: (state) => state.data,
-		telephoneCodeOptions: () => () => [
+		telephoneCodeOptions: () => [
 			{ text: '+1', value: '+1' },
 			{ text: '+7', value: '+7' },
 			{ text: '+20', value: '+20' },
