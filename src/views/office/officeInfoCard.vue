@@ -222,7 +222,7 @@
 				});
 			},
 			deleteCompanyAccount(i) {
-				this.myOffice.bankAccountInfo = this.myOffice.bankAccountInfo.splice(i, 1);
+				this.myOffice.bankAccountInfo.splice(i, 1);
 			},
 			addInsuranceCompanies() {
 				this.myOffice.insuranceCompanies.push({
@@ -231,7 +231,7 @@
 				});
 			},
 			deleteInsuranceCompanies(i) {
-				this.myOffice.insuranceCompanies = this.myOffice.bankAccountInfo.splice(i, 1);
+				this.myOffice.insuranceCompanies.splice(i, 1);
 			},
 		},
 		computed: {
