@@ -335,5 +335,11 @@
     "createOfficeConnection": "Σύνδεση γραφείου",
     "inviteEmployeeToOffice": "Πρόσκληση υπαλλήλου",
     "inviteContractorToOffice": "Πρόσκληση συνεργάτη"
+  },
+  "files": {
+    "professionStart": "Έναρξη επαγγέλματος",
+    "chamberCertificate": "Πιστοποιητικό επιμελητηρίου",
+    "liabilityInsurance": "Ασφαλιστήριο αστικής ευθύνης",
+    "companyArticlesOfAssociation": "Καταστατικό εταιρίας"
   }
 }

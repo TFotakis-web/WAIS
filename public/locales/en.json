@@ -335,5 +335,11 @@
     "createOfficeConnection": "Office connection",
     "inviteEmployeeToOffice": "Employee invitation",
     "inviteContractorToOffice": "Contractor invitation"
+  },
+  "files": {
+    "professionStart": "Profession start",
+    "chamberCertificate": "Chamber certificate",
+    "liabilityInsurance": "Liability insurance",
+    "companyArticlesOfAssociation": "Company articles of association"
   }
 }
