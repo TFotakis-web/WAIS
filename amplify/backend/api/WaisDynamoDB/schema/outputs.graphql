@@ -249,6 +249,13 @@ type S3ObjectOutput {
     contentType: String!
 }
 
+type S3ObjectContentsOutput{
+    content: String
+    size: Int
+    path: String
+    contentType: String
+}
+
 type PartnerOfficeOutput{
     id: ID
     officeName: String
