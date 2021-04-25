@@ -464,7 +464,7 @@ module.exports = {
 	 */
 
 	updateOfficeDetails: async (username, input, condition) => {
-		console.log('officeAPI.updateOfficeDetails input: ' + [username, input, JSON.stringify(condition)])
+		console.log('officeAPI.updateOfficeDetails input: ' + [username, JSON.stringify(input), JSON.stringify(condition)])
 		if (!username) {
 			return Promise.reject('Invalid username or unauthenticated user.')
 		}
@@ -495,18 +495,11 @@ module.exports = {
 				return obj
 			}, {})
 
-		const allowed_private = ['bankAccountInfo']
-		if ('private_data' in sanitized_input) {
-			sanitized_input.private_data = Object.keys(sanitized_input.private_data)
-				.filter((key) => allowed_private.includes(key))
-				.reduce((obj, key) => {
-					obj[key] = sanitized_input.private_data[key]
-					return obj
-				}, {})
+		if ('bankAccountInfo' in sanitized_input) {
+			sanitized_input.bankAccountInfo = JSON.stringify(sanitized_input.bankAccountInfo)
 		}
 
 		//Expand the condition to require that the caller is also the manager of that office
-		const expanded_condition = {and: [condition || {ownerUsername: {ne: ''}}, {ownerUsername: {eq: username}}]}
 		const mutation = /* GraphQL */ `
 			mutation updateOfficeDetails($input: UpdateOfficeInput!, $condition: ModelOfficeConditionInput) {
 				updateOffice(input: $input, condition: $condition) {
@@ -552,7 +545,7 @@ module.exports = {
 
 		const response = await gqlUtil.execute({
 			input: sanitized_input,
-			condition: expanded_condition
+			condition: {ownerUsername: {eq: username}}
 		}, mutation, 'updateOfficeDetails')
 		const result = response.data.updateOffice
 		console.log('officeAPI.updateOfficeDetails output: ' + JSON.stringify(result))
