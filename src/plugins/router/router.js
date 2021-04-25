@@ -46,6 +46,10 @@ function hasPermissions(route) {
 		return route.meta.isAdmin;
 	}
 
+	if (route.meta.freeAccessForManager && store.getters['auth/role'] === 'MANAGER') {
+		return true;
+	}
+
 	let flag = true;
 	const userModelPermissions = store.getters['auth/userModelPermissions'];
 	const userPagePermissions = store.getters['auth/userPagePermissions'];
@@ -69,6 +73,7 @@ function hasPermissions(route) {
 	if (route.meta.customCheck) {
 		flag &= route.meta.customCheck();
 	}
+
 	return flag;
 }
 

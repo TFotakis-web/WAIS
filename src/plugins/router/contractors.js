@@ -11,6 +11,7 @@ export default [
 				meta: {
 					requiresAuth: true,
 					requiresPagePermission: true,
+					freeAccessForManager: true,
 				},
 			},
 			{
@@ -20,6 +21,7 @@ export default [
 				meta: {
 					requiresAuth: true,
 					requiresPagePermission: true,
+					freeAccessForManager: true,
 				},
 			},
 		],
