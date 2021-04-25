@@ -566,10 +566,9 @@ export const getRequestsForMe = /* GraphQL */ `
 export const getS3Object = /* GraphQL */ `
 	query GetS3Object($obj: S3ObjectInput) {
 		getS3Object(obj: $obj) {
-			level
-			idToken
-			filePath
-			filename
+			content
+			size
+			path
 			contentType
 		}
 	}
