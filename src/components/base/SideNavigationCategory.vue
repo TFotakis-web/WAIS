@@ -1,5 +1,5 @@
 <template>
-	<ion-item v-if="routeCategory.thumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
+	<ion-item v-if="routeCategory.thumbnail || routeCategory.defaultThumbnail" :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
 		<ion-avatar slot="start">
 			<s3-ion-img :s3-object="routeCategory.thumbnail" :default-url="routeCategory.defaultThumbnail"/>
 		</ion-avatar>
