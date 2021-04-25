@@ -77,7 +77,7 @@
 			},
 			modelValue: {
 				type: [Object, Array],
-				default: function (props) {
+				default: function(props) {
 					return props.multiple ? [] : {};
 				},
 			},
@@ -117,8 +117,10 @@
 		methods: {
 			async onFilePicked(event) {
 				this.loading = true;
-				this.files = [];
-				this.downloadUrls = [];
+				if (!this.multiple) {
+					this.files = [];
+					this.downloadUrls = [];
+				}
 
 				for (const file of event.target.files) {
 					if (file.size > this.sizeLimitInBytes) {
@@ -200,7 +202,7 @@
 				}
 
 				for (const file of this.files) {
-					const response = await Storage.get(file.filePath  + '/' + file.filename, { level: file.level });
+					const response = await Storage.get(file.filePath + '/' + file.filename, { level: file.level });
 					this.downloadUrls.push(response);
 				}
 			},
