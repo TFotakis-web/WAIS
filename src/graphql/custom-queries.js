@@ -246,6 +246,13 @@ export const getMySentRequests = /* GraphQL */ `
 						tin
 						professionStartDate
 						chamberRecordNumber
+						office_logo {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
@@ -328,6 +335,13 @@ export const getOfficesIWorkIn = /* GraphQL */ `
 					tin
 					professionStartDate
 					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					bankAccountInfo
@@ -422,8 +436,17 @@ export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
 export const getPartnerSummary = /* GraphQL */ `
 	query GetPartnerSummary {
 		getPartnerSummary {
-			partners {
-				officeDetails {
+			items {
+				id
+				username
+				userId
+				pagePermissions
+				modelPermissions
+				preferences
+				officeId
+				officeName
+				employeeType
+				office {
 					id
 					officeName
 					ownerUsername
@@ -432,10 +455,14 @@ export const getPartnerSummary = /* GraphQL */ `
 					zip_code
 					mobile
 					phone
-					partnersNumberLimit
-					employeesNumberLimit
-					verified
 					tin
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					professionStartDate
 					chamberRecordNumber
 					insuranceLicenseExpirationDate
@@ -452,78 +479,22 @@ export const getPartnerSummary = /* GraphQL */ `
 						name
 						code
 					}
-					createdAt
-					updatedAt
-				}
-				employees {
-					id
-					username
-					email
-					role
-					telephone
-					name
-					fathers_name
-					address
-					zip_code
-					mobile
-					tin
-					family_name
-					gender
-					birthdate
-					city
-					profilePicture {
-						level
-						idToken
-						filePath
-						filename
-						contentType
+					workforce {
+						items {
+							id
+							officeId
+							officeName
+							userId
+							username
+							pagePermissions
+							modelPermissions
+							employeeType
+							preferences
+							createdAt
+							updatedAt
+						}
+						nextToken
 					}
-					preferences
-					locale
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					createdAt
-					updatedAt
-				}
-				contractors {
-					id
-					username
-					email
-					role
-					telephone
-					name
-					fathers_name
-					address
-					zip_code
-					mobile
-					tin
-					family_name
-					gender
-					birthdate
-					city
-					profilePicture {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					preferences
-					locale
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					createdAt
-					updatedAt
 				}
 			}
 		}
@@ -553,6 +524,13 @@ export const getRequestsForMe = /* GraphQL */ `
 						tin
 						professionStartDate
 						chamberRecordNumber
+						office_logo {
+							level
+							idToken
+							filePath
+							filename
+							contentType
+						}
 						insuranceLicenseExpirationDate
 						civilLiabilityExpirationDate
 						comments
@@ -588,9 +566,10 @@ export const getRequestsForMe = /* GraphQL */ `
 export const getS3Object = /* GraphQL */ `
 	query GetS3Object($obj: S3ObjectInput) {
 		getS3Object(obj: $obj) {
-			content
-			path
-			size
+			level
+			idToken
+			filePath
+			filename
 			contentType
 		}
 	}

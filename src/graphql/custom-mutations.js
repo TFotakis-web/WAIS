@@ -118,6 +118,13 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
 					tin
 					professionStartDate
 					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
@@ -169,6 +176,13 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 					tin
 					professionStartDate
 					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
@@ -260,6 +274,13 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
 					tin
 					professionStartDate
 					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
@@ -309,6 +330,13 @@ export const createOfficeRequest = /* GraphQL */ `
 					tin
 					professionStartDate
 					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
 					insuranceLicenseExpirationDate
 					civilLiabilityExpirationDate
 					comments
@@ -816,6 +844,13 @@ export const updateOfficeDetails = /* GraphQL */ `
 			tin
 			professionStartDate
 			chamberRecordNumber
+			office_logo {
+				level
+				idToken
+				filePath
+				filename
+				contentType
+			}
 			insuranceLicenseExpirationDate
 			civilLiabilityExpirationDate
 			bankAccountInfo

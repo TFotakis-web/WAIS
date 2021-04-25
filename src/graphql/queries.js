@@ -572,9 +572,10 @@ export const getPartnerSummary = /* GraphQL */ `
           phone
           tin
           office_logo {
-            content
-            path
-            size
+            level
+            idToken
+            filePath
+            filename
             contentType
           }
           professionStartDate
@@ -583,9 +584,10 @@ export const getPartnerSummary = /* GraphQL */ `
           civilLiabilityExpirationDate
           bankAccountInfo
           files {
-            content
-            path
-            size
+            level
+            idToken
+            filePath
+            filename
             contentType
           }
           insuranceCompanies {
@@ -616,9 +618,10 @@ export const getPartnerSummary = /* GraphQL */ `
 export const getS3Object = /* GraphQL */ `
   query GetS3Object($obj: S3ObjectInput) {
     getS3Object(obj: $obj) {
-      content
-      path
-      size
+      level
+      idToken
+      filePath
+      filename
       contentType
     }
   }
