@@ -80,14 +80,8 @@
 									<ion-label position="floating">{{ $t('fields.civilLiabilityExpirationDate') }}</ion-label>
 									<ion-datetime v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="civilLiabilityExpirationDate"/>
 								</ion-item>
-								<ion-item>
-									<file-input color="primary" text="File type 1" rename-to="File type 1" file-path="createOfficeRequest" v-model="fileType1" :sizeLimitInMBs="10" size="small"/>
-								</ion-item>
-								<ion-item>
-									<file-input color="primary" text="File type 2" rename-to="File type 2" file-path="createOfficeRequest" v-model="fileType2" :sizeLimitInMBs="10" size="small"/>
-								</ion-item>
-								<ion-item>
-									<file-input color="primary" text="File type 3" rename-to="File type 3" file-path="createOfficeRequest" v-model="fileType3" :sizeLimitInMBs="10" size="small"/>
+								<ion-item v-for="file in specificFiles" :key="file.filename">
+									<file-input color="primary" :text="file.text()" :rename-to="file.filename" :file-path="file.filepath" v-model="file.data" :sizeLimitInMBs="10" size="small"/>
 								</ion-item>
 								<ion-item>
 									<file-input color="primary" text="Other files" file-path="createOfficeRequest" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
@@ -150,9 +144,32 @@
 				error: {
 					message: '',
 				},
-				fileType1: {},
-				fileType2: {},
-				fileType3: {},
+				specificFiles: [
+					{
+						filename: 'profession_start',
+						filepath: 'createOfficeRequest',
+						text: () => this.$t('files.professionStart'),
+						data: {},
+					},
+					{
+						filename: 'chamber_certificate',
+						filepath: 'createOfficeRequest',
+						text: () => this.$t('files.chamberCertificate'),
+						data: {},
+					},
+					{
+						filename: 'liability_insurance',
+						filepath: 'createOfficeRequest',
+						text: () => this.$t('files.liabilityInsurance'),
+						data: {},
+					},
+					{
+						filename: 'company_articles_of_association',
+						filepath: 'createOfficeRequest',
+						text: () => this.$t('files.companyArticlesOfAssociation'),
+						data: {},
+					},
+				],
 				otherFiles: [],
 				condition: false,
 			};
@@ -167,15 +184,17 @@
 				const payload = this.request.payload.createOfficePayload;
 				Object.assign(this.CreateOfficeRequestPayloadInput, payload);
 
-				this.fileType1 = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match('File type 1')) || {};
-				this.fileType2 = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match('File type 2')) || {};
-				this.fileType3 = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match('File type 3')) || {};
+				for (const file of this.specificFiles) {
+					file.data = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match(file.filename)) || {}
+				}
 
 				this.otherFiles = this.CreateOfficeRequestPayloadInput.files.filter((el) => {
 					let flag = false;
-					flag |= Boolean(el.filename.match('File type 1'));
-					flag |= Boolean(el.filename.match('File type 2'));
-					flag |= Boolean(el.filename.match('File type 3'));
+
+					for (const file of this.specificFiles) {
+						flag |= Boolean(el.filename.match(file.filename));
+					}
+
 					return !flag;
 				});
 				this.condition = true;
@@ -188,9 +207,13 @@
 				this.loading = true;
 
 				let files = [];
-				if (Object.keys(this.fileType1).length) files.push(this.fileType1);
-				if (Object.keys(this.fileType2).length) files.push(this.fileType2);
-				if (Object.keys(this.fileType3).length) files.push(this.fileType3);
+
+				for (const file of this.specificFiles) {
+					if (Object.keys(file).length) {
+						files.push(file.data);
+					}
+				}
+
 				if (this.otherFiles.length) {
 					files = files.concat(this.otherFiles);
 				}
