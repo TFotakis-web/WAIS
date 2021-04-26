@@ -307,104 +307,6 @@ export const getMyUserCalendarEvents = /* GraphQL */ `
 		}
 	}
 `;
-export const getOfficesIWorkIn = /* GraphQL */ `
-	query GetOfficesIWorkIn(
-		$filter: ModelOfficeFilterInput
-		$limit: Int
-		$nextToken: String
-	) {
-		getOfficesIWorkIn(filter: $filter, limit: $limit, nextToken: $nextToken) {
-			items {
-				id
-				officeId
-				officeName
-				userId
-				username
-				office {
-					id
-					officeName
-					ownerUsername
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					partnersNumberLimit
-					employeesNumberLimit
-					verified
-					tin
-					professionStartDate
-					chamberRecordNumber
-					office_logo {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					insuranceCompanies {
-						name
-						code
-					}
-					createdAt
-					updatedAt
-				}
-				user {
-					id
-					username
-					email
-					role
-					telephone
-					name
-					fathers_name
-					address
-					zip_code
-					mobile
-					tin
-					family_name
-					gender
-					birthdate
-					city
-					profilePicture {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					preferences
-					locale
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					createdAt
-					updatedAt
-				}
-				pagePermissions
-				modelPermissions
-				employeeType
-				preferences
-				createdAt
-				updatedAt
-			}
-			nextToken
-		}
-	}
-`;
 export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
 	query GetPartnerOfficeConnectionsForOfficeId(
 		$officeId: ID!
@@ -430,73 +332,6 @@ export const getPartnerOfficeConnectionsForOfficeId = /* GraphQL */ `
 				updatedAt
 			}
 			nextToken
-		}
-	}
-`;
-export const getPartnerSummary = /* GraphQL */ `
-	query GetPartnerSummary {
-		getPartnerSummary {
-			items {
-				id
-				username
-				userId
-				pagePermissions
-				modelPermissions
-				preferences
-				officeId
-				officeName
-				employeeType
-				office {
-					id
-					officeName
-					ownerUsername
-					address
-					office_email
-					zip_code
-					mobile
-					phone
-					tin
-					office_logo {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					professionStartDate
-					chamberRecordNumber
-					insuranceLicenseExpirationDate
-					civilLiabilityExpirationDate
-					bankAccountInfo
-					files {
-						level
-						idToken
-						filePath
-						filename
-						contentType
-					}
-					insuranceCompanies {
-						name
-						code
-					}
-					workforce {
-						items {
-							id
-							officeId
-							officeName
-							userId
-							username
-							pagePermissions
-							modelPermissions
-							employeeType
-							preferences
-							createdAt
-							updatedAt
-						}
-						nextToken
-					}
-				}
-			}
 		}
 	}
 `;
@@ -625,6 +460,108 @@ export const getUserProfileByUsername = /* GraphQL */ `
 export const getUserRole = /* GraphQL */ `
 	query GetUserRole {
 		getUserRole
+	}
+`;
+export const getWorkEnvironment = /* GraphQL */ `
+	query GetWorkEnvironment(
+		$partnerFilter: ModelOfficeFilterInput
+		$limit: Int
+		$nextToken: String
+	) {
+		getWorkEnvironment(
+			partnerFilter: $partnerFilter
+			limit: $limit
+			nextToken: $nextToken
+		) {
+			items {
+				id
+				officeId
+				officeName
+				userId
+				username
+				office {
+					id
+					officeName
+					ownerUsername
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					partnersNumberLimit
+					employeesNumberLimit
+					verified
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					bankAccountInfo
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceCompanies {
+						name
+						code
+					}
+					createdAt
+					updatedAt
+				}
+				user {
+					id
+					username
+					email
+					role
+					telephone
+					name
+					fathers_name
+					address
+					zip_code
+					mobile
+					tin
+					family_name
+					gender
+					birthdate
+					city
+					profilePicture {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					preferences
+					locale
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					createdAt
+					updatedAt
+				}
+				pagePermissions
+				modelPermissions
+				employeeType
+				preferences
+				createdAt
+				updatedAt
+			}
+			nextToken
+		}
 	}
 `;
 export const me = /* GraphQL */ `
