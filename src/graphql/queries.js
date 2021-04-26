@@ -45,13 +45,17 @@ export const echo = /* GraphQL */ `
     echo(msg: $msg)
   }
 `;
-export const getOfficesIWorkIn = /* GraphQL */ `
-  query GetOfficesIWorkIn(
-    $filter: ModelOfficeFilterInput
+export const getWorkEnvironment = /* GraphQL */ `
+  query GetWorkEnvironment(
+    $partnerFilter: ModelOfficeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    getOfficesIWorkIn(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    getWorkEnvironment(
+      partnerFilter: $partnerFilter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         officeId
@@ -544,73 +548,6 @@ export const getAvailableInsuranceCompanies = /* GraphQL */ `
       insuranceCompanies {
         name
         code
-      }
-    }
-  }
-`;
-export const getPartnerSummary = /* GraphQL */ `
-  query GetPartnerSummary {
-    getPartnerSummary {
-      items {
-        id
-        username
-        userId
-        pagePermissions
-        modelPermissions
-        preferences
-        officeId
-        officeName
-        employeeType
-        office {
-          id
-          officeName
-          ownerUsername
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          tin
-          office_logo {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          professionStartDate
-          chamberRecordNumber
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          bankAccountInfo
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          insuranceCompanies {
-            name
-            code
-          }
-          workforce {
-            items {
-              id
-              officeId
-              officeName
-              userId
-              username
-              pagePermissions
-              modelPermissions
-              employeeType
-              preferences
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-        }
       }
     }
   }
