@@ -24,17 +24,17 @@ type UserProfileOutput {
 
 type OfficeOutput {
     id: ID
-    officeName: String!
-    ownerUsername: String!
+    officeName: String
+    ownerUsername: String
     address: String
-    office_email: String!
+    office_email: String
     zip_code: String
     mobile: String
     phone: String!
     partnersNumberLimit: Int
     employeesNumberLimit: Int
     verified: Boolean
-    tin: String!
+    tin: String
     professionStartDate: AWSDate
     chamberRecordNumber: String
     office_logo: S3Object
@@ -42,9 +42,9 @@ type OfficeOutput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3Object]
-    insuranceCompanies: [InsuranceCompany!]
-    createdAt: AWSDateTime!
-    updatedAt: AWSDateTime!
+    insuranceCompanies: [InsuranceCompany]
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
 }
 #
 type VehicleOutput {
@@ -124,18 +124,18 @@ type CustomerOutput {
 
 type OfficeUserConnectionOutput {
     id: ID
-    officeId: ID!
-    officeName: String!
-    userId: ID!
-    username: String!
+    officeId: ID
+    officeName: String
+    userId: ID
+    username: String
     office: OfficeOutput
     user: UserProfileOutput
-    pagePermissions: AWSJSON!
-    modelPermissions: [ModelPermission!]!
-    employeeType: EmployeeType!
+    pagePermissions: AWSJSON
+    modelPermissions: [ModelPermission]
+    employeeType: EmployeeType
     preferences: AWSJSON
-    createdAt: AWSDateTime!
-    updatedAt: AWSDateTime!
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
 }
 
 type OfficeContractConnectionOutput {

@@ -19,13 +19,13 @@ module.exports = {
 		console.log('getUserProfileByUsername output: ' + JSON.stringify(result))
 		return result
 	},
-	getOfficesOfUser: async (args) => {
-		console.log('getOfficeDetailsAndPermissionsByUsername input: ' + JSON.stringify(args))
+	getWorkEnvironment: async (args) => {
+		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid caller username or unauthenticated user.')
 		}
-		const result = await officeAPI.getOfficeDetailsAndPermissionsByUsername(args.username, args.filter, args.limit, args.nextToken)
-		console.log('getOfficeDetailsAndPermissionsByUsername output: ' + JSON.stringify(result))
+		const result = await officeAPI.getWorkEnvironment(args.username)
+		console.log('getPartnerSummary output: ' + JSON.stringify(result))
 		return result
 	},
 	getCalendarEventsOfUser: async (args) => {
@@ -281,7 +281,7 @@ module.exports = {
 			throw new Error('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
-		console.log('createOfficeRequest output: ' + JSON.stringify(result))
+		console.log('createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
 	createInviteContractorToOfficeRequest: async (args) => {
@@ -575,15 +575,6 @@ module.exports = {
 		}
 		const result = await adminAPI.getUserProfileByUsername(args.username)
 		console.log('getUserProfileByUsername preview output: ' + JSON.stringify(result))
-		return result
-	},
-	getPartnerSummary: async (args) => {
-		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
-		if (!args.username) {
-			return Promise.reject('Invalid caller username or unauthenticated user.')
-		}
-		const result = await officeAPI.getPartnerSummary(args.username)
-		console.log('getPartnerSummary output: ' + JSON.stringify(result))
 		return result
 	},
 	test: async (args) => {

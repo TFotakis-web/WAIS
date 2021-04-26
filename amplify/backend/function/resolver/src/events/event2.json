@@ -1,6 +1,6 @@
 {
   "typeName": "Query",
-  "fieldName": "getOfficesIWorkIn",
+  "fieldName": "getWorkEnvironment",
   "arguments": {
     "filter": null,
     "limit": null,

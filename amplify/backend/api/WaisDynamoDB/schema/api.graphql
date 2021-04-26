@@ -4,7 +4,8 @@ type Query {
 
     echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
-    getOfficesIWorkIn(filter: ModelOfficeFilterInput, limit: Int, nextToken: String): ModelOfficeUserConnectionOutput
+    # Will fetch the Office the caller is part of along with its partners.
+    getWorkEnvironment(partnerFilter: ModelOfficeFilterInput, limit: Int, nextToken: String): ModelOfficeUserConnectionOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
@@ -58,8 +59,6 @@ type Query {
     getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     getAvailableInsuranceCompanies: InsuranceCompanyDetailsOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
-    getPartnerSummary: PartnerSummaryOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     ### ADMIN API ###
     getS3Object(obj: S3ObjectInput): S3ObjectContentsOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
