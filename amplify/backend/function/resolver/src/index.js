@@ -31,12 +31,12 @@ const resolvers = {
 		me: async (event) => {
 			return await api.user({username: event.identity.claims['cognito:username']})
 		},
-		getOfficesIWorkIn: async (event) => {
-			return await api.getOfficesOfUser({
+		getWorkEnvironment: async (event) => {
+			return await api.getWorkEnvironment({
 				username: event.identity.claims['cognito:username'],
 				filter: event.arguments.filter,
 				limit: event.arguments.limit,
-				nextToken: event.arguments.nextToken,
+				nextToken: event.arguments.nextToken
 			})
 		},
 		getMyUserCalendarEvents: async (event) => {
@@ -121,11 +121,6 @@ const resolvers = {
 				caller_username: event.identity.claims['cognito:username'],
 				username: event.arguments.username,
 				groups: event.identity.groups
-			})
-		},
-		getPartnerSummary: async (event) => {
-			return await api.getPartnerSummary({
-				username: event.identity.claims['cognito:username']
 			})
 		}
 	},

@@ -655,8 +655,8 @@ module.exports = {
 		console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
 		return result
 	},
-	getPartnerSummary: async (username) => {
-		console.log('getPartnerSummary input: ' + [username])
+	getWorkEnvironment: async (username, filter, limit, nextToken) => {
+		console.log('getWorkEnvironment input: ' + JSON.stringify([username, filter, limit, nextToken]))
 		if (!username) {
 			return Promise.reject('Invalid username or unauthenticated user.')
 		}
@@ -736,9 +736,9 @@ module.exports = {
 		try {
 			const response = await gqlUtil.execute({
 				username: username,
-				filter: {id: {ne: ''}},
-				limit: 100,
-				nextToken: null
+				filter: filter || {id: {ne: ''}},
+				limit: limit || 100,
+				nextToken: nextToken || null
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			let result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
 			result?.items.forEach((officeCon) => { //Quick page permissions fix
@@ -760,10 +760,10 @@ module.exports = {
 					}
 				})
 			})
-			console.log('officeAPI.getPartnerSummary output: ' + JSON.stringify(result))
+			console.log('officeAPI.getWorkEnvironment output: ' + JSON.stringify(result))
 			return result
 		} catch (err) {
-			console.error(`officeAPI.getPartnerSummary unhandled error: ${err}`)
+			console.error(`officeAPI.getWorkEnvironment unhandled error: ${err}`)
 			return Promise.reject(`Unable to retrieve partner summary for user ${username}.`)
 		}
 	}
