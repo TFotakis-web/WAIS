@@ -68,17 +68,17 @@
 								<ion-item>
 									<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 									<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-									<ion-datetime v-model="CreateOfficeRequestPayloadInput.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.professionStartDate" :disable-future="true" name="professionStartDate" :return-date="true"/>
 								</ion-item>
 								<ion-item>
 									<ion-icon slot="start"/>
 									<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-									<ion-datetime v-model="CreateOfficeRequestPayloadInput.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.insuranceLicenseExpirationDate" :disable-past="true" name="insuranceLicenseExpirationDate" :return-date="true"/>
 								</ion-item>
 								<ion-item>
 									<ion-icon slot="start"/>
 									<ion-label position="floating">{{ $t('fields.civilLiabilityExpirationDate') }}</ion-label>
-									<ion-datetime v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="civilLiabilityExpirationDate"/>
+									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" :disable-past="true" name="civilLiabilityExpirationDate" :return-date="true"/>
 								</ion-item>
 								<ion-item v-for="file in specificFiles" :key="file.filename">
 									<file-input color="primary" :text="file.text()" :rename-to="file.filename" :file-path="file.filepath" v-model="file.data" :sizeLimitInMBs="10" size="small"/>
@@ -114,10 +114,12 @@
 	import { mapActions } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import fileInput from '@/components/structure/fileInput/fileInput';
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 	export default {
 		name: 'officeCreationForm',
 		components: {
+			IonDatetimeCustom,
 			loadingBtn,
 			fileInput,
 		},
@@ -185,7 +187,7 @@
 				Object.assign(this.CreateOfficeRequestPayloadInput, payload);
 
 				for (const file of this.specificFiles) {
-					file.data = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match(file.filename)) || {}
+					file.data = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match(file.filename)) || {};
 				}
 
 				this.otherFiles = this.CreateOfficeRequestPayloadInput.files.filter((el) => {
