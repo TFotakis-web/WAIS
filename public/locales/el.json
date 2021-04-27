@@ -158,7 +158,8 @@
       "iAgreeToTheTermsAndConditions": "Συμφωνώ με τους όρους και τις προϋποθέσεις."
     },
     "notifications": {
-      "pageTitle": "Ειδοποιήσεις"
+      "pageTitle": "Ειδοποιήσεις",
+      "noNewNotifications": "Δεν υπάρχουν ειδοποιήσεις"
     }
   },
   "fields": {
