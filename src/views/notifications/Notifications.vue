@@ -1,6 +1,9 @@
 <template>
 	<ion-grid fixed>
 		<ion-list>
+			<ion-item v-if="$store.getters['request/requestsForMe'].length === 0">
+				<ion-text>{{ $t('views.notifications.noNewNotifications' )}}</ion-text>
+			</ion-item>
 			<template v-for="request in $store.getters['request/requestsForMe']" :key="request.id">
 				<create-office-notification v-if="request.type === 'CREATE_OFFICE'" :request="request"/>
 				<create-office-connection-notification v-if="request.type === 'CREATE_OFFICE_CONNECTION'" :request="request"/>
