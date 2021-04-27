@@ -158,7 +158,8 @@
       "iAgreeToTheTermsAndConditions": "I agree to the terms and conditions."
     },
     "notifications": {
-      "pageTitle": "Notifications"
+      "pageTitle": "Notifications",
+      "noNewNotifications": "No new notifications"
     }
   },
   "fields": {
