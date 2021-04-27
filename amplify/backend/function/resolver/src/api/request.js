@@ -446,10 +446,100 @@ module.exports = {
 			case 'INVITE_CONTRACTOR_TO_OFFICE': {
 				//Create an unverified office
 				if (decision === 'ACCEPT') {
-					//let newContractorResult = await ddbAPI.addContractorToOffice('office', receiverUsername, 'empEmail', uuid)
+					//Required
+					if (!callerPayload) {
+						throw new Error("No 'payload' field provided.")
+					}
+
+
+					//Create the new Office if its the first time
+					//Check if there is already an Office with this name
+					let createdOfficeId = null
+					let officeName = null
+
+					if (receiverUserProfile.role === 'UNKNOWN') {
+						const createOfficeInput = requestObject.payload.inviteContractorToOfficePayload
+						if (!createOfficeInput) {
+							throw new Error('Request has invalid payload.')
+						}
+
+						//Add extra fields to the Office
+						createOfficeInput.ownerUsername = receiverUserProfile.username
+						createOfficeInput.partnersNumberLimit = 0
+						createOfficeInput.employeesNumberLimit = 0
+						createOfficeInput.insuranceCompanies = callerPayload.inviteContractorToOfficePayload.insuranceCompanies || []
+						createOfficeInput.subscriptionExpirationDate = callerPayload.inviteContractorToOfficePayload.subscriptionExpirationDate
+						createOfficeInput.verified = false
+						createOfficeInput.bankAccountInfo = JSON.stringify([])
+
+						//Delete some fields that should only be present in the request and not in the office
+						delete createOfficeInput.comments
+
+						//Empty and Null checks
+						if (!createOfficeInput.office_email) {
+							throw new Error('Office e-mail can not be empty.')
+						}
+
+						const mutation1 = /* GraphQL */ `
+						mutation createOffice($input: CreateOfficeInput!) {
+								createOffice(input: $input) {
+									id
+								}
+							}
+						`
+						officeName = createdOfficeId.officeName
+
+						try {
+							const response = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+							createdOfficeId = response.data.createOffice.id
+							if (!createdOfficeId) {
+								return Promise.reject('Failed to create new office: ' + response.errors.message)
+							}
+						} catch (err) {
+							console.error('Failed to create new office: ' + JSON.stringify(err))
+							return Promise.reject('Failed to create new office: ' + JSON.stringify(err))
+						}
+					} else {
+						officeQueries.getOfficeDetailsAndPermissionsByUsername(callerUsername)
+							.then(office => {
+								officeName = office.officeName
+								createdOfficeId = office.id
+							})
+					}
+
+					//Create a connection between the new Office and the manager.
+					const createTUCInput = {
+						officeId: createdOfficeId,
+						officeName: officeName,
+						userId: senderUserProfile.id,
+						username: senderUserProfile.username,
+						pagePermissions: JSON.stringify(callerPayload.inviteContractorToOfficePayload.managerPagePermissions),
+						modelPermissions: callerPayload.inviteContractorToOfficePayload.managerModelPermissions,
+						employeeType: 'MANAGER',
+					}
+
+					const mutation2 = /* GraphQL */ `
+						mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
+							createOfficeUserConnection(input: $input) {
+								id
+							}
+						}
+					`
+
+					try {
+						const createOUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+						const createOUCResult = createOUCResponse.data.createOfficeUserConnection
+						if (!createOUCResult) {
+							return Promise.reject('Failed to create new Office-User connection: ' + createOUCResponse.errors.message)
+						}
+						console.log(`Created OUC: ${JSON.stringify(createOUCResult)}`)
+					} catch (err) {
+						console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err))
+						return Promise.reject('Failed to create new Office-User connection: ' + JSON.stringify(err))
+					}
 
 					//Update role in the UserProfile
-					const mutation = /* GraphQL */ `
+					const updateProfileMutation = /* GraphQL */ `
 						mutation updateUserProfileDetails($input: UpdateUserProfileInput!) {
 							updateUserProfile(input: $input) {
 								id
@@ -460,11 +550,12 @@ module.exports = {
 						id: senderUserProfile.id,
 						role: 'CONTRACTOR',
 					}
-					const response = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
-					const resultUP = response.data.updateUserProfile.id
+					const updateUPResponse = await gqlUtil.execute({input: upInput}, updateProfileMutation, 'updateUserProfileDetails')
+					const resultUP = updateUPResponse.data.updateUserProfile.id
 					if (!resultUP) {
 						throw new Error('Failed to update Contractor`s UserProfile role.')
 					}
+
 				} else {
 					console.log(`Request with ID ${id} was rejected.`)
 				}

@@ -178,5 +178,22 @@ input ResolveInviteEmployeePayload {
     body: String #Ignored
 }
 input ResolveInviteContractorPayload {
-    body: String #Ignored
+    officeName: String
+    address: String
+    office_email: String
+    zip_code: String
+    mobile: String
+    phone: String!
+    tin: String!
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    office_logo: S3ObjectInput
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    comments: String
+    files: [S3ObjectInput]
+    managerModelPermissions: [ModelPermission!]!
+    managerPagePermissions: AWSJSON!
+    subscriptionExpirationDate: AWSDate!
+    insuranceCompanies: [InsuranceCompanyInput!]
 }
