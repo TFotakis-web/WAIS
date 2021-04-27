@@ -40,7 +40,7 @@
 				<ion-item>
 					<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 					<ion-label position="floating">{{ $t('fields.subscriptionExpirationDate') }}</ion-label>
-					<ion-datetime v-model="form.subscriptionExpirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="subscriptionExpirationDate" required/>
+					<ion-datetime-custom v-model="form.subscriptionExpirationDate" :disable-past="true" name="subscriptionExpirationDate" :required="true" :return-date="true"/>
 				</ion-item>
 				<ion-item>
 					<ion-icon :icon="$ionicons.peopleOutline" slot="start" class="ion-align-self-center"/>
@@ -80,10 +80,12 @@
 	import { API, graphqlOperation } from 'aws-amplify';
 	import { getS3Object } from '@/graphql/custom-queries';
 	import loadingBtn from '@/components/structure/loadingBtn';
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 	export default {
 		name: 'NotificationDetails',
 		components: {
+			IonDatetimeCustom,
 			loadingBtn,
 		},
 		data() {
