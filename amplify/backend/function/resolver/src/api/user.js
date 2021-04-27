@@ -57,7 +57,7 @@ module.exports = {
 			console.log('userAPI.getUserProfileByUsername output: ' + JSON.stringify(userProfile))
 			return userProfile
 		} else {
-			throw new Error(`UserProfile not found for user ${username}.`)
+			return Promise.reject(`UserProfile not found for user ${username}.`)
 		}
 	},
 
@@ -109,7 +109,7 @@ module.exports = {
 			.catch(err => 'Unhandled error in getUserProfileByEmail: ' + JSON.stringify(err))
 
 		if (!userProfile) {
-			throw new Error(`Failed to find UserProfile for user with email: ${email}`)
+			return Promise.reject(`Failed to find UserProfile for user with email: ${email}`)
 		}
 		console.log('userAPI.getUserProfileByEmail output: ' + JSON.stringify(userProfile))
 		return userProfile
@@ -227,7 +227,7 @@ module.exports = {
 	updateUserProfileDetails: async (username, input, condition) => {
 		console.log('userAPI.updateUserProfileDetails input: ' + [username, JSON.stringify(input), JSON.stringify(condition)])
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Sanitize input
@@ -308,14 +308,14 @@ module.exports = {
 			console.log('officeAPI.updateUserProfileDetails output: ' + JSON.stringify(result))
 			return result
 		} else {
-			throw new Error(`Unable to update UserProfile for user ${username} and input ${sanitized_input}.`)
+			return Promise.reject(`Unable to update UserProfile for user ${username} and input ${sanitized_input}.`)
 		}
 	},
 
 	updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {
 		console.log('userAPI.updateEmployeeModelPermissionsForOffice input: ' + [officeId, caller_username, empUsername, modelPermissions])
 		if (!caller_username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Get the office
@@ -323,7 +323,7 @@ module.exports = {
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
-			throw new Error('Invalid office ID or caller not an owner of that office.')
+			return Promise.reject('Invalid office ID or caller not an owner of that office.')
 		}
 
 		const input = {id: tucItem.id, modelPermissions: modelPermissions}
@@ -344,7 +344,7 @@ module.exports = {
 	updateEmployeePagePermissionsForOffice: async (officeId, caller_username, empUsername, pagePermissions) => {
 		console.log('userAPI.updateEmployeePagePermissionsForOffice input: ' + [officeId, caller_username, empUsername, pagePermissions])
 		if (!caller_username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		//Get the office
@@ -352,7 +352,7 @@ module.exports = {
 		const officeDetailsAndPermissions = await module.exports.getOfficeDetailsAndPermissionsByUsername(caller_username, tuc_filter)
 		const tucItem = officeDetailsAndPermissions.items[0].officeConnections.items[0]
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
-			throw new Error('Invalid office ID or caller not an owner of that office.')
+			return Promise.reject('Invalid office ID or caller not an owner of that office.')
 		}
 
 		const input = {id: tucItem.id, pagePermissions: pagePermissions}
