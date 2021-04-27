@@ -529,5 +529,20 @@ export const platformData = {
 		],
 		defaultOfficeLogo: () => 'https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg',
 		defaultProfilePicture: () => 'https://www.w3schools.com/howto/img_avatar.png',
+		bankOptions: () => [
+			{ text: $i18n.global.t('banks.bankOfGreece'), value: 'Bank of Greece' },
+			{ text: $i18n.global.t('banks.nationalBankOfGreece'), value: 'National Bank of Greece' },
+			{ text: $i18n.global.t('banks.piraeusBank'), value: 'Piraeus Bank' },
+			{ text: $i18n.global.t('banks.eurobank'), value: 'Eurobank' },
+			{ text: $i18n.global.t('banks.alphaBank'), value: 'Alpha Bank' },
+			{ text: $i18n.global.t('banks.atticaBank'), value: 'Attica Bank' },
+			{ text: $i18n.global.t('banks.HSBCHellas'), value: 'HSBC Hellas' },
+			{ text: $i18n.global.t('banks.pancretaBank'), value: 'Pancreta Bank' },
+			{ text: $i18n.global.t('banks.chaniaBank'), value: 'Chania Bank' },
+			{ text: $i18n.global.t('banks.epirusBank'), value: 'Epirus Bank' },
+			{ text: $i18n.global.t('banks.serresBank'), value: 'Serres Bank' },
+			{ text: $i18n.global.t('banks.bankOfThessaly'), value: 'Bank of Thessaly' },
+			{ text: $i18n.global.t('banks.other'), value: 'Other' },
+		]
 	},
 };
