@@ -317,6 +317,7 @@ export const office = {
 			const keys = [
 				'id',
 				'officeName',
+				'office_logo',
 				'address',
 				'office_email',
 				'zip_code',
