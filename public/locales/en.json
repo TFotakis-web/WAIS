@@ -246,7 +246,8 @@
     "noCompanyFiles": "No company files",
     "noPartnerOffices": "No partner offices",
     "noEmployees": "No employees",
-    "noContractors": "No contractors"
+    "noContractors": "No contractors",
+    "bank": ""
   },
   "actions": {
     "submit": "Submit",
@@ -342,5 +343,20 @@
     "chamberCertificate": "Chamber certificate",
     "liabilityInsurance": "Liability insurance",
     "companyArticlesOfAssociation": "Company articles of association"
+  },
+  "banks": {
+    "bankOfGreece": "Bank Of Greece",
+    "nationalBankOfGreece": "National Bank Of Greece",
+    "piraeusBank": "Piraeus Bank",
+    "eurobank": "Eurobank",
+    "alphaBank": "Alpha Bank",
+    "atticaBank": "Attica Bank",
+    "HSBCHellas": "HSBC Hellas",
+    "pancretaBank": "Pancreta Bank",
+    "chaniaBank": "Chania Bank",
+    "epirusBank": "Epirus Bank",
+    "serresBank": "Serres Bank",
+    "bankOfThessaly": "Bank Of Thessaly",
+    "other":"Other"
   }
 }
