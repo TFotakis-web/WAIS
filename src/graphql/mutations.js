@@ -534,6 +534,36 @@ export const createOfficeRequest = /* GraphQL */ `
             contentType
           }
         }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
+        }
         createOfficeConnectionPayload {
           manager_email
         }
@@ -591,6 +621,36 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
             filename
             contentType
           }
+        }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
         }
         createOfficeConnectionPayload {
           manager_email
@@ -650,6 +710,36 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
             contentType
           }
         }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
+        }
         createOfficeConnectionPayload {
           manager_email
         }
@@ -707,6 +797,36 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
             filename
             contentType
           }
+        }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
         }
         createOfficeConnectionPayload {
           manager_email
@@ -948,6 +1068,13 @@ export const deleteContractorForOffice = /* GraphQL */ `
       officeId: $officeId
       contractorUsername: $contractorUsername
     ) {
+      id
+    }
+  }
+`;
+export const createUnverifiedOffice = /* GraphQL */ `
+  mutation CreateUnverifiedOffice($input: CreateUnverifiedOfficePayloadInput!) {
+    createUnverifiedOffice(input: $input) {
       id
     }
   }
@@ -2362,6 +2489,22 @@ export const createUserProfile = /* GraphQL */ `
               civilLiabilityExpirationDate
               comments
             }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
+            }
             createOfficeConnectionPayload {
               manager_email
             }
@@ -2402,6 +2545,22 @@ export const createUserProfile = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               comments
+            }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
             }
             createOfficeConnectionPayload {
               manager_email
@@ -2615,6 +2774,22 @@ export const updateUserProfile = /* GraphQL */ `
               civilLiabilityExpirationDate
               comments
             }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
+            }
             createOfficeConnectionPayload {
               manager_email
             }
@@ -2655,6 +2830,22 @@ export const updateUserProfile = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               comments
+            }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
             }
             createOfficeConnectionPayload {
               manager_email
@@ -2868,6 +3059,22 @@ export const deleteUserProfile = /* GraphQL */ `
               civilLiabilityExpirationDate
               comments
             }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
+            }
             createOfficeConnectionPayload {
               manager_email
             }
@@ -2908,6 +3115,22 @@ export const deleteUserProfile = /* GraphQL */ `
               insuranceLicenseExpirationDate
               civilLiabilityExpirationDate
               comments
+            }
+            createUnverifiedOfficePayload {
+              officeName
+              address
+              office_email
+              zip_code
+              mobile
+              phone
+              tin
+              professionStartDate
+              chamberRecordNumber
+              insuranceLicenseExpirationDate
+              civilLiabilityExpirationDate
+              comments
+              contractorPagePermissions
+              contractorModelPermissions
             }
             createOfficeConnectionPayload {
               manager_email
@@ -8114,6 +8337,36 @@ export const createRequests = /* GraphQL */ `
             contentType
           }
         }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
+        }
         createOfficeConnectionPayload {
           manager_email
         }
@@ -8173,6 +8426,36 @@ export const updateRequests = /* GraphQL */ `
             contentType
           }
         }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
+        }
         createOfficeConnectionPayload {
           manager_email
         }
@@ -8231,6 +8514,36 @@ export const deleteRequests = /* GraphQL */ `
             filename
             contentType
           }
+        }
+        createUnverifiedOfficePayload {
+          officeName
+          address
+          office_email
+          zip_code
+          mobile
+          phone
+          tin
+          professionStartDate
+          chamberRecordNumber
+          office_logo {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          insuranceLicenseExpirationDate
+          civilLiabilityExpirationDate
+          comments
+          files {
+            level
+            idToken
+            filePath
+            filename
+            contentType
+          }
+          contractorPagePermissions
+          contractorModelPermissions
         }
         createOfficeConnectionPayload {
           manager_email

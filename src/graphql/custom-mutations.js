@@ -136,6 +136,36 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
 						contentType
 					}
 				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
+				}
 				createOfficeConnectionPayload {
 					manager_email
 				}
@@ -193,6 +223,36 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 						filename
 						contentType
 					}
+				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
 				}
 				createOfficeConnectionPayload {
 					manager_email
@@ -292,6 +352,36 @@ export const createOfficeConnectionRequest = /* GraphQL */ `
 						contentType
 					}
 				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
+				}
 				createOfficeConnectionPayload {
 					manager_email
 				}
@@ -348,6 +438,36 @@ export const createOfficeRequest = /* GraphQL */ `
 						contentType
 					}
 				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
+				}
 				createOfficeConnectionPayload {
 					manager_email
 				}
@@ -364,6 +484,13 @@ export const createOfficeRequest = /* GraphQL */ `
 			}
 			createdAt
 			updatedAt
+		}
+	}
+`;
+export const createUnverifiedOffice = /* GraphQL */ `
+	mutation CreateUnverifiedOffice($input: CreateUnverifiedOfficePayloadInput!) {
+		createUnverifiedOffice(input: $input) {
+			id
 		}
 	}
 `;
