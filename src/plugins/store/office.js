@@ -88,7 +88,7 @@ export const office = {
 				let response = await API.graphql(graphqlOperation(getWorkEnvironment));
 				response = response.data.getWorkEnvironment;
 				if (Object.keys(response).length) {
-					response.office.bankAccountInfo = JSON.parse(response.office.bankAccountInfo);
+					response.office.bankAccountInfo = JSON.parse(response.office.bankAccountInfo) || [];
 					commit('setOffice', response.office);
 					commit('auth/setModelPermissions', response.modelPermissions, { root: true });
 					commit('auth/setPagePermissions', JSON.parse(response.pagePermissions), { root: true });
