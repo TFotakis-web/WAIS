@@ -6,9 +6,9 @@
 		<ion-card-content>
 			<ion-item>
 				<ion-avatar class="ion-margin-end">
-					<s3-ion-img :s3-object="myOffice.officeLogo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
+					<s3-ion-img :s3-object="myOffice.office_logo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
 				</ion-avatar>
-				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="myOffice.officeLogo" :sizeLimitInMBs="10" size="small"/>
+				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="myOffice.office_logo" :sizeLimitInMBs="10" size="small"/>
 			</ion-item>
 			<form @submit.prevent="save">
 				<ion-list>
