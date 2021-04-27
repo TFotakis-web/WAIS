@@ -24,14 +24,15 @@ import {
 	getContractorUserProfiles,
 	getContractsForOfficeId,
 	getCustomersForOfficeId, getEmployeeUserProfiles,
-	getOfficesIWorkIn,
+	// getWorkEnvironment,
+	getWorkEnvironment,
 	getPartnerOfficeConnectionsForOfficeId,
 } from '@/graphql/custom-queries';
 
 export const office = {
 	namespaced: true,
 	state: {
-		offices: {},
+		office: {},
 		employees: {},
 		contractors: {},
 		contracts: {},
@@ -39,8 +40,8 @@ export const office = {
 		partnerOffices: {},
 	},
 	mutations: {
-		setOffices(state, payload) {
-			state.offices = payload;
+		setOffice(state, payload) {
+			state.office = payload;
 		},
 		setEmployees(state, payload) {
 			state.eployees = payload;
@@ -81,19 +82,16 @@ export const office = {
 				return Promise.reject(error);
 			}
 		},
-		async getOfficesIWorkIn({ commit, dispatch }) {
+		async getWorkEnvironment({ commit }) {
 			try {
 				commit('pageStructure/increaseGlobalPendingPromises', null, { root: true });
-				let response = await API.graphql(graphqlOperation(getOfficesIWorkIn));
-				response = response.data.getOfficesIWorkIn;
-				for (const office of response.items) {
-					office.office.bankAccountInfo = JSON.parse(office.office.bankAccountInfo);
-				}
-				commit('setOffices', response);
-				if (response.length) {
-					const selectedOfficeId = response[0].id;
-					dispatch('auth/getUserModelPermissionsForOffice', selectedOfficeId, { root: true });
-					dispatch('auth/getUserPagePermissionsForOffice', selectedOfficeId, { root: true });
+				let response = await API.graphql(graphqlOperation(getWorkEnvironment));
+				response = response.data.getWorkEnvironment.items;
+				if (Object.keys(response).length) {
+					response.office.bankAccountInfo = JSON.parse(JSON.parse(response.office.bankAccountInfo));
+					commit('setOffice', response.office);
+					commit('auth/setModelPermissions', response.modelPermissions, { root: true });
+					commit('auth/setPagePermissions', JSON.parse(response.pagePermissions), { root: true });
 				}
 				return Promise.resolve(response);
 			} catch (error) {
@@ -338,7 +336,7 @@ export const office = {
 			for (const k of keys) {
 				payload[k] = getters.myOffice[k];
 			}
-			
+
 			payload.bankAccountInfo = JSON.stringify(payload.bankAccountInfo);
 
 			try {
@@ -362,8 +360,7 @@ export const office = {
 		},
 	},
 	getters: {
-		offices: (state) => state.offices?.items || [],
-		myOffice: (state) => state.offices?.items[0]?.office || {},
+		myOffice: (state) => state.office || {},
 		employees: (state) => state.employees?.items || [],
 		contractors: (state) => state.contractors?.items || [],
 		partnerOffices: (state) => state.partnerOffices?.items || [],

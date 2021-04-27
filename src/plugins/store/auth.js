@@ -144,7 +144,7 @@ export const auth = {
 				// User is now authenticated
 				// Dispatch all async-able actions
 				dispatch('request/listRequests', null, { root: true });
-				dispatch('office/getOfficesIWorkIn', null, { root: true });
+				dispatch('office/getWorkEnvironment', null, { root: true });
 
 				// This has to be synchronous for routing permissions
 				response = await API.graphql(graphqlOperation(me));
