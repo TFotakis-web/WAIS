@@ -80,12 +80,14 @@ enum RequestDecision {
 
 type CreateRequestPayload {
     createOfficePayload: CreateOfficeRequestPayload
+    createUnverifiedOfficePayload: CreateUnverifiedOfficePayload
     createOfficeConnectionPayload: OfficeConnectionRequestPayload
     inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
     inviteContractorToOfficePayload: InviteContractorRequestPayload
 }
 input CreateRequestPayloadInput {
     createOfficePayload: CreateOfficeRequestPayloadInput
+    createUnverifiedOfficePayload: CreateUnverifiedOfficePayloadInput
     createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
     inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
     inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
@@ -124,6 +126,42 @@ input CreateOfficeRequestPayloadInput {
     files: [S3ObjectInput]
 }
 
+type CreateUnverifiedOfficePayload {
+    officeName: String
+    address: String
+    office_email: String
+    zip_code: String
+    mobile: String
+    phone: String
+    tin: String
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    office_logo: S3Object
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    comments: String
+    files: [S3Object]
+    contractorPagePermissions: AWSJSON
+    contractorModelPermissions: AWSJSON
+}
+input CreateUnverifiedOfficePayloadInput {
+    officeName: String
+    address: String
+    office_email: String
+    zip_code: String
+    mobile: String
+    phone: String
+    tin: String
+    professionStartDate: AWSDate
+    chamberRecordNumber: String
+    office_logo: S3ObjectInput
+    insuranceLicenseExpirationDate: AWSDate
+    civilLiabilityExpirationDate: AWSDate
+    comments: String
+    files: [S3ObjectInput]
+    contractorPagePermissions: AWSJSON
+    contractorModelPermissions: AWSJSON
+}
 
 type OfficeConnectionRequestPayload {
     manager_email: String!
@@ -154,7 +192,6 @@ input InviteContractorRequestPayloadInput {
     email: String!
 }
 
-
 ##### Resolve request
 input ResolveRequestPayloadInput {
     createOfficePayload: ResolveCreateOfficePayload
@@ -178,22 +215,5 @@ input ResolveInviteEmployeePayload {
     body: String #Ignored
 }
 input ResolveInviteContractorPayload {
-    officeName: String
-    address: String
-    office_email: String
-    zip_code: String
-    mobile: String
-    phone: String!
-    tin: String!
-    professionStartDate: AWSDate
-    chamberRecordNumber: String
-    office_logo: S3ObjectInput
-    insuranceLicenseExpirationDate: AWSDate
-    civilLiabilityExpirationDate: AWSDate
-    comments: String
-    files: [S3ObjectInput]
-    managerModelPermissions: [ModelPermission!]!
-    managerPagePermissions: AWSJSON!
-    subscriptionExpirationDate: AWSDate!
-    insuranceCompanies: [InsuranceCompanyInput!]
+    body: String #Ignored
 }

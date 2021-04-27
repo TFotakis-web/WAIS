@@ -361,6 +361,12 @@ const resolvers = {
 				username: event.identity.claims['cognito:username'],
 			})
 		},
+		createUnverifiedOffice: async (event) => {
+			return await api.createUnverifiedOffice({
+				username: event.identity.claims['cognito:username'],
+				input: event.arguments.input
+			})
+		},
 		test: async (event) => {
 			return await api.test({
 				username: event.identity.claims['cognito:username'],

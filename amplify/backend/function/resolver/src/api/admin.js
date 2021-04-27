@@ -76,7 +76,7 @@ module.exports = {
 		if (result.items.length > 0) {
 			result = result.items[0]
 		} else {
-			throw new Error('UserProfile not found.')
+			return Promise.reject('UserProfile not found.')
 		}
 		console.log('adminAPI.getUserProfileByUsername output: ' + [username])
 		return result

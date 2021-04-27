@@ -31,7 +31,7 @@ module.exports = {
 	getCalendarEventsOfUser: async (args) => {
 		console.log('getCalendarEventsForUser input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const query = /* GraphQL */ `
 			query getCalendarEventsForUser(
@@ -69,7 +69,7 @@ module.exports = {
 	getRequestsFromUser: async (args) => {
 		console.log('getRequestsFromUser input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.getRequestsFromUser(args.username, args.filter, args.limit, args.nextToken)
 		console.log('getRequestsFromUser output: ' + JSON.stringify(result))
@@ -78,7 +78,7 @@ module.exports = {
 	getRequestsForUser: async (args) => {
 		console.log('getRequestsForUser input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		//Admin users just need the Create Office requests
 		let result
@@ -93,7 +93,7 @@ module.exports = {
 	resolveRequest: async (args) => {
 		console.log('resolveRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.resolveRequest(args.username, args.email, args.groups, args.id, args.decision, args.payload)
 		console.log('resolveRequest output: ' + result)
@@ -102,7 +102,7 @@ module.exports = {
 	getEmployeeUserProfilesForManagerUsername: async (args) => {
 		console.log('getEmployeeUserProfilesForManagerUsername input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid manager username')
+			return Promise.reject('Invalid manager username')
 		}
 		const result = officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
 			args.username,
@@ -117,7 +117,7 @@ module.exports = {
 	getContractorUserProfilesForManagerUsername: async (args) => {
 		console.log('getContractorUserProfilesForManagerUsername input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid manager username')
+			return Promise.reject('Invalid manager username')
 		}
 		const result = await officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
 			args.username,
@@ -132,7 +132,7 @@ module.exports = {
 	getCustomersForOfficeId: async (args) => {
 		console.log('getCustomersForOfficeId input: ' + JSON.stringify(args))
 		if (!args.officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const result = await officeAPI.getCustomersForOfficeId(args.officeId, args.filter, args.limit, args.nextToken)
 		console.log('getCustomersForOfficeId output: ' + JSON.stringify(result))
@@ -141,7 +141,7 @@ module.exports = {
 	getContractsForOfficeId: async (args) => {
 		console.log('getContractsForOfficeId input: ' + JSON.stringify(args))
 		if (!args.officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const result = await officeAPI.getContractsForOfficeId(args.officeId, args.username, args.filter, args.limit, args.nextToken)
 		console.log('getContractsForOfficeId output: ' + JSON.stringify(result))
@@ -150,10 +150,10 @@ module.exports = {
 	getPartnerOfficeConnections: async (args) => {
 		console.log('getPartnerOfficeConnections input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!args.officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const result = await officeAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
 		console.log('getPartnerOfficeConnections output: ' + JSON.stringify(result))
@@ -162,10 +162,10 @@ module.exports = {
 	getUserModelPermissionsForOffice: async (args) => {
 		console.log('getUserModelPermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!args.officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const result = await userAPI.getUserModelPermissionsForOffice(args.officeId, args.username)
 		console.log('getUserModelPermissionsForOffice output: ' + JSON.stringify(result))
@@ -174,10 +174,10 @@ module.exports = {
 	getUserPagePermissionsForOffice: async (args) => {
 		console.log('getUserPagePermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		if (!args.officeId) {
-			throw new Error('Invalid office ID')
+			return Promise.reject('Invalid office ID')
 		}
 		const result = await userAPI.getUserPagePermissionsForOffice(args.officeId, args.username)
 		console.log('getUserPagePermissionsForOffice output: ' + JSON.stringify(result))
@@ -188,7 +188,7 @@ module.exports = {
 	updateOfficeDetails: async (args) => {
 		console.log('updateOfficeDetails input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.updateOfficeDetails(args.username, args.requestInput, args.condition)
 		console.log('updateOfficeDetails output: ' + JSON.stringify(result))
@@ -197,7 +197,7 @@ module.exports = {
 	updateUserProfileDetails: async (args) => {
 		console.log('updateUserProfileDetails input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
 		console.log('updateUserProfileDetails output: ' + JSON.stringify(result))
@@ -206,7 +206,7 @@ module.exports = {
 	createVehicleForOffice: async (args) => {
 		console.log('createVehicleForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.createVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
 		console.log('createVehicleForOffice output: ' + JSON.stringify(result))
@@ -215,7 +215,7 @@ module.exports = {
 	updateVehicleForOffice: async (args) => {
 		console.log('updateVehicleForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.updateVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
 		console.log('updateVehicleForOffice output: ' + JSON.stringify(result))
@@ -224,7 +224,7 @@ module.exports = {
 	deleteVehicleForOffice: async (args) => {
 		console.log('deleteVehicleForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.deleteVehicleForOffice(args.officeId, args.username, args.requestInput, args.condition)
 		console.log('deleteVehicleForOffice output: ' + JSON.stringify(result))
@@ -233,7 +233,7 @@ module.exports = {
 	createContractForOffice: async (args) => {
 		console.log('createContractForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.createContractForOffice(args.officeId, args.username, args.requestInput, args.condition) //TODO implement
 		console.log('createContractForOffice output: ' + JSON.stringify(result))
@@ -242,7 +242,7 @@ module.exports = {
 	updateContractForOffice: async (args) => {
 		console.log('updateContractForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.updateContractForOffice(args.officeId, args.username, args.requestInput, args.condition) //TODO implement
 		console.log('updateContractForOffice output: ' + JSON.stringify(result))
@@ -251,7 +251,7 @@ module.exports = {
 	deleteContractForOffice: async (args) => {
 		console.log('deleteContractForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.deleteContractForOffice(args.officeId, args.username, args.requestInput, args.condition) //TODO implement
 		console.log('deleteContractForOffice output: ' + JSON.stringify(result))
@@ -260,7 +260,7 @@ module.exports = {
 	createCustomerForOffice: async (args) => {
 		console.log('createCustomerForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.createCustomerForOffice(args.officeId, args.username, args.requestInput, args.condition) //TODO implement
 		console.log('createCustomerForOffice output: ' + JSON.stringify(result))
@@ -269,7 +269,7 @@ module.exports = {
 	createOfficeRequest: async (args) => {
 		console.log('createOfficeRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.createOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createOfficeRequest output: ' + JSON.stringify(result))
@@ -278,7 +278,7 @@ module.exports = {
 	createInviteEmployeeToOfficeRequest: async (args) => {
 		console.log('createInviteEmployeeToOfficeRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.createInviteEmployeeToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
@@ -287,7 +287,7 @@ module.exports = {
 	createInviteContractorToOfficeRequest: async (args) => {
 		console.log('createInviteContractorToOfficeRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
@@ -296,7 +296,7 @@ module.exports = {
 	createOfficeConnectionRequest: async (args) => {
 		console.log('createOfficeConnectionRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
@@ -305,7 +305,7 @@ module.exports = {
 	deleteRequestsSentByMe: async (args) => {
 		console.log('deleteRequestsSentByMe input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await requestAPI.deleteRequestsSentByMe(args.username, args.email, args.groups, args.requestInput, args.condition)
 		console.log('deleteRequestsSentByMe output: ' + JSON.stringify(result))
@@ -314,7 +314,7 @@ module.exports = {
 	createOfficeAccessConnectionForOffice: async (args) => {
 		console.log('createOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.createOfficeAccessConnectionForOffice(
 			args.officeId,
@@ -328,7 +328,7 @@ module.exports = {
 	updateOfficeAccessConnectionForOffice: async (args) => {
 		console.log('updateOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.updateOfficeAccessConnectionForOffice(
 			args.officeId,
@@ -342,7 +342,7 @@ module.exports = {
 	deleteOfficeAccessConnectionForOffice: async (args) => {
 		console.log('deleteOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.deleteOfficeAccessConnectionForOffice(args.username, args.requestInput, args.condition) //TODO implement
 		console.log('deleteOfficeAccessConnectionForOffice output: ' + JSON.stringify(result))
@@ -355,11 +355,11 @@ module.exports = {
 		console.log('createMyUserCalendarEvent input: ' + [username, JSON.stringify(payload), JSON.stringify(condition)])
 
 		if (!username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		if (!payload) {
-			throw new Error('Payload can\'t be empty or null.')
+			return Promise.reject('Payload can\'t be empty or null.')
 		}
 
 		// Expand the condition to require that the caller is also the owner of the profile
@@ -387,7 +387,7 @@ module.exports = {
 			.catch(err => console.error(`Unhandled error in createMyUserCalendarEvent: ${JSON.stringify(err)}`))
 
 		if (!result) {
-			throw new Error('Failed to create Calendar Event.')
+			return Promise.reject('Failed to create Calendar Event.')
 		}
 
 		console.log('createMyUserCalendarEvent output: ' + JSON.stringify(result))
@@ -399,7 +399,7 @@ module.exports = {
 		const condition = args.condition
 		console.log('updateMyUserCalendarEvents input: ' + [username, input, condition])
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		const allowed = ['id', 'username', 'payload']
@@ -432,7 +432,7 @@ module.exports = {
 		const condition = args.condition
 		console.log('deleteMyUserCalendarEvents input: ' + [username, input, condition])
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 
 		const expanded_condition = {and: [condition || {senderUsername: {ne: ''}}, {username: {eq: username}}]}
@@ -454,7 +454,7 @@ module.exports = {
 	updateEmployeeModelPermissionsForOffice: async (args) => {
 		console.log('updateEmployeeModelPermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateEmployeeModelPermissionsForOffice(
 			args.officeId,
@@ -468,7 +468,7 @@ module.exports = {
 	updateEmployeePagePermissionsForOffice: async (args) => {
 		console.log('updateEmployeePagePermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateEmployeePagePermissionsForOffice(
 			args.officeId,
@@ -483,7 +483,7 @@ module.exports = {
 		//TODO finish
 		console.log('deleteEmployeeForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await ddbUtil.removeEmployeeFromOffice(args.officeId, args.username, args.empUsername)
 		console.log('deleteEmployeeForOffice output: ' + JSON.stringify(result))
@@ -492,7 +492,7 @@ module.exports = {
 	updateContractorModelPermissionsForOffice: async (args) => {
 		console.log('updateContractorModelPermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateContractorModelPermissionsForOffice(
 			args.officeId,
@@ -506,7 +506,7 @@ module.exports = {
 	updateContractorPagePermissionsForOffice: async (args) => {
 		console.log('updateContractorPagePermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.updateContractorPagePermissionsForOffice(
 			args.officeId,
@@ -520,7 +520,7 @@ module.exports = {
 	deleteContractorForOffice: async (args) => {
 		console.log('deleteContractorForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await userAPI.deleteContractorForOffice(args.officeId, args.username, args.contractorUsername) //TODO implement
 		console.log('deleteContractorForOffice output: ' + JSON.stringify(result))
@@ -535,7 +535,7 @@ module.exports = {
 	getAllInsuranceCompanies: async (args) => {
 		console.log('getAllInsuranceCompanies input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.getAllInsuranceCompanies(args.username)
 		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
@@ -544,7 +544,7 @@ module.exports = {
 	getAvailableInsuranceCompaniesForOffice: async (args) => {
 		console.log('getAvailableInsuranceCompaniesForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await officeAPI.getAvailableInsuranceCompaniesForOffice(args.office, args.username)
 		console.log('getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
@@ -553,10 +553,10 @@ module.exports = {
 	getS3Object: async (args) => {
 		console.log('getS3Object input: ' + JSON.stringify(args))
 		if (!args.groups || args.groups.indexOf('admin') < 0) {
-			throw new Error('Insufficient privileges.')
+			return Promise.reject('Insufficient privileges.')
 		}
 		if (!args.username) {
-			throw new Error('Invalid username or unauthenticated user.')
+			return Promise.reject('Invalid username or unauthenticated user.')
 		}
 		const result = await adminAPI.getS3Object(args.username, args.email, args.s3obj, args.groups)
 		console.log('getS3Object preview output: ' + JSON.stringify(result.contentType))
@@ -565,16 +565,25 @@ module.exports = {
 	getUserProfileByUsername: async (args) => {
 		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
 		if (!args.groups || args.groups.indexOf('admin') < 0) {
-			throw new Error('Insufficient privileges.')
+			return Promise.reject('Insufficient privileges.')
 		}
 		if (!args.caller_username) {
-			throw new Error('Invalid caller username or unauthenticated user.')
+			return Promise.reject('Invalid caller username or unauthenticated user.')
 		}
 		if (!args.username) {
-			throw new Error('Invalid username.')
+			return Promise.reject('Invalid username.')
 		}
 		const result = await adminAPI.getUserProfileByUsername(args.username)
 		console.log('getUserProfileByUsername preview output: ' + JSON.stringify(result))
+		return result
+	},
+	createUnverifiedOffice: async (args) => {
+		console.log('createUnverifiedOffice input: ' + JSON.stringify(args))
+		if (!args.username) {
+			return Promise.reject('Invalid username.')
+		}
+		const result = await officeAPI.createUnverifiedOffice(args.username, args.input)
+		console.log('createUnverifiedOffice output: ' + JSON.stringify(result))
 		return result
 	},
 	test: async (args) => {

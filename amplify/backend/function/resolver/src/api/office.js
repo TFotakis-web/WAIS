@@ -740,25 +740,32 @@ module.exports = {
 				limit: limit || 100,
 				nextToken: nextToken || null
 			}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			let result = response.data.listUserProfileByUsername?.items[0].officeConnections || []
-			result?.items.forEach((officeCon) => { //Quick page permissions fix
-				officeCon.pagePermissions = JSON.parse(officeCon.pagePermissions)
-				if (officeCon.office) {
-					if (!officeCon?.office?.files) {
-						officeCon.office.files = []
-					}
-					if (!officeCon?.office?.insuranceCompanies) {
-						officeCon.office.insuranceCompanies = []
-					}
-					if (!officeCon?.office?.workforce) {
-						officeCon.office.workforce = []
-					}
+
+			let result = response.data.listUserProfileByUsername?.items[0].officeConnections?.items[0]
+			if (!result) {
+				return Promise.reject('Failed to retrieve Office of user ' + username)
+			}
+
+			//Quick page permissions fix
+			result.pagePermissions = JSON.parse(result.pagePermissions)
+			if (result.office) {
+				if (!result?.office?.files) {
+					result.office.files = []
 				}
-				officeCon?.office?.workforce?.items.forEach((workforce) => {
-					if (workforce.pagePermissions) {
-						workforce.pagePermissions = JSON.parse(workforce.pagePermissions)
-					}
-				})
+				if (!result?.office?.insuranceCompanies) {
+					result.office.insuranceCompanies = []
+				}
+				if (!result?.office?.workforce) {
+					result.office.workforce = []
+				}
+			}
+			if (result?.office?.bankAccountInfo) {
+				result.office.bankAccountInfo = JSON.parse(result.office.bankAccountInfo)
+			}
+			result?.office?.workforce?.items.forEach((workforce) => {
+				if (workforce.pagePermissions) {
+					workforce.pagePermissions = JSON.parse(workforce.pagePermissions)
+				}
 			})
 			console.log('officeAPI.getWorkEnvironment output: ' + JSON.stringify(result))
 			return result
@@ -766,5 +773,126 @@ module.exports = {
 			console.error(`officeAPI.getWorkEnvironment unhandled error: ${err}`)
 			return Promise.reject(`Unable to retrieve partner summary for user ${username}.`)
 		}
+	},
+	createUnverifiedOffice: async (caller_username, officeInput) => {
+		console.log('officeAPI.createUnverifiedOffice input: ' + JSON.stringify([caller_username, officeInput]))
+
+		const query = /* GraphQL */ `
+			query getUserProfileByUsername($username: String!) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						id
+						username
+						role
+					}
+				}
+			}
+		`
+		const callerUserProfile = await gqlUtil.execute({username: caller_username}, query, 'getUserProfileByUsername')
+		if (!callerUserProfile) {
+			return Promise.reject(`User profile for sender was not found.`)
+		}
+
+		//Check if there is already an Office with this name
+		if (callerUserProfile.role !== 'UNKNOWN') {
+			return Promise.reject(`User's role is not UNKNOWN.`)
+		}
+
+		//Deep copy input
+		const createOfficeInput = JSON.parse(JSON.stringify(officeInput));
+		if (!createOfficeInput) {
+			return Promise.reject('Request has invalid payload.')
+		}
+
+		//Add extra fields to the Office
+		createOfficeInput.ownerUsername = caller_username
+		createOfficeInput.employeesNumberLimit = 0
+		createOfficeInput.partnersNumberLimit = 10
+		createOfficeInput.insuranceCompanies = []
+		createOfficeInput.verified = false
+		createOfficeInput.bankAccountInfo = JSON.stringify([])
+
+		//Delete some fields that should only be present in the request and not in the office
+		delete createOfficeInput.comments
+		delete createOfficeInput.modelPermissions
+		delete createOfficeInput.pagePermissions
+
+		//Empty and Null checks
+		if (!createOfficeInput.office_email) {
+			return Promise.reject('Office e-mail can not be empty.')
+		}
+
+		const mutation1 = /* GraphQL */ `
+						mutation createOffice($input: CreateOfficeInput!) {
+								createOffice(input: $input) {
+									id
+								}
+							}
+						`
+
+		let createdOfficeId = null
+		try {
+			const response = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+			createdOfficeId = response.data.createOffice.id
+			if (!createdOfficeId) {
+				return Promise.reject('Failed to create new office: ' + response.errors.message)
+			}
+		} catch (err) {
+			console.error('Failed to create new office: ' + JSON.stringify(err))
+			return Promise.reject('Failed to create new office: ' + JSON.stringify(err))
+		}
+
+		//Create a connection between the new Office and the contractor-manager.
+		const createTUCInput = {
+			officeId: createdOfficeId,
+			officeName: createOfficeInput.officeName,
+			userId: callerUserProfile.id,
+			username: callerUserProfile.username,
+			pagePermissions: JSON.stringify(officeInput.managerPagePermissions),
+			modelPermissions: officeInput.managerModelPermissions,
+			employeeType: 'MANAGER',
+		}
+
+		const mutation2 = /* GraphQL */ `
+						mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
+								createOfficeUserConnection(input: $input) {
+									id
+								}
+							}
+						`
+
+		try {
+			const createOUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
+			const createOUCResult = createOUCResponse.data.createOfficeUserConnection
+			if (!createOUCResult) {
+				return Promise.reject('Failed to create new Office-User connection: ' + createOUCResponse.errors.message)
+			}
+			console.log(`Created OUC: ${JSON.stringify(createOUCResult)}`)
+		} catch (err) {
+			console.error('Unhandled error in officeAPI.createUnverifiedOffice: ' + JSON.stringify(err))
+			return Promise.reject('Failed to create new Office-User connection: ' + JSON.stringify(err))
+		}
+
+		//Update role in the UserProfile
+		const updateProfileMutation = /* GraphQL */ `
+						mutation updateUserProfileDetails($input: UpdateUserProfileInput!) {
+							updateUserProfile(input: $input) {
+								id
+							}
+						}
+					`
+		const upInput = {
+			id: callerUserProfile.id,
+			role: 'CONTRACTOR',
+		}
+		const updateUPResponse = await gqlUtil.execute({input: upInput}, updateProfileMutation, 'updateUserProfileDetails')
+		const resultUP = updateUPResponse.data.updateUserProfile.id
+		if (!resultUP) {
+			return Promise.reject('Failed to update Contractor`s UserProfile role.')
+		}
+
+		const result = {id: createdOfficeId}
+		console.log('officeAPI.createUnverifiedOffice output: ' + JSON.stringify(result))
+		return result
 	}
 }
