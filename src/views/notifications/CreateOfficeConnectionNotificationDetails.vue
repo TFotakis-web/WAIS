@@ -17,7 +17,7 @@
 					<ion-item>
 						<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 						<ion-label position="floating">{{ $t('fields.expirationDate') }}</ion-label>
-						<ion-datetime v-model="form.expirationDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="expirationDate" required/>
+						<ion-datetime-custom v-model="form.expirationDate" :disable-past="true" name="expirationDate" :required="true" :return-date="true"/>
 					</ion-item>
 					<div class="ion-text-center">
 						<loading-btn color="success" type="submit" :loading="acceptLoading" :text="$t('actions.accept')" :loadingText="$t('actions.accepting')"/>
@@ -30,10 +30,11 @@
 </template>
 <script>
 	import LoadingBtn from '@/components/structure/loadingBtn';
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 	export default {
 		name: 'CreateOfficeConnectionNotificationDetails',
-		components: { LoadingBtn },
+		components: { IonDatetimeCustom, LoadingBtn },
 		data() {
 			return {
 				acceptLoading: false,
