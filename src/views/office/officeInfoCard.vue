@@ -34,18 +34,25 @@
 						</ion-col>
 					</ion-row>
 					<ion-row>
-						<ion-col size="12" size-md="6">
+						<ion-col size="12" size-md="4">
 							<ion-item>
 								<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 								<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-								<ion-datetime v-model="myOffice.professionStartDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="professionStartDate"/>
+								<ion-datetime-custom v-model="myOffice.professionStartDate" :disable-future="true" name="professionStartDate" :return-date="true"/>
 							</ion-item>
 						</ion-col>
-						<ion-col size="12" size-md="6">
+						<ion-col size="12" size-md="4">
 							<ion-item>
 								<ion-icon slot="start" class="ion-hide-md-up"/>
 								<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-								<ion-datetime v-model="myOffice.insuranceLicenseExpirationDate" display-format="DD MMM YYYY" :min="(new Date()).toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="insuranceLicenseExpirationDate"/>
+								<ion-datetime-custom v-model="myOffice.insuranceLicenseExpirationDate" :disable-past="true" name="insuranceLicenseExpirationDate" :return-date="true"/>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" size-md="4">
+							<ion-item>
+								<ion-icon slot="start" class="ion-hide-md-up"/>
+								<ion-label position="floating">{{ $t('fields.civilLiabilityExpirationDate') }}</ion-label>
+								<ion-datetime-custom v-model="myOffice.civilLiabilityExpirationDate" :disable-past="true" name="civilLiabilityExpirationDate" :return-date="true"/>
 							</ion-item>
 						</ion-col>
 					</ion-row>
@@ -199,10 +206,12 @@
 	import S3IonImg from '@/components/structure/S3IonImg';
 	import FileInput from '@/components/structure/fileInput/fileInput';
 	import { mapGetters } from 'vuex';
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 	export default {
 		name: 'OfficeInfoCard',
 		components: {
+			IonDatetimeCustom,
 			FileInput,
 			S3IonImg,
 			loadingBtn,
