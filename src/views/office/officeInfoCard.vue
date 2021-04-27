@@ -104,13 +104,18 @@
 					<ion-item v-if="(myOffice.bankAccountInfo || []).length === 0">
 						<ion-text>{{ $t('fields.noCompanyAccounts') }}</ion-text>
 					</ion-item>
-					<!--					todo: Remove redundant || [] when backend is ready -->
-					<ion-row class="ion-no-padding ion-align-items-center" v-for="(account, i) in (myOffice.bankAccountInfo || [])" :key="'companyAccounts' + i">
+					<ion-row class="ion-no-padding ion-align-items-center" v-for="(account, i) in myOffice.bankAccountInfo" :key="'bankAccounts' + i">
 						<ion-col>
 							<ion-row>
 								<ion-col size="12" size-md="6">
 									<ion-item>
-										<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
+										<ion-label position="floating">{{ $t('fields.bank') }}</ion-label>
+										<ion-select v-model="selectedBanks[i]" required interface="popover">
+											<ion-select-option v-for="o in bankOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
+										</ion-select>
+									</ion-item>
+									<ion-item v-if="selectedBanks[i] === 'Other'">
+										<ion-label position="floating">{{ $t('fields.bank') }}</ion-label>
 										<ion-input v-model="account.name" type="text" required/>
 									</ion-item>
 								</ion-col>
@@ -159,7 +164,7 @@
 							</ion-row>
 						</ion-col>
 						<ion-col size="auto" class="ion-no-padding">
-							<ion-button  @click="deleteInsuranceCompanies(i)" fill="clear" size="small" color="danger">
+							<ion-button @click="deleteInsuranceCompanies(i)" fill="clear" size="small" color="danger">
 								<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
 							</ion-button>
 						</ion-col>
@@ -204,12 +209,31 @@
 		},
 		data() {
 			return {
+				selectedBanks: [],
 				loading: false,
 			};
+		},
+		mounted() {
+			const bankNames = Array.from(this.bankOptions, o => o.value);
+			for (const account of this.myOffice.bankAccountInfo) {
+				if (bankNames.includes(account.name)) {
+					this.selectedBanks.push(account.name);
+				} else {
+					this.selectedBanks.push('Other');
+				}
+			}
 		},
 		methods: {
 			save() {
 				this.loading = true;
+
+				for (const i in this.myOffice.bankAccountInfo) {
+					if (this.selectedBanks[i] === 'Other') {
+						continue;
+					}
+					this.myOffice.bankAccountInfo[i].name = this.selectedBanks[i];
+				}
+
 				this.$store.dispatch('office/updateOfficeDetails')
 					.then(this.$toast.saveSuccess)
 					.catch(this.$toast.error)
@@ -235,7 +259,7 @@
 			},
 		},
 		computed: {
-			...mapGetters('platformData', ['companyOptions']),
+			...mapGetters('platformData', ['companyOptions', 'bankOptions']),
 			...mapGetters('office', ['myOffice']),
 		},
 	};
