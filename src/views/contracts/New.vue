@@ -85,14 +85,14 @@
 						<ion-item>
 							<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
 							<ion-label position="floating">{{ $t('fields.birthdate') }}</ion-label>
-							<ion-datetime v-model="form.birthdate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="birthdate" required/>
+							<ion-datetime-custom v-model="form.birthdate" :disable-future="true" name="birthdate" :required="true" :return-date="true"/>
 						</ion-item>
 					</ion-col>
 					<ion-col size="12" size-md="4">
 						<ion-item>
 							<ion-icon slot="start" class="ion-hide-md-up"/>
 							<ion-label position="floating">{{ $t('fields.driversLicenseIssueDate') }}</ion-label>
-							<ion-datetime v-model="form.driversLicenseIssueDate" display-format="DD MMM YYYY" :max="new Date().toISOString()" name="driversLicenseIssueDate" required/>
+							<ion-datetime-custom v-model="form.driversLicenseIssueDate" :disable-future="true" name="driversLicenseIssueDate" :required="true" :return-date="true"/>
 						</ion-item>
 					</ion-col>
 				</ion-row>
@@ -204,7 +204,7 @@
 					<ion-col size="12" size-md="4">
 						<ion-item>
 							<ion-label position="floating">{{ $t('fields.issueDate') }}</ion-label>
-							<ion-datetime v-model="form.issueDate" display-format="DD MMM YYYY" :min="new Date().toISOString()" :max="new Date(new Date().getFullYear() + 50, 1, 1).toISOString()" name="issuedate" required/>
+							<ion-datetime-custom v-model="form.issueDate" :disable-past="true" name="issueDate" :required="true" :return-date="true"/>
 						</ion-item>
 					</ion-col>
 					<ion-col size="12" size-md="4">
@@ -246,10 +246,12 @@
 <script>
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import { mapGetters } from 'vuex';
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 	export default {
 		name: 'NewContract',
 		components: {
+			IonDatetimeCustom,
 			loadingBtn,
 		},
 		mounted() {
