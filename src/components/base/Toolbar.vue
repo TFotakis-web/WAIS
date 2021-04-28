@@ -2,7 +2,7 @@
 	<ion-header :translucent="true">
 		<ion-toolbar>
 			<ion-buttons slot="start">
-				<ion-menu-button color="primary" v-if="!$store.getters['pageStructure/pageBackButton']"/>
+				<ion-menu-button color="primary" v-show="!$store.getters['pageStructure/pageBackButton']"/>
 				<ion-back-button :default-href="$store.getters['pageStructure/backButtonDefaultHref']" v-if="$store.getters['pageStructure/pageBackButton']"/>
 			</ion-buttons>
 			<ion-title>{{ $store.getters['pageStructure/pageTitle']() }}</ion-title>
