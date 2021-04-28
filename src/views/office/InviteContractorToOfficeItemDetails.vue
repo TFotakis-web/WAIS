@@ -13,7 +13,7 @@
 					<ion-list-header>
 						<h2>{{ $t('fields.permissions') + ': ' }}</h2>
 					</ion-list-header>
-					<ion-item v-for="permission in JSON.parse(JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions))" :key="permission">
+					<ion-item v-for="permission in JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)" :key="permission">
 						<ion-text>{{ permission }}</ion-text>
 					</ion-item>
 				</ion-list>
