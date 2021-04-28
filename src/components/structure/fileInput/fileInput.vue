@@ -23,10 +23,6 @@
 	<ion-list>
 		<ion-item v-for="(file, fileIndex) in files" :key="file.filePath + '/' + file.filename">
 			<s3-object :s3-object="file" @fileDeleted="deleteFile(fileIndex)"/>
-<!--			<ion-button :href="downloadUrls[fileIndex]" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>-->
-<!--			<ion-button @click="deleteFile(fileIndex)" fill="clear" size="small">-->
-<!--				<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>-->
-<!--			</ion-button>-->
 		</ion-item>
 	</ion-list>
 </template>
@@ -109,7 +105,7 @@
 				default: 'private',
 			},
 		},
-		emits: ['update:modelValue', 'update:downloadUrls'],
+		emits: ['update:modelValue'],
 		data() {
 			return {
 				files: [],
