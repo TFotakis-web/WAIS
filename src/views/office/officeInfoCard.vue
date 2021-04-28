@@ -180,18 +180,15 @@
 				<ion-list>
 					<ion-list-header>
 						<h2><strong>{{ $t('views.Office.companyFiles') }}</strong></h2>
-						<ion-button fill="clear">
-							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>
-						</ion-button>
+<!--						<ion-button fill="clear">-->
+<!--							<ion-icon :icon="$ionicons.addOutline" slot="icon-only"/>-->
+<!--						</ion-button>-->
 					</ion-list-header>
 					<ion-item v-if="myOffice.files.length === 0">
 						<ion-text>{{ $t('fields.noCompanyFiles') }}</ion-text>
 					</ion-item>
-					<ion-item v-for="(file, i) in myOffice.files" :key="'companyCodes' + i">
-						<ion-button :href="file.url" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
-						<ion-button fill="clear" size="small">
-							<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
-						</ion-button>
+					<ion-item v-for="(file, i) in myOffice.files" :key="'companyFiles' + i">
+						<s3-object :s3-object="file" :disable-delete="true"/>
 					</ion-item>
 				</ion-list>
 				<div class="ion-margin-top">
@@ -207,10 +204,12 @@
 	import FileInput from '@/components/structure/fileInput/fileInput';
 	import { mapGetters } from 'vuex';
 	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
+	import S3Object from '@/components/structure/S3Object';
 
 	export default {
 		name: 'OfficeInfoCard',
 		components: {
+			S3Object,
 			IonDatetimeCustom,
 			FileInput,
 			S3IonImg,
