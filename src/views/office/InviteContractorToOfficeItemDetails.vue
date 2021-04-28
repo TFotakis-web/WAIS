@@ -47,7 +47,7 @@
 				this.$store.dispatch('request/deleteRequestsSentByMe', this.request.id)
 					.then(() => {
 						this.$toast.deleteSuccess();
-						this.$router.push({ name: 'Notifications' });
+						this.$router.push({ name: 'Office' });
 					})
 					.catch((err) => this.$toast.error(err))
 					.finally(() => this.deleteLoading = false);
