@@ -22,20 +22,23 @@
 	/>
 	<ion-list>
 		<ion-item v-for="(file, fileIndex) in files" :key="file.filePath + '/' + file.filename">
-			<ion-button :href="downloadUrls[fileIndex]" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>
-			<ion-button @click="deleteFile(fileIndex)" fill="clear" size="small">
-				<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
-			</ion-button>
+			<s3-object :s3-object="file" @fileDeleted="deleteFile(fileIndex)"/>
+<!--			<ion-button :href="downloadUrls[fileIndex]" target="_blank" fill="clear" size="small">{{ file.filename }}</ion-button>-->
+<!--			<ion-button @click="deleteFile(fileIndex)" fill="clear" size="small">-->
+<!--				<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>-->
+<!--			</ion-button>-->
 		</ion-item>
 	</ion-list>
 </template>
 <script>
 	import { Storage } from 'aws-amplify';
 	import loadingBtn from '@/components/structure/loadingBtn';
+	import S3Object from '@/components/structure/S3Object';
 
 	export default {
 		name: 'fileInput',
 		components: {
+			S3Object,
 			loadingBtn,
 		},
 		props: {
@@ -110,7 +113,6 @@
 		data() {
 			return {
 				files: [],
-				downloadUrls: [],
 				loading: false,
 			};
 		},
@@ -119,7 +121,6 @@
 				this.loading = true;
 				if (!this.multiple) {
 					this.files = [];
-					this.downloadUrls = [];
 				}
 
 				for (const file of event.target.files) {
@@ -153,9 +154,6 @@
 							contentType,
 							idToken: this.$store.getters['auth/user'].id,
 						});
-
-						const response = await Storage.get(this.filePath + '/' + filename, { level: this.level });
-						this.downloadUrls.push(response);
 					} catch (error) {
 						console.error(error);
 					}
@@ -164,24 +162,17 @@
 				this.loading = false;
 				if (this.multiple) {
 					this.$emit('update:modelValue', this.files);
-					this.$emit('update:downloadUrls', this.downloadUrls);
 				} else {
 					this.$emit('update:modelValue', this.files[0]);
-					this.$emit('update:downloadUrls', this.downloadUrls[0]);
 				}
 			},
-			async deleteFile(fileIndex) {
-				const file = this.files[fileIndex];
-				await Storage.remove(file.filePath + '/' + file.filename, { level: file.level });
+			deleteFile(fileIndex) {
 				this.files.splice(fileIndex, 1);
-				this.downloadUrls.splice(fileIndex, 1);
 
 				if (this.multiple) {
 					this.$emit('update:modelValue', this.files);
-					this.$emit('update:downloadUrls', this.downloadUrls);
 				} else {
 					this.$emit('update:modelValue', this.files[0]);
-					this.$emit('update:downloadUrls', this.downloadUrls[0]);
 				}
 			},
 		},
@@ -193,17 +184,11 @@
 		watch: {
 			async modelValue(newValue) {
 				this.files = [];
-				this.downloadUrls = [];
 
 				if (this.multiple) {
 					this.files = newValue;
 				} else if (Object.keys(newValue).length) {
 					this.files.push(newValue);
-				}
-
-				for (const file of this.files) {
-					const response = await Storage.get(file.filePath + '/' + file.filename, { level: file.level });
-					this.downloadUrls.push(response);
 				}
 			},
 		},
