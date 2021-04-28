@@ -18,6 +18,7 @@
 		<ion-item v-else :router-link="routeCategory.to" button detail="false" :class="{ selected: isSelected(routeCategory) }" lines="none" class="topLevelRoute">
 			<ion-icon :icon="routeCategory.icon" slot="start"/>
 			<ion-label>{{ routeCategory.name }}</ion-label>
+			<ion-badge v-if="routeCategory.badge && routeCategory.badge()" color="medium">{{ routeCategory.badge() }}</ion-badge>
 		</ion-item>
 		<ion-list v-if="shown && routeCategory.children" lines="none">
 			<ion-item v-for="(route, i) in routeCategory.children" :key="i" button router-direction="root" :router-link="route.to" lines="none" detail="false" class="hydrated" :class="{ selected: isSelected(route) }">
