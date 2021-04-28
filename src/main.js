@@ -119,7 +119,7 @@ app.config.globalProperties.$toast = {
 				message: window.vm.$t('defaultNotification.somethingWentWrong'),
 				duration: 10000,
 				color: 'danger',
-				position: 'top',
+				position: 'bottom',
 			});
 		return toast.present();
 	},
@@ -129,7 +129,7 @@ app.config.globalProperties.$toast = {
 				message: window.vm.$t('defaultNotification.saveSuccess'),
 				duration: 10000,
 				color: 'success',
-				position: 'top',
+				position: 'bottom',
 			});
 		return toast.present();
 	},
@@ -139,7 +139,7 @@ app.config.globalProperties.$toast = {
 				message: window.vm.$t('defaultNotification.deleteSuccess'),
 				duration: 10000,
 				color: 'success',
-				position: 'top',
+				position: 'bottom',
 			});
 		return toast.present();
 	},
