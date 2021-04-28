@@ -10,7 +10,9 @@
 		<ion-card-content>
 			<ion-list>
 				<ion-list-header>
-					<h2>{{ $t('fields.employees') }}</h2>
+					<h2>
+						<strong>{{ $t('fields.employees') }}</strong>
+					</h2>
 				</ion-list-header>
 				<ion-item v-if="requestsForInviteEmployeeToOfficeSent.length === 0 && employees.length === 0">
 					<ion-text>{{ $t('fields.noEmployees') }}</ion-text>
@@ -29,7 +31,9 @@
 			</ion-list>
 			<ion-list>
 				<ion-list-header>
-					<h2>{{ $t('fields.contractors') }}</h2>
+					<h2>
+						<strong>{{ $t('fields.contractors') }}</strong>
+					</h2>
 				</ion-list-header>
 				<ion-item v-if="requestsForInviteContractorToOfficeSent.length === 0 && contractors.length === 0">
 					<ion-text>{{ $t('fields.noContractors') }}</ion-text>
