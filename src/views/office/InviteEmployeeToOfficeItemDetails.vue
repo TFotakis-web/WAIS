@@ -13,7 +13,7 @@
 					<ion-list-header>
 						<h2>{{ $t('fields.permissions') + ': ' }}</h2>
 					</ion-list-header>
-					<ion-item v-for="permission in JSON.parse(JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions))" :key="permission">
+					<ion-item v-for="permission in JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)" :key="permission">
 						<ion-text>{{ permission }}</ion-text>
 					</ion-item>
 				</ion-list>
@@ -38,8 +38,8 @@
 			this.request = Object.assign({}, this.$store.getters['request/requestById'](requestId));
 
 			this.$store.commit('pageStructure/setPageTitle', () => window.vm.$t('views.Office.pageTitle'));
-			this.$store.commit('pageStructure/setPageBackButton', true);
 			this.$store.commit('pageStructure/setBackButtonDefaultHref', this.$router.resolve({ name: 'Office' }).fullPath);
+			this.$store.commit('pageStructure/setPageBackButton', true);
 		},
 		methods: {
 			deleteRequest() {
