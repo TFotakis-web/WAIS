@@ -270,15 +270,7 @@
 			...mapGetters('platformData', ['companyOptions', 'bankOptions']),
 			...mapGetters('office', ['myOffice']),
 			companyOptionsAvailable() {
-				// Todo: Remove when backend ready
-				const insuranceCompaniesAvailable = [
-					'Am Trust',
-					'Brokers Union / Ergo',
-					'Brokers Union / Prime',
-					'Cromar/Lloyds',
-				];
-				return this.companyOptions.filter(el => insuranceCompaniesAvailable.includes(el.value));
-				// return this.companyOptions.filter(el => this.myOffice.insuranceCompaniesAvailable.includes(el.value));
+				return this.companyOptions.filter(el => this.myOffice.insuranceCompaniesAvailable.includes(el.value));
 			},
 		},
 	};
