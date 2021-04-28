@@ -183,13 +183,13 @@ type TransactionHistoryOutput {
 
 type RequestsOutput {
     id: ID
-    senderUsername: String!
-    senderEmail: String!
-    receiverEmail: String!
-    type: RequestType!
-    payload: CreateRequestPayload!
-    createdAt: AWSDateTime!
-    updatedAt: AWSDateTime!
+    senderUsername: String
+    senderEmail: String
+    receiverEmail: String
+    type: RequestType
+    payload: CreateRequestPayload
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
 }
 
 type ModelOfficeConnectionOutput {

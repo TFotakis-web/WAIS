@@ -377,11 +377,11 @@ module.exports = {
 
 				if (decision === 'ACCEPT') {
 					//Get the sender and receiver offices
-					const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
+					const senderOffice = await ddbAPI.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						return Promise.reject("Sender's Office not found.")
 					}
-					const receiverOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
+					const receiverOffice = await ddbAPI.getOfficeByOwnerUsername(receiverUserProfile.username)
 					if (!receiverOffice) {
 						return Promise.reject("Receiver's Office not found.")
 					}
@@ -408,7 +408,7 @@ module.exports = {
 
 				if (decision === 'ACCEPT') {
 					//Get the sender`s office
-					const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
+					const senderOffice = await ddbAPI.getOfficeByOwnerUsername(requestObject.senderUsername)
 					if (!senderOffice) {
 						return Promise.reject("Sender's Office not found.")
 					}
@@ -509,11 +509,26 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					updatedAt
+					type
+					senderUsername
+					senderEmail
+					receiverEmail
+					payload {
+						inviteEmployeeToOfficePayload {
+							email
+							empModelPermissions
+							empPagePermissions
+						}
+					}
 				}
 			}
 		`
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const result = response.data.createRequests
+		let result = response.data.createRequests
+		if (result?.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+			result.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(result.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+		}
 		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -535,12 +550,27 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
+					updatedAt
+					type
+					senderUsername
+					senderEmail
+					receiverEmail
+					payload {
+						inviteContractorToOfficePayload {
+							email
+							ctrModelPermissions
+							ctrPagePermissions
+						}
+					}
 				}
 			}
 		`
 
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const result = response.data.createRequests
+		let result = response.data.createRequests
+		if (result?.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+			result.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(result.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+		}
 		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
