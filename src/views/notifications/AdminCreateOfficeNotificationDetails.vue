@@ -198,7 +198,7 @@
 				this.resolveRequest({ id: this.request.id, decision: 'ACCEPT', payload: { createOfficePayload: payload } })
 					.then(() => {
 						this.$toast.saveSuccess();
-						this.$router.push({ name: 'Notifications' });
+						this.$router.push({ name: 'AdminNotifications' });
 					})
 					.catch((err) => this.$toast.error(err))
 					.finally(() => this.acceptLoading = false);
@@ -208,7 +208,7 @@
 				this.resolveRequest({ id: this.request.id, decision: 'REJECT' })
 					.then(() => {
 						this.$toast.saveSuccess();
-						this.$router.push({ name: this.$store.getters['auth/isAdmin'] ? 'AdminNotifications' : 'Notifications' });
+						this.$router.push({ name: 'AdminNotifications' });
 					})
 					.catch((err) => this.$toast.error(err))
 					.finally(() => this.rejectLoading = false);
