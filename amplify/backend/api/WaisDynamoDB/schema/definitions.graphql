@@ -152,7 +152,8 @@ input CreateOfficeInput {
     professionStartDate: AWSDate
     chamberRecordNumber: String
     office_logo: S3ObjectInput
-    insuranceCompanies: [InsuranceCompanyInput!]
+    insuranceCompanies: [InsuranceCompanyInput]
+    insuranceCompaniesAvailable: [String]
     subscriptionExpirationDate: AWSDate
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
@@ -180,7 +181,8 @@ input UpdateOfficeInput {
     civilLiabilityExpirationDate: AWSDate
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
-    insuranceCompanies: [InsuranceCompanyInput!]
+    insuranceCompanies: [InsuranceCompanyInput]
+    insuranceCompaniesAvailable: [String]
 }
 
 input DeleteOfficeInput {

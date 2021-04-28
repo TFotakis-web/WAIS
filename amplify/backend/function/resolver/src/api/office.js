@@ -63,6 +63,7 @@ module.exports = {
 									name
 									code
 								  }
+								  insuranceCompaniesAvailable
 								  createdAt
 								  updatedAt
 								}
@@ -484,6 +485,7 @@ module.exports = {
 			'insuranceLicenseExpirationDate',
 			'office_logo',
 			'insuranceCompanies',
+			'insuranceCompaniesAvailable',
 			'phone',
 			'professionStartDate',
 		]
@@ -522,6 +524,7 @@ module.exports = {
 						name
 						code
 					}
+					insuranceCompaniesAvailable
 					office_logo {
 						level
 						idToken
@@ -713,6 +716,7 @@ module.exports = {
 									name
 									code
 								  }
+								  insuranceCompaniesAvailable
 								  workforce {
 								  	items{
 										id
@@ -754,6 +758,9 @@ module.exports = {
 				}
 				if (!result?.office?.insuranceCompanies) {
 					result.office.insuranceCompanies = []
+				}
+				if (!result?.office?.insuranceCompaniesAvailable) {
+					result.office.insuranceCompaniesAvailable = []
 				}
 				if (!result?.office?.workforce) {
 					result.office.workforce = []
@@ -809,6 +816,7 @@ module.exports = {
 		createOfficeInput.employeesNumberLimit = 0
 		createOfficeInput.partnersNumberLimit = 10
 		createOfficeInput.insuranceCompanies = []
+		createOfficeInput.insuranceCompaniesAvailable = []
 		createOfficeInput.verified = false
 		createOfficeInput.bankAccountInfo = JSON.stringify([])
 

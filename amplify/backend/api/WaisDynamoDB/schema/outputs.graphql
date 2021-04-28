@@ -43,6 +43,7 @@ type OfficeOutput {
     bankAccountInfo: AWSJSON
     files: [S3Object]
     insuranceCompanies: [InsuranceCompany]
+    insuranceCompaniesAvailable: [String]
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
 }
@@ -274,6 +275,7 @@ type PartnerOfficeOutput{
     bankAccountInfo: AWSJSON
     files: [S3ObjectOutput]
     insuranceCompanies: [InsuranceCompanyOutput]
+    insuranceCompaniesAvailable: [String]
     workforce: [ModelOfficeUserConnectionConnection]
 }
 

@@ -206,7 +206,8 @@ input ResolveCreateOfficePayload {
     partnersNumberLimit: Int!
     employeesNumberLimit: Int!
     subscriptionExpirationDate: AWSDate!
-    insuranceCompanies: [InsuranceCompanyInput!]
+    insuranceCompanies: [InsuranceCompanyInput]
+    insuranceCompaniesAvailable: [String]
 }
 input ResolveOfficeAccessConnectionPayload {
     expirationDate: AWSTimestamp!

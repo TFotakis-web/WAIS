@@ -278,6 +278,7 @@ module.exports = {
 					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
 					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
 					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
+					createOfficeInput.insuranceCompaniesAvailable = callerPayload.createOfficePayload.insuranceCompaniesAvailable || []
 					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 					createOfficeInput.verified = true
 					createOfficeInput.bankAccountInfo = JSON.stringify([])
@@ -508,17 +509,11 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
-					createdAt
-					updatedAt
 				}
 			}
 		`
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responseData = response.data.createRequests
-		const result = requestInput
-		result.id = responseData.id
-		result.createdAt = responseData.createdAt
-		result.updatedAt = responseData.updatedAt
+		const result = response.data.createRequests
 		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
@@ -540,18 +535,12 @@ module.exports = {
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
-					createdAt
-					updatedAt
 				}
 			}
 		`
 
 		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responseData = response.data.createRequests
-		let result = requestInput
-		result.id = responseData.id
-		result.createdAt = responseData.createdAt
-		result.updatedAt = responseData.updatedAt
+		const result = response.data.createRequests
 		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},

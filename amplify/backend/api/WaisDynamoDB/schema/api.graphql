@@ -104,10 +104,10 @@ type Mutation {
     createOfficeRequest(input: CreateOfficeRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
-    createInviteEmployeeToOfficeRequest(input: InviteEmployeeRequestPayloadInput!): RequestsOutput
+    createInviteEmployeeToOfficeRequest(input: InviteEmployeeRequestPayloadInput!): IDOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
-    createInviteContractorToOfficeRequest(input: InviteContractorRequestPayloadInput!): RequestsOutput
+    createInviteContractorToOfficeRequest(input: InviteContractorRequestPayloadInput!): IDOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
     createOfficeConnectionRequest(input: OfficeConnectionRequestPayloadInput!): RequestsOutput

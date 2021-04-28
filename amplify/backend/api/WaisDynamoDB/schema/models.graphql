@@ -36,6 +36,7 @@ type Office
 
     # Insurance companies
     insuranceCompanies: [InsuranceCompany!]
+    insuranceCompaniesAvailable: [String]
 
     # Access to connected offices, private access
     officeConnections: [OfficeAccessConnection] @connection(keyName: "byFromOfficeName", fields: ["officeName"])
