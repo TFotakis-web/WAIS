@@ -42,6 +42,7 @@ export const updateOfficeDetails = /* GraphQL */ `
         name
         code
       }
+      insuranceCompaniesAvailable
       createdAt
       updatedAt
     }
@@ -589,85 +590,6 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
   ) {
     createInviteEmployeeToOfficeRequest(input: $input) {
       id
-      senderUsername
-      senderEmail
-      receiverEmail
-      type
-      payload {
-        createOfficePayload {
-          officeName
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          tin
-          professionStartDate
-          chamberRecordNumber
-          office_logo {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          comments
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-        }
-        createUnverifiedOfficePayload {
-          officeName
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          tin
-          professionStartDate
-          chamberRecordNumber
-          office_logo {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          comments
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          contractorPagePermissions
-          contractorModelPermissions
-        }
-        createOfficeConnectionPayload {
-          manager_email
-        }
-        inviteEmployeeToOfficePayload {
-          email
-          empModelPermissions
-          empPagePermissions
-        }
-        inviteContractorToOfficePayload {
-          ctrModelPermissions
-          ctrPagePermissions
-          email
-        }
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -677,85 +599,6 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
   ) {
     createInviteContractorToOfficeRequest(input: $input) {
       id
-      senderUsername
-      senderEmail
-      receiverEmail
-      type
-      payload {
-        createOfficePayload {
-          officeName
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          tin
-          professionStartDate
-          chamberRecordNumber
-          office_logo {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          comments
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-        }
-        createUnverifiedOfficePayload {
-          officeName
-          address
-          office_email
-          zip_code
-          mobile
-          phone
-          tin
-          professionStartDate
-          chamberRecordNumber
-          office_logo {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          insuranceLicenseExpirationDate
-          civilLiabilityExpirationDate
-          comments
-          files {
-            level
-            idToken
-            filePath
-            filename
-            contentType
-          }
-          contractorPagePermissions
-          contractorModelPermissions
-        }
-        createOfficeConnectionPayload {
-          manager_email
-        }
-        inviteEmployeeToOfficePayload {
-          email
-          empModelPermissions
-          empPagePermissions
-        }
-        inviteContractorToOfficePayload {
-          ctrModelPermissions
-          ctrPagePermissions
-          email
-        }
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1121,6 +964,7 @@ export const createOffice = /* GraphQL */ `
         name
         code
       }
+      insuranceCompaniesAvailable
       availableInsuranceCompanies {
         id
         officeName
@@ -1289,6 +1133,7 @@ export const createOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1408,6 +1253,7 @@ export const createOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1464,6 +1310,7 @@ export const createOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1531,6 +1378,7 @@ export const updateOffice = /* GraphQL */ `
         name
         code
       }
+      insuranceCompaniesAvailable
       availableInsuranceCompanies {
         id
         officeName
@@ -1699,6 +1547,7 @@ export const updateOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1818,6 +1667,7 @@ export const updateOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1874,6 +1724,7 @@ export const updateOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -1941,6 +1792,7 @@ export const deleteOffice = /* GraphQL */ `
         name
         code
       }
+      insuranceCompaniesAvailable
       availableInsuranceCompanies {
         id
         officeName
@@ -2109,6 +1961,7 @@ export const deleteOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -2228,6 +2081,7 @@ export const deleteOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -2284,6 +2138,7 @@ export const deleteOffice = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -2398,6 +2253,7 @@ export const createUserProfile = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -2683,6 +2539,7 @@ export const updateUserProfile = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -2968,6 +2825,7 @@ export const deleteUserProfile = /* GraphQL */ `
               name
               code
             }
+            insuranceCompaniesAvailable
             availableInsuranceCompanies {
               id
               officeName
@@ -3677,6 +3535,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -3810,6 +3669,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -3869,6 +3729,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -3891,6 +3752,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -3964,6 +3826,7 @@ export const createOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4083,6 +3946,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -4216,6 +4080,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4275,6 +4140,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4297,6 +4163,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4370,6 +4237,7 @@ export const updateOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4489,6 +4357,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -4622,6 +4491,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4681,6 +4551,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4703,6 +4574,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4776,6 +4648,7 @@ export const deleteOfficeUserConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -4891,6 +4764,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -5024,6 +4898,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5083,6 +4958,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5105,6 +4981,7 @@ export const createOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5233,6 +5110,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -5366,6 +5244,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5425,6 +5304,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5447,6 +5327,7 @@ export const updateOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5575,6 +5456,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -5708,6 +5590,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5767,6 +5650,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5789,6 +5673,7 @@ export const deleteOfficeContractConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -5921,6 +5806,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -6054,6 +5940,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6113,6 +6000,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6135,6 +6023,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6179,6 +6068,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -6312,6 +6202,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6371,6 +6262,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6393,6 +6285,7 @@ export const createOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6457,6 +6350,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -6590,6 +6484,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6649,6 +6544,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6671,6 +6567,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6715,6 +6612,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -6848,6 +6746,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6907,6 +6806,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6929,6 +6829,7 @@ export const updateOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -6993,6 +6894,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -7126,6 +7028,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7185,6 +7088,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7207,6 +7111,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7251,6 +7156,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
           name
           code
         }
+        insuranceCompaniesAvailable
         availableInsuranceCompanies {
           id
           officeName
@@ -7384,6 +7290,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7443,6 +7350,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7465,6 +7373,7 @@ export const deleteOfficeAccessConnection = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7556,6 +7465,7 @@ export const createTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7684,6 +7594,7 @@ export const createTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7830,6 +7741,7 @@ export const updateTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -7958,6 +7870,7 @@ export const updateTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -8104,6 +8017,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }
@@ -8232,6 +8146,7 @@ export const deleteTransactionHistory = /* GraphQL */ `
               civilLiabilityExpirationDate
               bankAccountInfo
               subscriptionExpirationDate
+              insuranceCompaniesAvailable
               createdAt
               updatedAt
             }

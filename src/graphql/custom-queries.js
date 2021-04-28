@@ -574,6 +574,7 @@ export const getWorkEnvironment = /* GraphQL */ `
 					name
 					code
 				}
+				insuranceCompaniesAvailable
 				createdAt
 				updatedAt
 			}
