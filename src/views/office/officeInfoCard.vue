@@ -158,7 +158,7 @@
 									<ion-item>
 										<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
 										<ion-select v-model="companyCode.name" required interface="popover">
-											<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
+											<ion-select-option v-for="o in companyOptionsAvailable" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
 										</ion-select>
 									</ion-item>
 								</ion-col>
@@ -270,6 +270,17 @@
 		computed: {
 			...mapGetters('platformData', ['companyOptions', 'bankOptions']),
 			...mapGetters('office', ['myOffice']),
+			companyOptionsAvailable() {
+				// Todo: Remove when backend ready
+				const insuranceCompaniesAvailable = [
+					'Am Trust',
+					'Brokers Union / Ergo',
+					'Brokers Union / Prime',
+					'Cromar/Lloyds',
+				];
+				return this.companyOptions.filter(el => insuranceCompaniesAvailable.includes(el.value));
+				// return this.companyOptions.filter(el => this.myOffice.insuranceCompaniesAvailable.includes(el.value));
+			},
 		},
 	};
 </script>
