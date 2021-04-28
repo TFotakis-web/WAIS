@@ -63,6 +63,7 @@
 						name: this.$t('components.navigation.navbar-item.notifications'),
 						to: { name: 'AdminNotifications' },
 						icon: this.$ionicons.notificationsOutline,
+						badge: () => this.$store.getters['request/requestsForMe'].length,
 					},
 
 					{
@@ -90,6 +91,7 @@
 						name: this.$t('components.navigation.navbar-item.notifications'),
 						to: { name: 'Notifications' },
 						icon: this.$ionicons.notificationsOutline,
+						badge: () => this.$store.getters['request/requestsForMe'].length,
 					},
 					{
 						name: this.$t('components.navigation.sidenav.pricing._groupName'),
