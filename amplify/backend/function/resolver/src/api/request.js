@@ -483,7 +483,7 @@ module.exports = {
 		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
 
 		//Transform the result to the IDOutput
-		result = JSON.stringify({id: result})
+		result = JSON.stringify({id: id})
 
 		console.log('RequestAPI.resolveRequest output: ' + result)
 		return result
