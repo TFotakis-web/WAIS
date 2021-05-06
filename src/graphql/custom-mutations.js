@@ -103,6 +103,85 @@ export const createInviteContractorToOfficeRequest = /* GraphQL */ `
 	) {
 		createInviteContractorToOfficeRequest(input: $input) {
 			id
+			senderUsername
+			senderEmail
+			receiverEmail
+			type
+			payload {
+				createOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
+				}
+				createOfficeConnectionPayload {
+					manager_email
+				}
+				inviteEmployeeToOfficePayload {
+					email
+					empModelPermissions
+					empPagePermissions
+				}
+				inviteContractorToOfficePayload {
+					ctrModelPermissions
+					ctrPagePermissions
+					email
+				}
+			}
+			createdAt
+			updatedAt
 		}
 	}
 `;
@@ -112,6 +191,85 @@ export const createInviteEmployeeToOfficeRequest = /* GraphQL */ `
 	) {
 		createInviteEmployeeToOfficeRequest(input: $input) {
 			id
+			senderUsername
+			senderEmail
+			receiverEmail
+			type
+			payload {
+				createOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+				}
+				createUnverifiedOfficePayload {
+					officeName
+					address
+					office_email
+					zip_code
+					mobile
+					phone
+					tin
+					professionStartDate
+					chamberRecordNumber
+					office_logo {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					insuranceLicenseExpirationDate
+					civilLiabilityExpirationDate
+					comments
+					files {
+						level
+						idToken
+						filePath
+						filename
+						contentType
+					}
+					contractorPagePermissions
+					contractorModelPermissions
+				}
+				createOfficeConnectionPayload {
+					manager_email
+				}
+				inviteEmployeeToOfficePayload {
+					email
+					empModelPermissions
+					empPagePermissions
+				}
+				inviteContractorToOfficePayload {
+					ctrModelPermissions
+					ctrPagePermissions
+					email
+				}
+			}
+			createdAt
+			updatedAt
 		}
 	}
 `;
