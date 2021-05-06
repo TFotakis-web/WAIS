@@ -16,7 +16,7 @@ module.exports = {
 	 * @param {*} gql
 	 * @param {String} operation
 	 */
-	execute: async (item, gql, operation) => {
+	execute: (item, gql, operation) => {
 		const req = new AWS.HttpRequest(APPSYNC_URL, REGION)
 		req.method = 'POST'
 		req.path = '/graphql'
@@ -31,7 +31,7 @@ module.exports = {
 		const signer = new AWS.Signers.V4(req, 'appsync', true)
 		signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate())
 
-		return await new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			const httpRequest = https.request({...req, host: ENDPOINT}, (response) => {
 				let chunks_of_data = [];
 

@@ -39,8 +39,8 @@ exports.handler = async event => {
     code: 200,
   }
 
-  //Create the following data structures for a new user
-  //UserProfile, UserWallet
+  //Create the following data structures for a new user in..
+  //UserProfile
   switch (event.action) {
     case 'CheckUniqueEmail':
       try {

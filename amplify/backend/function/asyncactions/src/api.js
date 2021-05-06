@@ -1,11 +1,11 @@
-const gqlQueries = require('./gql_queries')
+const queries = require('./queries')
 module.exports = {
 	/**
 	 * Initialize all required data structures for a new user.
 	 *
 	 * @param {Dict} event
 	 */
-	initUser: async (event) => {
+	initUser: (event) => {
 		console.log('InitUser with event: ' + JSON.stringify(event))
 		const userProfileItem = {
 			username: event.username,
@@ -23,18 +23,17 @@ module.exports = {
 			birthdate: null,
 			city: null,
 			profilePicture: null,
-			preferences: null,
+			preferences: "{}",
 			locale: null,
 			files: [],
 		}
-		return await gqlQueries.createUserProfile(userProfileItem)
+		return queries.createUserProfile(userProfileItem)
 	},
 
-	checkUniqueEmail: async (email) => {
-		console.log('CheckUniqueEmail input: ' + email)
-		const existingProfile = await gqlQueries.getUserProfileIdByEmail(email)
-		const result = existingProfile ? 'REJECT' : 'ACCEPT'
-		console.log('CheckUniqueEmail output: ' + result)
-		return result
+	checkUniqueEmail: (email) => {
+		return queries.getUserProfileByEmail(email)
+			.then(id => {
+				return !id;
+			})
 	},
 }

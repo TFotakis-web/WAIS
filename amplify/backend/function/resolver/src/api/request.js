@@ -4,8 +4,7 @@ const userQueries = require('./user')
 const officeQueries = require('./office')
 
 module.exports = {
-	getRequestsFromUser: async (username, filter, limit, nextToken) => {
-		console.log('requestAPI.getRequestsFromUser input: ' + [username, JSON.stringify(filter), limit, nextToken])
+	getRequestsFromUser: (username, filter, limit, nextToken) => {
 		const query = /* GraphQL */ `
 			query getRequestsFromUser($username: String!, $filter: ModelRequestsFilterInput, $limit: Int, $nextToken: String) {
 				listRequestsBySenderUsername(limit: $limit, nextToken: $nextToken, filter: $filter, senderUsername: $username) {
@@ -65,25 +64,26 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute(
+		return gqlUtil.execute(
 			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
-			query,
-			'getRequestsFromUser',
-		)
-		const result = response.data.listRequestsBySenderUsername
-		result?.items.forEach((request) => {  //Quick page permissions fix
-			if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
-				request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
-			}
-			if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
-				request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
-			}
-		})
-		console.log('requestAPI.getRequestsFromUser output: ' + JSON.stringify(result))
-		return result
+			query, 'getRequestsFromUser')
+			.then(response => {
+				let result = response?.data?.listRequestsBySenderUsername
+				if (result === undefined) {
+					return Promise.reject(new Error('Failed to get Requests.'))
+				}
+				result?.items.forEach((request) => {  //Quick page permissions fix
+					if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+						request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+					}
+					if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+						request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+					}
+				})
+				return result
+			})
 	},
-	getRequestsForUser: async (username, email, filter, limit, nextToken) => {
-		console.log('requestAPI.getRequestsForUser input: ' + [username, email, filter, limit, nextToken])
+	getRequestsForUser: (username, email, filter, limit, nextToken) => {
 		const query = /* GraphQL */ `
 			query getRequestsForUser($email: String!, $filter: ModelRequestsFilterInput, $limit: Int, $nextToken: String) {
 				listRequestsByReceiverEmail(limit: $limit, nextToken: $nextToken, filter: $filter, receiverEmail: $email) {
@@ -143,31 +143,33 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute(
+		return gqlUtil.execute(
 			{email: email, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
-			query,
-			'getRequestsForUser',
-		)
-		const result = response.data.listRequestsByReceiverEmail
-		result?.items.forEach((request) => {  //Quick page permissions fix
-			if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
-				request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
-			}
-			if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
-				request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
-			}
-		})
-		console.log('requestAPI.getRequestsForUser output: ' + JSON.stringify(result))
-		return result
+			query, 'getRequestsForUser')
+			.then(response => {
+				const result = response?.data?.listRequestsByReceiverEmail
+				if (result === undefined) {
+					return Promise.reject(new Error('Failed to get Requests.'))
+				}
+				result?.items.forEach((request) => {  //Quick page permissions fix
+					if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+						request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+					}
+					if (request.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+						request.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(request.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+					}
+				})
+				return result
+			})
 	},
 
+	//TODO
 	resolveRequest: async (callerUsername, caller_email, groups, id, decision, callerPayload) => {
-		console.log('requestAPI.resolveRequest input: ' + [callerUsername, caller_email, JSON.stringify(groups), id, decision, JSON.stringify(callerPayload)])
 		if (!decision) {
-			return Promise.reject("No 'decision' field provided.")
+			return Promise.reject(new Error("No 'decision' field provided."))
 		}
 		if (!id) {
-			return Promise.reject("No 'id' field provided.")
+			return Promise.reject(new Error("No 'id' field provided."))
 		}
 
 		// Fetch the request with the provided ID
@@ -230,7 +232,7 @@ module.exports = {
 			}
 		`
 		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
-			.then(resp => resp.data.listRequestss.items[0])
+			.then(resp => resp?.data?.listRequestss?.items[0])
 			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err.message)))
 
 		if (!requestObject) {
@@ -241,13 +243,13 @@ module.exports = {
 
 		//Retrieve the sender's UserProfile - User who send the request
 		const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
-		if (senderUserProfile == null) {
+		if (!senderUserProfile) {
 			return Promise.reject(`User profile for sender was not found.`)
 		}
 
 		//Retrieve the profile of the user resolving this request
 		const receiverUserProfile = await userQueries.getUserProfileByEmail(caller_email)
-		if (receiverUserProfile == null) {
+		if (!receiverUserProfile) {
 			return Promise.reject(`User profile for sender was not found.`)
 		}
 
@@ -260,7 +262,6 @@ module.exports = {
 					return Promise.reject('Admin privileges are required to resolve this request.')
 				}
 
-				//TODO make this a DDB Transaction
 				if (decision === 'ACCEPT') {
 					//Required
 					if (!callerPayload) {
@@ -492,10 +493,12 @@ module.exports = {
 	/*
 	 * Mutations
 	 */
-	createInviteEmployeeToOfficeRequest: async (username, email, groups, input) => {
-		console.log('requestAPI.createInviteEmployeeToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+	createInviteEmployeeToOfficeRequest: (username, email, groups, input) => {
 		if (!username) {
 			return Promise.reject('Invalid username or unauthenticated user.')
+		}
+		if (!input.email) {
+			return Promise.reject(new Error('Receiver\'s email is invalid.'))
 		}
 		input.empPagePermissions = JSON.stringify(input.empPagePermissions)
 		const requestInput = {
@@ -524,19 +527,25 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		let result = response.data.createRequests
-		if (result?.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
-			result.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(result.payload.inviteEmployeeToOfficePayload.empPagePermissions)
-		}
-		console.log('requestAPI.createInviteEmployeeToOfficeRequest output: ' + JSON.stringify(result))
-		return result
+		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => {
+				let result = response?.data?.createRequests
+				if (result === undefined) {
+					return Promise.reject(new Error('Failed to create request.'))
+				}
+				if (result?.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
+					result.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(result.payload.inviteEmployeeToOfficePayload.empPagePermissions)
+				}
+				return result
+			})
 	},
 
-	createInviteContractorToOfficeRequest: async (username, email, groups, input) => {
-		console.log('requestAPI.createInviteContractorToOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+	createInviteContractorToOfficeRequest: (username, email, groups, input) => {
 		if (!username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
+		}
+		if (!input.email) {
+			return Promise.reject(new Error('Receiver\'s email is invalid.'))
 		}
 		input.ctrPagePermissions = JSON.stringify(input.ctrPagePermissions)
 		const requestInput = {
@@ -566,19 +575,22 @@ module.exports = {
 			}
 		`
 
-		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		let result = response.data.createRequests
-		if (result?.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
-			result.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(result.payload.inviteContractorToOfficePayload.ctrPagePermissions)
-		}
-		console.log('requestAPI.createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
-		return result
+		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => {
+				let result = response?.data?.createRequests
+				if (result === undefined) {
+					return Promise.reject(new Error('Failed to create request.'))
+				}
+				if (result?.payload?.inviteContractorToOfficePayload?.ctrPagePermissions) {
+					result.payload.inviteContractorToOfficePayload.ctrPagePermissions = JSON.parse(result.payload.inviteContractorToOfficePayload.ctrPagePermissions)
+				}
+				return result
+			})
 	},
 
-	createOfficeRequest: async (username, email, groups, input) => {
-		console.log('requestAPI.createOfficeRequest input: ' + [username, email, groups, JSON.stringify(input)])
+	createOfficeRequest: (username, email, groups, input) => {
 		if (!username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 
 		//Patch input
@@ -603,22 +615,28 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		if (response.errors) {
-			throw  new Error(`Failed to create request with error: ${response.errors}`)
-		}
-		const responseData = response.data.createRequests
-		const result = requestInput
-		result.id = responseData.id
-		result.createdAt = responseData.createdAt
-		result.updatedAt = responseData.updatedAt
-		console.log('requestAPI.createOfficeRequest output: ' + JSON.stringify(result))
-		return result
+		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => {
+				const responseData = response.data.createRequests
+				if (responseData === undefined) {
+					return Promise.reject(new Error('Failed to create Request.'))
+				}
+				const result = requestInput
+				result.id = responseData.id
+				result.createdAt = responseData.createdAt
+				result.updatedAt = responseData.updatedAt
+				return result
+			})
 	},
-	createOfficeConnectionRequest: async (username, email, groups, input) => {
-		console.log('requestAPI.createOfficeConnectionRequest input: ' + [username, email, groups, JSON.stringify(input)])
+	createOfficeConnectionRequest: (username, email, groups, input) => {
 		if (!username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
+		}
+		if (!input?.manager_email) {
+			return Promise.reject(new Error('Manager email is required.'))
+		}
+		if (!email) {
+			return Promise.reject(new Error('Caller\'s email is invalid.'))
 		}
 		const requestInput = {
 			senderUsername: username,
@@ -636,22 +654,24 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-		const responseData = response.data.createRequests
-		const result = requestInput
-		result.id = responseData.id
-		result.createdAt = responseData.createdAt
-		result.updatedAt = responseData.updatedAt
-		console.log('requestAPI.createOfficeConnectionRequest output: ' + JSON.stringify(result))
-		return result
+		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => {
+				const responseData = response?.data?.createRequests
+				if (responseData === undefined) {
+					return Promise.reject(new Error('Failed to create Request.'))
+				}
+				const result = requestInput
+				result.id = responseData.id
+				result.createdAt = responseData.createdAt
+				result.updatedAt = responseData.updatedAt
+				return result
+			})
 	},
 
-	deleteRequestsSentByMe: async (username, email, groups, input, condition) => {
-		console.log('requestAPI.deleteRequestsSentByMe input: ' + [username, email, groups, input, condition])
+	deleteRequestsSentByMe: (username, email, groups, input, condition) => {
 		if (!username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-
 		const expanded_condition = {
 			and: [condition || {senderUsername: {ne: ''}}, {senderUsername: {eq: username}}, {senderEmail: {eq: email}}],
 		}
@@ -662,12 +682,16 @@ module.exports = {
 				}
 			}
 		`
-		const response = await gqlUtil.execute({
+		return gqlUtil.execute({
 			input: input,
 			condition: expanded_condition
 		}, mutation, 'deleteRequestsSentByMe')
-		const result = response.data.deleteRequests
-		console.log('requestAPI.deleteRequestsSentByMe output: ' + JSON.stringify(result))
-		return result
+			.then(response => {
+				const result = response?.data?.deleteRequests
+				if (result === undefined) {
+					return Promise.reject(new Error('Failed to delete Requests.'))
+				}
+				return result
+			})
 	},
 }
