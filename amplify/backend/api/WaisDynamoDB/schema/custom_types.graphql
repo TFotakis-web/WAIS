@@ -76,55 +76,6 @@ enum RequestDecision {
     REJECT
 }
 
-##### Create Request
-
-type CreateRequestPayload {
-    createOfficePayload: CreateOfficeRequestPayload
-    createUnverifiedOfficePayload: CreateUnverifiedOfficePayload
-    createOfficeConnectionPayload: OfficeConnectionRequestPayload
-    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
-    inviteContractorToOfficePayload: InviteContractorRequestPayload
-}
-input CreateRequestPayloadInput {
-    createOfficePayload: CreateOfficeRequestPayloadInput
-    createUnverifiedOfficePayload: CreateUnverifiedOfficePayloadInput
-    createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
-    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
-    inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
-}
-
-type CreateOfficeRequestPayload {
-    officeName: String!
-    address: String
-    office_email: String!
-    zip_code: String
-    mobile: String
-    phone: String!
-    tin: String!
-    professionStartDate: AWSDate
-    chamberRecordNumber: String
-    office_logo: S3Object
-    insuranceLicenseExpirationDate: AWSDate
-    civilLiabilityExpirationDate: AWSDate
-    comments: String
-    files: [S3Object]
-}
-input CreateOfficeRequestPayloadInput {
-    officeName: String!
-    address: String
-    office_email: String!
-    zip_code: String
-    mobile: String
-    phone: String!
-    tin: String!
-    professionStartDate: AWSDate
-    chamberRecordNumber: String
-    office_logo: S3ObjectInput
-    insuranceLicenseExpirationDate: AWSDate
-    civilLiabilityExpirationDate: AWSDate
-    comments: String
-    files: [S3ObjectInput]
-}
 
 type CreateUnverifiedOfficePayload {
     officeName: String
@@ -163,6 +114,33 @@ input CreateUnverifiedOfficePayloadInput {
     contractorModelPermissions: AWSJSON
 }
 
+##### Create Request
+type CreateRequestPayload {
+    verifyOfficePayload: VerifyOfficeRequestPayload
+    createOfficeConnectionPayload: OfficeConnectionRequestPayload
+    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
+    inviteContractorToOfficePayload: InviteContractorRequestPayload
+}
+input CreateRequestPayloadInput {
+    verifyOfficePayload: VerifyOfficeRequestPayloadInput
+    createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
+    inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
+    inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
+}
+
+type VerifyOfficeRequestPayload {
+    officeId: ID!
+    officeName: String!
+    comments: String
+    files: [S3Object]
+}
+input VerifyOfficeRequestPayloadInput {
+    officeId: ID!
+    officeName: String!
+    comments: String
+    files: [S3ObjectInput]
+}
+
 type OfficeConnectionRequestPayload {
     manager_email: String!
 }
@@ -194,13 +172,13 @@ input InviteContractorRequestPayloadInput {
 
 ##### Resolve request
 input ResolveRequestPayloadInput {
-    createOfficePayload: ResolveCreateOfficePayload
+    verifyOfficePayload: ResolveVerifyOfficePayload
     createOfficeConnectionPayload: ResolveOfficeAccessConnectionPayload
     inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
     inviteContractorToOfficePayload: ResolveInviteContractorPayload
 }
 
-input ResolveCreateOfficePayload {
+input ResolveVerifyOfficePayload {
     managerModelPermissions: [ModelPermission!]!
     managerPagePermissions: AWSJSON!
     partnersNumberLimit: Int!

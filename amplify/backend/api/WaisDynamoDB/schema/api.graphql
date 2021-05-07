@@ -101,7 +101,7 @@ type Mutation {
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    createOfficeRequest(input: CreateOfficeRequestPayloadInput!): RequestsOutput
+    verifyOfficeRequest(input: CreateOfficeRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
     createInviteEmployeeToOfficeRequest(input: InviteEmployeeRequestPayloadInput!): RequestsOutput
