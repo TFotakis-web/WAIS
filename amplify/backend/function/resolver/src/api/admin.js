@@ -10,9 +10,9 @@ const bucket = process.env.STORAGE_WAISSTORAGE_BUCKETNAME
 
 module.exports = {
 	/* Queries */
-	getS3Object: (username, email, s3obj, groups) => {
+	getS3Object: (username, email, s3obj) => {
 		const path = `${s3obj.level}/${s3obj.idToken}/${s3obj.filePath}/${s3obj.filename}`
-		s3.getObject({Bucket: bucket, Key: path}).promise()
+		return s3.getObject({Bucket: bucket, Key: path}).promise()
 			.then(data => {
 				const parsed_data = data.Body.toString('base64')
 				return {
@@ -21,7 +21,6 @@ module.exports = {
 					path: path,
 					contentType: s3obj.contentType || null
 				}
-
 			})
 	},
 	getUserProfileByUsername: (username) => {

@@ -82,10 +82,9 @@ module.exports = {
 		const query = `mutation createUserProfile($input: CreateUserProfileInput!){
 			createUserProfile(input: $input) {
 				id
-				username
 			}
 		}`
-		gqlHelper({input: item}, query, 'createUserProfile')
+		return gqlHelper({input: item}, query, 'createUserProfile')
 			.then(resp => {
 				const result = resp?.data?.createUserProfile?.id
 				if (result === undefined) {
@@ -103,6 +102,8 @@ module.exports = {
 			ExpressionAttributeNames: {'#emailField': 'email'},
 			ExpressionAttributeValues: {':emailValue': email},
 			KeyConditionExpression: '#emailField = :emailValue',
-		}).promise()
+		})
+			.promise()
+			.then(data => data?.Items?.values()?.next())
 	},
 }

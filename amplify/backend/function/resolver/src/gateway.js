@@ -558,7 +558,7 @@ module.exports = {
 		if (!args.username) {
 			return Promise.reject('Invalid username or unauthenticated user.')
 		}
-		const result = await adminAPI.getS3Object(args.username, args.email, args.s3obj, args.groups)
+		const result = await adminAPI.getS3Object(args.username, args.email, args.s3obj)
 		console.log('getS3Object preview output: ' + JSON.stringify(result.contentType))
 		return result
 	},

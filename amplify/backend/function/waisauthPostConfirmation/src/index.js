@@ -1,14 +1,32 @@
-/*
-  this file will loop through all js modules which are uploaded to the lambda resource,
-  provided that the file names (without extension) are included in the "MODULES" env variable.
-  "MODULES" is a comma-delimmited string.
-*/
-const moduleNames = process.env.MODULES.split(',');
-const modules = moduleNames.map(name => require(`./${name}`));
+const AWS = require('aws-sdk');
+AWS.config.update({region: process.env.REGION})
+const lambda = new AWS.Lambda({
+	region: process.env.REGION,
+});
 
-exports.handler = (event, context, callback) => {
-  for (let i = 0; i < modules.length; i += 1) {
-    const { handler } = modules[i];
-    handler(event, context, callback);
-  }
-};
+exports.handler = async (event, context, callback) => {
+	return lambda
+		.invoke({
+			FunctionName: 'asyncactions-' + process.env.ENV,
+			Payload: JSON.stringify({
+				action: 'InitUser',
+				username: event.userName,
+				email: event.request.userAttributes.email,
+				phone_number: event.request.userAttributes.phone_number,
+			}),
+		})
+		.promise()
+		.then(result => {
+			const returnedPayload = JSON.parse(result?.Payload || '{}')
+			if (returnedPayload) {
+				console.log('User added successfully: ' + event.userName)
+				callback(null, event)
+			} else {
+				return Promise.reject(new Error('Failed to initialize User.'))
+			}
+		})
+		.catch(error => {
+			console.log('Error: ' + JSON.stringify(error))
+			callback(error)
+		})
+}

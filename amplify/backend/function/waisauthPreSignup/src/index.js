@@ -1,13 +1,32 @@
-/*
-  this file will loop through all js modules which are uploaded to the lambda resource,
-  provided that the file names (without extension) are included in the "MODULES" env variable.
-  "MODULES" is a comma-delimmited string.
-*/
+const AWS = require('aws-sdk');
+AWS.config.update({region: process.env.REGION})
+const lambda = new AWS.Lambda({
+	region: process.env.REGION,
+})
 
 exports.handler = (event, context, callback) => {
-  const modules = process.env.MODULES.split(',');
-  for (let i = 0; i < modules.length; i += 1) {
-    const { handler } = require(`./${modules[i]}`);
-    handler(event, context, callback);
-  }
-};
+	console.log('PreSignUp trigger with event=[' + JSON.stringify(event) + '] and context=[' + JSON.stringify(context) + ']')
+	return lambda
+		.invoke({
+			FunctionName: 'asyncactions-' + process.env.ENV,
+			Payload: JSON.stringify({
+				action: 'CheckUniqueEmail',
+				username: event.userName,
+				email: event.request.userAttributes.email,
+			}),
+		})
+		.promise()
+		.then(result => {
+			console.log('Lambda response: ' + JSON.stringify(result))
+			const returnedPayload = JSON.parse(result?.Payload || '{}')
+			if (returnedPayload === false) {
+				callback(null, event)
+			} else {
+				return Promise.reject(new Error('Input e-mail already exists'))
+			}
+		})
+		.catch(error => {
+			console.log('Error: ' + JSON.stringify(error))
+			callback(error)
+		})
+}
