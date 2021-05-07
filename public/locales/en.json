@@ -73,6 +73,11 @@
     },
     "localeDropdown": {
       "language": "Language"
+    },
+    "base": {
+      "sideNavigations": {
+        "toggleDarkTheme": "Toggle Dark Theme"
+      }
     }
   },
   "views": {
@@ -357,6 +362,6 @@
     "epirusBank": "Epirus Bank",
     "serresBank": "Serres Bank",
     "bankOfThessaly": "Bank Of Thessaly",
-    "other":"Other"
+    "other": "Other"
   }
 }

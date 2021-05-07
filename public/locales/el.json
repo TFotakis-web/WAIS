@@ -73,6 +73,11 @@
     },
     "localeDropdown": {
       "language": "Γλώσσα"
+    },
+    "base": {
+      "sideNavigations": {
+        "toggleDarkTheme": "Σκοτεινό Θέμα"
+      }
     }
   },
   "views": {
@@ -227,7 +232,7 @@
     "issuing": "Έκδοση",
     "chooseFile": "Επιλέξτε αρχείο",
     "civilLiabilityExpirationDate": "Ημ. ληξης αστικής ευθύνης",
-    "personalInfo": "Προσωπικές Στοιχεία",
+    "personalInfo": "Προσωπικά Στοιχεία",
     "professionalInfo": "Επαγγελματικά στοιχεία",
     "vehicleInfo": "Στοιχεία Οχήματος",
     "contractInfo": "Στοιχεία Συμβολαίου",

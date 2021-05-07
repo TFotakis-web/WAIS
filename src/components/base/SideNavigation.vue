@@ -7,7 +7,7 @@
 			<ion-list lines="none">
 				<ion-item lines="none" class="topLevelRoute">
 					<ion-icon slot="start" :icon="$ionicons.moonOutline"></ion-icon>
-					<ion-label>Toggle Dark Theme</ion-label>
+					<ion-label>{{ $t('components.base.sideNavigations.toggleDarkTheme')}}</ion-label>
 					<ion-toggle id="themeToggle" slot="end" :checked="colorTheme === 'dark'" @ionChange="toggleTheme"/>
 				</ion-item>
 				<localeDropdown class="topLevelRoute"/>
