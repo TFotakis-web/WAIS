@@ -5,7 +5,7 @@ const lambda = new AWS.Lambda({
 })
 
 exports.handler = (event, context, callback) => {
-	console.log('PreSignUp trigger with event=[' + JSON.stringify(event) + '] and context=[' + JSON.stringify(context) + ']')
+	console.log('PreSignUp trigger with event=[' + JSON.stringify(event, null, 2) + '] and context=[' + JSON.stringify(context, null, 2) + ']')
 	return lambda
 		.invoke({
 			FunctionName: 'asyncactions-' + process.env.ENV,

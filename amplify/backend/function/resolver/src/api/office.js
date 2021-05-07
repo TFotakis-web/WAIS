@@ -17,6 +17,7 @@ module.exports = {
 			.promise()
 			.then(res => res.Items)
 	},
+
 	getOfficeById: (id) => {
 		return docClient.get({
 			TableName: 'Office' + ddbSuffix,
@@ -25,6 +26,7 @@ module.exports = {
 			.promise()
 			.then(res => res.Item)
 	},
+
 	/**
 	 * ==DDB TRANSACTION==
 	 * Update members and put user into members iff remaining > 0 AND members dont contain empUsername

@@ -20,20 +20,24 @@ module.exports = {
 		return ddb.query({
 			TableName: 'UserProfile' + ddbSuffix,
 			IndexName: 'byEmail',
+			KeyConditionExpression: '#emailField = :emailValue',
 			ExpressionAttributeNames: {'#emailField': 'email'},
 			ExpressionAttributeValues: {':emailValue': email},
-			KeyConditionExpression: '#emailField = :emailValue',
-		}).promise()
+		})
+			.promise()
+			.then(data => data?.Items[0])
 	},
 
 	getUserProfileByUsername: (username) => {
 		return ddb.query({
 			TableName: 'UserProfile' + ddbSuffix,
 			IndexName: 'byUsername',
+			KeyConditionExpression: '#usernameField = :usernameValue',
 			ExpressionAttributeNames: {'#usernameField': 'username'},
 			ExpressionAttributeValues: {':usernameValue': username},
-			KeyConditionExpression: '#usernameField = :usernameValue',
-		}).promise()
+		})
+			.promise()
+			.then(data => data?.Items[0])
 	},
 
 	getUserRoleByUsername: (username) => {
@@ -41,10 +45,12 @@ module.exports = {
 			TableName: 'UserProfile' + ddbSuffix,
 			IndexName: 'byUsername',
 			ProjectionExpression: "id, username, role",
+			KeyConditionExpression: '#usernameField = :usernameValue',
 			ExpressionAttributeNames: {'#usernameField': 'username'},
 			ExpressionAttributeValues: {':usernameValue': username},
-			KeyConditionExpression: '#usernameField = :usernameValue',
-		}).promise()
+		})
+			.promise()
+			.then(data => data?.Items[0])
 	},
 
 	getUserModelPermissionsForOffice: (username, officeId) => {

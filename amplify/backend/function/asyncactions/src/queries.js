@@ -104,6 +104,6 @@ module.exports = {
 			KeyConditionExpression: '#emailField = :emailValue',
 		})
 			.promise()
-			.then(data => data?.Items?.values()?.next())
+			.then(data => data?.Items[0])
 	},
 }
