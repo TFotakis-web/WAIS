@@ -12,6 +12,7 @@ Resources:
       Runtime: nodejs14.x
       Environment:
         Variables:
-          API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT: "o2xgz3b4kbaa5i7cjmmelyrhhy"
+          API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT: "gvpopt2wmbfexlgiqb7edajxmq"
           REGION: eu-central-1
+          ENV: dev
           API_WAISDYNAMODB_GRAPHQLAPIENDPOINTOUTPUT: "https://4qvouxiweremris62rudgnsnvq.appsync-api.eu-central-1.amazonaws.com/graphql"

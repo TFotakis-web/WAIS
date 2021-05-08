@@ -1071,18 +1071,6 @@ module.exports = {
 	},
 
 	createUnverifiedOffice: (caller_username, officeInput) => {
-		const getUserProfileQuery = /* GraphQL */ `
-			query getUserProfileByUsername($username: String!) {
-				listUserProfileByUsername(username: $username) {
-					items {
-						id
-						username
-						role
-					}
-				}
-			}
-		`
-
 		const createOfficeMutation = /* GraphQL */ `
 			mutation createOffice($input: CreateOfficeInput!) {
 				createOffice(input: $input) {
@@ -1145,11 +1133,14 @@ module.exports = {
 					return Promise.reject(Promise.reject(new Error('Office e-mail can not be empty.')))
 				}
 
-				const response = await gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')
-				const createdOfficeId = response?.data?.createOffice?.id
-				if (!createdOfficeId) {
-					return Promise.reject(new Error('Failed to create new office: ' + response.errors.message))
-				}
+				const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')//TODO continue from here
+					.then(response => {
+						const createdOfficeId = response?.data?.createOffice?.id
+						if (!createdOfficeId) {
+							return Promise.reject(new Error('Failed to create new office: ' + response.errors.message))
+						}
+					})
+
 
 				//Create a connection between the new Office and the contractor-manager.
 				const createTUCInput = {

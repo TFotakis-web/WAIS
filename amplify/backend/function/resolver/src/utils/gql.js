@@ -44,8 +44,9 @@ module.exports = {
 					try {
 						const result = JSON.parse(contents.toString())
 						if ('errors' in result) {
-							console.log('GQL error: ' + JSON.stringify(result))
-							reject(result)
+							const err = JSON.stringify(result.errors, null, 2)
+							console.log('GQL error: ' + err)
+							reject(err)
 						} else {
 							console.log('GQL data: ' + JSON.stringify(result))
 							resolve(result)
