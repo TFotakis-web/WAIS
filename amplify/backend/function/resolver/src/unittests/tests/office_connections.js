@@ -8,7 +8,7 @@ module.exports = {
 		// await gateway.getEmployeeUserProfilesForManagerUsername({username: 'tfotakis'})
 		//await gateway.getPartnerSummary({username: 'tfotakis'})
 
-		const office = await gateway.getOfficesOfUser({username: 'username_2'})
+		const office = await gateway.getOfficeByOwnerUsername({username: 'username_2'})
 		console.log(JSON.stringify(office))
 	}
 }

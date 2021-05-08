@@ -195,12 +195,12 @@ const resolvers = {
 				condition: event.arguments.condition,
 			})
 		},
-		createOfficeRequest: (event) => {
-			return api.createOfficeRequest({
+		verifyOfficeRequest: (event) => {
+			return api.verifyOfficeRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
-				requestInput: event.arguments.input,
+				message: event.arguments.message,
 			})
 		},
 		createInviteEmployeeToOfficeRequest: (event) => {
@@ -402,7 +402,7 @@ exports.handler = (event, context) => {
 				})
 				.catch(reason => {
 					console.log('Resolver error: ' + JSON.stringify(reason, null, 2))
-					return reason
+					throw reason
 				})
 		} else {
 			return Promise.reject(new Error('Resolver not found.'))

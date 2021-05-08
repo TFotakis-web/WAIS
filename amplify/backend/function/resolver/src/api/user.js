@@ -53,6 +53,21 @@ module.exports = {
 			.then(data => data?.Items[0])
 	},
 
+	updateUserRoleByUserId: (id, role) => {
+		if (!id) {
+			return Promise.reject(new Error(`Invalid ID: ${id.toString()}`))
+		}
+		if (['EMPLOYEE', 'CONTRACTOR', 'MANAGER', 'UNKNOWN'].indexOf(role) < 0) {
+			return Promise.reject(new Error(`Invalid role provided '${role.toString()}'`))
+		}
+		return ddb.update({
+			TableName: 'UserProfile' + ddbSuffix,
+			Key: {"id": id},
+			UpdateExpression: "set role = :role",
+			ExpressionAttributeValues: {":role": role}
+		}).promise()
+	},
+
 	getUserModelPermissionsForOffice: (username, officeId) => {
 		const query = /* GraphQL */ `
 			query getUserModelPermissionsForOffice($username: String!, $filter: ModelOfficeUserConnectionConditionInput, $limit: Int) {

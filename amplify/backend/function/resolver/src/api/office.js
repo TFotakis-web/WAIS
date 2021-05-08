@@ -5,6 +5,9 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
+const hashCore = require('node-object-hash');
+const hashEngine = hashCore({sort: false, coerce: true, enc: "base64"});
+
 module.exports = {
 	getOfficeByOwnerUsername: (username) => {
 		return docClient.query({
@@ -17,7 +20,6 @@ module.exports = {
 			.promise()
 			.then(res => res.Items)
 	},
-
 	getOfficeById: (id) => {
 		return docClient.get({
 			TableName: 'Office' + ddbSuffix,
@@ -26,7 +28,6 @@ module.exports = {
 			.promise()
 			.then(res => res.Item)
 	},
-
 	/**
 	 * ==DDB TRANSACTION==
 	 * Update members and put user into members iff remaining > 0 AND members dont contain empUsername
@@ -107,9 +108,9 @@ module.exports = {
 	 * Transaction.
 	 * Connects 2 Offices via a OfficeAccessConnection.
 	 */
-	addOfficeAccessConnection: (senderOfficeId, senderOfficeName, receiverOfficeId, receiverOfficeName, insuranceCompanyName, insuranceCompanyCode) => {
+	addOfficeAccessConnection: (senderOffice, receiverOffice, insuranceCompanyName, insuranceCompanyCode) => {
 		const now = new Date().toISOString()
-		const connId = senderOfficeId + '_' + receiverOfficeId
+		const connId = hashEngine.hash([senderOffice.id, receiverOffice.id, insuranceCompanyName, insuranceCompanyCode])
 		return docClient.transactWrite({
 			TransactItems: [
 				{
@@ -117,7 +118,7 @@ module.exports = {
 					Update: {
 						TableName: 'Office' + ddbSuffix,
 						Key: {
-							id: senderOfficeId,
+							id: senderOffice.id,
 						},
 						ConditionExpression: '#partnersNumberLimit > :zero',
 						UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
@@ -137,7 +138,7 @@ module.exports = {
 					Update: {
 						TableName: 'Office' + ddbSuffix,
 						Key: {
-							id: receiverOfficeId,
+							id: receiverOffice.id,
 						},
 						ConditionExpression: '#partnersNumberLimit > :zero',
 						UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
@@ -162,10 +163,10 @@ module.exports = {
 							id: connId,
 							insuranceCompanyCode: insuranceCompanyCode,
 							insuranceCompanyName: insuranceCompanyName,
-							fromId: senderOfficeId,
-							toId: receiverOfficeId,
-							fromOfficeName: senderOfficeName,
-							toOfficeName: receiverOfficeName,
+							fromId: senderOffice.id,
+							toId: receiverOffice.id,
+							fromOfficeName: senderOffice.officeName,
+							toOfficeName: receiverOffice.officeName,
 							expirationDate: new Date(new Date().getTime() + 1000 * 60 * 24 * 7).getTime(),
 							message: ' ',
 							createdAt: now,
@@ -1125,6 +1126,7 @@ module.exports = {
 				}
 
 				//Add extra fields to the Office
+				createOfficeInput.id = callerUserProfile.id
 				createOfficeInput.ownerUsername = caller_username
 				createOfficeInput.employeesNumberLimit = 0
 				createOfficeInput.partnersNumberLimit = 10

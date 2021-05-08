@@ -270,13 +270,13 @@ module.exports = {
 		console.log('createCustomerForOffice output: ' + JSON.stringify(result))
 		return result
 	},
-	createOfficeRequest: (args) => {
-		console.log('createOfficeRequest input: ' + JSON.stringify(args))
+	verifyOfficeRequest: (args) => {
+		console.log('verifyOfficeRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = requestAPI.createOfficeRequest(args.username, args.email, args.groups, args.requestInput)
-		console.log('createOfficeRequest output: ' + JSON.stringify(result))
+		const result = requestAPI.verifyOfficeRequest(args.username, args.email, args.groups, args.message)
+		console.log('verifyOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
 	createInviteEmployeeToOfficeRequest: (args) => {

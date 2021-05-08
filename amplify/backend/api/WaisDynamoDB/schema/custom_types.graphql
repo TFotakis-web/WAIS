@@ -48,7 +48,7 @@ type InsurancePackage {
 }
 
 enum RequestType {
-    CREATE_OFFICE
+    VERIFY_OFFICE
     CREATE_OFFICE_CONNECTION
     INVITE_EMPLOYEE_TO_OFFICE
     INVITE_CONTRACTOR_TO_OFFICE
@@ -129,16 +129,12 @@ input CreateRequestPayloadInput {
 }
 
 type VerifyOfficeRequestPayload {
-    officeId: ID!
-    officeName: String!
-    comments: String
-    files: [S3Object]
+    message: String
+    office: CreateUnverifiedOfficePayload!
 }
 input VerifyOfficeRequestPayloadInput {
-    officeId: ID!
-    officeName: String!
-    comments: String
-    files: [S3ObjectInput]
+    message: String
+    office: CreateUnverifiedOfficePayloadInput!
 }
 
 type OfficeConnectionRequestPayload {

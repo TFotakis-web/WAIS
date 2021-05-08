@@ -1,9 +1,32 @@
 const gqlUtil = require('../utils/gql')
-const ddbAPI = require('../utils/ddb')
 const userQueries = require('./user')
 const officeQueries = require('./office')
 
+//Init the DDB client and update regional settings
+const AWS = require('aws-sdk')
+AWS.config.update({
+	region: process.env.REGION,
+})
+
+//DDB client
+const ddb = new AWS.DynamoDB.DocumentClient({
+	region: process.env.REGION,
+})
+
+//Amplify DDB table suffix
+const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
+
+
 module.exports = {
+	getRequestById: (id) => {
+		return ddb.get({TableName: 'Requests' + ddbSuffix, Key: {id: id}})
+			.promise()
+			.then(data => data.Item)
+	},
+	deleteRequestById: (id) => {
+		return ddb.delete({TableName: 'Office' + ddbSuffix, Key: {id: id}})
+			.promise()
+	},
 	getRequestsFromUser: (username, filter, limit, nextToken) => {
 		const query = /* GraphQL */ `
 			query getRequestsFromUser($username: String!, $filter: ModelRequestsFilterInput, $limit: Int, $nextToken: String) {
@@ -163,7 +186,6 @@ module.exports = {
 			})
 	},
 
-	//TODO
 	resolveRequest: async (callerUsername, caller_email, groups, id, decision, callerPayload) => {
 		if (!decision) {
 			return Promise.reject(new Error("No 'decision' field provided."))
@@ -172,322 +194,260 @@ module.exports = {
 			return Promise.reject(new Error("No 'id' field provided."))
 		}
 
-		// Fetch the request with the provided ID
-		const query1 = /* GraphQL */ `
-			query getRequestById($filter: ModelRequestsFilterInput!) {
-				listRequestss(filter: $filter) {
-					items {
-						id
-						senderUsername
-						senderEmail
-						receiverEmail
-						type
-						createdAt
-						updatedAt
-						payload {
-							createOfficePayload {
-								officeName
-								zip_code
-								tin
-								professionStartDate
-								phone
-								office_email
-								mobile
-								insuranceLicenseExpirationDate
-								address
-								chamberRecordNumber
-								civilLiabilityExpirationDate
-								comments
-								office_logo {
-									level
-									idToken
-									filePath
-									filename
-									contentType
+		//Start fetching the caller's profile
+		const callerProfilePromise = userQueries.getUserProfileByEmail(caller_email)
+
+		return module.exports.getRequestById(id)
+			.catch(reason => {
+				console.log('Failed to get Request with error: ' + JSON.stringify(reason, null, 2))
+				return Promise.reject(reason)
+			})
+			.then(async function (requestObject) {
+				console.log('Request object: ' + JSON.stringify(requestObject))
+
+				//Block and fetch the sender's and receiver's UserProfile
+				let senderUPFound = true, callerUPFound = true
+				const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
+					.catch(reason => {
+						console.log(`Failed to find sender's UserProfile for request ID: ${requestObject.id} and reason: ${JSON.stringify(reason)}`)
+						senderUPFound = false
+					})
+				if (!senderUPFound) {
+					return Promise.reject(new Error(`Failed to find sender's UserProfile for request ID: ${requestObject.id}`))
+				}
+				const receiverUserProfile = await callerProfilePromise
+					.catch(reason => {
+						console.log(`Failed to find caller's UserProfile for request ID: ${requestObject.id} and reason: ${JSON.stringify(reason)}`)
+						callerUPFound = false
+					})
+				if (!callerUPFound) {
+					return Promise.reject(new Error(`Failed to find caller's UserProfile for request ID: ${requestObject.id}`))
+				}
+
+				//Resolve the request
+				console.log(`Decision for ${requestObject.type}: ${decision}`)
+				switch (requestObject.type) {
+					case 'VERIFY_OFFICE': {
+						if (groups == null || groups.indexOf('admin') === -1) {
+							return Promise.reject(new Error('Admin privileges are required to resolve this request.'))
+						}
+
+						if (decision === 'ACCEPT') {
+							//Required
+							if (!callerPayload) {
+								return Promise.reject(new Error("No 'payload' field provided."))
+							}
+
+							//Create the new Office
+							const createOfficeInput = requestObject?.payload?.verifyOfficePayload
+							if (!createOfficeInput) {
+								return Promise.reject(new Error('Request has invalid payload.'))
+							}
+
+							//Add extra fields to the Office
+							createOfficeInput.ownerUsername = senderUserProfile.username
+							createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
+							createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
+							createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
+							createOfficeInput.insuranceCompaniesAvailable = callerPayload.createOfficePayload.insuranceCompaniesAvailable || []
+							createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
+							createOfficeInput.verified = true
+							createOfficeInput.bankAccountInfo = JSON.stringify([])
+
+							//Delete some fields that should only be present in the request and not in the office
+							delete createOfficeInput.comments
+
+							//Empty and Null checks
+							if (!createOfficeInput?.office_email) {
+								return Promise.reject(new Error('Office e-mail can not be empty.'))
+							}
+
+							const mutation1 = /* GraphQL */ `
+								mutation createOffice($input: CreateOfficeInput!) {
+									createOffice(input: $input) {
+										id
+									}
 								}
-								files {
-									level
-									idToken
-									filePath
-									filename
-									contentType
+							`
+
+							let createOfficeErrorMsg = 'Failed to create new Office.'
+							const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
+								.then(response => response?.data?.createOffice?.id)
+								.catch(reason => {
+									createOfficeErrorMsg = 'Failed to create new office: ' + JSON.stringify(reason, null, 2)
+								})
+							if (!createdOfficeId) {
+								return Promise.reject(new Error(createOfficeErrorMsg))
+							}
+							console.log(`Created Office with ID= ${createdOfficeId}`)
+
+							//Create a connection between the new Office and the manager.
+							const createOUCInput = {
+								officeId: createdOfficeId,
+								officeName: createOfficeInput.officeName,
+								userId: senderUserProfile.id,
+								username: senderUserProfile.username,
+								pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
+								modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
+								employeeType: 'MANAGER',
+							}
+
+							const mutation2 = /* GraphQL */ `
+								mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
+									createOfficeUserConnection(input: $input) {
+										id
+									}
 								}
+							`
+
+							let createOUCErrorMsg = 'Failed to create new Office-User Connection.'
+							const createOUCResult = await gqlUtil.execute({input: createOUCInput}, mutation2, 'createOfficeUserConnection')
+								.then(createOUCResponse => createOUCResponse?.data?.createOfficeUserConnection)
+								.catch(reason => {
+									createOUCErrorMsg = 'Failed to create new Office-User Connection: ' + JSON.stringify(reason, null, 2)
+								})
+							if (!createOUCResult) {
+								return Promise.reject(new Error(createOUCErrorMsg))
 							}
-							createOfficeConnectionPayload {
-								manager_email
+							console.log(`Created OUC: ${JSON.stringify(createOUCResult)}`)
+
+							//Update role in the UserProfile
+							let updateRoleErrorMsg = 'Failed to update new UserProfile role.'
+							const updateSuccess = await userQueries.updateUserRoleByUserId(senderUserProfile.id, 'MANAGER')
+								.then(() => true)
+								.catch(err => {
+									updateRoleErrorMsg = 'Failed to update new UserProfile role with error: ' + JSON.stringify(err)
+									return false
+								})
+							if (!updateSuccess) {
+								return Promise.reject(new Error(updateRoleErrorMsg))
 							}
-							inviteEmployeeToOfficePayload {
-								email
-								empModelPermissions
-								empPagePermissions
-							}
-							inviteContractorToOfficePayload {
-								email
-								ctrModelPermissions
-								ctrPagePermissions
-							}
+							return createdOfficeId
+						} else {
+							console.log(`Request with ID ${id} was rejected.`)
 						}
+						break
 					}
-				}
-			}
-		`
-		const requestObject = await gqlUtil.execute({filter: {id: {eq: id}}}, query1, 'getRequestById')
-			.then(resp => resp?.data?.listRequestss?.items[0])
-			.catch(err => console.error('Unhandled error in getRequestById: ' + JSON.stringify(err.message)))
+					case 'CREATE_OFFICE_CONNECTION': {
+						//Ensure that the caller-employee is the receiver of this request
+						if (caller_email !== requestObject.receiverEmail) {
+							return Promise.reject(new Error('Caller is not the receiver of this request (e-mail mismatch).'))
+						}
 
-		if (!requestObject) {
-			return Promise.reject('Request with provided ID was not found.')
-		} else {
-			console.log('Request object: ' + JSON.stringify(requestObject))
-		}
-
-		//Retrieve the sender's UserProfile - User who send the request
-		const senderUserProfile = await userQueries.getUserProfileByUsername(requestObject.senderUsername)
-		if (!senderUserProfile) {
-			return Promise.reject(`User profile for sender was not found.`)
-		}
-
-		//Retrieve the profile of the user resolving this request
-		const receiverUserProfile = await userQueries.getUserProfileByEmail(caller_email)
-		if (!receiverUserProfile) {
-			return Promise.reject(`User profile for sender was not found.`)
-		}
-
-		//Resolve the request
-		let result = ''
-		console.log(`Decision for ${requestObject.type}: ${decision}`)
-		switch (requestObject.type) {
-			case 'CREATE_OFFICE': {
-				if (groups == null || groups.indexOf('admin') === -1) {
-					return Promise.reject('Admin privileges are required to resolve this request.')
-				}
-
-				if (decision === 'ACCEPT') {
-					//Required
-					if (!callerPayload) {
-						return Promise.reject("No 'payload' field provided.")
-					}
-
-					//Create the new Office
-					const createOfficeInput = requestObject.payload.createOfficePayload
-					if (!createOfficeInput) {
-						return Promise.reject('Request has invalid payload.')
-					}
-
-					//Add extra fields to the Office
-					createOfficeInput.ownerUsername = senderUserProfile.username
-					createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
-					createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
-					createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
-					createOfficeInput.insuranceCompaniesAvailable = callerPayload.createOfficePayload.insuranceCompaniesAvailable || []
-					createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
-					createOfficeInput.verified = true
-					createOfficeInput.bankAccountInfo = JSON.stringify([])
-
-					//Delete some fields that should only be present in the request and not in the office
-					delete createOfficeInput.comments
-
-					//Empty and Null checks
-					if (!createOfficeInput.office_email) {
-						return Promise.reject('Office e-mail can not be empty.')
-					}
-
-					const mutation1 = /* GraphQL */ `
-						mutation createOffice($input: CreateOfficeInput!) {
-							createOffice(input: $input) {
-								id
+						if (decision === 'ACCEPT') {
+							//Get the sender and receiver offices
+							const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
+							if (!senderOffice) {
+								return Promise.reject(new Error("Sender's Office not found."))
 							}
-						}
-					`
-
-					let createdOfficeId = null
-					try {
-						const response = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
-						createdOfficeId = response.data.createOffice.id
-						if (!createdOfficeId) {
-							return Promise.reject('Failed to create new office: ' + response.errors.message)
-						}
-					} catch (err) {
-						console.error('Failed to create new office: ' + JSON.stringify(err))
-						return Promise.reject('Failed to create new office: ' + JSON.stringify(err))
-					}
-
-					//Create a connection between the new Office and the manager.
-					const createTUCInput = {
-						officeId: createdOfficeId,
-						officeName: createOfficeInput.officeName,
-						userId: senderUserProfile.id,
-						username: senderUserProfile.username,
-						pagePermissions: JSON.stringify(callerPayload.createOfficePayload.managerPagePermissions),
-						modelPermissions: callerPayload.createOfficePayload.managerModelPermissions,
-						employeeType: 'MANAGER',
-					}
-
-					const mutation2 = /* GraphQL */ `
-						mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
-							createOfficeUserConnection(input: $input) {
-								id
+							const receiverOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
+							if (!receiverOffice) {
+								return Promise.reject(new Error("Receiver's Office not found."))
 							}
-						}
-					`
 
-					try {
-						const createOUCResponse = await gqlUtil.execute({input: createTUCInput}, mutation2, 'createOfficeUserConnection')
-						const createOUCResult = createOUCResponse.data.createOfficeUserConnection
-						if (!createOUCResult) {
-							return Promise.reject('Failed to create new Office-User connection: ' + createOUCResponse.errors.message)
-						}
-						console.log(`Created OUC: ${JSON.stringify(createOUCResult)}`)
-					} catch (err) {
-						console.error('Unhandled error in createOfficeUserConnection: ' + JSON.stringify(err))
-						return Promise.reject('Failed to create new Office-User connection: ' + JSON.stringify(err))
-					}
-
-					//Update role in the UserProfile
-					const mutation = /* GraphQL */ `
-						mutation updateUserProfileDetails($input: UpdateUserProfileInput!) {
-							updateUserProfile(input: $input) {
-								id
+							//Transaction, add the new connection
+							try {
+								return await officeQueries.addOfficeAccessConnection(senderOffice, receiverOffice, 'comp1', 'code1')//TODO change
+							} catch (err) {
+								return Promise.reject(new Error(
+									'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',
+								))
 							}
+						} else {
+							console.log(`Request with ID ${id} was rejected.`)
 						}
-					`
-					const upInput = {
-						id: senderUserProfile.id,
-						role: 'MANAGER',
+						break
 					}
-					const resultUP = await gqlUtil.execute({input: upInput}, mutation, 'updateUserProfileDetails')
-						.then(response => response.data.updateUserProfile.id)
-						.catch(err => console.error('Unhandled error in updateUserProfileDetails: ' + JSON.stringify(err)))
+					case 'INVITE_EMPLOYEE_TO_OFFICE': {
+						//Ensure that the caller-employee is the receiver of this request
+						if (caller_email !== requestObject.receiverEmail) {
+							throw  new Error('Caller is not the receiver of this request (e-mail mismatch).')
+						}
 
-					if (!resultUP) {
-						return Promise.reject('Failed to update Manager`s UserProfile role.')
+						if (decision === 'ACCEPT') {
+							//Get the sender`s office
+							const senderOffice = await officeQueries.getOfficeByOwnerUsername(requestObject.senderUsername)
+							if (!senderOffice) {
+								return Promise.reject(new Error("Sender's Office not found."))
+							}
+							//Ensure that the User has no other connections
+							const isUnemployed = await userQueries.checkIfUserIsUnemployed(receiverUserProfile.username)
+							if (!isUnemployed) {
+								return Promise.reject(new Error("User is a member of another Office and therefore can't join a new one."))
+							}
+
+							//Get the permissions (decided by manager)
+							const modelPermissions = requestObject.payload.inviteEmployeeToOfficePayload.empModelPermissions
+							const pagePermissions = requestObject.payload.inviteEmployeeToOfficePayload.empPagePermissions //TODO stringify?
+
+							//Add the Employee to the new Office and create the connection between User and Office
+							try {
+								const empAddRes = await officeQueries.addEmployeeToOffice(
+									senderOffice,
+									senderUserProfile.id,
+									receiverUserProfile.username,
+									requestObject.id,
+									receiverUserProfile.id,
+									modelPermissions,
+									pagePermissions,
+								)
+								console.log('Invite emp tx: ' + JSON.stringify(empAddRes))
+								return receiverUserProfile.id
+							} catch (err) {
+								return Promise.reject(new Error('Failed to add employee to Office, ensure that the Office is allowed to invite employees.'))
+							}
+						} else {
+							console.log(`Request with ID ${id} was rejected.`)
+						}
+						break
 					}
+					case 'INVITE_CONTRACTOR_TO_OFFICE': {
+						//Create an unverified office
+						if (decision === 'ACCEPT') {
+							//Required
+							if (!callerPayload) {
+								return Promise.reject(new Error("No 'payload' field provided."))
+							}
 
-					result = createdOfficeId
-					console.log(`Request with ID ${id} was accepted.`)
-				} else {
-					console.log(`Request with ID ${id} was rejected.`)
+							if (receiverUserProfile.role !== 'CONTRACTOR') {
+								return Promise.reject(new Error('Receiver is not a Contractor.'))
+							}
+
+							//Create a connection between the contractor office and the manager that invited you
+							const contractorOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
+							const otherOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
+							return await officeQueries.addOfficeAccessConnection(contractorOffice, otherOffice, 'comp1', 'code1')//FIXME
+						} else {
+							console.log(`Request with ID ${id} was rejected.`)
+						}
+						break
+					}
+					default: {
+						return Promise.reject(new Error(`Invalid request type: ${requestObject.type}`))
+					}
 				}
-				break
-			}
-			case 'CREATE_OFFICE_CONNECTION': {
-				//Ensure that the caller-employee is the receiver of this request
-				if (caller_email !== requestObject.receiverEmail) {
-					throw  new Error('Caller is not the receiver of this request (e-mail mismatch).')
-				}
-
-				if (decision === 'ACCEPT') {
-					//Get the sender and receiver offices
-					const senderOffice = await ddbAPI.getOfficeByOwnerUsername(requestObject.senderUsername)
-					if (!senderOffice) {
-						return Promise.reject("Sender's Office not found.")
-					}
-					const receiverOffice = await ddbAPI.getOfficeByOwnerUsername(receiverUserProfile.username)
-					if (!receiverOffice) {
-						return Promise.reject("Receiver's Office not found.")
-					}
-
-					//Transaction, add the new connection
-					try {
-						result = await ddbAPI.addOfficeConnection(senderOffice, receiverOffice)
-					} catch (err) {
-						return Promise.reject(
-							'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',
-						)
-					}
-					console.log(`Request with ID ${id} was accepted.`)
-				} else {
-					console.log(`Request with ID ${id} was rejected.`)
-				}
-				break
-			}
-			case 'INVITE_EMPLOYEE_TO_OFFICE': {
-				//Ensure that the caller-employee is the receiver of this request
-				if (caller_email !== requestObject.receiverEmail) {
-					throw  new Error('Caller is not the receiver of this request (e-mail mismatch).')
-				}
-
-				if (decision === 'ACCEPT') {
-					//Get the sender`s office
-					const senderOffice = await ddbAPI.getOfficeByOwnerUsername(requestObject.senderUsername)
-					if (!senderOffice) {
-						return Promise.reject("Sender's Office not found.")
-					}
-					//Ensure that the User has no other connections
-					const isUnemployed = await userQueries.checkIfUserIsUnemployed(receiverUserProfile.username)
-					if (!isUnemployed) {
-						return Promise.reject("User is a member of another Office and therefore can't join a new one.")
-					}
-
-					//Get the permissions (decided by manager)
-					const modelPermissions = requestObject.payload.inviteEmployeeToOfficePayload.empModelPermissions
-					const pagePermissions = requestObject.payload.inviteEmployeeToOfficePayload.empPagePermissions //TODO stringify?
-
-					//Add the Employee to the new Office and create the connection between User and Office
-					try {
-						const empAddRes = await ddbAPI.addEmployeeToOffice(
-							senderOffice,
-							senderUserProfile.id,
-							receiverUserProfile.username,
-							requestObject.id,
-							receiverUserProfile.id,
-							modelPermissions,
-							pagePermissions,
-						)
-						console.log('Invite emp tx: ' + JSON.stringify(empAddRes))
-						result = receiverUserProfile.id
-					} catch (err) {
-						return Promise.reject('Failed to add employee to Office, ensure that the Office is allowed to invite employees.')
-					}
-					console.log(`Request with ID ${id} was accepted.`)
-				} else {
-					console.log(`Request with ID ${id} was rejected.`)
-				}
-				break
-			}
-			case 'INVITE_CONTRACTOR_TO_OFFICE': {
-				//Create an unverified office
-				if (decision === 'ACCEPT') {
-					//Required
-					if (!callerPayload) {
-						return Promise.reject("No 'payload' field provided.")
-					}
-
-					if (receiverUserProfile.role !== 'CONTRACTOR') {
-						return Promise.reject('Receiver is not a Contractor.')
-					}
-
-					//Create a connection between the contractor office and the manager that invited you
-					const contractorOffice = officeQueries.getOfficeDetailsAndPermissionsByUsername(receiverUserProfile.username)
-					const otherOffice = officeQueries.getOfficeDetailsAndPermissionsByUsername(senderUserProfile.username);
-					result = ddbAPI.addOfficeConnection(contractorOffice, otherOffice)
-					console.log('Contractor office connection complete.')
-				} else {
-					console.log(`Request with ID ${id} was rejected.`)
-				}
-				break
-			}
-			default: {
-				return Promise.reject('Invalid request type.')
-			}
-		}
-
-		//Delete the resolved request
-		const mutation0 = /* GraphQL */ `
-			mutation deleteResolvedRequest($input: DeleteRequestsInput!) {
-				deleteRequests(input: $input) {
-					id
-				}
-			}
-		`
-		const delResponse = await gqlUtil.execute({input: {id: id}}, mutation0, 'deleteResolvedRequest')
-		console.log(`Request with id=${id} was deleted with message: ${JSON.stringify(delResponse)}`)
-
-		//Transform the result to the IDOutput
-		result = JSON.stringify({id: id})
-
-		console.log('RequestAPI.resolveRequest output: ' + result)
-		return result
+			})
+			.catch(reason => {
+				const msg = 'Unhandled error in resolveRequest with reason: ' + JSON.stringify(reason, null, 2)
+				console.log(msg)
+				return Promise.resolve()
+			})
+			.then(async function () {
+				//Delete the resolved request
+				let deleted = true
+				await module.exports.deleteRequestById(id)
+					.then(() => console.log(`Request with id=${id} was deleted.`))
+					.catch(reason => {
+						console.log(`Failed to delete request with ID=${id} with reason: ${reason}.`)
+						deleted = false
+					})
+				return JSON.stringify({id: id})
+			})
+			.catch(reason => {
+				const msg = 'Unhandled error in resolveRequest final catch with reason: ' + JSON.stringify(reason, null, 2)
+				console.log(msg)
+				return Promise.reject(new Error(msg))
+			})
 	},
 
 	/*
@@ -495,7 +455,7 @@ module.exports = {
 	 */
 	createInviteEmployeeToOfficeRequest: (username, email, groups, input) => {
 		if (!username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 		if (!input.email) {
 			return Promise.reject(new Error('Receiver\'s email is invalid.'))
@@ -588,44 +548,48 @@ module.exports = {
 			})
 	},
 
-	createOfficeRequest: (username, email, groups, input) => {
+	/**
+	 * Requirements: The caller must have an unverified Office and must hold a role of UNKNOWN.
+	 */
+	verifyOfficeRequest: (username, email, groups, message) => {
 		if (!username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-
-		//Patch input
-		const requestInput = {
-			senderUsername: username,
-			senderEmail: email,
-			type: 'CREATE_OFFICE',
-			receiverEmail: 'admin@wais.com',
-			payload: {createOfficePayload: input},
-		}
-
-		if (requestInput.payload.createOfficePayload == null || requestInput.payload.createOfficePayload === '{}') {
-			return Promise.reject('Invalid payload.')
 		}
 
 		const mutation = /* GraphQL */ `
 			mutation createRequest($input: CreateRequestsInput!) {
 				createRequests(input: $input) {
 					id
-					createdAt
-					updatedAt
+					senderUsername
+					senderEmail
+					receiverEmail
+					type
+					payload {
+						officeId
+						message
+					}
 				}
 			}
 		`
-		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+
+		//Get *existing* office
+		return officeQueries.getOfficeByOwnerUsername(username)
+			.then(unverifiedOffice => {
+				return {
+					senderUsername: username,
+					senderEmail: email,
+					type: 'CREATE_OFFICE',
+					receiverEmail: 'admin@wais.com',
+					payload: {office: unverifiedOffice, message: message || ''},
+				}
+			})
+			.then(requestInput => gqlUtil.execute({input: requestInput}, mutation, 'createRequest'))
 			.then(response => {
-				const responseData = response.data.createRequests
+				const responseData = response?.data?.createRequests
 				if (responseData === undefined) {
 					return Promise.reject(new Error('Failed to create Request.'))
 				}
-				const result = requestInput
-				result.id = responseData.id
-				result.createdAt = responseData.createdAt
-				result.updatedAt = responseData.updatedAt
-				return result
+				return responseData
 			})
 	},
 	createOfficeConnectionRequest: (username, email, groups, input) => {

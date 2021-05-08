@@ -13,26 +13,6 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
 module.exports = {
-
-	getRequestById: async (id) => {
-		console.log('getRequestById id: ' + id)
-		try {
-			const resp = await ddb
-				.get({
-					TableName: 'Requests' + ddbSuffix,
-					Key: {id: id},
-				})
-				.promise()
-			console.log('getRequestById result: ' + JSON.stringify(resp))
-			if (!resp.Item) {
-				return null
-			}
-			return resp.Item
-		} catch (err) {
-			return err
-		}
-	},
-
 	getUserProfileByEmail: async (email) => {
 		console.log('getUserProfileByEmail email: ' + email)
 		try {
@@ -100,27 +80,6 @@ module.exports = {
 		}
 	},
 
-	getOfficeByOwnerUsername: async (username) => {
-		console.log('getOfficeByOwnerUsername username: ' + username)
-		try {
-			const resp = await ddb
-				.query({
-					TableName: 'Office' + ddbSuffix,
-					IndexName: 'byOwnerUsername',
-					ExpressionAttributeNames: {'#ownerUsernameFieldName': 'ownerUsername'},
-					KeyConditionExpression: '#ownerUsernameFieldName = :inputUsername',
-					ExpressionAttributeValues: {':inputUsername': username},
-				})
-				.promise()
-			console.log('getOfficeByOwnerUsername result: ' + JSON.stringify(resp))
-			if (!resp.Items) {
-				return null
-			}
-			return resp.Items[0]
-		} catch (err) {
-			return err
-		}
-	},
 	createOfficeIfNotExists: async (item) => {
 		console.log('Attempting to add a new Office: ' + JSON.stringify(item))
 		try {

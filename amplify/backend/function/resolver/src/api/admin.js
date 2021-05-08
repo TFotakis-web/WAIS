@@ -1,5 +1,6 @@
 const gqlUtil = require('../utils/gql')
 const userAPI = require('../api/user')
+const officeAPI = require('../api/office')
 
 const AWS = require('aws-sdk')
 AWS.config.update({
