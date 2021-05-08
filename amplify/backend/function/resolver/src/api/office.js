@@ -1083,15 +1083,7 @@ module.exports = {
 			mutation createOfficeUserConnection($input: CreateOfficeUserConnectionInput!) {
 				createOfficeUserConnection(input: $input) {
 					id
-				}
-			}
-		`
-
-		//Update role in the UserProfile
-		const updateProfileMutation = /* GraphQL */ `
-			mutation updateUserProfileDetails($input: UpdateUserProfileInput!) {
-				updateUserProfile(input: $input) {
-					id
+					officeId
 				}
 			}
 		`
@@ -1133,43 +1125,33 @@ module.exports = {
 					return Promise.reject(Promise.reject(new Error('Office e-mail can not be empty.')))
 				}
 
-				const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')//TODO continue from here
+				return gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')
 					.then(response => {
 						const createdOfficeId = response?.data?.createOffice?.id
 						if (!createdOfficeId) {
 							return Promise.reject(new Error('Failed to create new office: ' + response.errors.message))
 						}
+						return createdOfficeId
 					})
-
-
-				//Create a connection between the new Office and the contractor-manager.
-				const createTUCInput = {
-					officeId: createdOfficeId,
-					officeName: createOfficeInput.officeName,
-					userId: callerUserProfile.id,
-					username: callerUserProfile.username,
-					pagePermissions: JSON.stringify(officeInput.managerPagePermissions),
-					modelPermissions: officeInput.managerModelPermissions,
-					employeeType: 'MANAGER',
-				}
-
-				const createOUCResponse = await gqlUtil.execute({input: createTUCInput}, createOfficeUserConnectionMutation, 'createOfficeUserConnection')
-				const createOUCResult = createOUCResponse?.data?.createOfficeUserConnection
-				if (!createOUCResult) {
-					return Promise.reject(new Error('Failed to create new Office-User connection: ' + createOUCResponse.errors.message))
-				}
-
-				const upInput = {
-					id: callerUserProfile.id,
-					role: 'CONTRACTOR',
-				}
-				const updateUPResponse = await gqlUtil.execute({input: upInput}, updateProfileMutation, 'updateUserProfileDetails')
-				const resultUP = updateUPResponse?.data?.updateUserProfile?.id
-				if (!resultUP) {
-					return Promise.reject(new Error('Failed to update Contractor`s UserProfile role.'))
-				}
-
-				return {id: createdOfficeId}
+					.then(createdOfficeId => { //TODO continue from here
+						return {
+							officeId: createdOfficeId,
+							officeName: createOfficeInput.officeName,
+							userId: callerUserProfile.id,
+							username: callerUserProfile.username,
+							pagePermissions: JSON.stringify([]),
+							modelPermissions: [],
+							employeeType: 'MANAGER',
+						}
+					}).then(createOUCInput => {
+						return gqlUtil.execute({input: createOUCInput}, createOfficeUserConnectionMutation, 'createOfficeUserConnection')
+					}).then(createOUCResponse => {
+						const createdOfficeId = createOUCResponse?.data?.createOfficeUserConnection?.id
+						if (!createdOfficeId) {
+							return Promise.reject(new Error('Failed to create new Office-User connection: ' + createOUCResponse.errors.message))
+						}
+						return {id: createdOfficeId}
+					})
 			})
 	}
 }
