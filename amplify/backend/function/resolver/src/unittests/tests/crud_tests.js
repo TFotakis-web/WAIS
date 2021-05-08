@@ -1,10 +1,8 @@
 const assert = require('assert')
 const util = require('util');
 
-const usersAPI = require('../../api/user')
-
 module.exports = {
-	UserProfile: async (ddb, gql, gateway) => {
+	UserProfile: async (gql, gateway) => {
 		console.log('CRUD UserProfile')
 
 		//The chosen ID for this test object
@@ -155,14 +153,13 @@ module.exports = {
 				}
 			}
 		`
-		let readUP = null
 		try {
 			const response = await gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
-			readUP = response.data.listUserProfileByUsername.items[0]
+			const readUP = response?.data?.listUserProfileByUsername.items[0]
+			assert(util.isDeepStrictEqual(readUP, createdUserProfile))
 		} catch (err) {
 			return Promise.reject(err.message)
 		}
-		assert(util.isDeepStrictEqual(readUP, createdUserProfile))
 		console.log('UserProfile read succeeded.')
 
 		//Update
@@ -170,7 +167,7 @@ module.exports = {
 			id: id,
 			city: createdUserProfile.city + '_UPDATED'
 		}
-		const updatedUserProfile = await usersAPI.updateUserProfileDetails(createdUserProfile.username, updateInput)
+		const updatedUserProfile = await gateway.updateUserProfileDetails({username: createdUserProfile.username, requestInput: updateInput})
 		if (!updatedUserProfile) {
 			throw new Error('UserProfile update failed.')
 		}
@@ -200,7 +197,7 @@ module.exports = {
 		console.log('UserProfile delete succeeded.')
 
 		console.log('UserProfile CRUD tests passed successfully.')
-		return {}
+		return Promise.resolve({})
 	}
 }
 

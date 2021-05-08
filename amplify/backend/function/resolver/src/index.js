@@ -401,7 +401,7 @@ exports.handler = (event, context) => {
 					return value
 				})
 				.catch(reason => {
-					console.log('Resolver error: ' + JSON.stringify(reason, null, 2))
+					console.error(reason)
 					throw reason
 				})
 		} else {

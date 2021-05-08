@@ -199,13 +199,10 @@ module.exports = {
 		return result
 	},
 	updateUserProfileDetails: (args) => {
-		console.log('updateUserProfileDetails input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = userAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
-		console.log('updateUserProfileDetails output: ' + JSON.stringify(result))
-		return result
+		return userAPI.updateUserProfileDetails(args.username, args.requestInput, args.condition)
 	},
 	createVehicleForOffice: (args) => {
 		console.log('createVehicleForOffice input: ' + JSON.stringify(args))
@@ -546,28 +543,21 @@ module.exports = {
 		return result
 	},
 	getAvailableInsuranceCompaniesForOffice: (args) => {
-		console.log('getAvailableInsuranceCompaniesForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = officeAPI.getAvailableInsuranceCompaniesForOffice(args.office, args.username)
-		console.log('getAvailableInsuranceCompaniesForOffice output: ' + JSON.stringify(result))
-		return result
+		return officeAPI.getAvailableInsuranceCompaniesForOffice(args.office, args.username)
 	},
 	getS3Object: (args) => {
-		console.log('getS3Object input: ' + JSON.stringify(args))
 		if (!args.groups || args.groups.indexOf('admin') < 0) {
 			return Promise.reject(new Error('Insufficient privileges.'))
 		}
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = adminAPI.getS3Object(args.username, args.email, args.s3obj)
-		console.log('getS3Object preview output: ' + JSON.stringify(result.contentType))
-		return result
+		return adminAPI.getS3Object(args.username, args.email, args.s3obj)
 	},
 	getUserProfileByUsername: (args) => {
-		console.log('getUserProfileByUsername input: ' + JSON.stringify(args))
 		if (!args.groups || args.groups.indexOf('admin') < 0) {
 			return Promise.reject(new Error('Insufficient privileges.'))
 		}
@@ -577,24 +567,16 @@ module.exports = {
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username.'))
 		}
-		const result = adminAPI.getUserProfileByUsername(args.username)
-		console.log('getUserProfileByUsername preview output: ' + JSON.stringify(result))
-		return result
+		return adminAPI.getUserProfileByUsername(args.username)
 	},
 	createUnverifiedOffice: (args) => {
-		console.log('createUnverifiedOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username.'))
 		}
-		const result = officeAPI.createUnverifiedOffice(args.username, args.input)
-		console.log('createUnverifiedOffice output: ' + JSON.stringify(result))
-		return result
+		return officeAPI.createUnverifiedOffice(args.username, args.input)
 	},
 	test: (args) => {
-		console.log('test input: ' + JSON.stringify(args))
 		const testAPI = require('./unittests/index')
-		const res = testAPI.run(args)
-		console.log('test output: ' + JSON.stringify(res))
-		return res
+		return testAPI.run()
 	}
 }

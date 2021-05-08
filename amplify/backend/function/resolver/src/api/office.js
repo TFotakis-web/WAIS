@@ -1108,7 +1108,7 @@ module.exports = {
 			}
 		`
 
-		return gqlUtil.execute({username: caller_username}, getUserProfileQuery, 'getUserProfileByUsername')
+		return userAPI.getUserProfileByUsername(caller_username)
 			.then(async function (callerUserProfile) {
 				if (!callerUserProfile) {
 					return Promise.reject(new Error(`User profile for sender was not found.`))

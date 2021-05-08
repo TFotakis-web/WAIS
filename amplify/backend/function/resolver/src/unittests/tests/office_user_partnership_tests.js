@@ -22,8 +22,9 @@ module.exports = {
 	 * -- API functions used in this test --
 	 *
 	 */
-	officeConnectionsTest: async (ddb, gql, gateway) => {
+	officeConnectionsTest: async (gql, gateway) => {
 		console.log('officeManagerAndEmployeeConnection start')
+		let shouldStop = false
 
 		//The user profiles of the 3 users.
 		const managerUserProfile = {
@@ -52,20 +53,21 @@ module.exports = {
 		}
 
 		//Delete existing user profiles iff they already exist
-		const deleteUPMutation0 = /* GraphQL */`
+		const deleteUPMutation = /* GraphQL */`
 			mutation deleteUserProfile($input: DeleteUserProfileInput!) {
 				deleteUserProfile(input: $input) {
 					id
 				}
 			}
 		`
-		const cleanUpResultManger = await gql.execute({input: {id: managerUserProfile.id}}, deleteUPMutation0, 'deleteUserProfile')
-		const cleanUpResultEmployee = await gql.execute({input: {id: employeeUserProfile.id}}, deleteUPMutation0, 'deleteUserProfile')
-		const cleanUpResultContractor = await gql.execute({input: {id: contractorUserProfile.id}}, deleteUPMutation0, 'deleteUserProfile')
-		if (cleanUpResultManger.errors || cleanUpResultEmployee.errors || cleanUpResultContractor.errors) {
-			throw new Error(`Error cleaning initial UserProfiles ${JSON.stringify(cleanUpResultManger)},${JSON.stringify(cleanUpResultEmployee)},${JSON.stringify(cleanUpResultContractor)}`)
-		}
-		console.log('Initial clean up OK')
+		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
+			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
+			.then(() => console.log('Initial clean up OK'))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		//Create the 3 user profiles
 		const createUPMutation = `mutation createUserProfile($input: CreateUserProfileInput!){
@@ -78,130 +80,107 @@ module.exports = {
 				name
 			}
 		}`
-		const createManagerUPResult = await gql.execute({input: managerUserProfile}, createUPMutation, 'createUserProfile')
-		const createEmployeeUPResult = await gql.execute({input: employeeUserProfile}, createUPMutation, 'createUserProfile')
-		const createContractorUPResult = await gql.execute({input: contractorUserProfile}, createUPMutation, 'createUserProfile')
-		if (createManagerUPResult.errors || createEmployeeUPResult.errors || createContractorUPResult.errors) {
-			throw new Error(`Error creating one of the UserProfiles: ${JSON.stringify(createManagerUPResult)},${JSON.stringify(createEmployeeUPResult)},${JSON.stringify(createContractorUPResult)}`)
-		}
-		assert(createManagerUPResult.data.createUserProfile.username === managerUserProfile.username)
-		assert(createEmployeeUPResult.data.createUserProfile.username === employeeUserProfile.username)
-		assert(createContractorUPResult.data.createUserProfile.username === contractorUserProfile.username)
-		console.log('UserProfile creation succeeded.')
+		await Promise.all([managerUserProfile, employeeUserProfile, contractorUserProfile].map(profile => gql.execute({input: profile}, createUPMutation, 'createUserProfile')))
+			.then(profile => console.log(`UserProfile created: ${JSON.stringify(profile)}`))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
+
 
 		//Make a createOffice request
-		const createOfficeRequestInput = {
-			officeName: "TestOffice1",
-			address: "address1",
-			office_email: "testoffice1@email.com",
-			zip_code: "71414",
-			mobile: "6969696969",
-			phone: "+30123",
-			tin: "123",
-			office_logo: null,
-			professionStartDate: new Date().toISOString().slice(0, 10),
-			chamberRecordNumber: '123',
-			insuranceLicenseExpirationDate: new Date().toISOString().slice(0, 10),
-			civilLiabilityExpirationDate: new Date().toISOString().slice(0, 10),
-			comments: '',
-			files: [{
-				level: 'test_level',
-				idToken: 'test_id_token',
-				filePath: 'test_file_path',
-				filename: 'test_filename',
-				contentType: 'test_content_type'
-			}]
-		}
-
-		//Throws error on failure
-		const createOfficeRequest = await gateway.createOfficeRequest({
+		await gateway.createUnverifiedOffice({
 			username: employeeUserProfile.username,
-			email: employeeUserProfile.email,
-			groups: null,
-			requestInput: createOfficeRequestInput,
-		})
-		const createOfficeRequestID = createOfficeRequest.id
-		assert(util.isDeepStrictEqual(createOfficeRequestInput, createOfficeRequest.payload.createOfficePayload))
-		console.log('CreateOffice request was sent successfully.')
-
-		//Accept that request as an admin
-		const resolveCreateOfficeRequest = {
-			username: managerUserProfile.username,
-			email: managerUserProfile.email,
-			groups: ["admin"],
-			id: createOfficeRequestID,
-			decision: "ACCEPT",
-			payload: {
-				createOfficePayload: {
-					managerModelPermissions: [
-						"OFFICE_INFO_QUERY",
-						"OFFICE_INFO_MUTATE",
-						"VEHICLES_QUERY",
-						"VEHICLES_MUTATE",
-						"CONTRACTS_QUERY",
-						"CONTRACTS_MUTATE",
-						"CUSTOMERS_QUERY",
-						"CUSTOMERS_MUTATE",
-						"EMPLOYEE_ADD",
-						"EMPLOYEE_REMOVE",
-						"CONTRACTOR_ADD",
-						"CONTRACTOR_REMOVE",
-						"OFFICE_CONN_CREATE",
-						"OFFICE_CONN_DELETE"
-					],
-					managerPagePermissions: ["AccountingReceipts"],
-					partnersNumberLimit: 1,
-					employeesNumberLimit: 2,
-					insuranceCompanies: [{
-						name: "insurance_company_1",
-						code: "insurance_code_1",
-					}, {
-						name: "insurance_company_2",
-						code: "insurance_code_2",
-					}]
-				}
+			input: {
+				officeName: "TestOffice1",
+				address: "address1",
+				office_email: "testoffice1@email.com",
+				zip_code: "71414",
+				mobile: "6969696969",
+				phone: "+30123",
+				tin: "123",
+				office_logo: null,
+				professionStartDate: new Date().toISOString().slice(0, 10),
+				chamberRecordNumber: '123',
+				insuranceLicenseExpirationDate: new Date().toISOString().slice(0, 10),
+				civilLiabilityExpirationDate: new Date().toISOString().slice(0, 10),
+				comments: '',
+				files: [{
+					level: 'test_level',
+					idToken: 'test_id_token',
+					filePath: 'test_file_path',
+					filename: 'test_filename',
+					contentType: 'test_content_type'
+				}]
 			}
-		}
-		const acceptCreateOfficeRequestResponse = await gateway.resolveRequest(resolveCreateOfficeRequest)
-		if (!acceptCreateOfficeRequestResponse) {
-			throw new Error(`Failed to resolve the CreateOffice request. Response was ${JSON.stringify(acceptCreateOfficeRequestResponse)}`)
-		}
-		assert(util.isDeepStrictEqual(createOfficeRequestInput, createOfficeRequest.payload.createOfficePayload))
-		console.log('CreateOffice request was resolved successfully.')
+		})
+			.then((unverifiedOfficeResult) => {
+				const unverifiedOfficeId = unverifiedOfficeResult?.id
+				if (!unverifiedOfficeId) {
+					return Promise.reject(new Error('Failed to create unverified office.'))
+				}
+				console.log('Unverified office created successfully with: ' + JSON.stringify(unverifiedOfficeId, null, 2))
+				return unverifiedOfficeId
+			})
+			.catch(reason => Promise.reject(reason))
+			.then(unverifiedOfficeId => ({
+				username: managerUserProfile.username,
+				email: managerUserProfile.email,
+				groups: ["admin"],
+				id: unverifiedOfficeId,
+				decision: "ACCEPT",
+				payload: {
+					verifyOfficePayload: {
+						managerModelPermissions: [
+							"OFFICE_INFO_QUERY",
+							"OFFICE_INFO_MUTATE",
+							"VEHICLES_QUERY",
+							"VEHICLES_MUTATE",
+							"CONTRACTS_QUERY",
+							"CONTRACTS_MUTATE",
+							"CUSTOMERS_QUERY",
+							"CUSTOMERS_MUTATE",
+							"EMPLOYEE_ADD",
+							"EMPLOYEE_REMOVE",
+							"CONTRACTOR_ADD",
+							"CONTRACTOR_REMOVE",
+							"OFFICE_CONN_CREATE",
+							"OFFICE_CONN_DELETE"
+						],
+						managerPagePermissions: ["AccountingReceipts"],
+						partnersNumberLimit: 1,
+						employeesNumberLimit: 2,
+						insuranceCompanies: [{
+							name: "insurance_company_1",
+							code: "insurance_code_1",
+						}, {
+							name: "insurance_company_2",
+							code: "insurance_code_2",
+						}]
+					}
+				}
+			}))
+			.then(resolveCreateOfficeRequest => gateway.resolveRequest(resolveCreateOfficeRequest))
+			.then(value => console.log('Request resolved successfully: ' + JSON.stringify(value, null, 2)))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		//Clean up
-		//Delete UserProfiles
-		const deleteUPMutation = /* GraphQL */`
-			mutation deleteUserProfile($input: DeleteUserProfileInput!) {
-				deleteUserProfile(input: $input) {
-					id
-				}
-			}
-		`
-		const deleteManagerUP = await gql.execute({input: {id: managerUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
-		const deleteEmployeeUP = await gql.execute({input: {id: employeeUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
-		const deleteContractorUP = await gql.execute({input: {id: contractorUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
-		if ((deleteManagerUP.errors || deleteEmployeeUP.errors || deleteContractorUP.errors) !== undefined) {
-			throw new Error(`Clean up failed while deleting one of the UserProfiles:
-			${JSON.stringify(deleteManagerUP)},${JSON.stringify(deleteEmployeeUP)},${JSON.stringify(deleteContractorUP)}`)
-		}
-		assert(deleteManagerUP.data.deleteUserProfile.id === managerUserProfile.id)
-		assert(deleteEmployeeUP.data.deleteUserProfile.id === employeeUserProfile.id)
-		assert(deleteContractorUP.data.deleteUserProfile.id === contractorUserProfile.id)
-
-		//Delete office request, just in case
-		const deleteCreateOfficeRequestMutation = /* GraphQL */`
-			mutation deleteUserProfile($input: DeleteUserProfileInput!) {
-				deleteUserProfile(input: $input) {
-					id
-				}
-			}
-		`
-		const deleteCreateOfficeRequestResponse = await gql.execute({input: {id: createOfficeRequestID}}, deleteCreateOfficeRequestMutation, 'deleteUserProfile')
-		console.log(`Delete CreateOfficeRequest result: ${deleteCreateOfficeRequestResponse}`)
-
-		console.log('Clean up successful.')
+		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
+			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
+			.then(() => console.log('Clean up successful.'))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		console.log('officeManagerAndEmployeeConnection finish')
+		return Promise.resolve({})
 	}
 }
