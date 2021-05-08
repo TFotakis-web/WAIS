@@ -77,8 +77,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{type: "CREATE_OFFICE", filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query, 'getRequestsForUser')
-			.then(response => {
-				const result = response?.data?.listRequestsByType
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}

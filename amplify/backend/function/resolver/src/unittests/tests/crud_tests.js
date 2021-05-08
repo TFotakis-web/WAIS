@@ -100,14 +100,7 @@ module.exports = {
 			}
 		}`
 
-		let createdUserProfile = null
-		try {
-			const response = await gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
-			createdUserProfile = response.data.createUserProfile
-		} catch (err) {
-			return Promise.reject(err.message)
-		}
-
+		const createdUserProfile = await gql.execute({input: ogUP}, createUPMutation, 'createUserProfile')
 		assert(createdUserProfile.username === ogUP.username)
 		console.log('UserProfile creation succeeded.')
 
@@ -153,13 +146,9 @@ module.exports = {
 				}
 			}
 		`
-		try {
-			const response = await gql.execute({username: createdUserProfile.username}, listUPQuery, 'getUserProfileByUsername')
-			const readUP = response?.data?.listUserProfileByUsername.items[0]
-			assert(util.isDeepStrictEqual(readUP, createdUserProfile))
-		} catch (err) {
-			return Promise.reject(err.message)
-		}
+		await gateway.user({
+			username: createdUserProfile.username
+		})
 		console.log('UserProfile read succeeded.')
 
 		//Update
@@ -184,16 +173,11 @@ module.exports = {
 				}
 			}
 		`
-		let deleteResult
-		try {
-			deleteResult = await gql.execute({input: {id: createdUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
-			if (!deleteResult || deleteResult.errors) {
-				return Promise.reject('Failed to delete UserProfile')
-			}
-		} catch (err) {
-			return Promise.reject(err.message)
+		const deleteResult = await gql.execute({input: {id: createdUserProfile.id}}, deleteUPMutation, 'deleteUserProfile')
+		if (!deleteResult) {
+			return Promise.reject('Failed to delete UserProfile')
 		}
-		assert(createdUserProfile.id === deleteResult.data.deleteUserProfile.id)
+		assert(createdUserProfile.id === deleteResult.id)
 		console.log('UserProfile delete succeeded.')
 
 		console.log('UserProfile CRUD tests passed successfully.')

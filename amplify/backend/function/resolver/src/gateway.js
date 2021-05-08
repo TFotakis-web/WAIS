@@ -56,7 +56,7 @@ module.exports = {
 				}
 			}
 		`
-		const response = gqlUtil.execute(
+		const result = gqlUtil.execute(
 			{
 				username: args.username,
 				filter: args.filter || {id: {ne: ''}},
@@ -66,7 +66,6 @@ module.exports = {
 			query,
 			'getCalendarEventsForUser',
 		)
-		const result = response?.data?.listUserCalendarEventsByUsername
 		console.log('getCalendarEventsForUser output: ' + JSON.stringify(result))
 		return result
 	},
@@ -384,7 +383,6 @@ module.exports = {
 			input: input,
 			condition: condition
 		}, mutation, 'createMyUserCalendarEvent')
-			.then(response => response.data.createUserCalendarEvent)
 			.catch(err => console.error(`Unhandled error in createMyUserCalendarEvent: ${JSON.stringify(err)}`))
 
 		if (!result) {
@@ -418,12 +416,11 @@ module.exports = {
 				}
 			}
 		`
-		const response = gqlUtil.execute(
+		const result = gqlUtil.execute(
 			{input: sanitized_input, condition: expanded_condition},
 			mutation,
 			'updateMyUserCalendarEvents',
 		)
-		const result = response.data.updateUserCalendarEvent
 		console.log('updateMyUserCalendarEvents output: ' + JSON.stringify(result))
 		return result
 	},
@@ -444,11 +441,10 @@ module.exports = {
 				}
 			}
 		`
-		const response = gqlUtil.execute({
+		const result = gqlUtil.execute({
 			input: input,
 			condition: expanded_condition
 		}, mutation, 'deleteMyUserCalendarEvents')
-		const result = response.data.deleteUserCalendarEvent
 		console.log('deleteMyUserCalendarEvents output: ' + JSON.stringify(result))
 		return result
 	},

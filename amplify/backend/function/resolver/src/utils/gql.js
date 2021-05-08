@@ -48,8 +48,9 @@ module.exports = {
 							console.log('GQL error: ' + err)
 							reject(err)
 						} else {
-							console.log('GQL data: ' + JSON.stringify(result))
-							resolve(result)
+							const data = result.data[Object.keys(result.data)[0]]	//Don't judge
+							console.log('GQL data: ' + JSON.stringify(data))
+							resolve(data)
 						}
 					} catch (err) {
 						console.log('GQL parsing error: ' + JSON.stringify(err))

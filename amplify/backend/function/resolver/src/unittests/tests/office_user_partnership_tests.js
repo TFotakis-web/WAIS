@@ -60,9 +60,28 @@ module.exports = {
 				}
 			}
 		`
+
+		//Delete office
+		const deleteOfficeMutation = /* GraphQL */`
+			mutation deleteOffice($input: DeleteOfficeInput!) {
+				deleteOffice(input: $input) {
+					id
+				}
+			}
+		`
+
 		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
 			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
-			.then(() => console.log('Initial clean up OK'))
+			.then(() => console.log('Initial UserProfile clean up OK'))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
+
+		await Promise.all([managerUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteOfficeMutation, 'deleteOffice')))
+			.then(deleteOfficeResp => deleteOfficeResp.forEach(value => console.log(`Office with ID:${JSON.stringify(value, null, 2)} deleted.`)))
+			.then(() => console.log('Initial Office clean up successful.'))
 			.catch(reason => {
 				console.error(reason)
 				shouldStop = true
@@ -91,7 +110,7 @@ module.exports = {
 
 		//Make a createOffice request
 		await gateway.createUnverifiedOffice({
-			username: employeeUserProfile.username,
+			username: managerUserProfile.username,
 			input: {
 				officeName: "TestOffice1",
 				address: "address1",
@@ -173,7 +192,16 @@ module.exports = {
 		//Clean up
 		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
 			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
-			.then(() => console.log('Clean up successful.'))
+			.then(() => console.log('UserProfile clean up successful.'))
+			.catch(reason => {
+				console.error(reason)
+				shouldStop = true
+			})
+		if (shouldStop) return Promise.reject(new Error('FAILED'))
+
+		await Promise.all([managerUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteOfficeMutation, 'deleteOffice')))
+			.then(deleteOfficeResp => deleteOfficeResp.forEach(value => console.log(`Office with ID:${JSON.stringify(value, null, 2)} deleted.`)))
+			.then(() => console.log('Office clean up successful.'))
 			.catch(reason => {
 				console.error(reason)
 				shouldStop = true

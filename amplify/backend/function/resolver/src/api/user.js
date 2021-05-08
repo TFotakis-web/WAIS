@@ -26,6 +26,10 @@ module.exports = {
 		})
 			.promise()
 			.then(data => data?.Items[0])
+			.then(userProfile => {
+				delete userProfile['__typename']
+				return userProfile
+			})
 	},
 
 	getUserProfileByUsername: (username) => {
@@ -38,6 +42,10 @@ module.exports = {
 		})
 			.promise()
 			.then(data => data?.Items[0])
+			.then(userProfile => {
+				delete userProfile['__typename']
+				return userProfile
+			})
 	},
 
 	getUserRoleByUsername: (username) => {
@@ -88,7 +96,7 @@ module.exports = {
 			query, 'getUserModelPermissionsForOffice')
 			.then(response => {
 				const modelPermissionsSet = new Set()
-				response?.data?.listUserProfileByUsername?.items?.forEach((userProfile) => {
+				response?.items?.forEach((userProfile) => {
 					userProfile.officeConnections?.items?.forEach((oc) => {
 						modelPermissionsSet.add(oc.modelPermissions)
 					})
@@ -117,7 +125,7 @@ module.exports = {
 			query, 'getUserPagePermissionsForOffice')
 			.then(response => {
 				const pagePermissionsSet = new Set()
-				response?.data?.listUserProfileByUsername?.items?.forEach((userProfile) => {
+				response?.items?.forEach((userProfile) => {
 					userProfile?.officeConnections?.items?.forEach((oc) => {
 						pagePermissionsSet.add(oc.pagePermissions)
 					})
@@ -142,7 +150,7 @@ module.exports = {
 		`
 		return gqlUtil.execute({username: username}, query, 'listUserProfileByUsername')
 			.then(response => {
-				const conns = response?.data?.listUserProfileByUsername?.items[0]?.officeConnections[0]?.items
+				const conns = response?.items[0]?.officeConnections[0]?.items
 				if (conns === undefined) {
 					return Promise.reject(new Error('Failed to retrieve caller/user.'))
 				}
@@ -229,10 +237,9 @@ module.exports = {
 			input: sanitized_input,
 			condition: expanded_condition
 		}, mutation, 'updateUserProfileDetails')
-			.then(response => {
-				const result = response?.data?.updateUserProfile
+			.then(result => {
 				if (result === undefined) {
-					return Promise.reject(new Error(`Unable to update UserProfile for user ${username} and input ${sanitized_input}.`))
+					return Promise.reject(new Error(`Unable to update UserProfile for user ${JSON.stringify(username)} and input ${JSON.stringify(sanitized_input)}.`))
 				}
 				return result
 			})

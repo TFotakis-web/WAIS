@@ -90,8 +90,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{username: username, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query, 'getRequestsFromUser')
-			.then(response => {
-				let result = response?.data?.listRequestsBySenderUsername
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}
@@ -169,8 +168,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{email: email, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query, 'getRequestsForUser')
-			.then(response => {
-				const result = response?.data?.listRequestsByReceiverEmail
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}
@@ -272,7 +270,7 @@ module.exports = {
 
 							let createOfficeErrorMsg = 'Failed to create new Office.'
 							const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
-								.then(response => response?.data?.createOffice?.id)
+								.then(response => response.id)
 								.catch(reason => {
 									createOfficeErrorMsg = 'Failed to create new office: ' + JSON.stringify(reason, null, 2)
 								})
@@ -302,7 +300,6 @@ module.exports = {
 
 							let createOUCErrorMsg = 'Failed to create new Office-User Connection.'
 							const createOUCResult = await gqlUtil.execute({input: createOUCInput}, mutation2, 'createOfficeUserConnection')
-								.then(createOUCResponse => createOUCResponse?.data?.createOfficeUserConnection)
 								.catch(reason => {
 									createOUCErrorMsg = 'Failed to create new Office-User Connection: ' + JSON.stringify(reason, null, 2)
 								})
@@ -488,8 +485,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-			.then(response => {
-				let result = response?.data?.createRequests
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to create request.'))
 				}
@@ -536,8 +532,7 @@ module.exports = {
 		`
 
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-			.then(response => {
-				let result = response?.data?.createRequests
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to create request.'))
 				}
@@ -584,8 +579,7 @@ module.exports = {
 				}
 			})
 			.then(requestInput => gqlUtil.execute({input: requestInput}, mutation, 'createRequest'))
-			.then(response => {
-				const responseData = response?.data?.createRequests
+			.then(responseData => {
 				if (responseData === undefined) {
 					return Promise.reject(new Error('Failed to create Request.'))
 				}
@@ -619,8 +613,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-			.then(response => {
-				const responseData = response?.data?.createRequests
+			.then(responseData => {
 				if (responseData === undefined) {
 					return Promise.reject(new Error('Failed to create Request.'))
 				}
@@ -650,8 +643,7 @@ module.exports = {
 			input: input,
 			condition: expanded_condition
 		}, mutation, 'deleteRequestsSentByMe')
-			.then(response => {
-				const result = response?.data?.deleteRequests
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to delete Requests.'))
 				}

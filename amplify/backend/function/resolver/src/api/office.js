@@ -302,7 +302,7 @@ module.exports = {
 			nextToken: nextToken
 		}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const result = response?.data?.listUserProfileByUsername?.items[0]?.officeConnections || []
+				const result = response?.items[0]?.officeConnections || []
 				result?.items.forEach((item) => { //Quick page permissions fix
 					item.pagePermissions = JSON.parse(item.pagePermissions)
 					if (item.office) {
@@ -328,7 +328,7 @@ module.exports = {
 		`
 		return await gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const result = response?.data?.listUserProfileByUsername?.items[0]?.officeConnections?.items
+				const result = response?.items[0]?.officeConnections?.items
 				return result !== undefined && result.length > 0;
 			})
 	},
@@ -356,8 +356,7 @@ module.exports = {
 
 		return gqlUtil.execute({input: {id: tucItem.id, modelPermissions: modelPermissions}},
 			mutation1, 'updateOfficeUserConnection')
-			.then(response => {
-				const result = response?.data?.updateUserCalendarEvent
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update model permissions.'))
 				}
@@ -389,8 +388,7 @@ module.exports = {
 		}
 		return gqlUtil.execute({input: {id: tucItem.id, pagePermissions: pagePermissions}},
 			mutation1, 'updateOfficeUserConnection')
-			.then(response => {
-				const result = response?.data?.updateUserCalendarEvent
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update page permissions.'))
 				}
@@ -453,8 +451,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 100, nextToken: nextToken},
 			query, 'getEmployeeTypeUserProfilesForManagerUsername')
-			.then(response => {
-				const office = response?.data?.listOfficeByOwnerUsername
+			.then(office => {
 				if (office === undefined || office.items === undefined) {
 					return Promise.reject(new Error('An error occurred while retrieving contractors.'))
 				}
@@ -524,7 +521,7 @@ module.exports = {
 			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query, 'getCustomersForOfficeId')
 			.then(response => {
-				let result = response?.data?.listOffices?.items
+				let result = response?.items
 				if (result) {
 					result = result[0]?.officeCustomers
 				}
@@ -610,8 +607,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query, 'getContractsForOfficeId')
-			.then(response => {
-				let result = response?.data?.listOffices
+			.then(result => {
 				if (result) {
 					result = result[0]?.officeCustomers
 				}
@@ -662,8 +658,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{officeId: officeId, filter: user_filter, limit: limit || 100, nextToken: nextToken},
 			query, 'getPartnerOfficeConnections')
-			.then(response => {
-				const result = response?.data?.listOfficeAccessConnections
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to retrieve partners.'))
 				}
@@ -704,7 +699,7 @@ module.exports = {
 		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
 				const companies = []
-				response?.data?.listUserProfileByUsername?.items?.forEach((oc) => {
+				response?.items?.forEach((oc) => {
 					oc.items.forEach((office) => {
 						office.availableInsuranceCompanies.items.forEach((ic) => {
 							companies.push(ic)
@@ -747,7 +742,7 @@ module.exports = {
 
 		return gqlUtil.execute({officeId: office.id, limit: 1000}, query, 'getPartnerOfficeConnections')
 			.then(response => {
-				response?.data?.listOfficeAccessConnections?.items?.forEach((partnerOffice) => companies.push(partnerOffice))
+				response?.items?.forEach((partnerOffice) => companies.push(partnerOffice))
 				return {items: companies}
 			})
 	},
@@ -840,8 +835,7 @@ module.exports = {
 			input: sanitized_input,
 			condition: {ownerUsername: {eq: username}}
 		}, mutation, 'updateOfficeDetails')
-			.then(response => {
-				const result = response?.data?.updateOffice
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update Office details.'));
 				}
@@ -877,8 +871,7 @@ module.exports = {
 			input: input,
 			condition: expanded_condition
 		}, mutation, 'createVehicleForOffice')
-			.then(response => {
-				const result = response?.data?.createVehicle
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to create vehicle for office.'))
 				}
@@ -947,8 +940,7 @@ module.exports = {
 			input: sanitized_input,
 			condition: expanded_condition
 		}, mutation, 'updateVehicleForOffice')
-			.then(response => {
-				const result = response?.data?.updateVehicle
+			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update vehicle for this Office.'))
 				}
@@ -1038,7 +1030,7 @@ module.exports = {
 			nextToken: nextToken || null
 		}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const result = response.data.listUserProfileByUsername?.items[0].officeConnections?.items[0]
+				const result = response?.items[0].officeConnections?.items[0]
 				if (!result) {
 					return Promise.reject(new Error('Failed to retrieve Office of user ' + username))
 				}
@@ -1091,7 +1083,7 @@ module.exports = {
 		return userAPI.getUserProfileByUsername(caller_username)
 			.then(async function (callerUserProfile) {
 				if (!callerUserProfile) {
-					return Promise.reject(new Error(`User profile for sender was not found.`))
+					return Promise.reject(new Error(`User profile for caller was not found.`))
 				}
 
 				//Check if there is already an Office with this name
@@ -1127,13 +1119,13 @@ module.exports = {
 
 				return gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')
 					.then(response => {
-						const createdOfficeId = response?.data?.createOffice?.id
+						const createdOfficeId = response?.id
 						if (!createdOfficeId) {
 							return Promise.reject(new Error('Failed to create new office: ' + response.errors.message))
 						}
 						return createdOfficeId
 					})
-					.then(createdOfficeId => { //TODO continue from here
+					.then(createdOfficeId => {
 						return {
 							officeId: createdOfficeId,
 							officeName: createOfficeInput.officeName,
@@ -1146,7 +1138,7 @@ module.exports = {
 					}).then(createOUCInput => {
 						return gqlUtil.execute({input: createOUCInput}, createOfficeUserConnectionMutation, 'createOfficeUserConnection')
 					}).then(createOUCResponse => {
-						const createdOfficeId = createOUCResponse?.data?.createOfficeUserConnection?.id
+						const createdOfficeId = createOUCResponse?.id
 						if (!createdOfficeId) {
 							return Promise.reject(new Error('Failed to create new Office-User connection: ' + createOUCResponse.errors.message))
 						}
