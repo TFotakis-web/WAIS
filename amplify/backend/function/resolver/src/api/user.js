@@ -81,10 +81,8 @@ module.exports = {
 			query getUserModelPermissionsForOffice($username: String!, $filter: ModelOfficeUserConnectionConditionInput, $limit: Int) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections(filter: $filter, limit: $limit) {
-							items {
-								modelPermissions
-							}
+						officeConnection(filter: $filter, limit: $limit) {
+							modelPermissions
 						}
 					}
 				}
@@ -97,9 +95,9 @@ module.exports = {
 			.then(response => {
 				const modelPermissionsSet = new Set()
 				response?.items?.forEach((userProfile) => {
-					userProfile.officeConnections?.items?.forEach((oc) => {
-						modelPermissionsSet.add(oc.modelPermissions)
-					})
+					if (userProfile?.officeConnection?.modelPermissions) {
+						modelPermissionsSet.add(userProfile.officeConnection.modelPermissions)
+					}
 				})
 				return modelPermissionsSet
 			})
@@ -110,10 +108,8 @@ module.exports = {
 			query getUserPagePermissionsForOffice($username: String!, $filter: ModelOfficeUserConnectionConditionInput, $limit: Int) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections(filter: $filter, limit: $limit) {
-							items {
-								pagePermissions
-							}
+						officeConnection(filter: $filter, limit: $limit) {
+							pagePermissions
 						}
 					}
 				}
@@ -126,9 +122,9 @@ module.exports = {
 			.then(response => {
 				const pagePermissionsSet = new Set()
 				response?.items?.forEach((userProfile) => {
-					userProfile?.officeConnections?.items?.forEach((oc) => {
-						pagePermissionsSet.add(oc.pagePermissions)
-					})
+					if (userProfile?.officeConnection?.pagePermissions) {
+						pagePermissionsSet.add(userProfile.officeConnection.pagePermissions)
+					}
 				})
 				return pagePermissionsSet
 			})
@@ -139,23 +135,15 @@ module.exports = {
 			query listUserProfileByUsername($username: String!) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections {
-							items {
-								id
-							}
+						officeConnection {
+							id
 						}
 					}
 				}
 			}
 		`
 		return gqlUtil.execute({username: username}, query, 'listUserProfileByUsername')
-			.then(response => {
-				const conns = response?.items[0]?.officeConnections[0]?.items
-				if (conns === undefined) {
-					return Promise.reject(new Error('Failed to retrieve caller/user.'))
-				}
-				return conns.length === 0
-			})
+			.then(response => !!response?.items[0]?.officeConnection)
 	},
 
 	/*

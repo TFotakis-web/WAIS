@@ -43,11 +43,10 @@ type OfficeOutput {
     bankAccountInfo: AWSJSON
     files: [S3Object]
     insuranceCompanies: [InsuranceCompany]
-    insuranceCompaniesAvailable: [String]
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
 }
-#
+
 type VehicleOutput {
     id: ID
     numberPlate: String!
@@ -192,11 +191,6 @@ type RequestsOutput {
     updatedAt: AWSDateTime
 }
 
-type ModelOfficeConnectionOutput {
-    items: [OfficeOutput]
-    nextToken: String
-}
-
 type ModelUserCalendarEventConnectionOutput {
     items: [UserCalendarEventOutput]
     nextToken: String
@@ -227,19 +221,8 @@ type ModelOfficeAccessConnectionOutput {
     nextToken: String
 }
 
-type InsuranceCompanyDetailsOutput {
-    id: ID
-    officeName: String
-    insuranceCompanies: [InsuranceCompany!]
-}
-
 type IDOutput {
     id: ID
-}
-
-type InsuranceCompanyOutput {
-    name: String!
-    code: String!
 }
 
 type S3ObjectOutput {
@@ -250,48 +233,9 @@ type S3ObjectOutput {
     contentType: String!
 }
 
-type S3ObjectContentsOutput{
+type S3ObjectContentsOutput {
     content: String
     size: Int
     path: String
     contentType: String
-}
-
-type PartnerOfficeOutput{
-    id: ID
-    officeName: String
-    ownerUsername: String
-    address: String
-    office_email: String
-    zip_code: String
-    mobile: String
-    phone: String
-    tin: String
-    office_logo: S3ObjectOutput
-    professionStartDate: AWSDate
-    chamberRecordNumber: String
-    insuranceLicenseExpirationDate: AWSDate
-    civilLiabilityExpirationDate: AWSDate
-    bankAccountInfo: AWSJSON
-    files: [S3ObjectOutput]
-    insuranceCompanies: [InsuranceCompanyOutput]
-    insuranceCompaniesAvailable: [String]
-    workforce: [ModelOfficeUserConnectionConnection]
-}
-
-type PartnerConnectionOutput {
-    id: ID
-    username: String
-    userId: ID
-    pagePermissions: AWSJSON
-    modelPermissions: [ModelPermission]
-    preferences: AWSJSON
-    officeId: ID
-    officeName: String
-    employeeType: EmployeeType
-    office: PartnerOfficeOutput
-}
-
-type PartnerSummaryOutput {
-    items: [PartnerConnectionOutput]
 }

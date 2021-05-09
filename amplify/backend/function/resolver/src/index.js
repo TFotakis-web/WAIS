@@ -16,14 +16,6 @@ const api = require('./gateway')
  * Exceptions will be thrown on error.
  */
 const resolvers = {
-	Office: {
-		availableInsuranceCompanies: (event) => {
-			return api.getAvailableInsuranceCompaniesForOffice({
-				office: event.source,
-				username: event.identity.claims['cognito:username'],
-			})
-		},
-	},
 	Query: {
 		echo: (event) => {
 			return event.arguments.msg
@@ -33,10 +25,7 @@ const resolvers = {
 		},
 		getWorkEnvironment: (event) => {
 			return api.getWorkEnvironment({
-				username: event.identity.claims['cognito:username'],
-				filter: event.arguments.filter,
-				limit: event.arguments.limit,
-				nextToken: event.arguments.nextToken
+				username: event.identity.claims['cognito:username']
 			})
 		},
 		getMyUserCalendarEvents: (event) => {
@@ -99,13 +88,9 @@ const resolvers = {
 				nextToken: event.arguments.nextToken,
 			})
 		},
-		getPartnerOfficeConnections: (event) => {
-			return api.getPartnerOfficeConnections({
-				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
-				filter: event.arguments.filter,
-				limit: event.arguments.limit,
-				nextToken: event.arguments.nextToken,
+		getInsuranceCompaniesOfMyOffice: (event) => {
+			return api.getInsuranceCompaniesOfMyOffice({
+				username: event.identity.claims['cognito:username']
 			})
 		},
 		getS3Object: (event) => {
@@ -213,14 +198,6 @@ const resolvers = {
 		},
 		createInviteContractorToOfficeRequest: (event) => {
 			return api.createInviteContractorToOfficeRequest({
-				username: event.identity.claims['cognito:username'],
-				email: event.identity.claims['email'],
-				groups: event.identity.groups,
-				requestInput: event.arguments.input,
-			})
-		},
-		createOfficeConnectionRequest: (event) => {
-			return api.createOfficeConnectionRequest({
 				username: event.identity.claims['cognito:username'],
 				email: event.identity.claims['email'],
 				groups: event.identity.groups,
@@ -356,17 +333,28 @@ const resolvers = {
 				username: event.identity.claims['cognito:username'],
 			})
 		},
-		getAvailableInsuranceCompanies: (event) => {
-			return api.getAllInsuranceCompanies({
-				username: event.identity.claims['cognito:username'],
-			})
-		},
 		createUnverifiedOffice: (event) => {
 			return api.createUnverifiedOffice({
 				username: event.identity.claims['cognito:username'],
 				input: event.arguments.input
 			})
 		},
+		addInsuranceCompaniesToOffice: (event) => {
+			return api.addInsuranceCompaniesToOffice({
+				username: event.identity.claims['cognito:username'],
+				officeId: event.arguments.officeId,
+				insuranceCompanies: event.arguments.insuranceCompanies
+			})
+		},
+		removeInsuranceCompaniesFromOffice: (event) => {
+			return api.removeInsuranceCompaniesFromOffice({
+				username: event.identity.claims['cognito:username'],
+				officeId: event.arguments.officeId,
+				insuranceCompanyCodes: event.arguments.insuranceCompanyCodes
+			})
+		},
+
+		// Testing
 		test: (event) => {
 			return api.test({
 				username: event.identity.claims['cognito:username'],

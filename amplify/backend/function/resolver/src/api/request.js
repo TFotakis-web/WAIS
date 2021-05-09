@@ -247,7 +247,6 @@ module.exports = {
 							createOfficeInput.partnersNumberLimit = callerPayload.createOfficePayload.partnersNumberLimit
 							createOfficeInput.employeesNumberLimit = callerPayload.createOfficePayload.employeesNumberLimit
 							createOfficeInput.insuranceCompanies = callerPayload.createOfficePayload.insuranceCompanies || []
-							createOfficeInput.insuranceCompaniesAvailable = callerPayload.createOfficePayload.insuranceCompaniesAvailable || []
 							createOfficeInput.subscriptionExpirationDate = callerPayload.createOfficePayload.subscriptionExpirationDate
 							createOfficeInput.verified = true
 							createOfficeInput.bankAccountInfo = JSON.stringify([])

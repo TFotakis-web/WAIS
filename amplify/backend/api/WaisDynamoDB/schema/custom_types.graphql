@@ -1,12 +1,16 @@
 type InsuranceCompany {
-    name: String!
-    code: String!
+    receivedFromUsername: String
+    name: String
+    code: String
+    expiresAt: AWSDate
 }
-type InsuranceCompanyDetails {
-    id: ID
-    officeName: String
-    insuranceCompanies: [InsuranceCompany!]
+input InsuranceCompanyInput {
+    receivedFromUsername: String
+    name: String
+    code: String
+    expiresAt: AWSDate
 }
+
 type S3Object {
     level: String!
     idToken: String!
@@ -117,13 +121,13 @@ input CreateUnverifiedOfficePayloadInput {
 ##### Create Request
 type CreateRequestPayload {
     verifyOfficePayload: VerifyOfficeRequestPayload
-    createOfficeConnectionPayload: OfficeConnectionRequestPayload
+    offerInsuranceCompanyPayload: OfferInsuranceCompanyRequestPayload
     inviteEmployeeToOfficePayload: InviteEmployeeRequestPayload
     inviteContractorToOfficePayload: InviteContractorRequestPayload
 }
 input CreateRequestPayloadInput {
     verifyOfficePayload: VerifyOfficeRequestPayloadInput
-    createOfficeConnectionPayload: OfficeConnectionRequestPayloadInput
+    offerInsuranceCompanyPayload: OfferInsuranceCompanyRequestPayloadInput
     inviteEmployeeToOfficePayload: InviteEmployeeRequestPayloadInput
     inviteContractorToOfficePayload: InviteContractorRequestPayloadInput
 }
@@ -137,11 +141,11 @@ input VerifyOfficeRequestPayloadInput {
     office: CreateUnverifiedOfficePayloadInput!
 }
 
-type OfficeConnectionRequestPayload {
-    manager_email: String!
+type OfferInsuranceCompanyRequestPayload {
+    insuranceCompany: InsuranceCompany!
 }
-input OfficeConnectionRequestPayloadInput {
-    manager_email: String!
+input OfferInsuranceCompanyRequestPayloadInput {
+    insuranceCompany: InsuranceCompanyInput!
 }
 
 type InviteEmployeeRequestPayload {
@@ -169,7 +173,7 @@ input InviteContractorRequestPayloadInput {
 ##### Resolve request
 input ResolveRequestPayloadInput {
     verifyOfficePayload: ResolveVerifyOfficePayload
-    createOfficeConnectionPayload: ResolveOfficeAccessConnectionPayload
+    offerInsuranceCompanyPayload: ResolveOfferInsuranceCompanyPayload
     inviteEmployeeToOfficePayload: ResolveInviteEmployeePayload
     inviteContractorToOfficePayload: ResolveInviteContractorPayload
 }
@@ -181,10 +185,9 @@ input ResolveVerifyOfficePayload {
     employeesNumberLimit: Int!
     subscriptionExpirationDate: AWSDate!
     insuranceCompanies: [InsuranceCompanyInput]
-    insuranceCompaniesAvailable: [String]
 }
-input ResolveOfficeAccessConnectionPayload {
-    expirationDate: AWSTimestamp!
+input ResolveOfferInsuranceCompanyPayload {
+    body: String #Ignored
 }
 input ResolveInviteEmployeePayload {
     body: String #Ignored

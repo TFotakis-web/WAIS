@@ -1,29 +1,31 @@
 type Query {
-    #Utils
+    # UserProfile of caller
     me: UserProfileOutput @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
+    # Utility that returns input string
     echo(msg: String!): String @function(name: "resolver-${env}") @auth(rules: [{ allow: private }])
 
     # Will fetch the Office the caller is part of along with its partners.
-    getWorkEnvironment(partnerFilter: ModelOfficeFilterInput, limit: Int, nextToken: String): OfficeUserConnectionOutput
-    @auth(rules: [{ allow: private }])
-    @function(name: "resolver-${env}")
+    getWorkEnvironment: OfficeUserConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
+    # Calendar events of caller
     getMyUserCalendarEvents(
         filter: ModelUserCalendarEventFilterInput
         limit: Int
         nextToken: String
     ): ModelUserCalendarEventConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
+    # Requests that sent BY the caller to someone else
     getMySentRequests(filter: ModelRequestsFilterInput, limit: Int, nextToken: String): ModelRequestsConnectionOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
+    # Requests that are sent from someone else TO the caller
     getRequestsForMe(filter: ModelRequestsFilterInput, limit: Int, nextToken: String): ModelRequestsConnectionOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    # Manager query
+    # Manager query, retrieves user profiles that are connected with an OUC to caller's office
     getEmployeeUserProfiles(filter: ModelOfficeUserConnectionFilterInput, limit: Int, nextToken: String): ModelUserProfileConnectionOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
@@ -43,12 +45,8 @@ type Query {
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    getPartnerOfficeConnectionsForOfficeId(
-        officeId: ID!
-        filter: ModelOfficeAccessConnectionFilterInput
-        limit: Int
-        nextToken: String
-    ): ModelOfficeAccessConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+    # Retrieve Insurance Companies. Consider filtering
+    getInsuranceCompaniesOfMyOffice: [InsuranceCompany]! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     getUserModelPermissionsForOffice(officeId: ID!): [ModelPermission!]!
     @auth(rules: [{ allow: private }])
@@ -58,59 +56,73 @@ type Query {
 
     getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    getAvailableInsuranceCompanies: InsuranceCompanyDetailsOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
     ### ADMIN API ###
     getS3Object(obj: S3ObjectInput): S3ObjectContentsOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 
     getUserProfileByUsername(username: String): UserProfileOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
+
+    getInsuranceCompaniesOfOffice(officeId: ID!): [InsuranceCompany]! @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
 }
 
 type Mutation {
     updateOfficeDetails(input: UpdateOfficeInput!, condition: ModelOfficeConditionInput): OfficeOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     updateUserProfileDetails(input: UpdateUserProfileInput!, condition: ModelUserProfileConditionInput): UserProfileOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     createVehicleForOffice(officeId: ID!, input: CreateVehicleInput!, condition: ModelVehicleConditionInput): VehicleOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     updateVehicleForOffice(officeId: ID!, input: UpdateVehicleInput!, condition: ModelVehicleConditionInput): VehicleOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     deleteVehicleForOffice(officeId: ID!, input: DeleteVehicleInput!, condition: ModelVehicleConditionInput): VehicleOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     createContractForOffice(officeId: ID!, input: CreateContractInput!, condition: ModelContractConditionInput): ContractOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     updateContractForOffice(officeId: ID!, input: UpdateContractInput!, condition: ModelContractConditionInput): ContractOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     deleteContractForOffice(officeId: ID!, input: DeleteContractInput!, condition: ModelContractConditionInput): ContractOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     createCustomerForOffice(officeId: ID!, input: CreateCustomerInput!, condition: ModelCustomerConditionInput): CustomerOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     updateCustomerForOffice(officeId: ID!, input: UpdateCustomerInput!, condition: ModelCustomerConditionInput): CustomerOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     deleteCustomerForOffice(officeId: ID!, input: DeleteCustomerInput!, condition: ModelCustomerConditionInput): CustomerOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
+    # Requests API
     verifyOfficeRequest(message: String): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     createInviteEmployeeToOfficeRequest(input: InviteEmployeeRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
+
     createInviteContractorToOfficeRequest(input: InviteContractorRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
-    createOfficeConnectionRequest(input: OfficeConnectionRequestPayloadInput!): RequestsOutput
+
+    offerInsuranceCompanyToOfficeRequest(input: OfferInsuranceCompanyRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
@@ -121,24 +133,6 @@ type Mutation {
     resolveRequest(requestId: ID!, decision: RequestDecision!, payload: ResolveRequestPayloadInput): IDOutput!
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
-
-    createOfficeAccessConnectionForOffice(
-        officeId: ID!
-        input: CreateOfficeAccessConnectionInput!
-        condition: ModelOfficeAccessConnectionConditionInput
-    ): ModelOfficeAccessConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
-    updateOfficeAccessConnectionForOffice(
-        officeId: ID!
-        input: UpdateOfficeAccessConnectionInput!
-        condition: ModelOfficeAccessConnectionConditionInput
-    ): ModelOfficeAccessConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
-    deleteOfficeAccessConnectionForOffice(
-        officeId: ID!
-        input: DeleteOfficeAccessConnectionInput!
-        condition: ModelOfficeAccessConnectionConditionInput
-    ): ModelOfficeAccessConnectionOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     createMyUserCalendarEvent(
         input: CreateUserCalendarEventInput!
@@ -179,5 +173,14 @@ type Mutation {
 
     createUnverifiedOffice(input: CreateUnverifiedOfficePayloadInput!): IDOutput
     @auth(rules: [{ allow: private }])
+    @function(name: "resolver-${env}")
+
+    # ADMIN API
+    addInsuranceCompaniesToOffice(officeId: ID!, insuranceCompanies: [InsuranceCompanyInput!]!): IDOutput
+    @auth(rules: [{ allow: groups, groups: ["admin"] }])
+    @function(name: "resolver-${env}")
+
+    removeInsuranceCompaniesFromOffice(officeId: ID!, insuranceCompanyCodes: [String]!): IDOutput
+    @auth(rules: [{ allow: groups, groups: ["admin"] }])
     @function(name: "resolver-${env}")
 }

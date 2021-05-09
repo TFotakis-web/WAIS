@@ -9,6 +9,9 @@ AWS.config.update({
 const s3 = new AWS.S3()
 const bucket = process.env.STORAGE_WAISSTORAGE_BUCKETNAME
 
+const docClient = new AWS.DynamoDB.DocumentClient();
+const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
+
 module.exports = {
 	/* Queries */
 	getS3Object: (username, email, s3obj) => {
@@ -83,5 +86,37 @@ module.exports = {
 				}
 				return result
 			})
+	},
+	addInsuranceCompaniesToOffice(officeId, newInsuranceCompanies) {
+		return docClient.update({
+			TableName: 'Office' + ddbSuffix,
+			Key: {id: officeId},
+			KeyConditionExpression: 'SET #insuranceCompanies = list_append(#insuranceCompanies, :newInsuranceCompanies)',
+			ExpressionAttributeNames: {'#insuranceCompanies': 'insuranceCompanies'},
+			ExpressionAttributeValues: {':newInsuranceCompanies': newInsuranceCompanies},
+		}).promise()
+	},
+	getInsuranceCompaniesOfOffice(officeId) {
+		return docClient.get({
+			TableName: 'UserProfile' + ddbSuffix,
+			Key: {id: officeId},
+			ProjectionExpression: "insuranceCompanies"
+		})
+			.promise()
+			.then(data => data.Item)
+	},
+	removeInsuranceCompaniesFromOffice(officeId, insuranceCompanyCodes) {
+		return module.exports.getInsuranceCompaniesOfOffice(officeId)
+			.then((companies) => {
+				return companies.filter((company) => !insuranceCompanyCodes.contains(company.code))
+			})
+			.then(new_companies => docClient.update({
+					TableName: 'Office' + ddbSuffix,
+					Key: {id: officeId},
+					KeyConditionExpression: 'SET #insuranceCompanies = :newInsuranceCompanies',
+					ExpressionAttributeNames: {'#insuranceCompanies': 'insuranceCompanies'},
+					ExpressionAttributeValues: {':newInsuranceCompanies': new_companies},
+				}).promise()
+			)
 	}
 }

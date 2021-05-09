@@ -24,7 +24,6 @@ module.exports = {
 	 */
 	officeConnectionsTest: async (gql, gateway) => {
 		console.log('officeManagerAndEmployeeConnection start')
-		let shouldStop = false
 
 		//The user profiles of the 3 users.
 		const managerUserProfile = {
@@ -73,20 +72,10 @@ module.exports = {
 		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
 			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
 			.then(() => console.log('Initial UserProfile clean up OK'))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		await Promise.all([managerUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteOfficeMutation, 'deleteOffice')))
 			.then(deleteOfficeResp => deleteOfficeResp.forEach(value => console.log(`Office with ID:${JSON.stringify(value, null, 2)} deleted.`)))
 			.then(() => console.log('Initial Office clean up successful.'))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		//Create the 3 user profiles
 		const createUPMutation = `mutation createUserProfile($input: CreateUserProfileInput!){
@@ -101,12 +90,6 @@ module.exports = {
 		}`
 		await Promise.all([managerUserProfile, employeeUserProfile, contractorUserProfile].map(profile => gql.execute({input: profile}, createUPMutation, 'createUserProfile')))
 			.then(profile => console.log(`UserProfile created: ${JSON.stringify(profile)}`))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
-
 
 		//Make a createOffice request
 		await gateway.createUnverifiedOffice({
@@ -142,7 +125,6 @@ module.exports = {
 				console.log('Unverified office created successfully with: ' + JSON.stringify(unverifiedOfficeId, null, 2))
 				return unverifiedOfficeId
 			})
-			.catch(reason => Promise.reject(reason))
 			.then(unverifiedOfficeId => ({
 				username: managerUserProfile.username,
 				email: managerUserProfile.email,
@@ -182,31 +164,15 @@ module.exports = {
 			}))
 			.then(resolveCreateOfficeRequest => gateway.resolveRequest(resolveCreateOfficeRequest))
 			.then(value => console.log('Request resolved successfully: ' + JSON.stringify(value, null, 2)))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		//Clean up
 		await Promise.all([managerUserProfile.id, employeeUserProfile.id, contractorUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteUPMutation, 'deleteUserProfile')))
 			.then(deleteUPResponses => deleteUPResponses.forEach(value => console.log(`User profile with ID:${JSON.stringify(value, null, 2)} deleted.`)))
 			.then(() => console.log('UserProfile clean up successful.'))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		await Promise.all([managerUserProfile.id].map(id => gql.execute({input: {id: id}}, deleteOfficeMutation, 'deleteOffice')))
 			.then(deleteOfficeResp => deleteOfficeResp.forEach(value => console.log(`Office with ID:${JSON.stringify(value, null, 2)} deleted.`)))
 			.then(() => console.log('Office clean up successful.'))
-			.catch(reason => {
-				console.error(reason)
-				shouldStop = true
-			})
-		if (shouldStop) return Promise.reject(new Error('FAILED'))
 
 		console.log('officeManagerAndEmployeeConnection finish')
 		return Promise.resolve({})

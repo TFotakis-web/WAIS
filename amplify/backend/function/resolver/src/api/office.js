@@ -5,8 +5,11 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + process.env.ENV
 
-const hashCore = require('node-object-hash');
-const hashEngine = hashCore({sort: false, coerce: true, enc: "base64"});
+const {
+	v1: uuidv1,	// Time-based
+	v4: uuidv4,	// Random
+	v5: uuidv5,	// Based on name
+} = require('uuid');
 
 module.exports = {
 	getOfficeByOwnerUsername: (username) => {
@@ -110,7 +113,7 @@ module.exports = {
 	 */
 	addOfficeAccessConnection: (senderOffice, receiverOffice, insuranceCompanyName, insuranceCompanyCode) => {
 		const now = new Date().toISOString()
-		const connId = hashEngine.hash([senderOffice.id, receiverOffice.id, insuranceCompanyName, insuranceCompanyCode])
+		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id, insuranceCompanyName, insuranceCompanyCode]))
 		return docClient.transactWrite({
 			TransactItems: [
 				{
@@ -217,99 +220,86 @@ module.exports = {
 			.promise()
 			.then(() => officeUserConId)
 	},
-	detailsAndPermissionsByUsername: (username, filter, limit, nextToken) => {
+	detailsAndPermissionsByUsername: (username) => {
 		const query = /* GraphQL */ `
-			query getOfficeDetailsAndPermissionsByUsername(
-				$username: String!
-				$filter: ModelOfficeUserConnectionFilterInput
-				$limit: Int
-				$nextToken: String
-			) {
+			query getOfficeDetailsAndPermissionsByUsername($username: String!) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
-							items {
-								id
+						officeConnection {
+							id
+							username
+							userId
+							pagePermissions
+							modelPermissions
+							preferences
+							officeId
+							officeName
+							employeeType
+							office {
+							  id
+							  officeName
+							  ownerUsername
+							  address
+							  office_email
+							  zip_code
+							  mobile
+							  phone
+							  partnersNumberLimit
+							  employeesNumberLimit
+							  verified
+							  tin
+							  office_logo {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  professionStartDate
+							  chamberRecordNumber
+							  insuranceLicenseExpirationDate
+							  civilLiabilityExpirationDate
+							  bankAccountInfo
+							  files {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  insuranceCompanies {
+								name
+								code
+							  }
+							  createdAt
+							  updatedAt
+							}
+							user {
 								username
-								userId
-								pagePermissions
-								modelPermissions
-								preferences
-								officeId
-								officeName
-								employeeType
-								office {
-								  id
-								  officeName
-								  ownerUsername
-								  address
-								  office_email
-								  zip_code
-								  mobile
-								  phone
-								  partnersNumberLimit
-								  employeesNumberLimit
-								  verified
-								  tin
-								  office_logo {
-									level
-									idToken
-									filePath
-									filename
-									contentType
-								  }
-								  professionStartDate
-								  chamberRecordNumber
-								  insuranceLicenseExpirationDate
-								  civilLiabilityExpirationDate
-								  bankAccountInfo
-								  files {
-									level
-									idToken
-									filePath
-									filename
-									contentType
-								  }
-								  insuranceCompanies {
-									name
-									code
-								  }
-								  insuranceCompaniesAvailable
-								  createdAt
-								  updatedAt
-								}
-								user {
-									username
-									email
-									role
-									telephone
-									createdAt
-									updatedAt
-								}
+								email
+								role
+								telephone
 								createdAt
 								updatedAt
 							}
-							nextToken
+							createdAt
+							updatedAt
 						}
+						nextToken
 					}
 				}
 			}
 		`
-		return gqlUtil.execute({
-			username: username,
-			filter: filter || {id: {ne: ''}},
-			limit: limit || 100,
-			nextToken: nextToken
-		}, query, 'getOfficeDetailsAndPermissionsByUsername')
+		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const result = response?.items[0]?.officeConnections || []
-				result?.items.forEach((item) => { //Quick page permissions fix
-					item.pagePermissions = JSON.parse(item.pagePermissions)
-					if (item.office) {
-						item.office.bankAccountInfo = JSON.parse(item.office.bankAccountInfo)
+				const officeConnection = response?.items[0]?.officeConnection
+				if (officeConnection) {
+					officeConnection.pagePermissions = JSON.parse(officeConnection.pagePermissions)
+					if (officeConnection.office) {
+						officeConnection.office.bankAccountInfo = JSON.parse(officeConnection.office.bankAccountInfo)
 					}
-				})
-				return result
+				}
+				return officeConnection
 			})
 	},
 	userIsUnemployed: async (username) => {
@@ -318,19 +308,14 @@ module.exports = {
 				listUserProfileByUsername(username: $username) {
 					items {
 						officeConnections {
-							items {
-								id
-							}
+							id
 						}
 					}
 				}
 			}
 		`
 		return await gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			.then(response => {
-				const result = response?.items[0]?.officeConnections?.items
-				return result !== undefined && result.length > 0;
-			})
+			.then(response => !!response?.items[0]?.officeConnection)
 	},
 
 	updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {
@@ -349,7 +334,7 @@ module.exports = {
 		//Get the office
 		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
 		const officeDetailsAndPermissions = await module.exports.detailsAndPermissionsByUsername(caller_username, tuc_filter)
-		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnections?.items[0]
+		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnection
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			return Promise.reject(new Error('Invalid office ID or caller not an owner of that office.'))
 		}
@@ -381,7 +366,7 @@ module.exports = {
 		//Get the office
 		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
 		const officeDetailsAndPermissions = await module.exports.detailsAndPermissionsByUsername(caller_username, tuc_filter)
-		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnections?.items[0]
+		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnection
 		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
 			return Promise.reject(new Error('Invalid office ID or caller not an owner of that office.'))
 
@@ -617,39 +602,16 @@ module.exports = {
 				return result
 			})
 	},
-
-	getPartnerOfficeConnections: (officeId, username, filter, limit, nextToken) => {
+	getInsuranceCompaniesOfMyOffice: (officeId, username, filter, limit, nextToken) => {
 		if (!username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		if (!officeId) {
-			return Promise.reject(new Error('Invalid office ID'))
-		}
-		const user_filter = {and: [filter || {id: {ne: ''}}, {fromId: {eq: officeId}}]}
+
 		const query = /* GraphQL */ `
-			query getPartnerOfficeConnections(
-				$officeId: String!
-				$filter: ModelOfficeAccessConnectionFilterInput
-				$limit: Int
-				$nextToken: String
-			) {
-				listOfficeAccessConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+			query getPartnerOfficeConnections($officeId: String!) {
+				listUserProfileByUsername(username: $username) {
 					items {
-						id
-						to {
-							id
-							officeName
-							ownerUsername
-							office_email
-							address
-							mobile
-							phone
-							tin
-						}
-						expirationDate
-						message
-						createdAt
-						updatedAt
+						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
 					}
 					nextToken
 				}
@@ -663,50 +625,6 @@ module.exports = {
 					return Promise.reject(new Error('Failed to retrieve partners.'))
 				}
 				return result
-			})
-	},
-
-	getAllInsuranceCompanies: (username) => {
-		if (!username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-
-		//Get user's office and its companies
-		const query = /* GraphQL */ `
-			query getOfficeDetailsAndPermissionsByUsername($username: String!) {
-				listUserProfileByUsername(username: $username) {
-					items {
-						officeConnections {
-							items {
-								office {
-									availableInsuranceCompanies {
-										items {
-											id
-											officeName
-											insuranceCompanies {
-												name
-												code
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		`
-		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			.then(response => {
-				const companies = []
-				response?.items?.forEach((oc) => {
-					oc.items.forEach((office) => {
-						office.availableInsuranceCompanies.items.forEach((ic) => {
-							companies.push(ic)
-						})
-					})
-				})
-				return {items: companies}
 			})
 	},
 
@@ -767,7 +685,6 @@ module.exports = {
 			'insuranceLicenseExpirationDate',
 			'office_logo',
 			'insuranceCompanies',
-			'insuranceCompaniesAvailable',
 			'phone',
 			'professionStartDate',
 		]
@@ -794,7 +711,6 @@ module.exports = {
 						name
 						code
 					}
-					insuranceCompaniesAvailable
 					office_logo {
 						level
 						idToken
@@ -948,87 +864,74 @@ module.exports = {
 			})
 	},
 
-	getWorkEnvironment: (username, filter, limit, nextToken) => {
+	getWorkEnvironment: (username) => {
 		const query = /* GraphQL */ `
-			query getOfficeDetailsAndPermissionsByUsername(
-				$username: String!
-				$filter: ModelOfficeUserConnectionFilterInput
-				$limit: Int
-				$nextToken: String
-			) {
+			query getOfficeDetailsAndPermissionsByUsername($username: String!) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
-							items {
-								id
-								username
-								userId
-								pagePermissions
-								modelPermissions
-								preferences
-								officeId
-								officeName
-								employeeType
-								office {
-								  id
-								  officeName
-								  ownerUsername
-								  address
-								  office_email
-								  zip_code
-								  mobile
-								  phone
-								  tin
-								  office_logo {
-									level
-									idToken
-									filePath
-									filename
-									contentType
-								  }
-								  professionStartDate
-								  chamberRecordNumber
-								  insuranceLicenseExpirationDate
-								  civilLiabilityExpirationDate
-								  bankAccountInfo
-								  files {
-									level
-									idToken
-									filePath
-									filename
-									contentType
-								  }
-								  insuranceCompanies {
-									name
-									code
-								  }
-								  insuranceCompaniesAvailable
-								  workforce {
-								  	items{
-										id
-										officeId
-										officeName
-										userId
-										username
-										pagePermissions
-										modelPermissions
-										employeeType
-										preferences
-								  	}
-								  }
+						officeConnection {
+							id
+							username
+							userId
+							pagePermissions
+							modelPermissions
+							preferences
+							officeId
+							officeName
+							employeeType
+							office {
+							  id
+							  officeName
+							  ownerUsername
+							  address
+							  office_email
+							  zip_code
+							  mobile
+							  phone
+							  tin
+							  office_logo {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  professionStartDate
+							  chamberRecordNumber
+							  insuranceLicenseExpirationDate
+							  civilLiabilityExpirationDate
+							  bankAccountInfo
+							  files {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  insuranceCompanies {
+								name
+								code
+							  }
+							  workforce {
+								items{
+									id
+									officeId
+									officeName
+									userId
+									username
+									pagePermissions
+									modelPermissions
+									employeeType
+									preferences
 								}
+							  }
 							}
 						}
 					}
 				}
 			}
 		`
-		return gqlUtil.execute({
-			username: username,
-			filter: filter || {id: {ne: ''}},
-			limit: limit || 100,
-			nextToken: nextToken || null
-		}, query, 'getOfficeDetailsAndPermissionsByUsername')
+		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
 				const result = response?.items[0].officeConnections?.items[0]
 				if (!result) {
@@ -1042,9 +945,6 @@ module.exports = {
 					}
 					if (!result?.office?.insuranceCompanies) {
 						result.office.insuranceCompanies = []
-					}
-					if (!result?.office?.insuranceCompaniesAvailable) {
-						result.office.insuranceCompaniesAvailable = []
 					}
 					if (!result?.office?.workforce) {
 						result.office.workforce = []
@@ -1103,7 +1003,6 @@ module.exports = {
 				createOfficeInput.employeesNumberLimit = 0
 				createOfficeInput.partnersNumberLimit = 10
 				createOfficeInput.insuranceCompanies = []
-				createOfficeInput.insuranceCompaniesAvailable = []
 				createOfficeInput.verified = false
 				createOfficeInput.bankAccountInfo = JSON.stringify([])
 

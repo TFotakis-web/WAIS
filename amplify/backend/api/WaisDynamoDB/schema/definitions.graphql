@@ -6,25 +6,9 @@ input S3ObjectInput {
     contentType: String!
 }
 
-input InsuranceCompanyInput {
-    name: String!
-    code: String!
-}
-
-input InsuranceCompanyDetailsInput {
-    id: ID
-    officeName: String
-    insuranceCompanies: [InsuranceCompanyInput!]!
-}
-
 enum ModelSortDirection {
     ASC
     DESC
-}
-
-type ModelOfficeConnection @aws_iam {
-    items: [Office]
-    nextToken: String
 }
 
 input ModelStringInput {
@@ -153,7 +137,6 @@ input CreateOfficeInput {
     chamberRecordNumber: String
     office_logo: S3ObjectInput
     insuranceCompanies: [InsuranceCompanyInput]
-    insuranceCompaniesAvailable: [String]
     subscriptionExpirationDate: AWSDate
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
@@ -182,7 +165,6 @@ input UpdateOfficeInput {
     bankAccountInfo: AWSJSON
     files: [S3ObjectInput]
     insuranceCompanies: [InsuranceCompanyInput]
-    insuranceCompaniesAvailable: [String]
 }
 
 input DeleteOfficeInput {
@@ -769,68 +751,6 @@ input ModelOfficeContractConnectionConditionInput {
     not: ModelOfficeContractConnectionConditionInput
 }
 
-type ModelOfficeAccessConnectionConnection @aws_iam {
-    items: [OfficeAccessConnection]
-    nextToken: String
-}
-
-input ModelOfficeAccessConnectionFilterInput {
-    id: ModelIDInput
-    insuranceCompanyName: ModelStringInput
-    insuranceCompanyCode: ModelStringInput
-    fromId: ModelIDInput
-    fromOfficeName: ModelStringInput
-    toId: ModelIDInput
-    toOfficeName: ModelStringInput
-    expirationDate: ModelIntInput
-    message: ModelStringInput
-    and: [ModelOfficeAccessConnectionFilterInput]
-    or: [ModelOfficeAccessConnectionFilterInput]
-    not: ModelOfficeAccessConnectionFilterInput
-}
-
-input CreateOfficeAccessConnectionInput {
-    id: ID
-    insuranceCompanyName: String!
-    insuranceCompanyCode: String!
-    fromId: ID!
-    fromOfficeName: String!
-    toId: ID!
-    toOfficeName: String!
-    expirationDate: AWSTimestamp!
-    message: String
-}
-
-input UpdateOfficeAccessConnectionInput {
-    id: ID!
-    insuranceCompanyName: String
-    insuranceCompanyCode: String
-    fromId: ID
-    fromOfficeName: String
-    toId: ID
-    toOfficeName: String
-    expirationDate: AWSTimestamp
-    message: String
-}
-
-input DeleteOfficeAccessConnectionInput {
-    id: ID
-}
-
-input ModelOfficeAccessConnectionConditionInput {
-    insuranceCompanyName: ModelStringInput
-    insuranceCompanyCode: ModelStringInput
-    fromId: ModelIDInput
-    fromOfficeName: ModelStringInput
-    toId: ModelIDInput
-    toOfficeName: ModelStringInput
-    expirationDate: ModelIntInput
-    message: ModelStringInput
-    and: [ModelOfficeAccessConnectionConditionInput]
-    or: [ModelOfficeAccessConnectionConditionInput]
-    not: ModelOfficeAccessConnectionConditionInput
-}
-
 type ModelTransactionHistoryConnection @aws_iam {
     items: [TransactionHistory]
     nextToken: String
@@ -1058,4 +978,89 @@ input ModelTransactionHistoryByReceiverUsernameCompositeKeyConditionInput {
 input ModelTransactionHistoryByReceiverUsernameCompositeKeyInput {
     timestamp: AWSTimestamp
     senderUsername: String
+}
+
+
+type ModelEventsConnection @aws_iam {
+    items: [Events]
+    nextToken: String
+}
+
+input ModelEventsFilterInput {
+    id: ModelIDInput
+    payload: ModelStringInput
+    and: [ModelEventsFilterInput]
+    or: [ModelEventsFilterInput]
+    not: ModelEventsFilterInput
+}
+
+input CreateEventsInput {
+    id: ID
+    payload: String!
+}
+
+input UpdateEventsInput {
+    id: ID!
+    payload: String
+}
+
+input DeleteEventsInput {
+    id: ID
+}
+
+input ModelEventsConditionInput {
+    payload: ModelStringInput
+    and: [ModelEventsConditionInput]
+    or: [ModelEventsConditionInput]
+    not: ModelEventsConditionInput
+}
+
+type ModelUserNotificationsConnection @aws_iam {
+    items: [UserNotifications]
+    nextToken: String
+}
+
+input ModelUserNotificationsFilterInput {
+    id: ModelIDInput
+    username: ModelStringInput
+    payload: ModelStringInput
+    notificationType: ModelStringInput
+    createdAt: ModelStringInput
+    updatedAt: ModelStringInput
+    and: [ModelUserNotificationsFilterInput]
+    or: [ModelUserNotificationsFilterInput]
+    not: ModelUserNotificationsFilterInput
+}
+
+input CreateUserNotificationsInput {
+    id: ID
+    username: String
+    payload: String
+    notificationType: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+}
+
+input UpdateUserNotificationsInput {
+    id: ID!
+    username: String
+    payload: String
+    notificationType: String
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+}
+
+input DeleteUserNotificationsInput {
+    id: ID
+}
+
+input ModelUserNotificationsConditionInput {
+    username: ModelStringInput
+    payload: ModelStringInput
+    notificationType: ModelStringInput
+    createdAt: ModelStringInput
+    updatedAt: ModelStringInput
+    and: [ModelUserNotificationsConditionInput]
+    or: [ModelUserNotificationsConditionInput]
+    not: ModelUserNotificationsConditionInput
 }

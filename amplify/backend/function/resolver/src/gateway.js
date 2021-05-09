@@ -22,7 +22,6 @@ module.exports = {
 		console.log('user output: ' + JSON.stringify(result))
 		return result
 	},
-
 	getWorkEnvironment: (args) => {
 		console.log('getWorkEnvironment input: ' + JSON.stringify(args))
 		if (!args.username) {
@@ -99,7 +98,7 @@ module.exports = {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 		const result = requestAPI.resolveRequest(args.username, args.email, args.groups, args.id, args.decision, args.payload)
-		console.log('resolveRequest output: ' + result)
+		console.log('resolveRequest output: ' + JSON.stringify(result))
 		return result
 	},
 	getEmployeeUserProfilesForManagerUsername: (args) => {
@@ -107,7 +106,7 @@ module.exports = {
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid manager username'))
 		}
-		const result = officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
+		const result = officeAPI.getEmployeeUserProfilesForManagerUsername(
 			args.username,
 			'STANDARD',
 			args.filter,
@@ -122,7 +121,7 @@ module.exports = {
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid manager username'))
 		}
-		const result = officeAPI.getEmployeeTypeUserProfilesForManagerUsername(
+		const result = officeAPI.getEmployeeUserProfilesForManagerUsername(
 			args.username,
 			'CONTRACTOR',
 			args.filter,
@@ -150,17 +149,18 @@ module.exports = {
 		console.log('getContractsForOfficeId output: ' + JSON.stringify(result))
 		return result
 	},
-	getPartnerOfficeConnections: (args) => {
-		console.log('getPartnerOfficeConnections input: ' + JSON.stringify(args))
-		if (!args.username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-		if (!args.officeId) {
-			return Promise.reject(new Error('Invalid office ID'))
-		}
-		const result = officeAPI.getPartnerOfficeConnections(args.officeId, args.username, args.filter, args.limit, args.nextToken)
-		console.log('getPartnerOfficeConnections output: ' + JSON.stringify(result))
-		return result
+	getInsuranceCompaniesOfMyOffice: (args) => {
+		return Promise.resolve(() => console.log('getInsuranceCompaniesOfMyOffice input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.username) {
+					return Promise.reject(new Error('Invalid username or unauthenticated user.'))
+				}
+			})
+			.then(() => officeAPI.getInsuranceCompaniesOfMyOffice(args.username))
+			.then((result) => {
+				console.log('getInsuranceCompaniesOfMyOffice output: ' + JSON.stringify(result))
+				return result
+			})
 	},
 	getUserModelPermissionsForOffice: (args) => {
 		console.log('getUserModelPermissionsForOffice input: ' + JSON.stringify(args))
@@ -291,15 +291,6 @@ module.exports = {
 		}
 		const result = requestAPI.createInviteContractorToOfficeRequest(args.username, args.email, args.groups, args.requestInput)
 		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
-		return result
-	},
-	createOfficeConnectionRequest: (args) => {
-		console.log('createOfficeConnectionRequest input: ' + JSON.stringify(args))
-		if (!args.username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-		const result = requestAPI.createOfficeConnectionRequest(args.username, args.email, args.groups, args.requestInput)
-		console.log('createOfficeConnectionRequest output: ' + JSON.stringify(result))
 		return result
 	},
 	deleteRequestsSentByMe: (args) => {
@@ -529,15 +520,6 @@ module.exports = {
 		console.log('getUserRoleByUsername output: ' + JSON.stringify(result))
 		return result
 	},
-	getAllInsuranceCompanies: (args) => {
-		console.log('getAllInsuranceCompanies input: ' + JSON.stringify(args))
-		if (!args.username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-		const result = officeAPI.getAllInsuranceCompanies(args.username)
-		console.log('getAllInsuranceCompanies output: ' + JSON.stringify(result))
-		return result
-	},
 	getAvailableInsuranceCompaniesForOffice: (args) => {
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
@@ -570,6 +552,81 @@ module.exports = {
 			return Promise.reject(new Error('Invalid username.'))
 		}
 		return officeAPI.createUnverifiedOffice(args.username, args.input)
+	},
+	addInsuranceCompaniesToOffice(args) {
+		return Promise.resolve(null)
+			.then(() => console.log('addInsuranceCompaniesToOffice input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.groups || args.groups.indexOf('admin') < 0) {
+					return Promise.reject(new Error('Insufficient privileges.'))
+				}
+			})
+			.then(() => {
+				if (!args.username) {
+					return Promise.reject(new Error('Invalid username.'))
+				}
+				if (!args.officeId) {
+					return Promise.reject(new Error('Invalid officeId.'))
+				}
+				if (!args.insuranceCompanies) {
+					return Promise.reject(new Error('Invalid (or empty) insuranceCompanies.'))
+				}
+			})
+			.then(() => adminAPI.addInsuranceCompaniesToOffice(args.officeId, args.insuranceCompanies))
+			.then((result) => {
+				console.log('addInsuranceCompaniesToOffice output: ' + JSON.stringify(result))
+				return result
+			})
+	},
+	getInsuranceCompaniesOfOffice(args) {
+		return Promise.resolve(null)
+			.then(() => console.log('getInsuranceCompaniesOfOffice input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.groups || args.groups.indexOf('admin') < 0) {
+					return Promise.reject(new Error('Insufficient privileges.'))
+				}
+			})
+			.then(() => {
+				if (!args.username) {
+					return Promise.reject(new Error('Invalid username.'))
+				}
+				if (!args.officeId) {
+					return Promise.reject(new Error('Invalid officeId.'))
+				}
+				if (!args.insuranceCompanies) {
+					return Promise.reject(new Error('Invalid (or empty) insuranceCompanies.'))
+				}
+			})
+			.then(() => adminAPI.getInsuranceCompaniesOfOffice(args.officeId))
+			.then((result) => {
+				console.log('getInsuranceCompaniesOfOffice output: ' + JSON.stringify(result))
+				return result
+			})
+	},
+	removeInsuranceCompaniesFromOffice(args) {
+		return Promise.resolve(null)
+			.then(() => console.log('removeInsuranceCompaniesFromOffice input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.groups || args.groups.indexOf('admin') < 0) {
+					return Promise.reject(new Error('Insufficient privileges.'))
+				}
+			})
+			.then(() => {
+				if (!args.username) {
+					return Promise.reject(new Error('Invalid username.'))
+				}
+				if (!args.officeId) {
+					return Promise.reject(new Error('Invalid officeId.'))
+				}
+				if (!args.insuranceCompanies) {
+					return Promise.reject(new Error('Invalid (or empty) insuranceCompanies.'))
+				}
+			})
+			.then(() => adminAPI.removeInsuranceCompaniesFromOffice(args.officeId, args.insuranceCompanyCodes))
+			.then((result) => {
+				console.log('removeInsuranceCompaniesFromOffice output: ' + JSON.stringify(result))
+				return result
+			})
 	},
 	test: (args) => {
 		const testAPI = require('./unittests/index')
