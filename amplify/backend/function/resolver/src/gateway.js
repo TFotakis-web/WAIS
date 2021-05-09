@@ -150,7 +150,8 @@ module.exports = {
 		return result
 	},
 	getInsuranceCompaniesOfMyOffice: (args) => {
-		return Promise.resolve(() => console.log('getInsuranceCompaniesOfMyOffice input: ' + JSON.stringify(args)))
+		return Promise.resolve(null)
+			.then(() => console.log('getInsuranceCompaniesOfMyOffice input: ' + JSON.stringify(args)))
 			.then(() => {
 				if (!args.username) {
 					return Promise.reject(new Error('Invalid username or unauthenticated user.'))

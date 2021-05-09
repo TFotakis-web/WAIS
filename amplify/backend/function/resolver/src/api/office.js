@@ -602,24 +602,31 @@ module.exports = {
 				return result
 			})
 	},
-	getInsuranceCompaniesOfMyOffice: (officeId, username, filter, limit, nextToken) => {
+	getInsuranceCompaniesOfMyOffice: (username) => {
 		if (!username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 
 		const query = /* GraphQL */ `
-			query getPartnerOfficeConnections($officeId: String!) {
+			query getInsuranceCompanies($username: String!) {
 				listUserProfileByUsername(username: $username) {
 					items {
-						officeConnections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+						officeConnection {
+							insuranceCompanies {
+								name
+								code
+								expiresAt
+								receivedFromUsername
+								givenToOffices
+							}
+						}
 					}
-					nextToken
 				}
 			}
 		`
-		return gqlUtil.execute(
-			{officeId: officeId, filter: user_filter, limit: limit || 100, nextToken: nextToken},
-			query, 'getPartnerOfficeConnections')
+
+		return gqlUtil.execute({username: username}, query, 'getInsuranceCompanies')
+			.then(response => response?.items?.officeConnection?.insuranceCompanies)
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to retrieve partners.'))
@@ -651,6 +658,9 @@ module.exports = {
 							insuranceCompanies {
 								name
 								code
+								expiresAt
+								receivedFromUsername
+								givenToOffices
 							}
 						}
 					}

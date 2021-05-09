@@ -48,7 +48,7 @@ module.exports = {
 							console.log('GQL error: ' + err)
 							reject(err)
 						} else {
-							const data = result.data[Object.keys(result.data)[0]]	//Don't judge
+							const data = result.data[Object.keys(result.data)[0]]	//FIXME
 							console.log('GQL data: ' + JSON.stringify(data))
 							resolve(data)
 						}

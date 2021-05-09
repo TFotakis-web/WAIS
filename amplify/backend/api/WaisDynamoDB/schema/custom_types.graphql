@@ -3,12 +3,14 @@ type InsuranceCompany {
     name: String
     code: String
     expiresAt: AWSDate
+    givenToOffices: [ID]
 }
 input InsuranceCompanyInput {
     receivedFromUsername: String
     name: String
     code: String
     expiresAt: AWSDate
+    givenToOffices: [ID]
 }
 
 type S3Object {

@@ -80,6 +80,9 @@ type UserProfile
     # Store S3 files in this field
     files: [S3Object]
 
+    # Office related
+    employerOfficeId: ID
+
     # Access to requests
     requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
     requestsForMe: [Requests] @connection(keyName: "byReceiverEmail", fields: ["email"])
@@ -88,7 +91,7 @@ type UserProfile
     calendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
 
     # Access to working Office, null if no invites/creations have taken place
-    officeConnection: OfficeUserConnection @connection(keyName: "byOfficeUsername", fields: ["username"])
+    officeConnection: OfficeUserConnection @connection(fields: ["employerOfficeId"])
 }
 
 type Vehicle

@@ -118,5 +118,6 @@ module.exports = {
 					ExpressionAttributeValues: {':newInsuranceCompanies': new_companies},
 				}).promise()
 			)
+			.then(() => officeId)
 	}
 }
