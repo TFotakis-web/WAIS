@@ -6,6 +6,7 @@ import axios from '@/plugins/axios';
 import VueAxios from 'vue-axios';
 import Cookies from 'js-cookie';
 import { store } from '@/plugins/store/store';
+import mitt from 'mitt';
 
 import Amplify from 'aws-amplify';
 import { Auth } from '@aws-amplify/auth';
@@ -86,15 +87,14 @@ app.config.globalProperties.$toBase64 = file => new Promise((resolve, reject) =>
 	reader.onload = () => resolve(reader.result);
 	reader.onerror = error => reject(error);
 });
-
 app.config.globalProperties.$toGreeklish = toGreeklish;
-app.config.globalProperties.$parseJwt = function (token) {
+app.config.globalProperties.$parseJwt = function(token) {
 	const base64Url = token.split('.')[1];
 	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 	const jsonPayload = decodeURIComponent(
 		atob(base64)
 			.split('')
-			.map(function (c) {
+			.map(function(c) {
 				return (
 					'%' +
 					('00' + c.charCodeAt(0).toString(16)).slice(-2)
@@ -105,7 +105,7 @@ app.config.globalProperties.$parseJwt = function (token) {
 
 	return JSON.parse(jsonPayload);
 };
-app.config.globalProperties.$clearCookies = function () {
+app.config.globalProperties.$clearCookies = function() {
 	for (const cookie of this.$cookies.keys()) {
 		this.$cookies.remove(cookie);
 	}
@@ -144,6 +144,7 @@ app.config.globalProperties.$toast = {
 		return toast.present();
 	},
 };
+app.config.globalProperties.$mitt = mitt();
 
 // -------------- Mount --------------
 store.commit('pageStructure/increaseGlobalPendingPromises');
