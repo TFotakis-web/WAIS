@@ -225,6 +225,15 @@ app.config.globalProperties.$inputConfigs = {
 		label: () => window.vm.$t('fields.phone'),
 		inputGroup: 'office',
 	},
+	email: {
+		type: 'email',
+		name: 'email',
+		autocomplete: 'email',
+		required: true,
+		icon: ioniconsOutline.mailOutline,
+		label: () => window.vm.$t('fields.email'),
+		inputGroup: 'userProfile',
+	},
 	office_email: {
 		type: 'email',
 		name: 'email',
