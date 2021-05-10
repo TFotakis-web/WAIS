@@ -14,74 +14,34 @@
 					</ion-item>
 					<ion-row>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.family_name') }}</ion-label>
-								<ion-input v-model="userProfile.family_name" type="text" name="fname" autocomplete="family-name" required/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.family_name" :config="$inputConfigs.family_name"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
-								<ion-input v-model="userProfile.name" type="text" name="name" autocomplete="given-name" required/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.name" :config="$inputConfigs.name"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.fathersName') }}</ion-label>
-								<ion-input v-model="userProfile.fathers_name" type="text" name="name" autocomplete="additional-name" required/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.fathers_name" :config="$inputConfigs.fathers_name"/>
 						</ion-col>
 					</ion-row>
-					<ion-item>
-						<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-						<ion-input v-model="userProfile.tin" type="text" name="tin"/>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-						<ion-input v-model="userProfile.email" type="email" name="email" autocomplete="email" required/>
-					</ion-item>
+					<ion-input-item v-model="userProfile.tin" :config="$inputConfigs.tin"/>
+					<ion-input-item v-model="userProfile.email" :config="$inputConfigs.email"/>
 					<ion-row>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-								<ion-input v-model="userProfile.mobile" type="number" name="mobile" autocomplete="tel" class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.mobile" :config="$inputConfigs.mobile"/>
 						</ion-col>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-								<ion-input v-model="userProfile.telephone" type="number" name="phone" autocomplete="tel" class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.telephone" :config="$inputConfigs.phone"/>
 						</ion-col>
 					</ion-row>
 					<ion-row>
-						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-								<ion-input v-model="userProfile.address" type="text" name="address" autocomplete="street-address"/>
-							</ion-item>
+						<ion-col size="12" size-md="8">
+							<ion-input-item v-model="userProfile.address" :config="$inputConfigs.address"/>
 						</ion-col>
+						<!--						<ion-col size="12" size-md="4">-->
+						<!--							<ion-input-item v-model="userProfile.city" :config="$inputConfigs.city"/>-->
+						<!--						</ion-col>-->
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start"/>
-								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
-								<ion-input v-model="userProfile.city" type="text" name="city" autocomplete="address-level2"/>
-							</ion-item>
-						</ion-col>
-						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start"/>
-								<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-								<ion-input v-model="userProfile.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="userProfile.zip_code" :config="$inputConfigs.zip_code"/>
 						</ion-col>
 					</ion-row>
 				</ion-list>
@@ -93,17 +53,20 @@
 	</ion-card>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import { mapActions, mapGetters } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import fileInput from '@/components/structure/fileInput/fileInput';
 	import S3IonImg from '@/components/structure/S3IonImg';
 
+
 	export default {
 		name: 'personalInfoCard',
 		components: {
+			IonInputItem,
 			S3IonImg,
 			loadingBtn,
-			fileInput
+			fileInput,
 		},
 		data() {
 			return {
@@ -114,25 +77,11 @@
 			...mapActions('auth', ['updateUserProfile']),
 			save() {
 				this.loading = true;
-				// let userProfile = {
-				// 	id: this.userProfile.id,
-				// 	username: this.userProfile.username,
-				// 	name: this.userProfile.name,
-				// 	family_name: this.userProfile.family_name,
-				// 	fathers_name: this.userProfile.fathers_name,
-				// 	tin: this.userProfile.tin,
-				// 	email: this.userProfile.email,
-				// 	telephone: this.userProfile.telephone,
-				// 	mobile: this.userProfile.mobile,
-				// 	address: this.userProfile.address,
-				// 	city: this.userProfile.city,
-				// 	zip_code: this.userProfile.zip_code,
-				// 	locale: this.userProfile.locale,
-				// 	profilePicture: this.userProfile.profilePicture,
-				// };
-				// this.updateUserProfile(userProfile)
 				this.updateUserProfile()
-					.then(() => this.$toast.saveSuccess())
+					.then(() => {
+						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:userProfile');
+					})
 					.catch(this.$toast.error)
 					.finally(() => this.loading = false);
 			},
