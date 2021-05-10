@@ -120,6 +120,17 @@ function checkRoute(to, from, next) {
 	next();
 }
 
-router.beforeEach(checkRoute);
+router.beforeEach((to, from, next) => {
+	if (store.getters['pageStructure/dirtyInputs']) {
+		window.vm.$toast.preventRoutePush(() => {
+			store.commit('pageStructure/clearDirtyInputs');
+			checkRoute(to, from, next);
+		}, () => {
+			return;
+		});
+		return;
+	}
+	checkRoute(to, from, next);
+});
 
 export default router;
