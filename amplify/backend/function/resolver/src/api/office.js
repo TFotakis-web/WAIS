@@ -8,7 +8,7 @@ const ddbSuffix = '-' + process.env.API_WAISDYNAMODB_GRAPHQLAPIIDOUTPUT + '-' + 
 const {
 	v1: uuidv1,	// Time-based
 	v4: uuidv4,	// Random
-	v5: uuidv5,	// Based on name
+	v5: uuidv5,	// Based on name (seed)
 } = require('uuid');
 
 module.exports = {
@@ -31,6 +31,69 @@ module.exports = {
 			.promise()
 			.then(res => res.Item)
 	},
+	getOfficeOfUser: (username) => {
+		const query = /* GraphQL */ `
+			query getUserOffice($username: String!) {
+				listUserProfileByUsername(username: $username) {
+					items {
+						officeConnection {
+							office {
+							  id
+							  officeName
+							  ownerUsername
+							  address
+							  office_email
+							  zip_code
+							  mobile
+							  phone
+							  partnersNumberLimit
+							  employeesNumberLimit
+							  verified
+							  tin
+							  office_logo {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  professionStartDate
+							  chamberRecordNumber
+							  insuranceLicenseExpirationDate
+							  civilLiabilityExpirationDate
+							  bankAccountInfo
+							  files {
+								level
+								idToken
+								filePath
+								filename
+								contentType
+							  }
+							  insuranceCompanies {
+								name
+								code
+								expiresAt
+								receivedFromUsername
+								givenToOffices
+							  }
+							  createdAt
+							  updatedAt
+							}
+						}
+					}
+				}
+			}
+		`
+
+		return gqlUtil.execute({username: username}, query, 'getUserOffice')
+			.then(response => response?.items[0]?.officeConnection?.office)
+			.then(result => {
+				if (result === undefined) {
+					return Promise.reject(new Error(`Failed to retrieve office of user ${username}.`))
+				}
+				return result
+			})
+	},
 	/**
 	 * ==DDB TRANSACTION==
 	 * Update members and put user into members iff remaining > 0 AND members dont contain empUsername
@@ -39,6 +102,21 @@ module.exports = {
 	 */
 	addEmployeeToOffice: (office, userProfId, empUsername, connId, userId, empModelPermissions, empPagePermissions) => {
 		const now = new Date().toISOString()
+		const newConnItem = {
+			__typename: 'OfficeUserConnection',
+			id: connId,
+			officeId: office.id,
+			officeName: office.officeName,
+			userId: userId,
+			username: empUsername,
+			modelPermissions: empModelPermissions,
+			pagePermissions: JSON.parse(empPagePermissions),
+			employeeType: 'STANDARD',
+			preferences: "{}",
+			createdAt: now,
+			updatedAt: now,
+		}
+
 		return docClient
 			.transactWrite({
 				TransactItems: [
@@ -67,20 +145,7 @@ module.exports = {
 						//Add the user's connection with the Office
 						Put: {
 							TableName: 'OfficeUserConnection' + ddbSuffix,
-							Item: {
-								__typename: 'OfficeUserConnection',
-								id: connId,
-								officeId: office.id,
-								officeName: office.officeName,
-								userId: userId,
-								username: empUsername,
-								modelPermissions: empModelPermissions,
-								pagePermissions: JSON.parse(empPagePermissions),
-								employeeType: 'STANDARD',
-								preferences: "{}",
-								createdAt: now,
-								updatedAt: now,
-							},
+							Item: newConnItem,
 						},
 					},
 					{
@@ -90,14 +155,16 @@ module.exports = {
 							Key: {
 								id: userProfId,
 							},
-							UpdateExpression: 'SET #updatedAt = :now, #role = :role',
+							UpdateExpression: 'SET #updatedAt = :now, #role = :role, #officeConnId = :officeConnId',
 							ExpressionAttributeNames: {
 								'#updatedAt': 'updatedAt',
 								'#role': 'role',
+								'#officeConnId': 'officeConnId',
 							},
 							ExpressionAttributeValues: {
 								':now': now,
 								':role': 'EMPLOYEE',
+								':officeConnId': newConnItem.id
 							},
 						},
 					},
@@ -109,11 +176,11 @@ module.exports = {
 
 	/**
 	 * Transaction.
-	 * Connects 2 Offices via a OfficeAccessConnection.
+	 * Connects 2 Offices via a OfficeCollaborationConnection.
 	 */
-	addOfficeAccessConnection: (senderOffice, receiverOffice, insuranceCompanyName, insuranceCompanyCode) => {
+	addOfficeCollaborationConnection: (senderOffice, receiverOffice, insuranceCompany) => {
 		const now = new Date().toISOString()
-		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id, insuranceCompanyName, insuranceCompanyCode]))
+		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id, insuranceCompany]))
 		return docClient.transactWrite({
 			TransactItems: [
 				{
@@ -156,27 +223,7 @@ module.exports = {
 						},
 						ReturnValues: 'UPDATED_NEW',
 					},
-				},
-				{
-					//Create the OfficeAccessConnection item
-					Put: {
-						TableName: 'OfficeAccessConnection' + ddbSuffix,
-						Item: {
-							__typename: 'OfficeAccessConnection',
-							id: connId,
-							insuranceCompanyCode: insuranceCompanyCode,
-							insuranceCompanyName: insuranceCompanyName,
-							fromId: senderOffice.id,
-							toId: receiverOffice.id,
-							fromOfficeName: senderOffice.officeName,
-							toOfficeName: receiverOffice.officeName,
-							expirationDate: new Date(new Date().getTime() + 1000 * 60 * 24 * 7).getTime(),
-							message: ' ',
-							createdAt: now,
-							updatedAt: now,
-						},
-					},
-				},
+				}
 			],
 		})
 			.promise()
@@ -186,19 +233,10 @@ module.exports = {
 	/**
 	 * Remove a user from the given office.
 	 * The index of the user's username in the office members index is necessary.
-	 *
-	 * @param {String} officeUserConId
-	 * @param {String} officeId
 	 */
-	removeEmployeeFromOffice: (officeUserConId, officeId) => {
+	removeEmployeeFromOffice: (officeUserConId, officeId, employeeId) => {
 		return docClient.transactWrite({
 			TransactItems: [
-				{
-					Delete: {
-						TableName: 'OfficeUserConnection' + ddbSuffix,
-						Key: {id: officeUserConId},
-					},
-				},
 				{
 					Update: {
 						TableName: 'Office' + ddbSuffix,
@@ -211,6 +249,32 @@ module.exports = {
 						ExpressionAttributeValues: {
 							':inc': 1,
 							':now': new Date().toISOString(),
+						},
+						ReturnValues: 'UPDATED_NEW',
+					},
+				},
+				{
+					Delete: {
+						TableName: 'OfficeUserConnection' + ddbSuffix,
+						Key: {id: officeUserConId},
+					},
+				},
+				{
+					Update: {
+						TableName: 'Office' + ddbSuffix,
+						Key: {
+							id: employeeId,
+						},
+						ConditionExpression: '#partnersNumberLimit > :zero',
+						UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
+						ExpressionAttributeNames: {
+							'#updatedAt': 'updatedAt',
+							'#partnersNumberLimit': 'partnersNumberLimit',
+						},
+						ExpressionAttributeValues: {
+							':now': new Date().toISOString(),
+							':dec': 1,
+							':zero': 0,
 						},
 						ReturnValues: 'UPDATED_NEW',
 					},
@@ -602,76 +666,151 @@ module.exports = {
 				return result
 			})
 	},
-	getInsuranceCompaniesOfMyOffice: (username) => {
-		if (!username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-
+	getInsuranceCompaniesForOffice: (office) => {
+		//Get user's office and its companies
 		const query = /* GraphQL */ `
-			query getInsuranceCompanies($username: String!) {
-				listUserProfileByUsername(username: $username) {
-					items {
-						officeConnection {
-							insuranceCompanies {
-								name
-								code
-								expiresAt
-								receivedFromUsername
-								givenToOffices
-							}
+			query getInsuranceCompaniesForOffice($officeId: ID!) {
+				getOffice(id: $officeId){
+					id
+					officeName
+					ownedInsuranceCompanies {
+						name
+						code
+						expiresAt
+					}
+					outgoingOfficeConnections {
+						items {
+							toId
+							toOfficeName
+							sharedInsuranceCompanies
+						}
+					}
+					incomingOfficeConnections {
+						items {
+							fromId
+							fromOfficeName
+							sharedInsuranceCompanies
 						}
 					}
 				}
 			}
 		`
 
-		return gqlUtil.execute({username: username}, query, 'getInsuranceCompanies')
-			.then(response => response?.items?.officeConnection?.insuranceCompanies)
-			.then(result => {
-				if (result === undefined) {
-					return Promise.reject(new Error('Failed to retrieve partners.'))
+		return gqlUtil.execute({officeId: office.id}, query, 'getInsuranceCompaniesForOffice')
+			.then(response => response?.getOffice)
+			.then(office => {
+				if (!office) {
+					return Promise.reject(new Error('Office not found.'))
 				}
-				return result
+				const companies = []
+				office?.ownedInsuranceCompanies?.forEach(ownedInsuranceCompany => {
+					companies.push({
+						officeId: office?.id,
+						officeName: office?.name,
+						name: ownedInsuranceCompany?.name,
+						code: ownedInsuranceCompany?.code,
+						expiresAt: ownedInsuranceCompany?.expiresAt,
+					})
+				})
+				office?.outgoingOfficeConnections?.items?.forEach(outgoingOfficeConnection => {
+					companies.push({
+						officeId: outgoingOfficeConnection?.toId,
+						officeName: outgoingOfficeConnection?.toOfficeName,
+						name: outgoingOfficeConnection?.sharedInsuranceCompanies?.name,
+						code: outgoingOfficeConnection?.sharedInsuranceCompanies?.code,
+						expiresAt: outgoingOfficeConnection?.sharedInsuranceCompanies?.expiresAt,
+					})
+				})
+				office?.incomingOfficeConnections?.items?.forEach(incomingOfficeConnection => {
+					companies.push({
+						officeId: incomingOfficeConnection?.toId,
+						officeName: incomingOfficeConnection?.toOfficeName,
+						name: incomingOfficeConnection?.sharedInsuranceCompanies?.name,
+						code: incomingOfficeConnection?.sharedInsuranceCompanies?.code,
+						expiresAt: incomingOfficeConnection?.sharedInsuranceCompanies?.expiresAt,
+					})
+				})
+				return companies
 			})
 	},
 
-	getAvailableInsuranceCompaniesForOffice: (office, username) => {
-		if (!username) {
-			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
-		}
-
+	getInsuranceCompaniesOfMyOffice(username) {
 		//Get user's office and its companies
-		const companies = []
-		companies.push({
-			id: office.id,
-			officeName: office.officeName,
-			insuranceCompanies: office.insuranceCompanies,
-		})
-
 		const query = /* GraphQL */ `
-			query getPartnerOfficeConnections($officeId: String!, $limit: Int) {
-				listOfficeAccessConnections(limit: $limit) {
-					items {
-						to {
-							id
-							officeName
-							insuranceCompanies {
-								name
-								code
-								expiresAt
-								receivedFromUsername
-								givenToOffices
-							}
-						}
+			query getInsuranceCompaniesForOffice($ownerUsername: String!) {
+  				listOfficeByOwnerUsername(ownerUsername: $ownerUsername")
+					allInsuranceCompanies {
+						officeId
+						officeName
+						name
+						code
+						expiresAt
 					}
 				}
 			}
 		`
 
-		return gqlUtil.execute({officeId: office.id, limit: 1000}, query, 'getPartnerOfficeConnections')
-			.then(response => {
-				response?.items?.forEach((partnerOffice) => companies.push(partnerOffice))
-				return {items: companies}
+		return gqlUtil.execute({ownerUsername: username}, query, 'getInsuranceCompaniesForOffice')
+			.then(response => response?.listOfficeByOwnerUsername?.allInsuranceCompanies ?? [])
+	},
+	getOutgoingOfficeConnections: (officeId) => {
+		//Get user's office and its companies
+		const query = /* GraphQL */ `
+			query getOutgoingOfficeConnections($officeId: ID!) {
+				getOffice(id: $officeId){
+					outgoingOfficeConnections {
+						id
+						fromId
+						fromOfficeName
+						toId
+						toOfficeName
+						sharedInsuranceCompanies
+						expirationDate
+						message
+						createdAt
+						updatedAt
+					}
+				}
+			}
+		`
+
+		return gqlUtil.execute({officeId: officeId}, query, 'getOutgoingOfficeConnections')
+			.then(response => response?.getOffice)
+			.then(office => {
+				if (!office) {
+					return Promise.reject(new Error('Office not found.'))
+				}
+				return office?.outgoingOfficeConnections ?? []
+			})
+	},
+	getIncomingOfficeConnections: (officeId) => {
+		//Get user's office and its companies
+		const query = /* GraphQL */ `
+			query getIncomingOfficeConnections($officeId: ID!) {
+				getOffice(id: $officeId){
+					incomingOfficeConnections {
+						id
+						fromId
+						fromOfficeName
+						toId
+						toOfficeName
+						sharedInsuranceCompanies
+						expirationDate
+						message
+						createdAt
+						updatedAt
+					}
+				}
+			}
+		`
+
+		return gqlUtil.execute({officeId: officeId}, query, 'getIncomingOfficeConnections')
+			.then(response => response?.getOffice)
+			.then(office => {
+				if (!office) {
+					return Promise.reject(new Error('Office not found.'))
+				}
+				return office?.incomingOfficeConnections ?? []
 			})
 	},
 
@@ -971,7 +1110,6 @@ module.exports = {
 				return result
 			})
 	},
-
 	createUnverifiedOffice: (caller_username, officeInput) => {
 		const createOfficeMutation = /* GraphQL */ `
 			mutation createOffice($input: CreateOfficeInput!) {

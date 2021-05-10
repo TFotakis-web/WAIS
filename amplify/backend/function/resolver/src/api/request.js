@@ -343,7 +343,7 @@ module.exports = {
 
 							//Transaction, add the new connection
 							try {
-								return await officeQueries.addOfficeAccessConnection(senderOffice, receiverOffice, 'comp1', 'code1')//TODO change
+								return await officeQueries.addOfficeCollaborationConnection(senderOffice, receiverOffice, 'comp1', 'code1')//TODO change
 							} catch (err) {
 								return Promise.reject(new Error(
 									'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',
@@ -412,7 +412,7 @@ module.exports = {
 							//Create a connection between the contractor office and the manager that invited you
 							const contractorOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
 							const otherOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
-							return await officeQueries.addOfficeAccessConnection(contractorOffice, otherOffice, 'comp1', 'code1')//FIXME
+							return await officeQueries.addOfficeCollaborationConnection(contractorOffice, otherOffice, 'comp1', 'code1')//FIXME
 						} else {
 							console.log(`Request with ID ${id} was rejected.`)
 						}

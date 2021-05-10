@@ -148,7 +148,7 @@ type OfficeContractConnectionOutput {
     updatedAt: AWSDateTime!
 }
 
-type OfficeAccessConnectionOutput {
+type OfficeCollaborationConnectionOutput {
     id: ID
     fromId: ID!
     fromOfficeName: String!
@@ -216,8 +216,8 @@ type ModelCustomerConnectionOutput {
     nextToken: String
 }
 
-type ModelOfficeAccessConnectionOutput {
-    items: [OfficeAccessConnectionOutput]
+type ModelOfficeCollaborationConnectionOutput {
+    items: [OfficeCollaborationConnectionOutput]
     nextToken: String
 }
 

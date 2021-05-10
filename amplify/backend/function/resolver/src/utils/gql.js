@@ -47,10 +47,12 @@ module.exports = {
 							const err = JSON.stringify(result.errors, null, 2)
 							console.log('GQL error: ' + err)
 							reject(err)
-						} else {
-							const data = result.data[Object.keys(result.data)[0]]	//FIXME
+						} else if ('data' in result) {
+							const data = result.data
 							console.log('GQL data: ' + JSON.stringify(data))
 							resolve(data)
+						} else {
+							reject(new Error('Unhandled GQL response error for result: ' + JSON.stringify(result, null, 2)))
 						}
 					} catch (err) {
 						console.log('GQL parsing error: ' + JSON.stringify(err))

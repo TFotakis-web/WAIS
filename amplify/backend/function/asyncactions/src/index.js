@@ -53,6 +53,7 @@ exports.handler = async event => {
 				preferences: "{}",
 				locale: null,
 				files: [],
+				officeConnection: null
 			})
 			break
 		default:

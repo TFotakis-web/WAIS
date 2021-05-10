@@ -31,7 +31,6 @@ module.exports = {
 				return userProfile
 			})
 	},
-
 	getUserProfileByUsername: (username) => {
 		return ddb.query({
 			TableName: 'UserProfile' + ddbSuffix,
@@ -47,7 +46,6 @@ module.exports = {
 				return userProfile
 			})
 	},
-
 	getUserRoleByUsername: (username) => {
 		return ddb.query({
 			TableName: 'UserProfile' + ddbSuffix,
@@ -60,17 +58,16 @@ module.exports = {
 			.promise()
 			.then(data => data?.Items[0])
 	},
-
-	updateUserRoleByUserId: (id, role) => {
-		if (!id) {
-			return Promise.reject(new Error(`Invalid ID: ${id.toString()}`))
+	updateUserRoleByUserId: (userId, role) => {
+		if (!userId) {
+			return Promise.reject(new Error(`Invalid ID: ${userId.toString()}`))
 		}
 		if (['EMPLOYEE', 'CONTRACTOR', 'MANAGER', 'UNKNOWN'].indexOf(role) < 0) {
 			return Promise.reject(new Error(`Invalid role provided '${role.toString()}'`))
 		}
 		return ddb.update({
 			TableName: 'UserProfile' + ddbSuffix,
-			Key: {"id": id},
+			Key: {"id": userId},
 			UpdateExpression: "set role = :role",
 			ExpressionAttributeValues: {":role": role}
 		}).promise()

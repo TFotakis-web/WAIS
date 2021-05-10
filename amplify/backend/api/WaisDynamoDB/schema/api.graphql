@@ -180,7 +180,7 @@ type Mutation {
     @auth(rules: [{ allow: groups, groups: ["admin"] }])
     @function(name: "resolver-${env}")
 
-    removeInsuranceCompaniesFromOffice(officeId: ID!, insuranceCompanyCodes: [String]!): IDOutput
+    removeInsuranceCompaniesFromOffice(officeId: ID!, companies: [DeleteInsuranceCompanyInput!]!): IDOutput
     @auth(rules: [{ allow: groups, groups: ["admin"] }])
     @function(name: "resolver-${env}")
 }

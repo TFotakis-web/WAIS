@@ -16,6 +16,23 @@ const api = require('./gateway')
  * Exceptions will be thrown on error.
  */
 const resolvers = {
+	Office: {
+		allInsuranceCompanies: (event) => {
+			return api.getInsuranceCompaniesOfOffice({
+				office: event.source?.officeId
+			})
+		},
+		outgoingOfficeConnections: (event) => {
+			return api.getOutgoingOfficeConnections({
+				office: event.source?.officeId
+			})
+		},
+		incomingOfficeConnections: (event) => {
+			return api.getIncomingOfficeConnections({
+				office: event.source?.officeId
+			})
+		},
+	},
 	Query: {
 		echo: (event) => {
 			return event.arguments.msg
@@ -91,6 +108,11 @@ const resolvers = {
 		getInsuranceCompaniesOfMyOffice: (event) => {
 			return api.getInsuranceCompaniesOfMyOffice({
 				username: event.identity.claims['cognito:username']
+			})
+		},
+		getInsuranceCompaniesOfOffice: (event) => {
+			return api.getInsuranceCompaniesOfOffice({
+				officeId: event.arguments.officeId
 			})
 		},
 		getS3Object: (event) => {
@@ -223,24 +245,24 @@ const resolvers = {
 				payload: event.arguments.payload,
 			})
 		},
-		createOfficeAccessConnectionForOffice: (event) => {
-			return api.createOfficeAccessConnectionForOffice({
+		createOfficeCollaborationConnectionForOffice: (event) => {
+			return api.createOfficeCollaborationConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
-		updateOfficeAccessConnectionForOffice: (event) => {
-			return api.updateOfficeAccessConnectionForOffice({
+		updateOfficeCollaborationConnectionForOffice: (event) => {
+			return api.updateOfficeCollaborationConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,
 				condition: event.arguments.condition,
 			})
 		},
-		deleteOfficeAccessConnectionForOffice: (event) => {
-			return api.deleteOfficeAccessConnectionForOffice({
+		deleteOfficeCollaborationConnectionForOffice: (event) => {
+			return api.deleteOfficeCollaborationConnectionForOffice({
 				username: event.identity.claims['cognito:username'],
 				officeId: event.arguments.officeId,
 				requestInput: event.arguments.input,

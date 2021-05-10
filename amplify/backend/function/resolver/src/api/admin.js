@@ -78,8 +78,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute(
-			{type: "CREATE_OFFICE", filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
-			query, 'getRequestsForUser')
+			{type: "CREATE_OFFICE", filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken}, query, 'getRequestsForUser')
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
@@ -95,15 +94,6 @@ module.exports = {
 			ExpressionAttributeNames: {'#insuranceCompanies': 'insuranceCompanies'},
 			ExpressionAttributeValues: {':newInsuranceCompanies': newInsuranceCompanies},
 		}).promise()
-	},
-	getInsuranceCompaniesOfOffice(officeId) {
-		return docClient.get({
-			TableName: 'UserProfile' + ddbSuffix,
-			Key: {id: officeId},
-			ProjectionExpression: "insuranceCompanies"
-		})
-			.promise()
-			.then(data => data.Item)
 	},
 	removeInsuranceCompaniesFromOffice(officeId, insuranceCompanyCodes) {
 		return module.exports.getInsuranceCompaniesOfOffice(officeId)

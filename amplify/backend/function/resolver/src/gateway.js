@@ -1,5 +1,4 @@
 const gqlUtil = require('./utils/gql')
-const ddbUtil = require('./utils/ddb')
 
 const officeAPI = require('./api/office')
 const userAPI = require('./api/user')
@@ -303,41 +302,41 @@ module.exports = {
 		console.log('deleteRequestsSentByMe output: ' + JSON.stringify(result))
 		return result
 	},
-	createOfficeAccessConnectionForOffice: (args) => {
-		console.log('createOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
+	createOfficeCollaborationConnectionForOffice: (args) => {
+		console.log('createOfficeCollaborationConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = officeAPI.createOfficeAccessConnectionForOffice(
+		const result = officeAPI.createOfficeCollaborationConnectionForOffice(
 			args.officeId,
 			args.username,
 			args.requestInput,
 			args.condition,
 		) //TODO implement
-		console.log('createOfficeAccessConnectionForOffice output: ' + JSON.stringify(result))
+		console.log('createOfficeCollaborationConnectionForOffice output: ' + JSON.stringify(result))
 		return result
 	},
-	updateOfficeAccessConnectionForOffice: (args) => {
-		console.log('updateOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
+	updateOfficeCollaborationConnectionForOffice: (args) => {
+		console.log('updateOfficeCollaborationConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = officeAPI.updateOfficeAccessConnectionForOffice(
+		const result = officeAPI.updateOfficeCollaborationConnectionForOffice(
 			args.officeId,
 			args.username,
 			args.requestInput,
 			args.condition,
 		) //TODO implement
-		console.log('updateOfficeAccessConnectionForOffice output: ' + JSON.stringify(result))
+		console.log('updateOfficeCollaborationConnectionForOffice output: ' + JSON.stringify(result))
 		return result
 	},
-	deleteOfficeAccessConnectionForOffice: (args) => {
-		console.log('deleteOfficeAccessConnectionForOffice input: ' + JSON.stringify(args))
+	deleteOfficeCollaborationConnectionForOffice: (args) => {
+		console.log('deleteOfficeCollaborationConnectionForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = officeAPI.deleteOfficeAccessConnectionForOffice(args.username, args.requestInput, args.condition) //TODO implement
-		console.log('deleteOfficeAccessConnectionForOffice output: ' + JSON.stringify(result))
+		const result = officeAPI.deleteOfficeCollaborationConnectionForOffice(args.username, args.requestInput, args.condition) //TODO implement
+		console.log('deleteOfficeCollaborationConnectionForOffice output: ' + JSON.stringify(result))
 		return result
 	},
 	createMyUserCalendarEvent: (args) => {
@@ -583,24 +582,41 @@ module.exports = {
 		return Promise.resolve(null)
 			.then(() => console.log('getInsuranceCompaniesOfOffice input: ' + JSON.stringify(args)))
 			.then(() => {
-				if (!args.groups || args.groups.indexOf('admin') < 0) {
-					return Promise.reject(new Error('Insufficient privileges.'))
-				}
-			})
-			.then(() => {
-				if (!args.username) {
-					return Promise.reject(new Error('Invalid username.'))
-				}
 				if (!args.officeId) {
 					return Promise.reject(new Error('Invalid officeId.'))
 				}
-				if (!args.insuranceCompanies) {
-					return Promise.reject(new Error('Invalid (or empty) insuranceCompanies.'))
-				}
 			})
-			.then(() => adminAPI.getInsuranceCompaniesOfOffice(args.officeId))
+			.then(() => officeAPI.getInsuranceCompaniesForOffice(args.office))
 			.then((result) => {
 				console.log('getInsuranceCompaniesOfOffice output: ' + JSON.stringify(result))
+				return result
+			})
+	},
+	getOutgoingOfficeConnections(args) {
+		return Promise.resolve(null)
+			.then(() => console.log('getOutgoingOfficeConnections input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.officeId) {
+					return Promise.reject(new Error('Invalid officeId.'))
+				}
+			})
+			.then(() => officeAPI.getOutgoingOfficeConnections(args.officeId))
+			.then((result) => {
+				console.log('getOutgoingOfficeConnections output: ' + JSON.stringify(result))
+				return result
+			})
+	},
+	getIncomingOfficeConnections(args) {
+		return Promise.resolve(null)
+			.then(() => console.log('getIncomingOfficeConnections input: ' + JSON.stringify(args)))
+			.then(() => {
+				if (!args.officeId) {
+					return Promise.reject(new Error('Invalid officeId.'))
+				}
+			})
+			.then(() => officeAPI.getIncomingOfficeConnections(args.officeId))
+			.then((result) => {
+				console.log('getIncomingOfficeConnections output: ' + JSON.stringify(result))
 				return result
 			})
 	},

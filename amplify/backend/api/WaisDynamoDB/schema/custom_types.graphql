@@ -1,16 +1,18 @@
 type InsuranceCompany {
-    receivedFromUsername: String
-    name: String
-    code: String
+    officeId: ID!
+    officeName: String!
+    name: String!
+    code: String!
     expiresAt: AWSDate
-    givenToOffices: [ID]
 }
 input InsuranceCompanyInput {
-    receivedFromUsername: String
-    name: String
-    code: String
+    name: String!
+    code: String!
     expiresAt: AWSDate
-    givenToOffices: [ID]
+}
+input DeleteInsuranceCompanyInput {
+    officeId: ID!
+    code: String!
 }
 
 type S3Object {

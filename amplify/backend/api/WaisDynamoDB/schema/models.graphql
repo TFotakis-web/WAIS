@@ -34,8 +34,13 @@ type Office
     # Store S3 files in this field
     files: [S3Object]
 
-    # Insurance companies, no @Connection needeed atm
-    insuranceCompanies: [InsuranceCompany]
+    # Insurance companies given by an Admin
+    ownedInsuranceCompanies: [InsuranceCompany]!
+    allInsuranceCompanies: [InsuranceCompany] @function(name: "resolver-${env}") # Owned,Incoming,Outgoing
+
+    # Access to connected offices
+    outgoingOfficeConnections: [OfficeCollaborationConnection] @connection(keyName: "byFromOfficeName", fields: ["officeName"])
+    incomingOfficeConnections: [OfficeCollaborationConnection] @connection(keyName: "byToOfficeName", fields: ["officeName"])
 
     # Customers of this Office, does not include office connection customers, use the customers protected resolver for this
     officeCustomers: [Customer] @connection(keyName: "byOfficeName", fields: ["officeName"])
@@ -80,8 +85,9 @@ type UserProfile
     # Store S3 files in this field
     files: [S3Object]
 
-    # Office related
-    employerOfficeId: ID
+    # Access to working Office, null if no invites/creations have taken place
+    officeConnId: ID
+    officeConnection: OfficeUserConnection @connection(fields: ["officeConnId"])
 
     # Access to requests
     requestsSentByMe: [Requests] @connection(keyName: "bySenderEmail", fields: ["email"])
@@ -89,9 +95,6 @@ type UserProfile
 
     # Get all calendar events
     calendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
-
-    # Access to working Office, null if no invites/creations have taken place
-    officeConnection: OfficeUserConnection @connection(fields: ["employerOfficeId"])
 }
 
 type Vehicle
@@ -200,6 +203,26 @@ type OfficeUserConnection
     preferences: AWSJSON
 }
 
+# 1-way connection between 2 Offices.
+# Only the sender 'pays' for the collaboration.
+type OfficeCollaborationConnection
+@model(subscriptions: null)
+@key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeCollaborationConnectionByFromOfficeId")
+@key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeCollaborationConnectionByFromOfficeName")
+@key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeCollaborationConnectionByToOfficeName")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    fromId: ID!
+    fromOfficeName: String!
+    toId: ID!
+    toOfficeName: String!
+    sharedInsuranceCompanies: AWSJSON! # Levels are: insuranceCompanyCode->InsuranceCompany
+    from: Office! @connection(fields: ["fromId"]) #This office initiates the collaboration
+    to: Office! @connection(fields: ["toId"]) #This office needs to accept the collaboration
+    expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
+    message: String
+}
+
 type OfficeContractConnection
 @model(subscriptions: null)
 @key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
@@ -261,7 +284,6 @@ type Events
     payload: String!
 }
 
-#For calendar use
 type UserNotifications
 @model(subscriptions: null)
 @key(name: "byUsernameAndUpdatedAt", fields: ["username", "updatedAt"], queryField: "listUserNotificationsByUsernameAndUpdatedAt")

@@ -115,28 +115,6 @@
           ]
         }
       ]
-    },
-    "ddbtrigger": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "WaisDynamoDB",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "waisauth",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
     }
   },
   "api": {
