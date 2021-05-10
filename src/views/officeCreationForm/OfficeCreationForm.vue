@@ -122,7 +122,10 @@
 			...mapActions('request', ['createOfficeRequest', 'updateRequest']),
 			save() {
 				this.loading = true;
-				this.updateUserProfile();
+				this.updateUserProfile()
+					.then(() => {
+						this.$mitt.emit('markInputClean:userProfile');
+					});
 
 				let files = [];
 
@@ -142,7 +145,7 @@
 						.then((response) => {
 							this.request = response;
 							this.$toast.saveSuccess();
-							this.$mitt.emit('markInputClean:userProfile');
+							this.$mitt.emit('markInputClean:office');
 						})
 						.catch(this.$toast.error)
 						.finally(() => (this.loading = false));
