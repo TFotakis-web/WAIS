@@ -37,6 +37,7 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import '@/theme/variables.css';
 
+
 Amplify.configure(aws_exports);
 Auth.configure(aws_exports);
 API.configure(aws_exports);
@@ -62,6 +63,7 @@ app.use(VueAxios, axios);
 
 import * as IonComponents from '@ionic/vue';
 
+
 Object.keys(IonComponents).forEach(key => {
 	if (/^Ion[A-Z]\w+$/.test(key)) {
 		app.component(key, IonComponents[key]);
@@ -69,6 +71,7 @@ Object.keys(IonComponents).forEach(key => {
 });
 
 import * as Ionicons from 'ionicons/icons';
+
 
 const ioniconsOutline = {};
 Object.keys(Ionicons).forEach(key => {
@@ -88,13 +91,13 @@ app.config.globalProperties.$toBase64 = file => new Promise((resolve, reject) =>
 	reader.onerror = error => reject(error);
 });
 app.config.globalProperties.$toGreeklish = toGreeklish;
-app.config.globalProperties.$parseJwt = function(token) {
+app.config.globalProperties.$parseJwt = function (token) {
 	const base64Url = token.split('.')[1];
 	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 	const jsonPayload = decodeURIComponent(
 		atob(base64)
 			.split('')
-			.map(function(c) {
+			.map(function (c) {
 				return (
 					'%' +
 					('00' + c.charCodeAt(0).toString(16)).slice(-2)
@@ -105,7 +108,7 @@ app.config.globalProperties.$parseJwt = function(token) {
 
 	return JSON.parse(jsonPayload);
 };
-app.config.globalProperties.$clearCookies = function() {
+app.config.globalProperties.$clearCookies = function () {
 	for (const cookie of this.$cookies.keys()) {
 		this.$cookies.remove(cookie);
 	}
@@ -158,14 +161,197 @@ app.config.globalProperties.$toast = {
 					{
 						text: window.vm.$t('actions.cancel'),
 						role: 'cancel',
-						handler: cancelCallback
-					}
+						handler: cancelCallback,
+					},
 				],
 			});
 		return toast.present();
 	},
 };
 app.config.globalProperties.$mitt = mitt();
+app.config.globalProperties.$inputConfigs = {
+	family_name: {
+		type: 'text',
+		name: 'fname',
+		autocomplete: 'family-name',
+		required: true,
+		icon: ioniconsOutline.personOutline,
+		label: () => window.vm.$t('fields.family_name'),
+		inputGroup: 'userProfile',
+	},
+	name: {
+		type: 'text',
+		name: 'name',
+		autocomplete: 'given-name',
+		required: true,
+		iconPlaceholder: true,
+		label: () => window.vm.$t('fields.name'),
+		inputGroup: 'userProfile',
+	},
+	fathers_name: {
+		type: 'text',
+		name: 'name',
+		autocomplete: 'additional-name',
+		required: true,
+		iconPlaceholder: true,
+		label: () => window.vm.$t('fields.fathersName'),
+		inputGroup: 'userProfile',
+	},
+	officeName: {
+		type: 'text',
+		name: 'officeName',
+		required: true,
+		icon: ioniconsOutline.businessOutline,
+		label: () => window.vm.$t('fields.office'),
+		inputGroup: 'office',
+	},
+	mobile: {
+		type: 'number',
+		noArrows: true,
+		name: 'mobile',
+		autocomplete: 'tel',
+		required: true,
+		icon: ioniconsOutline.phonePortraitOutline,
+		label: () => window.vm.$t('fields.mobile'),
+		inputGroup: 'office',
+	},
+	phone: {
+		type: 'number',
+		noArrows: true,
+		name: 'phone',
+		autocomplete: 'tel',
+		required: true,
+		icon: ioniconsOutline.callOutline,
+		label: () => window.vm.$t('fields.phone'),
+		inputGroup: 'office',
+	},
+	office_email: {
+		type: 'email',
+		name: 'email',
+		autocomplete: 'email',
+		required: true,
+		icon: ioniconsOutline.mailOutline,
+		label: () => window.vm.$t('fields.email'),
+		inputGroup: 'office',
+	},
+	address: {
+		type: 'text',
+		name: 'address',
+		autocomplete: 'street-address',
+		icon: ioniconsOutline.locationOutline,
+		label: () => window.vm.$t('fields.address'),
+		inputGroup: 'office',
+	},
+	zip_code: {
+		type: 'number',
+		noArrows: true,
+		name: 'postal',
+		autocomplete: 'postal-code',
+		icon: ioniconsOutline.locateOutline,
+		label: () => window.vm.$t('fields.zip_code'),
+		inputGroup: 'office',
+	},
+	tin: {
+		type: 'text',
+		name: 'tin',
+		icon: ioniconsOutline.idCardOutline,
+		label: () => window.vm.$t('fields.tin'),
+		inputGroup: 'office',
+	},
+	chamberRecordNumber: {
+		type: 'text',
+		name: 'chamberRecordNumber',
+		icon: ioniconsOutline.bookOutline,
+		label: () => window.vm.$t('fields.chamberRecordNumber'),
+		inputGroup: 'office',
+	},
+	professionStartDate: {
+		type: 'date',
+		disableFuture: true,
+		name: 'professionStartDate',
+		icon: ioniconsOutline.calendarOutline,
+		label: () => window.vm.$t('fields.professionStartDate'),
+		inputGroup: 'office',
+	},
+	insuranceLicenseExpirationDate: {
+		type: 'date',
+		disablePast: true,
+		name: 'insuranceLicenseExpirationDate',
+		iconPlaceholder: true,
+		label: () => window.vm.$t('fields.insuranceLicenseExpirationDate'),
+		inputGroup: 'office',
+	},
+	civilLiabilityExpirationDate: {
+		type: 'date',
+		disablePast: true,
+		name: 'civilLiabilityExpirationDate',
+		iconPlaceholder: true,
+		label: () => window.vm.$t('fields.civilLiabilityExpirationDate'),
+		inputGroup: 'office',
+	},
+	comments: {
+		type: 'textarea',
+		autoGrow: true,
+		name: 'comments',
+		icon: ioniconsOutline.chatbubbleOutline,
+		label: () => window.vm.$t('fields.comments'),
+		inputGroup: 'office',
+	},
+	checkbox: {
+		type: 'checkbox',
+		slot: 'start',
+		required: true,
+		label: () => window.vm.$t('views.officeCreationForm.iAgreeToTheTermsAndConditions'),
+		inputGroup: 'office',
+	},
+	files: {
+		profession_start: {
+			type: 'file',
+			color: 'primary',
+			renameTo: 'profession_start',
+			filePath: 'createOfficeRequest',
+			text: () => window.vm.$t('files.professionStart'),
+			sizeLimitInMBs: 10,
+			size: 'small',
+		},
+		chamber_certificate: {
+			type: 'file',
+			color: 'primary',
+			renameTo: 'chamber_certificate',
+			filePath: 'createOfficeRequest',
+			text: () => window.vm.$t('files.chamberCertificate'),
+			sizeLimitInMBs: 10,
+			size: 'small',
+		},
+		liability_insurance: {
+			type: 'file',
+			color: 'primary',
+			renameTo: 'liability_insurance',
+			filePath: 'createOfficeRequest',
+			text: () => window.vm.$t('files.liabilityInsurance'),
+			sizeLimitInMBs: 10,
+			size: 'small',
+		},
+		company_articles_of_association: {
+			type: 'file',
+			color: 'primary',
+			renameTo: 'company_articles_of_association',
+			filePath: 'createOfficeRequest',
+			text: () => window.vm.$t('files.companyArticlesOfAssociation'),
+			sizeLimitInMBs: 10,
+			size: 'small',
+		},
+	},
+	otherFiles: {
+		type: 'file',
+		color: 'primary',
+		text: () => window.vm.$t('files.other'),
+		filePath: 'createOfficeRequest',
+		sizeLimitInMBs: 10,
+		multiple: true,
+		size: 'small',
+	},
+};
 
 // -------------- Mount --------------
 store.commit('pageStructure/increaseGlobalPendingPromises');
