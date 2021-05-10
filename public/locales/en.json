@@ -349,7 +349,8 @@
     "professionStart": "Profession start",
     "chamberCertificate": "Chamber certificate",
     "liabilityInsurance": "Liability insurance",
-    "companyArticlesOfAssociation": "Company articles of association"
+    "companyArticlesOfAssociation": "Company articles of association",
+    "other": "Other files"
   },
   "banks": {
     "bankOfGreece": "Bank Of Greece",

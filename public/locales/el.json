@@ -349,7 +349,8 @@
     "professionStart": "Έναρξη επαγγέλματος",
     "chamberCertificate": "Πιστοποιητικό επιμελητηρίου",
     "liabilityInsurance": "Ασφαλιστήριο αστικής ευθύνης",
-    "companyArticlesOfAssociation": "Καταστατικό εταιρίας"
+    "companyArticlesOfAssociation": "Καταστατικό εταιρίας",
+    "other": "Άλλα αρχεία"
   },
   "banks": {
     "bankOfGreece": "Τράπεζα Ελλάδος",
