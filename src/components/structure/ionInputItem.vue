@@ -1,7 +1,7 @@
 <template>
 	<ion-item>
 		<ion-icon v-if="config.icon || config.iconPlaceholder" :icon="config.icon" slot="start" class="ion-align-self-center"/>
-		<ion-label position="floating">{{ config.label() }}</ion-label>
+		<ion-label v-if="config.label" :position="config.slot !== 'start' ? 'floating' : undefined">{{ config.label() }}</ion-label>
 		<ion-input-custom v-model="modelValue" :config="config" @update:modelValue="el => $emit('update:modelValue', el)"/>
 	</ion-item>
 </template>
