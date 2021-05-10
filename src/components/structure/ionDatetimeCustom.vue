@@ -1,7 +1,7 @@
 <template>
 	<ion-datetime
 		v-model="modelValue"
-		@update:modelValue="el => $emit('update:modelValue', returnDate ? el.split('T')[0] : el)"
+		@update:modelValue="el => $emit('update:modelValue', type==='date' ? el.split('T')[0] : type==='time' ? el.split('T')[1] : el)"
 		:key="$i18n.locale + name"
 		:day-names="calendarOptions.dayNames"
 		:day-short-names="calendarOptions.dayShortNames"
@@ -11,7 +11,7 @@
 		:min="minValue"
 		:cancel-text="$t('actions.cancel')"
 		:done-text="$t('actions.ok')"
-		:display-format="displayFormat || returnDate ? 'DD MMM YYYY' : 'DD MMM YYYY, HH:mm'"
+		:display-format="displayFormat || type==='date' ? 'DD MMM YYYY' : type==='time' ? 'HH:mm' : 'DD MMM YYYY, HH:mm'"
 		:day-values="dayValues"
 		:disabled="disabled"
 		:display-timezone="displayTimezone"
@@ -59,6 +59,7 @@
 			'disableFuture',
 			'returnDate',
 			'modelValue',
+			'type',
 		],
 		emits: ['update:modelValue'],
 		data() {
