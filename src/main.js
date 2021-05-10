@@ -143,6 +143,27 @@ app.config.globalProperties.$toast = {
 			});
 		return toast.present();
 	},
+	preventRoutePush: async (discardCallback, cancelCallback) => {
+		const toast = await IonComponents.toastController
+			.create({
+				header: window.vm.$t('defaultNotification.youHaveUnsavedChanges'),
+				duration: 30000,
+				color: 'warning',
+				position: 'bottom',
+				buttons: [
+					{
+						text: window.vm.$t('actions.discardChanges'),
+						handler: discardCallback,
+					},
+					{
+						text: window.vm.$t('actions.cancel'),
+						role: 'cancel',
+						handler: cancelCallback
+					}
+				],
+			});
+		return toast.present();
+	},
 };
 app.config.globalProperties.$mitt = mitt();
 
