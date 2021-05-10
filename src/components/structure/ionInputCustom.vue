@@ -1,7 +1,6 @@
 <template>
 	<ion-input
 		v-if="['email', 'month', 'number', 'password', 'search', 'tel', 'text', 'time', 'url', 'week'].includes(config.type)"
-		ref="root"
 		v-model="modelValue"
 		@update:modelValue="inputChanged"
 		:slot="config.slot"
@@ -37,7 +36,6 @@
 	/>
 	<ion-datetime-custom
 		v-if="['date', 'time', 'datetime'].includes(config.type)"
-		ref="root"
 		v-model="modelValue"
 		@update:modelValue="inputChanged"
 		:slot="config.slot"
@@ -68,7 +66,6 @@
 	/>
 	<ion-textarea
 		v-if="config.type === 'textarea'"
-		ref="root"
 		v-model="modelValue"
 		@update:modelValue="inputChanged"
 		:slot="config.slot"
@@ -96,7 +93,6 @@
 	/>
 	<ion-checkbox
 		v-if="config.type === 'checkbox'"
-		ref="root"
 		v-model="modelValue"
 		@update:modelValue="inputChanged"
 		:slot="config.slot"
@@ -110,7 +106,6 @@
 	/>
 	<file-input
 		v-if="config.type === 'file'"
-		ref="root"
 		v-model="modelValue"
 		@update:modelValue="inputChanged"
 		:color="config.color"
@@ -134,6 +129,7 @@
 	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 	import FileInput from '@/components/structure/fileInput/fileInput';
 
+
 	export default {
 		name: 'ionInputCustom',
 		components: { FileInput, IonDatetimeCustom },
@@ -150,9 +146,15 @@
 			this.$mitt.on('markInputClean:all', () => {
 				this.markClean();
 			});
+			this.$mitt.on('discardChanges:all', () => {
+				this.$emit('update:modelValue', this.initialValue);
+			});
 			if (this.config.inputGroup) {
 				this.$mitt.on(`markInputClean:${this.config.inputGroup}`, () => {
 					this.markClean();
+				});
+				this.$mitt.on(`discardChanges:${this.config.inputGroup}`, () => {
+					this.$emit('update:modelValue', this.initialValue);
 				});
 			}
 		},
