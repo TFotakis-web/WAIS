@@ -120,7 +120,7 @@
 		:shape="config.shape"
 		:size="config.size"
 		:strong="config.strong"
-		:text="config.text"
+		:text="config.text()"
 		:loadingText="config.loadingText"
 		:accept="config.accept"
 		:multiple="config.multiple"
