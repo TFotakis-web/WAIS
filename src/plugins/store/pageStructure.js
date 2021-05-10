@@ -6,6 +6,7 @@ const initState = () => ({
 	globalPendingPromises: 0,
 	routerViewPendingPromises: 0,
 	localesLoaded: false,
+	dirtyInputs: 0,
 });
 
 export const pageStructure = {
@@ -48,6 +49,19 @@ export const pageStructure = {
 		setLocalesLoaded(state, loaded) {
 			state.localesLoaded = loaded;
 		},
+		increaseDirtyInputs(state) {
+			state.dirtyInputs++;
+		},
+		decreaseDirtyInputs(state) {
+			state.dirtyInputs--;
+			if (state.dirtyInputs < 0) {
+				console.error('Pending Promises:', state.dirtyInputs);
+				state.dirtyInputs = 0;
+			}
+		},
+		clearDirtyInputs(state) {
+			state.dirtyInputs = 0;
+		},
 	},
 	actions: {},
 	getters: {
@@ -57,5 +71,7 @@ export const pageStructure = {
 		globalPendingPromises: (state) => state.globalPendingPromises,
 		routerViewPendingPromises: (state) => state.routerViewPendingPromises,
 		localesLoaded: (state) => state.localesLoaded,
+		pageInputsDirty: (state) => state.pageInputsDirty,
+		dirtyInputs: (state) => state.dirtyInputs,
 	},
 };
