@@ -1,8 +1,10 @@
 <template>
 	<ion-input
+		v-if="['email', 'month', 'number', 'password', 'search', 'tel', 'text', 'time', 'url', 'week'].includes(config.type)"
 		ref="root"
 		v-model="modelValue"
-		@ionChange="inputChanged"
+		@update:modelValue="inputChanged"
+		:slot="config.slot"
 		:accept="config.accept"
 		:autocapitalize="config.autocapitalize"
 		:autocomplete="config.autocomplete"
@@ -31,11 +33,110 @@
 		:step="config.step"
 		:type="config.type"
 		:value="config.value"
+		:class="{'no-arrows': config.noArrows}"
+	/>
+	<ion-datetime-custom
+		v-if="['date', 'time', 'datetime'].includes(config.type)"
+		ref="root"
+		v-model="modelValue"
+		@update:modelValue="inputChanged"
+		:slot="config.slot"
+		:cancelText="config.cancelText"
+		:dayValues="config.dayValues"
+		:disabled="config.disabled"
+		:displayFormat="config.displayFormat"
+		:displayTimezone="config.displayTimezone"
+		:doneText="config.doneText"
+		:hourValues="config.hourValues"
+		:max="config.max"
+		:min="config.min"
+		:minuteValues="config.minuteValues"
+		:mode="config.mode"
+		:monthValues="config.monthValues"
+		:name="config.name"
+		:pickerFormat="config.pickerFormat"
+		:pickerOptions="config.pickerOptions"
+		:placeholder="config.placeholder"
+		:readonly="config.readonly"
+		:value="config.value"
+		:yearValues="config.yearValues"
+		:required="config.required"
+		:disablePast="config.disablePast"
+		:disableFuture="config.disableFuture"
+		:returnDate="config.returnDate"
+		:type="config.type"
+	/>
+	<ion-textarea
+		v-if="config.type === 'textarea'"
+		ref="root"
+		v-model="modelValue"
+		@update:modelValue="inputChanged"
+		:slot="config.slot"
+		:auto-grow="config.autoGrow"
+		:autocapitalize="config.autocapitalize"
+		:autofocus="config.autofocus"
+		:clear-on-edit="config.clearOnEdit"
+		:color="config.color"
+		:cols="config.cols"
+		:debounce="config.debounce"
+		:disabled="config.disabled"
+		:enterkeyhint="config.enterkeyhint"
+		:inputmode="config.inputmode"
+		:maxlength="config.maxlength"
+		:minlength="config.minlength"
+		:mode="config.mode"
+		:name="config.name"
+		:placeholder="config.placeholder"
+		:readonly="config.readonly"
+		:required="config.required"
+		:rows="config.rows"
+		:spellcheck="config.spellcheck"
+		:value="config.value"
+		:wrap="config.wrap"
+	/>
+	<ion-checkbox
+		v-if="config.type === 'checkbox'"
+		ref="root"
+		v-model="modelValue"
+		@update:modelValue="inputChanged"
+		:slot="config.slot"
+		:checked="config.checked"
+		:color="config.color"
+		:disabled="config.disabled"
+		:indeterminate="config.indeterminate"
+		:mode="config.mode"
+		:name="config.name"
+		:value="config.value"
+	/>
+	<file-input
+		v-if="config.type === 'file'"
+		ref="root"
+		v-model="modelValue"
+		@update:modelValue="inputChanged"
+		:color="config.color"
+		:disabled="config.disabled"
+		:expand="config.expand"
+		:fill="config.fill"
+		:shape="config.shape"
+		:size="config.size"
+		:strong="config.strong"
+		:text="config.text"
+		:loadingText="config.loadingText"
+		:accept="config.accept"
+		:multiple="config.multiple"
+		:sizeLimitInMBs="config.sizeLimitInMBs"
+		:renameTo="config.renameTo"
+		:filePath="config.filePath"
+		:level="config.level"
 	/>
 </template>
 <script>
+	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
+	import FileInput from '@/components/structure/fileInput/fileInput';
+
 	export default {
 		name: 'ionInputCustom',
+		components: { FileInput, IonDatetimeCustom },
 		props: ['modelValue', 'config'],
 		emits: ['update:modelValue'],
 		data() {
@@ -45,7 +146,7 @@
 			};
 		},
 		mounted() {
-			this.initialValue = this.modelValue;
+			this.initialValue = this.modelValue || '';
 			this.$mitt.on('markInputClean:all', () => {
 				this.markClean();
 			});
@@ -57,11 +158,12 @@
 		},
 		methods: {
 			inputChanged() {
-				if (this.modelValue === this.initialValue || (this.initialValue === null && this.modelValue === '')) {
+				if (this.modelValue === this.initialValue) {
 					this.markClean();
 				} else {
 					this.markDirty();
 				}
+				this.$emit('update:modelValue', this.modelValue);
 			},
 			markDirty() {
 				if (this.isDirty) {
