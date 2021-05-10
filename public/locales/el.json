@@ -277,12 +277,14 @@
     "ok": "OK",
     "cancel": "Άκυρο",
     "invite": "Πρόσκληση",
-    "inviting": "Προσκαλείται"
+    "inviting": "Προσκαλείται",
+    "discardChanges": "Απόρριψη αλλαγών"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",
     "saveSuccess": "Επιτυχής αποθήκευση!",
-    "deleteSuccess": "Επιτυχής διαγραφή!"
+    "deleteSuccess": "Επιτυχής διαγραφή!",
+    "youHaveUnsavedChanges": "Έχετε μη αποθηκευμένες αλλαγές."
   },
   "dates": {
     "days": {

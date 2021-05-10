@@ -277,12 +277,14 @@
     "ok": "OK",
     "cancel": "Cancel",
     "invite": "Invite",
-    "inviting": "Inviting"
+    "inviting": "Inviting",
+    "discardChanges": "Discard changes"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",
     "saveSuccess": "Saved successfully!",
-    "deleteSuccess": "Deleted successfully!"
+    "deleteSuccess": "Deleted successfully!",
+    "youHaveUnsavedChanges": "You have unsaved changes."
   },
   "dates": {
     "days": {
