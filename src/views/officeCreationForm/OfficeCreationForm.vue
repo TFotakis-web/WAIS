@@ -7,97 +7,33 @@
 						<form @submit.prevent="save">
 							<ion-list>
 								<ion-list-header>{{ $t('fields.personalInfo') }}</ion-list-header>
-								<ion-item>
-									<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.family_name') }}</ion-label>
-									<ion-input v-model="this.$store.getters['auth/userProfile'].family_name" type="text" name="fname" autocomplete="family-name" required/>
-								</ion-item>
-								<ion-item>
-									<ion-icon slot="start"/>
-									<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
-									<ion-input v-model="this.$store.getters['auth/userProfile'].name" type="text" name="name" autocomplete="given-name" required/>
-								</ion-item>
-								<ion-item>
-									<ion-icon slot="start"/>
-									<ion-label position="floating">{{ $t('fields.fathersName') }}</ion-label>
-									<ion-input v-model="this.$store.getters['auth/userProfile'].fathers_name" type="text" name="name" autocomplete="additional-name" required/>
-								</ion-item>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].family_name" :config="$inputConfigs.family_name"/>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].name" :config="$inputConfigs.name"/>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].fathers_name" :config="$inputConfigs.fathers_name"/>
 							</ion-list>
 							<ion-list>
 								<ion-list-header>{{ $t('fields.professionalInfo') }}</ion-list-header>
-								<ion-item>
-									<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.officeName" type="text" name="officeName" required/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.office_email" type="email" name="email" autocomplete="email" required/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.address" type="text" name="address" autocomplete="street-address"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.locateOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.tin" type="text" name="tin"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
-									<ion-input v-model="CreateOfficeRequestPayloadInput.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.professionStartDate" :disable-future="true" name="professionStartDate" :return-date="true"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon slot="start"/>
-									<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.insuranceLicenseExpirationDate" :disable-past="true" name="insuranceLicenseExpirationDate" :return-date="true"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon slot="start"/>
-									<ion-label position="floating">{{ $t('fields.civilLiabilityExpirationDate') }}</ion-label>
-									<ion-datetime-custom v-model="CreateOfficeRequestPayloadInput.civilLiabilityExpirationDate" :disable-past="true" name="civilLiabilityExpirationDate" :return-date="true"/>
-								</ion-item>
-								<ion-item v-for="file in specificFiles" :key="file.filename">
-									<file-input color="primary" :text="file.text()" :rename-to="file.filename" :file-path="file.filepath" v-model="file.data" :sizeLimitInMBs="10" size="small"/>
-								</ion-item>
-								<ion-item>
-									<file-input color="primary" text="Other files" file-path="createOfficeRequest" v-model="otherFiles" :sizeLimitInMBs="10" multiple size="small"/>
-								</ion-item>
-								<ion-item>
-									<ion-icon :icon="$ionicons.chatbubbleOutline" slot="start" class="ion-align-self-center"/>
-									<ion-label position="floating">{{ $t('fields.comments') }}</ion-label>
-									<ion-textarea v-model="CreateOfficeRequestPayloadInput.comments" :auto-grow="true" name="comments"/>
-								</ion-item>
+								<ion-input-item v-model="payload.officeName" :config="$inputConfigs.officeName"/>
+								<ion-input-item v-model="payload.mobile" :config="$inputConfigs.mobile"/>
+								<ion-input-item v-model="payload.phone" :config="$inputConfigs.phone"/>
+								<ion-input-item v-model="payload.office_email" :config="$inputConfigs.office_email"/>
+								<ion-input-item v-model="payload.address" :config="$inputConfigs.address"/>
+								<ion-input-item v-model="payload.zip_code" :config="$inputConfigs.zip_code"/>
+								<ion-input-item v-model="payload.tin" :config="$inputConfigs.tin"/>
+								<ion-input-item v-model="payload.chamberRecordNumber" :config="$inputConfigs.chamberRecordNumber"/>
+								<ion-input-item v-model="payload.professionStartDate" :config="$inputConfigs.professionStartDate"/>
+								<ion-input-item v-model="payload.insuranceLicenseExpirationDate" :config="$inputConfigs.insuranceLicenseExpirationDate"/>
+								<ion-input-item v-model="payload.civilLiabilityExpirationDate" :config="$inputConfigs.civilLiabilityExpirationDate"/>
+								<ion-input-item v-model="specificFiles.profession_start" :config="$inputConfigs.files.profession_start"/>
+								<ion-input-item v-model="specificFiles.chamber_certificate" :config="$inputConfigs.files.chamber_certificate"/>
+								<ion-input-item v-model="specificFiles.liability_insurance" :config="$inputConfigs.files.liability_insurance"/>
+								<ion-input-item v-model="specificFiles.company_articles_of_association" :config="$inputConfigs.files.company_articles_of_association"/>
+								<ion-input-item v-model="otherFiles" :config="$inputConfigs.otherFiles"/>
+								<ion-input-item v-model="payload.comments" :config="$inputConfigs.comments"/>
 							</ion-list>
 							<ion-list>
 								<ion-list-header>{{ $t('views.officeCreationForm.termsAndConditions') }}</ion-list-header>
-								<ion-item>
-									<ion-checkbox v-model="condition" slot="start" required/>
-									<ion-label>{{ $t('views.officeCreationForm.iAgreeToTheTermsAndConditions') }}</ion-label>
-								</ion-item>
+								<ion-input-item v-model="condition" :config="$inputConfigs.checkbox"/>
 							</ion-list>
 							<div class="ion-margin-top">
 								<loading-btn color="primary" :disabled="!condition" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
@@ -113,19 +49,18 @@
 <script>
 	import { mapActions } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
-	import fileInput from '@/components/structure/fileInput/fileInput';
-	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
+	import IonInputItem from '@/components/structure/ionInputItem';
+
 
 	export default {
 		name: 'officeCreationForm',
 		components: {
-			IonDatetimeCustom,
+			IonInputItem,
 			loadingBtn,
-			fileInput,
 		},
 		data() {
 			return {
-				CreateOfficeRequestPayloadInput: {
+				payload: {
 					officeName: '',
 					address: '',
 					office_email: '',
@@ -146,32 +81,12 @@
 				error: {
 					message: '',
 				},
-				specificFiles: [
-					{
-						filename: 'profession_start',
-						filepath: 'createOfficeRequest',
-						text: () => this.$t('files.professionStart'),
-						data: {},
-					},
-					{
-						filename: 'chamber_certificate',
-						filepath: 'createOfficeRequest',
-						text: () => this.$t('files.chamberCertificate'),
-						data: {},
-					},
-					{
-						filename: 'liability_insurance',
-						filepath: 'createOfficeRequest',
-						text: () => this.$t('files.liabilityInsurance'),
-						data: {},
-					},
-					{
-						filename: 'company_articles_of_association',
-						filepath: 'createOfficeRequest',
-						text: () => this.$t('files.companyArticlesOfAssociation'),
-						data: {},
-					},
-				],
+				specificFiles: {
+					profession_start: {},
+					chamber_certificate: {},
+					liability_insurance: {},
+					company_articles_of_association: {},
+				},
 				otherFiles: [],
 				condition: false,
 			};
@@ -184,17 +99,17 @@
 			if (requestsForNewOffice.length) {
 				this.request = requestsForNewOffice[0];
 				const payload = this.request.payload.createOfficePayload;
-				Object.assign(this.CreateOfficeRequestPayloadInput, payload);
+				Object.assign(this.payload, payload);
 
-				for (const file of this.specificFiles) {
-					file.data = this.CreateOfficeRequestPayloadInput.files.find((el) => el.filename.match(file.filename)) || {};
+				for (const filename in this.specificFiles) {
+					this.specificFiles[filename] = this.payload.files.find((el) => el.filename.match(filename)) || {};
 				}
 
-				this.otherFiles = this.CreateOfficeRequestPayloadInput.files.filter((el) => {
+				this.otherFiles = this.payload.files.filter((el) => {
 					let flag = false;
 
-					for (const file of this.specificFiles) {
-						flag |= Boolean(el.filename.match(file.filename));
+					for (const filename in this.specificFiles) {
+						flag |= Boolean(el.filename.match(filename));
 					}
 
 					return !flag;
@@ -203,46 +118,41 @@
 			}
 		},
 		methods: {
-			...mapActions('auth', ['updateUserProfile', 'signOut']),
+			...mapActions('auth', ['updateUserProfile']),
 			...mapActions('request', ['createOfficeRequest', 'updateRequest']),
-			async save() {
+			save() {
 				this.loading = true;
+				this.updateUserProfile();
 
 				let files = [];
 
-				for (const file of this.specificFiles) {
-					if (Object.keys(file).length) {
-						files.push(file.data);
+				for (const file in this.specificFiles) {
+					if (Object.keys(this.specificFiles[file]).length) {
+						files.push(this.specificFiles[file]);
 					}
 				}
 
 				if (this.otherFiles.length) {
 					files = files.concat(this.otherFiles);
 				}
-				this.CreateOfficeRequestPayloadInput.files = files;
-				this.updateUserProfile();
+				this.payload.files = files;
 
-				let payload = Object.assign({}, this.CreateOfficeRequestPayloadInput);
-				payload.professionStartDate = payload.professionStartDate.split('T')[0];
-				if (payload.professionStartDate === '') payload.professionStartDate = null;
-				payload.insuranceLicenseExpirationDate = payload.insuranceLicenseExpirationDate.split('T')[0];
-				if (payload.insuranceLicenseExpirationDate === '') payload.insuranceLicenseExpirationDate = null;
-				payload.civilLiabilityExpirationDate = payload.civilLiabilityExpirationDate.split('T')[0];
-				if (payload.civilLiabilityExpirationDate === '') payload.civilLiabilityExpirationDate = null;
 				if (Object.keys(this.request).length === 0) {
-					this.createOfficeRequest(payload)
+					this.createOfficeRequest(this.payload)
 						.then((response) => {
 							this.request = response;
 							this.$toast.saveSuccess();
+							this.$mitt.emit('markInputClean:userProfile');
 						})
 						.catch(this.$toast.error)
 						.finally(() => (this.loading = false));
 				} else {
-					this.request.payload.createOfficePayload = payload;
+					this.request.payload.createOfficePayload = this.payload;
 					this.updateRequest(this.request)
 						.then((response) => {
 							this.request = response;
 							this.$toast.saveSuccess();
+							this.$mitt.emit('markInputClean:office');
 						})
 						.catch(this.$toast.error)
 						.finally(() => (this.loading = false));
