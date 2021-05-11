@@ -166,7 +166,7 @@
 			};
 		},
 		mounted() {
-			this.initialValue = this.modelValue || '';
+			this.initialValue = this.modelValue;
 			this.$mitt.on('markInputClean:all', () => {
 				this.markClean();
 			});
@@ -182,9 +182,12 @@
 				});
 			}
 		},
+		beforeUnmount() {
+			this.markClean();
+		},
 		methods: {
 			inputChanged() {
-				if (this.modelValue === this.initialValue) {
+				if (this.modelValue === this.initialValue || (this.initialValue === null && (this.modelValue === '' || this.modelValue === {}))) {
 					this.markClean();
 				} else {
 					this.markDirty();
