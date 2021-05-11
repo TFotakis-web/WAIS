@@ -278,7 +278,8 @@
     "cancel": "Άκυρο",
     "invite": "Πρόσκληση",
     "inviting": "Προσκαλείται",
-    "discardChanges": "Απόρριψη αλλαγών"
+    "discardChanges": "Απόρριψη αλλαγών",
+    "pending": "Αναμένεται"
   },
   "defaultNotification": {
     "somethingWentWrong": "Κάτι πήγε στραβά...",
@@ -343,7 +344,8 @@
     "createOffice": "Δημιουργία γραφείου",
     "createOfficeConnection": "Σύνδεση γραφείου",
     "inviteEmployeeToOffice": "Πρόσκληση υπαλλήλου",
-    "inviteContractorToOffice": "Πρόσκληση συνεργάτη"
+    "inviteContractorToOffice": "Πρόσκληση συνεργάτη",
+    "inviteOffice": "Πρόσκληση γραφείου"
   },
   "files": {
     "professionStart": "Έναρξη επαγγέλματος",

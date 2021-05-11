@@ -278,7 +278,8 @@
     "cancel": "Cancel",
     "invite": "Invite",
     "inviting": "Inviting",
-    "discardChanges": "Discard changes"
+    "discardChanges": "Discard changes",
+    "pending": "Pending"
   },
   "defaultNotification": {
     "somethingWentWrong": "Something went wrong...",
@@ -343,7 +344,8 @@
     "createOffice": "Office creation",
     "createOfficeConnection": "Office connection",
     "inviteEmployeeToOffice": "Employee invitation",
-    "inviteContractorToOffice": "Contractor invitation"
+    "inviteContractorToOffice": "Contractor invitation",
+    "inviteOffice": "Office invitation"
   },
   "files": {
     "professionStart": "Profession start",
