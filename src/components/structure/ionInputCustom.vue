@@ -127,6 +127,26 @@
 		:filePath="config.filePath"
 		:level="config.level"
 	/>
+	<ion-select
+		v-if="config.type === 'select'"
+		v-model="modelValue"
+		@update:modelValue="inputChanged"
+		:cancel-text="$t('actions.cancel')"
+		:compare-with="config.compareWith"
+		:disabled="config.disabled"
+		:interface="config.interface"
+		:interface-options="config.interfaceOptions"
+		:mode="config.mode"
+		:multiple="config.multiple"
+		:name="config.name"
+		:ok-text="$t('actions.ok')"
+		:placeholder="config.placeholder"
+		:selected-text="config.selectedText"
+		:value="config.value"
+		:required="config.required"
+	>
+		<ion-select-option v-for="o in config.selectOptions()" :key="o.text" :value="o.value" :disabled="o.disabled">{{ o.text }}</ion-select-option>
+	</ion-select>
 </template>
 <script>
 	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
