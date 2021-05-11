@@ -124,7 +124,6 @@ router.beforeEach((to, from, next) => {
 	if (store.getters['pageStructure/dirtyInputs']) {
 		window.vm.$toast.preventRoutePush(() => {
 			window.vm.$mitt.emit('discardChanges:all');
-			store.commit('pageStructure/clearDirtyInputs');
 			checkRoute(to, from, next);
 		});
 		return;
