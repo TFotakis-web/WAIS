@@ -416,7 +416,7 @@ app.config.globalProperties.$inputConfigs = {
 		label: () => window.vm.$t('fields.bank'),
 		interface: 'popover',
 		required: true,
-		selectOptions: () => store.getters['platformData/bankOptions']
+		selectOptions: () => store.getters['platformData/bankOptions'],
 	},
 	companyBankAccountsIban: {
 		type: 'text',
@@ -433,12 +433,27 @@ app.config.globalProperties.$inputConfigs = {
 		label: () => window.vm.$t('fields.company'),
 		interface: 'popover',
 		required: true,
-		selectOptions: () => store.getters['platformData/companyOptionsAvailable']
+		selectOptions: () => store.getters['platformData/companyOptionsAvailable'],
 	},
 	insuranceCompaniesCode: {
 		type: 'text',
 		label: () => window.vm.$t('fields.code'),
 		required: true,
+	},
+	role: {
+		type: 'select',
+		label: () => window.vm.$t('fields.role'),
+		interface: 'popover',
+		required: true,
+		selectOptions: () => store.getters['platformData/roleOptions'],
+	},
+	permissions: {
+		type: 'select',
+		label: () => window.vm.$t('fields.permissions'),
+		interface: 'popover',
+		multiple: true,
+		required: true,
+		selectOptions: () => store.getters['platformData/permissionOptions'],
 	},
 };
 
