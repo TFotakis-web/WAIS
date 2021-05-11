@@ -171,8 +171,8 @@
 
 				this.$store.dispatch('office/updateOfficeDetails')
 					.then(() => {
+						this.$mitt.emit('markInputClean:companyInfo');
 						this.$toast.saveSuccess();
-						this.$mitt.emit('markInputClean:all');
 					})
 					.catch(this.$toast.error)
 					.finally(() => this.loading = false);
