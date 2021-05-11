@@ -9,9 +9,10 @@
 		</ion-item>
 		<ion-card-content>
 			<ion-list>
-				<ion-item v-if="partnerOffices.length === 0">
+				<ion-item v-if="requestsForNewOfficeConnectionSent.length === 0 && partnerOffices.length === 0">
 					<ion-text>{{ $t('fields.noPartnerOffices') }}</ion-text>
 				</ion-item>
+				<invite-office-item v-for="request in requestsForNewOfficeConnectionSent" :key="request.id" :request="request"/>
 				<ion-item v-for="office in partnerOffices" :key="office.name" :router-link="{name: 'ManageOffice', params: {id: office.id}}" button>
 					<!--			<ion-item v-for="office in offices" :key="office.name" :router-link="{name: 'ManageOffice', params: {id: office.id}}" button>-->
 					<ion-avatar slot="start">
@@ -22,19 +23,24 @@
 						<!--					<h3>{{ office.name }}</h3>-->
 						<!--					<p>{{ office.managerUsername }} • {{ office.address }}</p>-->
 					</ion-label>
-					<!--				<ion-badge v-if="office.state === 'pending'" color="warning">Pending</ion-badge>-->
+					<!--				<ion-badge v-if="office.state === 'pending'" color="warning">{{ $t('actions.pending') }}</ion-badge>-->
 				</ion-item>
 			</ion-list>
 		</ion-card-content>
 	</ion-card>
 </template>
 <script>
+	import InviteOfficeItem from '@/views/office/inviteOfficeItem';
 	import { mapGetters } from 'vuex';
 	import S3IonImg from '@/components/structure/S3IonImg';
 
+
 	export default {
 		name: 'officeManagementTableCard',
-		components: { S3IonImg },
+		components: {
+			InviteOfficeItem,
+			S3IonImg,
+		},
 		data() {
 			return {
 				offices: (() => {
@@ -58,6 +64,7 @@
 		},
 		computed: {
 			...mapGetters('office', ['myOffice', 'partnerOffices']),
+			...mapGetters('request', ['requestsForNewOfficeConnectionSent']),
 		},
 	};
 </script>
