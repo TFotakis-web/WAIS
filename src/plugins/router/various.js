@@ -1,5 +1,6 @@
 import { store } from '@/plugins/store/store';
 
+
 export default [
 	{
 		path: '',
@@ -99,14 +100,31 @@ export default [
 			},
 			{
 				path: 'inviteOffice',
-				name: 'InviteOffice',
-				component: () => import('@/views/office/InviteOffice'),
-				meta: {
-					requiresAuth: true,
-					customCheck: () => {
-						return store.getters['auth/role'] === 'MANAGER';
+				component: () => import('@/components/structure/passThroughRouterView'),
+				children: [
+					{
+						path: '',
+						name: 'InviteOffice',
+						component: () => import('@/views/office/InviteOffice'),
+						meta: {
+							requiresAuth: true,
+							customCheck: () => {
+								return store.getters['auth/role'] === 'MANAGER';
+							},
+						},
 					},
-				},
+					{
+						path: ':id',
+						name: 'InviteOfficeItemDetails',
+						component: () => import('@/views/office/InviteOfficeItemDetails'),
+						meta: {
+							requiresAuth: true,
+							customCheck: () => {
+								return store.getters['auth/role'] === 'MANAGER';
+							},
+						},
+					},
+				],
 			},
 		],
 	},
