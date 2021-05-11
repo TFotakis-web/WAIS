@@ -4,12 +4,7 @@
 			<ion-list class="ion-margin-bottom">
 				<ion-row>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.collaborator') }}</ion-label>
-							<ion-select v-model="form.collaborator" required interface="popover">
-								<ion-select-option v-for="o in collaboratorOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.collaborator" :config="$inputConfigs.collaboratorSelect"/>
 					</ion-col>
 				</ion-row>
 			</ion-list>
@@ -19,81 +14,37 @@
 				</ion-list-header>
 				<ion-row>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-							<ion-input v-model="form.tin" type="text" name="tin"/>
-						</ion-item>
+						<ion-input-item v-model="form.tin" :config="$inputConfigs.tin"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.personOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.name') }}</ion-label>
-							<ion-input v-model="form.name" type="text" name="name" autocomplete="given-name" required/>
-						</ion-item>
+						<ion-input-item v-model="form.family_name" :config="$inputConfigs.family_name"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon slot="start" class="ion-hide-md-up"/>
-							<ion-label position="floating">{{ $t('fields.family_name') }}</ion-label>
-							<ion-input v-model="form.family_name" type="text" name="fname" autocomplete="family-name" required/>
-						</ion-item>
+						<ion-input-item v-model="form.name" :config="$inputConfigs.name" icon-classes="ion-hide-md-up"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-							<ion-input v-model="form.address" type="text" name="address" autocomplete="street-address"/>
-						</ion-item>
+						<ion-input-item v-model="form.address" :config="$inputConfigs.address"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon slot="start" class="ion-hide-md-up"/>
-							<ion-label position="floating">{{ $t('fields.city') }}</ion-label>
-							<ion-input v-model="form.city" type="text" name="city" autocomplete="address-level2"/>
-						</ion-item>
+						<ion-input-item v-model="form.city" :config="$inputConfigs.city" icon-classes="ion-hide-md-up"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon slot="start" class="ion-hide-md-up"/>
-							<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-							<ion-input v-model="form.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.zip_code" :config="$inputConfigs.zip_code" icon-classes="ion-hide-md-up"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-							<ion-input v-model="form.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.mobile" :config="$inputConfigs.mobile"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-							<ion-input v-model="form.telephone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.phone" :config="$inputConfigs.phone"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-							<ion-input v-model="form.email" type="email" name="email" autocomplete="email" required/>
-						</ion-item>
+						<ion-input-item v-model="form.email" :config="$inputConfigs.email"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
-							<ion-label position="floating">{{ $t('fields.birthdate') }}</ion-label>
-							<ion-datetime-custom v-model="form.birthdate" :disable-future="true" name="birthdate" :required="true" :return-date="true"/>
-						</ion-item>
+						<ion-input-item v-model="form.birthdate" :config="$inputConfigs.birthdate"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-icon slot="start" class="ion-hide-md-up"/>
-							<ion-label position="floating">{{ $t('fields.driversLicenseIssueDate') }}</ion-label>
-							<ion-datetime-custom v-model="form.driversLicenseIssueDate" :disable-future="true" name="driversLicenseIssueDate" :required="true" :return-date="true"/>
-						</ion-item>
+						<ion-input-item v-model="form.driversLicenseIssueDate" :config="$inputConfigs.driversLicenseIssueDate" icon-classes="ion-hide-md-up"/>
 					</ion-col>
 				</ion-row>
 			</ion-list>
@@ -103,74 +54,31 @@
 				</ion-list-header>
 				<ion-row>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.numberPlate') }}</ion-label>
-							<ion-input v-model="form.numberPlate" type="number" name="numberPlate" class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.numberPlate" :config="$inputConfigs.numberPlate"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.branch') }}</ion-label>
-							<ion-select v-model="form.branch" required interface="popover">
-								<ion-select-option v-for="o in branchOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.branch" :config="$inputConfigs.branchSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.usage') }}</ion-label>
-							<ion-select v-model="form.usage" required interface="popover">
-								<ion-select-option v-for="o in usageOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.usage" :config="$inputConfigs.usageSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.manufacturer') }}</ion-label>
-							<ion-select v-model="form.manufacturer" required interface="popover">
-								<ion-select-option v-for="o in manufacturerOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.manufacturer" :config="$inputConfigs.manufacturerSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.model') }}</ion-label>
-							<ion-select v-model="form.model" required interface="popover">
-								<ion-select-option v-for="o in modelOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.model" :config="$inputConfigs.modelSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.type') }}</ion-label>
-							<ion-select v-model="form.type" required interface="popover">
-								<ion-select-option v-for="o in typeOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.type" :config="$inputConfigs.typeSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.color') }}</ion-label>
-							<ion-select v-model="form.color" required interface="popover">
-								<ion-select-option v-for="o in colorOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.color" :config="$inputConfigs.colorSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.fuelType') }}</ion-label>
-							<ion-select v-model="form.fuelType" required interface="popover">
-								<ion-select-option v-for="o in fuelTypeOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.fuelType" :config="$inputConfigs.fuelTypeSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.owner') }}</ion-label>
-							<ion-select v-model="form.owner" required interface="popover">
-								<ion-select-option v-for="o in ownerOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.owner" :config="$inputConfigs.ownerSelect"/>
 					</ion-col>
 				</ion-row>
 			</ion-list>
@@ -180,60 +88,28 @@
 				</ion-list-header>
 				<ion-row>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-							<ion-select v-model="form.company" required interface="popover">
-								<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.company" :config="$inputConfigs.companySelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.package') }}</ion-label>
-							<ion-select v-model="form.package" required interface="popover">
-								<ion-select-option v-for="o in packageOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.package" :config="$inputConfigs.packageSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.contractNumber') }}</ion-label>
-							<ion-input v-model="form.contractNumber" type="number" name="contractNumber" required class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.contractNumber" :config="$inputConfigs.contractNumber"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.issueDate') }}</ion-label>
-							<ion-datetime-custom v-model="form.issueDate" :disable-past="true" name="issueDate" :required="true" :return-date="true"/>
-						</ion-item>
+						<ion-input-item v-model="form.issueDate" :config="$inputConfigs.issueDate"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.duration') }}</ion-label>
-							<ion-select v-model="form.duration" required interface="popover">
-								<ion-select-option v-for="o in durationOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.duration" :config="$inputConfigs.durationSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.discount') }}</ion-label>
-							<ion-select v-model="form.discount" required interface="popover">
-								<ion-select-option v-for="o in discountOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-							</ion-select>
-						</ion-item>
+						<ion-input-item v-model="form.discount" :config="$inputConfigs.discountSelect"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.grossIncome') }}</ion-label>
-							<ion-input v-model="form.grossIncome" type="number" name="grossIncome" required class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.grossIncome" :config="$inputConfigs.grossIncome"/>
 					</ion-col>
 					<ion-col size="12" size-md="4">
-						<ion-item>
-							<ion-label position="floating">{{ $t('fields.netIncome') }}</ion-label>
-							<ion-input v-model="form.netIncome" type="number" name="netIncome" required class="no-arrows"/>
-						</ion-item>
+						<ion-input-item v-model="form.netIncome" :config="$inputConfigs.netIncome"/>
 					</ion-col>
 				</ion-row>
 			</ion-list>
@@ -244,13 +120,16 @@
 	</ion-grid>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import { mapGetters } from 'vuex';
 	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
+
 	export default {
 		name: 'NewContract',
 		components: {
+			IonInputItem,
 			IonDatetimeCustom,
 			loadingBtn,
 		},
