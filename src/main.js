@@ -177,7 +177,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.personOutline,
 		label: () => window.vm.$t('fields.family_name'),
-		inputGroup: 'userProfile',
 	},
 	name: {
 		type: 'text',
@@ -186,7 +185,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		iconPlaceholder: true,
 		label: () => window.vm.$t('fields.name'),
-		inputGroup: 'userProfile',
 	},
 	fathers_name: {
 		type: 'text',
@@ -195,7 +193,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		iconPlaceholder: true,
 		label: () => window.vm.$t('fields.fathersName'),
-		inputGroup: 'userProfile',
 	},
 	officeName: {
 		type: 'text',
@@ -203,7 +200,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.businessOutline,
 		label: () => window.vm.$t('fields.office'),
-		inputGroup: 'office',
 	},
 	mobile: {
 		type: 'number',
@@ -213,7 +209,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.phonePortraitOutline,
 		label: () => window.vm.$t('fields.mobile'),
-		inputGroup: 'office',
 	},
 	phone: {
 		type: 'number',
@@ -223,7 +218,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.callOutline,
 		label: () => window.vm.$t('fields.phone'),
-		inputGroup: 'office',
 	},
 	email: {
 		type: 'email',
@@ -232,7 +226,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.mailOutline,
 		label: () => window.vm.$t('fields.email'),
-		inputGroup: 'userProfile',
 	},
 	office_email: {
 		type: 'email',
@@ -241,7 +234,6 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		icon: ioniconsOutline.mailOutline,
 		label: () => window.vm.$t('fields.email'),
-		inputGroup: 'office',
 	},
 	address: {
 		type: 'text',
@@ -249,7 +241,6 @@ app.config.globalProperties.$inputConfigs = {
 		autocomplete: 'street-address',
 		icon: ioniconsOutline.locationOutline,
 		label: () => window.vm.$t('fields.address'),
-		inputGroup: 'office',
 	},
 	zip_code: {
 		type: 'number',
@@ -258,21 +249,18 @@ app.config.globalProperties.$inputConfigs = {
 		autocomplete: 'postal-code',
 		icon: ioniconsOutline.locateOutline,
 		label: () => window.vm.$t('fields.zip_code'),
-		inputGroup: 'office',
 	},
 	tin: {
 		type: 'text',
 		name: 'tin',
 		icon: ioniconsOutline.idCardOutline,
 		label: () => window.vm.$t('fields.tin'),
-		inputGroup: 'office',
 	},
 	chamberRecordNumber: {
 		type: 'text',
 		name: 'chamberRecordNumber',
 		icon: ioniconsOutline.bookOutline,
 		label: () => window.vm.$t('fields.chamberRecordNumber'),
-		inputGroup: 'office',
 	},
 	professionStartDate: {
 		type: 'date',
@@ -280,7 +268,6 @@ app.config.globalProperties.$inputConfigs = {
 		name: 'professionStartDate',
 		icon: ioniconsOutline.calendarOutline,
 		label: () => window.vm.$t('fields.professionStartDate'),
-		inputGroup: 'office',
 	},
 	insuranceLicenseExpirationDate: {
 		type: 'date',
@@ -288,7 +275,6 @@ app.config.globalProperties.$inputConfigs = {
 		name: 'insuranceLicenseExpirationDate',
 		iconPlaceholder: true,
 		label: () => window.vm.$t('fields.insuranceLicenseExpirationDate'),
-		inputGroup: 'office',
 	},
 	civilLiabilityExpirationDate: {
 		type: 'date',
@@ -296,7 +282,6 @@ app.config.globalProperties.$inputConfigs = {
 		name: 'civilLiabilityExpirationDate',
 		iconPlaceholder: true,
 		label: () => window.vm.$t('fields.civilLiabilityExpirationDate'),
-		inputGroup: 'office',
 	},
 	comments: {
 		type: 'textarea',
@@ -304,14 +289,12 @@ app.config.globalProperties.$inputConfigs = {
 		name: 'comments',
 		icon: ioniconsOutline.chatbubbleOutline,
 		label: () => window.vm.$t('fields.comments'),
-		inputGroup: 'office',
 	},
 	checkbox: {
 		type: 'checkbox',
 		slot: 'start',
 		required: true,
 		label: () => window.vm.$t('views.officeCreationForm.iAgreeToTheTermsAndConditions'),
-		inputGroup: 'office',
 	},
 	files: {
 		profession_start: {
