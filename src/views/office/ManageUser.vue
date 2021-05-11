@@ -9,7 +9,7 @@
 					<h3>{{ user.fullName }}</h3>
 					<p>{{ user.username }} • {{ user.role }}</p>
 				</ion-label>
-				<ion-badge v-if="user.state === 'pending'" color="warning">Pending</ion-badge>
+				<ion-badge v-if="user.state === 'pending'" color="warning">{{ $t('actions.pending') }}</ion-badge>
 				<ion-button v-if="$store.getters['auth/role'] === 'MANAGER'" @click="deleteUser" fill="clear" slot="end" color="danger">
 					<ion-icon :icon="$ionicons.trashOutline" slot="start"/>
 					<span>{{ $t('actions.delete') }}</span>
