@@ -481,6 +481,9 @@ export const platformData = {
 			{ text: 'Εθνική', value: 'Εθνική' },
 			{ text: 'Ευρωπαϊκή Πίστη', value: 'Ευρωπαϊκή Πίστη' },
 		],
+		companyOptionsAvailable: (state, getters, rootState, rootGetters) => {
+			return getters.companyOptions.filter(el => rootGetters['office/myOffice'].insuranceCompaniesAvailable.includes(el.value));
+		},
 		permissionOptions: () => [
 			// { text: $i18n.global.t('views.homePage.pageTitle'), value: 'AdminHome' },
 			// { text: $i18n.global.t('components.navigation.navbar-item.notifications'), value: 'AdminNotifications' },
