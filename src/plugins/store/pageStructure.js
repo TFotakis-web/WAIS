@@ -55,7 +55,7 @@ export const pageStructure = {
 		decreaseDirtyInputs(state) {
 			state.dirtyInputs--;
 			if (state.dirtyInputs < 0) {
-				console.error('Pending Promises:', state.dirtyInputs);
+				console.error('Dirty Inputs:', state.dirtyInputs);
 				state.dirtyInputs = 0;
 			}
 		},
