@@ -6,11 +6,7 @@
 			</ion-item>
 			<ion-card-content>
 				<form @submit.prevent="inviteOffice">
-					<ion-item>
-						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-						<ion-input v-model="form.manager_email" type="email" name="email" autocomplete="email" required/>
-					</ion-item>
+					<ion-input-item v-model="form.manager_email" :config="$inputConfigs.email"/>
 					<div class="ion-margin-top">
 						<loading-btn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
 					</div>
@@ -20,11 +16,14 @@
 	</ion-grid>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
+
 
 	export default {
 		name: 'InviteOffice',
 		components: {
+			IonInputItem,
 			loadingBtn,
 		},
 		mounted() {
@@ -45,6 +44,7 @@
 				this.$store.dispatch('request/createOfficeConnectionRequest', this.form)
 					.then(() => {
 						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:all');
 						this.$router.push({ name: 'Office' });
 					})
 					.catch(this.$toast.error)
