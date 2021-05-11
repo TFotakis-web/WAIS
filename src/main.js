@@ -399,6 +399,47 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		selectOptions: () => store.getters['platformData/companyOptions'],
 	},
+	office_logo: {
+		type: 'file',
+		color: 'primary',
+		text: () => window.vm.$t('actions.edit'),
+		renameTo: 'officeLogo',
+		filePath: 'office',
+		level: 'protected',
+		sizeLimitInMBs: 10,
+		size: 'small',
+		showAvatar: true,
+		defaultUrl: store.getters['platformData/defaultOfficeLogo'],
+	},
+	companyBankAccountsSelect: {
+		type: 'select',
+		label: () => window.vm.$t('fields.bank'),
+		interface: 'popover',
+		required: true,
+		selectOptions: () => store.getters['platformData/bankOptions']
+	},
+	companyBankAccountsIban: {
+		type: 'text',
+		label: () => window.vm.$t('fields.iban'),
+		required: true,
+	},
+	companyBankAccountsOtherName: {
+		type: 'text',
+		label: () => window.vm.$t('fields.iban'),
+		required: true,
+	},
+	insuranceCompaniesSelect: {
+		type: 'select',
+		label: () => window.vm.$t('fields.company'),
+		interface: 'popover',
+		required: true,
+		selectOptions: () => store.getters['platformData/companyOptionsAvailable']
+	},
+	insuranceCompaniesCode: {
+		type: 'text',
+		label: () => window.vm.$t('fields.code'),
+		required: true,
+	},
 };
 
 // -------------- Mount --------------
