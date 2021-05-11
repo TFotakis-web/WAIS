@@ -14,34 +14,34 @@
 					</ion-item>
 					<ion-row>
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.family_name" :config="$inputConfigs.family_name"/>
+							<ion-input-item v-model="userProfile.family_name" :config="$inputConfigs.family_name" input-group="userProfile"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.name" :config="$inputConfigs.name"/>
+							<ion-input-item v-model="userProfile.name" :config="$inputConfigs.name" input-group="userProfile"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.fathers_name" :config="$inputConfigs.fathers_name"/>
+							<ion-input-item v-model="userProfile.fathers_name" :config="$inputConfigs.fathers_name" input-group="userProfile"/>
 						</ion-col>
 					</ion-row>
-					<ion-input-item v-model="userProfile.tin" :config="$inputConfigs.tin"/>
-					<ion-input-item v-model="userProfile.email" :config="$inputConfigs.email"/>
+					<ion-input-item v-model="userProfile.tin" :config="$inputConfigs.tin" input-group="userProfile"/>
+					<ion-input-item v-model="userProfile.email" :config="$inputConfigs.email" input-group="userProfile"/>
 					<ion-row>
 						<ion-col size="12" size-md="6">
-							<ion-input-item v-model="userProfile.mobile" :config="$inputConfigs.mobile"/>
+							<ion-input-item v-model="userProfile.mobile" :config="$inputConfigs.mobile" input-group="userProfile"/>
 						</ion-col>
 						<ion-col size="12" size-md="6">
-							<ion-input-item v-model="userProfile.telephone" :config="$inputConfigs.phone"/>
+							<ion-input-item v-model="userProfile.telephone" :config="$inputConfigs.phone" input-group="userProfile"/>
 						</ion-col>
 					</ion-row>
 					<ion-row>
 						<ion-col size="12" size-md="8">
-							<ion-input-item v-model="userProfile.address" :config="$inputConfigs.address"/>
+							<ion-input-item v-model="userProfile.address" :config="$inputConfigs.address" input-group="userProfile"/>
 						</ion-col>
 						<!--						<ion-col size="12" size-md="4">-->
-						<!--							<ion-input-item v-model="userProfile.city" :config="$inputConfigs.city"/>-->
+						<!--							<ion-input-item v-model="userProfile.city" :config="$inputConfigs.city" input-group="userProfile"/>-->
 						<!--						</ion-col>-->
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.zip_code" :config="$inputConfigs.zip_code"/>
+							<ion-input-item v-model="userProfile.zip_code" :config="$inputConfigs.zip_code" input-group="userProfile"/>
 						</ion-col>
 					</ion-row>
 				</ion-list>
