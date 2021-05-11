@@ -343,6 +343,18 @@ app.config.globalProperties.$inputConfigs = {
 		multiple: true,
 		size: 'small',
 	},
+	profilePicture: {
+		type: 'file',
+		color: 'primary',
+		text: () => window.vm.$t('actions.edit'),
+		renameTo: 'profile',
+		filePath: 'profile',
+		level: 'protected',
+		sizeLimitInMBs: 10,
+		size: 'small',
+		showAvatar: true,
+		defaultUrl: store.getters['platformData/defaultProfilePicture'],
+	},
 };
 
 // -------------- Mount --------------
