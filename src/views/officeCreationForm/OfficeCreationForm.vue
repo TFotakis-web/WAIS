@@ -7,33 +7,33 @@
 						<form @submit.prevent="save">
 							<ion-list>
 								<ion-list-header>{{ $t('fields.personalInfo') }}</ion-list-header>
-								<ion-input-item v-model="this.$store.getters['auth/userProfile'].family_name" :config="$inputConfigs.family_name"/>
-								<ion-input-item v-model="this.$store.getters['auth/userProfile'].name" :config="$inputConfigs.name"/>
-								<ion-input-item v-model="this.$store.getters['auth/userProfile'].fathers_name" :config="$inputConfigs.fathers_name"/>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].family_name" :config="$inputConfigs.family_name" input-group="userProfile"/>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].name" :config="$inputConfigs.name" input-group="userProfile"/>
+								<ion-input-item v-model="this.$store.getters['auth/userProfile'].fathers_name" :config="$inputConfigs.fathers_name" input-group="userProfile"/>
 							</ion-list>
 							<ion-list>
 								<ion-list-header>{{ $t('fields.professionalInfo') }}</ion-list-header>
-								<ion-input-item v-model="payload.officeName" :config="$inputConfigs.officeName"/>
-								<ion-input-item v-model="payload.mobile" :config="$inputConfigs.mobile"/>
-								<ion-input-item v-model="payload.phone" :config="$inputConfigs.phone"/>
-								<ion-input-item v-model="payload.office_email" :config="$inputConfigs.office_email"/>
-								<ion-input-item v-model="payload.address" :config="$inputConfigs.address"/>
-								<ion-input-item v-model="payload.zip_code" :config="$inputConfigs.zip_code"/>
-								<ion-input-item v-model="payload.tin" :config="$inputConfigs.tin"/>
-								<ion-input-item v-model="payload.chamberRecordNumber" :config="$inputConfigs.chamberRecordNumber"/>
-								<ion-input-item v-model="payload.professionStartDate" :config="$inputConfigs.professionStartDate"/>
-								<ion-input-item v-model="payload.insuranceLicenseExpirationDate" :config="$inputConfigs.insuranceLicenseExpirationDate"/>
-								<ion-input-item v-model="payload.civilLiabilityExpirationDate" :config="$inputConfigs.civilLiabilityExpirationDate"/>
-								<ion-input-item v-model="specificFiles.profession_start" :config="$inputConfigs.files.profession_start"/>
-								<ion-input-item v-model="specificFiles.chamber_certificate" :config="$inputConfigs.files.chamber_certificate"/>
-								<ion-input-item v-model="specificFiles.liability_insurance" :config="$inputConfigs.files.liability_insurance"/>
-								<ion-input-item v-model="specificFiles.company_articles_of_association" :config="$inputConfigs.files.company_articles_of_association"/>
-								<ion-input-item v-model="otherFiles" :config="$inputConfigs.otherFiles"/>
-								<ion-input-item v-model="payload.comments" :config="$inputConfigs.comments"/>
+								<ion-input-item v-model="payload.officeName" :config="$inputConfigs.officeName" input-group="office"/>
+								<ion-input-item v-model="payload.mobile" :config="$inputConfigs.mobile" input-group="office"/>
+								<ion-input-item v-model="payload.phone" :config="$inputConfigs.phone" input-group="office"/>
+								<ion-input-item v-model="payload.office_email" :config="$inputConfigs.office_email" input-group="office"/>
+								<ion-input-item v-model="payload.address" :config="$inputConfigs.address" input-group="office"/>
+								<ion-input-item v-model="payload.zip_code" :config="$inputConfigs.zip_code" input-group="office"/>
+								<ion-input-item v-model="payload.tin" :config="$inputConfigs.tin" input-group="office"/>
+								<ion-input-item v-model="payload.chamberRecordNumber" :config="$inputConfigs.chamberRecordNumber" input-group="office"/>
+								<ion-input-item v-model="payload.professionStartDate" :config="$inputConfigs.professionStartDate" input-group="office"/>
+								<ion-input-item v-model="payload.insuranceLicenseExpirationDate" :config="$inputConfigs.insuranceLicenseExpirationDate" input-group="office"/>
+								<ion-input-item v-model="payload.civilLiabilityExpirationDate" :config="$inputConfigs.civilLiabilityExpirationDate" input-group="office"/>
+								<ion-input-item v-model="specificFiles.profession_start" :config="$inputConfigs.files.profession_start" input-group="office"/>
+								<ion-input-item v-model="specificFiles.chamber_certificate" :config="$inputConfigs.files.chamber_certificate" input-group="office"/>
+								<ion-input-item v-model="specificFiles.liability_insurance" :config="$inputConfigs.files.liability_insurance" input-group="office"/>
+								<ion-input-item v-model="specificFiles.company_articles_of_association" :config="$inputConfigs.files.company_articles_of_association" input-group="office"/>
+								<ion-input-item v-model="otherFiles" :config="$inputConfigs.otherFiles" input-group="office"/>
+								<ion-input-item v-model="payload.comments" :config="$inputConfigs.comments" input-group="office"/>
 							</ion-list>
 							<ion-list>
 								<ion-list-header>{{ $t('views.officeCreationForm.termsAndConditions') }}</ion-list-header>
-								<ion-input-item v-model="condition" :config="$inputConfigs.checkbox"/>
+								<ion-input-item v-model="condition" :config="$inputConfigs.checkbox" input-group="office"/>
 							</ion-list>
 							<div class="ion-margin-top">
 								<loading-btn color="primary" :disabled="!condition" expand="block" type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')" class="ion-margin-bottom"/>
