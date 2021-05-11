@@ -26,7 +26,7 @@
 						<h3>{{ user.fullName }}</h3>
 						<p>{{ user.username }} • {{ user.role }}</p>
 					</ion-label>
-					<ion-badge v-if="user.state === 'pending'" color="warning">Pending</ion-badge>
+					<ion-badge v-if="user.state === 'pending'" color="warning">{{ $t('actions.pending') }}</ion-badge>
 				</ion-item>
 			</ion-list>
 			<ion-list>
@@ -47,7 +47,7 @@
 						<h3>{{ user.fullName }}</h3>
 						<p>{{ user.username }} • {{ user.role }}</p>
 					</ion-label>
-					<ion-badge v-if="user.state === 'pending'" color="warning">Pending</ion-badge>
+					<ion-badge v-if="user.state === 'pending'" color="warning">{{ $t('actions.pending') }}</ion-badge>
 				</ion-item>
 			</ion-list>
 		</ion-card-content>
