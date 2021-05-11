@@ -484,6 +484,12 @@ export const platformData = {
 		companyOptionsAvailable: (state, getters, rootState, rootGetters) => {
 			return getters.companyOptions.filter(el => rootGetters['office/myOffice'].insuranceCompaniesAvailable.includes(el.value));
 		},
+		officeInsuranceCompanyOptions: (state, getters, rootState, rootGetters) => {
+			return getters.companyOptions.filter(companyOption => {
+				Array.from(rootGetters['office/myOffice'].insuranceCompanies, company => company.name)
+					.includes(companyOption.value);
+			});
+		},
 		permissionOptions: () => [
 			// { text: $i18n.global.t('views.homePage.pageTitle'), value: 'AdminHome' },
 			// { text: $i18n.global.t('components.navigation.navbar-item.notifications'), value: 'AdminNotifications' },
