@@ -3,9 +3,8 @@
 		<ion-label>
 			<h3>{{ $t('requests.inviteEmployeeToOffice') }}</h3>
 			<p>{{ request.receiverEmail }}</p>
-<!--			<p>{{ request.senderUsername }} • {{ request.senderEmail }}</p>-->
 		</ion-label>
-		<ion-badge color="warning">Pending</ion-badge>
+		<ion-badge color="warning">{{ $t('actions.pending') }}</ion-badge>
 	</ion-item>
 </template>
 <script>
