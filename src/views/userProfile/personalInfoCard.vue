@@ -6,12 +6,7 @@
 		<ion-card-content>
 			<form @submit.prevent="save">
 				<ion-list>
-					<ion-item>
-						<ion-avatar class="ion-margin-end">
-							<s3-ion-img :s3-object="userProfile.profilePicture" :default-url="$store.getters['platformData/defaultProfilePicture']"/>
-						</ion-avatar>
-						<file-input color="primary" :text="$t('actions.edit')" rename-to="profile" file-path="profile" level="protected" v-model="userProfile.profilePicture" :sizeLimitInMBs="10" size="small"/>
-					</ion-item>
+					<ion-input-item v-model="userProfile.profilePicture" :config="$inputConfigs.profilePicture" input-group="userProfile"/>
 					<ion-row>
 						<ion-col size="12" size-md="4">
 							<ion-input-item v-model="userProfile.family_name" :config="$inputConfigs.family_name" input-group="userProfile"/>
@@ -56,17 +51,13 @@
 	import IonInputItem from '@/components/structure/ionInputItem';
 	import { mapActions, mapGetters } from 'vuex';
 	import loadingBtn from '@/components/structure/loadingBtn';
-	import fileInput from '@/components/structure/fileInput/fileInput';
-	import S3IonImg from '@/components/structure/S3IonImg';
 
 
 	export default {
 		name: 'personalInfoCard',
 		components: {
 			IonInputItem,
-			S3IonImg,
 			loadingBtn,
-			fileInput,
 		},
 		data() {
 			return {
