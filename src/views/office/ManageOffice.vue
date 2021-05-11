@@ -17,12 +17,7 @@
 			</ion-item>
 			<ion-card-content>
 				<form @submit.prevent="save">
-					<ion-item v-if="$store.getters['auth/role'] === 'MANAGER'">
-						<ion-label position="floating">{{ $t('fields.companyAccess') }}</ion-label>
-						<ion-select v-model="office.companyAccess" multiple required>
-							<ion-select-option v-for="o in companyOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-						</ion-select>
-					</ion-item>
+					<ion-input-item v-if="$store.getters['auth/role'] === 'MANAGER'" v-model="office.companyAccess" :config="$inputConfigs.officeInsuranceCompaniesSelect"/>
 					<div class="ion-margin-top">
 						<loading-btn type="submit" :loading="loading" :text="$t('actions.save')" :loadingText="$t('actions.saving')"/>
 					</div>
@@ -32,12 +27,13 @@
 	</ion-grid>
 </template>
 <script>
-	import { mapGetters } from 'vuex';
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import LoadingBtn from '@/components/structure/loadingBtn';
+
 
 	export default {
 		name: 'ManageOffice',
-		components: { LoadingBtn },
+		components: { IonInputItem, LoadingBtn },
 		data() {
 			return {
 				loading: false,
@@ -72,7 +68,6 @@
 			id() {
 				return this.$route.params.id;
 			},
-			...mapGetters('platformData', ['companyOptions']),
 		},
 	};
 </script>
