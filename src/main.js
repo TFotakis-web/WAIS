@@ -435,6 +435,13 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 		selectOptions: () => store.getters['platformData/companyOptionsAvailable'],
 	},
+	officeInsuranceCompaniesSelect: {
+		type: 'select',
+		label: () => window.vm.$t('fields.companyAccess'),
+		interface: 'popover',
+		required: true,
+		selectOptions: () => store.getters['platformData/officeInsuranceCompanyOptions'],
+	},
 	insuranceCompaniesCode: {
 		type: 'text',
 		label: () => window.vm.$t('fields.code'),
