@@ -6,23 +6,9 @@
 			</ion-item>
 			<ion-card-content>
 				<form @submit.prevent="inviteUser">
-					<ion-item>
-						<ion-label position="floating">{{ $t('fields.role') }}</ion-label>
-						<ion-select v-model="form.role" required interface="popover">
-							<ion-select-option v-for="o in roleOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-						</ion-select>
-					</ion-item>
-					<ion-item>
-						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-						<ion-input v-model="form.email" type="email" name="email" autocomplete="email" required/>
-					</ion-item>
-					<ion-item>
-						<ion-label position="floating">{{ $t('fields.permissions') }}</ion-label>
-						<ion-select v-model="form.permissions" multiple required>
-							<ion-select-option v-for="o in permissionOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-						</ion-select>
-					</ion-item>
+					<ion-input-item v-model="form.email" :config="$inputConfigs.email"/>
+					<ion-input-item v-model="form.role" :config="$inputConfigs.role"/>
+					<ion-input-item v-model="form.permissions" :config="$inputConfigs.permissions"/>
 					<div class="ion-margin-top">
 						<loading-btn type="submit" :loading="loading" :text="$t('actions.invite')" :loadingText="$t('actions.inviting')"/>
 					</div>
@@ -32,12 +18,15 @@
 	</ion-grid>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import { mapGetters } from 'vuex';
+
 
 	export default {
 		name: 'InviteUser',
 		components: {
+			IonInputItem,
 			loadingBtn,
 		},
 		mounted() {
@@ -132,17 +121,12 @@
 				this.$store.dispatch(action, payload)
 					.then(() => {
 						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:all');
 						this.$router.push({ name: 'Office' });
 					})
 					.catch(this.$toast.error)
 					.finally(() => this.loading = false);
 			},
-		},
-		computed: {
-			...mapGetters('platformData', [
-				'roleOptions',
-				'permissionOptions',
-			]),
 		},
 	};
 </script>
