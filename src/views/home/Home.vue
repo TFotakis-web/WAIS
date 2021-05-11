@@ -1,6 +1,6 @@
 <template>
 	<ion-grid fixed>
-		<create-office-card v-if="$store.getters['auth/role'] === 'UNKNOWN'" class="ion-text-center ion-margin-top"/>
+		<create-office-card v-if="$store.getters['auth/role'] === 'UNKNOWN' && !$store.getters['auth/isAdmin']" class="ion-text-center ion-margin-top"/>
 		<template v-else>
 			<newsfeed-card/>
 			<h1 class="ion-text-center">{{ $t('various.underConstruction') }}</h1>
