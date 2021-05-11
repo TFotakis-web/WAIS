@@ -52,7 +52,7 @@
 </template>
 <script>
 	import IonInputItem from '@/components/structure/ionInputItem';
-	import { mapActions, mapGetters } from 'vuex';
+	import { mapActions } from 'vuex';
 	import { API, graphqlOperation } from 'aws-amplify';
 	import { getS3Object } from '@/graphql/custom-queries';
 	import loadingBtn from '@/components/structure/loadingBtn';
@@ -191,12 +191,6 @@
 					.catch((err) => this.$toast.error(err))
 					.finally(() => this.rejectLoading = false);
 			},
-		},
-		computed: {
-			...mapGetters('platformData', [
-				'featureAccessOptions',
-				'companyOptions',
-			]),
 		},
 	};
 </script>
