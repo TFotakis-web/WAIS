@@ -133,7 +133,7 @@
 	export default {
 		name: 'ionInputCustom',
 		components: { FileInput, IonDatetimeCustom },
-		props: ['modelValue', 'config'],
+		props: ['modelValue', 'config', 'inputGroup'],
 		emits: ['update:modelValue'],
 		data() {
 			return {
@@ -149,11 +149,11 @@
 			this.$mitt.on('discardChanges:all', () => {
 				this.$emit('update:modelValue', this.initialValue);
 			});
-			if (this.config.inputGroup) {
-				this.$mitt.on(`markInputClean:${this.config.inputGroup}`, () => {
+			if (this.inputGroup) {
+				this.$mitt.on(`markInputClean:${this.inputGroup}`, () => {
 					this.markClean();
 				});
-				this.$mitt.on(`discardChanges:${this.config.inputGroup}`, () => {
+				this.$mitt.on(`discardChanges:${this.inputGroup}`, () => {
 					this.$emit('update:modelValue', this.initialValue);
 				});
 			}
