@@ -10,15 +10,11 @@
 			</ion-item>
 			<ion-card-content>
 				<p>
-					<strong>{{ $t('fields.managerEmail') + ': '}}</strong>
+					<strong>{{ $t('fields.managerEmail') + ': ' }}</strong>
 					<span>{{ request.payload.createOfficeConnectionPayload.manager_email }}</span>
 				</p>
 				<form @submit.prevent="acceptRequest" v-if="!isMine">
-					<ion-item>
-						<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.expirationDate') }}</ion-label>
-						<ion-datetime-custom v-model="form.expirationDate" :disable-past="true" name="expirationDate" :required="true" :return-date="true"/>
-					</ion-item>
+					<ion-input-item v-model="form.expirationDate" :config="$inputConfigs.expirationDate"/>
 					<div class="ion-text-center">
 						<loading-btn color="success" type="submit" :loading="acceptLoading" :text="$t('actions.accept')" :loadingText="$t('actions.accepting')"/>
 						<loading-btn @click="rejectRequest" color="danger" :loading="rejectLoading" :text="$t('actions.reject')" :loadingText="$t('actions.rejecting')"/>
@@ -29,12 +25,16 @@
 	</ion-grid>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import LoadingBtn from '@/components/structure/loadingBtn';
-	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
+
 
 	export default {
 		name: 'CreateOfficeConnectionNotificationDetails',
-		components: { IonDatetimeCustom, LoadingBtn },
+		components: {
+			IonInputItem,
+			LoadingBtn,
+		},
 		data() {
 			return {
 				acceptLoading: false,
@@ -59,14 +59,15 @@
 				this.acceptLoading = true;
 
 				this.$store.dispatch('request/resolveRequest', {
-					id: this.request.id,
-					decision: 'ACCEPT',
-					payload: {
-						createOfficeConnectionPayload: this.form,
-					},
-				})
+						id: this.request.id,
+						decision: 'ACCEPT',
+						payload: {
+							createOfficeConnectionPayload: this.form,
+						},
+					})
 					.then(() => {
 						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:all');
 						this.$router.push({ name: 'Notifications' });
 					})
 					.catch((err) => this.$toast.error(err))
@@ -77,6 +78,7 @@
 				this.$store.dispatch('request/resolveRequest', { id: this.request.id, decision: 'REJECT' })
 					.then(() => {
 						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:all');
 						this.$router.push({ name: 'Notifications' });
 					})
 					.catch((err) => this.$toast.error(err))
@@ -87,6 +89,7 @@
 				this.$store.dispatch('request/deleteRequestsSentByMe', this.request.id)
 					.then(() => {
 						this.$toast.deleteSuccess();
+						this.$mitt.emit('markInputClean:all');
 						this.$router.push({ name: 'Notifications' });
 					})
 					.catch((err) => this.$toast.error(err))
