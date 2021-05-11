@@ -12,10 +12,10 @@
 							<ion-input-item v-model="userProfile.family_name" :config="$inputConfigs.family_name" input-group="userProfile"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.name" :config="$inputConfigs.name" input-group="userProfile"/>
+							<ion-input-item v-model="userProfile.name" :config="$inputConfigs.name" icon-classes="ion-hide-md-up" input-group="userProfile"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-input-item v-model="userProfile.fathers_name" :config="$inputConfigs.fathers_name" input-group="userProfile"/>
+							<ion-input-item v-model="userProfile.fathers_name" :config="$inputConfigs.fathers_name" icon-classes="ion-hide-md-up" input-group="userProfile"/>
 						</ion-col>
 					</ion-row>
 					<ion-input-item v-model="userProfile.tin" :config="$inputConfigs.tin" input-group="userProfile"/>
