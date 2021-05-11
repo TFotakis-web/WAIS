@@ -20,7 +20,6 @@
 <script>
 	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
-	import { mapGetters } from 'vuex';
 
 
 	export default {
