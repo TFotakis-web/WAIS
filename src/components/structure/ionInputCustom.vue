@@ -104,6 +104,9 @@
 		:name="config.name"
 		:value="config.value"
 	/>
+	<ion-avatar v-if="config.showAvatar" class="ion-margin-end">
+		<s3-ion-img :s3-object="modelValue" :default-url="config.defaultUrl"/>
+	</ion-avatar>
 	<file-input
 		v-if="config.type === 'file'"
 		v-model="modelValue"
@@ -128,11 +131,12 @@
 <script>
 	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 	import FileInput from '@/components/structure/fileInput/fileInput';
+	import S3IonImg from '@/components/structure/S3IonImg';
 
 
 	export default {
 		name: 'ionInputCustom',
-		components: { FileInput, IonDatetimeCustom },
+		components: { S3IonImg, FileInput, IonDatetimeCustom },
 		props: ['modelValue', 'config', 'inputGroup'],
 		emits: ['update:modelValue'],
 		data() {
