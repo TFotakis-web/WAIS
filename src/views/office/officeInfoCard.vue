@@ -4,102 +4,46 @@
 			<ion-card-title>{{ $t('views.Office.companyInfo') }}</ion-card-title>
 		</ion-item>
 		<ion-card-content>
-			<ion-item>
-				<ion-avatar class="ion-margin-end">
-					<s3-ion-img :s3-object="myOffice.office_logo" :default-url="$store.getters['platformData/defaultOfficeLogo']"/>
-				</ion-avatar>
-				<file-input color="primary" :text="$t('actions.edit')" rename-to="officeLogo" file-path="office" level="protected" v-model="myOffice.office_logo" :sizeLimitInMBs="10" size="small"/>
-			</ion-item>
 			<form @submit.prevent="save">
+				<ion-input-item v-model="myOffice.office_logo" :config="$inputConfigs.office_logo" input-group="companyInfo"/>
 				<ion-list>
-					<ion-item>
-						<ion-icon :icon="$ionicons.businessOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.office') }}</ion-label>
-						<ion-input v-model="myOffice.officeName" type="text" name="officeName" required/>
-					</ion-item>
+					<ion-input-item v-model="myOffice.officeName" :config="$inputConfigs.officeName" input-group="companyInfo"/>
 					<ion-row>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.idCardOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.tin') }}</ion-label>
-								<ion-input v-model="myOffice.tin" type="text" name="tin"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.tin" :config="$inputConfigs.tin" input-group="companyInfo"/>
 						</ion-col>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.bookOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.chamberRecordNumber') }}</ion-label>
-								<ion-input v-model="myOffice.chamberRecordNumber" type="text" name="chamberRecordNumber"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.chamberRecordNumber" :config="$inputConfigs.chamberRecordNumber" input-group="companyInfo"/>
 						</ion-col>
 					</ion-row>
 					<ion-row>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon :icon="$ionicons.calendarOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.professionStartDate') }}</ion-label>
-								<ion-datetime-custom v-model="myOffice.professionStartDate" :disable-future="true" name="professionStartDate" :return-date="true"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.professionStartDate" :config="$inputConfigs.professionStartDate" input-group="companyInfo"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.insuranceLicenseExpirationDate') }}</ion-label>
-								<ion-datetime-custom v-model="myOffice.insuranceLicenseExpirationDate" :disable-past="true" name="insuranceLicenseExpirationDate" :return-date="true"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.insuranceLicenseExpirationDate" :config="$inputConfigs.insuranceLicenseExpirationDate" icon-classes="ion-hide-md-up" input-group="companyInfo"/>
 						</ion-col>
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.civilLiabilityExpirationDate') }}</ion-label>
-								<ion-datetime-custom v-model="myOffice.civilLiabilityExpirationDate" :disable-past="true" name="civilLiabilityExpirationDate" :return-date="true"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.civilLiabilityExpirationDate" :config="$inputConfigs.civilLiabilityExpirationDate" icon-classes="ion-hide-md-up" input-group="companyInfo"/>
 						</ion-col>
 					</ion-row>
 					<ion-row>
 						<ion-col size="12" size-md="8">
-							<ion-item>
-								<ion-icon :icon="$ionicons.locationOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.address') }}</ion-label>
-								<ion-input v-model="myOffice.address" type="text" name="address" autocomplete="street-address"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.address" :config="$inputConfigs.address" input-group="companyInfo"/>
 						</ion-col>
-						<!--						<ion-col size="12" size-md="4">-->
-						<!--							<ion-item>-->
-						<!--								<ion-icon slot="start" class="ion-hide-md-up"/>-->
-						<!--								<ion-label position="floating">{{ $t('fields.city') }}</ion-label>-->
-						<!--								<ion-input v-model="myOffice.city" type="text" name="city" autocomplete="address-level2"/>-->
-						<!--							</ion-item>-->
-						<!--						</ion-col>-->
 						<ion-col size="12" size-md="4">
-							<ion-item>
-								<ion-icon slot="start" class="ion-hide-md-up"/>
-								<ion-label position="floating">{{ $t('fields.zip_code') }}</ion-label>
-								<ion-input v-model="myOffice.zip_code" type="number" name="postal" autocomplete="postal-code" class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.zip_code" :config="$inputConfigs.zip_code" input-group="companyInfo"/>
 						</ion-col>
 					</ion-row>
 					<ion-row>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.callOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.phone') }}</ion-label>
-								<ion-input v-model="myOffice.phone" type="number" name="phone" autocomplete="tel" required class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.phone" :config="$inputConfigs.phone" input-group="companyInfo"/>
 						</ion-col>
 						<ion-col size="12" size-md="6">
-							<ion-item>
-								<ion-icon :icon="$ionicons.phonePortraitOutline" slot="start" class="ion-align-self-center"/>
-								<ion-label position="floating">{{ $t('fields.mobile') }}</ion-label>
-								<ion-input v-model="myOffice.mobile" type="number" name="mobile" autocomplete="tel" required class="no-arrows"/>
-							</ion-item>
+							<ion-input-item v-model="myOffice.mobile" :config="$inputConfigs.mobile" input-group="companyInfo"/>
 						</ion-col>
 					</ion-row>
-					<ion-item>
-						<ion-icon :icon="$ionicons.mailOutline" slot="start" class="ion-align-self-center"/>
-						<ion-label position="floating">{{ $t('fields.email') }}</ion-label>
-						<ion-input v-model="myOffice.office_email" type="email" name="email" autocomplete="email" required/>
-					</ion-item>
+					<ion-input-item v-model="myOffice.office_email" :config="$inputConfigs.office_email" input-group="companyInfo"/>
 				</ion-list>
 				<ion-list>
 					<ion-list-header>
@@ -115,22 +59,11 @@
 						<ion-col>
 							<ion-row>
 								<ion-col size="12" size-md="6">
-									<ion-item>
-										<ion-label position="floating">{{ $t('fields.bank') }}</ion-label>
-										<ion-select v-model="selectedBanks[i]" required interface="popover">
-											<ion-select-option v-for="o in bankOptions" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-										</ion-select>
-									</ion-item>
-									<ion-item v-if="selectedBanks[i] === 'Other'">
-										<ion-label position="floating">{{ $t('fields.bank') }}</ion-label>
-										<ion-input v-model="account.name" type="text" required/>
-									</ion-item>
+									<ion-input-item v-model="selectedBanks[i]" :config="$inputConfigs.companyBankAccountsSelect" input-group="companyInfo"/>
+									<ion-input-item v-if="selectedBanks[i] === 'Other'" v-model="account.name" :config="$inputConfigs.companyBankAccountsOtherName" input-group="companyInfo"/>
 								</ion-col>
 								<ion-col size="12" size-md="6">
-									<ion-item>
-										<ion-label position="floating">{{ $t('fields.iban') }}</ion-label>
-										<ion-input v-model="account.iban" type="text" required/>
-									</ion-item>
+									<ion-input-item v-model="account.iban" :config="$inputConfigs.companyBankAccountsIban" input-group="companyInfo"/>
 								</ion-col>
 							</ion-row>
 						</ion-col>
@@ -154,19 +87,12 @@
 					<ion-row class="ion-no-padding ion-align-items-center" v-for="(companyCode, i) in myOffice.insuranceCompanies" :key="'companyCodes' + i">
 						<ion-col>
 							<ion-row>
+
 								<ion-col size="12" size-md="6">
-									<ion-item>
-										<ion-label position="floating">{{ $t('fields.company') }}</ion-label>
-										<ion-select v-model="companyCode.name" required interface="popover">
-											<ion-select-option v-for="o in companyOptionsAvailable" :key="o.value" :value="o.value">{{ o.text }}</ion-select-option>
-										</ion-select>
-									</ion-item>
+									<ion-input-item v-model="companyCode.name" :config="$inputConfigs.insuranceCompaniesSelect" input-group="companyInfo"/>
 								</ion-col>
 								<ion-col size="12" size-md="6">
-									<ion-item>
-										<ion-label position="floating">{{ $t('fields.code') }}</ion-label>
-										<ion-input v-model="companyCode.code" type="text" required/>
-									</ion-item>
+									<ion-input-item v-model="companyCode.code" :config="$inputConfigs.insuranceCompaniesCode" input-group="companyInfo"/>
 								</ion-col>
 							</ion-row>
 						</ion-col>
@@ -199,20 +125,17 @@
 	</ion-card>
 </template>
 <script>
+	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
-	import S3IonImg from '@/components/structure/S3IonImg';
-	import FileInput from '@/components/structure/fileInput/fileInput';
 	import { mapGetters } from 'vuex';
-	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 	import S3Object from '@/components/structure/S3Object';
+
 
 	export default {
 		name: 'OfficeInfoCard',
 		components: {
+			IonInputItem,
 			S3Object,
-			IonDatetimeCustom,
-			FileInput,
-			S3IonImg,
 			loadingBtn,
 		},
 		data() {
@@ -231,6 +154,10 @@
 				}
 			}
 		},
+		beforeUnmount() {
+			this.myOffice.bankAccountInfo = this.myOffice.bankAccountInfo.filter(el => el.name !== '' && el.iban !== '');
+			this.myOffice.insuranceCompanies = this.myOffice.insuranceCompanies.filter(el => el.name !== '' && el.code !== '');
+		},
 		methods: {
 			save() {
 				this.loading = true;
@@ -243,7 +170,10 @@
 				}
 
 				this.$store.dispatch('office/updateOfficeDetails')
-					.then(this.$toast.saveSuccess)
+					.then(() => {
+						this.$toast.saveSuccess();
+						this.$mitt.emit('markInputClean:all');
+					})
 					.catch(this.$toast.error)
 					.finally(() => this.loading = false);
 			},
@@ -267,11 +197,8 @@
 			},
 		},
 		computed: {
-			...mapGetters('platformData', ['companyOptions', 'bankOptions']),
+			...mapGetters('platformData', ['bankOptions']),
 			...mapGetters('office', ['myOffice']),
-			companyOptionsAvailable() {
-				return this.companyOptions.filter(el => this.myOffice.insuranceCompaniesAvailable.includes(el.value));
-			},
 		},
 	};
 </script>
