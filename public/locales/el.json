@@ -348,10 +348,10 @@
     "inviteOffice": "Πρόσκληση γραφείου"
   },
   "files": {
-    "professionStart": "Έναρξη επαγγέλματος",
-    "chamberCertificate": "Πιστοποιητικό επιμελητηρίου",
-    "liabilityInsurance": "Ασφαλιστήριο αστικής ευθύνης",
-    "companyArticlesOfAssociation": "Καταστατικό εταιρίας",
+    "profession_start": "Έναρξη επαγγέλματος",
+    "chamber_certificate": "Πιστοποιητικό επιμελητηρίου",
+    "liability_insurance": "Ασφαλιστήριο αστικής ευθύνης",
+    "company_articles_of_association": "Καταστατικό εταιρίας",
     "other": "Άλλα αρχεία"
   },
   "banks": {

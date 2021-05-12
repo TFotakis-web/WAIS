@@ -348,10 +348,10 @@
     "inviteOffice": "Office invitation"
   },
   "files": {
-    "professionStart": "Profession start",
-    "chamberCertificate": "Chamber certificate",
-    "liabilityInsurance": "Liability insurance",
-    "companyArticlesOfAssociation": "Company articles of association",
+    "profession_start": "Profession start",
+    "chamber_certificate": "Chamber certificate",
+    "liability_insurance": "Liability insurance",
+    "company_articles_of_association": "Company articles of association",
     "other": "Other files"
   },
   "banks": {
