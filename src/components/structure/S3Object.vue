@@ -1,5 +1,5 @@
 <template>
-	<ion-button :href="url" target="_blank" fill="clear" size="small">{{ $t(`files.${s3Object.filename.split('.')[0]}`) || s3Object.filename }}</ion-button>
+	<ion-button :href="url" target="_blank" fill="clear" size="small">{{ ($t(`files.${s3Object.filename.split('.')[0]}`) === `files.${s3Object.filename.split('.')[0]}`) ? s3Object.filename : $t(`files.${s3Object.filename.split('.')[0]}`) }}</ion-button>
 	<ion-button v-if="!disableDelete" @click="deleteFile()" fill="clear" size="small">
 		<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
 	</ion-button>
@@ -7,12 +7,13 @@
 <script>
 	import { Storage } from 'aws-amplify';
 
+
 	export default {
 		name: 'S3Object',
 		props: [
 			's3Object',
 			'defaultUrl',
-			'disableDelete'
+			'disableDelete',
 		],
 		emits: ['fileDeleted'],
 		data() {
@@ -29,7 +30,7 @@
 		watch: {
 			s3Object: {
 				immediate: true,
-				handler: async function(newValue) {
+				handler: async function (newValue) {
 					if (!newValue || !newValue.filePath || !newValue.filename || !newValue.level) {
 						this.url = this.defaultUrl;
 						return;
