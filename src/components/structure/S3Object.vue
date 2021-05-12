@@ -1,5 +1,5 @@
 <template>
-	<ion-button :href="url" target="_blank" fill="clear" size="small">{{ s3Object.filename }}</ion-button>
+	<ion-button :href="url" target="_blank" fill="clear" size="small">{{ $t(`files.${s3Object.filename.split('.')[0]}`) || s3Object.filename }}</ion-button>
 	<ion-button v-if="!disableDelete" @click="deleteFile()" fill="clear" size="small">
 		<ion-icon :icon="$ionicons.closeOutline" slot="icon-only"/>
 	</ion-button>
