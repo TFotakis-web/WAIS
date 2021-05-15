@@ -1,4 +1,4 @@
-const gqlUtil = require('../utils/gql')
+const gqlUtil = require('../gql')
 const userQueries = require('./user')
 const officeQueries = require('./office')
 
@@ -94,7 +94,7 @@ module.exports = {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}
-				result?.items.forEach((request) => {  //Quick page permissions fix
+				result?.listRequestsBySenderUsername?.items.forEach((request) => {  //Quick page permissions fix
 					if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
 						request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
 					}
@@ -172,7 +172,7 @@ module.exports = {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}
-				result?.items.forEach((request) => {  //Quick page permissions fix
+				result?.listRequestsByReceiverEmail?.items.forEach((request) => {  //Quick page permissions fix
 					if (request.payload?.inviteEmployeeToOfficePayload?.empPagePermissions) {
 						request.payload.inviteEmployeeToOfficePayload.empPagePermissions = JSON.parse(request.payload.inviteEmployeeToOfficePayload.empPagePermissions)
 					}
@@ -269,7 +269,7 @@ module.exports = {
 
 							let createOfficeErrorMsg = 'Failed to create new Office.'
 							const createdOfficeId = await gqlUtil.execute({input: createOfficeInput}, mutation1, 'createOffice')
-								.then(response => response.id)
+								.then(response => response?.createOffice?.id)
 								.catch(reason => {
 									createOfficeErrorMsg = 'Failed to create new office: ' + JSON.stringify(reason, null, 2)
 								})
@@ -299,6 +299,7 @@ module.exports = {
 
 							let createOUCErrorMsg = 'Failed to create new Office-User Connection.'
 							const createOUCResult = await gqlUtil.execute({input: createOUCInput}, mutation2, 'createOfficeUserConnection')
+								.then(response => response?.createOfficeUserConnection)
 								.catch(reason => {
 									createOUCErrorMsg = 'Failed to create new Office-User Connection: ' + JSON.stringify(reason, null, 2)
 								})
@@ -343,7 +344,8 @@ module.exports = {
 
 							//Transaction, add the new connection
 							try {
-								return await officeQueries.addOfficeCollaborationConnection(senderOffice, receiverOffice, 'comp1', 'code1')//TODO change
+								const sharedInsuranceCompanies = {}
+								return await officeQueries.addOfficeCollaborationConnection(senderOffice, receiverOffice, sharedInsuranceCompanies)
 							} catch (err) {
 								return Promise.reject(new Error(
 									'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',

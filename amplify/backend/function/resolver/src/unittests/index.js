@@ -2,7 +2,7 @@ const crud_tests = require('./tests/crud_tests')
 const office_user_partnership_tests = require('./tests/office_user_partnership_tests')
 
 const gateway = require('../gateway')
-const gql = require('../utils/gql')
+const gql = require('../gql')
 
 module.exports = {
 	run: () => {

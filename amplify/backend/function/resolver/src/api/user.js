@@ -1,4 +1,4 @@
-const gqlUtil = require('../utils/gql')
+const gqlUtil = require('../gql')
 const AWS = require('aws-sdk')
 AWS.config.update({
 	region: process.env.REGION,
@@ -91,7 +91,7 @@ module.exports = {
 			query, 'getUserModelPermissionsForOffice')
 			.then(response => {
 				const modelPermissionsSet = new Set()
-				response?.items?.forEach((userProfile) => {
+				response?.listUserProfileByUsername?.items?.forEach((userProfile) => {
 					if (userProfile?.officeConnection?.modelPermissions) {
 						modelPermissionsSet.add(userProfile.officeConnection.modelPermissions)
 					}
@@ -118,7 +118,7 @@ module.exports = {
 			query, 'getUserPagePermissionsForOffice')
 			.then(response => {
 				const pagePermissionsSet = new Set()
-				response?.items?.forEach((userProfile) => {
+				response?.listUserProfileByUsername?.items?.forEach((userProfile) => {
 					if (userProfile?.officeConnection?.pagePermissions) {
 						pagePermissionsSet.add(userProfile.officeConnection.pagePermissions)
 					}
@@ -140,7 +140,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute({username: username}, query, 'listUserProfileByUsername')
-			.then(response => !!response?.items[0]?.officeConnection)
+			.then(response => !!response?.listUserProfileByUsername?.items[0]?.officeConnection)
 	},
 
 	/*
@@ -218,11 +218,9 @@ module.exports = {
 			}
 		`
 
-		return gqlUtil.execute({
-			input: sanitized_input,
-			condition: expanded_condition
-		}, mutation, 'updateUserProfileDetails')
+		return gqlUtil.execute({input: sanitized_input, condition: expanded_condition}, mutation, 'updateUserProfileDetails')
 			.then(result => {
+				result = result?.updateUserProfile
 				if (result === undefined) {
 					return Promise.reject(new Error(`Unable to update UserProfile for user ${JSON.stringify(username)} and input ${JSON.stringify(sanitized_input)}.`))
 				}

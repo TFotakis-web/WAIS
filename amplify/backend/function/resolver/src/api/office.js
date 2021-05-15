@@ -1,4 +1,4 @@
-const gqlUtil = require('../utils/gql')
+const gqlUtil = require('../gql')
 const userAPI = require('../api/user')
 
 const AWS = require('aws-sdk');
@@ -86,7 +86,7 @@ module.exports = {
 		`
 
 		return gqlUtil.execute({username: username}, query, 'getUserOffice')
-			.then(response => response?.items[0]?.officeConnection?.office)
+			.then(response => response?.listUserProfileByUsername?.items[0]?.officeConnection?.office)
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error(`Failed to retrieve office of user ${username}.`))
@@ -176,11 +176,12 @@ module.exports = {
 
 	/**
 	 * Transaction.
-	 * Connects 2 Offices via a OfficeCollaborationConnection.
+	 * Connects 2 Offices via a 1-way OfficeCollaborationConnection.
+	 * The sharedInsuranceCompanies are initialized to an empty JSON.
 	 */
-	addOfficeCollaborationConnection: (senderOffice, receiverOffice, insuranceCompany) => {
+	addOfficeCollaborationConnection: (senderOffice, receiverOffice) => {
 		const now = new Date().toISOString()
-		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id, insuranceCompany]))
+		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id]))
 		return docClient.transactWrite({
 			TransactItems: [
 				{
@@ -205,28 +206,25 @@ module.exports = {
 					},
 				},
 				{
-					Update: {
-						TableName: 'Office' + ddbSuffix,
+					Put: {
+						TableName: 'OfficeCollaborationConnection' + ddbSuffix,
 						Key: {
-							id: receiverOffice.id,
+							id: connId
 						},
-						ConditionExpression: '#partnersNumberLimit > :zero',
-						UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
-						ExpressionAttributeNames: {
-							'#updatedAt': 'updatedAt',
-							'#partnersNumberLimit': 'partnersNumberLimit',
-						},
-						ExpressionAttributeValues: {
-							':now': now,
-							':dec': 1,
-							':zero': 0,
-						},
-						ReturnValues: 'UPDATED_NEW',
-					},
+						Item: {
+							id: connId,
+							fromId: senderOffice.id,
+							fromOfficeName: senderOffice.officeName,
+							toId: receiverOffice.id,
+							toOfficeName: receiverOffice.office,
+							sharedInsuranceCompanies: '{}',
+							expirationDate: '',
+							message: '',
+						}
+					}
 				}
 			],
-		})
-			.promise()
+		}).promise()
 			.then(() => connId)
 
 	},
@@ -296,8 +294,6 @@ module.exports = {
 							pagePermissions
 							modelPermissions
 							preferences
-							officeId
-							officeName
 							employeeType
 							office {
 							  id
@@ -332,8 +328,11 @@ module.exports = {
 								contentType
 							  }
 							  insuranceCompanies {
+								officeId
+								officeName
 								name
 								code
+								expiresAt
 							  }
 							  createdAt
 							  updatedAt
@@ -356,7 +355,7 @@ module.exports = {
 		`
 		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const officeConnection = response?.items[0]?.officeConnection
+				const officeConnection = response?.listUserProfileByUsername?.items[0]?.officeConnection
 				if (officeConnection) {
 					officeConnection.pagePermissions = JSON.parse(officeConnection.pagePermissions)
 					if (officeConnection.office) {
@@ -379,7 +378,7 @@ module.exports = {
 			}
 		`
 		return await gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
-			.then(response => !!response?.items[0]?.officeConnection)
+			.then(response => !!response?.listUserProfileByUsername?.items[0]?.officeConnection)
 	},
 
 	updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {
@@ -406,6 +405,7 @@ module.exports = {
 		return gqlUtil.execute({input: {id: tucItem.id, modelPermissions: modelPermissions}},
 			mutation1, 'updateOfficeUserConnection')
 			.then(result => {
+				result = result?.updateOfficeUserConnection
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update model permissions.'))
 				}
@@ -438,6 +438,7 @@ module.exports = {
 		return gqlUtil.execute({input: {id: tucItem.id, pagePermissions: pagePermissions}},
 			mutation1, 'updateOfficeUserConnection')
 			.then(result => {
+				result = result?.updateOfficeUserConnection
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update page permissions.'))
 				}
@@ -501,6 +502,7 @@ module.exports = {
 			{ownerUsername: managerUsername, filter: emp_filter, limit: limit || 100, nextToken: nextToken},
 			query, 'getEmployeeTypeUserProfilesForManagerUsername')
 			.then(office => {
+				office = office?.listOfficeByOwnerUsername
 				if (office === undefined || office.items === undefined) {
 					return Promise.reject(new Error('An error occurred while retrieving contractors.'))
 				}
@@ -570,7 +572,7 @@ module.exports = {
 			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken},
 			query, 'getCustomersForOfficeId')
 			.then(response => {
-				let result = response?.items
+				let result = response?.listOffices?.items
 				if (result) {
 					result = result[0]?.officeCustomers
 				}
@@ -653,10 +655,10 @@ module.exports = {
 				}
 			}
 		`
-		return gqlUtil.execute(
-			{officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
+		return gqlUtil.execute({officeId: officeId, filter: filter || {id: {ne: ''}}, limit: limit || 50, nextToken: nextToken},
 			query, 'getContractsForOfficeId')
 			.then(result => {
+				result = result?.listOffices
 				if (result) {
 					result = result[0]?.officeCustomers
 				}
@@ -666,7 +668,7 @@ module.exports = {
 				return result
 			})
 	},
-	getInsuranceCompaniesForOffice: (office) => {
+	getInsuranceCompaniesForOffice: (officeId) => {
 		//Get user's office and its companies
 		const query = /* GraphQL */ `
 			query getInsuranceCompaniesForOffice($officeId: ID!) {
@@ -696,7 +698,7 @@ module.exports = {
 			}
 		`
 
-		return gqlUtil.execute({officeId: office.id}, query, 'getInsuranceCompaniesForOffice')
+		return gqlUtil.execute({officeId: officeId}, query, 'getInsuranceCompaniesForOffice')
 			.then(response => response?.getOffice)
 			.then(office => {
 				if (!office) {
@@ -733,7 +735,6 @@ module.exports = {
 				return companies
 			})
 	},
-
 	getInsuranceCompaniesOfMyOffice(username) {
 		//Get user's office and its companies
 		const query = /* GraphQL */ `
@@ -896,11 +897,9 @@ module.exports = {
 			sanitized_input.bankAccountInfo = JSON.stringify(sanitized_input.bankAccountInfo)
 		}
 
-		return gqlUtil.execute({
-			input: sanitized_input,
-			condition: {ownerUsername: {eq: username}}
-		}, mutation, 'updateOfficeDetails')
+		return gqlUtil.execute({input: sanitized_input, condition: {ownerUsername: {eq: username}}}, mutation, 'updateOfficeDetails')
 			.then(result => {
+				result = result?.updateOffice
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to update Office details.'));
 				}
@@ -1025,8 +1024,6 @@ module.exports = {
 							pagePermissions
 							modelPermissions
 							preferences
-							officeId
-							officeName
 							employeeType
 							office {
 							  id
@@ -1057,9 +1054,12 @@ module.exports = {
 								filename
 								contentType
 							  }
-							  insuranceCompanies {
+							  allInsuranceCompanies {
+								officeId
+								officeName
 								name
 								code
+								expiresAt
 							  }
 							  workforce {
 								items{
@@ -1082,7 +1082,7 @@ module.exports = {
 		`
 		return gqlUtil.execute({username: username}, query, 'getOfficeDetailsAndPermissionsByUsername')
 			.then(response => {
-				const result = response?.items[0].officeConnections?.items[0]
+				const result = response?.listUserProfileByUsername?.response?.items[0]?.officeConnections?.items[0]
 				if (!result) {
 					return Promise.reject(new Error('Failed to retrieve Office of user ' + username))
 				}
@@ -1166,7 +1166,7 @@ module.exports = {
 
 				return gqlUtil.execute({input: createOfficeInput}, createOfficeMutation, 'createOffice')
 					.then(response => {
-						const createdOfficeId = response?.id
+						const createdOfficeId = response?.createOffice?.id
 						if (!createdOfficeId) {
 							return Promise.reject(new Error('Failed to create new office: ' + response.errors.message))
 						}
@@ -1185,7 +1185,7 @@ module.exports = {
 					}).then(createOUCInput => {
 						return gqlUtil.execute({input: createOUCInput}, createOfficeUserConnectionMutation, 'createOfficeUserConnection')
 					}).then(createOUCResponse => {
-						const createdOfficeId = createOUCResponse?.id
+						const createdOfficeId = createOUCResponse?.createOfficeUserConnection?.id
 						if (!createdOfficeId) {
 							return Promise.reject(new Error('Failed to create new Office-User connection: ' + createOUCResponse.errors.message))
 						}

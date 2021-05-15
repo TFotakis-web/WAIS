@@ -97,6 +97,94 @@ type UserProfile
     calendarEvents: [UserCalendarEvent] @connection(keyName: "byUsername", fields: ["username"])
 }
 
+type OfficeUserConnection
+@model(subscriptions: null)
+@key(name: "byOfficeName", fields: ["officeName", "userId"], queryField: "listOfficeUserConnectionsByOfficeName")
+@key(name: "byEmployeeType", fields: ["employeeType", "username", "officeName"], queryField: "listOfficeUserConnectionsByEmployeeType")
+@key(name: "byUserId", fields: ["userId", "officeName"], queryField: "listOfficeUserConnectionsByUserId")
+@key(name: "byOfficeAndUser", fields: ["officeName", "username"], queryField: "listOfficeUserConnectionsByOfficeAndUser")
+@key(name: "byOfficeUsername", fields: ["username", "officeName"], queryField: "listOfficeUserConnectionsByUsername")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    officeId: ID!
+    officeName: String!
+    userId: ID!
+    username: String!
+    office: Office! @connection(fields: ["officeId"])
+    user: UserProfile! @connection(fields: ["userId"])
+    pagePermissions: AWSJSON!
+    modelPermissions: [ModelPermission!]!
+    employeeType: EmployeeType! # e.g Contractor
+    preferences: AWSJSON
+}
+
+# 1-way connection between 2 Offices.
+# Only the sender 'pays' for the collaboration.
+type OfficeCollaborationConnection
+@model(subscriptions: null)
+@key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeCollaborationConnectionByFromOfficeId")
+@key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeCollaborationConnectionByFromOfficeName")
+@key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeCollaborationConnectionByToOfficeName")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    fromId: ID!
+    fromOfficeName: String!
+    toId: ID!
+    toOfficeName: String!
+    sharedInsuranceCompanies: AWSJSON! # Levels are: insuranceCompanyCode->InsuranceCompany
+    from: Office! @connection(fields: ["fromId"]) #This office initiates the collaboration
+    to: Office! @connection(fields: ["toId"]) #This office needs to accept the collaboration
+    expirationDate: AWSTimestamp # Can be used to configure a TTL workflow
+    message: String
+}
+
+type Requests
+@model(subscriptions: null)
+@key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
+@key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
+@key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
+@key(name: "byType", fields: ["type"], queryField: "listRequestsByType")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    senderUsername: String!
+    senderEmail: String!
+    receiverEmail: String!
+    type: RequestType!
+    payload: CreateRequestPayload!
+}
+
+type Events
+@model(subscriptions: null)
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    payload: String!
+}
+
+type UserNotifications
+@model(subscriptions: null)
+@key(name: "byUsernameAndUpdatedAt", fields: ["username", "updatedAt"], queryField: "listUserNotificationsByUsernameAndUpdatedAt")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    username: String
+    payload: String
+    notificationType: String
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+}
+
+#For calendar use
+type UserCalendarEvent
+@model(subscriptions: null)
+@key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
+@auth(rules: [{ allow: private, provider: iam }]) {
+    id: ID
+    username: String # Populated server-side
+    payload: String
+    createdAt: AWSDateTime!
+}
+
+################################################ FOR LATER ON ################################################
+
 type Vehicle
 @model(subscriptions: null)
 @auth(rules: [{ allow: private, provider: iam }])
@@ -182,62 +270,6 @@ type Customer
     driversLicense: DriversLicense
 }
 
-type OfficeUserConnection
-@model(subscriptions: null)
-@key(name: "byOfficeName", fields: ["officeName", "userId"], queryField: "listOfficeUserConnectionsByOfficeName")
-@key(name: "byEmployeeType", fields: ["employeeType", "username", "officeName"], queryField: "listOfficeUserConnectionsByEmployeeType")
-@key(name: "byUserId", fields: ["userId", "officeName"], queryField: "listOfficeUserConnectionsByUserId")
-@key(name: "byOfficeAndUser", fields: ["officeName", "username"], queryField: "listOfficeUserConnectionsByOfficeAndUser")
-@key(name: "byOfficeUsername", fields: ["username", "officeName"], queryField: "listOfficeUserConnectionsByUsername")
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    officeId: ID!
-    officeName: String!
-    userId: ID!
-    username: String!
-    office: Office! @connection(fields: ["officeId"])
-    user: UserProfile! @connection(fields: ["userId"])
-    pagePermissions: AWSJSON!
-    modelPermissions: [ModelPermission!]!
-    employeeType: EmployeeType! # e.g Contractor
-    preferences: AWSJSON
-}
-
-# 1-way connection between 2 Offices.
-# Only the sender 'pays' for the collaboration.
-type OfficeCollaborationConnection
-@model(subscriptions: null)
-@key(name: "byFromId", fields: ["fromId", "toId"], queryField: "listOfficeCollaborationConnectionByFromOfficeId")
-@key(name: "byFromOfficeName", fields: ["fromOfficeName", "toOfficeName"], queryField: "listOfficeCollaborationConnectionByFromOfficeName")
-@key(name: "byToOfficeName", fields: ["toOfficeName", "fromOfficeName"], queryField: "listOfficeCollaborationConnectionByToOfficeName")
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    fromId: ID!
-    fromOfficeName: String!
-    toId: ID!
-    toOfficeName: String!
-    sharedInsuranceCompanies: AWSJSON! # Levels are: insuranceCompanyCode->InsuranceCompany
-    from: Office! @connection(fields: ["fromId"]) #This office initiates the collaboration
-    to: Office! @connection(fields: ["toId"]) #This office needs to accept the collaboration
-    expirationDate: AWSTimestamp! # Can be used to configure a TTL workflow
-    message: String
-}
-
-type OfficeContractConnection
-@model(subscriptions: null)
-@key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
-@key(name: "byOfficeName", fields: ["officeName", "officeId"], queryField: "listOfficeContractConnectionByOfficeName")
-@key(name: "byContractId", fields: ["contractId", "officeId"], queryField: "listOfficeContractConnectionByContractId")
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    officeId: ID!
-    officeName: String!
-    contractId: ID!
-    office: Office! @connection(fields: ["officeId"])
-    contract: Contract! @connection(fields: ["contractId"])
-    ownsContract: Boolean! #If true then the Office can edit the Contract
-}
-
 type TransactionHistory
 @model(subscriptions: null)
 @key(
@@ -262,47 +294,17 @@ type TransactionHistory
     receiver: UserProfile! @connection(fields: ["receiverUserProfileId"])
 }
 
-type Requests
+type OfficeContractConnection
 @model(subscriptions: null)
-@key(name: "bySenderEmail", fields: ["senderEmail"], queryField: "listRequestsBySenderEmail")
-@key(name: "byReceiverEmail", fields: ["receiverEmail"], queryField: "listRequestsByReceiverEmail")
-@key(name: "bySenderUsername", fields: ["senderUsername"], queryField: "listRequestsBySenderUsername")
-@key(name: "byType", fields: ["type"], queryField: "listRequestsByType")
+@key(name: "byOfficeId", fields: ["officeId", "officeName"], queryField: "listOfficeContractConnectionByOfficeId")
+@key(name: "byOfficeName", fields: ["officeName", "officeId"], queryField: "listOfficeContractConnectionByOfficeName")
+@key(name: "byContractId", fields: ["contractId", "officeId"], queryField: "listOfficeContractConnectionByContractId")
 @auth(rules: [{ allow: private, provider: iam }]) {
     id: ID
-    senderUsername: String!
-    senderEmail: String!
-    receiverEmail: String!
-    type: RequestType!
-    payload: CreateRequestPayload!
-}
-
-type Events
-@model(subscriptions: null)
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    payload: String!
-}
-
-type UserNotifications
-@model(subscriptions: null)
-@key(name: "byUsernameAndUpdatedAt", fields: ["username", "updatedAt"], queryField: "listUserNotificationsByUsernameAndUpdatedAt")
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    username: String
-    payload: String
-    notificationType: String
-    createdAt: AWSDateTime!
-    updatedAt: AWSDateTime!
-}
-
-#For calendar use
-type UserCalendarEvent
-@model(subscriptions: null)
-@key(name: "byUsername", fields: ["username", "createdAt"], queryField: "listUserCalendarEventsByUsername")
-@auth(rules: [{ allow: private, provider: iam }]) {
-    id: ID
-    username: String # Populated server-side
-    payload: String
-    createdAt: AWSDateTime!
+    officeId: ID!
+    officeName: String!
+    contractId: ID!
+    office: Office! @connection(fields: ["officeId"])
+    contract: Contract! @connection(fields: ["contractId"])
+    ownsContract: Boolean! #If true then the Office can edit the Contract
 }

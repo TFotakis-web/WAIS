@@ -19,17 +19,17 @@ const resolvers = {
 	Office: {
 		allInsuranceCompanies: (event) => {
 			return api.getInsuranceCompaniesOfOffice({
-				office: event.source?.officeId
+				officeId: event.source?.officeId
 			})
 		},
 		outgoingOfficeConnections: (event) => {
 			return api.getOutgoingOfficeConnections({
-				office: event.source?.officeId
+				officeId: event.source?.officeId
 			})
 		},
 		incomingOfficeConnections: (event) => {
 			return api.getIncomingOfficeConnections({
-				office: event.source?.officeId
+				officeId: event.source?.officeId
 			})
 		},
 	},

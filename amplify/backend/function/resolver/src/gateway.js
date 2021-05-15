@@ -1,4 +1,4 @@
-const gqlUtil = require('./utils/gql')
+const gqlUtil = require('./gql')
 
 const officeAPI = require('./api/office')
 const userAPI = require('./api/user')
@@ -586,7 +586,7 @@ module.exports = {
 					return Promise.reject(new Error('Invalid officeId.'))
 				}
 			})
-			.then(() => officeAPI.getInsuranceCompaniesForOffice(args.office))
+			.then(() => officeAPI.getInsuranceCompaniesForOffice(args.officeId))
 			.then((result) => {
 				console.log('getInsuranceCompaniesOfOffice output: ' + JSON.stringify(result))
 				return result

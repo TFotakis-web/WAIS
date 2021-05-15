@@ -1,6 +1,5 @@
-const gqlUtil = require('../utils/gql')
+const gqlUtil = require('../gql')
 const userAPI = require('../api/user')
-const officeAPI = require('../api/office')
 
 const AWS = require('aws-sdk')
 AWS.config.update({
@@ -80,6 +79,7 @@ module.exports = {
 		return gqlUtil.execute(
 			{type: "CREATE_OFFICE", filter: filter || {id: {ne: ''}}, limit: limit || 100, nextToken: nextToken}, query, 'getRequestsForUser')
 			.then(result => {
+				result = result?.listRequestsByType
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to get Requests.'))
 				}
