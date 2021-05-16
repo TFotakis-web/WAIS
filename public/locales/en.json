@@ -138,6 +138,12 @@
       },
       "officeManagementTableCard": {
         "cardTitle": "Office management"
+      },
+      "employeeManagementCard": {
+        "cardTitle": "Employee management"
+      },
+      "inviteEmployee": {
+        "pageTitle": "Employee invitation"
       }
     },
     "userProfile": {
@@ -238,7 +244,8 @@
     "role": "Role",
     "roles": {
       "employee": "Employee",
-      "contractor": "Contractor"
+      "contractor": "Contractor",
+      "partner": "Partner"
     },
     "expirationDate": "Exp. date",
     "managerEmail": "Manager email",

@@ -138,6 +138,12 @@
       },
       "officeManagementTableCard": {
         "cardTitle": "Διαχείρηση γραφείων"
+      },
+      "employeeManagementCard": {
+        "cardTitle": "Διαχείρηση υπαλλήλων"
+      },
+      "inviteEmployee": {
+        "pageTitle": "Πρόσκληση υπαλλήλου"
       }
     },
     "userProfile": {
@@ -238,7 +244,8 @@
     "role": "Ρόλος",
     "roles": {
       "employee": "Υπάλληλος",
-      "contractor": "Εξωτερικός συνεργάτης"
+      "contractor": "Εξωτερικός συνεργάτης",
+      "partner": "Συνεργάτης"
     },
     "expirationDate": "Ημ. λήξης",
     "managerEmail": "Email διαχειριστή",
