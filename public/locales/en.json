@@ -8,8 +8,6 @@
         "bank": "Iris",
         "collaboration": "Collaboration",
         "notifications": "Notifications",
-        "home": "Home",
-        "myAccount": "My account",
         "signOut": "Sign Out",
         "devtools": "Developer Tools",
         "wallet": "Wallet"
@@ -48,11 +46,6 @@
           "commissionsUncollected": "Commissions Uncollected",
           "commissionsCollected": "Commissions Collected",
           "mutualAccount": "Mutual Account"
-        },
-        "contractors": {
-          "_groupName": "Contractors",
-          "suppliers": "Suppliers",
-          "externalContractors": "External Contractors"
         },
         "cards": {
           "_groupName": "Cards",
@@ -153,7 +146,6 @@
     "Vehicle Cards Details": {
       "pageTitle": "Vehicle Cards Details"
     },
-    "newContract": {},
     "devTools": {
       "pageTitle": "Developer Tools"
     },
@@ -165,6 +157,12 @@
     "notifications": {
       "pageTitle": "Notifications",
       "noNewNotifications": "No new notifications"
+    },
+    "partners": {
+      "pageTitle": "Partners"
+    },
+    "partnerDetails": {
+      "pageTitle": "Partner details"
     }
   },
   "fields": {
@@ -252,7 +250,10 @@
     "noPartnerOffices": "No partner offices",
     "noEmployees": "No employees",
     "noContractors": "No contractors",
-    "bank": "Bank"
+    "bank": "Bank",
+    "filters": "Filters",
+    "supplier": "Supplier",
+    "externalContractor": "External contractor"
   },
   "actions": {
     "submit": "Submit",

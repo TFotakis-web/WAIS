@@ -8,8 +8,6 @@
         "bank": "Iris",
         "collaboration": " Συνεργασία",
         "notifications": "Ειδοποιήσεις",
-        "home": "Αρχική",
-        "myAccount": "Ο λογαριασμός μου",
         "signOut": "Αποσύνδεση",
         "devtools": "Εργαλεία Προγραμματιστή",
         "wallet": "Πορτοφόλι"
@@ -48,11 +46,6 @@
           "commissionsUncollected": "Προμήθειες προς είσπραξη",
           "commissionsCollected": "Εισπραγμένες Προμήθειες",
           "mutualAccount": "Αλληλόχρεος Λογαριασμός"
-        },
-        "contractors": {
-          "_groupName": "Συνεργάτες",
-          "suppliers": "Προμηθευτές",
-          "externalContractors": "Εξωτερικοί Συνεργάτες"
         },
         "cards": {
           "_groupName": "Καρτέλες",
@@ -153,7 +146,6 @@
     "Vehicle Cards Details": {
       "pageTitle": "Λεπτομέρειες καρτέλα οχήματος"
     },
-    "newContract": {},
     "devTools": {
       "pageTitle": "Εργαλεία Προγραμματιστή"
     },
@@ -165,6 +157,12 @@
     "notifications": {
       "pageTitle": "Ειδοποιήσεις",
       "noNewNotifications": "Δεν υπάρχουν ειδοποιήσεις"
+    },
+    "partners": {
+      "pageTitle": "Συνεργάτες"
+    },
+    "partnerDetails": {
+      "pageTitle": "Λεπτομέρειες συνεργάτη"
     }
   },
   "fields": {
@@ -252,7 +250,10 @@
     "noPartnerOffices": "Δεν υπάρχουν συνεργαζόμενα γραφεία",
     "noEmployees": "Δεν υπάρχουν υπάλληλοι",
     "noContractors": "Δεν υπάρχουν εξωτερικοί συνεργάτες",
-    "bank": "Τράπεζα"
+    "bank": "Τράπεζα",
+    "filters": "Φίλτρα",
+    "supplier": "Προμηθευτής",
+    "externalContractor": "Εξωτερικός συνεργάτης"
   },
   "actions": {
     "submit": "Υποβολή",
