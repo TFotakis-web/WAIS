@@ -79,8 +79,13 @@ function hasPermissions(route) {
 
 function hasPermissionsByName(name) {
 	if (!name) return false;
-	const route = router.resolve({ name });
-	return hasPermissions(route);
+	try {
+		const route = router.resolve({ name });
+		return hasPermissions(route);
+	} catch (error) {
+		console.error(error);
+		return false;
+	}
 }
 
 router.hasPermissions = hasPermissions;
