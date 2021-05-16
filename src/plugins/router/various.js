@@ -49,45 +49,6 @@ export default [
 				},
 			},
 			{
-				path: 'inviteUser',
-				component: () => import('@/components/structure/passThroughRouterView'),
-				children: [
-					{
-						path: '',
-						name: 'InviteUser',
-						component: () => import('@/views/office/InviteUser'),
-						meta: {
-							requiresAuth: true,
-							customCheck: () => {
-								return store.getters['auth/role'] === 'MANAGER';
-							},
-						},
-					},
-					{
-						path: 'employee/:id',
-						name: 'InviteEmployeeToOfficeItemDetails',
-						component: () => import('@/views/office/InviteEmployeeToOfficeItemDetails'),
-						meta: {
-							requiresAuth: true,
-							customCheck: () => {
-								return store.getters['auth/role'] === 'MANAGER';
-							},
-						},
-					},
-					{
-						path: 'contractor/:id',
-						name: 'InviteContractorToOfficeItemDetails',
-						component: () => import('@/views/office/InviteContractorToOfficeItemDetails'),
-						meta: {
-							requiresAuth: true,
-							customCheck: () => {
-								return store.getters['auth/role'] === 'MANAGER';
-							},
-						},
-					},
-				],
-			},
-			{
 				path: 'manageOffice/:id',
 				name: 'ManageOffice',
 				component: () => import('@/views/office/ManageOffice'),
@@ -97,34 +58,6 @@ export default [
 						return store.getters['auth/role'] === 'MANAGER' || store.getters['auth/role'] === 'EMPLOYEE';
 					},
 				},
-			},
-			{
-				path: 'inviteOffice',
-				component: () => import('@/components/structure/passThroughRouterView'),
-				children: [
-					{
-						path: '',
-						name: 'InviteOffice',
-						component: () => import('@/views/office/InviteOffice'),
-						meta: {
-							requiresAuth: true,
-							customCheck: () => {
-								return store.getters['auth/role'] === 'MANAGER';
-							},
-						},
-					},
-					{
-						path: ':id',
-						name: 'InviteOfficeItemDetails',
-						component: () => import('@/views/office/InviteOfficeItemDetails'),
-						meta: {
-							requiresAuth: true,
-							customCheck: () => {
-								return store.getters['auth/role'] === 'MANAGER';
-							},
-						},
-					},
-				],
 			},
 		],
 	},
