@@ -226,6 +226,13 @@ const resolvers = {
 				requestInput: event.arguments.input,
 			})
 		},
+		offerInsuranceCompanyToOfficeRequest: (event) => {
+			return api.offerInsuranceCompanyToOfficeRequest({
+				username: event.identity.claims['cognito:username'],
+				email: event.identity.claims['email'],
+				requestInput: event.arguments.input,
+			})
+		},
 		deleteRequestsSentByMe: (event) => {
 			return api.deleteRequestsSentByMe({
 				username: event.identity.claims['cognito:username'],

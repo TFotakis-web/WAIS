@@ -149,6 +149,7 @@ type OfferInsuranceCompanyRequestPayload {
     insuranceCompany: InsuranceCompany!
 }
 input OfferInsuranceCompanyRequestPayloadInput {
+    receiverOfficeEmail: String!
     insuranceCompany: InsuranceCompanyInput!
 }
 

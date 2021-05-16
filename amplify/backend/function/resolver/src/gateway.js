@@ -293,6 +293,15 @@ module.exports = {
 		console.log('createInviteContractorToOfficeRequest output: ' + JSON.stringify(result))
 		return result
 	},
+	offerInsuranceCompanyToOfficeRequest: (args) => {
+		console.log('offerInsuranceCompanyToOfficeRequest input: ' + JSON.stringify(args))
+		if (!args.username) {
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
+		}
+		const result = requestAPI.offerInsuranceCompanyToOfficeRequest(args.username, args.email, args.requestInput)
+		console.log('offerInsuranceCompanyToOfficeRequest output: ' + JSON.stringify(result))
+		return result
+	},
 	deleteRequestsSentByMe: (args) => {
 		console.log('deleteRequestsSentByMe input: ' + JSON.stringify(args))
 		if (!args.username) {

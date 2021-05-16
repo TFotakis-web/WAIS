@@ -16,9 +16,20 @@ module.exports = {
 		return docClient.query({
 			TableName: 'Office' + ddbSuffix,
 			IndexName: 'byOwnerUsername',
-			ExpressionAttributeNames: {'#ownerUsernameFieldName': 'ownerUsername'},
 			KeyConditionExpression: '#ownerUsernameFieldName = :inputUsername',
+			ExpressionAttributeNames: {'#ownerUsernameFieldName': 'ownerUsername'},
 			ExpressionAttributeValues: {':inputUsername': username},
+		})
+			.promise()
+			.then(res => res.Items)
+	},
+	getOfficeByOfficeEmail: (office_email) => {
+		return docClient.query({
+			TableName: 'Office' + ddbSuffix,
+			IndexName: 'byOfficeEmail',
+			KeyConditionExpression: '#office_email = :office_email',
+			ExpressionAttributeNames: {'#office_email': 'office_email'},
+			ExpressionAttributeValues: {':office_email': office_email},
 		})
 			.promise()
 			.then(res => res.Items)
@@ -226,7 +237,19 @@ module.exports = {
 			],
 		}).promise()
 			.then(() => connId)
-
+	},
+	getOfficeCollaborationConnectionId: (senderOfficeId, receiverOfficeId) => {
+		return uuidv5('wais', JSON.stringify([senderOfficeId, receiverOfficeId]))
+	},
+	addOfficeCollaborationConnectionInsuranceCompany: (connId, insuranceCompany) => {
+		return docClient.update({
+			TableName: 'OfficeCollaborationConnection' + ddbSuffix,
+			Key: {id: connId},
+			UpdateExpression: '',
+			KeyConditionExpression: `ADD #sharedInsuranceCompanies.${insuranceCompany.code} = :insuranceCompany`,
+			ExpressionAttributeNames: {'#sharedInsuranceCompanies': 'sharedInsuranceCompanies'},
+			ExpressionAttributeValues: {':insuranceCompany': insuranceCompany},
+		}).promise()
 	},
 	/**
 	 * Remove a user from the given office.

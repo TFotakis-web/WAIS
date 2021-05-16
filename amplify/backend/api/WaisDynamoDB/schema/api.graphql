@@ -122,6 +122,7 @@ type Mutation {
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
+    # Request that will add an Insurance Company to an Office Connection between 2 offices if accepted.
     offerInsuranceCompanyToOfficeRequest(input: OfferInsuranceCompanyRequestPayloadInput!): RequestsOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")

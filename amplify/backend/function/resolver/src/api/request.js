@@ -344,8 +344,7 @@ module.exports = {
 
 							//Transaction, add the new connection
 							try {
-								const sharedInsuranceCompanies = {}
-								return await officeQueries.addOfficeCollaborationConnection(senderOffice, receiverOffice, sharedInsuranceCompanies)
+								return await officeQueries.addOfficeCollaborationConnection(senderOffice, receiverOffice)
 							} catch (err) {
 								return Promise.reject(new Error(
 									'Failed to add employee to Office, ensure that the Office is allowed to collaborate with other Offices.',
@@ -412,9 +411,34 @@ module.exports = {
 							}
 
 							//Create a connection between the contractor office and the manager that invited you
+							const senderOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
 							const contractorOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
-							const otherOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
-							return await officeQueries.addOfficeCollaborationConnection(contractorOffice, otherOffice, 'comp1', 'code1')//FIXME
+							return await officeQueries.addOfficeCollaborationConnection(senderOffice, contractorOffice)
+						} else {
+							console.log(`Request with ID ${id} was rejected.`)
+						}
+						break
+					}
+					case 'OFFER_INSURANCE_COMPANY_TO_OFFICE': {
+						if (decision === 'ACCEPT') {
+							//Required
+							if (!callerPayload) {
+								return Promise.reject(new Error("No 'payload' field provided."))
+							}
+
+							if (receiverUserProfile.role !== 'CONTRACTOR') {
+								return Promise.reject(new Error('Receiver is not a Contractor.'))
+							}
+
+							//Create a connection between the contractor office and the manager that invited you
+							const senderOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
+							const contractorOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
+
+							//Get the existing collaboration connection between two offices or reject if there isn't one.
+							//This is not a query!
+							const existingConnId = officeQueries.getOfficeCollaborationConnectionId(senderOffice.id, contractorOffice.id)
+							const newInsuranceCompany = requestObject.payload.offerInsuranceCompanyPayload.insuranceCompany
+							return await officeQueries.addOfficeCollaborationConnectionInsuranceCompany(existingConnId, newInsuranceCompany)
 						} else {
 							console.log(`Request with ID ${id} was rejected.`)
 						}
@@ -428,23 +452,13 @@ module.exports = {
 			.catch(reason => {
 				const msg = 'Unhandled error in resolveRequest with reason: ' + JSON.stringify(reason, null, 2)
 				console.log(msg)
-				return Promise.resolve()
+				return Promise.reject(new Error(msg))
 			})
 			.then(async function () {
 				//Delete the resolved request
-				let deleted = true
 				await module.exports.deleteRequestById(id)
-					.then(() => console.log(`Request with id=${id} was deleted.`))
-					.catch(reason => {
-						console.log(`Failed to delete request with ID=${id} with reason: ${reason}.`)
-						deleted = false
-					})
-				return JSON.stringify({id: id})
-			})
-			.catch(reason => {
-				const msg = 'Unhandled error in resolveRequest final catch with reason: ' + JSON.stringify(reason, null, 2)
-				console.log(msg)
-				return Promise.reject(new Error(msg))
+					.catch(reason => Promise.reject(Error(`Failed to delete request with ID=${id} with reason: ${reason}.`)))
+				return JSON.stringify({id: id, decision: decision})
 			})
 	},
 
@@ -486,6 +500,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => response.createRequests)
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to create request.'))
@@ -533,6 +548,7 @@ module.exports = {
 		`
 
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => response.createRequests)
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to create request.'))
@@ -542,6 +558,62 @@ module.exports = {
 				}
 				return result
 			})
+	},
+
+	offerInsuranceCompanyToOfficeRequest: (username, email, input) => {
+		if (!username) {
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
+		}
+		if (!input.email) {
+			return Promise.reject(new Error('Receiver\'s email is invalid.'))
+		}
+
+		const mutation = /* GraphQL */ `
+			mutation createRequest($input: CreateRequestsInput!) {
+				createRequests(input: $input) {
+					id
+					type
+					senderUsername
+					senderEmail
+					receiverEmail
+					createdAt
+					updatedAt
+					payload {
+						offerInsuranceCompanyPayload {
+							officeId
+							officeName
+							name
+							code
+							expiresAt
+						}
+					}
+				}
+			}
+		`
+
+		return officeQueries.getOfficeByOfficeEmail(input.receiverOfficeEmail)
+			.then(office => ({
+				type: 'OFFER_INSURANCE_COMPANY_TO_OFFICE',
+				senderUsername: username,
+				senderEmail: email,
+				receiverEmail: office.office_email,
+				payload: {
+					insuranceCompany: input.insuranceCompany.map(company => {
+						company.officeId = office.id
+						company.officeName = office.officeName
+						return company
+					})
+				},
+			}))
+			.then(requestInput => gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+				.then(response => response.createRequests)
+				.then(result => {
+					if (result === undefined) {
+						return Promise.reject(new Error('Failed to create request.'))
+					}
+					return result
+				}))
+
 	},
 
 	/**
@@ -570,6 +642,7 @@ module.exports = {
 
 		//Get *existing* office
 		return officeQueries.getOfficeByOwnerUsername(username)
+			.then(response => response.createRequests)
 			.then(unverifiedOffice => {
 				return {
 					senderUsername: username,
@@ -614,6 +687,7 @@ module.exports = {
 			}
 		`
 		return gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
+			.then(response => response.createRequests)
 			.then(responseData => {
 				if (responseData === undefined) {
 					return Promise.reject(new Error('Failed to create Request.'))
@@ -644,6 +718,7 @@ module.exports = {
 			input: input,
 			condition: expanded_condition
 		}, mutation, 'deleteRequestsSentByMe')
+			.then(response => response.deleteRequests)
 			.then(result => {
 				if (result === undefined) {
 					return Promise.reject(new Error('Failed to delete Requests.'))

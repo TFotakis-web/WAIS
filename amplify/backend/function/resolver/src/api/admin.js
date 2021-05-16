@@ -1,5 +1,6 @@
 const gqlUtil = require('../gql')
 const userAPI = require('../api/user')
+const officeAPI = require('../api/office')
 
 const AWS = require('aws-sdk')
 AWS.config.update({
@@ -87,24 +88,36 @@ module.exports = {
 			})
 	},
 	addInsuranceCompaniesToOffice(officeId, newInsuranceCompanies) {
-		return docClient.update({
+		return officeAPI.getOfficeById(officeId)
+			.then(office => newInsuranceCompanies.map(newCompany => {
+				newCompany.officeId = office.id
+				newCompany.officeName = office.officeName
+			}))
+			.then(enrichedInsuranceCompanies => docClient.update({
+				TableName: 'Office' + ddbSuffix,
+				Key: {id: officeId},
+				KeyConditionExpression: 'SET #ownedInsuranceCompanies = list_append(#ownedInsuranceCompanies, :newInsuranceCompanies)',
+				ExpressionAttributeNames: {'#ownedInsuranceCompanies': 'ownedInsuranceCompanies'},
+				ExpressionAttributeValues: {':newInsuranceCompanies': enrichedInsuranceCompanies},
+			}).promise())
+	},
+	getInsuranceCompaniesOfOffice(officeId) {
+		return docClient.get({
 			TableName: 'Office' + ddbSuffix,
 			Key: {id: officeId},
-			KeyConditionExpression: 'SET #insuranceCompanies = list_append(#insuranceCompanies, :newInsuranceCompanies)',
-			ExpressionAttributeNames: {'#insuranceCompanies': 'insuranceCompanies'},
-			ExpressionAttributeValues: {':newInsuranceCompanies': newInsuranceCompanies},
-		}).promise()
+			ProjectionExpression: "allInsuranceCompanies",
+		})
+			.promise()
+			.then(res => res.Item)
 	},
 	removeInsuranceCompaniesFromOffice(officeId, insuranceCompanyCodes) {
 		return module.exports.getInsuranceCompaniesOfOffice(officeId)
-			.then((companies) => {
-				return companies.filter((company) => !insuranceCompanyCodes.contains(company.code))
-			})
+			.then((companies) => companies.filter((company) => !insuranceCompanyCodes.contains(company.code)))
 			.then(new_companies => docClient.update({
 					TableName: 'Office' + ddbSuffix,
 					Key: {id: officeId},
-					KeyConditionExpression: 'SET #insuranceCompanies = :newInsuranceCompanies',
-					ExpressionAttributeNames: {'#insuranceCompanies': 'insuranceCompanies'},
+					KeyConditionExpression: 'SET #ownedInsuranceCompanies = :newInsuranceCompanies',
+					ExpressionAttributeNames: {'#ownedInsuranceCompanies': 'ownedInsuranceCompanies'},
 					ExpressionAttributeValues: {':newInsuranceCompanies': new_companies},
 				}).promise()
 			)
