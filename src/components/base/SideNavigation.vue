@@ -206,18 +206,9 @@
 						],
 					},
 					{
-						name: this.$t('components.navigation.sidenav.contractors._groupName'),
+						name: this.$t('views.partners.pageTitle'),
 						icon: this.$ionicons.peopleOutline,
-						children: [
-							{
-								name: this.$t('components.navigation.sidenav.contractors.suppliers'),
-								to: { name: 'SupplierContractors' },
-							},
-							{
-								name: this.$t('components.navigation.sidenav.contractors.externalContractors'),
-								to: { name: 'ContractorsExternalContractors' },
-							},
-						],
+						to: { name: 'Partners' },
 					},
 					{
 						name: this.$t('components.navigation.sidenav.cards._groupName'),
