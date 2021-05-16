@@ -495,7 +495,6 @@ app.config.globalProperties.$inputConfigs = {
 		label: () => window.vm.$t('fields.numberPlate'),
 		required: true,
 	},
-
 	branchSelect: {
 		type: 'select',
 		label: () => window.vm.$t('fields.branch'),
@@ -609,6 +608,35 @@ app.config.globalProperties.$inputConfigs = {
 		required: true,
 	},
 };
+app.config.globalProperties.$filterList = (list, filters) => list.filter(el => {
+	let flag = true;
+	for (const filterName in filters) {
+		let filterValue = filters[filterName];
+		switch (typeof filterValue) {
+			case 'boolean':
+				if (!filterValue) {
+					continue;
+				}
+				flag &= el[filterName] === filterValue;
+				break;
+			case 'number':
+			case 'string':
+				filterValue = filterValue.toString().toLowerCase();
+				if (filterValue === '') {
+					continue;
+				}
+				flag &= el[filterName].toLowerCase().match(filterValue) !== null;
+				break;
+			default:
+				if (Array.isArray(filterValue)) {
+					for (const filterEl of filterValue) {
+						flag &= el[filterName].includes(filterEl);
+					}
+				}
+		}
+	}
+	return flag;
+});
 
 // -------------- Mount --------------
 store.commit('pageStructure/increaseGlobalPendingPromises');
