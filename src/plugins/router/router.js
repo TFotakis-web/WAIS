@@ -7,7 +7,7 @@ import admin from '@/plugins/router/admin';
 import auth from '@/plugins/router/auth';
 import cards from '@/plugins/router/cards';
 import contract from '@/plugins/router/contract';
-import contractors from '@/plugins/router/contractors';
+import partners from '@/plugins/router/partners';
 import pricing from '@/plugins/router/pricing';
 import processing from '@/plugins/router/processing';
 import various from '@/plugins/router/various';
@@ -22,7 +22,7 @@ const routes = [
 			...accounting,
 			...cards,
 			...contract,
-			...contractors,
+			...partners,
 			...pricing,
 			...processing,
 			...various,
