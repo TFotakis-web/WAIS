@@ -123,14 +123,12 @@
 	import IonInputItem from '@/components/structure/ionInputItem';
 	import loadingBtn from '@/components/structure/loadingBtn';
 	import { mapGetters } from 'vuex';
-	import IonDatetimeCustom from '@/components/structure/ionDatetimeCustom';
 
 
 	export default {
 		name: 'NewContract',
 		components: {
 			IonInputItem,
-			IonDatetimeCustom,
 			loadingBtn,
 		},
 		mounted() {
