@@ -117,6 +117,30 @@ import $i18n from '@/plugins/i18n';
 // 	}
 // }
 
+function sidenavFilter(side, allRoutes) {
+	const routes = [];
+	for (const category of allRoutes) {
+		if (category.children) {
+			const children = [];
+			for (const child of category.children) {
+				if (child.side === side) {
+					children.push(child);
+				}
+			}
+			if (children.length) {
+				category.children = children;
+				routes.push(category);
+			}
+		} else {
+			if (category.side === side) {
+				routes.push(category);
+			}
+		}
+	}
+
+	return routes;
+}
+
 export const platformData = {
 	namespaced: true,
 	state: {
@@ -161,6 +185,290 @@ export const platformData = {
 		// },
 	},
 	getters: {
+		sidenav: function (state, getters, rootState, rootGetters) {
+			const allRoutes = [
+				{
+					name: window.vm.$t('views.homePage.pageTitle'),
+					icon: window.vm.$ionicons.homeOutline,
+					to: { name: 'AdminHome' },
+					side: 'left',
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.notifications'),
+					to: { name: 'AdminNotifications' },
+					side: 'right',
+					icon: window.vm.$ionicons.notificationsOutline,
+					badge: () => rootGetters['request/requestsForMe'].length,
+				},
+
+				{
+					to: { name: 'Office' },
+					side: 'left',
+					thumbnail: rootGetters['office/myOffice'].office_logo,
+					defaultThumbnail: rootGetters['platformData/defaultOfficeLogo'],
+					h1: rootGetters['office/myOffice'].officeName || window.vm.$t('views.Office.pageTitle'),
+					// h1: 'Office Name',
+				},
+
+				{
+					to: { name: 'UserProfile' },
+					side: 'left',
+					thumbnail: rootGetters['auth/userProfile'].profilePicture,
+					defaultThumbnail: rootGetters['platformData/defaultProfilePicture'],
+					h2: rootGetters['auth/fullName'],
+					p: rootGetters['auth/username'],
+				},
+
+				{
+					name: window.vm.$t('views.homePage.pageTitle'),
+					icon: window.vm.$ionicons.homeOutline,
+					to: { name: 'Home' },
+					side: 'left',
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.notifications'),
+					to: { name: 'Notifications' },
+					side: 'right',
+					icon: window.vm.$ionicons.notificationsOutline,
+					badge: () => rootGetters['request/requestsForMe'].length,
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.pricing._groupName'),
+					icon: window.vm.$ionicons.barChartOutline,
+					children: [
+						{
+							name: window.vm.$t('components.navigation.sidenav.pricing.vehicle'),
+							to: { name: 'VehiclePricing' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.pricing.industrialLiability'),
+							to: { name: 'IndustrialLiabilityPricing' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.pricing.fire'),
+							to: { name: 'FirePricing' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.pricing.life'),
+							to: { name: 'LifePricing' },
+							side: 'left',
+						},
+					],
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.contracts._groupName'),
+					icon: window.vm.$ionicons.documentTextOutline,
+					children: [
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.file'),
+							to: { name: 'ContractsFile' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.uncollected'),
+							to: { name: 'UncollectedContracts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.collected'),
+							to: { name: 'CollectedContracts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.additionalActs'),
+							to: { name: 'ContractAdditionalActs' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.greenCard'),
+							to: { name: 'GreenCardContracts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.unclaimed'),
+							to: { name: 'UnclaimedContracts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.invalid'),
+							to: { name: 'InvalidContracts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.contracts.new'),
+							to: { name: 'NewContract' },
+							side: 'left',
+						},
+					],
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.processing._groupName'),
+					icon: window.vm.$ionicons.listOutline,
+					children: [
+						{
+							name: window.vm.$t('components.navigation.sidenav.processing.dueDateRegister'),
+							to: { name: 'ProcessingDueDateRegister' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.processing.duePayment'),
+							to: { name: 'ProcessingDuePayment' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.processing.paid'),
+							to: { name: 'ProcessingPaid' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.processing.losses'),
+							to: { name: 'ProcessingLosses' },
+							side: 'left',
+						},
+					],
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.accounting._groupName'),
+					icon: window.vm.$ionicons.cartOutline,
+					children: [
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.receipts'),
+							to: { name: 'AccountingReceipts' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.registers'),
+							to: { name: 'AccountingRegisters' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.todaysIncome'),
+							to: { name: 'AccountingTodaysIncome' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.commissionsUncollected'),
+							to: { name: 'AccountingCommissionsUncollected' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.commissionsCollected'),
+							to: { name: 'AccountingCommissionsCollected' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.accounting.mutualAccount'),
+							to: { name: 'AccountingMutualAccount' },
+							side: 'left',
+						},
+					],
+				},
+				{
+					name: window.vm.$t('views.partners.pageTitle'),
+					icon: window.vm.$ionicons.peopleOutline,
+					to: { name: 'Partners' },
+					side: 'left',
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.cards._groupName'),
+					icon: window.vm.$ionicons.idCardOutline,
+					children: [
+						{
+							name: window.vm.$t('components.navigation.sidenav.cards.vehicleCards'),
+							to: { name: 'VehicleCards' },
+							side: 'left',
+						},
+						{
+							name: window.vm.$t('components.navigation.sidenav.cards.customerCards'),
+							to: { name: 'CustomerCards' },
+							side: 'left',
+						},
+					],
+				},
+				{
+					name: window.vm.$t('components.navigation.sidenav.library._groupName'),
+					to: { name: 'Library' },
+					side: 'left',
+					icon: window.vm.$ionicons.bookOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.wallet'),
+					to: { name: 'Wallet' },
+					side: 'right',
+					icon: window.vm.$ionicons.walletOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.contract-approval'),
+					to: { name: 'ContractApproval' },
+					side: 'right',
+					icon: window.vm.$ionicons.eyeOutline,
+					// icon: window.vm.$ionicons.bagCheckOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.payment'),
+					to: { name: 'Payment' },
+					side: 'right',
+					icon: window.vm.$ionicons.cardOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.bank'),
+					to: { name: 'Bank' },
+					side: 'right',
+					icon: window.vm.$ionicons.briefcaseOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.collaboration'),
+					to: { name: 'Collaboration' },
+					side: 'right',
+					icon: window.vm.$ionicons.personAddOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.devtools'),
+					to: { name: 'DevTools' },
+					side: 'right',
+					icon: window.vm.$ionicons.bugOutline,
+				},
+				{
+					name: window.vm.$t('components.navigation.navbar-item.database'),
+					to: { name: 'PlatformData' },
+					side: 'right',
+					icon: window.vm.$ionicons.cogOutline,
+				},
+			];
+
+			const routes = [];
+			for (const category of allRoutes) {
+				if (category.children) {
+					const children = [];
+					for (const child of category.children) {
+						const routeName = child.to.name;
+						if (window.vm.$router.hasPermissionsByName(routeName)) {
+							children.push(child);
+						}
+					}
+					if (children.length) {
+						category.children = children;
+						routes.push(category);
+					}
+				} else {
+					const routeName = category.to.name;
+					if (window.vm.$router.hasPermissionsByName(routeName)) {
+						routes.push(category);
+					}
+				}
+			}
+
+			return routes;
+		},
+		sidenavLeft(state, getters) {
+			return sidenavFilter('left', getters.sidenav);
+		},
+		sidenavRight(state, getters) {
+			return sidenavFilter('right', getters.sidenav);
+		},
 		// data: (state) => state.data,
 		telephoneCodeOptions: () => [
 			{ text: '+1', value: '+1' },
