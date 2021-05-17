@@ -419,31 +419,6 @@ module.exports = {
 						}
 						break
 					}
-					case 'OFFER_INSURANCE_COMPANY_TO_OFFICE': {
-						if (decision === 'ACCEPT') {
-							//Required
-							if (!callerPayload) {
-								return Promise.reject(new Error("No 'payload' field provided."))
-							}
-
-							if (receiverUserProfile.role !== 'CONTRACTOR') {
-								return Promise.reject(new Error('Receiver is not a Contractor.'))
-							}
-
-							//Create a connection between the contractor office and the manager that invited you
-							const senderOffice = await officeQueries.getOfficeByOwnerUsername(senderUserProfile.username);
-							const contractorOffice = await officeQueries.getOfficeByOwnerUsername(receiverUserProfile.username)
-
-							//Get the existing collaboration connection between two offices or reject if there isn't one.
-							//This is not a query!
-							const existingConnId = officeQueries.getOfficeCollaborationConnectionId(senderOffice.id, contractorOffice.id)
-							const newInsuranceCompany = requestObject.payload.offerInsuranceCompanyPayload.insuranceCompany
-							return await officeQueries.addOfficeCollaborationConnectionInsuranceCompany(existingConnId, newInsuranceCompany)
-						} else {
-							console.log(`Request with ID ${id} was rejected.`)
-						}
-						break
-					}
 					default: {
 						return Promise.reject(new Error(`Invalid request type: ${requestObject.type}`))
 					}
@@ -560,60 +535,29 @@ module.exports = {
 			})
 	},
 
-	offerInsuranceCompanyToOfficeRequest: (username, email, input) => {
-		if (!username) {
+	offerInsuranceCompanyToOfficeRequest: async (caller_username, email, input) => {
+		if (!caller_username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 		if (!input.email) {
 			return Promise.reject(new Error('Receiver\'s email is invalid.'))
 		}
 
-		const mutation = /* GraphQL */ `
-			mutation createRequest($input: CreateRequestsInput!) {
-				createRequests(input: $input) {
-					id
-					type
-					senderUsername
-					senderEmail
-					receiverEmail
-					createdAt
-					updatedAt
-					payload {
-						offerInsuranceCompanyPayload {
-							officeId
-							officeName
-							name
-							code
-							expiresAt
-						}
-					}
-				}
-			}
-		`
-
-		return officeQueries.getOfficeByOfficeEmail(input.receiverOfficeEmail)
-			.then(office => ({
-				type: 'OFFER_INSURANCE_COMPANY_TO_OFFICE',
-				senderUsername: username,
-				senderEmail: email,
-				receiverEmail: office.office_email,
-				payload: {
-					insuranceCompany: input.insuranceCompany.map(company => {
-						company.officeId = office.id
-						company.officeName = office.officeName
-						return company
-					})
-				},
-			}))
-			.then(requestInput => gqlUtil.execute({input: requestInput}, mutation, 'createRequest')
-				.then(response => response.createRequests)
-				.then(result => {
-					if (result === undefined) {
-						return Promise.reject(new Error('Failed to create request.'))
-					}
-					return result
-				}))
-
+		return Promise.all([
+			officeQueries.getOfficeByOwnerUsername(caller_username),
+			officeQueries.getOfficeByOfficeEmail(input?.receiverOfficeEmail)
+		])
+			.then(responses => {
+				const senderOffice = responses.values().next()
+				const receiverOffice = responses.values().next()
+				const existingConnId = officeQueries.getOfficeCollaborationConnectionId(senderOffice.id, receiverOffice.id)
+				const newInsuranceCompany = input.insuranceCompany.map(company => {
+					company.officeId = receiverOffice.id
+					company.officeName = receiverOffice.officeName
+					return company
+				})
+				return officeQueries.addOfficeCollaborationConnectionInsuranceCompany(existingConnId, newInsuranceCompany)
+			})
 	},
 
 	/**

@@ -37,12 +37,12 @@ module.exports = {
 		}
 		const query = /* GraphQL */ `
 			query getCalendarEventsForUser(
-				$username: String!
-				$filter: ModelUserCalendarEventFilterInput
-				$limit: Int
+				$username: String!,
+				$filter: ModelUserCalendarEventFilterInput,
+				$limit: Int,
 				$nextToken: String
 			) {
-				listUserCalendarEventsByUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username) {
+				listUserCalendarEventsByUsername(limit: $limit, nextToken: $nextToken, filter: $filter, username: $username, sortDirection: DESC) {
 					items {
 						username
 						updatedAt
@@ -294,13 +294,10 @@ module.exports = {
 		return result
 	},
 	offerInsuranceCompanyToOfficeRequest: (args) => {
-		console.log('offerInsuranceCompanyToOfficeRequest input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = requestAPI.offerInsuranceCompanyToOfficeRequest(args.username, args.email, args.requestInput)
-		console.log('offerInsuranceCompanyToOfficeRequest output: ' + JSON.stringify(result))
-		return result
+		return requestAPI.offerInsuranceCompanyToOfficeRequest(args.username, args.email, args.requestInput)
 	},
 	deleteRequestsSentByMe: (args) => {
 		console.log('deleteRequestsSentByMe input: ' + JSON.stringify(args))
@@ -449,42 +446,22 @@ module.exports = {
 		return result
 	},
 	updateEmployeeModelPermissionsForOffice: (args) => {
-		console.log('updateEmployeeModelPermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = userAPI.updateEmployeeModelPermissionsForOffice(
-			args.officeId,
-			args.username,
-			args.empUsername,
-			args.modelPermissions,
-		)
-		console.log('updateEmployeeModelPermissionsForOffice output: ' + JSON.stringify(result))
-		return result
+		return officeAPI.updateEmployeeModelPermissionsForOffice(args.username, args.empUsername, args.modelPermissions)
 	},
 	updateEmployeePagePermissionsForOffice: (args) => {
-		console.log('updateEmployeePagePermissionsForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = userAPI.updateEmployeePagePermissionsForOffice(
-			args.officeId,
-			args.username,
-			args.empUsername,
-			args.modelPermissions,
-		)
-		console.log('updateEmployeePagePermissionsForOffice output: ' + JSON.stringify(result))
-		return result
+		return officeAPI.updateEmployeePagePermissionsForOffice(args.username, args.empUsername, args.modelPermissions)
 	},
 	deleteEmployeeForOffice: (args) => {
-		//TODO finish
-		console.log('deleteEmployeeForOffice input: ' + JSON.stringify(args))
 		if (!args.username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
-		const result = ddbUtil.removeEmployeeFromOffice(args.officeId, args.username, args.empUsername)
-		console.log('deleteEmployeeForOffice output: ' + JSON.stringify(result))
-		return result
+		return officeAPI.removeEmployeeFromOffice(args.username, args.empUsername)
 	},
 	updateContractorModelPermissionsForOffice: (args) => {
 		console.log('updateContractorModelPermissionsForOffice input: ' + JSON.stringify(args))

@@ -14,7 +14,6 @@ input DeleteInsuranceCompanyInput {
     officeId: ID!
     code: String!
 }
-
 type S3Object {
     level: String!
     idToken: String!
@@ -116,10 +115,10 @@ input CreateUnverifiedOfficePayloadInput {
     office_logo: S3ObjectInput
     insuranceLicenseExpirationDate: AWSDate
     civilLiabilityExpirationDate: AWSDate
-    comments: String
+    comments: String # TODO Remove
     files: [S3ObjectInput]
-    contractorPagePermissions: AWSJSON
-    contractorModelPermissions: AWSJSON
+    contractorPagePermissions: AWSJSON # FIXME
+    contractorModelPermissions: AWSJSON # FIXME
 }
 
 ##### Create Request

@@ -35,6 +35,7 @@ type Office
     files: [S3Object]
 
     # Insurance companies given by an Admin
+    ownedInsuranceCompanyNames: [String]!
     ownedInsuranceCompanies: [InsuranceCompany]!
     allInsuranceCompanies: [InsuranceCompany] @function(name: "resolver-${env}") # Owned,Incoming,Outgoing
 

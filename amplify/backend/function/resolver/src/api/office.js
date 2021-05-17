@@ -192,7 +192,7 @@ module.exports = {
 	 */
 	addOfficeCollaborationConnection: (senderOffice, receiverOffice) => {
 		const now = new Date().toISOString()
-		const connId = uuidv5('wais', JSON.stringify([senderOffice.id, receiverOffice.id]))
+		const connId = module.exports.getOfficeCollaborationConnectionId(senderOffice.id, receiverOffice.id)
 		return docClient.transactWrite({
 			TransactItems: [
 				{
@@ -239,7 +239,10 @@ module.exports = {
 			.then(() => connId)
 	},
 	getOfficeCollaborationConnectionId: (senderOfficeId, receiverOfficeId) => {
-		return uuidv5('wais', JSON.stringify([senderOfficeId, receiverOfficeId]))
+		return uuidv5('getOfficeCollaborationConnectionId', JSON.stringify([senderOfficeId, receiverOfficeId]))
+	},
+	getOfficeUserConnectionId: (fromUserProfileId, toOfficeId) => {
+		return uuidv5('getOfficeCollaborationConnectionId', JSON.stringify([fromUserProfileId, toOfficeId]))
 	},
 	addOfficeCollaborationConnectionInsuranceCompany: (connId, insuranceCompany) => {
 		return docClient.update({
@@ -255,13 +258,18 @@ module.exports = {
 	 * Remove a user from the given office.
 	 * The index of the user's username in the office members index is necessary.
 	 */
-	removeEmployeeFromOffice: (officeUserConId, officeId, employeeId) => {
+	removeEmployeeFromOffice: async (caller_username, emp_username) => {
+		const callersOffice = await module.exports.getOfficeByOwnerUsername(caller_username)
+			.catch(() => Promise.reject(new Error('Caller is not a Manager.')))
+		const empUP = await userAPI.getUserProfileByUsername(emp_username)
+		const oucID = module.exports.getOfficeUserConnectionId(empUP.id, callersOffice.id)
+		const now = new Date().toISOString()
 		return docClient.transactWrite({
 			TransactItems: [
 				{
 					Update: {
 						TableName: 'Office' + ddbSuffix,
-						Key: {id: officeId},
+						Key: {id: callersOffice},
 						UpdateExpression: 'SET #updatedAt = :now, #employeesNumberLimit = #employeesNumberLimit + :inc',
 						ExpressionAttributeNames: {
 							'#updatedAt': 'updatedAt',
@@ -269,7 +277,7 @@ module.exports = {
 						},
 						ExpressionAttributeValues: {
 							':inc': 1,
-							':now': new Date().toISOString(),
+							':now': now,
 						},
 						ReturnValues: 'UPDATED_NEW',
 					},
@@ -277,14 +285,14 @@ module.exports = {
 				{
 					Delete: {
 						TableName: 'OfficeUserConnection' + ddbSuffix,
-						Key: {id: officeUserConId},
+						Key: {id: oucID},
 					},
 				},
 				{
 					Update: {
 						TableName: 'Office' + ddbSuffix,
 						Key: {
-							id: employeeId,
+							id: empUP.id,
 						},
 						ConditionExpression: '#partnersNumberLimit > :zero',
 						UpdateExpression: 'SET #updatedAt = :now, #partnersNumberLimit = #partnersNumberLimit - :dec',
@@ -293,7 +301,7 @@ module.exports = {
 							'#partnersNumberLimit': 'partnersNumberLimit',
 						},
 						ExpressionAttributeValues: {
-							':now': new Date().toISOString(),
+							':now': now,
 							':dec': 1,
 							':zero': 0,
 						},
@@ -404,29 +412,25 @@ module.exports = {
 			.then(response => !!response?.listUserProfileByUsername?.items[0]?.officeConnection)
 	},
 
-	updateEmployeeModelPermissionsForOffice: async (officeId, caller_username, empUsername, modelPermissions) => {
+	updateEmployeeModelPermissionsForOffice: async (caller_username, empUsername, modelPermissions) => {
 		if (!caller_username) {
 			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
 
+		const callersOffice = await module.exports.getOfficeByOwnerUsername(caller_username)
+			.catch(() => Promise.reject(new Error('Caller is not a Manager.')))
+		const empUP = await userAPI.getUserProfileByUsername(empUsername)
+		const oucID = module.exports.getOfficeUserConnectionId(empUP.id, callersOffice.id)
+
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
 				updateOfficeUserConnection(input: $input) {
-					id
-				}
+				  id
+			    }
 			}
 		`
 
-		//Get the office
-		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
-		const officeDetailsAndPermissions = await module.exports.detailsAndPermissionsByUsername(caller_username, tuc_filter)
-		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnection
-		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
-			return Promise.reject(new Error('Invalid office ID or caller not an owner of that office.'))
-		}
-
-		return gqlUtil.execute({input: {id: tucItem.id, modelPermissions: modelPermissions}},
-			mutation1, 'updateOfficeUserConnection')
+		return gqlUtil.execute({input: {id: oucID, modelPermissions: modelPermissions}}, mutation1, 'updateOfficeUserConnection')
 			.then(result => {
 				result = result?.updateOfficeUserConnection
 				if (result === undefined) {
@@ -436,34 +440,29 @@ module.exports = {
 			})
 	},
 
-	updateEmployeePagePermissionsForOffice: async (officeId, caller_username, empUsername, pagePermissions) => {
-		console.log('userAPI.updateEmployeePagePermissionsForOffice input: ' + [officeId, caller_username, empUsername, pagePermissions])
+	updateEmployeePagePermissionsForOffice: async (caller_username, empUsername, pagePermissions) => {
 		if (!caller_username) {
-			return Promise.reject('Invalid username or unauthenticated user.')
+			return Promise.reject(new Error('Invalid username or unauthenticated user.'))
 		}
+
+		const callersOffice = await module.exports.getOfficeByOwnerUsername(caller_username)
+			.catch(() => Promise.reject(new Error('Caller is not a Manager.')))
+		const empUP = await userAPI.getUserProfileByUsername(empUsername)
+		const oucID = module.exports.getOfficeUserConnectionId(empUP.id, callersOffice.id)
 
 		const mutation1 = /* GraphQL */ `
 			mutation updateOfficeUserConnection(input: UpdateOfficeUserConnectionInput!) {
 				updateOfficeUserConnection(input: $input) {
-					id
-				}
+				  id
+			    }
 			}
 		`
 
-		//Get the office
-		const tuc_filter = {and: [{officeId: {eq: officeId}}, {username: {eq: caller_username}}]}
-		const officeDetailsAndPermissions = await module.exports.detailsAndPermissionsByUsername(caller_username, tuc_filter)
-		const tucItem = officeDetailsAndPermissions?.items[0]?.officeConnection
-		if (!tucItem || tucItem.office.ownerUsername !== caller_username) {
-			return Promise.reject(new Error('Invalid office ID or caller not an owner of that office.'))
-
-		}
-		return gqlUtil.execute({input: {id: tucItem.id, pagePermissions: pagePermissions}},
-			mutation1, 'updateOfficeUserConnection')
+		return gqlUtil.execute({input: {id: oucID, pagePermissions: pagePermissions}}, mutation1, 'updateOfficeUserConnection')
 			.then(result => {
 				result = result?.updateOfficeUserConnection
 				if (result === undefined) {
-					return Promise.reject(new Error('Failed to update page permissions.'))
+					return Promise.reject(new Error('Failed to update model permissions.'))
 				}
 				return result
 			})
@@ -472,9 +471,9 @@ module.exports = {
 		const emp_filter = {and: [filter || {id: {ne: ''}}, {employeeType: {eq: empType}}]}
 		const query = /* GraphQL */ `
 			query getEmployeeTypeUserProfilesForManagerUsername(
-				$ownerUsername: String!
-				$filter: ModelOfficeUserConnectionFilterInput
-				$limit: Int
+				$ownerUsername: String!,
+				$filter: ModelOfficeUserConnectionFilterInput,
+				$limit: Int,
 				$nextToken: String
 			) {
 				listOfficeByOwnerUsername(ownerUsername: $ownerUsername) {
@@ -969,7 +968,6 @@ module.exports = {
 	updateVehicleForOffice: async (office_id, username, input, condition) => {
 		//Sanitize input
 		const allowed = [
-			'id',
 			'numberPlate',
 			'color',
 			'manufacturer',

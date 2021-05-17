@@ -30,7 +30,7 @@ type Query {
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    # Manager query
+    # Manager query, FIXME
     getContractorUserProfiles(
         filter: ModelOfficeUserConnectionFilterInput
         limit: Int
@@ -54,7 +54,7 @@ type Query {
 
     getUserPagePermissionsForOffice(officeId: ID!): AWSJSON! @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    getUserRole: UserRole @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
+    getUserRole: GetUserRoleOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     ### ADMIN API ###
     getS3Object(obj: S3ObjectInput): S3ObjectContentsOutput @auth(rules: [{ allow: groups, groups: ["admin"] }]) @function(name: "resolver-${env}")
@@ -150,27 +150,15 @@ type Mutation {
         condition: ModelUserCalendarEventConditionInput
     ): UserCalendarEventOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
-    updateEmployeeModelPermissionsForOffice(officeId: ID!, empUsername: String!, modelPermissions: [ModelPermission]!): IDOutput
+    updateEmployeeModelPermissionsForOffice(empUsername: String!, modelPermissions: [ModelPermission]!): IDOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    updateEmployeePagePermissionsForOffice(officeId: ID!, empUsername: String!, pagePermissions: AWSJSON!): IDOutput
+    updateEmployeePagePermissionsForOffice(empUsername: String!, pagePermissions: AWSJSON!): IDOutput
     @auth(rules: [{ allow: private }])
     @function(name: "resolver-${env}")
 
-    deleteEmployeeForOffice(officeId: ID!, empUsername: String!): IDOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
-
-    updateContractorModelPermissionsForOffice(officeId: ID!, contractorUsername: String!, modelPermissions: [ModelPermission]!): IDOutput
-    @auth(rules: [{ allow: private }])
-    @function(name: "resolver-${env}")
-
-    updateContractorPagePermissionsForOffice(officeId: ID!, contractorUsername: String!, pagePermissions: AWSJSON!): IDOutput
-    @auth(rules: [{ allow: private }])
-    @function(name: "resolver-${env}")
-
-    deleteContractorForOffice(officeId: ID!, contractorUsername: String!): IDOutput
-    @auth(rules: [{ allow: private }])
-    @function(name: "resolver-${env}")
+    deleteEmployeeForOffice(empUsername: String!): IDOutput @auth(rules: [{ allow: private }]) @function(name: "resolver-${env}")
 
     createUnverifiedOffice(input: CreateUnverifiedOfficePayloadInput!): IDOutput
     @auth(rules: [{ allow: private }])

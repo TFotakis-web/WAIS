@@ -301,7 +301,6 @@ const resolvers = {
 		updateEmployeeModelPermissionsForOffice: (event) => {
 			return api.updateEmployeeModelPermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
 				modelPermissions: event.arguments.modelPermissions,
 			})
@@ -309,7 +308,6 @@ const resolvers = {
 		updateEmployeePagePermissionsForOffice: (event) => {
 			return api.updateEmployeePagePermissionsForOffice({
 				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
 				pagePermissions: event.arguments.pagePermissions,
 			})
@@ -317,32 +315,7 @@ const resolvers = {
 		deleteEmployeeForOffice: (event) => {
 			return api.deleteEmployeeForOffice({
 				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
 				empUsername: event.arguments.empUsername,
-			})
-		},
-		updateContractorModelPermissionsForOffice: (event) => {
-			return api.updateContractorModelPermissionsForOffice({
-				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
-				contractorUsername: event.arguments.contractorUsername,
-				modelPermissions: event.arguments.modelPermissions,
-			})
-		},
-		updateContractorPagePermissionsForOffice: (event) => {
-			return api.updateContractorPagePermissionsForOffice({
-				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
-				contractorUsername: event.arguments.contractorUsername,
-				pagePermissions: event.arguments.pagePermissions,
-			})
-		},
-		deleteContractorForOffice: (event) => {
-			return api.deleteContractorForOffice({
-				username: event.identity.claims['cognito:username'],
-				officeId: event.arguments.officeId,
-				contractorUsername: event.arguments.contractorUsername,
-				permissions: event.arguments.permissions,
 			})
 		},
 		getUserModelPermissionsForOffice: (event) => {
